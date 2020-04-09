@@ -35,9 +35,9 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             </div>,
             {
                 closed: {},
-                opened: { clickSelector: ".s-product_name", postInteractionWait: LongPostInteractionTimeout },
+                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
                 "select-all": {
-                    clickSelectors: [".s-product_name", ".s-select_all"],
+                    clickSelectors: [".s-product", ".s-select_all"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
@@ -56,9 +56,9 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             </div>,
             {
                 closed: {},
-                opened: { clickSelector: ".s-product_name", postInteractionWait: LongPostInteractionTimeout },
+                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
                 "select-all": {
-                    clickSelectors: [".s-product_name", ".s-alle_ausw_hlen"],
+                    clickSelectors: [".s-product", ".s-alle_ausw_hlen"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
@@ -75,13 +75,13 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                 />
             </div>,
             {
-                opened: { clickSelector: ".s-product_name", postInteractionWait: LongPostInteractionTimeout },
+                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
                 "select-all": {
-                    clickSelectors: [".s-product_name", ".s-select_all"],
+                    clickSelectors: [".s-product", ".s-select_all"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 clear: {
-                    clickSelectors: [".s-product_name", ".s-clear"],
+                    clickSelectors: [".s-product", ".s-clear"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
@@ -106,15 +106,15 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             {
                 closed: {},
                 opened: {
-                    clickSelector: ".s-product_name__wonderkid__explorer_______3_",
+                    clickSelector: ".s-product__wonderkid__explorer__touch_____3_",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 "select-all": {
-                    clickSelectors: [".s-product_name__wonderkid__explorer_______3_", ".s-select_all"],
+                    clickSelectors: [".s-product__wonderkid__explorer__touch_____3_", ".s-select_all"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 clear: {
-                    clickSelectors: [".s-product_name__wonderkid__explorer_______3_", ".s-clear"],
+                    clickSelectors: [".s-product__wonderkid__explorer__touch_____3_", ".s-clear"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
@@ -138,15 +138,15 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             {
                 closed: {},
                 opened: {
-                    clickSelector: ".s-product_name__all_except_wonderkid______3_",
+                    clickSelector: ".s-product__all_except_wonderkid__expl_____3_",
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 "select-all": {
-                    clickSelectors: [".s-product_name__all_except_wonderkid______3_", ".s-select_all"],
+                    clickSelectors: [".s-product__all_except_wonderkid__expl_____3_", ".s-select_all"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
                 clear: {
-                    clickSelectors: [".s-product_name__all_except_wonderkid______3_", ".s-clear"],
+                    clickSelectors: [".s-product__all_except_wonderkid__expl_____3_", ".s-clear"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },

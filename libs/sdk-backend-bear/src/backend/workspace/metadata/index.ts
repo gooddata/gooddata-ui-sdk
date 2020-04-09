@@ -13,6 +13,8 @@ import {
     newAttributeDisplayFormMetadataObject,
     ObjRef,
     uriRef,
+    IAttributeMetadataObject,
+    newAttributeMetadataObject,
 } from "@gooddata/sdk-model";
 import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
 import { objRefToUri } from "../../../fromObjRef/api";
@@ -39,6 +41,23 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
                 .description(displayFormDetails.meta.summary)
                 .id(displayFormDetails.meta.identifier)
                 .uri(displayFormDetails.meta.uri),
+        );
+    };
+
+    public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
+        const attributeUri = await objRefToUri(ref, this.workspace, this.authCall);
+        const wrappedAttribute: GdcMetadata.IWrappedAttribute = await this.authCall(sdk =>
+            sdk.md.getObjectDetails(attributeUri),
+        );
+        const { title, uri, isProduction, identifier, summary } = wrappedAttribute.attribute.meta;
+
+        return newAttributeMetadataObject(ref, a =>
+            a
+                .title(title)
+                .uri(uri)
+                .production(Boolean(isProduction))
+                .id(identifier)
+                .description(summary),
         );
     };
 

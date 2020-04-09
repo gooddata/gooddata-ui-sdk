@@ -7,6 +7,10 @@ import {
     ObjRef,
     IMeasureExpressionToken,
     IMetadataObject,
+    IAttributeMetadataObject,
+    isCatalogAttribute,
+    newAttributeMetadataObject,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { RecordingIndex } from "./types";
 import { identifierToRecording } from "./utils";
@@ -39,6 +43,36 @@ export class RecordedMetadata implements IWorkspaceMetadata {
         }
 
         return Promise.resolve(recording.obj);
+    }
+
+    public getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
+        if (!this.recordings.metadata || !this.recordings.metadata.catalog) {
+            return Promise.reject(new UnexpectedResponseError("No recordings", 404, {}));
+        }
+
+        const recording = this.recordings.metadata.catalog.items
+            .filter(isCatalogAttribute)
+            .find(wrappedAttribute => {
+                return areObjRefsEqual(ref, wrappedAttribute.attribute.ref);
+            });
+
+        if (!recording) {
+            return Promise.reject(
+                new UnexpectedResponseError(`No attribute recording ${JSON.stringify(ref)}`, 404, {}),
+            );
+        }
+
+        const { title, uri, id, production, description } = recording.attribute;
+        return Promise.resolve(
+            newAttributeMetadataObject(ref, a =>
+                a
+                    .title(title)
+                    .uri(uri)
+                    .production(Boolean(production))
+                    .id(id)
+                    .description(description),
+            ),
+        );
     }
 
     public getMeasureExpressionTokens(_: ObjRef): Promise<IMeasureExpressionToken[]> {

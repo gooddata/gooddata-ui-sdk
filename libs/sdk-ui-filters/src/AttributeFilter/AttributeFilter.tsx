@@ -20,7 +20,13 @@ import {
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
-import { defaultErrorHandler, OnError, IntlWrapper } from "@gooddata/sdk-ui";
+import {
+    defaultErrorHandler,
+    OnError,
+    IntlWrapper,
+    IntlTranslationsProvider,
+    ITranslationsComponentProps,
+} from "@gooddata/sdk-ui";
 
 interface IAttributeFilterProps {
     backend: IAnalyticalBackend;
@@ -148,12 +154,13 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         this.setState({ error: null, isLoading: true });
 
         try {
-            const displayForm = await this.getBackend()
+            const metadata = this.getBackend()
                 .workspace(this.props.workspace)
-                .metadata()
-                .getAttributeDisplayForm(this.getObjRef());
+                .metadata();
+            const displayForm = await metadata.getAttributeDisplayForm(this.getObjRef());
+            const attribute = await metadata.getAttribute(displayForm.attribute);
 
-            this.setState({ title: displayForm.title, error: null, isLoading: false });
+            this.setState({ title: attribute.title, error: null, isLoading: false });
         } catch (error) {
             this.setState({ title: "", error, isLoading: false });
 
@@ -187,17 +194,24 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
                 {error ? (
                     <FilterError error={error} />
                 ) : (
-                    <AttributeDropdown
-                        titleWithSelection={titleWithSelection}
-                        displayForm={this.getObjRef()}
-                        backend={backend}
-                        workspace={workspace}
-                        onApply={this.onApply}
-                        title={this.props.title || this.state.title}
-                        isInverted={isInverted}
-                        selectedItems={selectedItems}
-                        isLoading={isLoading}
-                    />
+                    <IntlTranslationsProvider>
+                        {(translationProps: ITranslationsComponentProps) => {
+                            return (
+                                <AttributeDropdown
+                                    titleWithSelection={titleWithSelection}
+                                    displayForm={this.getObjRef()}
+                                    backend={backend}
+                                    workspace={workspace}
+                                    onApply={this.onApply}
+                                    title={this.props.title || this.state.title}
+                                    isInverted={isInverted}
+                                    selectedItems={selectedItems}
+                                    isLoading={isLoading}
+                                    translationProps={translationProps}
+                                />
+                            );
+                        }}
+                    </IntlTranslationsProvider>
                 )}
             </IntlWrapper>
         );

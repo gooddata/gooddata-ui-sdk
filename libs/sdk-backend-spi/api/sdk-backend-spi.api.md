@@ -10,6 +10,7 @@ import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
+import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
@@ -543,6 +544,7 @@ export interface IWorkspaceInsights {
 
 // @public
 export interface IWorkspaceMetadata {
+    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;

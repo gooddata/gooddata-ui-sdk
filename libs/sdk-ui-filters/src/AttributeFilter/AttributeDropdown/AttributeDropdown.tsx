@@ -5,6 +5,7 @@ import { IAttributeElement, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model"
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { string as stringUtils } from "@gooddata/js-utils";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ITranslationsComponentProps } from "@gooddata/sdk-ui";
 import * as classNames from "classnames";
 import debounce = require("lodash/debounce");
 import noop = require("lodash/noop");
@@ -47,6 +48,7 @@ export interface IAttributeDropdownOwnProps {
     titleWithSelection?: boolean;
     FilterLoading?: React.ComponentType;
     isLoading?: boolean;
+    translationProps: ITranslationsComponentProps;
 }
 
 type IAttributeDropdownProps = IAttributeDropdownOwnProps & WrappedComponentProps;
@@ -175,6 +177,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         items: AttributeListItem[],
     ) => {
         const nonEmptyItems = items.filter(isNonEmptyListItem);
+
         return selection.map(selectedItem => {
             const foundItem = nonEmptyItems.find(
                 item =>
@@ -361,6 +364,22 @@ export class AttributeDropdownCore extends React.PureComponent<
         this.setState({ offset: from, limit: to - from }, () => this.getElements());
     };
 
+    private emptyValueItems(items: AttributeListItem[]): AttributeListItem[] {
+        const emptyHeaderString = this.props.translationProps
+            ? this.props.translationProps.emptyHeaderString
+            : "(empty value)";
+        const nonEmptyItems = items.filter(isNonEmptyListItem);
+        nonEmptyItems.forEach(item => {
+            if (isEmpty(item.title)) {
+                // TODO: SDK8: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
+                // @ts-ignore
+                item.title = emptyHeaderString;
+            }
+        });
+
+        return items;
+    }
+
     private renderDropdownBody() {
         const { selectedItems, isInverted, error, isLoading, validElements, searchString } = this.state;
 
@@ -371,7 +390,7 @@ export class AttributeDropdownCore extends React.PureComponent<
             <AttributeDropdownBody
                 error={error}
                 isLoading={!hasTriedToLoadData && isLoading}
-                items={validElements ? validElements.items : []}
+                items={validElements ? this.emptyValueItems(validElements.items) : []}
                 isInverted={isInverted}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}
