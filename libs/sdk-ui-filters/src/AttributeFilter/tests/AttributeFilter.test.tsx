@@ -21,7 +21,7 @@ describe("AttributeFilter", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);
     const workspace = "testWorkspace";
 
-    it("should download attribute display form title", async () => {
+    it("should download attribute title", async () => {
         const rendered = mount(
             <AttributeFilter
                 filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
@@ -34,10 +34,10 @@ describe("AttributeFilter", () => {
         await waitForAsync();
         rendered.update();
 
-        expect(rendered.find(AttributeDropdown).prop("title")).toEqual("Product Name");
+        expect(rendered.find(AttributeDropdown).prop("title")).toEqual("Product");
     });
 
-    it("should display error if attribute display form title load fails", async () => {
+    it("should display error if attribute title load fails", async () => {
         const rendered = mount(
             <AttributeFilter
                 filter={newPositiveAttributeFilter("non existing display form", [])}

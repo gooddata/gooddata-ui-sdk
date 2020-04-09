@@ -362,7 +362,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         this.setState({ offset: from, limit: to - from }, () => this.getElements());
     };
 
-    private emptyValueItem(items: AttributeListItem[]): AttributeListItem[] {
+    private emptyValueItems(items: AttributeListItem[]): AttributeListItem[] {
         const emptyHeaderString = this.props.translationProps
             ? this.props.translationProps.emptyHeaderString
             : "(empty value)";
@@ -388,7 +388,7 @@ export class AttributeDropdownCore extends React.PureComponent<
             <AttributeDropdownBody
                 error={error}
                 isLoading={!hasTriedToLoadData && isLoading}
-                items={validElements ? this.emptyValueItem(validElements.items) : []}
+                items={validElements ? this.emptyValueItems(validElements.items) : []}
                 isInverted={isInverted}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}

@@ -8,6 +8,8 @@ import {
     idRef,
     IMetadataObject,
     newDataSetMetadataObject,
+    IAttributeMetadataObject,
+    newAttributeMetadataObject,
 } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
@@ -20,6 +22,10 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
                 df.title("Display form").attribute(idRef("attr.dummy")),
             ),
         );
+    };
+
+    public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
+        return this.authCall(async () => newAttributeMetadataObject(ref, att => att.title("dummyTitle")));
     };
 
     public async getMeasureExpressionTokens(_ref: ObjRef): Promise<IMeasureExpressionToken[]> {

@@ -154,12 +154,13 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         this.setState({ error: null, isLoading: true });
 
         try {
-            const displayForm = await this.getBackend()
+            const metadata = this.getBackend()
                 .workspace(this.props.workspace)
-                .metadata()
-                .getAttributeDisplayForm(this.getObjRef());
+                .metadata();
+            const displayForm = await metadata.getAttributeDisplayForm(this.getObjRef());
+            const attribute = await metadata.getAttribute(displayForm.attribute);
 
-            this.setState({ title: displayForm.title, error: null, isLoading: false });
+            this.setState({ title: attribute.title, error: null, isLoading: false });
         } catch (error) {
             this.setState({ title: "", error, isLoading: false });
 

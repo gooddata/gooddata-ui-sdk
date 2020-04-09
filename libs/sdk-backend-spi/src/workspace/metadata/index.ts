@@ -4,6 +4,7 @@ import {
     IMeasureExpressionToken,
     ObjRef,
     IMetadataObject,
+    IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
 
 /**
@@ -32,4 +33,11 @@ export interface IWorkspaceMetadata {
      * @returns promise of metadata object
      */
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+
+    /**
+     * Get metadata of attribute
+     * @param ref - ref of the attribute to retrieve
+     * @returns promise of attribute metadata object
+     */
+    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
 }
