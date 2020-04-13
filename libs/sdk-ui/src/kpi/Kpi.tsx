@@ -3,7 +3,7 @@ import * as React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IMeasure, IFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/numberjs";
-import { RawExecutor, IRawExecutorProps } from "../execution";
+import { RawExecutor, IRawExecutorProps, IWithLoadingEvents } from "../execution";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -15,9 +15,8 @@ import {
     ILoadingProps,
     LoadingComponent,
     IErrorProps,
-    IWithLoadingEvents,
+    DataViewFacade,
 } from "../base";
-import { DataViewFacade } from "../base/results/facade";
 
 //
 // Internals

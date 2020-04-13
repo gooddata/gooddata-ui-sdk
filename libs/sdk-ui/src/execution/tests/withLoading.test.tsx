@@ -2,8 +2,8 @@
 import * as React from "react";
 import { withLoading, IWithLoading, WithLoadingResult } from "../withLoading";
 import { shallow } from "enzyme";
-import { IDummyPromise, createDummyPromise } from "./toolkit";
-import { DataViewFacade } from "../..";
+import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit";
+import { DataViewFacade } from "../../base";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef } from "@gooddata/sdk-model";
 

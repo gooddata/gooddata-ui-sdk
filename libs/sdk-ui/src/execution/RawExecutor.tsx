@@ -2,7 +2,7 @@
 import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult, IWithLoadingEvents } from "../base";
+import { WithLoadingResult, IWithLoadingEvents } from "./withLoading";
 
 /**
  * @public

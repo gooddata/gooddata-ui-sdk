@@ -28,7 +28,6 @@ export { BackendProvider, useBackend, withBackend } from "./react/BackendContext
 export { WorkspaceProvider, useWorkspace, withWorkspace } from "./react/WorkspaceContext";
 export { usePagedResource } from "./react/usePagedResource";
 export { withContexts } from "./react/withContexts";
-export { withLoading, IWithLoading, IWithLoadingEvents, WithLoadingResult } from "./react/withLoading";
 export { wrapDisplayName } from "./react/wrapDisplayName";
 
 /*
