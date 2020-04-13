@@ -17,6 +17,7 @@ import {
     IErrorProps,
     DataViewFacade,
 } from "../base";
+import { InvariantError } from "ts-invariant";
 
 //
 // Internals
@@ -39,6 +40,12 @@ const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = props => {
         onLoadingStart,
         intl,
     } = props;
+
+    if (!backend || !workspace) {
+        throw new InvariantError(
+            "backend and workspace must be either specified explicitly or be provided by context",
+        );
+    }
 
     const execution = backend
         .withTelemetry("KPI", props)
@@ -122,8 +129,8 @@ const RenderKpi: React.FC<IKpiProps> = props => {
  * @public
  */
 export interface IKpiProps extends IWithLoadingEvents<IRawExecutorProps> {
-    backend: IAnalyticalBackend;
-    workspace: string;
+    backend?: IAnalyticalBackend;
+    workspace?: string;
     measure: IMeasure;
     filters?: IFilter[];
     separators?: ISeparators;
