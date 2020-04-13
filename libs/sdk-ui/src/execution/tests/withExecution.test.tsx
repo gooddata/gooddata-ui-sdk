@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
+import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { DataViewFacade } from "../../base/results/facade";
 import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
@@ -7,6 +7,7 @@ import * as React from "react";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { WithLoadingResult } from "../../base/react/withLoading";
 import { IWithExecution, withExecution } from "../withExecution";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 interface IDummyComponentProps {
     attributes?: IAttribute[];
@@ -14,14 +15,17 @@ interface IDummyComponentProps {
     filters?: IFilter[];
 }
 
-const renderEnhancedComponent = <R extends object>(
-    hocConfig?: Omit<IWithExecution<IDummyComponentProps, R>, "execution" | "mapResultToProps">,
+const DummyBackendEmptyData = dummyBackendEmptyData();
+
+const renderEnhancedComponent = (
+    hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution" | "mapResultToProps">,
+    backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
-    const CoreComponent: React.FC<WithLoadingResult<DataViewFacade> & IDummyComponentProps> = props => {
-        const { result, error, fetch, isLoading } = props;
+    const CoreComponent: React.FC<WithLoadingResult & IDummyComponentProps> = props => {
+        const { result, error, reload, isLoading } = props;
         return (
             <div>
-                <button className="Refetch" onClick={fetch} />
+                <button className="Refetch" onClick={reload} />
                 {isLoading && <div className="Loading" />}
                 {result && <div className="Result">{result}</div>}
                 {error && <div className="Error">{error.message}</div>}
@@ -34,12 +38,11 @@ const renderEnhancedComponent = <R extends object>(
         execution: (props?: IDummyComponentProps) => {
             const { attributes, measures, filters } = props ?? {};
 
-            return dummyBackendEmptyData()
+            return backend
                 .workspace("dummy")
                 .execution()
                 .forItems([...attributes, ...measures], filters);
         },
-        mapResultToProps: result => result,
     })(CoreComponent);
 
     return shallow(<Component attributes={[]} measures={[]} filters={[]} />);
@@ -68,7 +71,7 @@ describe("withExecution", () => {
 
     it("should inject fetch handler", () => {
         const wrapper = renderEnhancedComponent();
-        expect(wrapper.prop("fetch")).toEqual(expect.any(Function));
+        expect(wrapper.prop("reload")).toEqual(expect.any(Function));
     });
 
     it("should start loading again after invoking injected fetch function", async done => {
@@ -104,37 +107,24 @@ describe("withExecution", () => {
         done();
     });
 
-    // TODO: implement rejection in dummyBackend to test onError handler
+    it("should invoke onError", async done => {
+        const onError = jest.fn();
 
-    it("should inject correct props from mapResultToProps", () => {
-        const errorProp = "laError";
-        const fetchProp = "laFetch";
-        const isLoadingProp = "laLoading";
-        const resultProp = "laResult";
-        const randomProp = "laRandom";
-
-        const Component = withExecution({
-            execution: dummyBackendEmptyData()
-                .workspace("dummy")
-                .execution()
-                .forItems([]),
-            mapResultToProps: ({ error, fetch, isLoading, result }) => {
-                return {
-                    [errorProp]: error,
-                    [fetchProp]: fetch,
-                    [isLoadingProp]: isLoading,
-                    [resultProp]: result,
-                    [randomProp]: true,
-                };
+        /*
+         * this test uses dummy backend in the default config which raises NO_DATA errors.
+         */
+        renderEnhancedComponent(
+            {
+                events: {
+                    onError,
+                },
             },
-        })(() => <div />);
+            dummyBackend(),
+        );
 
-        const wrapper = shallow(<Component />);
-        const props = wrapper.props();
-        expect(props).toHaveProperty(errorProp);
-        expect(props).toHaveProperty(fetchProp);
-        expect(props).toHaveProperty(isLoadingProp);
-        expect(props).toHaveProperty(resultProp);
-        expect(props).toHaveProperty(randomProp);
+        await createDummyPromise({ delay: 150 });
+
+        expect(onError).toBeCalledTimes(1);
+        done();
     });
 });

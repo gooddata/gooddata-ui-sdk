@@ -3,18 +3,23 @@ import * as React from "react";
 import { withLoading, IWithLoading, WithLoadingResult } from "../withLoading";
 import { shallow } from "enzyme";
 import { IDummyPromise, createDummyPromise } from "./toolkit";
+import { DataViewFacade } from "../..";
+import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
+import { emptyDef } from "@gooddata/sdk-model";
 
-const renderEnhancedComponent = <T, P, E, R extends object>(
-    promiseConfig: IDummyPromise<P, E>,
-    hocConfig?: Omit<IWithLoading<T, P, R>, "promiseFactory" | "mapResultToProps">,
+const EmptyDataViewFacade = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
+
+const renderEnhancedComponent = <T, E>(
+    promiseConfig: IDummyPromise<DataViewFacade, E>,
+    hocConfig?: Omit<IWithLoading<T>, "promiseFactory" | "mapResultToProps">,
 ) => {
     const promiseFactory = (_props?: T) => createDummyPromise(promiseConfig);
 
-    const CoreComponent: React.FC<WithLoadingResult<P>> = props => {
-        const { result, error, fetch, isLoading } = props;
+    const CoreComponent: React.FC<WithLoadingResult> = props => {
+        const { result, error, reload, isLoading } = props;
         return (
             <div>
-                <button className="Refetch" onClick={fetch} />
+                <button className="Refetch" onClick={reload} />
                 {isLoading && <div className="Loading" />}
                 {result && <div className="Result">{result}</div>}
                 {error && <div className="Error">{error.message}</div>}
@@ -25,14 +30,13 @@ const renderEnhancedComponent = <T, P, E, R extends object>(
     const Component: any = withLoading({
         ...hocConfig,
         promiseFactory,
-        mapResultToProps: result => result,
     })(CoreComponent as any);
 
     return shallow(<Component />);
 };
 
 describe("withLoading", () => {
-    const RESULT = "RESULT";
+    const RESULT = EmptyDataViewFacade;
     const ERROR = new Error("ERROR");
 
     it("should start loading immediately and inject isLoading prop", () => {
@@ -63,7 +67,7 @@ describe("withLoading", () => {
 
     it("should inject fetch handler", () => {
         const wrapper = renderEnhancedComponent({ delay: 100 });
-        expect(wrapper.prop("fetch")).toEqual(expect.any(Function));
+        expect(wrapper.prop("reload")).toEqual(expect.any(Function));
     });
 
     it("should start loading again after invoking injected fetch function", async done => {
@@ -124,35 +128,5 @@ describe("withLoading", () => {
         expect(onLoadingChanged).toBeCalledTimes(2);
         expect(onError).toBeCalledTimes(1);
         done();
-    });
-
-    it("should inject correct props from mapResultToProps", () => {
-        const promiseFactory = () => createDummyPromise({ result: {}, delay: 100 });
-        const errorProp = "laError";
-        const fetchProp = "laFetch";
-        const isLoadingProp = "laLoading";
-        const resultProp = "laResult";
-        const randomProp = "laRandom";
-
-        const Component = withLoading({
-            promiseFactory,
-            mapResultToProps: ({ error, fetch, isLoading, result }) => {
-                return {
-                    [errorProp]: error,
-                    [fetchProp]: fetch,
-                    [isLoadingProp]: isLoading,
-                    [resultProp]: result,
-                    [randomProp]: true,
-                };
-            },
-        })(() => <div />);
-
-        const wrapper = shallow(<Component />);
-        const props = wrapper.props();
-        expect(props).toHaveProperty(errorProp);
-        expect(props).toHaveProperty(fetchProp);
-        expect(props).toHaveProperty(isLoadingProp);
-        expect(props).toHaveProperty(resultProp);
-        expect(props).toHaveProperty(randomProp);
     });
 });
