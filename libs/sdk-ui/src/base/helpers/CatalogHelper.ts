@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import get = require("lodash/get");
 
 /**
@@ -55,7 +55,7 @@ export interface ICatalog {
 function getDisplayFormFromAttr(
     attrs: IAttrs,
     attributeName: string,
-    displayFormName: string,
+    displayFormName: string | undefined,
     property: string,
 ): string {
     if (!displayFormName) {
@@ -80,7 +80,7 @@ export class CatalogHelper {
     public dateDataSets: { [key: string]: IDataSet };
 
     constructor(catalog: ICatalog) {
-        this.measures = catalog.measures;
+        this.measures = catalog.measures ?? {};
         this.visualizations = catalog.visualizations;
         this.attributes = catalog.attributes;
         this.dateDataSets = catalog.dateDataSets;

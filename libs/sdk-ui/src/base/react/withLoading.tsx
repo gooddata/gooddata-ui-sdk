@@ -16,7 +16,7 @@ export type WithLoadingResult<T> = {
     isLoading: boolean;
     error: Error | undefined;
     result: T | undefined;
-    fetch: () => Promise<T>;
+    fetch: () => Promise<T | undefined>;
 };
 
 /**
@@ -133,23 +133,24 @@ export function withLoading<T, P, R extends object>({
                 }));
             }
 
-            private async fetch() {
+            private async fetch(): Promise<P | undefined> {
                 if (this.cancelablePromise) {
                     this.cancelablePromise.cancel();
                 }
+
                 this.startLoading();
+
                 const promise = promiseFactory(this.props);
                 this.cancelablePromise = makeCancelable(promise);
-                let result;
+
                 try {
-                    result = await this.cancelablePromise.promise;
+                    const result = await this.cancelablePromise.promise;
+                    this.setResult(result);
+
+                    return result;
                 } catch (err) {
                     this.setError(err);
-                    return;
                 }
-
-                this.setResult(result);
-                return result;
             }
 
             public componentDidMount() {
@@ -174,7 +175,7 @@ export function withLoading<T, P, R extends object>({
 
             public render() {
                 const { result, isLoading, error } = this.state;
-                const injectedProps = mapResultToProps(
+                const injectedProps = mapResultToProps?.(
                     {
                         result,
                         isLoading,

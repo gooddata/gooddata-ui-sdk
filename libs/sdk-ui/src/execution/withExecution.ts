@@ -18,16 +18,12 @@ export interface IWithExecution<T, R extends object> {
  * TODO: SDK8: add docs
  * @public
  */
-export function withExecution<T, R extends object>({
-    execution,
-    mapResultToProps,
-    events,
-    loadOnMount,
-    shouldRefetch,
-}: IWithExecution<T, R>) {
-    return (WrappedComponent: React.ComponentType<T & R>) =>
-        withLoading({
-            promiseFactory: async (props: T) => {
+export function withExecution<T, R extends object>(params: IWithExecution<T, R>) {
+    const { execution, mapResultToProps, events, loadOnMount, shouldRefetch } = params;
+
+    return (WrappedComponent: React.ComponentType<T & R>) => {
+        const withLoadingParams = {
+            promiseFactory: async (props?: T) => {
                 let _execution;
 
                 if (typeof execution === "function") {
@@ -46,5 +42,8 @@ export function withExecution<T, R extends object>({
             loadOnMount,
             events,
             shouldRefetch,
-        })(WrappedComponent);
+        };
+
+        return withLoading(withLoadingParams)(WrappedComponent);
+    };
 }

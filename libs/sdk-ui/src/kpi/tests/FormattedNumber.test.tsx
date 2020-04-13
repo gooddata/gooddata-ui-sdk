@@ -23,6 +23,6 @@ describe("FormattedNumber", () => {
     it("should be colored when formatting contains colors", () => {
         const wrapper = shallow(<FormattedNumber value="10" format="[color=99AE00]" />);
         expect(wrapper.find("span").text()).toBe("10");
-        expect(wrapper.find("span").prop("style").color).toBe("#99AE00");
+        expect(wrapper.find("span").prop("style")!.color).toBe("#99AE00");
     });
 });

@@ -19,14 +19,20 @@ import {
 } from "@gooddata/sdk-model";
 import { DataViewFacade } from "../results/facade";
 
+/**
+ * This predicate is returned when predicate factory encounters invalid input. Having it to keep backward
+ * compatibility with the previous more lenient behavior.
+ */
+const alwaysFalsePredicate = () => false;
+
 function arithmeticMeasureLocalIdentifierDeepMatch(
     dv: DataViewFacade,
     operandLocalIdentifier: string,
     predicate: IHeaderPredicate,
     context: IHeaderPredicateContext,
 ): boolean {
-    const operand: IMeasure = dv.def().measure(operandLocalIdentifier);
-    const operandDescriptor: IMeasureDescriptor = dv.meta().measureDescriptor(operandLocalIdentifier);
+    const operand: IMeasure = dv.def().measure(operandLocalIdentifier)!;
+    const operandDescriptor: IMeasureDescriptor = dv.meta().measureDescriptor(operandLocalIdentifier)!;
 
     if (isArithmeticMeasure(operand)) {
         const operands = measureArithmeticOperands(operand);
@@ -39,20 +45,29 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
     return predicate(operandDescriptor, context);
 }
 
-function getMasterMeasureOperandIdentifiers(measure: IMeasure): string[] {
+function getMasterMeasureOperandIdentifiers(measure: IMeasure): string[] | undefined {
     return measureArithmeticOperands(measure);
 }
 
-function getDerivedMeasureMasterMeasureOperandIdentifiers(measure: IMeasure, dv: DataViewFacade): string[] {
+function getDerivedMeasureMasterMeasureOperandIdentifiers(
+    measure: IMeasure,
+    dv: DataViewFacade,
+): string[] | null {
     const masterMeasureLocalIdentifier = measureMasterIdentifier(measure);
 
     if (!masterMeasureLocalIdentifier) {
         return null;
     }
 
-    const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier);
+    const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier)!;
 
-    return getMasterMeasureOperandIdentifiers(masterMeasure);
+    const result = getMasterMeasureOperandIdentifiers(masterMeasure);
+
+    if (result === undefined) {
+        return null;
+    }
+
+    return result;
 }
 
 function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
@@ -110,20 +125,20 @@ function matchDerivedMeasureByMasterUri(
 ): boolean {
     const { dv } = context;
     const masterMeasureLocalIdentifier = measureMasterIdentifier(measure);
-    const isDerived = !!masterMeasureLocalIdentifier;
 
-    if (isDerived) {
-        const masterMeasureHeader = dv.meta().measureDescriptor(masterMeasureLocalIdentifier);
-
-        if (matchHeaderUri(uri, masterMeasureHeader)) {
-            return true;
-        }
-
-        const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier);
-
-        return matchUri(uri, masterMeasure);
+    if (masterMeasureLocalIdentifier === undefined) {
+        return false;
     }
-    return false;
+
+    const masterMeasureHeader = dv.meta().measureDescriptor(masterMeasureLocalIdentifier)!;
+
+    if (matchHeaderUri(uri, masterMeasureHeader)) {
+        return true;
+    }
+
+    const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier)!;
+
+    return matchUri(uri, masterMeasure);
 }
 
 function matchDerivedMeasureByMasterIdentifier(
@@ -133,23 +148,27 @@ function matchDerivedMeasureByMasterIdentifier(
 ): boolean {
     const { dv } = context;
     const masterMeasureLocalIdentifier = measureMasterIdentifier(measure);
-    const isDerived = !!masterMeasureLocalIdentifier;
 
-    if (isDerived) {
-        const masterMeasureHeader = dv.meta().measureDescriptor(masterMeasureLocalIdentifier);
-
-        if (matchHeaderIdentifier(identifier, masterMeasureHeader)) {
-            return true;
-        }
-
-        const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier);
-
-        return matchMeasureIdentifier(identifier, masterMeasure);
+    if (masterMeasureLocalIdentifier === undefined) {
+        return false;
     }
-    return false;
+
+    const masterMeasureHeader = dv.meta().measureDescriptor(masterMeasureLocalIdentifier)!;
+
+    if (matchHeaderIdentifier(identifier, masterMeasureHeader)) {
+        return true;
+    }
+
+    const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier)!;
+
+    return matchMeasureIdentifier(identifier, masterMeasure);
 }
 
 export function uriMatch(uri: string): IHeaderPredicate {
+    if (!uri) {
+        return alwaysFalsePredicate;
+    }
+
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         const { dv } = context;
 
@@ -180,6 +199,10 @@ export function uriMatch(uri: string): IHeaderPredicate {
  * @public
  */
 export function identifierMatch(identifier: string): IHeaderPredicate {
+    if (!identifier) {
+        return alwaysFalsePredicate;
+    }
+
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         const { dv } = context;
         if (isResultAttributeHeader(header)) {
@@ -214,6 +237,10 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
  * @public
  */
 export function attributeItemNameMatch(name: string): IHeaderPredicate {
+    if (!name) {
+        return alwaysFalsePredicate;
+    }
+
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         return isResultAttributeHeader(header)
             ? header.attributeHeaderItem && header.attributeHeaderItem.name === name
@@ -227,6 +254,10 @@ export function attributeItemNameMatch(name: string): IHeaderPredicate {
  * @public
  */
 export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHeaderPredicate {
+    if (!localIdOrMeasure) {
+        return alwaysFalsePredicate;
+    }
+
     const localId =
         typeof localIdOrMeasure === "string" ? localIdOrMeasure : measureLocalId(localIdOrMeasure);
 
@@ -235,7 +266,8 @@ export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHead
             return false;
         }
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);
-        return headerLocalIdentifier && headerLocalIdentifier === localId;
+
+        return headerLocalIdentifier !== undefined && headerLocalIdentifier === localId;
     };
 }
 
@@ -245,6 +277,10 @@ export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHead
  * @public
  */
 export function composedFromUri(uri: string): IHeaderPredicate {
+    if (!uri) {
+        return alwaysFalsePredicate;
+    }
+
     return composedFromQualifier(uriMatch(uri));
 }
 
@@ -254,5 +290,9 @@ export function composedFromUri(uri: string): IHeaderPredicate {
  * @public
  */
 export function composedFromIdentifier(identifier: string): IHeaderPredicate {
+    if (!identifier) {
+        return alwaysFalsePredicate;
+    }
+
     return composedFromQualifier(identifierMatch(identifier));
 }

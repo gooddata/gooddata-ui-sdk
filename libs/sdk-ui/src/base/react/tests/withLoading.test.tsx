@@ -8,7 +8,7 @@ const renderEnhancedComponent = <T, P, E, R extends object>(
     promiseConfig: IDummyPromise<P, E>,
     hocConfig?: Omit<IWithLoading<T, P, R>, "promiseFactory" | "mapResultToProps">,
 ) => {
-    const promiseFactory = ({}) => createDummyPromise(promiseConfig);
+    const promiseFactory = (_props?: T) => createDummyPromise(promiseConfig);
 
     const CoreComponent: React.FC<WithLoadingResult<P>> = props => {
         const { result, error, fetch, isLoading } = props;
@@ -22,11 +22,11 @@ const renderEnhancedComponent = <T, P, E, R extends object>(
         );
     };
 
-    const Component = withLoading({
+    const Component: any = withLoading({
         ...hocConfig,
         promiseFactory,
         mapResultToProps: result => result,
-    })(CoreComponent);
+    })(CoreComponent as any);
 
     return shallow(<Component />);
 };
@@ -127,7 +127,7 @@ describe("withLoading", () => {
     });
 
     it("should inject correct props from mapResultToProps", () => {
-        const promiseFactory = ({}) => createDummyPromise({ delay: 100 });
+        const promiseFactory = () => createDummyPromise({ result: {}, delay: 100 });
         const errorProp = "laError";
         const fetchProp = "laFetch";
         const isLoadingProp = "laLoading";

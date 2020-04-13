@@ -91,7 +91,7 @@ class TwoDimIterator implements Iterator<DataPoint> {
         this.offset = 0;
 
         if (this.type === "series") {
-            this.offsetEnd = this.digest.slices?.count;
+            this.offsetEnd = this.digest.slices!.count;
         } else {
             this.offsetEnd = this.digest.series!.count;
         }
@@ -250,13 +250,11 @@ export class DataAccessImpl {
     private readonly dataView: IDataView;
     private readonly config: DataAccessConfig;
     private readonly digest: DataAccessDigest;
-
-    private seriesDescriptors: LazyInitArray<DataSeriesDescriptor>;
-    private slicesDescriptors: LazyInitArray<DataSliceDescriptor>;
-    private series: LazyInitArray<IDataSeries>;
-    private slices: LazyInitArray<IDataSlice>;
-
-    private accessors: StateAccessors[];
+    private readonly seriesDescriptors: LazyInitArray<DataSeriesDescriptor>;
+    private readonly slicesDescriptors: LazyInitArray<DataSliceDescriptor>;
+    private readonly series: LazyInitArray<IDataSeries>;
+    private readonly slices: LazyInitArray<IDataSlice>;
+    private readonly accessors: StateAccessors[];
 
     constructor(dataView: IDataView, config: DataAccessConfig) {
         this.dataView = dataView;
@@ -264,22 +262,6 @@ export class DataAccessImpl {
 
         this.digest = createDataAccessDigest(this.dataView);
 
-        this.initializeLazyArrays();
-    }
-
-    public getDataAccessPointers(): DataAccessDigest {
-        return this.digest;
-    }
-
-    public getDataSeriesIterator(): Iterator<IDataSeries> {
-        return this.series[Symbol.iterator]();
-    }
-
-    public getDataSlicesIterator(): Iterator<IDataSlice> {
-        return this.slices[Symbol.iterator]();
-    }
-
-    private initializeLazyArrays() {
         const { series, slices } = this.digest;
 
         const seriesCount = series?.count ?? 0;
@@ -318,6 +300,18 @@ export class DataAccessImpl {
                 sliceDescriptors: this.slicesDescriptors.get,
             },
         ];
+    }
+
+    public getDataAccessPointers(): DataAccessDigest {
+        return this.digest;
+    }
+
+    public getDataSeriesIterator(): Iterator<IDataSeries> {
+        return this.series[Symbol.iterator]();
+    }
+
+    public getDataSlicesIterator(): Iterator<IDataSlice> {
+        return this.slices[Symbol.iterator]();
     }
 
     private getRawData = (fromDimIdx: number, idx: number): DataValue[] => {
@@ -374,6 +368,11 @@ export class DataAccessImpl {
 
     private createDataSeriesDescriptor = (seriesIdx: number): DataSeriesDescriptor => {
         const { series: seriesDigest } = this.digest;
+
+        if (!seriesDigest) {
+            throw new InvariantError("trying to create data series descriptor when there are no data series");
+        }
+
         const {
             fromMeasures,
             fromMeasuresDef,
@@ -415,6 +414,11 @@ export class DataAccessImpl {
 
     private createDataSliceDescriptor = (sliceIdx: number): DataSliceDescriptor => {
         const { slices: slicesDigest } = this.digest;
+
+        if (!slicesDigest) {
+            throw new InvariantError("trying to create data slice descriptor when there are no data slices");
+        }
+
         const { descriptors, headerItems, descriptorsDef } = slicesDigest;
         const headers: Array<IResultAttributeHeader | IResultTotalHeader> = [];
         const { headerTranslator } = this.config;

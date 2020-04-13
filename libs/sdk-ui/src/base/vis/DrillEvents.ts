@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     IAttributeDescriptor,
     IDataView,
@@ -32,11 +32,11 @@ export type IDrillableItem =
     | IDrillableItemIdentifier
     | (IDrillableItemUri & IDrillableItemIdentifier);
 
-export function isDrillableItemUri(item: IDrillableItem): item is IDrillableItemUri {
+export function isDrillableItemUri(item: any): item is IDrillableItemUri {
     return (item as IDrillableItemUri).uri !== undefined;
 }
 
-export function isDrillableItemIdentifier(item: IDrillableItem): item is IDrillableItemIdentifier {
+export function isDrillableItemIdentifier(item: any): item is IDrillableItemIdentifier {
     return (item as IDrillableItemIdentifier).identifier !== undefined;
 }
 

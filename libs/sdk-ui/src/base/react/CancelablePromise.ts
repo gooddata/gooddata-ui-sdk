@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 /**
  * @internal
@@ -34,7 +34,7 @@ export class CancelError extends Error {
  * @internal
  */
 export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
-    let cancelReason: string;
+    let cancelReason: string | undefined;
     let hasCanceled = false;
 
     const wrappedPromise = new Promise<T>((resolve, reject) => {

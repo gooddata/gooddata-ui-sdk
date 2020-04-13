@@ -27,7 +27,7 @@ export class LazyInitArray<T> implements Iterable<T> {
             this.data[idx] = this.initializer(idx);
         }
 
-        return this.data[idx];
+        return this.data[idx]!;
     };
 
     public [Symbol.iterator] = (): Iterator<T> => {

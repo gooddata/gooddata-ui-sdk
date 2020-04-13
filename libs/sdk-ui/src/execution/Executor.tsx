@@ -3,6 +3,7 @@ import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
 import { WithLoadingResult, DataViewFacade } from "../base";
+import noop = require("lodash/noop");
 
 /**
  * TODO: SDK8: add docs
@@ -10,7 +11,7 @@ import { WithLoadingResult, DataViewFacade } from "../base";
  * @public
  */
 export interface IExecutorProps {
-    children: (executionResult: WithLoadingResult<DataViewFacade>) => React.ReactElement<any> | null;
+    children: (executionResult: WithLoadingResult<DataViewFacade>) => React.ReactElement | null;
     execution: IPreparedExecution;
     onError?: (error?: Error, props?: IExecutorProps) => void;
     onLoadingStart?: (props?: IExecutorProps) => void;
@@ -21,7 +22,9 @@ export interface IExecutorProps {
 
 type Props = IExecutorProps & WithLoadingResult<DataViewFacade>;
 
-const CoreExecutor: React.StatelessComponent<Props> = ({ children, error, isLoading, fetch, result }) => {
+const CoreExecutor: React.StatelessComponent<Props> = (props: Props) => {
+    const { children, error, isLoading, fetch, result } = props;
+
     return children({
         error,
         isLoading,
@@ -34,11 +37,12 @@ const CoreExecutor: React.StatelessComponent<Props> = ({ children, error, isLoad
  * TODO: SDK8: add docs
  * @public
  */
-export const Executor = withExecution({
-    execution: (props: IExecutorProps) => props.execution,
+export const Executor = withExecution<IExecutorProps, WithLoadingResult<DataViewFacade>>({
+    execution: (props?: IExecutorProps) => props!.execution,
     mapResultToProps: r => r,
-    events: props => {
-        const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart } = props;
+    events: (props?: IExecutorProps) => {
+        const { onError = noop, onLoadingChanged = noop, onLoadingFinish = noop, onLoadingStart = noop } =
+            props ?? {};
         return {
             onError,
             onLoadingChanged,
@@ -46,7 +50,7 @@ export const Executor = withExecution({
             onLoadingStart,
         };
     },
-    shouldRefetch: (prevProps, nextProps) => {
+    shouldRefetch: (prevProps?: IExecutorProps, nextProps?: IExecutorProps) => {
         const relevantProps: Array<keyof IExecutorProps> = [
             "onError",
             "onLoadingChanged",
@@ -54,7 +58,11 @@ export const Executor = withExecution({
             "onLoadingStart",
             "execution",
         ];
-        return relevantProps.some(propName => prevProps[propName] !== nextProps[propName]);
+        return relevantProps.some(propName => prevProps![propName] !== nextProps![propName]);
     },
-    loadOnMount: ({ loadOnMount = true }) => loadOnMount,
+    loadOnMount: (props?: IExecutorProps) => {
+        const { loadOnMount = true } = props ?? {};
+
+        return loadOnMount;
+    },
 })(CoreExecutor);

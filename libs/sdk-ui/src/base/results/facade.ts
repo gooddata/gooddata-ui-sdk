@@ -50,7 +50,7 @@ export class DataViewFacade {
             DataViewFacade.Facades.set(dataView, new DataViewFacade(dataView));
         }
 
-        return DataViewFacade.Facades.get(dataView);
+        return DataViewFacade.Facades.get(dataView)!;
     }
 
     /**

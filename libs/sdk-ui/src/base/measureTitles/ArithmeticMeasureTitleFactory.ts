@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { getTranslation } from "../localization/IntlStore";
 import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle";
 import { ILocale } from "../localization/Locale";
@@ -33,7 +33,7 @@ export class ArithmeticMeasureTitleFactory {
     public getTitle(
         arithmeticMeasureProps: IArithmeticMeasureTitleProps,
         measureTitleProps: IMeasureTitleProps[],
-    ): string {
+    ): string | null {
         const { operator, masterMeasureLocalIdentifiers } = arithmeticMeasureProps;
         const localizationKey = this.getTitleLocalizationKey(operator);
         const masterMeasureTitles = this.getMasterMeasureTitles(
@@ -84,7 +84,10 @@ export class ArithmeticMeasureTitleFactory {
         };
     }
 
-    private findMeasureTitle(localIdentifier: string, measureTitles: IMeasureTitleProps[]): string {
+    private findMeasureTitle(
+        localIdentifier: string,
+        measureTitles: IMeasureTitleProps[],
+    ): string | undefined {
         const measureCurrentNames = measureTitles
             .filter(measureTitle => measureTitle.localIdentifier === localIdentifier)
             .map(measureTitle => measureTitle.alias || measureTitle.title);

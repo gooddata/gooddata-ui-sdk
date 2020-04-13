@@ -116,8 +116,8 @@ const RenderKpi: React.FC<IKpiProps> = props => {
  * @public
  */
 export interface IKpiProps {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
+    backend: IAnalyticalBackend;
+    workspace: string;
     measure: IMeasure;
     filters?: IFilter[];
     separators?: ISeparators;

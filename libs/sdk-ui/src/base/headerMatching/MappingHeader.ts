@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     IAttributeDescriptor,
     IMeasureDescriptor,
@@ -36,8 +36,7 @@ export function hasMappingHeaderLocalIdentifier(header: IMappingHeader): boolean
 export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.localIdentifier;
-    }
-    if (isMeasureDescriptor(header)) {
+    } else if (isMeasureDescriptor(header)) {
         return header.measureHeaderItem.localIdentifier;
     }
 
@@ -47,14 +46,12 @@ export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string 
 /**
  * @internal
  */
-export function getMappingHeaderName(header: IMappingHeader): string {
+export function getMappingHeaderName(header: IMappingHeader): string | undefined {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.formOf.name;
-    }
-    if (isResultAttributeHeader(header)) {
+    } else if (isResultAttributeHeader(header)) {
         return header.attributeHeaderItem.name;
-    }
-    if (isMeasureDescriptor(header)) {
+    } else if (isMeasureDescriptor(header)) {
         return header.measureHeaderItem.name;
     }
 }
@@ -62,11 +59,10 @@ export function getMappingHeaderName(header: IMappingHeader): string {
 /**
  * @internal
  */
-export function getMappingHeaderIdentifier(header: IMappingHeader): string {
+export function getMappingHeaderIdentifier(header: IMappingHeader): string | undefined {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.identifier;
-    }
-    if (isMeasureDescriptor(header)) {
+    } else if (isMeasureDescriptor(header)) {
         return header.measureHeaderItem.identifier;
     }
     throw new Error(`Mapping header of type "${Object.keys(header)}" has no identifier`);
@@ -75,14 +71,12 @@ export function getMappingHeaderIdentifier(header: IMappingHeader): string {
 /**
  * @internal
  */
-export function getMappingHeaderUri(header: IMappingHeader): string {
+export function getMappingHeaderUri(header: IMappingHeader): string | undefined {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.uri;
-    }
-    if (isResultAttributeHeader(header)) {
+    } else if (isResultAttributeHeader(header)) {
         return header.attributeHeaderItem.uri;
-    }
-    if (isMeasureDescriptor(header)) {
+    } else if (isMeasureDescriptor(header)) {
         return header.measureHeaderItem.uri;
     }
 }

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { fireDrillEvent } from "../drilling";
 import { IDrillEvent } from "../DrillEvents";
 
@@ -9,11 +9,12 @@ describe("fireDrillEvent", () => {
             drillContext: {},
         };
         const eventHandler = jest.fn();
+        const drillFunction = jest.fn();
         const target = {
             dispatchEvent: eventHandler,
         };
 
-        fireDrillEvent(undefined, eventData as IDrillEvent, (target as any) as EventTarget);
+        fireDrillEvent(drillFunction, eventData as IDrillEvent, (target as any) as EventTarget);
 
         expect(eventHandler).toHaveBeenCalledTimes(1);
         expect(eventHandler).toHaveBeenCalledWith(

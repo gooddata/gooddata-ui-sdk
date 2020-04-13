@@ -144,7 +144,7 @@ describe("DataAccessMethods", () => {
                 expect(dataPoints.map(dp => dp.rawValue)).toEqual(rawData);
                 expect({
                     series: `${s.scopeTitles().join(" > ")} > ${s.measureTitle()}`,
-                    slices: dataPoints.map(slice => slice.sliceDesc.sliceTitles()).join("|"),
+                    slices: dataPoints.map(slice => slice.sliceDesc!.sliceTitles()).join("|"),
                     rawData,
                 }).toMatchSnapshot();
             }
@@ -182,7 +182,7 @@ describe("DataAccessMethods", () => {
                 expect(dataPoints.map(dp => dp.rawValue)).toEqual(rawData);
                 expect({
                     series: `${s.scopeTitles().join(" > ")} > ${s.measureTitle()}`,
-                    slices: dataPoints.map(slice => slice.sliceDesc.sliceTitles()).join("|"),
+                    slices: dataPoints.map(slice => slice.sliceDesc!.sliceTitles()).join("|"),
                     rawData,
                 }).toMatchSnapshot();
             }

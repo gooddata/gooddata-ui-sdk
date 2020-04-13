@@ -8,6 +8,8 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "downlevelIteration": true,
+        "strict": true,
+        "strictNullChecks": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,

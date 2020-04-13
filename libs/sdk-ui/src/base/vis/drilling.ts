@@ -15,7 +15,7 @@ import {
     IDrillEventCallback,
     IDrillEvent,
 } from "./DrillEvents";
-import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate";
+import { IHeaderPredicate } from "../headerMatching/HeaderPredicate";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 import { DataViewFacade } from "../results/facade";
 
@@ -32,12 +32,12 @@ export function isSomeHeaderPredicateMatched(
 export function convertDrillableItemsToPredicates(
     drillableItems: Array<IDrillableItem | IHeaderPredicate>,
 ): IHeaderPredicate[] {
-    return drillableItems.map((drillableItem: IDrillableItem) => {
+    return drillableItems.map((drillableItem: IDrillableItem | IHeaderPredicate) => {
         if (isDrillableItemUri(drillableItem)) {
             return uriMatch(drillableItem.uri);
         } else if (isDrillableItemIdentifier(drillableItem)) {
             return identifierMatch(drillableItem.identifier);
-        } else if (isHeaderPredicate(drillableItem)) {
+        } else {
             return drillableItem;
         }
     });

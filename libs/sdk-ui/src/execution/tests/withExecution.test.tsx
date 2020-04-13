@@ -31,11 +31,14 @@ const renderEnhancedComponent = <R extends object>(
 
     const Component = withExecution({
         ...hocConfig,
-        execution: ({ attributes, measures, filters }) =>
-            dummyBackendEmptyData()
+        execution: (props?: IDummyComponentProps) => {
+            const { attributes, measures, filters } = props ?? {};
+
+            return dummyBackendEmptyData()
                 .workspace("dummy")
                 .execution()
-                .forItems([...attributes, ...measures], filters),
+                .forItems([...attributes, ...measures], filters);
+        },
         mapResultToProps: result => result,
     })(CoreComponent);
 
