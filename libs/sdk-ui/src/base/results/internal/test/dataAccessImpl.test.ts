@@ -4,6 +4,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, dummyDataView, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDataAccessMethods } from "../dataAccessMethods";
 import { emptyDef } from "@gooddata/sdk-model";
+import { DataAccessConfig, DefaultDataAccessConfig } from "../../dataAccessConfig";
 
 describe("DataAccessMethods", () => {
     it("should handle empty data view", () => {
@@ -40,6 +41,15 @@ describe("DataAccessMethods", () => {
             const slices = Array.from(dataAccess.slices());
 
             expect(slices).toEqual([]);
+        });
+
+        it("should correctly format data values", () => {
+            const dataAccess = newDataAccessMethods(DataViewWithEmptyFirstDim);
+            const firstSeries = Array.from(dataAccess.series())[0];
+            const firstSeriesDataPoints = Array.from(firstSeries);
+
+            expect(firstSeriesDataPoints[0].rawValue).toEqual("116625456.54");
+            expect(firstSeriesDataPoints[0].formattedValue()).toEqual("$116,625,456.54");
         });
     });
 
@@ -186,6 +196,23 @@ describe("DataAccessMethods", () => {
                     rawData,
                 }).toMatchSnapshot();
             }
+        });
+
+        it("should translate headers", () => {
+            const customConfig: DataAccessConfig = {
+                ...DefaultDataAccessConfig,
+                headerTranslator: (value: string) => `__${value}`,
+            };
+
+            const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices, customConfig);
+            const series = Array.from(dataAccess.series());
+            const slices = Array.from(dataAccess.slices());
+
+            const firstSeries = series[0];
+            const firstSlice = slices[0];
+
+            expect(firstSeries.scopeTitles()[0]).toMatch(/__.*/);
+            expect(firstSlice.sliceTitles()[0]).toMatch(/__.*/);
         });
     });
 });
