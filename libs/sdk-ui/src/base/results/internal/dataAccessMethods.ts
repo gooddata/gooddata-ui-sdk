@@ -9,7 +9,7 @@ import {
 } from "../dataAccess";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { DataAccessImpl } from "./dataAccessImpl";
-import { createNumberJsFormatter, DataAccessConfig } from "../dataAccessConfig";
+import { DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig";
 
 function createDataSeriesCollection(dataAccess: DataAccessImpl): IDataSeriesCollection {
     const {
@@ -73,10 +73,6 @@ class DataAccessMethods implements IDataAccessMethods {
         return undefined;
     }
 }
-
-const DefaultDataAccessConfig: DataAccessConfig = {
-    valueFormatter: createNumberJsFormatter(),
-};
 
 /**
  * @internal

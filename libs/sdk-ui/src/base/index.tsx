@@ -150,3 +150,10 @@ export {
     DataSliceHeaders,
     DataPointCoordinates,
 } from "./results/dataAccess";
+export {
+    DataAccessConfig,
+    ValueFormatter,
+    HeaderTranslator,
+    createNumberJsFormatter,
+    DefaultDataAccessConfig,
+} from "./results/dataAccessConfig";

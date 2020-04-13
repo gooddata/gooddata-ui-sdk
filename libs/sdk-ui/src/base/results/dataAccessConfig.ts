@@ -29,6 +29,13 @@ export function createNumberJsFormatter(separators?: ISeparators): ValueFormatte
 }
 
 /**
+ * Default configuration for the data access methods. Uses default numberjs formatter and no result formatting.
+ */
+export const DefaultDataAccessConfig: DataAccessConfig = {
+    valueFormatter: createNumberJsFormatter(),
+};
+
+/**
  * @alpha
  */
 export type DataAccessConfig = {
