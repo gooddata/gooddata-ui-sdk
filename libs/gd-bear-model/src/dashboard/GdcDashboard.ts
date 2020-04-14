@@ -7,6 +7,9 @@ import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFi
  * @public
  */
 export namespace GdcDashboard {
+    export interface IWrappedAnalyticalDashboard {
+        analyticalDashboard: IAnalyticalDashboard;
+    }
     export interface IAnalyticalDashboard {
         content: IAnalyticalDashboardContent;
         meta: GdcMetadata.IObjectMeta;

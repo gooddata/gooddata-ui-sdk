@@ -5,7 +5,7 @@ import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
-import { GdcVisualizationObject, GdcMetadata } from "@gooddata/gd-bear-model";
+import { GdcVisualizationObject, GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
 import {
@@ -60,7 +60,7 @@ export class MetadataModule {
      * @param attributeUri string
      */
     public async getAttributeDefaultDisplayForm(attributeUri: string) {
-        const object = await this.xhr.getParsed<GdcMetadata.WrappedObject>(attributeUri);
+        const object = await this.xhr.getParsed<GdcMetadataObject.WrappedObject>(attributeUri);
         if (!GdcMetadata.isWrappedAttribute(object)) {
             throw new Error("Provided uri is not attribute uri!");
         }
@@ -76,10 +76,9 @@ export class MetadataModule {
      * @param projectId string
      * @param identifier string
      */
-    public async getObjectByIdentifier<T extends GdcMetadata.WrappedObject = GdcMetadata.WrappedObject>(
-        projectId: string,
-        identifier: string,
-    ) {
+    public async getObjectByIdentifier<
+        T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject
+    >(projectId: string, identifier: string) {
         const uri = await this.getObjectUri(projectId, identifier);
         return this.xhr.getParsed<T>(uri);
     }
@@ -89,10 +88,9 @@ export class MetadataModule {
      * @param projectId string
      * @param identifiers string[]
      */
-    public async getObjectsByIdentifiers<T extends GdcMetadata.WrappedObject = GdcMetadata.WrappedObject>(
-        projectId: string,
-        identifiers: string[],
-    ) {
+    public async getObjectsByIdentifiers<
+        T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject
+    >(projectId: string, identifiers: string[]) {
         const uriIdentifierPairs = await this.getUrisFromIdentifiers(projectId, identifiers);
         const uris = uriIdentifierPairs.map(pair => pair.uri);
         const objects: T[] = await this.getObjects(projectId, uris);
@@ -108,7 +106,7 @@ export class MetadataModule {
      * @param {Array} objectUris array of uris for objects to be loaded
      * @return {Array} array of loaded elements
      */
-    public getObjects<T extends GdcMetadata.WrappedObject = GdcMetadata.WrappedObject>(
+    public getObjects<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
         projectId: string,
         objectUris: string[],
     ): Promise<T[]> {
@@ -225,7 +223,11 @@ export class MetadataModule {
      * @return {jQuery promise} promise promise once resolved returns an array of
      *         entries returned by using2 resource
      */
-    public getObjectUsing(projectId: string, uri: string, options: IGetObjectUsingOptions = {}) {
+    public getObjectUsing(
+        projectId: string,
+        uri: string,
+        options: IGetObjectUsingOptions = {},
+    ): Promise<GdcMetadata.IObjectLink[]> {
         const { types = [], nearest = false } = options;
         const resourceUri = `/gdc/md/${projectId}/using2`;
 
@@ -246,7 +248,7 @@ export class MetadataModule {
 
                 return r.getData();
             })
-            .then((result: any) => result.entries);
+            .then(result => result.entries);
     }
 
     /**
@@ -266,7 +268,7 @@ export class MetadataModule {
         projectId: string,
         uris: string[],
         options: IGetObjectUsingOptions = {},
-    ): Promise<any> {
+    ): Promise<GdcMetadata.IGetObjectUsingManyEntry[]> {
         const { types = [], nearest = false } = options;
         const resourceUri = `/gdc/md/${projectId}/using2`;
 

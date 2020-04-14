@@ -84,7 +84,8 @@ export const convertInsightDefinition = (
         meta: {
             title: insightTitle(insight),
         },
-    };
+        // tslint:disable-next-line no-object-literal-type-assertion
+    } as GdcVisualizationObject.IVisualizationObject;
 };
 
 export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisualizationObject => {

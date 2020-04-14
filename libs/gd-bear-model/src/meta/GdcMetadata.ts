@@ -1,9 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/fp/isEmpty";
-import values from "lodash/fp/values";
-import first from "lodash/first";
-import flow from "lodash/flow";
-import { Timestamp, MaqlExpression, Uri, NumberAsString } from "../aliases";
+import { Timestamp, MaqlExpression, Uri, NumberAsString, BooleanAsString } from "../aliases";
 import { GdcExecuteAFM } from "../executeAfm/GdcExecuteAFM";
 
 /**
@@ -129,8 +126,6 @@ export namespace GdcMetadata {
         };
     }
 
-    export type IObject = IAttribute | IMetric | IFact | IAttributeDisplayForm | IKpiAlert;
-
     export interface IWrappedAttribute {
         attribute: IAttribute;
     }
@@ -154,13 +149,6 @@ export namespace GdcMetadata {
     export interface IWrappedAttributeElement {
         element: IAttributeElement;
     }
-
-    export type WrappedObject =
-        | IWrappedAttribute
-        | IWrappedMetric
-        | IWrappedFact
-        | IWrappedAttributeDisplayForm
-        | IWrappedKpiAlert;
 
     export interface IAttributeElement {
         uri: string;
@@ -313,34 +301,61 @@ export namespace GdcMetadata {
         };
     }
 
+    export interface IObjectLink {
+        link: Uri;
+        title?: string;
+        category?: ObjectCategory;
+        summary?: string;
+        tags?: string;
+        author?: Uri;
+        created?: Timestamp;
+        contributor?: Uri;
+        updated?: Timestamp;
+        deprecated?: BooleanAsString;
+        projectTemplate?: string;
+        help?: Uri;
+        identifier?: string;
+        locked?: boolean;
+        unlisted?: boolean;
+        isProduction?: boolean;
+        sharedWithSomeone?: boolean;
+    }
+
+    export interface IGetObjectUsing {
+        entries: IObjectLink[];
+    }
+
+    export interface IGetObjectUsingManyEntry {
+        uri: Uri;
+        entries: IObjectLink[];
+    }
+
     export function isAttribute(obj: any): obj is IAttribute {
         return !isEmpty(obj) && (obj as IAttribute).meta.category === "attribute";
     }
 
-    export function isWrappedAttribute(object: WrappedObject): object is IWrappedAttribute {
-        return object.hasOwnProperty("attribute");
+    export function isWrappedAttribute(obj: any): obj is IWrappedAttribute {
+        return !isEmpty(obj) && obj.hasOwnProperty("attribute");
     }
 
-    export function isWrappedAttributeDisplayForm(
-        object: WrappedObject,
-    ): object is IWrappedAttributeDisplayForm {
-        return object.hasOwnProperty("attributeDisplayForm");
+    export function isWrappedAttributeDisplayForm(obj: any): obj is IWrappedAttributeDisplayForm {
+        return !isEmpty(obj) && obj.hasOwnProperty("attributeDisplayForm");
     }
 
     export function isAttributeDisplayForm(obj: any): obj is IAttributeDisplayForm {
         return !isEmpty(obj) && (obj as IAttributeDisplayForm).meta.category === "attributeDisplayForm";
     }
 
-    export function isWrappedMetric(object: WrappedObject): object is IWrappedMetric {
-        return object.hasOwnProperty("metric");
+    export function isWrappedMetric(obj: any): obj is IWrappedMetric {
+        return !isEmpty(obj) && obj.hasOwnProperty("metric");
     }
 
     export function isMetric(obj: any): obj is IMetric {
         return !isEmpty(obj) && (obj as IMetric).meta.category === "metric";
     }
 
-    export function isWrappedFact(object: WrappedObject): object is IWrappedFact {
-        return object.hasOwnProperty("fact");
+    export function isWrappedFact(obj: any): obj is IWrappedFact {
+        return !isEmpty(obj) && obj.hasOwnProperty("fact");
     }
 
     export function isFact(obj: any): obj is IFact {
@@ -351,13 +366,7 @@ export namespace GdcMetadata {
         return !isEmpty(obj) && (obj as IAttribute).meta.category === "kpiAlert";
     }
 
-    export function isWrappedKpiAlert(object: WrappedObject): object is IWrappedKpiAlert {
-        return object.hasOwnProperty("kpiAlert");
-    }
-
-    export function unwrapMetadataObject(object: WrappedObject): IObject {
-        const unwrappedObject: IObject = flow(values, first)(object);
-
-        return unwrappedObject;
+    export function isWrappedKpiAlert(obj: any): obj is IWrappedKpiAlert {
+        return !isEmpty(obj) && obj.hasOwnProperty("kpiAlert");
     }
 }

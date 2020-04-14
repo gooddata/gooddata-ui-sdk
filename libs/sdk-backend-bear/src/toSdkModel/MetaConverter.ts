@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcMetadata } from "@gooddata/gd-bear-model";
+import { GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
 import {
     uriRef,
     MetadataObject,
@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
-export const convertMetadataObject = (obj: GdcMetadata.IObject): MetadataObject => {
+export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataObject => {
     const ref = uriRef(obj.meta.uri);
 
     const commonModifications = <T extends IMetadataObjectBuilder>(builder: T) =>

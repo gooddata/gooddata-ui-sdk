@@ -208,20 +208,7 @@ export class CatalogueModule {
         return this.loadCatalog(projectId, request);
     }
 
-    public async loadDateDataSets(
-        projectId: string,
-        options: {
-            bucketItems?: GdcVisualizationObject.IVisualizationObjectContent;
-            excludeObjectsWithTags?: string[];
-            includeObjectsWithTags?: string[];
-            dataSetIdentifier?: string;
-            includeAvailableDateAttributes?: boolean;
-            includeUnavailableDateDataSetsCount?: boolean;
-            returnAllDateDataSets?: boolean;
-            returnAllRelatedDateDataSets?: boolean;
-            attributesMap?: {};
-        },
-    ) {
+    public async loadDateDataSets(projectId: string, options: GdcCatalog.ILoadDateDataSetsParams) {
         const mdObj = cloneDeep(options).bucketItems;
         const bucketItems = mdObj
             ? await this.loadItemDescriptions(projectId, mdObj, get(options, "attributesMap"), true)
