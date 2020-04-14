@@ -29,6 +29,7 @@ export { WorkspaceProvider, useWorkspace, withWorkspace } from "./react/Workspac
 export { usePagedResource } from "./react/usePagedResource";
 export { withContexts } from "./react/withContexts";
 export { wrapDisplayName } from "./react/wrapDisplayName";
+export { CancelError, ICancelablePromise, makeCancelable } from "./react/CancelablePromise";
 
 /*
  * Localization exports
@@ -135,6 +136,10 @@ export {
 export { Subtract } from "./typings/subtract";
 export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
 export { CatalogHelper } from "./helpers/CatalogHelper";
+
+/*
+ *
+ */
 
 export { DataViewFacade } from "./results/facade";
 export {

@@ -2,8 +2,7 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
-import { makeCancelable, ICancelablePromise } from "../base/react/CancelablePromise";
-import { DataViewFacade } from "../base";
+import { DataViewFacade, makeCancelable, ICancelablePromise } from "../base";
 
 /**
  * @public

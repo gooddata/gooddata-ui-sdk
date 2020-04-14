@@ -270,6 +270,9 @@ function expandRecordingToDataViews(recording: ExecutionRecording): NamedDataVie
     });
 }
 
+/**
+ * @internal
+ */
 export type NamedDataView = {
     name: string;
     dataView: IDataView;

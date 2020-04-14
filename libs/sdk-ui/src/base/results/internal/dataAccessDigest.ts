@@ -115,18 +115,18 @@ export type ExecutionDefinitionDigest = {
 export type DataAccessDigest = {
     /**
      * Information about series. If series property is not in digest, then data view does not contain any
-     * data series - which is valid invariant.
+     * data series - which is completely valid case..
      */
     series?: DataSeriesDigest;
 
     /**
      * Information about slices. If slices property is not in digest, then data view does not contain any
-     * data slices - which is valid invariant.
+     * data slices - which is completely valid case.
      */
     slices?: DataSlicesDigest;
 
     /**
-     * Information extracted from execution definition
+     * Information extracted from execution definition.
      */
     def: ExecutionDefinitionDigest;
 };
@@ -154,7 +154,9 @@ type ResultDescriptor = {
 
 /**
  * Given data view dimensions, this function identifies dimensions where data series and
- * data slices are laid out. The returned result always contains
+ * data slices are laid out. The returned result always contains two elements. First being
+ * the index to data series dimension, second to data slices dimension. If series / slices
+ * are not present, then the respective element contains -1.
  */
 function findSlicesAndSeriesDims(dimensions: IDimensionDescriptor[]): ResultDescriptor {
     if (dimensions.length === 0) {
@@ -197,6 +199,9 @@ function findSlicesAndSeriesDims(dimensions: IDimensionDescriptor[]): ResultDesc
         }
     }
 
+    /*
+     * The only possibility at this point is there are no data series.
+     */
     return {
         locations: [-1, 0],
     };

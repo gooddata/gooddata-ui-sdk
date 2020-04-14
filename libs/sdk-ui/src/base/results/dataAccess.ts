@@ -9,6 +9,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IMeasure, ITotal, IAttribute } from "@gooddata/sdk-model";
 
+/**
+ * @alpha
+ */
 export type DataPointCoordinates = number[];
 
 /**
@@ -17,6 +20,8 @@ export type DataPointCoordinates = number[];
  *
  * Technically, DataPoint is the raw data value stored in the data view decorated with all the metadata
  * there exists about that value.
+ *
+ * @alpha
  */
 export type DataPoint = {
     /**
@@ -31,7 +36,7 @@ export type DataPoint = {
     formattedValue(): null | string;
 
     /**
-     * Coordinates into the data view
+     * Coordinates into the data view. Coordinates are zero-based.
      */
     readonly coordinates: DataPointCoordinates;
 
@@ -56,6 +61,9 @@ export type DataPoint = {
 // Data Series - looking at results _along_ the dimension that contains measures
 //
 
+/**
+ * @alpha
+ */
 export type DataSeriesHeaders = {
     /**
      * Header of the measure whose computed values are in the data series. This header contains the
@@ -72,6 +80,9 @@ export type DataSeriesHeaders = {
     readonly attributeHeaders?: IResultAttributeHeader[];
 };
 
+/**
+ * @alpha
+ */
 export type DataSeriesDescriptorMethods = {
     /**
      * @returns - title of measure used to compute the data points
@@ -91,6 +102,8 @@ export type DataSeriesDescriptorMethods = {
 
 /**
  * Full descriptive information about the data series.
+ *
+ * @alpha
  */
 export type DataSeriesDescriptor = DataSeriesHeaders &
     DataSeriesDescriptorMethods & {
@@ -107,7 +120,7 @@ export type DataSeriesDescriptor = DataSeriesHeaders &
         readonly measureDescriptor: IMeasureDescriptor;
 
         /**
-         * Definition of the measure whose computed valuesa re in the data series.
+         * Definition of the measure whose computed values are in the data series.
          */
         readonly measureDefinition: IMeasure;
 
@@ -136,6 +149,8 @@ export type DataSeriesDescriptor = DataSeriesHeaders &
  *
  * For convenience, the data series is iterable over Data Points. You can use it either in for-of loop or
  * spread data series into an array of DataPoints.
+ *
+ * @alpha
  */
 export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataPoint> {
     /**
@@ -159,6 +174,8 @@ export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataP
  * An iterable collection of data series. The collection additionally includes basic information about the
  * origin of the data series that can be iterated - their number, measures they were calculated from and
  * optionally the scoping attributes.
+ *
+ * @alpha
  */
 export interface IDataSeriesCollection extends Iterable<IDataSeries> {
     /**
@@ -176,7 +193,7 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
     readonly fromMeasures: IMeasureDescriptor[];
 
     /**
-     * Definitions of measures which were sent to execution and resulted in the data series..
+     * Definitions of measures which were sent to execution and resulted in the data series.
      *
      * Order of appearance matches the order of appearance in the `fromMeasures` array.
      */
@@ -204,6 +221,8 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
  * Data slice name is specified using the result headers. The headers describe attribute elements (title+ID)
  * for the slice. The slice MAY be for a total calculation, in which case the last header will be for the
  * total.
+ *
+ * @alpha
  */
 export type DataSliceHeaders = {
     /**
@@ -212,11 +231,14 @@ export type DataSliceHeaders = {
     readonly headers: Array<IResultAttributeHeader | IResultTotalHeader>;
 
     /**
-     * Indicates whether this data slice contains a total value.
+     * Indicates whether this data slice is a total.
      */
-    readonly total?: boolean;
+    readonly isTotal?: boolean;
 };
 
+/**
+ * @alpha
+ */
 export type DataSliceDescriptorMethods = {
     /**
      * @returns titles of attribute elements to which this data slice belongs
@@ -227,6 +249,8 @@ export type DataSliceDescriptorMethods = {
 /**
  * Full descriptive information of a data slice includes all attribute element and total headers for the slice and
  * next to them descriptors of attribute objects whose elements figure in the headers.
+ *
+ * @alpha
  */
 export type DataSliceDescriptor = DataSliceHeaders &
     DataSliceDescriptorMethods & {
@@ -256,11 +280,13 @@ export type DataSliceDescriptor = DataSliceHeaders &
  * Data slice is a sequence of data points that are all computed for a particular attribute elements and/or totals but
  * different data series.
  *
- * In other words, data slice allows iterating over two dimension data view _acorss_ the dimension which contains
+ * In other words, data slice allows iterating over two dimension data view _across_ the dimension which contains
  * the measures.
  *
  * For convenience, the data slice is iterable over the Data Points. You can use it either in for-of loop or
  * spread data slice into an array of DataPoints.
+ *
+ * @alpha
  */
 export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoint> {
     /**
@@ -287,6 +313,8 @@ export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoi
  *
  * The slices are iterated in the order in which they appear in the underlying results => server side sorting
  * specified at the execution time is thus reflected and honored during the iteration.
+ *
+ * @alpha
  */
 export interface IDataSliceCollection extends Iterable<IDataSlice> {
     /**
@@ -303,6 +331,8 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
 /**
  * Defines methods to access data in the data view. These methods and types are recommended
  * in favor of directly accessing the underlying data, headers and descriptors.
+ *
+ * @alpha
  */
 export interface IDataAccessMethods {
     /**

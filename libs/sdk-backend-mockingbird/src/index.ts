@@ -22,6 +22,7 @@ export {
     DataViewAll,
     dataViewWindow,
     DataViewFirstPage,
+    NamedDataView,
 } from "./recordedBackend/execution";
 
 export {

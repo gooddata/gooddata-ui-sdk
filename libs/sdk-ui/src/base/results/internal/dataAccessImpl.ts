@@ -107,7 +107,7 @@ class TwoDimIterator implements Iterator<DataPoint> {
 
         /*
          * Set series and slices indexes accordingly. If iterator is over series, then base
-         * is index of series and offset is index of slice. Similar for type "slice"..
+         * is index of series and offset is index of slice. Similar for type "slice".
          */
         const seriesIdx = this.type === "series" ? this.baseIdx : this.offset;
         const sliceIdx = this.type === "slice" ? this.baseIdx : this.offset;
@@ -126,7 +126,7 @@ class TwoDimIterator implements Iterator<DataPoint> {
                 seriesDesc,
                 sliceDesc,
                 coordinates,
-                total: sliceDesc.total,
+                total: sliceDesc.isTotal,
                 formattedValue(): string | null {
                     return valueFormatter(rawValue, measureFormat);
                 },
@@ -369,6 +369,7 @@ export class DataAccessImpl {
     private createDataSeriesDescriptor = (seriesIdx: number): DataSeriesDescriptor => {
         const { series: seriesDigest } = this.digest;
 
+        invariant(seriesDigest);
         if (!seriesDigest) {
             throw new InvariantError("trying to create data series descriptor when there are no data series");
         }
@@ -440,7 +441,7 @@ export class DataAccessImpl {
             descriptors,
             definitions: descriptorsDef,
             headers,
-            total,
+            isTotal: total,
             sliceTitles: (): string[] => {
                 if (!headerTranslator) {
                     return headers.map(resultHeaderName);

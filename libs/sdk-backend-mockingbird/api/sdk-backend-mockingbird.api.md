@@ -94,6 +94,14 @@ export function legacyRecordedBackend(index: LegacyRecordingIndex, config?: Anal
 // @internal @deprecated
 export function legacyRecordedDataView(recording: LegacyExecutionRecording): IDataView;
 
+// Warning: (ae-internal-missing-underscore) The name "NamedDataView" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type NamedDataView = {
+    name: string;
+    dataView: IDataView;
+};
+
 // Warning: (ae-internal-missing-underscore) The name "recordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
@@ -112,7 +120,6 @@ export type RecordedBackendConfig = AnalyticalBackendConfig & {
 // @internal
 export function recordedDataView(recording: ScenarioRecording, dataViewId?: string): IDataView;
 
-// Warning: (ae-forgotten-export) The symbol "NamedDataView" needs to be exported by the entry point index.d.ts
 // Warning: (ae-internal-missing-underscore) The name "recordedDataViews" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal

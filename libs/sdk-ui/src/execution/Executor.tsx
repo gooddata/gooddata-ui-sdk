@@ -18,6 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
+import isEqual = require("lodash/isEqual");
 import { withContexts } from "../base";
 import { InvariantError } from "ts-invariant";
 
@@ -183,18 +184,24 @@ export const Executor = withContexts(
         },
         shouldRefetch: (prevProps: IExecutorProps, nextProps: IExecutorProps) => {
             const relevantProps: Array<keyof IExecutorProps> = [
-                "seriesBy",
-                "slicesBy",
-                "totals",
-                "filter",
-                "sortBy",
                 "onError",
                 "onLoadingChanged",
                 "onLoadingFinish",
                 "onLoadingStart",
             ];
 
-            return relevantProps.some(propName => prevProps[propName] !== nextProps[propName]);
+            const relevantPropsDeepEqual: Array<keyof IExecutorProps> = [
+                "seriesBy",
+                "slicesBy",
+                "totals",
+                "filter",
+                "sortBy",
+            ];
+
+            return (
+                relevantProps.some(propName => prevProps[propName] !== nextProps[propName]) ||
+                relevantPropsDeepEqual.some(propName => !isEqual(prevProps[propName], nextProps[propName]))
+            );
         },
         loadOnMount: (props?: IExecutorProps) => {
             const { loadOnMount = true } = props ?? {};
