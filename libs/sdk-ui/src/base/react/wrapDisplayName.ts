@@ -1,10 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 /**
  * Get displayName of React component
  * @internal
  */
-const getDisplayName = (Component: React.ComponentType) => {
+const getDisplayName = (Component: React.ComponentType<any>) => {
     return Component.displayName || Component.name || "Component";
 };
 
@@ -12,10 +12,11 @@ const getDisplayName = (Component: React.ComponentType) => {
  * Wrap displayName of React component
  * @internal
  */
-export const wrapDisplayName = (hocName: string, BaseComponent?: React.ComponentType) => <T>(
-    Component: React.ComponentType<T>,
-) => {
-    const displayName = `${hocName}(${getDisplayName(BaseComponent || Component)})`;
-    Component.displayName = displayName;
-    return Component;
+export const wrapDisplayName = (hocName: string, BaseComponent?: React.ComponentType<any>) => {
+    return <T>(Component: React.ComponentType<T>) => {
+        const componentName = getDisplayName(BaseComponent || Component);
+        Component.displayName = `${hocName}(${componentName})`;
+
+        return Component;
+    };
 };

@@ -26,6 +26,7 @@ import {
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
+import flatMap = require("lodash/flatMap");
 
 //
 //
@@ -247,4 +248,55 @@ export function recordedDataView(recording: ScenarioRecording, dataViewId: strin
     invariant(data, `data for view ${dataViewId} could not be found in the recording`);
 
     return new RecordedDataView(result, definition, data);
+}
+
+function expandRecordingToDataViews(recording: ExecutionRecording): NamedDataView[] {
+    if (!recording.scenarios) {
+        return [];
+    }
+
+    if (!recording[DataViewAll]) {
+        return [];
+    }
+
+    return recording.scenarios.map((s, scenarioIndex) => {
+        const name = `${s.vis} - ${s.scenario}`;
+        const dataView = recordedDataView({ scenarioIndex, execution: recording });
+
+        return {
+            name,
+            dataView,
+        };
+    });
+}
+
+/**
+ * @internal
+ */
+export type NamedDataView = {
+    name: string;
+    dataView: IDataView;
+};
+
+/**
+ * Given recording index with executions, this function will return named DataView instances for executions
+ * that match the following criteria:
+ *
+ * 1.  Executions specify test scenarios to which they belong - the test scenarios are used to obtain
+ *     name of the data view
+ *
+ * 2.  Executions contain `DataViewAll` recording = all data for the test scenario.
+ *
+ * @param recordings - recording index (as created by mock-handling tooling)
+ * @returns list of named data views; names are derived from test scenarios to which the data views belong
+ * @internal
+ */
+export function recordedDataViews(recordings: RecordingIndex): NamedDataView[] {
+    if (!recordings.executions) {
+        return [];
+    }
+
+    const executionRecordings = Object.values(recordings.executions);
+
+    return flatMap(executionRecordings, expandRecordingToDataViews);
 }

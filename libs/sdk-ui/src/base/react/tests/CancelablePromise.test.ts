@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { makeCancelable, CancelError } from "../CancelablePromise";
 import { createDummyPromise } from "./toolkit";
 
@@ -10,7 +10,7 @@ describe("CancelablePromise", () => {
 
         cancelableDummyPromise.cancel(CANCEL_REASON);
 
-        let error: CancelError;
+        let error: CancelError | undefined;
         try {
             await cancelableDummyPromise.promise;
         } catch (err) {
@@ -18,7 +18,7 @@ describe("CancelablePromise", () => {
         }
 
         expect(error).toBeInstanceOf(CancelError);
-        expect(error.message).toBe(CANCEL_REASON);
+        expect(error!.message).toBe(CANCEL_REASON);
     });
 
     it("should return original promise result when cancel was invoked after promise resolution", async () => {

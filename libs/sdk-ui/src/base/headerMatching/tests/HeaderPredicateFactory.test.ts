@@ -30,6 +30,7 @@ describe("uriMatch", () => {
                 expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
             });
             it("should NOT match when measure uri is null", () => {
+                // @ts-ignore ... keeping tests for invalid inputs to ensure compatibility with previous more lenient approach to input checking
                 const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch(null);
 
                 expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
@@ -204,6 +205,7 @@ describe("identifierMatch", () => {
                 expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
             });
             it("should NOT match when measure identifier is null", () => {
+                // @ts-ignore ... keeping tests for invalid inputs to ensure compatibility with previous more lenient approach to input checking
                 const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(null);
 
                 expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
@@ -356,6 +358,7 @@ describe("identifierMatch", () => {
 
     describe("attribute item headers", () => {
         it("should NOT match since attributeHeaderItem does not have identifier", () => {
+            // @ts-ignore ... keeping tests for invalid inputs to ensure compatibility with previous more lenient approach to input checking
             const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(null);
 
             expect(predicate(attributeHeaderItem, context)).toBe(false);
@@ -681,6 +684,7 @@ describe("attributeItemNameMatch", () => {
     });
 
     it("should not match predicate when empty name provided", () => {
+        // @ts-ignore ... keeping tests for invalid inputs to ensure compatibility with previous more lenient approach to input checking
         const predicate = headerPredicateFactory.attributeItemNameMatch(null);
 
         expect(predicate(attributeHeaderItem, context)).toBe(false);

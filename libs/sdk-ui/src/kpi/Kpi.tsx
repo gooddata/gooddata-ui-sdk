@@ -3,14 +3,21 @@ import * as React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IMeasure, IFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/numberjs";
-import { Executor, IExecutorProps } from "../execution";
+import { RawExecutor, IRawExecutorProps, IWithLoadingEvents } from "../execution";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import get = require("lodash/get");
 import isNil = require("lodash/isNil");
-import { withContexts, IntlWrapper, ILoadingProps, LoadingComponent, IErrorProps } from "../base";
-import { DataViewFacade } from "../base/results/facade";
+import {
+    withContexts,
+    IntlWrapper,
+    ILoadingProps,
+    LoadingComponent,
+    IErrorProps,
+    DataViewFacade,
+} from "../base";
+import { InvariantError } from "ts-invariant";
 
 //
 // Internals
@@ -18,7 +25,7 @@ import { DataViewFacade } from "../base/results/facade";
 
 const KpiLoading = () => <LoadingComponent inline={true} />;
 
-const CoreKpi: React.StatelessComponent<IKpiProps & WrappedComponentProps> = props => {
+const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = props => {
     const {
         backend,
         workspace,
@@ -34,6 +41,12 @@ const CoreKpi: React.StatelessComponent<IKpiProps & WrappedComponentProps> = pro
         intl,
     } = props;
 
+    if (!backend || !workspace) {
+        throw new InvariantError(
+            "backend and workspace must be either specified explicitly or be provided by context",
+        );
+    }
+
     const execution = backend
         .withTelemetry("KPI", props)
         .workspace(workspace)
@@ -41,7 +54,7 @@ const CoreKpi: React.StatelessComponent<IKpiProps & WrappedComponentProps> = pro
         .forItems([measure], filters);
 
     return (
-        <Executor
+        <RawExecutor
             execution={execution}
             onLoadingStart={onLoadingStart}
             onLoadingChanged={onLoadingChanged}
@@ -50,15 +63,15 @@ const CoreKpi: React.StatelessComponent<IKpiProps & WrappedComponentProps> = pro
         >
             {({ error, isLoading, result }) => {
                 if (error) {
-                    return ErrorComponent ? (
+                    return (
                         <ErrorComponent
                             code={error.message}
                             message={intl.formatMessage({ id: "visualization.ErrorMessageKpi" })}
                         />
-                    ) : null;
+                    );
                 }
                 if (isLoading || !result) {
-                    return LoadingComponent ? <LoadingComponent /> : null;
+                    return <LoadingComponent />;
                 }
 
                 const measureData = getMeasureData(result);
@@ -73,7 +86,7 @@ const CoreKpi: React.StatelessComponent<IKpiProps & WrappedComponentProps> = pro
                     />
                 );
             }}
-        </Executor>
+        </RawExecutor>
     );
 };
 
@@ -115,7 +128,7 @@ const RenderKpi: React.FC<IKpiProps> = props => {
  *
  * @public
  */
-export interface IKpiProps {
+export interface IKpiProps extends IWithLoadingEvents<IRawExecutorProps> {
     backend?: IAnalyticalBackend;
     workspace?: string;
     measure: IMeasure;
@@ -124,10 +137,6 @@ export interface IKpiProps {
     locale?: string;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
     ErrorComponent?: React.ComponentType<IErrorProps>;
-    onLoadingStart?: IExecutorProps["onLoadingStart"];
-    onLoadingChanged?: IExecutorProps["onLoadingChanged"];
-    onLoadingFinish?: IExecutorProps["onLoadingFinish"];
-    onError?: IExecutorProps["onError"];
 }
 
 /**

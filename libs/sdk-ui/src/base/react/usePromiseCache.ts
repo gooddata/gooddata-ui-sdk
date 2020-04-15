@@ -31,7 +31,9 @@ export function usePromiseCache<TParams, TResult, TError>(
     resetDeps: React.DependencyList,
     getCacheKey?: (params: TParams) => string,
 ) {
-    const promiseCacheRef = useRef<PromiseCache<TParams, TResult, TError>>();
+    const promiseCacheRef = useRef<PromiseCache<TParams, TResult, TError>>(
+        new PromiseCache(promiseFactory, getCacheKey),
+    );
     const [state, setState] = useState<IUsePromiseCacheState<TResult, TError>>(initialState);
 
     const setInitialState = () => setState(initialState);
@@ -40,8 +42,6 @@ export function usePromiseCache<TParams, TResult, TError>(
     const setLoading = (isLoading: boolean) => setState(state => ({ ...state, isLoading }));
 
     useEffect(() => {
-        promiseCacheRef.current = new PromiseCache(promiseFactory, getCacheKey);
-
         return () => {
             promiseCacheRef.current.reset();
             setInitialState();
@@ -57,7 +57,7 @@ export function usePromiseCache<TParams, TResult, TError>(
         }
 
         // Because promises have their own lifecycle independent on react lifecycle,
-        // we need to check if promise cache was not reseted before their resolution
+        // we need to check if promise cache was not reset before their resolution
         // and our results are still relevant.
         // We do this by storing current promise cache in effect closure
         // so when promises are resolved, we have still access to it

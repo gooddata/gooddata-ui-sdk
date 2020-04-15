@@ -6,7 +6,7 @@ import { wrapDisplayName } from "./wrapDisplayName";
 /**
  * @internal
  */
-const BackendContext = React.createContext<IAnalyticalBackend>(undefined);
+const BackendContext = React.createContext<IAnalyticalBackend | undefined>(undefined);
 BackendContext.displayName = "BackendContext";
 
 /**

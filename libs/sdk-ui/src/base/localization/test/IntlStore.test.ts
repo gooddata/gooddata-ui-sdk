@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { DefaultLocale, ILocale } from "../Locale";
 import { getIntl, getTranslation } from "../IntlStore";
 
@@ -16,6 +16,7 @@ describe("IntlStore", () => {
         });
 
         it("should return default locale when locale is null", () => {
+            // @ts-ignore
             const intl = getIntl(null);
             expect(intl.locale).toEqual(DefaultLocale);
         });

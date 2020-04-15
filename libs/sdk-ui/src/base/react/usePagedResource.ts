@@ -7,7 +7,7 @@ import { usePromiseCache } from "./usePromiseCache";
  * @internal
  */
 interface IUsePagedResourceState<TItem> {
-    totalItemsCount: number;
+    totalItemsCount: number | undefined;
     items: Array<TItem | undefined>;
 }
 

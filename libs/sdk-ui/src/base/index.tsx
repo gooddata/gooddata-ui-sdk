@@ -28,14 +28,8 @@ export { BackendProvider, useBackend, withBackend } from "./react/BackendContext
 export { WorkspaceProvider, useWorkspace, withWorkspace } from "./react/WorkspaceContext";
 export { usePagedResource } from "./react/usePagedResource";
 export { withContexts } from "./react/withContexts";
-export {
-    withLoading,
-    IWithLoading,
-    IWithLoadingEvents,
-    WithLoadingResult,
-    WithLoadingState,
-} from "./react/withLoading";
 export { wrapDisplayName } from "./react/wrapDisplayName";
+export { CancelError, ICancelablePromise, makeCancelable } from "./react/CancelablePromise";
 
 /*
  * Localization exports
@@ -143,4 +137,28 @@ export { Subtract } from "./typings/subtract";
 export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
 export { CatalogHelper } from "./helpers/CatalogHelper";
 
+/*
+ *
+ */
+
 export { DataViewFacade } from "./results/facade";
+export {
+    DataPoint,
+    DataSliceDescriptor,
+    IDataSlice,
+    DataSeriesDescriptor,
+    IDataSeries,
+    IDataSliceCollection,
+    IDataSeriesCollection,
+    IDataAccessMethods,
+    DataSeriesHeaders,
+    DataSliceHeaders,
+    DataPointCoordinates,
+} from "./results/dataAccess";
+export {
+    DataAccessConfig,
+    ValueFormatter,
+    HeaderTranslator,
+    createNumberJsFormatter,
+    DefaultDataAccessConfig,
+} from "./results/dataAccessConfig";

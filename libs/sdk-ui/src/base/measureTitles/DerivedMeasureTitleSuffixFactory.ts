@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { getTranslation } from "../localization/IntlStore";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 import { ILocale } from "../localization/Locale";
@@ -33,7 +33,7 @@ export class DerivedMeasureTitleSuffixFactory {
         return localizationKey === null ? "" : ` - ${this.translateKey(localizationKey)}`;
     }
 
-    private getSuffixLocalizationKey(overTimeComparisonType: OverTimeComparisonType): string {
+    private getSuffixLocalizationKey(overTimeComparisonType: OverTimeComparisonType): string | null {
         switch (overTimeComparisonType) {
             case OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR:
                 return "measure.title.suffix.same_period_year_ago";

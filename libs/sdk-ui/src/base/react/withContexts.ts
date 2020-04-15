@@ -6,7 +6,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { wrapDisplayName } from "./wrapDisplayName";
 
 /**
- * Injects backend and worksapce provided by BackendProvider & WorkspaceProvider to a component
+ * Injects backend and workspace provided by BackendProvider & WorkspaceProvider to a component
  * @internal
  */
 export function withContexts<T extends { backend?: IAnalyticalBackend; workspace?: string }>(

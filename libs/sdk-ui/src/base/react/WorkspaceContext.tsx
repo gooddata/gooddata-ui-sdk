@@ -1,15 +1,15 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { wrapDisplayName } from "./wrapDisplayName";
+
 /**
  * @internal
  */
-const WorkspaceContext = React.createContext<string>(undefined);
+const WorkspaceContext = React.createContext<string | undefined>(undefined);
 WorkspaceContext.displayName = "WorkspaceContext";
 
 /**
  * @internal
- * TODO: Probably support also IAnalyticalWorkspace
  */
 interface IWorkspaceProviderProps {
     workspace: string;
@@ -24,11 +24,12 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
 };
 
 /**
- * Hook to get analytical backend instance provided to BackendProvider
+ * Hook to get workspace instance provided to BackendProvider
  * @public
  */
 export const useWorkspace = () => {
     const workspace = React.useContext(WorkspaceContext);
+
     return workspace;
 };
 

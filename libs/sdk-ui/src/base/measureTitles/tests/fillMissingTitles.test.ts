@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     IInsight,
     insightBucket,
@@ -20,7 +20,7 @@ describe("measureTitleHelper", () => {
     describe("fillMissingTitles", () => {
         const locale = "en-US";
 
-        function getMeasureTitle(insight: IInsight, localIdentifier: string): string {
+        function getMeasureTitle(insight: IInsight, localIdentifier: string): string | undefined {
             const measures = insightMeasures(insight);
             const matchingMeasure = measures.find(idMatchMeasure(localIdentifier));
 
@@ -62,7 +62,7 @@ describe("measureTitleHelper", () => {
         it("should set title of derived based on master title even when it is located in a different bucket", () => {
             const result = fillMissingTitles(insightWithMultipleMeasureBuckets, locale, 1000);
 
-            expect(bucketMeasures(insightBucket(result, "measures"))).toEqual([
+            expect(bucketMeasures(insightBucket(result, "measures")!)).toEqual([
                 {
                     measure: {
                         localIdentifier: "fdd41e4ca6224cd2b5ecce15fdabf062",
@@ -80,7 +80,7 @@ describe("measureTitleHelper", () => {
                 },
             ]);
 
-            expect(bucketMeasures(insightBucket(result, "secondary_measures"))).toEqual([
+            expect(bucketMeasures(insightBucket(result, "secondary_measures")!)).toEqual([
                 {
                     measure: {
                         localIdentifier: "fdd41e4ca6224cd2b5ecce15fdabf062_pop",

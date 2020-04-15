@@ -2,17 +2,17 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { Executor, IExecutorProps } from "../Executor";
+import { RawExecutor, IRawExecutorProps } from "../RawExecutor";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base/results/facade";
 
 const makeChild = () => jest.fn(_ => <div />);
 const renderDummyExecutor = (
     child: jest.Mock<JSX.Element>,
-    props: Omit<IExecutorProps, "execution" | "children"> = {},
+    props: Omit<IRawExecutorProps, "execution" | "children"> = {},
 ) => {
     return mount(
-        <Executor
+        <RawExecutor
             execution={dummyBackendEmptyData()
                 .workspace("dummy")
                 .execution()
@@ -20,7 +20,7 @@ const renderDummyExecutor = (
             {...props}
         >
             {child}
-        </Executor>,
+        </RawExecutor>,
     );
 };
 
@@ -33,7 +33,7 @@ describe("Executor", () => {
             isLoading: true,
             error: undefined,
             result: undefined,
-            fetch: expect.any(Function),
+            reload: expect.any(Function),
         });
     });
 
@@ -45,7 +45,7 @@ describe("Executor", () => {
             isLoading: false,
             error: undefined,
             result: undefined,
-            fetch: expect.any(Function),
+            reload: expect.any(Function),
         });
     });
 
@@ -58,15 +58,15 @@ describe("Executor", () => {
             isLoading: false,
             error: undefined,
             result: expect.any(DataViewFacade),
-            fetch: expect.any(Function),
+            reload: expect.any(Function),
         });
         done();
     });
 
     // TODO: implement rejection in dummyBackend to test error injecting
 
-    it("should start loading after invoking injected fetch function", async done => {
-        const child = jest.fn(({ fetch }) => <button onClick={fetch} />);
+    it("should start loading after invoking injected reload function", async done => {
+        const child = jest.fn(({ reload }) => <button onClick={reload} />);
         const wrapper = renderDummyExecutor(child, { loadOnMount: false });
         wrapper.find("button").simulate("click");
 
@@ -74,13 +74,13 @@ describe("Executor", () => {
             isLoading: false,
             error: undefined,
             result: undefined,
-            fetch: expect.any(Function),
+            reload: expect.any(Function),
         });
         expect(child).toHaveBeenCalledWith({
             isLoading: true,
             error: undefined,
             result: undefined,
-            fetch: expect.any(Function),
+            reload: expect.any(Function),
         });
         done();
     });

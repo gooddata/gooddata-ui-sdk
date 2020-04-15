@@ -4,6 +4,8 @@ import { IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods";
 import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods";
 import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods";
+import { IDataAccessMethods } from "./dataAccess";
+import { newDataAccessMethods } from "./internal/dataAccessMethods";
 
 /**
  * This wrapper for {@link IDataView} provides various convenience methods to work with data and metadata stored inside
@@ -19,34 +21,41 @@ import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataM
  * and further enhancements will happen, the methods will be removed, renamed and added in the future. The public
  * API WILL break.
  *
- * TODO: move more added-value functions here, clean up, consolidate, modularize
  * @alpha
  */
 export class DataViewFacade {
+    private static Facades: WeakMap<IDataView, DataViewFacade> = new WeakMap<IDataView, DataViewFacade>();
+
     public readonly definition: IExecutionDefinition;
 
-    private readonly definitionMethods: IExecutionDefinitionMethods;
-    private readonly resultMetaMethods: IResultMetaMethods;
-    private readonly resultDataMethods: IResultDataMethods;
+    private definitionMethods: IExecutionDefinitionMethods | undefined;
+    private resultMetaMethods: IResultMetaMethods | undefined;
+    private resultDataMethods: IResultDataMethods | undefined;
+    private dataAccessMethods: IDataAccessMethods | undefined;
 
     protected constructor(public readonly dataView: IDataView) {
         this.definition = dataView.definition;
-
-        this.definitionMethods = newExecutionDefinitonMethods(dataView.definition);
-        this.resultMetaMethods = newResultMetaMethods(dataView);
-        this.resultDataMethods = newResultDataMethods(dataView);
     }
 
     //
     // Own methods
     //
 
+    /**
+     * @param dataView
+     * @alpha
+     */
     public static for(dataView: IDataView): DataViewFacade {
-        return new DataViewFacade(dataView);
+        if (!DataViewFacade.Facades.has(dataView)) {
+            DataViewFacade.Facades.set(dataView, new DataViewFacade(dataView));
+        }
+
+        return DataViewFacade.Facades.get(dataView)!;
     }
 
     /**
      * @returns result of execution which returned this data view
+     * @alpha
      */
     public result(): IExecutionResult {
         return this.dataView.result;
@@ -55,29 +64,61 @@ export class DataViewFacade {
     /**
      * @remarks see {@link IDataView.fingerprint} for more contractual information
      * @returns fingerprint of the data view
+     * @alpha
      */
     public fingerprint(): string {
         return this.dataView.fingerprint();
     }
 
     /**
+     * @returns methods to access data in a curated fashion using data slices and data series iterators
+     * @alpha
+     */
+    public data(): IDataAccessMethods {
+        if (!this.dataAccessMethods) {
+            this.dataAccessMethods = newDataAccessMethods(this.dataView);
+        }
+
+        return this.dataAccessMethods;
+    }
+
+    //
+    //
+    //
+
+    /**
      * @returns methods to work with execution definition
+     * @internal
      */
     public def(): IExecutionDefinitionMethods {
+        if (!this.definitionMethods) {
+            this.definitionMethods = newExecutionDefinitonMethods(this.dataView.definition);
+        }
+
         return this.definitionMethods;
     }
 
     /**
      * @returns methods to work with result metadata
+     * @internal
      */
     public meta(): IResultMetaMethods {
+        if (!this.resultMetaMethods) {
+            this.resultMetaMethods = newResultMetaMethods(this.dataView);
+        }
+
         return this.resultMetaMethods;
     }
 
     /**
      * @returns methods to work with the raw data included in the result
+     * @internal
      */
     public rawData(): IResultDataMethods {
+        if (!this.resultDataMethods) {
+            this.resultDataMethods = newResultDataMethods(this.dataView);
+        }
+
         return this.resultDataMethods;
     }
 }
