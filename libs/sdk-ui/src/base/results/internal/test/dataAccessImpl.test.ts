@@ -1,17 +1,17 @@
 // (C) 2020 GoodData Corporation
 
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, dummyDataView, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDataAccessMethods } from "../dataAccessMethods";
-import { emptyDef } from "@gooddata/sdk-model";
+import { emptyDef, measureLocalId } from "@gooddata/sdk-model";
 import { DataAccessConfig, DefaultDataAccessConfig } from "../../dataAccessConfig";
 
 describe("DataAccessMethods", () => {
     it("should handle empty data view", () => {
         const emptyDataView = dummyDataView(emptyDef("testWorkspace"));
         const dataAccess = newDataAccessMethods(emptyDataView);
-        const series = Array.from(dataAccess.series());
-        const slices = Array.from(dataAccess.slices());
+        const series = dataAccess.series().toArray();
+        const slices = dataAccess.slices().toArray();
 
         expect(series).toEqual([]);
         expect(slices).toEqual([]);
@@ -28,7 +28,7 @@ describe("DataAccessMethods", () => {
 
         it("should correctly extract data", () => {
             const dataAccess = newDataAccessMethods(DataViewWithEmptyFirstDim);
-            const firstSeries = Array.from(dataAccess.series())[0];
+            const firstSeries = dataAccess.series().toArray()[0];
 
             const firstSeriesRawData = firstSeries.rawData();
             const firstSeriesDataPoints = Array.from(firstSeries);
@@ -38,14 +38,14 @@ describe("DataAccessMethods", () => {
 
         it("should return empty slices", () => {
             const dataAccess = newDataAccessMethods(DataViewWithEmptyFirstDim);
-            const slices = Array.from(dataAccess.slices());
+            const slices = dataAccess.slices().toArray();
 
             expect(slices).toEqual([]);
         });
 
         it("should correctly format data values", () => {
             const dataAccess = newDataAccessMethods(DataViewWithEmptyFirstDim);
-            const firstSeries = Array.from(dataAccess.series())[0];
+            const firstSeries = dataAccess.series().toArray()[0];
             const firstSeriesDataPoints = Array.from(firstSeries);
 
             expect(firstSeriesDataPoints[0].rawValue).toEqual("116625456.54");
@@ -64,7 +64,7 @@ describe("DataAccessMethods", () => {
 
         it("should correctly extract data", () => {
             const dataAccess = newDataAccessMethods(DataWithTwoSeriesAndNoSlices);
-            const series = Array.from(dataAccess.series());
+            const series = dataAccess.series().toArray();
 
             expect(series.length).toEqual(2);
 
@@ -79,9 +79,23 @@ describe("DataAccessMethods", () => {
 
         it("should return empty slices", () => {
             const dataAccess = newDataAccessMethods(DataWithTwoSeriesAndNoSlices);
-            const slices = Array.from(dataAccess.slices());
+            const slices = dataAccess.slices().toArray();
 
             expect(slices).toEqual([]);
+        });
+
+        it("should find series by measure", () => {
+            const dataAccess = newDataAccessMethods(DataWithTwoSeriesAndNoSlices);
+
+            expect(dataAccess.series().firstForMeasure(ReferenceLdm.Amount)).toBeDefined();
+            expect(dataAccess.series().firstForMeasure(ReferenceLdm.Won)).toBeDefined();
+        });
+
+        it("should find all series by measure", () => {
+            const dataAccess = newDataAccessMethods(DataWithTwoSeriesAndNoSlices);
+
+            expect(Array.from(dataAccess.series().allForMeasure(ReferenceLdm.Amount)).length).toEqual(1);
+            expect(Array.from(dataAccess.series().allForMeasure(ReferenceLdm.Won)).length).toEqual(1);
         });
     });
 
@@ -97,7 +111,7 @@ describe("DataAccessMethods", () => {
 
         it("should correctly extract scoped series", () => {
             const dataAccess = newDataAccessMethods(DataWithWithScopedSeriesAndNoSlices);
-            const series = Array.from(dataAccess.series());
+            const series = dataAccess.series().toArray();
 
             expect(series.length).toEqual(4);
         });
@@ -117,7 +131,7 @@ describe("DataAccessMethods", () => {
 
         it("should return empty slices", () => {
             const dataAccess = newDataAccessMethods(DataWithWithScopedSeriesAndNoSlices);
-            const slices = Array.from(dataAccess.slices());
+            const slices = dataAccess.slices().toArray();
 
             expect(slices).toEqual([]);
         });
@@ -131,14 +145,14 @@ describe("DataAccessMethods", () => {
 
         it("should correctly extract scoped series", () => {
             const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices);
-            const series = Array.from(dataAccess.series());
+            const series = dataAccess.series().toArray();
 
             expect(series.length).toEqual(4);
         });
 
         it("should correctly extract slices", () => {
             const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices);
-            const slices = Array.from(dataAccess.slices());
+            const slices = dataAccess.slices().toArray();
 
             expect(slices.length).toEqual(6);
         });
@@ -169,14 +183,14 @@ describe("DataAccessMethods", () => {
 
         it("should correctly extract scoped series", () => {
             const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices);
-            const series = Array.from(dataAccess.series());
+            const series = dataAccess.series().toArray();
 
             expect(series.length).toEqual(8);
         });
 
         it("should correctly extract slices", () => {
             const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices);
-            const slices = Array.from(dataAccess.slices());
+            const slices = dataAccess.slices().toArray();
 
             expect(slices.length).toEqual(30);
         });
@@ -205,14 +219,41 @@ describe("DataAccessMethods", () => {
             };
 
             const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices, customConfig);
-            const series = Array.from(dataAccess.series());
-            const slices = Array.from(dataAccess.slices());
+            const series = dataAccess.series().toArray();
+            const slices = dataAccess.slices().toArray();
 
             const firstSeries = series[0];
             const firstSlice = slices[0];
 
             expect(firstSeries.scopeTitles()[0]).toMatch(/__.*/);
             expect(firstSlice.sliceTitles()[0]).toMatch(/__.*/);
+        });
+
+        it("should find series for measure", () => {
+            const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices);
+
+            expect(dataAccess.series().firstForMeasure(ReferenceLdm.Amount)).toBeDefined();
+            expect(dataAccess.series().firstForMeasure(ReferenceLdm.Won)).toBeDefined();
+        });
+
+        it("should find all series for measure", () => {
+            const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices);
+
+            expect(Array.from(dataAccess.series().allForMeasure(ReferenceLdm.Amount)).length).toEqual(4);
+
+            for (const s of dataAccess.series().allForMeasure(ReferenceLdm.Amount)) {
+                expect(measureLocalId(s.descriptor.measureDefinition)).toEqual(
+                    measureLocalId(ReferenceLdm.Amount),
+                );
+            }
+
+            expect(Array.from(dataAccess.series().allForMeasure(ReferenceLdm.Won)).length).toEqual(4);
+
+            for (const s of dataAccess.series().allForMeasure(ReferenceLdm.Won)) {
+                expect(measureLocalId(s.descriptor.measureDefinition)).toEqual(
+                    measureLocalId(ReferenceLdm.Won),
+                );
+            }
         });
     });
 });

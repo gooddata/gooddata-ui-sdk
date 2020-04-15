@@ -13,9 +13,9 @@ import { createDataAccessDigest, DataAccessDigest } from "./dataAccessDigest";
 import { LazyInitArray } from "./lazyInitArray";
 import invariant, { InvariantError } from "ts-invariant";
 import { measureFormat, measureName } from "./utils";
+import { DataAccessConfig } from "../dataAccessConfig";
 import partial = require("lodash/partial");
 import isArray = require("lodash/isArray");
-import { DataAccessConfig } from "../dataAccessConfig";
 
 type DataWithCoordinates = { rawValue: DataValue; coordinates: number[] };
 
@@ -302,17 +302,31 @@ export class DataAccessImpl {
         ];
     }
 
-    public getDataAccessPointers(): DataAccessDigest {
+    public getDataAccessPointers = (): DataAccessDigest => {
         return this.digest;
-    }
+    };
 
-    public getDataSeriesIterator(): Iterator<IDataSeries> {
+    public getDataSeriesIterator = (): Iterator<IDataSeries> => {
         return this.series[Symbol.iterator]();
-    }
+    };
 
-    public getDataSlicesIterator(): Iterator<IDataSlice> {
+    public getDataSlicesIterator = (): Iterator<IDataSlice> => {
         return this.slices[Symbol.iterator]();
-    }
+    };
+
+    public getDataSeries = (idx: number) => {
+        return this.series.get(idx);
+    };
+
+    public findDataSeriesIndexes = (localId: string): number[] => {
+        const { series: seriesDigest } = this.digest;
+
+        if (!seriesDigest) {
+            return [];
+        }
+
+        return seriesDigest.measureIndexes[localId] || [];
+    };
 
     private getRawData = (fromDimIdx: number, idx: number): DataValue[] => {
         if (fromDimIdx === 1) {
