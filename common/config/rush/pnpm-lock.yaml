@@ -15836,6 +15836,7 @@ packages:
       integrity: sha512-8QuOYGIb9AJlrbM0oaSXNS3Byz9gXbS4LKSrfjbwGXiO85GngBgla/+pwIEjElWoF1s7xjJwIxTb+cKEwvH6CQ==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
+registry: ''
 specifiers:
   '@ag-grid-community/all-modules': 22.1.1
   '@ag-grid-community/react': 22.1.2
