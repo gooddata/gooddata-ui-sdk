@@ -4,7 +4,7 @@
 
 ```ts
 
-import * as React from 'react';
+import * as React_2 from 'react';
 
 // @public (undocumented)
 export interface ISdkComponentProps {
@@ -13,7 +13,7 @@ export interface ISdkComponentProps {
 }
 
 // @public (undocumented)
-export class SdkComponent extends React.Component<ISdkComponentProps> {
+export class SdkComponent extends React_2.Component<ISdkComponentProps> {
     // (undocumented)
     render(): JSX.Element;
 }
