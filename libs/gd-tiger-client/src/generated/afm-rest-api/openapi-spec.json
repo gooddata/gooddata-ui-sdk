@@ -1,0 +1,437 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "https://staging.nas.gooddata.com",
+            "description": "Generated server url"
+        }
+    ],
+    "paths": {
+        "/api/afm": {
+            "post": {
+                "tags": ["afm-controller"],
+                "operationId": "processAfmRequest",
+                "parameters": [
+                    {
+                        "name": "skip-cache",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AfmExecution"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "default response",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AfmExecutionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/validObjects": {
+            "post": {
+                "tags": ["afm-controller"],
+                "operationId": "processAfmValidObjectsQuery",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AfmValidObjectsQuery"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "default response",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AfmValidObjectsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/labelElements": {
+            "get": {
+                "tags": ["elements-controller"],
+                "operationId": "processElementsRequest",
+                "parameters": [
+                    {
+                        "name": "workspace",
+                        "in": "query",
+                        "description": "Workspace on which to run request.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "label",
+                        "in": "query",
+                        "description": "Requested label.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sortOrder",
+                        "in": "query",
+                        "description": "Sort order of returned items.\nItems are sorted by ```label``` title.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "ASC",
+                            "enum": ["ASC", "DESC"]
+                        }
+                    },
+                    {
+                        "name": "includeTotalWithoutFilters",
+                        "in": "query",
+                        "description": "Specify if ```totalCountWithoutFilters``` should be returned.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "complementFilter",
+                        "in": "query",
+                        "description": "Inverse filter:\n* ```false``` - return items matching ```patternFilter```\n* ```true``` - return items not matching ```patternFilter```",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "patternFilter",
+                        "in": "query",
+                        "description": "Return only items, whose ```label``` title case insensitively contains ```filter``` as substring.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Request page with this offset.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Return only this number of items.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 1000
+                        }
+                    },
+                    {
+                        "name": "skip-cache",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "default response",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ElementsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AFM": {
+                "required": ["attributes", "filters", "measures"],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AttributeItem"
+                        }
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FilterDefinition"
+                        }
+                    },
+                    "measures": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    }
+                }
+            },
+            "AfmExecution": {
+                "required": ["execution", "project", "resultSpec"],
+                "type": "object",
+                "properties": {
+                    "execution": {
+                        "$ref": "#/components/schemas/AFM"
+                    },
+                    "project": {
+                        "type": "string"
+                    },
+                    "resultSpec": {
+                        "$ref": "#/components/schemas/ResultSpec"
+                    }
+                }
+            },
+            "AttributeItem": {
+                "required": ["displayForm", "localIdentifier"],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "type": "string"
+                    },
+                    "displayForm": {
+                        "type": "string"
+                    },
+                    "alias": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Dimension": {
+                "required": ["itemIdentifiers"],
+                "type": "object",
+                "properties": {
+                    "itemIdentifiers": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "FilterDefinition": {
+                "type": "object"
+            },
+            "MeasureDefinition": {
+                "type": "object"
+            },
+            "MeasureItem": {
+                "required": ["definition", "localIdentifier"],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "type": "string"
+                    },
+                    "definition": {
+                        "$ref": "#/components/schemas/MeasureDefinition"
+                    },
+                    "alias": {
+                        "type": "string"
+                    },
+                    "format": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ResultSpec": {
+                "required": ["dimensions"],
+                "type": "object",
+                "properties": {
+                    "dimensions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Dimension"
+                        }
+                    }
+                }
+            },
+            "AfmExecutionResponse": {
+                "required": ["executionResponse"],
+                "type": "object",
+                "properties": {
+                    "executionResponse": {
+                        "$ref": "#/components/schemas/ExecutionResponse"
+                    }
+                }
+            },
+            "ExecutionLinks": {
+                "required": ["executionResult"],
+                "type": "object",
+                "properties": {
+                    "executionResult": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ExecutionResponse": {
+                "required": ["dimensions", "links"],
+                "type": "object",
+                "properties": {
+                    "dimensions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ResultDimension"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ExecutionLinks"
+                    }
+                }
+            },
+            "ResultDimension": {
+                "required": ["headers"],
+                "type": "object",
+                "properties": {
+                    "headers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ResultDimensionHeader"
+                        }
+                    }
+                }
+            },
+            "ResultDimensionHeader": {
+                "type": "object"
+            },
+            "AfmValidObjectsQuery": {
+                "required": ["afm", "types"],
+                "type": "object",
+                "properties": {
+                    "types": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": ["facts", "attributes", "measures", "UNRECOGNIZED"]
+                        }
+                    },
+                    "afm": {
+                        "$ref": "#/components/schemas/AFM"
+                    }
+                }
+            },
+            "AfmValidObjectsResponse": {
+                "required": ["items"],
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "Element": {
+                "required": ["primaryTitle", "title"],
+                "type": "object",
+                "properties": {
+                    "primaryTitle": {
+                        "type": "string",
+                        "description": "Title of primary label of attribute owning requested label."
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of requested label."
+                    }
+                },
+                "description": "List of returned elements."
+            },
+            "ElementsResponse": {
+                "required": ["elements", "paging", "primaryLabel"],
+                "type": "object",
+                "properties": {
+                    "primaryLabel": {
+                        "type": "string"
+                    },
+                    "elements": {
+                        "type": "array",
+                        "description": "List of returned elements.",
+                        "items": {
+                            "$ref": "#/components/schemas/Element"
+                        }
+                    },
+                    "paging": {
+                        "$ref": "#/components/schemas/Paging"
+                    },
+                    "totalCountWithoutFilters": {
+                        "type": "integer",
+                        "description": "Total count of items ignoring all filters (using on ```project``` and  ```label``` from request).",
+                        "format": "int32"
+                    }
+                }
+            },
+            "Paging": {
+                "required": ["count", "offset", "total"],
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer",
+                        "description": "Count of returnable items ignoring paging.",
+                        "format": "int32"
+                    },
+                    "count": {
+                        "type": "integer",
+                        "description": "Count of items in this page.",
+                        "format": "int32"
+                    },
+                    "offset": {
+                        "type": "integer",
+                        "description": "Offset of this page.",
+                        "format": "int32"
+                    },
+                    "next": {
+                        "type": "string",
+                        "description": "Link to next page, or null if this is last page."
+                    }
+                },
+                "description": "Current page description."
+            }
+        }
+    }
+}

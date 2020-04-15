@@ -15,7 +15,7 @@ import {
 } from "../../../toSdkModel/CatalogConverter";
 import { TigerWorkspaceCatalog } from "./catalog";
 import { objRefToIdentifier } from "../../../fromObjRef";
-import { LabelsResourceReference, LabelsResourceSchema } from "@gooddata/gd-tiger-client";
+import { LabelResourceReference, LabelResourceSchema } from "@gooddata/gd-tiger-client";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -99,10 +99,10 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             attributes.data.included?.find(item => item.type === type && item.id === id);
 
         return attributes.data.data.map(attribute => {
-            const labelsRefs = (attribute.relationships as any).labels.data as LabelsResourceReference[];
+            const labelsRefs = (attribute.relationships as any).labels.data as LabelResourceReference[];
             const defaultLabelRef = labelsRefs[0];
             const attributeDisplayForm = getIncludedItem(defaultLabelRef.id, defaultLabelRef.type);
-            return convertAttribute(attribute, attributeDisplayForm as LabelsResourceSchema);
+            return convertAttribute(attribute, attributeDisplayForm as LabelResourceSchema);
         });
     };
 
