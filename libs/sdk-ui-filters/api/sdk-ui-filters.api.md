@@ -15,13 +15,13 @@ import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
-import * as React from 'react';
+import * as React_2 from 'react';
 
 // Warning: (ae-forgotten-export) The symbol "IAttributeElementsProps" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "IAttributeElementsState" needs to be exported by the entry point index.d.ts
 //
 // @public
-export class AttributeElements extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
+export class AttributeElements extends React_2.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
     // (undocumented)
     componentDidMount(): void;
     // (undocumented)
@@ -33,7 +33,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
     // (undocumented)
     loadMore: () => Promise<void>;
     // (undocumented)
-    render(): React.ReactNode;
+    render(): React_2.ReactNode;
     // (undocumented)
     state: IAttributeElementsState;
 }
@@ -42,7 +42,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
 // Warning: (ae-forgotten-export) The symbol "IAttributeFilterState" needs to be exported by the entry point index.d.ts
 //
 // @public
-export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
+export class AttributeFilter extends React_2.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
     // (undocumented)
     componentDidMount(): void;
     // (undocumented)
@@ -50,8 +50,8 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
     // (undocumented)
     static defaultProps: {
         locale: string;
-        FilterError: React.FC<import("react-intl").WithIntlProps<import("react-intl").WrappedComponentProps<any>>> & {
-            WrappedComponent: React.ComponentType<import("react-intl").WrappedComponentProps<any>>;
+        FilterError: React_2.FC<import("react-intl").WithIntlProps<import("react-intl").WrappedComponentProps<any>>> & {
+            WrappedComponent: React_2.ComponentType<import("react-intl").WrappedComponentProps<any>>;
         };
         fullscreenOnMobile: boolean;
         onError: typeof defaultErrorHandler;
@@ -66,14 +66,14 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
 // Warning: (ae-forgotten-export) The symbol "IDateFilterState" needs to be exported by the entry point index.d.ts
 //
 // @beta (undocumented)
-export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilterState> {
+export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
     constructor(props: IDateFilterProps);
     // (undocumented)
     static defaultProps: Partial<IDateFilterProps>;
     // (undocumented)
     static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState;
     // (undocumented)
-    render(): React.ReactNode;
+    render(): React_2.ReactNode;
 }
 
 // @beta (undocumented)
@@ -261,7 +261,7 @@ export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallba
 // Warning: (ae-forgotten-export) The symbol "IDropdownProps" needs to be exported by the entry point index.d.ts
 //
 // @beta (undocumented)
-export class MeasureValueFilterDropdown extends React.PureComponent<IDropdownProps> {
+export class MeasureValueFilterDropdown extends React_2.PureComponent<IDropdownProps> {
     // (undocumented)
     render(): JSX.Element;
 }

@@ -25,12 +25,13 @@ describe("calculateXirr", () => {
 
     it("should compute XIRR value for irregular input", () => {
         // source of data: https://support.office.com/en-us/article/xirr-function-de1242ec-6477-445b-b11b-a303ad9adc9d
+        // note: using UTC here to keep the tests stable and not subject variations due to DST and timezone settings
         const xirrInput = [
-            { when: new Date("01/01/08"), amount: -10000 },
-            { when: new Date("03/01/08"), amount: 2750 },
-            { when: new Date("10/30/08"), amount: 4250 },
-            { when: new Date("02/15/09"), amount: 3250 },
-            { when: new Date("04/01/09"), amount: 2750 },
+            { when: new Date("01/01/08Z"), amount: -10000 },
+            { when: new Date("03/01/08Z"), amount: 2750 },
+            { when: new Date("10/30/08Z"), amount: 4250 },
+            { when: new Date("02/15/09Z"), amount: 3250 },
+            { when: new Date("04/01/09Z"), amount: 2750 },
         ];
 
         const actual = calculateXirr(xirrInput).toPrecision(8);

@@ -13,14 +13,14 @@ import { ISeparators } from '@gooddata/numberjs';
 import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
-import * as React from 'react';
+import * as React_2 from 'react';
 import { SortItem } from '@gooddata/sdk-model';
 import { WrappedComponentProps } from 'react-intl';
 
 // Warning: (ae-internal-missing-underscore) The name "CorePivotTable" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export const CorePivotTable: React.FC<ICorePivotTableProps>;
+export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
 
 // Warning: (ae-internal-missing-underscore) The name "ICorePivotTableProps" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -85,7 +85,7 @@ export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucke
 }
 
 // @public
-export const PivotTable: React.ComponentType<IPivotTableProps>;
+export const PivotTable: React_2.ComponentType<IPivotTableProps>;
 
 
 // (No @packageDocumentation comment for this package)
