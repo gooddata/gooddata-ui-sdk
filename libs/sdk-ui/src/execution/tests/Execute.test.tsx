@@ -2,32 +2,28 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IRawExecuteProps, RawExecute } from "../RawExecute";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base/results/facade";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { createExecution, Execute, IExecuteProps } from "../Execute";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => jest.fn(_ => <div />);
 const renderDummyExecutor = (
     child: jest.Mock<JSX.Element>,
-    props: Omit<IRawExecuteProps, "execution" | "children"> = {},
+    props: Omit<IExecuteProps, "backend" | "workspace" | "children" | "seriesBy"> = {},
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
     return mount(
-        <RawExecute
-            execution={backend
-                .workspace("dummy")
-                .execution()
-                .forItems([])}
-            {...props}
-        >
+        <Execute backend={backend} workspace={"testWorkspace"} seriesBy={[ReferenceLdm.Amount]} {...props}>
             {child}
-        </RawExecute>,
+        </Execute>,
     );
 };
 
-describe("RawExecute", () => {
+describe("Execute", () => {
     it("should start loading immediately and inject isLoading prop", () => {
         const child = makeChild();
         renderDummyExecutor(child);
@@ -146,5 +142,58 @@ describe("RawExecute", () => {
         expect(onLoadingFinish).toBeCalledTimes(0);
 
         done();
+    });
+});
+
+describe("createExecution", () => {
+    const Scenarios: Array<[string, Partial<IExecuteProps>]> = [
+        ["unscoped series only", { seriesBy: [ReferenceLdm.Amount] }],
+        ["scoped series only", { seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region] }],
+        [
+            "unscoped series with slicing",
+            { seriesBy: [ReferenceLdm.Amount], slicesBy: [ReferenceLdm.Product.Name] },
+        ],
+        [
+            "scoped series with slicing",
+            { seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region], slicesBy: [ReferenceLdm.Product.Name] },
+        ],
+        [
+            "scoped series with slicing and filter",
+            {
+                seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region],
+                slicesBy: [ReferenceLdm.Product.Name],
+                filters: [newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"])],
+            },
+        ],
+        [
+            "scoped series with slicing and sortBy",
+            {
+                seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region],
+                slicesBy: [ReferenceLdm.Product.Name],
+                sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+            },
+        ],
+        [
+            "scoped series with slicing and totals",
+            {
+                seriesBy: [ReferenceLdm.Amount, ReferenceLdm.Region],
+                slicesBy: [ReferenceLdm.Product.Name],
+                totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name)],
+            },
+        ],
+    ];
+
+    it.each(Scenarios)("should create correct definition for %s", (_desc, props) => {
+        const input: IExecuteProps = {
+            backend: DummyBackendEmptyData,
+            workspace: "testWorkspace",
+            seriesBy: props.seriesBy!,
+            children: makeChild(),
+            ...props,
+        };
+
+        const execution = createExecution(input);
+
+        expect(execution.definition).toMatchSnapshot();
     });
 });
