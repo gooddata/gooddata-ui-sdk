@@ -212,10 +212,6 @@ function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
         return;
     }
 
-    if (scenario.tags.includes("mock-no-insight")) {
-        return;
-    }
-
     const id = scenario.insightId;
     const persistentInsight: IInsight = scenario.insightConverter({
         insight: { identifier: id, uri: id, ...def.insight },
@@ -275,7 +271,7 @@ describe("all scenarios", () => {
             return;
         }
 
-        if (PlugVisUnsupported.indexOf(vis) >= 0) {
+        if (scenario.tags.includes("mock-no-insight") || PlugVisUnsupported.indexOf(vis) >= 0) {
             /*
              * Some visualizations may not support plug vis yet. For those, just store scenario
              * definition and halt.

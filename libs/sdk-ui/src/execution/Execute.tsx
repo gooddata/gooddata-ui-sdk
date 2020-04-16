@@ -96,7 +96,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
 
 type Props = IExecuteProps & WithLoadingResult;
 
-const CoreExecutor: React.FC<Props> = (props: Props) => {
+const CoreExecute: React.FC<Props> = (props: Props) => {
     const { children, error, isLoading, reload, result } = props;
 
     return children({
@@ -224,5 +224,5 @@ export const Execute = withContexts(
             return loadOnMount;
         },
         window: (props: IExecuteProps) => props.window,
-    })(CoreExecutor),
+    })(CoreExecute),
 );

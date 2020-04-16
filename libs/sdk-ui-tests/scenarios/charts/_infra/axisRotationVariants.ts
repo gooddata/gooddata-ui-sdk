@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { CustomizedScenario, UnboundVisProps } from "../../../src";
+import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import cloneDeep = require("lodash/cloneDeep");
 
 const ConfigVariants: Array<[string]> = [["90"], ["-90"], ["60"], ["-60"]];
@@ -19,7 +19,7 @@ function updateAxisSettings(rotation: string, config: IChartConfig = {}): IChart
     return copy;
 }
 
-export function axisRotationVariants<T extends VisProps>(
+export function axisRotationVariants<T extends IBucketChartProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
 ): Array<CustomizedScenario<T>> {
