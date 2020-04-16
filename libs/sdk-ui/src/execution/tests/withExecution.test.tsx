@@ -61,12 +61,11 @@ describe("withExecution", () => {
         expect(wrapper.prop("isLoading")).toBe(false);
     });
 
-    it("should stop loading when execution is resolved and inject data view facade", async done => {
+    it("should stop loading when execution is resolved and inject data view facade", async () => {
         const wrapper = renderEnhancedComponent();
         await createDummyPromise({ delay: 100 });
         expect(wrapper.prop("isLoading")).toBe(false);
         expect(wrapper.prop("result")).toBeInstanceOf(DataViewFacade);
-        done();
     });
 
     it("should inject fetch handler", () => {
@@ -74,7 +73,7 @@ describe("withExecution", () => {
         expect(wrapper.prop("reload")).toEqual(expect.any(Function));
     });
 
-    it("should start loading again after invoking injected fetch function", async done => {
+    it("should start loading again after invoking injected fetch function", async () => {
         const wrapper = renderEnhancedComponent();
         await createDummyPromise({ delay: 150 });
         wrapper
@@ -83,10 +82,9 @@ describe("withExecution", () => {
             .simulate("click");
 
         expect(wrapper.prop("isLoading")).toBe(true);
-        done();
     });
 
-    it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async done => {
+    it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async () => {
         const onLoadingStart = jest.fn();
         const onLoadingChanged = jest.fn();
         const onLoadingFinish = jest.fn();
@@ -104,10 +102,9 @@ describe("withExecution", () => {
         expect(onLoadingStart).toBeCalledTimes(1);
         expect(onLoadingChanged).toBeCalledTimes(2);
         expect(onLoadingFinish).toBeCalledTimes(1);
-        done();
     });
 
-    it("should invoke onError", async done => {
+    it("should invoke onError", async () => {
         const onError = jest.fn();
 
         /*
@@ -125,10 +122,9 @@ describe("withExecution", () => {
         await createDummyPromise({ delay: 150 });
 
         expect(onError).toBeCalledTimes(1);
-        done();
     });
 
-    it("should do readAll when no window specified", async done => {
+    it("should do readAll when no window specified", async () => {
         const readAllCallback = jest.fn();
         const readWindowCallback = jest.fn();
         const backend = withEventing(DummyBackendEmptyData, {
@@ -141,11 +137,9 @@ describe("withExecution", () => {
 
         expect(readAllCallback).toBeCalled();
         expect(readWindowCallback).not.toBeCalled();
-
-        done();
     });
 
-    it("should do readWindow when window specified", async done => {
+    it("should do readWindow when window specified", async () => {
         const readAllCallback = jest.fn();
         const readWindowCallback = jest.fn();
         const backend = withEventing(DummyBackendEmptyData, {
@@ -159,7 +153,5 @@ describe("withExecution", () => {
 
         expect(readAllCallback).not.toBeCalled();
         expect(readWindowCallback).toBeCalledWith(window.offset, window.size, expect.any(Object));
-
-        done();
     });
 });

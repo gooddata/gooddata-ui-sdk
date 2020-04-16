@@ -49,20 +49,18 @@ describe("withLoading", () => {
         expect(wrapper.prop("isLoading")).toBe(false);
     });
 
-    it("should stop loading when promise is resolved and inject result prop", async done => {
+    it("should stop loading when promise is resolved and inject result prop", async () => {
         const wrapper = renderEnhancedComponent({ result: RESULT, delay: 100 });
         await createDummyPromise({ delay: 150 });
         expect(wrapper.prop("isLoading")).toBe(false);
         expect(wrapper.prop("result")).toBe(RESULT);
-        done();
     });
 
-    it("should stop loading when promise is rejected and inject error prop", async done => {
+    it("should stop loading when promise is rejected and inject error prop", async () => {
         const wrapper = renderEnhancedComponent({ willResolve: false, error: ERROR, delay: 100 });
         await createDummyPromise({ delay: 150 });
         expect(wrapper.prop("isLoading")).toBe(false);
         expect(wrapper.prop("error").cause).toBe(ERROR);
-        done();
     });
 
     it("should inject fetch handler", () => {
@@ -70,7 +68,7 @@ describe("withLoading", () => {
         expect(wrapper.prop("reload")).toEqual(expect.any(Function));
     });
 
-    it("should start loading again after invoking injected fetch function", async done => {
+    it("should start loading again after invoking injected fetch function", async () => {
         const wrapper = renderEnhancedComponent({ delay: 100 });
         await createDummyPromise({ delay: 150 });
         wrapper
@@ -79,10 +77,9 @@ describe("withLoading", () => {
             .simulate("click");
 
         expect(wrapper.prop("isLoading")).toBe(true);
-        done();
     });
 
-    it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async done => {
+    it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async () => {
         const onLoadingStart = jest.fn();
         const onLoadingChanged = jest.fn();
         const onLoadingFinish = jest.fn();
@@ -103,10 +100,9 @@ describe("withLoading", () => {
         expect(onLoadingStart).toBeCalledTimes(1);
         expect(onLoadingChanged).toBeCalledTimes(2);
         expect(onLoadingFinish).toBeCalledTimes(1);
-        done();
     });
 
-    it("should invoke onLoadingStart, onLoadingChanged and onError events", async done => {
+    it("should invoke onLoadingStart, onLoadingChanged and onError events", async () => {
         const onLoadingStart = jest.fn();
         const onLoadingChanged = jest.fn();
         const onError = jest.fn();
@@ -127,6 +123,5 @@ describe("withLoading", () => {
         expect(onLoadingStart).toBeCalledTimes(1);
         expect(onLoadingChanged).toBeCalledTimes(2);
         expect(onError).toBeCalledTimes(1);
-        done();
     });
 });

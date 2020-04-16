@@ -185,8 +185,6 @@ export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataP
  * origin of the data series that can be iterated - their number, measures they were calculated from and
  * optionally the scoping attributes.
  *
- * Note: see the
- *
  * @alpha
  */
 export interface IDataSeriesCollection extends Iterable<IDataSeries> {

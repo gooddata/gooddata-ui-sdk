@@ -52,7 +52,7 @@ describe("RawExecute", () => {
         });
     });
 
-    it("should stop loading when execution is resolved and inject data view facade", async done => {
+    it("should stop loading when execution is resolved and inject data view facade", async () => {
         const child = makeChild();
         renderDummyExecutor(child);
         await createDummyPromise({ delay: 100 });
@@ -63,10 +63,9 @@ describe("RawExecute", () => {
             result: expect.any(DataViewFacade),
             reload: expect.any(Function),
         });
-        done();
     });
 
-    it("should stop loading when execution fails", async done => {
+    it("should stop loading when execution fails", async () => {
         const child = makeChild();
         renderDummyExecutor(child, {}, dummyBackend());
         await createDummyPromise({ delay: 100 });
@@ -77,10 +76,9 @@ describe("RawExecute", () => {
             result: undefined,
             reload: expect.any(Function),
         });
-        done();
     });
 
-    it("should start loading after invoking injected reload function", async done => {
+    it("should start loading after invoking injected reload function", async () => {
         const child = jest.fn(({ reload }) => <button onClick={reload} />);
         const wrapper = renderDummyExecutor(child, { loadOnMount: false });
         wrapper.find("button").simulate("click");
@@ -97,10 +95,9 @@ describe("RawExecute", () => {
             result: undefined,
             reload: expect.any(Function),
         });
-        done();
     });
 
-    it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async done => {
+    it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async () => {
         const child = makeChild();
         const onLoadingStart = jest.fn();
         const onLoadingChanged = jest.fn();
@@ -117,10 +114,9 @@ describe("RawExecute", () => {
         expect(onLoadingStart).toBeCalledTimes(1);
         expect(onLoadingChanged).toBeCalledTimes(2);
         expect(onLoadingFinish).toBeCalledTimes(1);
-        done();
     });
 
-    it("should invoke onError when execution fails", async done => {
+    it("should invoke onError when execution fails", async () => {
         const child = makeChild();
         const onLoadingStart = jest.fn();
         const onLoadingChanged = jest.fn();
@@ -144,7 +140,5 @@ describe("RawExecute", () => {
         expect(onLoadingStart).toBeCalledTimes(1);
         expect(onLoadingChanged).toBeCalledTimes(2);
         expect(onLoadingFinish).toBeCalledTimes(0);
-
-        done();
     });
 });
