@@ -44,6 +44,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     public testConfig: TestConfiguration = { visual: {} };
     private scenarioIndex: ScenarioSet<T> = {};
     private defaultTags: ScenarioTag[] = [];
+    private defaultTestTypes: TestTypes[] = ["api", "visual"];
 
     constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
 
@@ -55,6 +56,18 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      */
     public withDefaultTags(...tags: ScenarioTag[]): ScenarioGroup<T> {
         this.defaultTags = tags;
+
+        return this;
+    }
+
+    /**
+     * Configures the scenario group to be tested using the specified types of tests. By default both API and visual
+     * regression will be done. Use this to override.
+     *
+     * @param testTypes - test types
+     */
+    public withDefaultTestTypes(...testTypes: TestTypes[]): ScenarioGroup<T> {
+        this.defaultTestTypes = testTypes;
 
         return this;
     }
@@ -78,6 +91,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
 
         const builder = new ScenarioBuilder<T>(this.vis, this.component, name, props);
         builder.withTags(...this.defaultTags);
+        builder.withTests(...this.defaultTestTypes);
         this.insertScenario(m(builder).build());
 
         return this;
