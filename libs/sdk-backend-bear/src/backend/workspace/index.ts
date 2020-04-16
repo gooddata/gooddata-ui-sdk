@@ -11,6 +11,8 @@ import {
     IWorkspaceDatasetsService,
     IWorkspacePermissionsFactory,
     IWorkspaceInsights,
+    IWorkspaceDashboards,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./execution/executionFactory";
 import { BearWorkspaceMetadata } from "./metadata";
@@ -40,6 +42,10 @@ export class BearWorkspace implements IAnalyticalWorkspace {
 
     public insights(): IWorkspaceInsights {
         return new BearWorkspaceInsights(this.authCall, this.workspace);
+    }
+
+    public dashboards(): IWorkspaceDashboards {
+        throw new NotSupported("Not supported");
     }
 
     public metadata(): IWorkspaceMetadata {

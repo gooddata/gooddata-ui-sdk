@@ -5,7 +5,12 @@ import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
-import { GdcVisualizationObject, GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
+import {
+    GdcVisualizationObject,
+    GdcMetadata,
+    GdcMetadataObject,
+    GdcProjectDashboard,
+} from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
 import {
@@ -408,6 +413,27 @@ export class MetadataModule {
                 apiResponse.response.ok ? apiResponse.getData() : apiResponse.response,
             )
             .then(getIn("query.entries"));
+    }
+
+    /**
+     * Returns all project dashboards in a project specified by the given projectId
+     *
+     * @method getProjectDashboards
+     * @param {string} projectId Project identifier
+     * @return {Array} An array of project dashboard objects
+     */
+    public getProjectDashboards(projectId: string): Promise<GdcProjectDashboard.IWrappedProjectDashboard[]> {
+        return this.xhr
+            .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
+                `/gdc/md/${projectId}/query/projectdashboards`,
+            )
+            .then(dashboardsQuery => {
+                const dashboardLinks = dashboardsQuery.query.entries.map(dashboard => dashboard.link);
+                return this.getObjects<GdcProjectDashboard.IWrappedProjectDashboard>(
+                    projectId,
+                    dashboardLinks,
+                );
+            });
     }
 
     /**

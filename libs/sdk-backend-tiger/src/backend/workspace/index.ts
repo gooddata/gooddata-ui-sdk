@@ -11,6 +11,8 @@ import {
     IWorkspacePermissionsFactory,
     IWorkspaceInsights,
     IWorkspaceDatasetsService,
+    IWorkspaceDashboards,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { TigerExecution } from "./execution/executionFactory";
 import { TigerWorkspaceCatalogFactory } from "./catalog/factory";
@@ -40,6 +42,10 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public insights(): IWorkspaceInsights {
         return new TigerWorkspaceInsights(this.authCall, this.workspace);
+    }
+
+    public dashboards(): IWorkspaceDashboards {
+        throw new NotSupported("Not supported");
     }
 
     public metadata(): IWorkspaceMetadata {

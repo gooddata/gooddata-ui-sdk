@@ -115,3 +115,73 @@ export {
 } from "./workspace";
 
 export { IWorkspacePermissionsFactory, IWorkspaceUserPermissions } from "./workspace/permissions";
+
+export { IWorkspaceDashboards } from "./workspace/dashboards";
+export { IDashboard, IDashboardDefinition, IDateFilterConfig } from "./workspace/dashboards/dashboard";
+export {
+    IFilterContext,
+    AbsoluteType,
+    DateFilterType,
+    FilterContextItem,
+    IAttributeFilter,
+    IDateFilter,
+    IFilterContextDefinition,
+    RelativeType,
+} from "./workspace/dashboards/filterContext";
+export {
+    Layout,
+    LayoutContent,
+    ILayoutWidget,
+    IFluidLayout,
+    IFluidLayoutColSize,
+    IFluidLayoutColumn,
+    IFluidLayoutRow,
+    IFluidLayoutSize,
+    ISectionDescription,
+    ISectionHeader,
+    SectionHeader,
+    Widget,
+} from "./workspace/dashboards/layout";
+export { IWidget, IWidgetDefinition, WidgetType } from "./workspace/dashboards/widget";
+export { IWidgetAlert, IWidgetAlertDefinition } from "./workspace/dashboards/alert";
+export { IDashboardBuilder } from "./workspace/dashboards/dashboardBuilder";
+export {
+    AbsoluteDateFilterOption,
+    AbsoluteFormType,
+    AbsolutePresetType,
+    AllTimeType,
+    DateFilterConfigMode,
+    DateFilterGranularity,
+    DateFilterOption,
+    DateFilterRelativeOptionGroup,
+    DateString,
+    GUID,
+    IAbsoluteDateFilterForm,
+    IAbsoluteDateFilterPreset,
+    IAllTimeDateFilter,
+    IDashboardAddedPresets,
+    IDateFilterOption,
+    IDateFilterOptionsByType,
+    IExtendedDateFilterErrors,
+    IRelativeDateFilterForm,
+    IRelativeDateFilterPreset,
+    IRelativeDateFilterPresetOfGranularity,
+    OptionType,
+    RelativeDateFilterOption,
+    RelativeFormType,
+    RelativeGranularityOffset,
+    RelativePresetType,
+    isAbsoluteDateFilterForm,
+    isAbsoluteDateFilterOption,
+    isAbsoluteDateFilterPreset,
+    isAllTimeDateFilter,
+    isRelativeDateFilterForm,
+    isRelativeDateFilterOption,
+    isRelativeDateFilterPreset,
+} from "./workspace/dashboards/extendedDateFilters";
+export {
+    IDashboardAttachment,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    ScheduledMailAttachment,
+} from "./workspace/dashboards/scheduledMail";
