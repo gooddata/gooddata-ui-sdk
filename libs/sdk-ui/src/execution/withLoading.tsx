@@ -4,8 +4,18 @@ import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
 import { DataViewFacade, makeCancelable, ICancelablePromise } from "../base";
 
+/**
+ * @public
+ */
 export type DataViewWindow = {
+    /**
+     * Zero-based offsets into the data.
+     */
     offset: number[];
+
+    /**
+     * Size of the window to retrieve.
+     */
     size: number[];
 };
 
