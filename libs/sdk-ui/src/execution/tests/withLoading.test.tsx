@@ -61,7 +61,7 @@ describe("withLoading", () => {
         const wrapper = renderEnhancedComponent({ willResolve: false, error: ERROR, delay: 100 });
         await createDummyPromise({ delay: 150 });
         expect(wrapper.prop("isLoading")).toBe(false);
-        expect(wrapper.prop("error")).toBe(ERROR);
+        expect(wrapper.prop("error").cause).toBe(ERROR);
         done();
     });
 

@@ -2,7 +2,7 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
-import { DataViewFacade, makeCancelable, ICancelablePromise } from "../base";
+import { DataViewFacade, makeCancelable, ICancelablePromise, convertError, GoodDataSdkError } from "../base";
 
 /**
  * @public
@@ -134,7 +134,7 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
                 }));
             }
 
-            private setError(error: Error) {
+            private setError(error: GoodDataSdkError) {
                 const { onError, onLoadingChanged } = this.getEvents();
 
                 onError(error, this.props);
@@ -176,7 +176,9 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
                     const result = await this.cancelablePromise.promise;
                     this.setResult(result);
                 } catch (err) {
-                    this.setError(err);
+                    const sdkError = convertError(err);
+
+                    this.setError(sdkError);
                 }
             }
 
