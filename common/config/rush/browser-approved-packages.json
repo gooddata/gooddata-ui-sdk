@@ -387,6 +387,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "dotenv",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "downshift",
       "allowedCategories": [ "production" ]
     },
@@ -524,6 +528,10 @@
     },
     {
       "name": "md5",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "mkdirp",
       "allowedCategories": [ "production" ]
     },
     {

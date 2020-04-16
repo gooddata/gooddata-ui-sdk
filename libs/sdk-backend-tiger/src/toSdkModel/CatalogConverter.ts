@@ -14,19 +14,19 @@ import {
     IGroupableCatalogItemBuilder,
 } from "@gooddata/sdk-model";
 import {
-    AttributesResourceSchema,
-    MetricsResourceSchema,
-    FactsResourceSchema,
-    TagsResourceSchema,
-    LabelsResourceSchema,
-    TagsResourceReference,
+    AttributeResourceSchema,
+    MetricResourceSchema,
+    FactResourceSchema,
+    TagResourceSchema,
+    LabelResourceSchema,
+    TagResourceReference,
 } from "@gooddata/gd-tiger-client";
 
 type MetadataObjectResourceSchema =
-    | AttributesResourceSchema
-    | FactsResourceSchema
-    | MetricsResourceSchema
-    | LabelsResourceSchema;
+    | AttributeResourceSchema
+    | FactResourceSchema
+    | MetricResourceSchema
+    | LabelResourceSchema;
 
 const commonMetadataObjectModifications = <
     TItem extends MetadataObjectResourceSchema,
@@ -46,7 +46,7 @@ const commonGroupableCatalogItemModifications = <
 >(
     item: MetadataObjectResourceSchema,
 ) => (builder: T) => {
-    const tagRefs = (((item.relationships as any)?.tags?.data || []) as TagsResourceReference[]).map(tagRef =>
+    const tagRefs = (((item.relationships as any)?.tags?.data || []) as TagResourceReference[]).map(tagRef =>
         idRef(tagRef.id, "tag"),
     );
 
@@ -54,8 +54,8 @@ const commonGroupableCatalogItemModifications = <
 };
 
 export const convertAttribute = (
-    attribute: AttributesResourceSchema,
-    defaultDisplayForm: LabelsResourceSchema,
+    attribute: AttributeResourceSchema,
+    defaultDisplayForm: LabelResourceSchema,
 ): ICatalogAttribute => {
     return newCatalogAttribute(catalogA =>
         catalogA
@@ -69,7 +69,7 @@ export const convertAttribute = (
     );
 };
 
-export const convertMeasure = (measure: MetricsResourceSchema): ICatalogMeasure => {
+export const convertMeasure = (measure: MetricResourceSchema): ICatalogMeasure => {
     const {
         attributes: { maql },
     } = measure;
@@ -83,7 +83,7 @@ export const convertMeasure = (measure: MetricsResourceSchema): ICatalogMeasure 
     );
 };
 
-export const convertFact = (fact: FactsResourceSchema): ICatalogFact => {
+export const convertFact = (fact: FactResourceSchema): ICatalogFact => {
     return newCatalogFact(catalogF =>
         catalogF
             .fact(idRef(fact.id, "fact"), f => f.modify(commonMetadataObjectModifications(fact)))
@@ -91,7 +91,7 @@ export const convertFact = (fact: FactsResourceSchema): ICatalogFact => {
     );
 };
 
-export const convertGroup = (tag: TagsResourceSchema): ICatalogGroup => {
+export const convertGroup = (tag: TagResourceSchema): ICatalogGroup => {
     const tagRef: IdentifierRef = {
         identifier: tag.id,
         type: "tag",

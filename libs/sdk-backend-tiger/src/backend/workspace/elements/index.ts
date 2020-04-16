@@ -4,11 +4,11 @@ import {
     IElementQuery,
     IElementQueryOptions,
     IElementQueryResult,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, isIdentifierRef, IAttributeElement } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { elements } from "./mocks/elements";
 
 export class TigerWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -25,9 +25,7 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
-        // @ts-ignore We are using mocks, so ignore for now - remove once it's implemented
         private readonly ref: ObjRef,
-        // @ts-ignore We are using mocks, so ignore for now - remove once it's implemented
         private readonly workspace: string,
     ) {}
 
@@ -56,9 +54,27 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
     private async queryWorker(
         offset: number,
         limit: number,
-        // @ts-ignore
         options: IElementQueryOptions | undefined,
     ): Promise<IElementQueryResult> {
+        const { ref } = this;
+        if (!isIdentifierRef(ref)) {
+            throw new UnexpectedError("Tiger backend does not allow referencing objects by URI");
+        }
+
+        const mergedOptions = { ...options, limit, offset };
+
+        const response = await this.authCall(sdk =>
+            sdk.labelElements.processElementsRequest({
+                ...mergedOptions,
+                workspace: this.workspace,
+                label: ref.identifier,
+            }),
+        );
+
+        const { paging, elements } = response.data;
+        const { count, total, offset: serverOffset } = paging;
+        const hasNextPage = serverOffset + count < total;
+
         const emptyResult: IElementQueryResult = {
             items: [],
             limit,
@@ -67,18 +83,19 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
             next: () => Promise.resolve(emptyResult),
         };
 
-        const dummyResult = await this.authCall(async () => {
-            const result: IElementQueryResult = {
-                items: elements,
-                limit,
-                offset,
-                totalCount: elements.length,
-                next: () => Promise.resolve(emptyResult),
-            };
-
-            return result;
-        });
-
-        return dummyResult;
+        return {
+            items: elements.map(
+                (element): IAttributeElement => ({
+                    title: element.title,
+                    uri: element.primaryTitle,
+                }),
+            ),
+            limit: count,
+            offset: serverOffset,
+            totalCount: total,
+            next: hasNextPage
+                ? () => this.queryWorker(offset + count, limit, options)
+                : () => Promise.resolve(emptyResult),
+        };
     }
 }
