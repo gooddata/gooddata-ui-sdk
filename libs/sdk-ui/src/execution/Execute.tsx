@@ -61,7 +61,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     /**
      * Optional filters to apply on server side.
      */
-    filter?: IFilter[];
+    filters?: IFilter[];
 
     /**
      * Optional sorting to apply on server side.
@@ -145,8 +145,14 @@ function seriesAndSlicesDim(
     );
 }
 
-function createExecution(props: IExecuteProps): IPreparedExecution {
-    const { backend, workspace, seriesBy, slicesBy = [], filter = [], sortBy = [], totals = [] } = props;
+/**
+ * Given execute props, this will prepare execution to send to backend.
+ *
+ * @param props - execute component props
+ * @internal
+ */
+export function createExecution(props: IExecuteProps): IPreparedExecution {
+    const { backend, workspace, seriesBy, slicesBy = [], filters = [], sortBy = [], totals = [] } = props;
 
     if (!backend || !workspace) {
         throw new InvariantError(
@@ -161,7 +167,7 @@ function createExecution(props: IExecuteProps): IPreparedExecution {
     return backend
         .workspace(workspace)
         .execution()
-        .forItems(seriesBy.concat(slicesBy), filter)
+        .forItems(seriesBy.concat(slicesBy), filters)
         .withSorting(...sortBy)
         .withDimensions(...dimensions);
 }
@@ -202,7 +208,7 @@ export const Execute = withContexts(
                 "seriesBy",
                 "slicesBy",
                 "totals",
-                "filter",
+                "filters",
                 "sortBy",
                 "window",
             ];
