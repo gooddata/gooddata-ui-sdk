@@ -61,15 +61,19 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
             throw new UnexpectedError("Tiger backend does not allow referencing objects by URI");
         }
 
-        const mergedOptions = { ...options, limit, offset };
-
-        const response = await this.authCall(sdk =>
-            sdk.labelElements.processElementsRequest({
-                ...mergedOptions,
-                workspace: this.workspace,
+        const response = await this.authCall(sdk => {
+            const elementsRequest: Parameters<typeof sdk.labelElements.processElementsRequest>[0] = {
+                ...(options?.complement && { complementFilter: options.complement }),
+                ...(options?.filter && { patternFilter: options.filter }),
+                ...(options?.order && { sortOrder: options.order === "asc" ? "ASC" : "DESC" }),
+                limit,
+                offset,
                 label: ref.identifier,
-            }),
-        );
+                workspace: this.workspace,
+            };
+
+            return sdk.labelElements.processElementsRequest(elementsRequest);
+        });
 
         const { paging, elements } = response.data;
         const { count, total, offset: serverOffset } = paging;

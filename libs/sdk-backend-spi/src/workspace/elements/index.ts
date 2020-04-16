@@ -30,7 +30,7 @@ export interface IElementQueryOptions {
     uris?: string[];
 
     /**
-     * TO-DO what is this doing?
+     * If true, the `filter` prop will behave negatively - i.e. it will not include items matching the `filter` value.
      */
     complement?: boolean;
 
