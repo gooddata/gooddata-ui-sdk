@@ -2,24 +2,25 @@
 import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult, IWithLoadingEvents } from "./withLoading";
+import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withLoading";
+import isEqual = require("lodash/isEqual");
 
 /**
  * @public
  */
 export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     /**
-     * Child component to which rendering is delegated. This is a function that will be called
-     * every time state of execution and data loading changes.
-     *
-     * @param executionResult - execution result, indicating state and/or results
-     */
-    children: (executionResult: WithLoadingResult) => React.ReactElement | null;
-
-    /**
      * Prepared execution which the executor will drive to completion and will obtain data from.
      */
     execution: IPreparedExecution;
+
+    /**
+     * Specifies whether `RawExecute` should load all data from backend or just a particular window - specified by
+     * offset and size of the window.
+     *
+     * If not specified, all data will be loaded.
+     */
+    window?: DataViewWindow;
 
     /**
      * Indicates whether the executor should trigger execution and loading right after it is
@@ -29,6 +30,14 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
      * to trigger the execution and loading.
      */
     loadOnMount?: boolean;
+
+    /**
+     * Child component to which rendering is delegated. This is a function that will be called
+     * every time state of execution and data loading changes.
+     *
+     * @param executionResult - execution result, indicating state and/or results
+     */
+    children: (executionResult: WithLoadingResult) => React.ReactElement | null;
 }
 
 type Props = IRawExecuteProps & WithLoadingResult;
@@ -76,15 +85,18 @@ export const RawExecute = withExecution<IRawExecuteProps>({
             "onLoadingStart",
         ];
 
-        const fingerprintMismatch = prevProps.execution.fingerprint() !== nextProps.execution.fingerprint();
+        const relevantPropsDeepEqual: Array<keyof IRawExecuteProps> = ["window"];
 
         return (
-            fingerprintMismatch || relevantProps.some(propName => prevProps[propName] !== nextProps[propName])
+            relevantProps.some(propName => prevProps[propName] !== nextProps[propName]) ||
+            relevantPropsDeepEqual.some(propName => !isEqual(prevProps[propName], nextProps[propName])) ||
+            prevProps.execution.fingerprint() !== nextProps.execution.fingerprint()
         );
     },
-    loadOnMount: (props?: IRawExecuteProps) => {
-        const { loadOnMount = true } = props ?? {};
+    loadOnMount: (props: IRawExecuteProps) => {
+        const { loadOnMount = true } = props;
 
         return loadOnMount;
     },
+    window: (props: IRawExecuteProps) => props.window,
 })(CoreExecutor);

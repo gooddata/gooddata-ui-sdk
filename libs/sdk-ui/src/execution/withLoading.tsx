@@ -4,6 +4,11 @@ import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
 import { DataViewFacade, makeCancelable, ICancelablePromise } from "../base";
 
+export type DataViewWindow = {
+    offset: number[];
+    size: number[];
+};
+
 /**
  * @public
  */
@@ -47,7 +52,8 @@ export interface IWithLoadingEvents<TProps> {
  * @public
  */
 export interface IWithLoading<TProps> {
-    promiseFactory: (props: TProps) => Promise<DataViewFacade>;
+    promiseFactory: (props: TProps, window?: DataViewWindow) => Promise<DataViewFacade>;
+    window?: DataViewWindow | ((props: TProps) => DataViewWindow | undefined);
     events?: IWithLoadingEvents<TProps> | ((props: TProps) => IWithLoadingEvents<TProps>);
     loadOnMount?: boolean | ((props: TProps) => boolean);
     shouldRefetch?: (prevProps: TProps, nextProps: TProps) => boolean;
@@ -64,7 +70,7 @@ type WithLoadingState = {
  * @public
  */
 export function withLoading<TProps>(params: IWithLoading<TProps>) {
-    const { promiseFactory, loadOnMount = true, events = {}, shouldRefetch = () => false } = params;
+    const { promiseFactory, loadOnMount = true, events = {}, shouldRefetch = () => false, window } = params;
 
     return (
         WrappedComponent: React.ComponentType<TProps & WithLoadingResult>,
@@ -152,7 +158,8 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
 
                 this.startLoading();
 
-                const promise = promiseFactory(this.props);
+                const readWindow = typeof window === "function" ? window(this.props) : window;
+                const promise = promiseFactory(this.props, readWindow);
                 this.cancelablePromise = makeCancelable(promise);
 
                 try {

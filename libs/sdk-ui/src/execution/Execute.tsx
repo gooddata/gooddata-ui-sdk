@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult, IWithLoadingEvents } from "./withLoading";
+import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withLoading";
 import {
     attributeLocalId,
     AttributeOrMeasure,
@@ -43,14 +43,6 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     workspace?: string;
 
     /**
-     * Child component to which rendering is delegated. This is a function that will be called
-     * every time state of execution and data loading changes.
-     *
-     * @param executionResult - execution result, indicating state and/or results
-     */
-    children: (executionResult: WithLoadingResult) => React.ReactElement | null;
-
-    /**
      * Data series will be built using the provided measures that are optionally further scoped for
      * elements of the specified attributes.
      */
@@ -77,13 +69,29 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     sortBy?: SortItem[];
 
     /**
-     * Indicates whether the executor should trigger execution and loading right after it is
+     * Specifies whether `Execute` should trigger execution and loading right after it is
      * mounted. If not specified defaults to `true`.
      *
      * If set to `false`, then the {@link WithLoadingResult#reload} function needs to be called
      * to trigger the execution and loading.
      */
     loadOnMount?: boolean;
+
+    /**
+     * Specifies whether `Execute` should load all data from backend or just a particular window - specified by
+     * offset and size of the window.
+     *
+     * If not specified, all data will be loaded.
+     */
+    window?: DataViewWindow;
+
+    /**
+     * Child component to which rendering is delegated. This is a function that will be called
+     * every time state of execution and data loading changes.
+     *
+     * @param executionResult - execution result, indicating state and/or results
+     */
+    children: (executionResult: WithLoadingResult) => React.ReactElement | null;
 }
 
 type Props = IExecuteProps & WithLoadingResult;
@@ -196,6 +204,7 @@ export const Execute = withContexts(
                 "totals",
                 "filter",
                 "sortBy",
+                "window",
             ];
 
             return (
@@ -208,5 +217,6 @@ export const Execute = withContexts(
 
             return loadOnMount;
         },
+        window: (props: IExecuteProps) => props.window,
     })(CoreExecutor),
 );

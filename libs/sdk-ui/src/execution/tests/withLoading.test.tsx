@@ -11,7 +11,7 @@ const EmptyDataViewFacade = DataViewFacade.for(dummyDataView(emptyDef("testWorks
 
 const renderEnhancedComponent = <T, E>(
     promiseConfig: IDummyPromise<DataViewFacade, E>,
-    hocConfig?: Omit<IWithLoading<T>, "promiseFactory" | "mapResultToProps">,
+    hocConfig?: Omit<IWithLoading<T>, "promiseFactory">,
 ) => {
     const promiseFactory = (_props?: T) => createDummyPromise(promiseConfig);
 
