@@ -1,7 +1,8 @@
+// (C) 2020 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-04-14T10:11:54.923Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-04-16T11:43:31.187Z; */
 
 const fp_01afaec4b4f8656e22afb2c2d2e9574d = {
     definition: require("./uiTestScenarios/executions/01afaec4b4f8656e22afb2c2d2e9574d/definition.json"),
@@ -652,6 +653,30 @@ const fp_fc002f5c4c8341773aa9029150232a61 = {
     dataView_all: require("./uiTestScenarios/executions/fc002f5c4c8341773aa9029150232a61/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/fc002f5c4c8341773aa9029150232a61/scenarios.json"),
 };
+const fp_36ce4842f620ded8c115c08e259732b3 = {
+    definition: require("./uiTestScenarios/executions/36ce4842f620ded8c115c08e259732b3/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/36ce4842f620ded8c115c08e259732b3/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/36ce4842f620ded8c115c08e259732b3/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/36ce4842f620ded8c115c08e259732b3/scenarios.json"),
+};
+const fp_40f9ee7ada7f5c5e491b822479a9e7c2 = {
+    definition: require("./uiTestScenarios/executions/40f9ee7ada7f5c5e491b822479a9e7c2/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/40f9ee7ada7f5c5e491b822479a9e7c2/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/40f9ee7ada7f5c5e491b822479a9e7c2/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/40f9ee7ada7f5c5e491b822479a9e7c2/scenarios.json"),
+};
+const fp_7b78adbc1dd909ea18f777e45cac730e = {
+    definition: require("./uiTestScenarios/executions/7b78adbc1dd909ea18f777e45cac730e/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/7b78adbc1dd909ea18f777e45cac730e/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/7b78adbc1dd909ea18f777e45cac730e/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/7b78adbc1dd909ea18f777e45cac730e/scenarios.json"),
+};
+const fp_8f0bfd95fac544821fb2ea6918a739a0 = {
+    definition: require("./uiTestScenarios/executions/8f0bfd95fac544821fb2ea6918a739a0/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/8f0bfd95fac544821fb2ea6918a739a0/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/8f0bfd95fac544821fb2ea6918a739a0/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/8f0bfd95fac544821fb2ea6918a739a0/scenarios.json"),
+};
 export const Scenarios = {
     BulletChart: {
         PrimaryAndTargetMeasures: { scenarioIndex: 0, execution: fp_05047e241c2b3be2be8c6714dfd6a553 },
@@ -977,6 +1002,12 @@ export const Scenarios = {
         OnlyMeasure: { scenarioIndex: 0, execution: fp_6b8547ba7d063a34720c3a54cae4bc03 },
         CorrectConfig: { scenarioIndex: 0, execution: fp_90599b16306772ee487aba97bc05accd },
         SemanticallyWrongMeasure: { scenarioIndex: 0, execution: fp_b33296db991d8e5c6d31153ba364d3e3 },
+    },
+    Execute: {
+        SingleUnscopedSeries: { scenarioIndex: 0, execution: fp_36ce4842f620ded8c115c08e259732b3 },
+        ScopedSeriesWithSlicing: { scenarioIndex: 0, execution: fp_40f9ee7ada7f5c5e491b822479a9e7c2 },
+        TwoUnscopedSeries: { scenarioIndex: 0, execution: fp_7b78adbc1dd909ea18f777e45cac730e },
+        ScopedSeries: { scenarioIndex: 0, execution: fp_8f0bfd95fac544821fb2ea6918a739a0 },
     },
 };
 const df_label_product_id_name = {
@@ -2680,6 +2711,10 @@ export const Recordings = {
         fp_f64018ab0da19253ad7d548be10fe7e1,
         fp_f79454ef5f7d6416e41a8e87ad40ad92,
         fp_fc002f5c4c8341773aa9029150232a61,
+        fp_36ce4842f620ded8c115c08e259732b3,
+        fp_40f9ee7ada7f5c5e491b822479a9e7c2,
+        fp_7b78adbc1dd909ea18f777e45cac730e,
+        fp_8f0bfd95fac544821fb2ea6918a739a0,
     },
     metadata: {
         catalog,
