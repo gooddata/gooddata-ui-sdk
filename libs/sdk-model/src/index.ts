@@ -229,12 +229,11 @@ export {
     IExecutionDefinition,
     DimensionGenerator,
     defWithFilters,
+    defFingerprint,
     defSetDimensions,
     defSetSorts,
     defTotals,
 } from "./execution/executionDefinition";
-
-export { defFingerprint } from "./execution/executionDefinition/fingerprints";
 
 export {
     newDefForItems,

@@ -1,5 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
+import isString = require("lodash/isString");
+import SparkMD5 from "spark-md5";
 import invariant from "ts-invariant";
 import { IAttribute } from "../attribute";
 import { dimensionTotals, IDimension } from "../base/dimension";
@@ -9,6 +11,10 @@ import { IBucket } from "../buckets";
 import { IFilter } from "../filter";
 import { mergeFilters } from "../filter/filterMerge";
 import { IMeasure } from "../measure";
+import { measureFingerprint } from "../measure/fingerprint";
+import { attributeFingerprint, sortFingerprint } from "./fingerprints";
+import { dimensionFingerprint } from "../base/fingerprint";
+import { filterFingerprint } from "../filter/fingerprint";
 
 /**
  * Execution definition contains 100% complete description of what will the execution compute and how will
@@ -108,4 +114,56 @@ export function defSetDimensions(
         ...def,
         dimensions,
     };
+}
+
+/**
+ * Calculates fingerprint for the execution definition. Fingerprinting is used as an _approximate_,
+ * quick, first-level assessment whether two execution definitions are or are not effectively same = they
+ * lead to the same computation on the backend.
+ *
+ * The contract and the approximate nature of the fingerprint can be described as follows:
+ *
+ * -  If two execution definitions have the same fingerprint, then they definitely are effectively the same
+ *    and backend will perform the same computation for them.
+ *
+ * -  If two execution definition have different fingerprint, they MAY OR MAY NOT lead to different execution. Or
+ *    more concrete: two executions with two different fingerprints MAY lead to the same execution and same results.
+ *
+ * While not optimal, this contract allows for safe usage of fingerprints to determine whether two
+ * execution definitions have changed. For instance it can be used in React lifecycle methods (shouldComponentUpdate)
+ * or for client-side caching.
+ *
+ * @param def - execution definition
+ * @public
+ */
+export function defFingerprint(def: IExecutionDefinition): string {
+    invariant(def, "execution definition to calculate fingerprint for must be defined");
+
+    const hasher = new SparkMD5();
+
+    /*
+     * Simple approach to construct exec definition fingerprint; the main drawback is that it completely
+     * disregards that ordering of some array elements does not impact the results of the actual execution.
+     *
+     * - attributes, measures, filters, sortby and totals should be sorted first and then fingerprinted.
+     * - dimensions must be fingerprinted in the defined order
+     *
+     * This simple approach can lead to 'false negatives' => code says executions are different while in
+     * fact are the same. This does not lead to functional issues as the bear can deal with that and will
+     * reuse cached and all. The only drawback is frontend cache misses.
+     */
+
+    const hashFun = hasher.append.bind(hasher);
+
+    hasher.append(def.workspace);
+    def.attributes.map(attributeFingerprint).forEach(hashFun);
+    def.measures.map(measureFingerprint).forEach(hashFun);
+    def.filters
+        .map(filterFingerprint)
+        .filter(isString)
+        .forEach(hashFun);
+    def.sortBy.map(sortFingerprint).forEach(hashFun);
+    def.dimensions.map(dimensionFingerprint).forEach(hashFun);
+
+    return hasher.end();
 }
