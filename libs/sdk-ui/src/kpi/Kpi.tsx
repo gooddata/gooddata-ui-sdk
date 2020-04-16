@@ -3,7 +3,7 @@ import * as React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IMeasure, IFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/numberjs";
-import { RawExecutor, IRawExecutorProps, IWithLoadingEvents } from "../execution";
+import { RawExecute, IRawExecuteProps, IWithLoadingEvents } from "../execution";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -54,7 +54,7 @@ const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = props => {
         .forItems([measure], filters);
 
     return (
-        <RawExecutor
+        <RawExecute
             execution={execution}
             onLoadingStart={onLoadingStart}
             onLoadingChanged={onLoadingChanged}
@@ -86,7 +86,7 @@ const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = props => {
                     />
                 );
             }}
-        </RawExecutor>
+        </RawExecute>
     );
 };
 
@@ -128,7 +128,7 @@ const RenderKpi: React.FC<IKpiProps> = props => {
  *
  * @public
  */
-export interface IKpiProps extends IWithLoadingEvents<IRawExecutorProps> {
+export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     backend?: IAnalyticalBackend;
     workspace?: string;
     measure: IMeasure;

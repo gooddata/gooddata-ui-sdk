@@ -25,7 +25,7 @@ import { InvariantError } from "ts-invariant";
 /**
  * @public
  */
-export interface IExecutorProps extends IWithLoadingEvents<IExecutorProps> {
+export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     /**
      * Backend to execute against.
      *
@@ -86,7 +86,7 @@ export interface IExecutorProps extends IWithLoadingEvents<IExecutorProps> {
     loadOnMount?: boolean;
 }
 
-type Props = IExecutorProps & WithLoadingResult;
+type Props = IExecuteProps & WithLoadingResult;
 
 const CoreExecutor: React.FC<Props> = (props: Props) => {
     const { children, error, isLoading, reload, result } = props;
@@ -137,7 +137,7 @@ function seriesAndSlicesDim(
     );
 }
 
-function createExecution(props: IExecutorProps): IPreparedExecution {
+function createExecution(props: IExecuteProps): IPreparedExecution {
     const { backend, workspace, seriesBy, slicesBy = [], filter = [], sortBy = [], totals = [] } = props;
 
     if (!backend || !workspace) {
@@ -169,10 +169,10 @@ function createExecution(props: IExecutorProps): IPreparedExecution {
  * @remarks see `IDataAccessMethods` for additional documentation
  * @public
  */
-export const Executor = withContexts(
-    withExecution<IExecutorProps>({
+export const Execute = withContexts(
+    withExecution<IExecuteProps>({
         execution: createExecution,
-        events: (props: IExecutorProps) => {
+        events: (props: IExecuteProps) => {
             const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart } = props;
 
             return {
@@ -182,15 +182,15 @@ export const Executor = withContexts(
                 onLoadingStart,
             };
         },
-        shouldRefetch: (prevProps: IExecutorProps, nextProps: IExecutorProps) => {
-            const relevantProps: Array<keyof IExecutorProps> = [
+        shouldRefetch: (prevProps: IExecuteProps, nextProps: IExecuteProps) => {
+            const relevantProps: Array<keyof IExecuteProps> = [
                 "onError",
                 "onLoadingChanged",
                 "onLoadingFinish",
                 "onLoadingStart",
             ];
 
-            const relevantPropsDeepEqual: Array<keyof IExecutorProps> = [
+            const relevantPropsDeepEqual: Array<keyof IExecuteProps> = [
                 "seriesBy",
                 "slicesBy",
                 "totals",
@@ -203,7 +203,7 @@ export const Executor = withContexts(
                 relevantPropsDeepEqual.some(propName => !isEqual(prevProps[propName], nextProps[propName]))
             );
         },
-        loadOnMount: (props?: IExecutorProps) => {
+        loadOnMount: (props?: IExecuteProps) => {
             const { loadOnMount = true } = props ?? {};
 
             return loadOnMount;

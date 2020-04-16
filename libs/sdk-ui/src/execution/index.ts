@@ -2,4 +2,4 @@
 
 export { withExecution, IWithExecution } from "./withExecution";
 export { withLoading, IWithLoading, IWithLoadingEvents, WithLoadingResult } from "./withLoading";
-export { RawExecutor, IRawExecutorProps } from "./RawExecutor";
+export { RawExecute, IRawExecuteProps } from "./RawExecute";

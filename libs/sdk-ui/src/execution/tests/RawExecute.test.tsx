@@ -2,17 +2,17 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { RawExecutor, IRawExecutorProps } from "../RawExecutor";
+import { RawExecute, IRawExecuteProps } from "../RawExecute";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base/results/facade";
 
 const makeChild = () => jest.fn(_ => <div />);
 const renderDummyExecutor = (
     child: jest.Mock<JSX.Element>,
-    props: Omit<IRawExecutorProps, "execution" | "children"> = {},
+    props: Omit<IRawExecuteProps, "execution" | "children"> = {},
 ) => {
     return mount(
-        <RawExecutor
+        <RawExecute
             execution={dummyBackendEmptyData()
                 .workspace("dummy")
                 .execution()
@@ -20,7 +20,7 @@ const renderDummyExecutor = (
             {...props}
         >
             {child}
-        </RawExecutor>,
+        </RawExecute>,
     );
 };
 

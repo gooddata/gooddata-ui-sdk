@@ -7,7 +7,7 @@ import { WithLoadingResult, IWithLoadingEvents } from "./withLoading";
 /**
  * @public
  */
-export interface IRawExecutorProps extends IWithLoadingEvents<IRawExecutorProps> {
+export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     /**
      * Child component to which rendering is delegated. This is a function that will be called
      * every time state of execution and data loading changes.
@@ -31,7 +31,7 @@ export interface IRawExecutorProps extends IWithLoadingEvents<IRawExecutorProps>
     loadOnMount?: boolean;
 }
 
-type Props = IRawExecutorProps & WithLoadingResult;
+type Props = IRawExecuteProps & WithLoadingResult;
 
 const CoreExecutor: React.FC<Props> = (props: Props) => {
     const { children, error, isLoading, reload, result } = props;
@@ -56,9 +56,9 @@ const CoreExecutor: React.FC<Props> = (props: Props) => {
  *
  * @public
  */
-export const RawExecutor = withExecution<IRawExecutorProps>({
-    execution: (props: IRawExecutorProps) => props.execution,
-    events: (props: IRawExecutorProps) => {
+export const RawExecute = withExecution<IRawExecuteProps>({
+    execution: (props: IRawExecuteProps) => props.execution,
+    events: (props: IRawExecuteProps) => {
         const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart } = props;
 
         return {
@@ -68,8 +68,8 @@ export const RawExecutor = withExecution<IRawExecutorProps>({
             onLoadingStart,
         };
     },
-    shouldRefetch: (prevProps: IRawExecutorProps, nextProps: IRawExecutorProps) => {
-        const relevantProps: Array<keyof IRawExecutorProps> = [
+    shouldRefetch: (prevProps: IRawExecuteProps, nextProps: IRawExecuteProps) => {
+        const relevantProps: Array<keyof IRawExecuteProps> = [
             "onError",
             "onLoadingChanged",
             "onLoadingFinish",
@@ -82,7 +82,7 @@ export const RawExecutor = withExecution<IRawExecutorProps>({
             fingerprintMismatch || relevantProps.some(propName => prevProps[propName] !== nextProps[propName])
         );
     },
-    loadOnMount: (props?: IRawExecutorProps) => {
+    loadOnMount: (props?: IRawExecuteProps) => {
         const { loadOnMount = true } = props ?? {};
 
         return loadOnMount;
