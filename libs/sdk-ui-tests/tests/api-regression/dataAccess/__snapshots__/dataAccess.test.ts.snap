@@ -1747,6 +1747,96 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: Execute - scoped series 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 4,
+    "attributes": 1,
+    "measures": 2,
+    "seriesNames": Array [
+      "East Coast > Amount",
+      "East Coast > Won",
+      "West Coast > Amount",
+      "West Coast > Won",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: Execute - scoped series with slicing 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 4,
+    "attributes": 1,
+    "measures": 2,
+    "seriesNames": Array [
+      "East Coast > Amount",
+      "East Coast > Won",
+      "West Coast > Amount",
+      "West Coast > Won",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: Execute - single unscoped series 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: Execute - two unscoped series 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": Array [
+      " > Amount",
+      " > Won",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 0,
+    "attributes": 0,
+    "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: FunnelChart - arithmetic measures 1`] = `
 Object {
   "seriesDigest": Object {

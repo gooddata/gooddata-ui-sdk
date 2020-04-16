@@ -21,7 +21,7 @@ describe("Kpi", () => {
         expect(wrapper.find(LoadingComponent)).toHaveLength(1);
     });
 
-    it("should render formatted number when loaded", async done => {
+    it("should render formatted number when loaded", async () => {
         const wrapper = mount(
             <Kpi backend={dummyBackendEmptyData()} workspace={testWorkspace} measure={testMeasure} />,
         );
@@ -29,10 +29,9 @@ describe("Kpi", () => {
         await createDummyPromise({ delay: 100 });
         wrapper.update();
         expect(wrapper.find(FormattedNumber)).toHaveLength(1);
-        done();
     });
 
-    it("should propagate custom measure format", async done => {
+    it("should propagate custom measure format", async () => {
         const wrapper = mount(
             <Kpi backend={dummyBackendEmptyData()} workspace={testWorkspace} measure={testMeasure} />,
         );
@@ -40,6 +39,5 @@ describe("Kpi", () => {
         await createDummyPromise({ delay: 100 });
         wrapper.update();
         expect(wrapper.find(FormattedNumber).prop("format")).toBe(testCustomFormat);
-        done();
     });
 });

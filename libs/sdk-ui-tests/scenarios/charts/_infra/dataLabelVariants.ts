@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
-import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
+import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
+import { CustomizedScenario, UnboundVisProps } from "../../../src";
 import { GermanNumberFormat } from "../../_infra/formatting";
 
 const ConfigVariants: Array<[string, IChartConfig]> = [
@@ -15,7 +15,7 @@ const ConfigVariants: Array<[string, IChartConfig]> = [
     ["forced hidden", { dataLabels: { visible: false } }],
 ];
 
-export function dataLabelCustomizer<T extends VisProps>(
+export function dataLabelCustomizer<T extends IBucketChartProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
 ): Array<CustomizedScenario<T>> {

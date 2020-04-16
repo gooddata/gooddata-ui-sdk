@@ -2,5 +2,6 @@
 
 import chartScenarios from "./charts";
 import pivotScenarios from "./pivotTable";
+import executeScenarios from "./execute/base";
 
-export default [...chartScenarios, ...pivotScenarios];
+export default [...chartScenarios, ...pivotScenarios, executeScenarios];

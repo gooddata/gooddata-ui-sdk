@@ -5,20 +5,22 @@ import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
 import * as React from "react";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
-import { WithLoadingResult } from "../withLoading";
+import { DataViewWindow, WithLoadingResult } from "../withLoading";
 import { IWithExecution, withExecution } from "../withExecution";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { withEventing } from "../../../../sdk-backend-base/src/eventingBackend";
 
 interface IDummyComponentProps {
     attributes?: IAttribute[];
     measures?: IMeasure[];
     filters?: IFilter[];
+    window?: DataViewWindow;
 }
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 
 const renderEnhancedComponent = (
-    hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution" | "mapResultToProps">,
+    hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution">,
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
     const CoreComponent: React.FC<WithLoadingResult & IDummyComponentProps> = props => {
@@ -59,22 +61,19 @@ describe("withExecution", () => {
         expect(wrapper.prop("isLoading")).toBe(false);
     });
 
-    it("should stop loading when execution is resolved and inject data view facade", async done => {
+    it("should stop loading when execution is resolved and inject data view facade", async () => {
         const wrapper = renderEnhancedComponent();
         await createDummyPromise({ delay: 100 });
         expect(wrapper.prop("isLoading")).toBe(false);
         expect(wrapper.prop("result")).toBeInstanceOf(DataViewFacade);
-        done();
     });
-
-    // TODO: implement rejection in dummyBackend to test error injecting
 
     it("should inject fetch handler", () => {
         const wrapper = renderEnhancedComponent();
         expect(wrapper.prop("reload")).toEqual(expect.any(Function));
     });
 
-    it("should start loading again after invoking injected fetch function", async done => {
+    it("should start loading again after invoking injected fetch function", async () => {
         const wrapper = renderEnhancedComponent();
         await createDummyPromise({ delay: 150 });
         wrapper
@@ -83,10 +82,9 @@ describe("withExecution", () => {
             .simulate("click");
 
         expect(wrapper.prop("isLoading")).toBe(true);
-        done();
     });
 
-    it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async done => {
+    it("should invoke onLoadingStart, onLoadingChanged and onLoadingFinish events", async () => {
         const onLoadingStart = jest.fn();
         const onLoadingChanged = jest.fn();
         const onLoadingFinish = jest.fn();
@@ -104,10 +102,9 @@ describe("withExecution", () => {
         expect(onLoadingStart).toBeCalledTimes(1);
         expect(onLoadingChanged).toBeCalledTimes(2);
         expect(onLoadingFinish).toBeCalledTimes(1);
-        done();
     });
 
-    it("should invoke onError", async done => {
+    it("should invoke onError", async () => {
         const onError = jest.fn();
 
         /*
@@ -125,6 +122,36 @@ describe("withExecution", () => {
         await createDummyPromise({ delay: 150 });
 
         expect(onError).toBeCalledTimes(1);
-        done();
+    });
+
+    it("should do readAll when no window specified", async () => {
+        const readAllCallback = jest.fn();
+        const readWindowCallback = jest.fn();
+        const backend = withEventing(DummyBackendEmptyData, {
+            successfulResultReadAll: readAllCallback,
+            successfulResultReadWindow: readWindowCallback,
+        });
+
+        renderEnhancedComponent({}, backend);
+        await createDummyPromise({ delay: 100 });
+
+        expect(readAllCallback).toBeCalled();
+        expect(readWindowCallback).not.toBeCalled();
+    });
+
+    it("should do readWindow when window specified", async () => {
+        const readAllCallback = jest.fn();
+        const readWindowCallback = jest.fn();
+        const backend = withEventing(DummyBackendEmptyData, {
+            successfulResultReadAll: readAllCallback,
+            successfulResultReadWindow: readWindowCallback,
+        });
+        const window = { offset: [1, 1], size: [10, 10] };
+
+        renderEnhancedComponent({ window }, backend);
+        await createDummyPromise({ delay: 100 });
+
+        expect(readAllCallback).not.toBeCalled();
+        expect(readWindowCallback).toBeCalledWith(window.offset, window.size, expect.any(Object));
     });
 });

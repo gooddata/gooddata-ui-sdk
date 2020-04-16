@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
-import { CustomizedScenario, ScenarioTag, UnboundVisProps, VisProps } from "../../../src";
+import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
+import { CustomizedScenario, ScenarioTag, UnboundVisProps } from "../../../src";
 import { CustomColorPalette, CustomColors } from "../../_infra/colors";
 
 const ConfigVariants: Array<[string, IChartConfig, ScenarioTag[]?]> = [
@@ -18,7 +18,7 @@ const ConfigVariants: Array<[string, IChartConfig, ScenarioTag[]?]> = [
     ],
 ];
 
-export function coloringCustomizer<T extends VisProps>(
+export function coloringCustomizer<T extends IBucketChartProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
     baseTags: ScenarioTag[],

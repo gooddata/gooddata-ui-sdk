@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult, IWithLoadingEvents } from "./withLoading";
+import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withLoading";
 import {
     attributeLocalId,
     AttributeOrMeasure,
@@ -25,7 +25,7 @@ import { InvariantError } from "ts-invariant";
 /**
  * @public
  */
-export interface IExecutorProps extends IWithLoadingEvents<IExecutorProps> {
+export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     /**
      * Backend to execute against.
      *
@@ -41,14 +41,6 @@ export interface IExecutorProps extends IWithLoadingEvents<IExecutorProps> {
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
      */
     workspace?: string;
-
-    /**
-     * Child component to which rendering is delegated. This is a function that will be called
-     * every time state of execution and data loading changes.
-     *
-     * @param executionResult - execution result, indicating state and/or results
-     */
-    children: (executionResult: WithLoadingResult) => React.ReactElement | null;
 
     /**
      * Data series will be built using the provided measures that are optionally further scoped for
@@ -69,7 +61,7 @@ export interface IExecutorProps extends IWithLoadingEvents<IExecutorProps> {
     /**
      * Optional filters to apply on server side.
      */
-    filter?: IFilter[];
+    filters?: IFilter[];
 
     /**
      * Optional sorting to apply on server side.
@@ -77,18 +69,34 @@ export interface IExecutorProps extends IWithLoadingEvents<IExecutorProps> {
     sortBy?: SortItem[];
 
     /**
-     * Indicates whether the executor should trigger execution and loading right after it is
+     * Specifies whether `Execute` should trigger execution and loading right after it is
      * mounted. If not specified defaults to `true`.
      *
      * If set to `false`, then the {@link WithLoadingResult#reload} function needs to be called
      * to trigger the execution and loading.
      */
     loadOnMount?: boolean;
+
+    /**
+     * Specifies whether `Execute` should load all data from backend or just a particular window - specified by
+     * offset and size of the window.
+     *
+     * If not specified, all data will be loaded.
+     */
+    window?: DataViewWindow;
+
+    /**
+     * Child component to which rendering is delegated. This is a function that will be called
+     * every time state of execution and data loading changes.
+     *
+     * @param executionResult - execution result, indicating state and/or results
+     */
+    children: (executionResult: WithLoadingResult) => React.ReactElement | null;
 }
 
-type Props = IExecutorProps & WithLoadingResult;
+type Props = IExecuteProps & WithLoadingResult;
 
-const CoreExecutor: React.FC<Props> = (props: Props) => {
+const CoreExecute: React.FC<Props> = (props: Props) => {
     const { children, error, isLoading, reload, result } = props;
 
     return children({
@@ -137,8 +145,14 @@ function seriesAndSlicesDim(
     );
 }
 
-function createExecution(props: IExecutorProps): IPreparedExecution {
-    const { backend, workspace, seriesBy, slicesBy = [], filter = [], sortBy = [], totals = [] } = props;
+/**
+ * Given execute props, this will prepare execution to send to backend.
+ *
+ * @param props - execute component props
+ * @internal
+ */
+export function createExecution(props: IExecuteProps): IPreparedExecution {
+    const { backend, workspace, seriesBy, slicesBy = [], filters = [], sortBy = [], totals = [] } = props;
 
     if (!backend || !workspace) {
         throw new InvariantError(
@@ -153,7 +167,7 @@ function createExecution(props: IExecutorProps): IPreparedExecution {
     return backend
         .workspace(workspace)
         .execution()
-        .forItems(seriesBy.concat(slicesBy), filter)
+        .forItems(seriesBy.concat(slicesBy), filters)
         .withSorting(...sortBy)
         .withDimensions(...dimensions);
 }
@@ -169,10 +183,10 @@ function createExecution(props: IExecutorProps): IPreparedExecution {
  * @remarks see `IDataAccessMethods` for additional documentation
  * @public
  */
-export const Executor = withContexts(
-    withExecution<IExecutorProps>({
+export const Execute = withContexts(
+    withExecution<IExecuteProps>({
         execution: createExecution,
-        events: (props: IExecutorProps) => {
+        events: (props: IExecuteProps) => {
             const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart } = props;
 
             return {
@@ -182,20 +196,21 @@ export const Executor = withContexts(
                 onLoadingStart,
             };
         },
-        shouldRefetch: (prevProps: IExecutorProps, nextProps: IExecutorProps) => {
-            const relevantProps: Array<keyof IExecutorProps> = [
+        shouldRefetch: (prevProps: IExecuteProps, nextProps: IExecuteProps) => {
+            const relevantProps: Array<keyof IExecuteProps> = [
                 "onError",
                 "onLoadingChanged",
                 "onLoadingFinish",
                 "onLoadingStart",
             ];
 
-            const relevantPropsDeepEqual: Array<keyof IExecutorProps> = [
+            const relevantPropsDeepEqual: Array<keyof IExecuteProps> = [
                 "seriesBy",
                 "slicesBy",
                 "totals",
-                "filter",
+                "filters",
                 "sortBy",
+                "window",
             ];
 
             return (
@@ -203,10 +218,11 @@ export const Executor = withContexts(
                 relevantPropsDeepEqual.some(propName => !isEqual(prevProps[propName], nextProps[propName]))
             );
         },
-        loadOnMount: (props?: IExecutorProps) => {
+        loadOnMount: (props?: IExecuteProps) => {
             const { loadOnMount = true } = props ?? {};
 
             return loadOnMount;
         },
-    })(CoreExecutor),
+        window: (props: IExecuteProps) => props.window,
+    })(CoreExecute),
 );

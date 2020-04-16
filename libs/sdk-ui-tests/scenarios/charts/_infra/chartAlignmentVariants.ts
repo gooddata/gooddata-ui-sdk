@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
-import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
+import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
+import { CustomizedScenario, UnboundVisProps } from "../../../src";
 
 const ConfigVariants: Array<[string, IChartConfig]> = [
     ["bottom", { chart: { verticalAlign: "bottom" } }],
@@ -9,7 +9,7 @@ const ConfigVariants: Array<[string, IChartConfig]> = [
     ["default", {}],
 ];
 
-export function chartAlignmentVariants<T extends VisProps>(
+export function chartAlignmentVariants<T extends IBucketChartProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
 ): Array<CustomizedScenario<T>> {

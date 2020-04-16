@@ -59,6 +59,11 @@ export type DataSeriesDigest = {
     allAttributeHeaders: IResultAttributeHeader[][];
 
     /**
+     * Index of measure local id -> index into the series dimension
+     */
+    measureIndexes: { [localId: string]: number[] };
+
+    /**
      * Count of data series - this is equal to number of measure headers (= all occurrences of all scoped measures)
      */
     count: number;
@@ -207,6 +212,26 @@ function findSlicesAndSeriesDims(dimensions: IDimensionDescriptor[]): ResultDesc
     };
 }
 
+function createMeasureIndexes(
+    measureDescriptors: IMeasureDescriptor[],
+    measureHeaders: IResultMeasureHeader[],
+) {
+    const measureAndIndex: Array<[string, number]> = measureHeaders.map((m, idx) => {
+        const measure = measureDescriptors[m.measureHeaderItem.order].measureHeaderItem.localIdentifier;
+
+        return [measure, idx];
+    });
+
+    return measureAndIndex.reduce((res, [localId, seriesIdx]) => {
+        if (!res[localId]) {
+            res[localId] = [];
+        }
+
+        res[localId].push(seriesIdx);
+        return res;
+    }, {});
+}
+
 function createDataSeriesDigest(
     dataView: IDataView,
     resultDesc: ResultDescriptor,
@@ -237,6 +262,7 @@ function createDataSeriesDigest(
     const scopingAttributesDef: IAttribute[] = scopingAttributes.map(
         a => def.attributesIndex[a.attributeHeader.localIdentifier],
     );
+    const measureIndexes = createMeasureIndexes(fromMeasures, measureHeaders);
 
     return {
         dimIdx,
@@ -246,6 +272,7 @@ function createDataSeriesDigest(
         scopingAttributesDef,
         measureHeaders,
         allAttributeHeaders,
+        measureIndexes,
         count,
     };
 }

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import { IChartConfig, IAxisNameConfig } from "@gooddata/sdk-ui-charts";
-import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
+import { IAxisNameConfig, IBucketChartProps, IChartConfig } from "@gooddata/sdk-ui-charts";
+import { CustomizedScenario, UnboundVisProps } from "../../../src";
 
 function getConfig(nameConfig: IAxisNameConfig): IChartConfig {
     const { visible = true, position = "middle" } = nameConfig;
@@ -54,7 +54,7 @@ function merge(original: IChartConfig = {}, axisNames: IChartConfig): IChartConf
     };
 }
 
-export function axisNameCustomization<T extends VisProps>(
+export function axisNameCustomization<T extends IBucketChartProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
 ): Array<CustomizedScenario<T>> {

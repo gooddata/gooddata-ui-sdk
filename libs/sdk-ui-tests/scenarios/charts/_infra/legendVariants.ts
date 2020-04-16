@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { UnboundVisProps, VisProps, CustomizedScenario } from "../../../src";
-import { ILegendConfig } from "@gooddata/sdk-ui-charts";
+import { UnboundVisProps, CustomizedScenario } from "../../../src";
+import { ILegendConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
 
 const LegendVariants: Array<[string, ILegendConfig]> = [
     ["auto legend", { position: "auto" }],
@@ -12,7 +12,7 @@ const LegendVariants: Array<[string, ILegendConfig]> = [
     ["disabled", { enabled: false }],
 ];
 
-export function legendCustomizer<T extends VisProps>(
+export function legendCustomizer<T extends IBucketChartProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
 ): Array<CustomizedScenario<T>> {

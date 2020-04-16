@@ -7,7 +7,17 @@ import {
     IResultMeasureHeader,
     IResultTotalHeader,
 } from "@gooddata/sdk-backend-spi";
-import { IMeasure, ITotal, IAttribute } from "@gooddata/sdk-model";
+import { IAttribute, IMeasure, ITotal } from "@gooddata/sdk-model";
+
+/**
+ * @alpha
+ */
+export type DataSeriesId = string;
+
+/**
+ * @alpha
+ */
+export type DataSliceId = string;
 
 /**
  * @alpha
@@ -110,7 +120,7 @@ export type DataSeriesDescriptor = DataSeriesHeaders &
         /**
          * Unique identifier of the data series. This can be used to directly access this data series from data view.
          */
-        readonly id: string;
+        readonly id: DataSeriesId;
 
         /**
          * Descriptor of the measure object whose computed values are in the data series. The descriptor
@@ -156,7 +166,7 @@ export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataP
     /**
      * Unique identifier of the data series. This can be used to directly access this data series from data view.
      */
-    readonly id: string;
+    readonly id: DataSeriesId;
 
     /**
      * Descriptor of this data series - what measure it was calculated from, whether it is scoped and if so to what attribute headers.
@@ -211,6 +221,34 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
      * Order of apperance matches the order of appreance in the `scopingAttributes` array.
      */
     readonly scopingAttributesDef?: IAttribute[];
+
+    /**
+     * Returns iterator over all data series created for particular measure.
+     *
+     * @param localIdOrMeasure - local id of measure or measure object to get local id from
+     * @returns iterable with no elements
+     */
+    allForMeasure(localIdOrMeasure: string | IMeasure): Iterable<IDataSeries>;
+
+    /**
+     * Returns first-found data series for the provided measure. This is a 'get-or-die' method and will throw
+     * in case data series from the provided measure is not located.
+     *
+     * @param localIdOrMeasure - local id of measure or measure object to get local id from
+     * @returns data series
+     * @throws error if no data series or no data series from the provided measure
+     */
+    firstForMeasure(localIdOrMeasure: string | IMeasure): IDataSeries;
+
+    /**
+     * Returns all data series in an array.
+     *
+     * Note: if you are looking for a subset of measures, always prefer using the first-class methods
+     * {@link allForMeasure} and {@link firstForMeasure} in favor of getting the array and filtering yourself.
+     *
+     * @return empty if no data series
+     */
+    toArray(): IDataSeries[];
 }
 
 //
@@ -257,7 +295,7 @@ export type DataSliceDescriptor = DataSliceHeaders &
         /**
          * Unique identifier of the data slice. This can be used to directly access this data slice from data view.
          */
-        readonly id: string;
+        readonly id: DataSliceId;
 
         /**
          * Descriptors of attributes whose elements are listed in the headers property.
@@ -292,7 +330,7 @@ export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoi
     /**
      * Unique identifier of the data slice. This can be used to directly access this data slice from data view.
      */
-    readonly id: string;
+    readonly id: DataSliceId;
 
     /**
      * Descriptor of this data slice - what attributes or totals are the data points calculated for.
@@ -326,6 +364,13 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
      * Descriptors of attributes and/or totals that were used to create data slices.
      */
     readonly descriptors: Array<IAttributeDescriptor | ITotal>;
+
+    /**
+     * Returns all data slices in an array.
+     *
+     * @return empty if no data slices
+     */
+    toArray(): IDataSlice[];
 }
 
 /**
@@ -341,19 +386,7 @@ export interface IDataAccessMethods {
     series(): IDataSeriesCollection;
 
     /**
-     * @param id - data series identifier
-     * @returns data series matching the identifier, undefined if not found
-     */
-    seriesById(id: string): IDataSeries | undefined;
-
-    /**
      * @returns collection of data slices that are available in the data view
      */
     slices(): IDataSliceCollection;
-
-    /**
-     * @param id - data slice identifier
-     * @returns data slice matching the identifier, undefined if not found
-     */
-    sliceById(id: string): IDataSlice | undefined;
 }

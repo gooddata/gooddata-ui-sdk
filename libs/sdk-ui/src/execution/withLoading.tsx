@@ -2,7 +2,22 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
-import { DataViewFacade, makeCancelable, ICancelablePromise } from "../base";
+import { DataViewFacade, makeCancelable, ICancelablePromise, convertError, GoodDataSdkError } from "../base";
+
+/**
+ * @public
+ */
+export type DataViewWindow = {
+    /**
+     * Zero-based offsets into the data.
+     */
+    offset: number[];
+
+    /**
+     * Size of the window to retrieve.
+     */
+    size: number[];
+};
 
 /**
  * @public
@@ -47,7 +62,8 @@ export interface IWithLoadingEvents<TProps> {
  * @public
  */
 export interface IWithLoading<TProps> {
-    promiseFactory: (props: TProps) => Promise<DataViewFacade>;
+    promiseFactory: (props: TProps, window?: DataViewWindow) => Promise<DataViewFacade>;
+    window?: DataViewWindow | ((props: TProps) => DataViewWindow | undefined);
     events?: IWithLoadingEvents<TProps> | ((props: TProps) => IWithLoadingEvents<TProps>);
     loadOnMount?: boolean | ((props: TProps) => boolean);
     shouldRefetch?: (prevProps: TProps, nextProps: TProps) => boolean;
@@ -64,7 +80,7 @@ type WithLoadingState = {
  * @public
  */
 export function withLoading<TProps>(params: IWithLoading<TProps>) {
-    const { promiseFactory, loadOnMount = true, events = {}, shouldRefetch = () => false } = params;
+    const { promiseFactory, loadOnMount = true, events = {}, shouldRefetch = () => false, window } = params;
 
     return (
         WrappedComponent: React.ComponentType<TProps & WithLoadingResult>,
@@ -118,7 +134,7 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
                 }));
             }
 
-            private setError(error: Error) {
+            private setError(error: GoodDataSdkError) {
                 const { onError, onLoadingChanged } = this.getEvents();
 
                 onError(error, this.props);
@@ -152,14 +168,17 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
 
                 this.startLoading();
 
-                const promise = promiseFactory(this.props);
+                const readWindow = typeof window === "function" ? window(this.props) : window;
+                const promise = promiseFactory(this.props, readWindow);
                 this.cancelablePromise = makeCancelable(promise);
 
                 try {
                     const result = await this.cancelablePromise.promise;
                     this.setResult(result);
                 } catch (err) {
-                    this.setError(err);
+                    const sdkError = convertError(err);
+
+                    this.setError(sdkError);
                 }
             }
 
