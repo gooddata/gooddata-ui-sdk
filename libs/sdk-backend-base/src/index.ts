@@ -19,3 +19,5 @@ export {
 
 export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 export { withCaching, CachingConfiguration, DefaultCachingConfiguration } from "./cachingBackend";
+export { withNormalization, NormalizationConfig } from "./normalizingBackend";
+export { Normalizer, Denormalizer, NormalizationState } from "./normalizingBackend/normalizer";
