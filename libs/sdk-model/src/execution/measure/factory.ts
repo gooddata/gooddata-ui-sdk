@@ -18,6 +18,7 @@ import {
     isSimpleMeasure,
     MeasureAggregation,
     measureLocalId,
+    MeasureOrLocalId,
 } from "./index";
 import { Identifier, isObjRef, ObjRef, objRefToString } from "../../objRef";
 import { IMeasureFilter } from "../filter";
@@ -52,7 +53,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      * @internal
      */
     protected constructor() {
-        this.measure = {} as any;
+        this.measure = { localIdentifier: "" };
     }
 
     public localId = (localId: Identifier) => {
@@ -62,8 +63,20 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
         return this;
     };
 
+    public defaultLocalId = () => {
+        this.measure.localIdentifier = "";
+        this.customLocalId = false;
+
+        return this;
+    };
+
     public alias = (alias: string) => {
         this.measure.alias = alias;
+        return this;
+    };
+
+    public noAlias = () => {
+        delete this.measure.alias;
         return this;
     };
 
@@ -73,8 +86,20 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
         return this;
     };
 
+    public defaultFormat = () => {
+        delete this.measure.format;
+
+        return this;
+    };
+
     public title = (title: string) => {
         this.measure.title = title;
+
+        return this;
+    };
+
+    public noTitle = () => {
+        delete this.measure.title;
 
         return this;
     };
@@ -92,6 +117,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
 
     protected initializeFromExisting(measure: MeasureEnvelope): void {
         this.measure = cloneDeep(measure);
+        this.measure.localIdentifier = "";
         this.customLocalId = false;
     }
 
@@ -239,7 +265,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 
 type ArithmeticMeasureBuilderInput =
     | {
-          measuresOrIds: ReadonlyArray<IMeasure | Identifier>;
+          measuresOrIds: ReadonlyArray<MeasureOrLocalId>;
           operator: ArithmeticMeasureOperator;
       }
     | IMeasure<IArithmeticMeasureDefinition>;
@@ -264,9 +290,7 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
             this.initializeFromExisting(input.measure);
             this.arithmeticMeasure = cloneDeep(input.measure.definition.arithmeticMeasure);
         } else {
-            const measureIdentifiers: Identifier[] = input.measuresOrIds.map(m =>
-                isMeasure(m) ? measureLocalId(m) : m,
-            );
+            const measureIdentifiers: Identifier[] = input.measuresOrIds.map(measureLocalId);
 
             this.arithmeticMeasure = {
                 measureIdentifiers,
@@ -274,6 +298,18 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
             };
         }
     }
+
+    public operator = (op: ArithmeticMeasureOperator) => {
+        this.arithmeticMeasure.operator = op;
+
+        return this;
+    };
+
+    public operands = (measuresOrLocalIds: MeasureOrLocalId[]) => {
+        this.arithmeticMeasure.measureIdentifiers = measuresOrLocalIds.map(measureLocalId);
+
+        return this;
+    };
 
     protected buildDefinition(): IArithmeticMeasureDefinition {
         return {
@@ -290,7 +326,7 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
 }
 
 type PoPMeasureBuilderInput =
-    | { measureOrLocalId: IMeasure | Identifier; popAttrIdOrRef: ObjRef | Identifier }
+    | { measureOrLocalId: MeasureOrLocalId; popAttrIdOrRef: ObjRef | Identifier }
     | IMeasure<IPoPMeasureDefinition>;
 
 /**
@@ -313,9 +349,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
             this.initializeFromExisting(input.measure);
             this.popMeasureDefinition = cloneDeep(input.measure.definition.popMeasureDefinition);
         } else {
-            const measureIdentifier = isMeasure(input.measureOrLocalId)
-                ? measureLocalId(input.measureOrLocalId)
-                : input.measureOrLocalId;
+            const measureIdentifier = measureLocalId(input.measureOrLocalId);
             const popAttribute = isObjRef(input.popAttrIdOrRef)
                 ? input.popAttrIdOrRef
                 : idRef(input.popAttrIdOrRef, "attribute");
@@ -326,6 +360,18 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
             };
         }
     }
+
+    public masterMeasure = (measureOrLocalId: MeasureOrLocalId) => {
+        this.popMeasureDefinition.measureIdentifier = measureLocalId(measureOrLocalId);
+
+        return this;
+    };
+
+    public popAttribute = (popAttrIdOrRef: ObjRef | Identifier) => {
+        this.popMeasureDefinition.popAttribute = isObjRef(popAttrIdOrRef)
+            ? popAttrIdOrRef
+            : idRef(popAttrIdOrRef, "attribute");
+    };
 
     protected buildDefinition(): IPoPMeasureDefinition {
         return {
@@ -342,7 +388,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
 
 type PreviousPeriodMeasureBuilderInput =
     | {
-          measureIdOrLocalId: IMeasure | string;
+          measureIdOrLocalId: MeasureOrLocalId;
           dateDataSets: IPreviousPeriodDateDataSetSimple[];
       }
     | IMeasure<IPreviousPeriodMeasureDefinition>;
@@ -368,18 +414,21 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
             this.previousPeriodMeasure = cloneDeep(input.measure.definition.previousPeriodMeasure);
         } else {
             this.previousPeriodMeasure = {
-                measureIdentifier: isMeasure(input.measureIdOrLocalId)
-                    ? measureLocalId(input.measureIdOrLocalId)
-                    : input.measureIdOrLocalId,
-                dateDataSets: input.dateDataSets.map(
-                    (d): IPreviousPeriodDateDataSet => ({
-                        ...d,
-                        dataSet: typeof d.dataSet === "string" ? { identifier: d.dataSet } : d.dataSet,
-                    }),
-                ),
+                measureIdentifier: measureLocalId(input.measureIdOrLocalId),
+                dateDataSets: this.convertDd(input.dateDataSets),
             };
         }
     }
+
+    public masterMeasure = (measureOrLocalId: MeasureOrLocalId) => {
+        this.previousPeriodMeasure.measureIdentifier = measureLocalId(measureOrLocalId);
+
+        return this;
+    };
+
+    public dateDataSets = (dd: IPreviousPeriodDateDataSetSimple[]) => {
+        this.previousPeriodMeasure.dateDataSets = this.convertDd(dd);
+    };
 
     protected buildDefinition(): IPreviousPeriodMeasureDefinition {
         return {
@@ -390,6 +439,15 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
     protected generateLocalId(): string {
         return `${this.previousPeriodMeasure.measureIdentifier}_previous_period`;
     }
+
+    private convertDd = (dd: IPreviousPeriodDateDataSetSimple[]) => {
+        return dd.map(
+            (d): IPreviousPeriodDateDataSet => ({
+                ...d,
+                dataSet: typeof d.dataSet === "string" ? { identifier: d.dataSet } : d.dataSet,
+            }),
+        );
+    };
 }
 
 /**
@@ -477,7 +535,7 @@ export function modifySimpleMeasure(
  * @public
  */
 export function newArithmeticMeasure(
-    measuresOrIds: ReadonlyArray<IMeasure | Identifier>,
+    measuresOrIds: ReadonlyArray<MeasureOrLocalId>,
     operator: ArithmeticMeasureOperator,
     modifications: MeasureModifications<ArithmeticMeasureBuilder> = identity,
 ): IMeasure<IArithmeticMeasureDefinition> {
@@ -494,7 +552,7 @@ export function newArithmeticMeasure(
  * @public
  */
 export function newPopMeasure(
-    measureOrLocalId: IMeasure | Identifier,
+    measureOrLocalId: MeasureOrLocalId,
     popAttrIdOrRef: ObjRef | Identifier,
     modifications: MeasureModifications<PoPMeasureBuilder> = identity,
 ): IMeasure<IPoPMeasureDefinition> {
@@ -511,7 +569,7 @@ export function newPopMeasure(
  * @public
  */
 export function newPreviousPeriodMeasure(
-    measureIdOrLocalId: IMeasure | Identifier,
+    measureIdOrLocalId: MeasureOrLocalId,
     dateDataSets: IPreviousPeriodDateDataSetSimple[],
     modifications: MeasureModifications<PreviousPeriodMeasureBuilder> = identity,
 ): IMeasure<IPreviousPeriodMeasureDefinition> {

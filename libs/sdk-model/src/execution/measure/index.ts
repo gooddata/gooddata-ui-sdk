@@ -34,6 +34,14 @@ export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionT
 }
 
 /**
+ * Specification of measure either by value or by local id reference. It is a common convenience that functions
+ * which require measure reference accept both value and reference.
+ *
+ * @public
+ */
+export type MeasureOrLocalId = IMeasure | Identifier;
+
+/**
  * Subset of IMeasure interface which defines properties that MAY be used to provide human readable
  * description of the measure.
  *
@@ -262,16 +270,15 @@ export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasu
 //
 
 /**
- * Gets measure's local identifier.
+ * Gets measure's local identifier. For convenience and fluency, this function accepts both measure object and identifier
+ * object.
  *
- * @param measure - measure to work with
+ * @param measureOrLocalId - measure object or measure localId; if localId provided, it is returned as is
  * @returns string identifier
  * @public
  */
-export function measureLocalId(measure: IMeasure): string {
-    invariant(measure, "measure to get local id from must be specified");
-
-    return measure.measure.localIdentifier;
+export function measureLocalId(measureOrLocalId: MeasureOrLocalId): string {
+    return typeof measureOrLocalId === "string" ? measureOrLocalId : measureOrLocalId.measure.localIdentifier;
 }
 
 /**

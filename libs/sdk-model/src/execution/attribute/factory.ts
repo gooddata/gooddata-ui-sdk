@@ -43,9 +43,22 @@ export class AttributeBuilder {
         return this;
     };
 
+    public noAlias = () => {
+        delete this.attribute.alias;
+
+        return this;
+    };
+
     public localId = (localId: string) => {
         this.attribute.localIdentifier = localId;
         this.customLocalId = true;
+
+        return this;
+    };
+
+    public defaultLocalId = () => {
+        this.attribute.localIdentifier = "";
+        this.customLocalId = false;
 
         return this;
     };

@@ -15,6 +15,21 @@ Object {
 }
 `;
 
+exports[`measure factories modifySimpleMeasure should create new measure with cleaned up customizations 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "item": Object {
+          "identifier": "measure1",
+        },
+      },
+    },
+    "localIdentifier": "m_measure1",
+  },
+}
+`;
+
 exports[`measure factories modifySimpleMeasure should create new measure with modified aggregation and custom local id 1`] = `
 Object {
   "measure": Object {
