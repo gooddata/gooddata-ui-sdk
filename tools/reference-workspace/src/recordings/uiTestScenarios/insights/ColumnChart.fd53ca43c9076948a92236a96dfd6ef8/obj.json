@@ -34,8 +34,8 @@
                     },
                     {
                         "measure": {
-                            "alias": "Won Last Year",
                             "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+                            "alias": "Won Last Year",
                             "definition": {
                                 "popMeasureDefinition": {
                                     "measureIdentifier": "m_acugFHNJgsBy",

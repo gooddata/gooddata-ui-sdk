@@ -34,8 +34,8 @@
                     },
                     {
                         "measure": {
-                            "alias": "Calculated 'Lost' measure",
                             "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                            "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],

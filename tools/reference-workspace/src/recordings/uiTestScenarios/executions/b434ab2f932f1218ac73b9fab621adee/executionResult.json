@@ -1,0 +1,56 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "name": "Product Name",
+                        "localIdentifier": "a_label.product.id.name",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                        "identifier": "label.product.id.name",
+                        "formOf": {
+                            "name": "Product",
+                            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+                            "identifier": "attr.product.id"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Amount",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Won",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
