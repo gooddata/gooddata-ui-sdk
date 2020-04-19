@@ -27,6 +27,7 @@ import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
@@ -171,6 +172,7 @@ export const DefaultCachingConfiguration: CachingConfiguration;
 // @internal (undocumented)
 export class Denormalizer {
     denormalizeDimDescriptors: (normalizedDims: IDimensionDescriptor[]) => IDimensionDescriptor[];
+    denormalizeHeaders: (headerItems: IResultHeader[][][]) => IResultHeader[][][];
     // (undocumented)
     static from(state: NormalizationState): Denormalizer;
     // (undocumented)

@@ -84,6 +84,7 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
 class DenormalizingExecutionResult implements IExecutionResult {
     public readonly definition: IExecutionDefinition;
     public readonly dimensions: IDimensionDescriptor[];
+    private readonly denormalizer: Denormalizer;
     private readonly _fingerprint: string;
 
     constructor(
@@ -92,10 +93,10 @@ class DenormalizingExecutionResult implements IExecutionResult {
         private readonly normalizingExecution: IPreparedExecution,
         private readonly originalExecution: IPreparedExecution,
     ) {
-        const denormalizer = Denormalizer.from(normalizationState);
+        this.denormalizer = Denormalizer.from(normalizationState);
 
         this.definition = this.normalizationState.original;
-        this.dimensions = denormalizer.denormalizeDimDescriptors(normalizedResult.dimensions);
+        this.dimensions = this.denormalizer.denormalizeDimDescriptors(normalizedResult.dimensions);
         this._fingerprint = `normalizedResult_${defFingerprint(this.definition)}`;
     }
 
@@ -114,7 +115,7 @@ class DenormalizingExecutionResult implements IExecutionResult {
         const result = this;
 
         return promisedDataView.then(dataView => {
-            return new DenormalizedDataView(result, dataView);
+            return new DenormalizedDataView(result, dataView, result.denormalizer);
         });
     };
 
@@ -123,7 +124,7 @@ class DenormalizingExecutionResult implements IExecutionResult {
         const result = this;
 
         return promisedDataView.then(dataView => {
-            return new DenormalizedDataView(result, dataView);
+            return new DenormalizedDataView(result, dataView, result.denormalizer);
         });
     };
 
@@ -137,16 +138,12 @@ class DenormalizingExecutionResult implements IExecutionResult {
 }
 
 /**
- * Denormalized data view performs no further alterations on the data view - the data and
- * headers are independent on details that are lost during normalization.
+ * Denormalized DataView takes mostly copies of the contents of the normalized data view. The only exception is the
+ * header items. The measure headers included therein may have normalized, incorrect measure names (defaulted by
+ * backend to localId).
  *
- * However, the implementation does take deep copies of the normalized data - to be sure that any mutations
- * of the data (albeit prohibited by the API) do not impact a possibly cached normalized data view. Currently
- * known mutation like this is called `fixEmptyHeaderItems` and is done by sdk-ui-charts.
- *
- * Additionally, this implementation is needed due to how DataViewFacade works. the DVF.for() uses WeakMap
- * to map instance of data view to an instance of facade. Without this instance in place, we would run into
- * hard-to-diagnose weirdness and clashes.
+ * Note: an important technical aspect is that DataViewFacade uses WeakMap to link between data view and facade
+ * instances. It is therefore important for denormalized view to have its own instance at all times.
  */
 class DenormalizedDataView implements IDataView {
     public readonly definition: IExecutionDefinition;
@@ -161,12 +158,16 @@ class DenormalizedDataView implements IDataView {
 
     private readonly _fingerprint: string;
 
-    constructor(result: DenormalizingExecutionResult, private readonly normalizedDataView: IDataView) {
+    constructor(
+        result: DenormalizingExecutionResult,
+        private readonly normalizedDataView: IDataView,
+        denormalizer: Denormalizer,
+    ) {
         this.result = result;
         this.definition = this.result.definition;
         this.count = cloneDeep(this.normalizedDataView.count);
         this.data = cloneDeep(this.normalizedDataView.data);
-        this.headerItems = cloneDeep(this.normalizedDataView.headerItems);
+        this.headerItems = denormalizer.denormalizeHeaders(this.normalizedDataView.headerItems);
         this.offset = cloneDeep(this.normalizedDataView.offset);
         this.totalCount = cloneDeep(this.normalizedDataView.totalCount);
         this.totals = cloneDeep(this.normalizedDataView.totals);

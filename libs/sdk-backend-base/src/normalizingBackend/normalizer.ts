@@ -1,9 +1,15 @@
 // (C) 2007-2020 GoodData Corporation
 import {
+    attributeAlias,
     attributeLocalId,
     filterIsEmpty,
+    IArithmeticMeasureDefinition,
+    IAttribute,
+    Identifier,
     IExecutionDefinition,
     IMeasure,
+    IPoPMeasureDefinition,
+    IPreviousPeriodMeasureDefinition,
     isArithmeticMeasureDefinition,
     isAttributeLocator,
     isAttributeSort,
@@ -13,28 +19,26 @@ import {
     isNegativeAttributeFilter,
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
+    measureAlias,
+    measureFormat,
     MeasureGroupIdentifier,
     measureLocalId,
+    measureTitle,
     measureValueFilterCondition,
     modifyAttribute,
     modifyMeasure,
-    IPoPMeasureDefinition,
-    IPreviousPeriodMeasureDefinition,
-    IArithmeticMeasureDefinition,
-    Identifier,
-    IAttribute,
-    attributeAlias,
-    measureFormat,
-    measureAlias,
-    measureTitle,
 } from "@gooddata/sdk-model";
 import {
     IDimensionDescriptor,
+    IResultHeader,
+    IResultMeasureHeader,
     isAttributeDescriptor,
-    isMeasureGroupDescriptor,
+    isMeasureDescriptor,
+    isResultMeasureHeader,
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import cloneDeep = require("lodash/cloneDeep");
+import cloneDeepWith = require("lodash/cloneDeepWith");
 import keyBy = require("lodash/keyBy");
 
 type LocalIdMap = { [from: string]: string };
@@ -88,49 +92,62 @@ export class Denormalizer {
      * @returns new descriptors
      */
     public denormalizeDimDescriptors = (normalizedDims: IDimensionDescriptor[]): IDimensionDescriptor[] => {
-        const copy = cloneDeep(normalizedDims);
+        return cloneDeepWith(normalizedDims, value => {
+            if (isAttributeDescriptor(value)) {
+                const localIdentifier = this.originalLocalId(value.attributeHeader.localIdentifier);
+                const attribute = this.originalAttributes[localIdentifier]!;
+                const name = attributeAlias(attribute) || value.attributeHeader.name;
 
-        copy.forEach(dim => {
-            dim.headers.forEach(descriptor => {
-                if (isAttributeDescriptor(descriptor)) {
-                    const originalLocalId = this.originalLocalId(descriptor.attributeHeader.localIdentifier);
-                    const originalDefinition = this.originalAttributes[originalLocalId]!;
-                    const originalAlias = attributeAlias(originalDefinition);
+                return {
+                    attributeHeader: {
+                        ...value.attributeHeader,
+                        name,
+                        localIdentifier,
+                    },
+                };
+            } else if (isMeasureDescriptor(value)) {
+                const localIdentifier = this.originalLocalId(value.measureHeaderItem.localIdentifier);
+                const measure = this.originalMeasures[localIdentifier]!;
+                const format = measureFormat(measure) || value.measureHeaderItem.format;
+                const name = measureAlias(measure) || measureTitle(measure) || value.measureHeaderItem.name;
 
-                    if (originalAlias) {
-                        descriptor.attributeHeader.name = originalAlias;
-                    }
+                return {
+                    measureHeaderItem: {
+                        ...value.measureHeaderItem,
+                        localIdentifier,
+                        format,
+                        name,
+                    },
+                };
+            }
 
-                    descriptor.attributeHeader.localIdentifier = originalLocalId;
-                } else if (isMeasureGroupDescriptor(descriptor)) {
-                    descriptor.measureGroupHeader.items.forEach(measure => {
-                        const originalLocalId = this.originalLocalId(
-                            measure.measureHeaderItem.localIdentifier,
-                        );
-                        const originalDefinition = this.originalMeasures[originalLocalId]!;
-                        const originalFormat = measureFormat(originalDefinition);
-                        const originalAlias = measureAlias(originalDefinition);
-                        const originalTitle = measureTitle(originalDefinition);
-
-                        if (originalFormat) {
-                            // TODO investigate behavior when computeRatio is specified.
-                            measure.measureHeaderItem.format = originalFormat;
-                        }
-
-                        // alias has precedence over title
-                        if (originalAlias) {
-                            measure.measureHeaderItem.name = originalAlias;
-                        } else if (originalTitle) {
-                            measure.measureHeaderItem.name = originalTitle;
-                        }
-
-                        measure.measureHeaderItem.localIdentifier = originalLocalId;
-                    });
-                }
-            });
+            return;
         });
+    };
 
-        return copy;
+    /**
+     * Derived measures or arithmetic measures have the 'name' in result header defaulted to measure
+     * localId. This method deals with it. It creates a copy of headers with the measure headers denormalized,
+     * values replaced with the contents of alias or title (whichever comes first).
+     *
+     * @param headerItems - headers to denormalize, copy will be done
+     * @returns new headers
+     */
+    public denormalizeHeaders = (headerItems: IResultHeader[][][]): IResultHeader[][][] => {
+        return cloneDeepWith(headerItems, value => {
+            if (isResultMeasureHeader(value)) {
+                const newHeader: IResultMeasureHeader = {
+                    measureHeaderItem: {
+                        name: this.fillOriginalMeasureTitle(value.measureHeaderItem.name),
+                        order: value.measureHeaderItem.order,
+                    },
+                };
+
+                return newHeader;
+            }
+
+            return;
+        });
     };
 
     private originalLocalId = (normalized: string): string => {
@@ -139,6 +156,22 @@ export class Denormalizer {
         invariant(value, `mapping from normalized to real localId does not exist. Normalized: ${normalized}`);
 
         return value!;
+    };
+
+    private fillOriginalMeasureTitle = (name: string): string => {
+        const originalLocalId = this.state.n2oMap[name];
+
+        if (!originalLocalId) {
+            return name;
+        }
+
+        const measure = this.originalMeasures[originalLocalId];
+
+        if (!measure) {
+            return name;
+        }
+
+        return measureAlias(measure) || measureTitle(measure) || name;
     };
 }
 

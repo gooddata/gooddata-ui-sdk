@@ -28,7 +28,6 @@ import invariant from "ts-invariant";
 import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
 import { Denormalizer, NormalizationState } from "@gooddata/sdk-backend-base";
 import flatMap = require("lodash/flatMap");
-import cloneDeep = require("lodash/cloneDeep");
 
 //
 //
@@ -125,8 +124,10 @@ class RecordedExecutionResult implements IExecutionResult {
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
         private readonly recording: ExecutionRecording,
+        private readonly denormalizer?: Denormalizer,
     ) {
-        this.dimensions = this.recording.executionResult.dimensions as IDimensionDescriptor[];
+        const dimensions = this.recording.executionResult.dimensions as IDimensionDescriptor[];
+        this.dimensions = denormalizer ? denormalizer.denormalizeDimDescriptors(dimensions) : dimensions;
 
         this._fp = defFingerprint(this.definition) + "/recordedResult";
     }
@@ -142,7 +143,7 @@ class RecordedExecutionResult implements IExecutionResult {
             return Promise.reject(new NoDataError("there is no execution recording that contains all data"));
         }
 
-        return Promise.resolve(new RecordedDataView(this, this.definition, allData));
+        return Promise.resolve(new RecordedDataView(this, this.definition, allData, this.denormalizer));
     };
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
@@ -153,7 +154,7 @@ class RecordedExecutionResult implements IExecutionResult {
             return Promise.reject(new NoDataError("there is no execution recording for requested window"));
         }
 
-        return Promise.resolve(new RecordedDataView(this, this.definition, windowData));
+        return Promise.resolve(new RecordedDataView(this, this.definition, windowData, this.denormalizer));
     };
 
     public transform = (): IPreparedExecution => {
@@ -183,9 +184,12 @@ class RecordedDataView implements IDataView {
         public readonly result: IExecutionResult,
         public readonly definition: IExecutionDefinition,
         recordedDataView: any,
+        denormalizer?: Denormalizer,
     ) {
         this.data = recordedDataView.data;
-        this.headerItems = recordedDataView.headerItems;
+        this.headerItems = denormalizer
+            ? denormalizer.denormalizeHeaders(recordedDataView.headerItems)
+            : recordedDataView.headerItems;
         this.totals = recordedDataView.totals;
         this.count = recordedDataView.count;
         this.offset = recordedDataView.offset;
@@ -236,24 +240,6 @@ function denormalizedDataView(recording: ScenarioRecording, scenario: any, dataV
     return new RecordedDataView(result, definition, data);
 }
 
-function denormalizeRecording(
-    execution: ExecutionRecording,
-    normalizationState: NormalizationState,
-): ExecutionRecording {
-    const normalizedResult: IExecutionResult = cloneDeep(execution.executionResult);
-    const denormalizedResult: IExecutionResult = {
-        ...normalizedResult,
-        dimensions: Denormalizer.from(normalizationState).denormalizeDimDescriptors(
-            normalizedResult.dimensions,
-        ),
-    };
-
-    return {
-        ...execution,
-        executionResult: denormalizedResult,
-    };
-}
-
 /**
  * Constructs data view from normalized execution - performing denormalization in order to return the
  * expected data.
@@ -267,17 +253,17 @@ function normalizedDataView(recording: ScenarioRecording, scenario: any, dataVie
         n2oMap: scenario.n2oMap,
     };
 
-    const denormalizedExecution = denormalizeRecording(execution, normalizationState);
+    const denormalizer = Denormalizer.from(normalizationState);
     const recordingKey = recordedExecutionKey(normalizationState.original);
-    const adHocIndex: RecordingIndex = adHocExecIndex(recordingKey, denormalizedExecution);
+    const adHocIndex: RecordingIndex = adHocExecIndex(recordingKey, execution);
 
     const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace");
-    const result = new RecordedExecutionResult(normalizationState.original, factory, denormalizedExecution);
-    const data = denormalizedExecution[dataViewId];
+    const result = new RecordedExecutionResult(normalizationState.original, factory, execution, denormalizer);
+    const data = execution[dataViewId];
 
     invariant(data, `data for view ${dataViewId} could not be found in the recording`);
 
-    return new RecordedDataView(result, normalizationState.original, data);
+    return new RecordedDataView(result, normalizationState.original, data, denormalizer);
 }
 
 /**
