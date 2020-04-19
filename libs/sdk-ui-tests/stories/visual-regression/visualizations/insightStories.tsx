@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedBackend, RecordedBackendConfig, RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
+import { RecordedBackendConfig, RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -34,6 +34,7 @@ import { ConfigurationPanelWrapper } from "../_infra/ConfigurationPanelWrapper";
 import groupBy = require("lodash/groupBy");
 import keyBy = require("lodash/keyBy");
 import flatten = require("lodash/flatten");
+import { StorybookBackend } from "../_infra/backend";
 
 /*
  * Code in this file generates stories that render test scenarios using pluggable visualizations.
@@ -80,7 +81,7 @@ const DefaultBackendConfig: RecordedBackendConfig = {
     globalSettings: DefaultSettings,
 };
 
-const backend = recordedBackend(ReferenceRecordings.Recordings, DefaultBackendConfig);
+const backend = StorybookBackend(DefaultBackendConfig);
 
 //
 // Inspect recording index & prepare list of Insights to possibly create stories for

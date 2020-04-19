@@ -4,13 +4,7 @@ import flatMap = require("lodash/flatMap");
 import unionBy = require("lodash/unionBy");
 import isArray = require("lodash/isArray");
 import isObject = require("lodash/isObject");
-import {
-    defFingerprint,
-    IExecutionDefinition,
-    IInsight,
-    IInsightDefinition,
-    insightTitle,
-} from "@gooddata/sdk-model";
+import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
@@ -18,7 +12,7 @@ import allScenarios from "../../scenarios";
 import { IScenario } from "../../src";
 import { ChartInteractions, DataViewRequests } from "../_infra/backendWithCapturing";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory";
-import { mountChartAndCapture } from "../_infra/render";
+import { mountChartAndCaptureNormalized } from "../_infra/render";
 import { mountInsight } from "../_infra/renderPlugVis";
 
 type AllScenariosType = [string, string, IScenario<any>];
@@ -135,7 +129,7 @@ function storeScenarioMetadata(
     recordingDir: string,
     vis: string,
     scenarioName: string,
-    definition: IExecutionDefinition,
+    interactions: ChartInteractions,
 ) {
     const scenariosFile = path.join(recordingDir, ScenariosFileName);
 
@@ -164,7 +158,30 @@ function storeScenarioMetadata(
         return;
     }
 
-    scenarios.push({ vis, scenario: scenarioName, buckets: definition.buckets });
+    const { normalizationState } = interactions;
+
+    if (normalizationState) {
+        /*
+         * If execution normalization took place, the scenario definition must contain the original execution definition
+         * and mapping between normalized localIds and original localIds. The normalized execution does not
+         * have to be stored together with scenario: it's already stored as part of execution definition.
+         *
+         * This must be done so that directly accessing recordedDataView can perform denormalization as well.
+         *
+         * The recordedDataView() is an important piece of the test support and must work predictably and without
+         * caveats.
+         */
+        scenarios.push({
+            vis,
+            scenario: scenarioName,
+            originalExecution: normalizationState.original,
+            n2oMap: normalizationState.n2oMap,
+        });
+    } else {
+        const definition = interactions.triggeredExecution;
+
+        scenarios.push({ vis, scenario: scenarioName, buckets: definition!.buckets });
+    }
 
     writeAsJsonSync(scenariosFile, scenarios);
 }
@@ -203,7 +220,7 @@ function storeScenarioDefinition(
     }
 
     if (!scenario.tags.includes("mock-no-scenario-meta")) {
-        storeScenarioMetadata(recordingDir, scenario.vis, scenario.name, componentExecution!);
+        storeScenarioMetadata(recordingDir, scenario.vis, scenario.name, interactions);
     }
 }
 
@@ -257,9 +274,10 @@ describe("all scenarios", () => {
     });
 
     it.each(Scenarios)("%s %s should lead to execution", async (vis, scenarioName, scenario) => {
-        const interactions = await mountChartAndCapture(scenario.component, scenario.propsFactory);
+        const interactions = await mountChartAndCaptureNormalized(scenario.component, scenario.propsFactory);
 
         expect(interactions.triggeredExecution).toBeDefined();
+        expect(interactions.normalizationState).toBeDefined();
 
         if (
             interactions.dataViewRequests.windows === undefined &&
@@ -283,7 +301,12 @@ describe("all scenarios", () => {
              * the respective visualization, capture execution definition and store everything.
              */
             const insight = createInsightDefinitionForChart(vis, scenarioName, interactions);
-            const plugVizInteractions = await mountInsight(insight);
+
+            /*
+             * note: to allow PV executions and react component executions to hit the same fingerprints, this function
+             * must also use the normalizing backend.
+             */
+            const plugVizInteractions = await mountInsight(insight, true);
 
             storeScenarioDefinition(scenario, interactions, plugVizInteractions);
             storeInsight(scenario, insight);

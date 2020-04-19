@@ -36,8 +36,11 @@ class PlugVisRendererUsingEnzyme {
     }
 }
 
-export async function mountInsight(insight: IInsightDefinition): Promise<ChartInteractions> {
-    const [backend, promisedInteractions] = backendWithCapturing();
+export async function mountInsight(
+    insight: IInsightDefinition,
+    normalize: boolean = false,
+): Promise<ChartInteractions> {
+    const [backend, promisedInteractions] = backendWithCapturing(normalize);
     const persistedInsight: IInsight = {
         insight: {
             identifier: "test",
