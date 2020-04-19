@@ -26,7 +26,9 @@ import {
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
+import { Denormalizer, NormalizationState } from "@gooddata/sdk-backend-base";
 import flatMap = require("lodash/flatMap");
+import cloneDeep = require("lodash/cloneDeep");
 
 //
 //
@@ -125,6 +127,7 @@ class RecordedExecutionResult implements IExecutionResult {
         private readonly recording: ExecutionRecording,
     ) {
         this.dimensions = this.recording.executionResult.dimensions as IDimensionDescriptor[];
+
         this._fp = defFingerprint(this.definition) + "/recordedResult";
     }
 
@@ -206,6 +209,77 @@ class RecordedDataView implements IDataView {
 //
 //
 
+function adHocExecIndex(key: string, execution: ExecutionRecording): RecordingIndex {
+    const adHocIndex: RecordingIndex = { executions: {} };
+    adHocIndex.executions![key] = execution;
+
+    return adHocIndex;
+}
+
+/**
+ * Constructs data view, using the recording as-is. The functions sets all the necessary pieces to a point
+ * where exec factory, definition and results match live results. The factory is setup in a way that attempting
+ * to transform and re-execute same prepared execution results works as expected.
+ */
+function denormalizedDataView(recording: ScenarioRecording, scenario: any, dataViewId: string): IDataView {
+    const { execution } = recording;
+    const definition = { ...execution.definition, buckets: scenario.buckets };
+    const recordingKey = recordedExecutionKey(definition);
+    const adHocIndex: RecordingIndex = adHocExecIndex(recordingKey, execution);
+
+    const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace");
+    const result = new RecordedExecutionResult(definition, factory, execution);
+    const data = execution[dataViewId];
+
+    invariant(data, `data for view ${dataViewId} could not be found in the recording`);
+
+    return new RecordedDataView(result, definition, data);
+}
+
+function denormalizeRecording(
+    execution: ExecutionRecording,
+    normalizationState: NormalizationState,
+): ExecutionRecording {
+    const normalizedResult: IExecutionResult = cloneDeep(execution.executionResult);
+    const denormalizedResult: IExecutionResult = {
+        ...normalizedResult,
+        dimensions: Denormalizer.from(normalizationState).denormalizeDimDescriptors(
+            normalizedResult.dimensions,
+        ),
+    };
+
+    return {
+        ...execution,
+        executionResult: denormalizedResult,
+    };
+}
+
+/**
+ * Constructs data view from normalized execution - performing denormalization in order to return the
+ * expected data.
+ */
+function normalizedDataView(recording: ScenarioRecording, scenario: any, dataViewId: string): IDataView {
+    const { execution } = recording;
+
+    const normalizationState: NormalizationState = {
+        original: scenario.originalExecution! as IExecutionDefinition,
+        normalized: execution.definition,
+        n2oMap: scenario.n2oMap,
+    };
+
+    const denormalizedExecution = denormalizeRecording(execution, normalizationState);
+    const recordingKey = recordedExecutionKey(normalizationState.original);
+    const adHocIndex: RecordingIndex = adHocExecIndex(recordingKey, denormalizedExecution);
+
+    const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace");
+    const result = new RecordedExecutionResult(normalizationState.original, factory, denormalizedExecution);
+    const data = denormalizedExecution[dataViewId];
+
+    invariant(data, `data for view ${dataViewId} could not be found in the recording`);
+
+    return new RecordedDataView(result, normalizationState.original, data);
+}
+
 /**
  * Creates a new data view facade for the provided recording. If the recording contains multiple sets of dataViews
  * (e.g. for different windows etc), then it is possible to provide dataViewId to look up the particular view. By default,
@@ -230,24 +304,11 @@ export function recordedDataView(recording: ScenarioRecording, dataViewId: strin
         "unable to find test scenario recording; this is most likely because of invalid/stale recording index. please refresh recordings and rebuild.",
     );
 
-    const definition = { ...execution.definition, buckets: scenario.buckets };
-
-    /*
-     * construct ad-hoc recording index that contains input recording.
-     *
-     * this enables limited facade => result => transform => exec flow.
-     */
-    const recordingKey = recordedExecutionKey(definition);
-    const adHocIndex: RecordingIndex = { executions: {} };
-    adHocIndex.executions![recordingKey] = execution;
-
-    const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace");
-    const result = new RecordedExecutionResult(definition, factory, execution);
-    const data = execution[dataViewId];
-
-    invariant(data, `data for view ${dataViewId} could not be found in the recording`);
-
-    return new RecordedDataView(result, definition, data);
+    if (!scenario.originalExecution) {
+        return denormalizedDataView(recording, scenario, dataViewId);
+    } else {
+        return normalizedDataView(recording, scenario, dataViewId);
+    }
 }
 
 function expandRecordingToDataViews(recording: ExecutionRecording): NamedDataView[] {
