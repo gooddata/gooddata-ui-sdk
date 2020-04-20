@@ -12,7 +12,6 @@ import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
-import { IBuilder } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
@@ -258,6 +257,8 @@ export interface IAuthenticationProvider {
 // @alpha
 export type IDashboard = IDashboardDefinition & {
     readonly ref: ObjRef;
+    readonly uri: string;
+    readonly identifier: string;
 };
 
 // @public
@@ -276,36 +277,15 @@ export interface IDashboardAttachment {
 }
 
 // @alpha
-export interface IDashboardBuilder extends IBuilder<IDashboard> {
-    alert(widgetRef: ObjRef, alert: IWidgetAlertDefinition): this;
-    alertFilterContext(alertRef: ObjRef, filterContext: IFilterContextDefinition): this;
-    dateFilterConfig(dateFilterConfig: IDateFilterConfig): this;
-    deleteAlert(alertRef: ObjRef): this;
-    deleteAlertFilterContext(filterContextRef: ObjRef): this;
-    deleteFilterContext(filterContextRef: ObjRef): this;
-    deleteScheduledMail(scheduledMailRef: ObjRef): this;
-    deleteWidget(widgetRef: ObjRef): this;
-    description(description: string): this;
-    filterContext(filterContext: IFilterContextDefinition): this;
-    layout(layout: Layout): this;
-    scheduledMail(scheduledMail: IScheduledMailDefinition): this;
-    title(title: string): this;
-    updateAlert(alert: IWidgetAlert): this;
-    updateAlertFilterContext(filterContext: IFilterContext): this;
-    updateFilterContext(filterContext: IFilterContext): this;
-    updateScheduledMail(scheduledMail: IScheduledMail): this;
-    updateWidget(widget: IWidget): this;
-    widget(widget: IWidgetDefinition): this;
-}
-
-// @alpha
 export interface IDashboardDefinition {
+    readonly created: string;
     readonly dateFilterConfig?: IDateFilterConfig;
     readonly description: string;
     readonly filterContext: IFilterContext[];
     readonly layout: Layout;
     readonly scheduledMails: IScheduledMail[];
     readonly title: string;
+    readonly updated: string;
     readonly widgets: IWidget[];
 }
 
@@ -525,6 +505,17 @@ export interface IInsightQueryResult extends IPagedResource<IInsight> {
 // @alpha
 export interface ILayoutWidget {
     widget: ObjRef;
+}
+
+// @alpha
+export interface IListedDashboard {
+    readonly created: string;
+    readonly description: string;
+    readonly identifier: string;
+    readonly ref: ObjRef;
+    readonly title: string;
+    readonly updated: string;
+    readonly uri: string;
 }
 
 // @public
@@ -866,7 +857,7 @@ export interface IWorkspaceDashboards {
     createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
     deleteDashboard(ref: ObjRef): Promise<void>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
-    getDashboards(): Promise<IDashboard[]>;
+    getDashboards(): Promise<IListedDashboard[]>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboard): Promise<IDashboard>;
     // (undocumented)
     readonly workspace: string;

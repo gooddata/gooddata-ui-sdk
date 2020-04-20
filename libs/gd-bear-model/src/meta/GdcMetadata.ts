@@ -40,18 +40,18 @@ export namespace GdcMetadata {
         | "visualizationWidget";
 
     export interface IObjectMeta {
-        category: ObjectCategory;
+        category?: ObjectCategory;
         title: string;
         summary: string;
-        tags: string;
-        author: string;
-        contributor: string;
+        tags?: string;
+        author?: string;
+        contributor?: string;
         identifier: string;
         uri: string;
-        deprecated: "0" | "1";
-        isProduction: 1 | 0;
-        created: Timestamp;
-        updated: Timestamp;
+        deprecated?: "0" | "1";
+        isProduction?: 1 | 0;
+        created?: Timestamp;
+        updated?: Timestamp;
         flags?: string[];
         locked?: boolean;
         projectTemplate?: string;

@@ -19,7 +19,7 @@ export interface IScheduledMailDefinition {
          * Start date
          * e.g. YYYY-MM-DD
          */
-        startDate: string; //
+        startDate: string;
 
         /**
          * End date

@@ -1336,21 +1336,21 @@ export namespace GdcMetadata {
     // (undocumented)
     export interface IObjectMeta {
         // (undocumented)
-        author: string;
+        author?: string;
         // (undocumented)
-        category: ObjectCategory;
+        category?: ObjectCategory;
         // (undocumented)
-        contributor: string;
+        contributor?: string;
         // (undocumented)
-        created: Timestamp;
+        created?: Timestamp;
         // (undocumented)
-        deprecated: "0" | "1";
+        deprecated?: "0" | "1";
         // (undocumented)
         flags?: string[];
         // (undocumented)
         identifier: string;
         // (undocumented)
-        isProduction: 1 | 0;
+        isProduction?: 1 | 0;
         // (undocumented)
         locked?: boolean;
         // (undocumented)
@@ -1360,13 +1360,13 @@ export namespace GdcMetadata {
         // (undocumented)
         summary: string;
         // (undocumented)
-        tags: string;
+        tags?: string;
         // (undocumented)
         title: string;
         // (undocumented)
         unlisted?: boolean;
         // (undocumented)
-        updated: Timestamp;
+        updated?: Timestamp;
         // (undocumented)
         uri: string;
     }

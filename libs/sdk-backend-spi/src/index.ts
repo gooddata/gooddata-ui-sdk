@@ -117,7 +117,12 @@ export {
 export { IWorkspacePermissionsFactory, IWorkspaceUserPermissions } from "./workspace/permissions";
 
 export { IWorkspaceDashboards } from "./workspace/dashboards";
-export { IDashboard, IDashboardDefinition, IDateFilterConfig } from "./workspace/dashboards/dashboard";
+export {
+    IDashboard,
+    IDashboardDefinition,
+    IDateFilterConfig,
+    IListedDashboard,
+} from "./workspace/dashboards/dashboard";
 export {
     IFilterContext,
     AbsoluteType,
@@ -144,7 +149,6 @@ export {
 } from "./workspace/dashboards/layout";
 export { IWidget, IWidgetDefinition, WidgetType } from "./workspace/dashboards/widget";
 export { IWidgetAlert, IWidgetAlertDefinition } from "./workspace/dashboards/alert";
-export { IDashboardBuilder } from "./workspace/dashboards/dashboardBuilder";
 export {
     AbsoluteDateFilterOption,
     AbsoluteFormType,

@@ -203,7 +203,7 @@ export class MetadataModuleExt {
                         const newUriKpiObj: string = (
                             await this.metadataModule.createObject(projectId, kpiWidget)
                         ).kpi.meta.uri;
-                        uriMap.set(kpi.meta.uri, newUriKpiObj);
+                        uriMap.set(kpi.meta.uri!, newUriKpiObj);
                     }),
             );
         }

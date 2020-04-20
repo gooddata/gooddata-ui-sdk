@@ -12,7 +12,6 @@ import {
     IWorkspacePermissionsFactory,
     IWorkspaceInsights,
     IWorkspaceDashboards,
-    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./execution/executionFactory";
 import { BearWorkspaceMetadata } from "./metadata";
@@ -23,6 +22,7 @@ import { BearWorkspaceSettings } from "./settings/settings";
 import { BearWorkspacePermissionsFactory } from "./permissions/permissions";
 import { BearWorkspaceInsights } from "./insights";
 import { BearWorkspaceDataSets } from "./datasets";
+import { BearWorkspaceDashboards } from "./dashboards";
 import { BearAuthenticatedCallGuard } from "../../types";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
@@ -45,7 +45,7 @@ export class BearWorkspace implements IAnalyticalWorkspace {
     }
 
     public dashboards(): IWorkspaceDashboards {
-        throw new NotSupported("Not supported");
+        return new BearWorkspaceDashboards(this.authCall, this.workspace);
     }
 
     public metadata(): IWorkspaceMetadata {

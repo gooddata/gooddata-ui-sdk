@@ -64,6 +64,16 @@ export interface IDashboardDefinition {
     readonly description: string;
 
     /**
+     * Created date
+     */
+    readonly created: string;
+
+    /**
+     * Updated date
+     */
+    readonly updated: string;
+
+    /**
      * Dashboard layout
      */
     readonly layout: Layout;
@@ -90,6 +100,49 @@ export interface IDashboardDefinition {
 }
 
 /**
+ * Listed dashboard - to display the dashboard in the list
+ * Only a subset of dashboard data is available,
+ * for the full definition see {@link IDashboard}
+ * @alpha
+ */
+export interface IListedDashboard {
+    /**
+     * Dashboard object ref
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Dashboard uri
+     */
+    readonly uri: string;
+
+    /**
+     * Dashboard identifier
+     */
+    readonly identifier: string;
+
+    /**
+     * Dashboard title
+     */
+    readonly title: string;
+
+    /**
+     * Dashboard description
+     */
+    readonly description: string;
+
+    /**
+     * Created date
+     */
+    readonly created: string;
+
+    /**
+     * Updated date
+     */
+    readonly updated: string;
+}
+
+/**
  * See {@link IDashboardDefinition}
  * @alpha
  */
@@ -98,4 +151,14 @@ export type IDashboard = IDashboardDefinition & {
      * Dashboard object ref
      */
     readonly ref: ObjRef;
+
+    /**
+     * Dashboard uri
+     */
+    readonly uri: string;
+
+    /**
+     * Dashboard identifier
+     */
+    readonly identifier: string;
 };

@@ -416,7 +416,7 @@ export class MetadataModule {
     }
 
     /**
-     * Returns all project dashboards in a project specified by the given projectId
+     * Returns all project dashboards (pixel perfect dashboards) in a project specified by the given projectId
      *
      * @method getProjectDashboards
      * @param {string} projectId Project identifier
@@ -433,6 +433,23 @@ export class MetadataModule {
                     projectId,
                     dashboardLinks,
                 );
+            });
+    }
+
+    /**
+     * Returns all analytical dashboards (kpi dashboards) in a project specified by the given projectId
+     *
+     * @method getAnalyticalDashboards
+     * @param {string} projectId Project identifier
+     * @return {Array} An array of analytical dashboard objects
+     */
+    public getAnalyticalDashboards(projectId: string): Promise<GdcMetadata.IObjectLink[]> {
+        return this.xhr
+            .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
+                `/gdc/md/${projectId}/query/analyticaldashboard`,
+            )
+            .then(dashboardsQuery => {
+                return dashboardsQuery.query.entries;
             });
     }
 
@@ -502,7 +519,7 @@ export class MetadataModule {
      * @param uri uri of the metadata object for which details are to be retrieved
      * @return {Object} object details
      */
-    public getObjectDetails(uri: string): Promise<any> {
+    public getObjectDetails<T = any>(uri: string): Promise<T> {
         return this.xhr.get(uri).then((r: ApiResponse) => r.getData());
     }
 
