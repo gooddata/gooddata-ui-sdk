@@ -3,9 +3,10 @@ import * as React from "react";
 import * as uuid from "uuid";
 import { render } from "react-dom";
 import noop = require("lodash/noop");
+import isEqual = require("lodash/isEqual");
 
 import { IAnalyticalBackend, IAnalyticalWorkspace, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IInsight, IFilter, insightProperties, IColorPalette, idRef } from "@gooddata/sdk-model";
+import { IInsight, IFilter, insightProperties, IColorPalette, ObjRef, idRef } from "@gooddata/sdk-model";
 
 import { IVisualization, IVisProps, IVisCallbacks, DefaultVisualizationCatalog } from "../internal";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
@@ -25,13 +26,54 @@ import {
  * @public
  */
 export interface IInsightViewProps extends Partial<IVisCallbacks> {
+    /**
+     * Backend to work with.
+     *
+     * Note: the backend must come either from this property or from BackendContext. If you do not specify
+     * backend here, then the executor MUST be rendered within an existing BackendContext.
+     */
     backend?: IAnalyticalBackend;
+
+    /**
+     * Workspace where the insight exists.
+     *
+     * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
+     * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
+     */
     workspace?: string;
-    ErrorComponent?: React.ComponentType<IErrorProps>;
+
+    /**
+     * Reference to the insight to render. This can be specified by either object reference using URI or using identifier.
+     *
+     * For convenience it is also possible to specify just the identifier of the insight.
+     */
+    insight: ObjRef | string;
+
+    /**
+     * Additional filters to apply on top of the insight.
+     */
     filters?: IFilter[];
-    id: string;
+
+    /**
+     * Locale to use for localization of texts appearing in the chart.
+     *
+     * Note: text values coming from the data itself are not localized.
+     */
     locale?: ILocale;
+
+    /**
+     * Component to render if embedding fails.
+     */
+    ErrorComponent?: React.ComponentType<IErrorProps>;
+
+    /**
+     * Component to render while the insight is loading.
+     */
     LoadingComponent?: React.ComponentType<ILoadingProps>;
+
+    /**
+     * TODO: SDK8: investigate this then remove or explain
+     */
     visualizationProps?: IVisProps;
 }
 
@@ -170,9 +212,12 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     };
 
     private getInsight = () => {
-        return this.getRemoteResource<IInsight>(workspace =>
-            workspace.insights().getInsight(idRef(this.props.id)),
-        );
+        const ref =
+            typeof this.props.insight === "string"
+                ? idRef(this.props.insight, "insight")
+                : this.props.insight;
+
+        return this.getRemoteResource<IInsight>(workspace => workspace.insights().getInsight(ref));
     };
 
     private getColorPaletteFromProject = () => {
@@ -220,7 +265,8 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     }
 
     private componentDidUpdateInner = async (prevProps: IInsightViewProps) => {
-        const needsNewSetup = this.props.id !== prevProps.id || this.props.workspace !== prevProps.workspace;
+        const needsNewSetup =
+            !isEqual(this.props.insight, prevProps.insight) || this.props.workspace !== prevProps.workspace;
         if (needsNewSetup) {
             await this.setupVisualization();
         }
@@ -254,6 +300,8 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
 }
 
 /**
+ * Renders insight which was previously created and saved in the Analytical Designer.
+ *
  * @public
  */
 export const InsightView = withContexts(RenderInsightView);
