@@ -3,16 +3,16 @@ import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { withMultipleScreenshots, LongPostInteractionTimeout } from "../../_infra/backstopWrapper";
+import { LongPostInteractionTimeout, withMultipleScreenshots } from "../../_infra/backstopWrapper";
 import { FilterStories } from "../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilter.css";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { newPositiveAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { StorybookBackend } from "../../_infra/backend";
 
 const wrapperStyle = { width: 400, height: 600, padding: "1em 1em" };
-const backend = recordedBackend(ReferenceRecordings.Recordings);
+const backend = StorybookBackend();
 const workspace = "testWorkspace";
 
 /*

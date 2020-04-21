@@ -26,21 +26,13 @@ const immediateChildPropsExtractor: EffectivePropsExtractor = (wrapper: ReactWra
     return wrapper.childAt(0).props();
 };
 
-/**
- * Mounts chart component and captures significant chart interactions with the rest of the world. Because the
- * chart rendering communicates with backend asynchronously, this function is also async. The returned
- * promise will be resolved as soon as the chart does first request to obtain a data view to visualize.
- *
- * @param Component - chart component to render
- * @param propsFactory - will be called to obtain props for the chart to render
- * @param effectivePropsExtractor - function to extract effective props that can be later user for assertions
- */
-export async function mountChartAndCapture<T extends VisProps>(
+async function _mountChartAndCapture<T extends VisProps>(
     Component: React.ComponentType<T>,
     propsFactory: PropsFactory<T>,
-    effectivePropsExtractor: EffectivePropsExtractor = immediateChildPropsExtractor,
+    effectivePropsExtractor: EffectivePropsExtractor,
+    normalize: boolean,
 ): Promise<ChartInteractions> {
-    const [backend, promisedInteractions] = backendWithCapturing();
+    const [backend, promisedInteractions] = backendWithCapturing(normalize);
 
     const props = propsFactory(backend, "testWorkspace");
     const customErrorHandler = props.onError;
@@ -64,4 +56,33 @@ export async function mountChartAndCapture<T extends VisProps>(
     }
 
     return interactions;
+}
+
+/**
+ * Mounts chart component and captures significant chart interactions with the rest of the world. Because the
+ * chart rendering communicates with backend asynchronously, this function is also async. The returned
+ * promise will be resolved as soon as the chart does first request to obtain a data view to visualize.
+ *
+ * @param Component - chart component to render
+ * @param propsFactory - will be called to obtain props for the chart to render
+ * @param effectivePropsExtractor - function to extract effective props that can be later user for assertions
+ */
+export async function mountChartAndCapture<T extends VisProps>(
+    Component: React.ComponentType<T>,
+    propsFactory: PropsFactory<T>,
+    effectivePropsExtractor: EffectivePropsExtractor = immediateChildPropsExtractor,
+): Promise<ChartInteractions> {
+    return _mountChartAndCapture(Component, propsFactory, effectivePropsExtractor, false);
+}
+
+/**
+ * This is identical to {@link mountChartAndCapture} with single exception - the backend is decorated `withNormalization`.
+ *
+ * Meaning whatever execution definitions are captured represent state _after_ normalization.
+ */
+export async function mountChartAndCaptureNormalized<T extends VisProps>(
+    Component: React.ComponentType<T>,
+    propsFactory: PropsFactory<T>,
+): Promise<ChartInteractions> {
+    return _mountChartAndCapture(Component, propsFactory, immediateChildPropsExtractor, true);
 }

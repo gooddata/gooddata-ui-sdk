@@ -32,6 +32,12 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
     protected buildDefinition(): IArithmeticMeasureDefinition;
     // (undocumented)
     protected generateLocalId(): string;
+    // Warning: (ae-forgotten-export) The symbol "MeasureOrLocalId" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    operands: (measuresOrLocalIds: MeasureOrLocalId[]) => this;
+    // (undocumented)
+    operator: (op: ArithmeticMeasureOperator) => this;
 }
 
 // @public
@@ -60,7 +66,11 @@ export class AttributeBuilder {
         };
     };
     // (undocumented)
+    defaultLocalId: () => this;
+    // (undocumented)
     localId: (localId: string) => this;
+    // (undocumented)
+    noAlias: () => this;
 }
 
 // @public
@@ -1221,6 +1231,10 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     // (undocumented)
     protected customLocalId: boolean;
     // (undocumented)
+    defaultFormat: () => this;
+    // (undocumented)
+    defaultLocalId: () => this;
+    // (undocumented)
     format: (format: string) => this;
     protected abstract generateLocalId(): string;
     // Warning: (ae-forgotten-export) The symbol "MeasureEnvelope" needs to be exported by the entry point index.d.ts
@@ -1229,6 +1243,10 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     protected initializeFromExisting(measure: MeasureEnvelope): void;
     // (undocumented)
     localId: (localId: string) => this;
+    // (undocumented)
+    noAlias: () => this;
+    // (undocumented)
+    noTitle: () => this;
     // (undocumented)
     title: (title: string) => this;
 }
@@ -1256,7 +1274,7 @@ export type MeasureInBucket = {
 };
 
 // @public
-export function measureLocalId(measure: IMeasure): string;
+export function measureLocalId(measureOrLocalId: MeasureOrLocalId): string;
 
 // @public
 export function measureMasterIdentifier(measure: IMeasure): string | undefined;
@@ -1332,7 +1350,7 @@ export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modif
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string): IAbsoluteDateFilter;
 
 // @public
-export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<IMeasure | Identifier>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
+export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
 
 // @public
 export function newAttribute(displayFormRefOrId: ObjRef | Identifier, modifications?: AttributeModifications): IAttribute;
@@ -1409,13 +1427,13 @@ export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope, op
 export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: AttributeElements | string[]): INegativeAttributeFilter;
 
 // @public
-export function newPopMeasure(measureOrLocalId: IMeasure | Identifier, popAttrIdOrRef: ObjRef | Identifier, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
+export function newPopMeasure(measureOrLocalId: MeasureOrLocalId, popAttrIdOrRef: ObjRef | Identifier, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
 export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: AttributeElements | string[]): IPositiveAttributeFilter;
 
 // @public
-export function newPreviousPeriodMeasure(measureIdOrLocalId: IMeasure | Identifier, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
+export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @public
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: string, from: number, to: number): IRelativeDateFilter;
@@ -1450,6 +1468,10 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     protected buildDefinition(): IPoPMeasureDefinition;
     // (undocumented)
     protected generateLocalId(): string;
+    // (undocumented)
+    masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
+    // (undocumented)
+    popAttribute: (popAttrIdOrRef: string | import("../../objRef").UriRef | import("../../objRef").IdentifierRef) => void;
     }
 
 // @public
@@ -1461,7 +1483,11 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
     // (undocumented)
     protected buildDefinition(): IPreviousPeriodMeasureDefinition;
     // (undocumented)
+    dateDataSets: (dd: IPreviousPeriodDateDataSetSimple[]) => void;
+    // (undocumented)
     protected generateLocalId(): string;
+    // (undocumented)
+    masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
     }
 
 // @public (undocumented)

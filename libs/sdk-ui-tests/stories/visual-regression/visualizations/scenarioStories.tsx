@@ -1,22 +1,21 @@
 // (C) 2007-2018 GoodData Corporation
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { createHighChartResolver, ScreenshotReadyWrapper } from "../_infra/ScreenshotReadyWrapper";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import chartGroups from "../../../scenarios";
 import { ScenarioGroup } from "../../../src";
-import groupBy = require("lodash/groupBy");
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import { withScreenshot } from "../_infra/backstopWrapper";
 import { ScenarioStories } from "../_infra/storyGroups";
+import { StorybookBackend } from "../_infra/backend";
+import groupBy = require("lodash/groupBy");
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
 const DefaultWorkspace = "testWorkspace";
 
-const backend = recordedBackend(ReferenceRecordings.Recordings);
+const backend = StorybookBackend();
 const ScenarioGroupsByVis = Object.entries(groupBy<ScenarioGroup<any>>(chartGroups, g => g.vis));
 
 function simpleStory(Component: React.ComponentType, props: any, wrapperStyle: any) {

@@ -28,7 +28,7 @@ export function createInsightDefinitionForChart(
     const chartConfig: IChartConfig | undefined = interactions.effectiveProps.config;
 
     const properties: VisualizationProperties = chartConfigToVisProperties(chartConfig);
-    const execution = interactions.triggeredExecution;
+    const execution = interactions.normalizationState?.original ?? interactions.triggeredExecution;
     const visClassUri = visNameToUri(name);
 
     return newInsightDefinition(visClassUri, b => {

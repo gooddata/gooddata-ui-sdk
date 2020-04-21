@@ -2,97 +2,185 @@
     {
         "vis": "BulletChart",
         "scenario": "primary and target measures",
-        "buckets": [
-            {
-                "localIdentifier": "measures",
-                "items": [
-                    {
-                        "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
+        "originalExecution": {
+            "workspace": "testWorkspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                ]
-            },
-            {
-                "localIdentifier": "secondary_measures",
-                "items": [
-                    {
-                        "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
+                    ]
+                },
+                {
+                    "localIdentifier": "secondary_measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
                                     }
                                 }
                             }
                         }
+                    ]
+                },
+                {
+                    "localIdentifier": "tertiary_measures",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": []
+                }
+            ],
+            "attributes": [],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
                     }
-                ]
-            },
-            {
-                "localIdentifier": "tertiary_measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "view",
-                "items": []
-            }
-        ]
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": []
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        }
     },
     {
         "vis": "BulletChart",
         "scenario": "primary and comparative measures",
-        "buckets": [
-            {
-                "localIdentifier": "measures",
-                "items": [
-                    {
-                        "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
+        "originalExecution": {
+            "workspace": "testWorkspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                ]
-            },
-            {
-                "localIdentifier": "secondary_measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "tertiary_measures",
-                "items": [
-                    {
-                        "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
+                    ]
+                },
+                {
+                    "localIdentifier": "secondary_measures",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "tertiary_measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
                                     }
                                 }
                             }
                         }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": []
+                }
+            ],
+            "attributes": [],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
                     }
-                ]
-            },
-            {
-                "localIdentifier": "view",
-                "items": []
-            }
-        ]
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": []
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        }
     }
 ]

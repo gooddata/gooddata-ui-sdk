@@ -35,7 +35,7 @@ export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPrepa
  */
 export class DecoratedExecutionFactory implements IExecutionFactory {
     constructor(
-        private readonly decorated: IExecutionFactory,
+        protected readonly decorated: IExecutionFactory,
         private readonly wrapper: PreparedExecutionWrapper = identity,
     ) {}
 
@@ -59,7 +59,16 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
         return this.decorated.forInsightByRef(uri, filters).then(this.wrap);
     }
 
-    private wrap = (execution: IPreparedExecution) => {
+    /**
+     * This method is a hook that can be used to wrap the execution prepared by the decorated factory - in essence
+     * to keep the decorator chain going and add extra functionality to the prepared execution.
+     *
+     * By default, this method will call the wrapper function passed to this class at construction time - so use
+     * that unless you need anything more fancy.
+     *
+     * @param execution - execution to wrap
+     */
+    protected wrap = (execution: IPreparedExecution) => {
         return this.wrapper(execution);
     };
 }
@@ -73,7 +82,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
 
-    protected constructor(private readonly decorated: IPreparedExecution) {
+    protected constructor(protected readonly decorated: IPreparedExecution) {
         this.definition = decorated.definition;
     }
 
@@ -117,12 +126,12 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
  * @alpha
  */
 export abstract class DecoratedExecutionResult implements IExecutionResult {
-    public readonly definition: IExecutionDefinition;
-    public readonly dimensions: IDimensionDescriptor[];
+    public definition: IExecutionDefinition;
+    public dimensions: IDimensionDescriptor[];
 
     protected constructor(
         private readonly decorated: IExecutionResult,
-        private readonly wrapper: PreparedExecutionWrapper,
+        private readonly wrapper: PreparedExecutionWrapper = identity,
     ) {
         this.definition = decorated.definition;
         this.dimensions = decorated.dimensions;

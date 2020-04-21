@@ -64,6 +64,13 @@ describe("measure factories", () => {
 
     describe("modifySimpleMeasure", () => {
         const ExistingMeasure = newMeasure("measure1", m => m.localId("measure1"));
+        const ExistingMeasureWithCustomizations = newMeasure("measure1", m =>
+            m
+                .localId("measure1")
+                .alias("alias")
+                .format("format")
+                .title("title"),
+        );
 
         it("should create new measure with modified aggregation and generated local id", () => {
             expect(modifySimpleMeasure(ExistingMeasure, m => m.aggregation("min"))).toMatchSnapshot();
@@ -73,6 +80,17 @@ describe("measure factories", () => {
             expect(
                 modifySimpleMeasure(ExistingMeasure, m => m.aggregation("min").localId("customLocalId")),
             ).toMatchSnapshot();
+        });
+
+        it("should create new measure with cleaned up customizations", () => {
+            const result = modifySimpleMeasure(ExistingMeasureWithCustomizations, m =>
+                m
+                    .defaultFormat()
+                    .noAlias()
+                    .noTitle(),
+            );
+
+            expect(result).toMatchSnapshot();
         });
     });
 

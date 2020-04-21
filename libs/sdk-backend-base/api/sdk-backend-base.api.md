@@ -27,6 +27,7 @@ import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
@@ -59,6 +60,8 @@ export function decoratedBackend(backend: IAnalyticalBackend, decorators: Decora
 export class DecoratedExecutionFactory implements IExecutionFactory {
     constructor(decorated: IExecutionFactory, wrapper?: PreparedExecutionWrapper);
     // (undocumented)
+    protected readonly decorated: IExecutionFactory;
+    // (undocumented)
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
     forDefinition(def: IExecutionDefinition): IPreparedExecution;
@@ -68,15 +71,16 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     // (undocumented)
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    protected wrap: (execution: IPreparedExecution) => IPreparedExecution;
     }
 
 // @alpha
 export abstract class DecoratedExecutionResult implements IExecutionResult {
-    protected constructor(decorated: IExecutionResult, wrapper: PreparedExecutionWrapper);
+    protected constructor(decorated: IExecutionResult, wrapper?: PreparedExecutionWrapper);
     // (undocumented)
-    readonly definition: IExecutionDefinition;
+    definition: IExecutionDefinition;
     // (undocumented)
-    readonly dimensions: IDimensionDescriptor[];
+    dimensions: IDimensionDescriptor[];
     // (undocumented)
     equals(other: IExecutionResult): boolean;
     // (undocumented)
@@ -95,6 +99,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     protected constructor(decorated: IPreparedExecution);
     protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
+    // (undocumented)
+    protected readonly decorated: IPreparedExecution;
     // (undocumented)
     readonly definition: IExecutionDefinition;
     // (undocumented)
@@ -161,6 +167,18 @@ export type DecoratorFactories = {
 // @beta (undocumented)
 export const DefaultCachingConfiguration: CachingConfiguration;
 
+// Warning: (ae-internal-missing-underscore) The name "Denormalizer" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export class Denormalizer {
+    denormalizeDimDescriptors: (normalizedDims: IDimensionDescriptor[]) => IDimensionDescriptor[];
+    denormalizeHeaders: (headerItems: IResultHeader[][][]) => IResultHeader[][][];
+    // (undocumented)
+    static from(state: NormalizationState): Denormalizer;
+    // (undocumented)
+    readonly state: NormalizationState;
+}
+
 // Warning: (ae-forgotten-export) The symbol "DummyBackendConfig" needs to be exported by the entry point index.d.ts
 // Warning: (ae-internal-missing-underscore) The name "dummyBackend" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -177,6 +195,32 @@ export function dummyBackendEmptyData(): IAnalyticalBackend;
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
+// @beta (undocumented)
+export type NormalizationConfig = {
+    normalizationStatus?: (normalizationState: NormalizationState) => void;
+};
+
+// Warning: (ae-internal-missing-underscore) The name "NormalizationState" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type NormalizationState = {
+    readonly normalized: IExecutionDefinition;
+    readonly original: IExecutionDefinition;
+    readonly n2oMap: LocalIdMap;
+};
+
+// Warning: (ae-internal-missing-underscore) The name "Normalizer" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export class Normalizer {
+    // (undocumented)
+    static normalize(def: IExecutionDefinition): NormalizationState;
+    // (undocumented)
+    readonly normalized: IExecutionDefinition;
+    // (undocumented)
+    readonly original: IExecutionDefinition;
+}
+
 // @alpha (undocumented)
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
 
@@ -186,6 +230,9 @@ export function withCaching(realBackend: IAnalyticalBackend, config?: CachingCon
 // @beta
 export function withEventing(realBackend: IAnalyticalBackend, callbacks: AnalyticalBackendCallbacks): IAnalyticalBackend;
 
+// @beta
+export function withNormalization(realBackend: IAnalyticalBackend, config?: NormalizationConfig): IAnalyticalBackend;
+
 // @alpha (undocumented)
 export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspaceCatalog;
 
@@ -194,6 +241,8 @@ export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspace
 //
 // dist/decoratedBackend/index.d.ts:12:5 - (ae-forgotten-export) The symbol "ExecutionDecoratorFactory" needs to be exported by the entry point index.d.ts
 // dist/decoratedBackend/index.d.ts:13:5 - (ae-forgotten-export) The symbol "CatalogDecoratorFactory" needs to be exported by the entry point index.d.ts
+// dist/normalizingBackend/index.d.ts:10:5 - (ae-incompatible-release-tags) The symbol "normalizationStatus" is marked as @beta, but its signature references "NormalizationState" which is marked as @internal
+// dist/normalizingBackend/normalizer.d.ts:21:5 - (ae-forgotten-export) The symbol "LocalIdMap" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
