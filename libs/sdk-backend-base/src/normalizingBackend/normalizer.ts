@@ -110,7 +110,7 @@ export class Denormalizer {
                 const localIdentifier = this.originalLocalId(value.measureHeaderItem.localIdentifier);
                 const measure = this.originalMeasures[localIdentifier]!;
                 const format = measureFormat(measure) || value.measureHeaderItem.format;
-                const name = measureAlias(measure) || measureTitle(measure) || value.measureHeaderItem.name;
+                const name = this.originalMeasureTitle(measure, value.measureHeaderItem.name);
 
                 return {
                     measureHeaderItem: {
@@ -172,7 +172,11 @@ export class Denormalizer {
             return name;
         }
 
-        return measureAlias(measure) || measureTitle(measure) || name;
+        return this.originalMeasureTitle(measure, name);
+    };
+
+    private originalMeasureTitle = (originalDef: IMeasure, nameFromBackend: string): string => {
+        return measureAlias(originalDef) || measureTitle(originalDef) || nameFromBackend;
     };
 }
 
