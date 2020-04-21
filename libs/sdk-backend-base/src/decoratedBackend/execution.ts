@@ -60,7 +60,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
     }
 
     /**
-     * This method is a hook that can be used to wrap the execution prepared by the decorated factory - in essense
+     * This method is a hook that can be used to wrap the execution prepared by the decorated factory - in essence
      * to keep the decorator chain going and add extra functionality to the prepared execution.
      *
      * By default, this method will call the wrapper function passed to this class at construction time - so use

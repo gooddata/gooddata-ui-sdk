@@ -27,6 +27,7 @@ import {
     measureValueFilterCondition,
     modifyAttribute,
     modifyMeasure,
+    IMeasureDefinition,
 } from "@gooddata/sdk-model";
 import {
     IDimensionDescriptor,
@@ -185,10 +186,12 @@ export class Denormalizer {
  * -  custom-crafted local IDs
  *
  * The code does the job by _mutating_ a clone of the original definition. The mutation approach, while not
- * backed by functionality in sdk-model and therefore somewhat hacky, is a simpler one. The main reason
- * behind that is the occurrence of attribute and measure objects in multiple parts of the execution definition (in
- * buckets and then in attributes and measures props). Mutating changes values that are referenced from multiple
- * places...
+ * backed by functionality in sdk-model and therefore somewhat hacky, is a simpler one for this task.
+ *
+ * The main reason behind that is the occurrence of attribute and measure objects in multiple parts of the
+ * execution definition: same attributes and measures are referenced from both buckets and the attributes and measures
+ * props of the execution definition. Mutating values means that after normalizing values the execution definition
+ * is fully normalized.
  *
  * @internal
  */
@@ -232,7 +235,7 @@ export class Normalizer {
     }
 
     /**
-     * Creates a new mapping between origina local ID and the proposed normalized local ID. This method
+     * Creates a new mapping between original local ID and the proposed normalized local ID. This method
      * ensures uniqueness of the normalized local ID. If the proposed normalized local ID is taken, it will
      * append a suffix to make a unique local ID.
      *
@@ -276,6 +279,19 @@ export class Normalizer {
             const normalizedLocalId = attributeLocalId(modifyAttribute(attr, m => m.defaultLocalId()));
 
             attr.attribute.localIdentifier = this.createUniqueMapping(originalLocalId, normalizedLocalId);
+        });
+    };
+
+    /**
+     * Simple measure normalization will toss away noop filters. There is nothing else to do.
+     */
+    private normalizeSimple = (def: IMeasureDefinition) => {
+        if (!def.measureDefinition.filters) {
+            return;
+        }
+
+        def.measureDefinition.filters = def.measureDefinition.filters?.filter(filter => {
+            return !isNegativeAttributeFilter(filter) || !filterIsEmpty(filter);
         });
     };
 
@@ -336,8 +352,8 @@ export class Normalizer {
                 } else if (isArithmeticMeasureDefinition(definition)) {
                     definitionNormalized = this.normalizeArithmetic(definition);
                 } else {
-                    // simple measure - definition has no references to other measures by localId thus is
-                    // naturally normalized
+                    this.normalizeSimple(definition);
+
                     definitionNormalized = true;
                 }
 

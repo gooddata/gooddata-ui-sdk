@@ -14,6 +14,9 @@ import {
     newBucket,
     modifyAttribute,
     modifyMeasure,
+    modifySimpleMeasure,
+    measureFilters,
+    newArithmeticMeasure,
 } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { Normalizer } from "../normalizer";
@@ -68,6 +71,15 @@ describe("Normalizer", () => {
             ]),
         ],
         [
+            "simple measures with filters",
+            newDefForItems("test", [
+                ReferenceLdm.Won,
+                modifySimpleMeasure(ReferenceLdm.Won, m =>
+                    m.filters(newNegativeAttributeFilter(ReferenceLdm.Region, ["East Coast"])),
+                ),
+            ]),
+        ],
+        [
             "measure value filters",
             newDefForItems(
                 "test",
@@ -101,6 +113,18 @@ describe("Normalizer", () => {
         expect(result.normalized.filters).toEqual([]);
     });
 
+    it("should strip away empty negative attr filter (noop) from simple measure", () => {
+        const def = newDefForItems("test", [
+            modifySimpleMeasure(ReferenceLdm.Won, m =>
+                m.filters(newNegativeAttributeFilter(ReferenceLdm.Region, [])),
+            ),
+        ]);
+
+        const result = Normalizer.normalize(def);
+
+        expect(measureFilters(result.normalized.measures[0])).toEqual([]);
+    });
+
     it("should strip away empty measure value filter (noop)", () => {
         const def = newDefForItems(
             "test",
@@ -119,11 +143,29 @@ describe("Normalizer", () => {
         expect(() => Normalizer.normalize(def)).toThrow();
     });
 
-    it("should touch buckets", () => {
-        const buckets = [newBucket("bucket", ReferenceLdm.Won)];
+    it("should throw if circular references", () => {
+        const def = newDefForItems("test", [
+            ReferenceLdm.Won,
+            newArithmeticMeasure([ReferenceLdm.Won, "cycle"], "multiplication", m => m.localId("cycle")),
+        ]);
+
+        expect(() => Normalizer.normalize(def)).toThrow();
+    });
+
+    it("should also normalize buckets", () => {
+        const buckets = [
+            newBucket(
+                "bucket",
+                ReferenceLdm.Won,
+                ReferenceLdm.Amount,
+                ReferenceLdmExt.CalculatedLost,
+                ReferenceLdmExt.CalculatedWonLostRatio,
+            ),
+        ];
+
         const def = newDefForBuckets("test", buckets);
 
         const result = Normalizer.normalize(def);
-        expect(result.normalized.buckets).toEqual(buckets);
+        expect(result.normalized.buckets).not.toEqual(result.original.buckets);
     });
 });

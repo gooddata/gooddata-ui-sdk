@@ -377,3 +377,64 @@ Object {
   "workspace": "test",
 }
 `;
+
+exports[`Normalizer should normalize simple measures with filters 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "filters": Array [
+              Object {
+                "negativeAttributeFilter": Object {
+                  "displayForm": Object {
+                    "identifier": "label.owner.region",
+                    "type": "displayForm",
+                  },
+                  "notIn": Object {
+                    "values": Array [
+                      "East Coast",
+                    ],
+                  },
+                },
+              },
+            ],
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy_a85dcdac",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "test",
+}
+`;

@@ -30,7 +30,7 @@ class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
 
 /**
  * Prepared execution which does normalization. The prepared execution works with the original
- * exec definition all the time. All operations are done on top of it - expect for the execution itself.
+ * exec definition all the time. All operations are done on top of it - except for the execution itself.
  *
  * Once the execute() is called, the prepared execution will perform normalization and will prepare execution
  * for the normalized definition. It uses the original, non-normalizing exec factory for this.
@@ -141,9 +141,6 @@ class DenormalizingExecutionResult implements IExecutionResult {
  * Denormalized DataView takes mostly copies of the contents of the normalized data view. The only exception is the
  * header items. The measure headers included therein may have normalized, incorrect measure names (defaulted by
  * backend to localId).
- *
- * Note: an important technical aspect is that DataViewFacade uses WeakMap to link between data view and facade
- * instances. It is therefore important for denormalized view to have its own instance at all times.
  */
 class DenormalizedDataView implements IDataView {
     public readonly definition: IExecutionDefinition;
