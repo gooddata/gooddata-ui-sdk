@@ -2,6 +2,7 @@
 import flow from "lodash/flow";
 import filter from "lodash/fp/filter";
 import map from "lodash/fp/map";
+import sortBy from "lodash/fp/sortBy";
 import { IInsightQueryOptions, IInsightQueryResult, IWorkspaceInsights } from "@gooddata/sdk-backend-spi";
 import { GdcVisualizationClass, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import {
@@ -41,8 +42,12 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
         const isVisClassNotDeprecated = (visClass: GdcVisualizationClass.IVisualizationClassWrapped) =>
             visClass.visualizationClass.meta.deprecated !== "1";
 
+        const visClassOrderingIndex = (visClass: GdcVisualizationClass.IVisualizationClassWrapped) =>
+            visClass.visualizationClass.content.orderIndex ?? 0;
+
         return flow(
             filter(isVisClassNotDeprecated),
+            sortBy(visClassOrderingIndex),
             map(convertVisualizationClass),
         )(visualizationClassesResult);
     };
