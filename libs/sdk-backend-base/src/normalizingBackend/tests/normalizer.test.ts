@@ -71,6 +71,10 @@ describe("Normalizer", () => {
             ]),
         ],
         [
+            "arithmetic measures when mixed between their operands",
+            newDefForItems("test", [ReferenceLdm.Amount, ReferenceLdmExt.CalculatedLost, ReferenceLdm.Won]),
+        ],
+        [
             "simple measures with filters",
             newDefForItems("test", [
                 ReferenceLdm.Won,

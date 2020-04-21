@@ -214,6 +214,8 @@ export class Normalizer {
      */
     private readonly n2oMap: LocalIdMap = {};
 
+    private readonly originalMeasures: Map<string, IMeasure> = new Map<string, IMeasure>();
+
     private constructor(public readonly original: IExecutionDefinition) {
         const copy = cloneDeep(this.original);
 
@@ -232,6 +234,8 @@ export class Normalizer {
             ...copy,
             filters,
         };
+
+        copy.measures.forEach(measure => this.originalMeasures.set(measureLocalId(measure), measure));
     }
 
     /**
@@ -295,96 +299,87 @@ export class Normalizer {
         });
     };
 
-    private normalizePoP = (def: IPoPMeasureDefinition): boolean => {
-        const normalizedId = this.maybeNormalizedLocalId(def.popMeasureDefinition.measureIdentifier);
-
-        if (!normalizedId) {
-            return false;
-        }
+    private normalizePoP = (def: IPoPMeasureDefinition, path: Set<string>): void => {
+        const masterMeasure = def.popMeasureDefinition.measureIdentifier;
+        const normalizedId =
+            this.maybeNormalizedLocalId(masterMeasure) || this.normalizeMeasureByLocalId(masterMeasure, path);
 
         def.popMeasureDefinition.measureIdentifier = normalizedId;
-
-        return true;
     };
 
-    private normalizePreviousPeriod = (def: IPreviousPeriodMeasureDefinition): boolean => {
-        const normalizedId = this.maybeNormalizedLocalId(def.previousPeriodMeasure.measureIdentifier);
-
-        if (!normalizedId) {
-            return false;
-        }
+    private normalizePreviousPeriod = (def: IPreviousPeriodMeasureDefinition, path: Set<string>): void => {
+        const masterMeasure = def.previousPeriodMeasure.measureIdentifier;
+        const normalizedId =
+            this.maybeNormalizedLocalId(masterMeasure) || this.normalizeMeasureByLocalId(masterMeasure, path);
 
         def.previousPeriodMeasure.measureIdentifier = normalizedId;
-
-        return true;
     };
 
-    private normalizeArithmetic = (def: IArithmeticMeasureDefinition): boolean => {
-        const normalizedIds = def.arithmeticMeasure.measureIdentifiers.map(this.maybeNormalizedLocalId);
+    private normalizeArithmetic = (def: IArithmeticMeasureDefinition, path: Set<string>): void => {
+        const normalizedIds: Identifier[] = def.arithmeticMeasure.measureIdentifiers.map(operand => {
+            return this.maybeNormalizedLocalId(operand) || this.normalizeMeasureByLocalId(operand, path);
+        });
 
-        if (normalizedIds.some(id => id === undefined)) {
-            return false;
+        def.arithmeticMeasure.measureIdentifiers = normalizedIds;
+    };
+
+    private normalizeMeasure = (measure: IMeasure, path: Set<string> = new Set()): string => {
+        const originalLocalId = measureLocalId(measure);
+        const definition = measure.measure.definition;
+
+        /*
+         * don't do anything if the measure is already normalized; this can be determined by testing
+         * whether there is already a originalLocalId -> normalizedLocalId entry.
+         *
+         * this can happen as master / derived / arithmetic measures can be mixed in the measures array
+         * in any order & the recursive algorithm goes after the leaves first.
+         */
+        const alreadyNormalized = this.maybeNormalizedLocalId(originalLocalId);
+        if (alreadyNormalized) {
+            return alreadyNormalized;
         }
 
-        def.arithmeticMeasure.measureIdentifiers = normalizedIds as Identifier[];
+        /*
+         * circular dependency detection and bail-out.
+         */
+        invariant(
+            !path.has(originalLocalId),
+            `circular dependency on measure with localId ${originalLocalId}`,
+        );
+        path.add(originalLocalId);
 
-        return true;
+        if (isPoPMeasureDefinition(definition)) {
+            this.normalizePoP(definition, path);
+        } else if (isPreviousPeriodMeasureDefinition(definition)) {
+            this.normalizePreviousPeriod(definition, path);
+        } else if (isArithmeticMeasureDefinition(definition)) {
+            this.normalizeArithmetic(definition, path);
+        } else {
+            this.normalizeSimple(definition);
+        }
+
+        delete measure.measure.alias;
+        delete measure.measure.title;
+        delete measure.measure.format;
+
+        const newLocalId = measureLocalId(modifyMeasure(measure, m => m.defaultLocalId()));
+        const newUniqueLocalId = this.createUniqueMapping(originalLocalId, newLocalId);
+
+        measure.measure.localIdentifier = newUniqueLocalId;
+
+        return newUniqueLocalId;
     };
 
-    /*
-     * Measure normalization is somewhat trickier, it is a multi-stage
-     */
+    private normalizeMeasureByLocalId = (localId: string, path: Set<string>): string => {
+        const measure = this.originalMeasures.get(localId);
+
+        invariant(measure, `measure with localId ${localId} could not be found`);
+
+        return this.normalizeMeasure(measure!, path);
+    };
+
     private normalizeMeasures = () => {
-        let toNormalize: IMeasure[] = [];
-        toNormalize.push(...this.normalized.measures);
-
-        while (toNormalize.length > 0) {
-            const nextRound: IMeasure[] = [];
-
-            for (const measure of toNormalize) {
-                const definition = measure.measure.definition;
-                let definitionNormalized = false;
-
-                if (isPoPMeasureDefinition(definition)) {
-                    definitionNormalized = this.normalizePoP(definition);
-                } else if (isPreviousPeriodMeasureDefinition(definition)) {
-                    definitionNormalized = this.normalizePreviousPeriod(definition);
-                } else if (isArithmeticMeasureDefinition(definition)) {
-                    definitionNormalized = this.normalizeArithmetic(definition);
-                } else {
-                    this.normalizeSimple(definition);
-
-                    definitionNormalized = true;
-                }
-
-                if (definitionNormalized) {
-                    /*
-                     * Now that the definition is normalized, the measure localId can be set to the default - which
-                     * is generated based on contents of alias, title, format + definition
-                     */
-
-                    delete measure.measure.alias;
-                    delete measure.measure.title;
-                    delete measure.measure.format;
-
-                    const originalLocalId = measureLocalId(measure);
-                    const newLocalId = measureLocalId(modifyMeasure(measure, m => m.defaultLocalId()));
-
-                    measure.measure.localIdentifier = this.createUniqueMapping(originalLocalId, newLocalId);
-                } else {
-                    nextRound.push(measure);
-                }
-            }
-
-            invariant(
-                nextRound.length !== toNormalize.length,
-                `measure normalization failed. there are either dangling references or cycles between measures: ${nextRound
-                    .map(measureLocalId)
-                    .join(", ")}`,
-            );
-
-            toNormalize = nextRound;
-        }
+        this.normalized.measures.forEach(measure => this.normalizeMeasure(measure));
     };
 
     private normalizeFilters = () => {
