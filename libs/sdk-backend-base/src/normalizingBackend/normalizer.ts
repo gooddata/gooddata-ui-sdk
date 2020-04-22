@@ -97,13 +97,16 @@ export class Denormalizer {
             if (isAttributeDescriptor(value)) {
                 const localIdentifier = this.originalLocalId(value.attributeHeader.localIdentifier);
                 const attribute = this.originalAttributes[localIdentifier]!;
-                const name = attributeAlias(attribute) || value.attributeHeader.name;
+                const name = attributeAlias(attribute) || value.attributeHeader.formOf.name;
 
                 return {
                     attributeHeader: {
                         ...value.attributeHeader,
-                        name,
                         localIdentifier,
+                        formOf: {
+                            ...value.attributeHeader.formOf,
+                            name,
+                        },
                     },
                 };
             } else if (isMeasureDescriptor(value)) {
