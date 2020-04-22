@@ -21,3 +21,12 @@ export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 export { withCaching, CachingConfiguration, DefaultCachingConfiguration } from "./cachingBackend";
 export { withNormalization, NormalizationConfig } from "./normalizingBackend";
 export { Normalizer, Denormalizer, NormalizationState } from "./normalizingBackend/normalizer";
+
+export {
+    AuthenticatedAsyncCall,
+    AuthenticatedCallGuard,
+    AuthProviderCallGuard,
+    IAuthenticatedAsyncCallContext,
+    IAuthProviderCallGuard,
+    NoopAuthProvider,
+} from "./toolkit/auth";

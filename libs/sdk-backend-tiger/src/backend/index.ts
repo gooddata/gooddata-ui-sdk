@@ -10,11 +10,8 @@ import {
     AuthenticatedPrincipal,
     IWorkspaceQueryFactory,
     IUserService,
-    AuthenticatedAsyncCall,
     ErrorConverter,
     NotAuthenticated,
-    IAuthenticatedAsyncCallContext,
-    AuthProviderCallGuard,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/gd-tiger-client";
 import isEmpty = require("lodash/isEmpty");
@@ -26,6 +23,11 @@ import { convertApiError } from "../errors/errorHandling";
 import { TigerWorkspace } from "./workspace";
 import { TigerWorkspaceQueryFactory } from "./workspaces";
 import { TigerUserService } from "./user";
+import {
+    AuthProviderCallGuard,
+    AuthenticatedAsyncCall,
+    IAuthenticatedAsyncCallContext,
+} from "@gooddata/sdk-backend-base";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: false,

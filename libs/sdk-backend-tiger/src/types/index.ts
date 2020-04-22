@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-spi";
 import { ITigerClient } from "@gooddata/gd-tiger-client";
+import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 
 /**
  * Tiger AFM types

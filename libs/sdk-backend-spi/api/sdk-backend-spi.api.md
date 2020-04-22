@@ -85,12 +85,6 @@ export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): st
 export function attributeDescriptorName(descriptor: IAttributeDescriptor): string;
 
 // @public
-export type AuthenticatedAsyncCall<TSdk, TReturn> = (sdk: TSdk, context: IAuthenticatedAsyncCallContext) => Promise<TReturn>;
-
-// @public
-export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(call: AuthenticatedAsyncCall<TSdk, TReturn>, errorConverter?: ErrorConverter) => Promise<TReturn>;
-
-// @public
 export type AuthenticatedPrincipal = {
     userId: string;
     userMeta?: any;
@@ -100,21 +94,6 @@ export type AuthenticatedPrincipal = {
 export type AuthenticationContext = {
     client: any;
 };
-
-// Warning: (ae-internal-missing-underscore) The name "AuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export class AuthProviderCallGuard implements IAuthProviderCallGuard {
-    constructor(realProvider: IAuthenticationProvider);
-    // (undocumented)
-    authenticate: (context: AuthenticationContext) => Promise<AuthenticatedPrincipal>;
-    // (undocumented)
-    deauthenticate(context: AuthenticationContext): Promise<void>;
-    // (undocumented)
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
-    // (undocumented)
-    reset: () => void;
-}
 
 // @public
 export type BackendCapabilities = {
@@ -190,24 +169,10 @@ export interface IAttributeDescriptor {
 }
 
 // @public
-export interface IAuthenticatedAsyncCallContext {
-    // (undocumented)
-    principal: AuthenticatedPrincipal;
-}
-
-// @public
 export interface IAuthenticationProvider {
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
     deauthenticate(context: AuthenticationContext): Promise<void>;
     getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "IAuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export interface IAuthProviderCallGuard extends IAuthenticationProvider {
-    // (undocumented)
-    reset(): void;
 }
 
 // @public
@@ -600,20 +565,6 @@ export interface IWorkspaceUserPermissions {
 export class NoDataError extends AnalyticalBackendError {
     constructor(message: string, dataView?: IDataView, cause?: Error);
     readonly dataView?: IDataView;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "NoopAuthProvider" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export class NoopAuthProvider implements IAuthProviderCallGuard {
-    // (undocumented)
-    authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
-    // (undocumented)
-    deauthenticate(_context: AuthenticationContext): Promise<void>;
-    // (undocumented)
-    getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
-    // (undocumented)
-    reset(): void;
 }
 
 // @public

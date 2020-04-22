@@ -6,10 +6,14 @@
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { AttributeOrMeasure } from '@gooddata/sdk-model';
+import { AuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
+import { AuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
+import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
@@ -44,6 +48,31 @@ export type AnalyticalBackendCallbacks = {
     successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView) => void;
     failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
 };
+
+// Warning: (ae-internal-missing-underscore) The name "AuthenticatedAsyncCall" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type AuthenticatedAsyncCall<TSdk, TReturn> = (sdk: TSdk, context: IAuthenticatedAsyncCallContext) => Promise<TReturn>;
+
+// Warning: (ae-internal-missing-underscore) The name "AuthenticatedCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(call: AuthenticatedAsyncCall<TSdk, TReturn>, errorConverter?: ErrorConverter) => Promise<TReturn>;
+
+// Warning: (ae-internal-missing-underscore) The name "AuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export class AuthProviderCallGuard implements IAuthProviderCallGuard {
+    constructor(realProvider: IAuthenticationProvider);
+    // (undocumented)
+    authenticate: (context: AuthenticationContext) => Promise<AuthenticatedPrincipal>;
+    // (undocumented)
+    deauthenticate(context: AuthenticationContext): Promise<void>;
+    // (undocumented)
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    // (undocumented)
+    reset: () => void;
+}
 
 // @beta
 export type CachingConfiguration = {
@@ -195,6 +224,36 @@ export function dummyBackendEmptyData(): IAnalyticalBackend;
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
+// Warning: (ae-internal-missing-underscore) The name "IAuthenticatedAsyncCallContext" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export interface IAuthenticatedAsyncCallContext {
+    // (undocumented)
+    principal: AuthenticatedPrincipal;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IAuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export interface IAuthProviderCallGuard extends IAuthenticationProvider {
+    // (undocumented)
+    reset(): void;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "NoopAuthProvider" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export class NoopAuthProvider implements IAuthProviderCallGuard {
+    // (undocumented)
+    authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    // (undocumented)
+    deauthenticate(_context: AuthenticationContext): Promise<void>;
+    // (undocumented)
+    getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    // (undocumented)
+    reset(): void;
+}
+
 // @beta (undocumented)
 export type NormalizationConfig = {
     normalizationStatus?: (normalizationState: NormalizationState) => void;
@@ -219,7 +278,7 @@ export class Normalizer {
     readonly normalized: IExecutionDefinition;
     // (undocumented)
     readonly original: IExecutionDefinition;
-}
+    }
 
 // @alpha (undocumented)
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;

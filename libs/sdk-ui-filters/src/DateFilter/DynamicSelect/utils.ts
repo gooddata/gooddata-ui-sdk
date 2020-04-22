@@ -203,11 +203,11 @@ export const findRelativeDateFilterOptionByValue = (
     return getSelectableItems(options).find(option => option.value === value);
 };
 
-export const getRelativeDateFilterItems = (
+export function getRelativeDateFilterItems(
     input: string = "",
     granularity: ExtendedDateFilters.DateFilterGranularity = DAY,
     intl: IMessageTranslator,
-): DynamicSelectItem[] => {
+): DynamicSelectItem[] {
     const trimmedInput = getTrimmedInput(input);
     const inputInfo = parseInput(trimmedInput);
 
@@ -224,4 +224,4 @@ export const getRelativeDateFilterItems = (
                 ? getOptionsByNumber(offset, granularity, intl)
                 : getFullTextMatches(trimmedInput, offset, granularity, intl);
     }
-};
+}
