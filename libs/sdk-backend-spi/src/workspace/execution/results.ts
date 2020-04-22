@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import isEmpty = require("lodash/isEmpty");
 
@@ -7,7 +7,6 @@ import isEmpty = require("lodash/isEmpty");
  * SQL nulls. The calculated numeric value WILL be returned in string representation - this is to
  * prevent float number precision errors.
  *
- * TODO: we should probably get rid of number variant
  * @public
  */
 export type DataValue = null | string | number;

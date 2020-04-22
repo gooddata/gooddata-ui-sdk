@@ -4,18 +4,13 @@ import {
     AnalyticalBackendConfig,
     AuthenticatedPrincipal,
     AuthenticationContext,
-    AuthenticatedAsyncCall,
     ErrorConverter,
-    IAuthenticatedAsyncCallContext,
-    AuthProviderCallGuard,
     BackendCapabilities,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     NotAuthenticated,
     IWorkspaceQueryFactory,
-    IAuthProviderCallGuard,
-    NoopAuthProvider,
     IUserService,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight, IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
@@ -29,6 +24,13 @@ import { BearUserService } from "./user";
 import { convertInsight } from "../fromSdkModel/InsightConverter";
 import { GdcUser } from "@gooddata/gd-bear-model";
 import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
+import {
+    IAuthProviderCallGuard,
+    NoopAuthProvider,
+    AuthenticatedAsyncCall,
+    IAuthenticatedAsyncCallContext,
+    AuthProviderCallGuard,
+} from "@gooddata/sdk-backend-base";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,

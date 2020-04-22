@@ -8,17 +8,7 @@ export {
     prepareExecution,
 } from "./backend";
 
-export {
-    AuthenticatedAsyncCall,
-    AuthenticatedCallGuard,
-    IAuthenticatedAsyncCallContext,
-    AuthProviderCallGuard,
-    AuthenticatedPrincipal,
-    AuthenticationContext,
-    IAuthProviderCallGuard,
-    IAuthenticationProvider,
-    NoopAuthProvider,
-} from "./auth";
+export { AuthenticatedPrincipal, AuthenticationContext, IAuthenticationProvider } from "./auth";
 
 export { ISettings, SettingCatalog } from "./common/settings";
 
