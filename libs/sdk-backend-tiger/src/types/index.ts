@@ -3,13 +3,6 @@ import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-spi";
 import { ITigerClient } from "@gooddata/gd-tiger-client";
 
 /**
- * Tiger object types
- *
- * @public
- */
-export type TigerObjectType = "attributes" | "metrics" | "facts" | "labels" | "datasets" | "tags";
-
-/**
  * Tiger AFM types
  *
  * @public

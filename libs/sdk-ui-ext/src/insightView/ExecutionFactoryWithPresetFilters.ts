@@ -9,6 +9,9 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
+/**
+ * @internal
+ */
 export class ExecutionFactoryWithPresetFilters implements IExecutionFactory {
     constructor(
         private readonly factory: IExecutionFactory,
