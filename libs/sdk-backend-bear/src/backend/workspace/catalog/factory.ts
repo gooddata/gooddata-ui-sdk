@@ -91,6 +91,15 @@ const createLookups = (
     };
 };
 
+const getProductionFlag = ({
+    production,
+    dataset,
+}: IWorkspaceCatalogFactoryOptions): GdcCatalog.ILoadCatalogItemsParams["production"] => {
+    // if a dataset is specified, production must be false
+    const sanitizedProduction = !dataset && production;
+    return sanitizedProduction ? 1 : 0;
+};
+
 export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
         private readonly authCall: BearAuthenticatedCallGuard,
@@ -206,7 +215,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadBearCatalogItems = async (): Promise<GdcCatalog.CatalogItem[]> => {
-        const { types, includeTags, excludeTags, dataset, production } = this.options;
+        const { types, includeTags, excludeTags, dataset } = this.options;
 
         const compatibleBearItemTypes = types.filter(isCompatibleCatalogItemType);
         if (compatibleBearItemTypes.length === 0) {
@@ -227,7 +236,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 types: bearItemTypes,
                 includeWithTags: includeTagsIdentifiers,
                 excludeWithTags: excludeTagsIdentifiers,
-                production: production ? 1 : 0,
+                production: getProductionFlag(this.options),
                 csvDataSets: dataset ? [dataSetIdentifier] : [],
             }),
         );
@@ -249,7 +258,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadCatalogGroups = async (): Promise<ICatalogGroup[]> => {
-        const { includeTags, excludeTags, dataset, production } = this.options;
+        const { includeTags, excludeTags, dataset } = this.options;
 
         const includeTagsIdentifiers = await this.objRefsToIdentifiers(includeTags);
         const excludeTagsIdentifiers = await this.objRefsToIdentifiers(excludeTags);
@@ -263,7 +272,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             sdk.catalogue.loadGroups(this.workspace, {
                 includeWithTags: includeTagsIdentifiers,
                 excludeWithTags: excludeTagsIdentifiers,
-                production: production ? 1 : 0,
+                production: getProductionFlag(this.options),
                 csvDataSets: dataset ? [dataSetIdentifier] : [],
             }),
         );
