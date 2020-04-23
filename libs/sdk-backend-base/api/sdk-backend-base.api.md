@@ -39,6 +39,23 @@ import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
+// Warning: (ae-internal-missing-underscore) The name "AbstractExecutionFactory" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export abstract class AbstractExecutionFactory implements IExecutionFactory {
+    constructor(workspace: string);
+    // (undocumented)
+    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    // (undocumented)
+    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    // (undocumented)
+    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    }
+
 // @beta
 export type AnalyticalBackendCallbacks = {
     beforeExecute?: (def: IExecutionDefinition) => void;
@@ -48,6 +65,9 @@ export type AnalyticalBackendCallbacks = {
     successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView) => void;
     failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
 };
+
+// @beta (undocumented)
+export type ApiClientProvider = (config: CustomBackendConfig) => any;
 
 // Warning: (ae-internal-missing-underscore) The name "AuthenticatedAsyncCall" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -69,7 +89,7 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     // (undocumented)
     deauthenticate(context: AuthenticationContext): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
     // (undocumented)
     reset: () => void;
 }
@@ -80,6 +100,41 @@ export type CachingConfiguration = {
     maxResultWindows: number | undefined;
     maxCatalogs: number | undefined;
     maxCatalogOptions: number | undefined;
+};
+
+// @beta
+export function customBackend(config: CustomBackendConfig): IAnalyticalBackend;
+
+// @beta (undocumented)
+export type CustomBackendConfig = AnalyticalBackendConfig & {
+    readonly clientProvider: ApiClientProvider;
+    readonly resultProvider: ResultProvider;
+    readonly dataProvider?: DataProvider;
+};
+
+// @beta (undocumented)
+export type CustomBackendState = {
+    telemetry?: TelemetryData;
+    authApiCall: AuthenticatedCallGuard;
+};
+
+// @beta (undocumented)
+export type CustomCallContext = {
+    config: CustomBackendConfig;
+    state: CustomBackendState;
+    client: any;
+};
+
+// @beta (undocumented)
+export type DataProvider = (context: DataProviderContext) => Promise<IDataView>;
+
+// @beta (undocumented)
+export type DataProviderContext = CustomCallContext & {
+    result: IExecutionResult;
+    window?: {
+        offset: number[];
+        size: number[];
+    };
 };
 
 // @alpha
@@ -249,7 +304,7 @@ export class NoopAuthProvider implements IAuthProviderCallGuard {
     // (undocumented)
     deauthenticate(_context: AuthenticationContext): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
     // (undocumented)
     reset(): void;
 }
@@ -283,6 +338,26 @@ export class Normalizer {
 // @alpha (undocumented)
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
 
+// @beta (undocumented)
+export type ResultFactory = (dimensions: IDimensionDescriptor[], fingerprint: string) => IExecutionResult;
+
+// @beta (undocumented)
+export type ResultProvider = (context: ResultProviderContext) => Promise<IExecutionResult>;
+
+// @beta (undocumented)
+export type ResultProviderContext = CustomCallContext & {
+    execution: IPreparedExecution;
+    resultFactory: ResultFactory;
+};
+
+// Warning: (ae-internal-missing-underscore) The name "TelemetryData" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type TelemetryData = {
+    componentName?: string;
+    props?: string[];
+};
+
 // @beta
 export function withCaching(realBackend: IAnalyticalBackend, config?: CachingConfiguration): IAnalyticalBackend;
 
@@ -298,6 +373,8 @@ export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspace
 
 // Warnings were encountered during analysis:
 //
+// dist/customBackend/config.d.ts:138:5 - (ae-incompatible-release-tags) The symbol "telemetry" is marked as @beta, but its signature references "TelemetryData" which is marked as @internal
+// dist/customBackend/config.d.ts:148:5 - (ae-incompatible-release-tags) The symbol "authApiCall" is marked as @beta, but its signature references "AuthenticatedCallGuard" which is marked as @internal
 // dist/decoratedBackend/index.d.ts:12:5 - (ae-forgotten-export) The symbol "ExecutionDecoratorFactory" needs to be exported by the entry point index.d.ts
 // dist/decoratedBackend/index.d.ts:13:5 - (ae-forgotten-export) The symbol "CatalogDecoratorFactory" needs to be exported by the entry point index.d.ts
 // dist/normalizingBackend/index.d.ts:10:5 - (ae-incompatible-release-tags) The symbol "normalizationStatus" is marked as @beta, but its signature references "NormalizationState" which is marked as @internal

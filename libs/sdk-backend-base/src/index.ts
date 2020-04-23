@@ -30,3 +30,21 @@ export {
     IAuthProviderCallGuard,
     NoopAuthProvider,
 } from "./toolkit/auth";
+
+export { TelemetryData } from "./toolkit/backend";
+
+export { AbstractExecutionFactory } from "./toolkit/execution";
+
+export { customBackend } from "./customBackend";
+
+export {
+    ResultProvider,
+    ResultProviderContext,
+    DataProvider,
+    DataProviderContext,
+    ApiClientProvider,
+    CustomBackendConfig,
+    CustomCallContext,
+    ResultFactory,
+    CustomBackendState,
+} from "./customBackend/config";

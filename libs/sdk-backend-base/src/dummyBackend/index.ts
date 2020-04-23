@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    AbstractExecutionFactory,
     AnalyticalBackendConfig,
     AuthenticatedPrincipal,
     IAnalyticalBackend,
@@ -41,6 +40,7 @@ import {
     ObjRef,
     SortItem,
 } from "@gooddata/sdk-model";
+import { AbstractExecutionFactory } from "../toolkit/execution";
 
 /**
  * @internal

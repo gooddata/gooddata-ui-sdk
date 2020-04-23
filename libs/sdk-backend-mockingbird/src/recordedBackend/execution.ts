@@ -1,7 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    AbstractExecutionFactory,
     DataValue,
     IDataView,
     IDimensionDescriptor,
@@ -26,7 +25,7 @@ import {
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
-import { Denormalizer, NormalizationState } from "@gooddata/sdk-backend-base";
+import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import flatMap = require("lodash/flatMap");
 
 //

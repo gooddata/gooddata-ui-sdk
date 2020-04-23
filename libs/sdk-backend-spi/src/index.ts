@@ -15,13 +15,7 @@ export { ISettings, SettingCatalog } from "./common/settings";
 export { IUserService } from "./user";
 export { IUserSettingsService, IUserSettings } from "./user/settings";
 
-export {
-    IExecutionFactory,
-    AbstractExecutionFactory,
-    IPreparedExecution,
-    IExecutionResult,
-    IDataView,
-} from "./workspace/execution";
+export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./workspace/execution";
 
 export {
     DataValue,

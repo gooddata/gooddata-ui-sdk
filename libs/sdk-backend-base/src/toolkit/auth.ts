@@ -93,7 +93,7 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
         return this.inflightRequest;
     };
 
-    public getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined> {
+    public getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null> {
         return this.realProvider.getCurrentPrincipal(context);
     }
 
@@ -112,7 +112,7 @@ export class NoopAuthProvider implements IAuthProviderCallGuard {
         throw new NotSupported("NoopAuthProvider does not support authenticate");
     }
 
-    public getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined> {
+    public getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | null> {
         throw new NotSupported("NoopAuthProvider does not support getCurrentPrincipal");
     }
 
@@ -122,5 +122,31 @@ export class NoopAuthProvider implements IAuthProviderCallGuard {
 
     public reset(): void {
         throw new NotSupported("NoopAuthProvider does not support reset");
+    }
+}
+
+export const AnonymousUser: AuthenticatedPrincipal = {
+    userId: "anonymous",
+};
+
+/**
+ * This is a noop implementation of authentication provider - it does nothing and assumes anonymous user.
+ *
+ */
+export class AnonymousAuthProvider implements IAuthProviderCallGuard {
+    public authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
+        return Promise.resolve(AnonymousUser);
+    }
+
+    public getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | null> {
+        return Promise.resolve(AnonymousUser);
+    }
+
+    public deauthenticate(_context: AuthenticationContext): Promise<void> {
+        return Promise.resolve();
+    }
+
+    public reset(): void {
+        return;
     }
 }

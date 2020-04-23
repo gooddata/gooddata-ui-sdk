@@ -17,7 +17,7 @@ export abstract class BearAuthProviderBase implements IAuthenticationProvider {
     // (undocumented)
     deauthenticate(context: AuthenticationContext): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
     // (undocumented)
     protected obtainCurrentPrincipal(context: AuthenticationContext): Promise<void>;
     // (undocumented)

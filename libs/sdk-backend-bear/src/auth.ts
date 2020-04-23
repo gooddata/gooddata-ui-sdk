@@ -24,14 +24,12 @@ export abstract class BearAuthProviderBase implements IAuthenticationProvider {
         await sdk.user.logout();
     }
 
-    public async getCurrentPrincipal(
-        context: AuthenticationContext,
-    ): Promise<AuthenticatedPrincipal | undefined> {
+    public async getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null> {
         if (!this.principal) {
             await this.obtainCurrentPrincipal(context);
         }
 
-        return this.principal;
+        return this.principal || null;
     }
 
     protected async obtainCurrentPrincipal(context: AuthenticationContext): Promise<void> {

@@ -47,21 +47,6 @@ export type AbsolutePresetType = "absolutePreset";
 export type AbsoluteType = "absolute";
 
 // @public
-export abstract class AbstractExecutionFactory implements IExecutionFactory {
-    constructor(workspace: string);
-    // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
-    // (undocumented)
-    abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
-    // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
-    // (undocumented)
-    abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
-    // (undocumented)
-    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
-    }
-
-// @public
 export type AllTimeType = "allTime";
 
 // @public
@@ -251,7 +236,7 @@ export interface IAttributeFilter {
 export interface IAuthenticationProvider {
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
     deauthenticate(context: AuthenticationContext): Promise<void>;
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
 }
 
 // @alpha

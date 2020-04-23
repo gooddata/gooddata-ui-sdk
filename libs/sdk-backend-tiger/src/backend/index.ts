@@ -27,6 +27,7 @@ import {
     AuthProviderCallGuard,
     AuthenticatedAsyncCall,
     IAuthenticatedAsyncCallContext,
+    TelemetryData,
 } from "@gooddata/sdk-backend-base";
 
 const CAPABILITIES: BackendCapabilities = {
@@ -56,11 +57,6 @@ export type TigerBackendConfig = {
      * Version of the frontend package, this will be recorded by backend as initiator of HTTP requests.
      */
     packageVersion?: string;
-};
-
-type TelemetryData = {
-    componentName?: string;
-    props?: string[];
 };
 
 /**
