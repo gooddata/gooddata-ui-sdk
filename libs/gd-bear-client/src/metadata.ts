@@ -5,7 +5,12 @@ import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
-import { GdcVisualizationObject, GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
+import {
+    GdcVisualizationObject,
+    GdcMetadata,
+    GdcMetadataObject,
+    GdcProjectDashboard,
+} from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
 import {
@@ -411,6 +416,44 @@ export class MetadataModule {
     }
 
     /**
+     * Returns all project dashboards (pixel perfect dashboards) in a project specified by the given projectId
+     *
+     * @method getProjectDashboards
+     * @param {string} projectId Project identifier
+     * @return {Array} An array of project dashboard objects
+     */
+    public getProjectDashboards(projectId: string): Promise<GdcProjectDashboard.IWrappedProjectDashboard[]> {
+        return this.xhr
+            .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
+                `/gdc/md/${projectId}/query/projectdashboards`,
+            )
+            .then(dashboardsQuery => {
+                const dashboardLinks = dashboardsQuery.query.entries.map(dashboard => dashboard.link);
+                return this.getObjects<GdcProjectDashboard.IWrappedProjectDashboard>(
+                    projectId,
+                    dashboardLinks,
+                );
+            });
+    }
+
+    /**
+     * Returns all analytical dashboards (kpi dashboards) in a project specified by the given projectId
+     *
+     * @method getAnalyticalDashboards
+     * @param {string} projectId Project identifier
+     * @return {Array} An array of analytical dashboard objects
+     */
+    public getAnalyticalDashboards(projectId: string): Promise<GdcMetadata.IObjectLink[]> {
+        return this.xhr
+            .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
+                `/gdc/md/${projectId}/query/analyticaldashboard`,
+            )
+            .then(dashboardsQuery => {
+                return dashboardsQuery.query.entries;
+            });
+    }
+
+    /**
      * Returns all metrics that are reachable (with respect to ldm of the project
      * specified by the given projectId) for given attributes
      *
@@ -476,7 +519,7 @@ export class MetadataModule {
      * @param uri uri of the metadata object for which details are to be retrieved
      * @return {Object} object details
      */
-    public getObjectDetails(uri: string): Promise<any> {
+    public getObjectDetails<T = any>(uri: string): Promise<T> {
         return this.xhr.get(uri).then((r: ApiResponse) => r.getData());
     }
 

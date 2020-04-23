@@ -20,6 +20,7 @@ import {
     IWorkspaceInsights,
     IUserSettingsService,
     IWorkspaceUserPermissions,
+    IWorkspaceDashboards,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedElementQueryFactory } from "./elements";
@@ -106,6 +107,9 @@ function recordedWorkspace(
         },
         insights(): IWorkspaceInsights {
             return new RecordedInsights(recordings);
+        },
+        dashboards(): IWorkspaceDashboards {
+            throw new NotSupported("not supported");
         },
         settings(): IWorkspaceSettingsService {
             return {

@@ -10,6 +10,7 @@ import { IWorkspaceCatalogFactory } from "./ldm/catalog";
 import { IWorkspaceDatasetsService } from "./ldm/datasets";
 import { IWorkspacePermissionsFactory } from "./permissions";
 import { IWorkspaceMetadata } from "./metadata";
+import { IWorkspaceDashboards } from "./dashboards";
 
 /**
  * Represents an analytical workspace hosted on a backend. It is an entry point to various services that can be
@@ -29,6 +30,11 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to query and update insights
      */
     insights(): IWorkspaceInsights;
+
+    /**
+     * Returns service that can be used to query and update dashboards
+     */
+    dashboards(): IWorkspaceDashboards;
 
     /**
      * Returns service that can be used to perform read and write operations on subset of workspace's metadata.

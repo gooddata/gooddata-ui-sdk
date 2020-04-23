@@ -27,6 +27,7 @@ import {
     IWorkspaceStylingService,
     NoDataError,
     NotSupported,
+    IWorkspaceDashboards,
 } from "@gooddata/sdk-backend-spi";
 import {
     CatalogItemType,
@@ -192,6 +193,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         insights(): IWorkspaceInsights {
+            throw new NotSupported("not supported");
+        },
+        dashboards(): IWorkspaceDashboards {
             throw new NotSupported("not supported");
         },
         styling(): IWorkspaceStylingService {

@@ -22,7 +22,7 @@ import { BearWorkspace } from "./workspace";
 import { BearWorkspaceQueryFactory } from "./workspaces";
 import { BearUserService } from "./user";
 import { convertInsight } from "../fromSdkModel/InsightConverter";
-import { GdcUser } from "@gooddata/gd-bear-model";
+import { GdcUser, GdcProjectDashboard } from "@gooddata/gd-bear-model";
 import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
 import {
     IAuthProviderCallGuard,
@@ -79,6 +79,7 @@ type BearLegacyFunctions = {
         workspace: string,
         postMessageData: IDrillingActivationPostMessageData,
     ): Promise<IDrillingActivationPostMessageData>;
+    getProjectDashboards?(workspace: string): Promise<GdcProjectDashboard.IWrappedProjectDashboard[]>;
 };
 
 /**
@@ -171,6 +172,10 @@ export class BearBackend implements IAnalyticalBackend {
                         (workspace, identifiers) =>
                             this.authApiCall(sdk => sdk.md.getUrisFromIdentifiers(workspace, identifiers)),
                     ),
+
+                getProjectDashboards: (workspace: string) => {
+                    return this.authApiCall(sdk => sdk.md.getProjectDashboards(workspace));
+                },
             };
 
             this.implConfig.onLegacyCallbacksReady(legacyFunctions);

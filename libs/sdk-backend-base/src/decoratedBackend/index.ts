@@ -18,6 +18,7 @@ import {
     IWorkspaceQueryFactory,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
+    IWorkspaceDashboards,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
 
@@ -115,6 +116,10 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public insights(): IWorkspaceInsights {
         return this.decorated.insights();
+    }
+
+    public dashboards(): IWorkspaceDashboards {
+        return this.decorated.dashboards();
     }
 
     public settings(): IWorkspaceSettingsService {

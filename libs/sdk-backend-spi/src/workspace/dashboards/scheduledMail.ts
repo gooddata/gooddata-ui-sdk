@@ -1,0 +1,116 @@
+// (C) 2020 GoodData Corporation
+import { ObjRef } from "@gooddata/sdk-model";
+
+/**
+ * A scheduled email is used to notify a user with an exported dashboard according to a specified time interval
+ * @alpha
+ */
+export interface IScheduledMailDefinition {
+    /**
+     * Scheduled email object reference
+     */
+    ref: ObjRef;
+
+    /**
+     * Scheduled email job interval
+     */
+    when: {
+        /**
+         * Start date
+         * e.g. YYYY-MM-DD
+         */
+        startDate: string;
+
+        /**
+         * End date
+         * e.g. YYYY-MM-DD
+         */
+        endDate?: string;
+
+        /**
+         * Recurrency
+         * e.g. 0:0:1*3:12:30:0
+         */
+        recurrency: string;
+
+        /**
+         * Timezone
+         * e.g. Europe/Amsterdam
+         */
+        timeZone: string;
+    };
+
+    /**
+     * Recipients email addresses
+     */
+    to: string[];
+
+    /**
+     * BCC recipients email addresses
+     */
+    bcc?: string[];
+
+    /**
+     * Unsubscribed recipients email addresses
+     */
+    unsubscribed?: string[];
+
+    /**
+     * Email subject
+     */
+    subject: string;
+
+    /**
+     * Email message body
+     */
+    body: string;
+
+    /**
+     * Email attachments
+     */
+    attachments: ScheduledMailAttachment;
+
+    /**
+     * Last successfull job
+     */
+    lastSuccessfull?: string;
+}
+
+/**
+ * Supported email attachments
+ * @alpha
+ */
+export type ScheduledMailAttachment = IDashboardAttachment;
+
+/**
+ * Email attachment - dashboard exported as pdf
+ * Optionally, you can setup specific filter context to use for the dashboard export
+ * @alpha
+ */
+export interface IDashboardAttachment {
+    /**
+     * Dashboard object ref
+     */
+    dashboard: ObjRef;
+
+    /**
+     * File format
+     */
+    format: "pdf";
+
+    /**
+     * Export filter context
+     */
+    filterContext?: ObjRef;
+}
+
+/**
+ * A scheduled email is used to notify a user with an exported dashboard according to a specified time interval
+ * @alpha
+ */
+export type IScheduledMail = IScheduledMailDefinition & {
+    /**
+     * Scheduled email object reference
+     */
+    ref: ObjRef;
+};

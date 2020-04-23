@@ -35,6 +35,18 @@ import { SortItem } from '@gooddata/sdk-model';
 import { WorkspacePermission } from '@gooddata/sdk-model';
 
 // @public
+export type AbsoluteDateFilterOption = IAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
+
+// @public
+export type AbsoluteFormType = "absoluteForm";
+
+// @public
+export type AbsolutePresetType = "absolutePreset";
+
+// @alpha
+export type AbsoluteType = "absolute";
+
+// @public
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
     constructor(workspace: string);
     // (undocumented)
@@ -48,6 +60,9 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
     // (undocumented)
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
     }
+
+// @public
+export type AllTimeType = "allTime";
 
 // @public
 export type AnalyticalBackendConfig = {
@@ -119,7 +134,59 @@ export class DataTooLargeError extends AnalyticalBackendError {
 export type DataValue = null | string | number;
 
 // @public
+export type DateFilterConfigMode = "readonly" | "hidden" | "active";
+
+// @public
+export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+
+// @public
+export type DateFilterOption = IAllTimeDateFilter | AbsoluteDateFilterOption | RelativeDateFilterOption;
+
+// @public
+export type DateFilterRelativeOptionGroup = {
+    [key in DateFilterGranularity]?: IRelativeDateFilterPresetOfGranularity<key>[];
+};
+
+// @alpha
+export type DateFilterType = RelativeType | AbsoluteType;
+
+// @public
+export type DateString = string;
+
+// @public
 export type ErrorConverter = (e: any) => AnalyticalBackendError;
+
+// @alpha
+export type FilterContextItem = IAttributeFilter | IDateFilter;
+
+// @public
+export type GUID = string;
+
+// @public
+export interface IAbsoluteDateFilterForm extends IDateFilterOption {
+    // (undocumented)
+    from?: DateString;
+    // (undocumented)
+    to?: DateString;
+    // (undocumented)
+    type: AbsoluteFormType;
+}
+
+// @public
+export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
+    // (undocumented)
+    from: DateString;
+    // (undocumented)
+    to: DateString;
+    // (undocumented)
+    type: AbsolutePresetType;
+}
+
+// @public
+export interface IAllTimeDateFilter extends IDateFilterOption {
+    // (undocumented)
+    type: AllTimeType;
+}
 
 // @public
 export interface IAnalyticalBackend {
@@ -139,6 +206,8 @@ export interface IAnalyticalBackend {
 // @public
 export interface IAnalyticalWorkspace {
     catalog(): IWorkspaceCatalogFactory;
+    // Warning: (ae-incompatible-release-tags) The symbol "dashboards" is marked as @public, but its signature references "IWorkspaceDashboards" which is marked as @alpha
+    dashboards(): IWorkspaceDashboards;
     dataSets(): IWorkspaceDatasetsService;
     elements(): IElementQueryFactory;
     execution(): IExecutionFactory;
@@ -168,11 +237,56 @@ export interface IAttributeDescriptor {
     };
 }
 
+// @alpha
+export interface IAttributeFilter {
+    // (undocumented)
+    attributeFilter: {
+        displayForm: ObjRef;
+        negativeSelection: boolean;
+        attributeElements: ObjRef[];
+    };
+}
+
 // @public
 export interface IAuthenticationProvider {
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
     deauthenticate(context: AuthenticationContext): Promise<void>;
     getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+}
+
+// @alpha
+export type IDashboard = IDashboardDefinition & {
+    readonly ref: ObjRef;
+    readonly uri: string;
+    readonly identifier: string;
+};
+
+// @public
+export interface IDashboardAddedPresets {
+    // (undocumented)
+    absolutePresets?: IAbsoluteDateFilterPreset[];
+    // (undocumented)
+    relativePresets?: IRelativeDateFilterPreset[];
+}
+
+// @alpha
+export interface IDashboardAttachment {
+    dashboard: ObjRef;
+    filterContext?: ObjRef;
+    format: "pdf";
+}
+
+// @alpha
+export interface IDashboardDefinition {
+    readonly created: string;
+    readonly dateFilterConfig?: IDateFilterConfig;
+    readonly description: string;
+    readonly filterContext: IFilterContext[];
+    readonly layout: Layout;
+    readonly scheduledMails: IScheduledMail[];
+    readonly title: string;
+    readonly updated: string;
+    readonly widgets: IWidget[];
 }
 
 // @public
@@ -187,6 +301,54 @@ export interface IDataView {
     readonly result: IExecutionResult;
     readonly totalCount: number[];
     readonly totals?: DataValue[][][];
+}
+
+// @alpha
+export interface IDateFilter {
+    // (undocumented)
+    dateFilter: {
+        type: DateFilterType;
+        granularity: DateFilterGranularity;
+        from?: DateString | number;
+        to?: DateString | number;
+        dataSet?: ObjRef;
+        attribute?: ObjRef;
+    };
+}
+
+// @alpha
+export interface IDateFilterConfig {
+    addPresets?: IDashboardAddedPresets;
+    filterName: string;
+    hideGranularities?: DateFilterGranularity[];
+    hideOptions?: GUID[];
+    mode: DateFilterConfigMode;
+}
+
+// @public
+export interface IDateFilterOption {
+    // (undocumented)
+    localIdentifier: GUID;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    type: OptionType;
+    // (undocumented)
+    visible: boolean;
+}
+
+// @public
+export interface IDateFilterOptionsByType {
+    // (undocumented)
+    absoluteForm?: IAbsoluteDateFilterForm;
+    // (undocumented)
+    absolutePreset?: IAbsoluteDateFilterPreset[];
+    // (undocumented)
+    allTime?: IAllTimeDateFilter;
+    // (undocumented)
+    relativeForm?: IRelativeDateFilterForm;
+    // (undocumented)
+    relativePreset?: DateFilterRelativeOptionGroup;
 }
 
 // @public
@@ -263,6 +425,71 @@ export interface IExportResult {
 }
 
 // @public
+export interface IExtendedDateFilterErrors {
+    // (undocumented)
+    absoluteForm?: {
+        from?: string;
+        to?: string;
+    };
+    // (undocumented)
+    relativeForm?: {
+        from?: string;
+        to?: string;
+    };
+}
+
+// @alpha
+export type IFilterContext = IFilterContextDefinition & {
+    readonly ref: ObjRef;
+};
+
+// @alpha
+export interface IFilterContextDefinition {
+    readonly description: string;
+    readonly filters: FilterContextItem[];
+    readonly title: string;
+}
+
+// @alpha
+export interface IFluidLayout {
+    // (undocumented)
+    fluidLayout: {
+        rows: IFluidLayoutRow[];
+        size?: IFluidLayoutSize;
+        style?: string;
+    };
+}
+
+// @alpha
+export interface IFluidLayoutColSize {
+    lg?: IFluidLayoutSize;
+    md?: IFluidLayoutSize;
+    sm?: IFluidLayoutSize;
+    xl: IFluidLayoutSize;
+    xs?: IFluidLayoutSize;
+}
+
+// @alpha
+export interface IFluidLayoutColumn {
+    content?: LayoutContent;
+    size: IFluidLayoutColSize;
+    style?: string;
+}
+
+// @alpha
+export interface IFluidLayoutRow {
+    columns: IFluidLayoutColumn[];
+    header?: SectionHeader;
+    style?: string;
+}
+
+// @alpha
+export interface IFluidLayoutSize {
+    heightAsRatio?: number;
+    width: number;
+}
+
+// @public
 export interface IInsightQueryOptions {
     author?: string;
     limit?: number;
@@ -273,6 +500,22 @@ export interface IInsightQueryOptions {
 
 // @public
 export interface IInsightQueryResult extends IPagedResource<IInsight> {
+}
+
+// @alpha
+export interface ILayoutWidget {
+    widget: ObjRef;
+}
+
+// @alpha
+export interface IListedDashboard {
+    readonly created: string;
+    readonly description: string;
+    readonly identifier: string;
+    readonly ref: ObjRef;
+    readonly title: string;
+    readonly updated: string;
+    readonly uri: string;
 }
 
 // @public
@@ -323,6 +566,38 @@ export interface IPreparedExecution {
 }
 
 // @public
+export interface IRelativeDateFilterForm extends IDateFilterOption {
+    // (undocumented)
+    availableGranularities: DateFilterGranularity[];
+    // (undocumented)
+    from?: RelativeGranularityOffset;
+    // (undocumented)
+    granularity?: DateFilterGranularity;
+    // (undocumented)
+    to?: RelativeGranularityOffset;
+    // (undocumented)
+    type: RelativeFormType;
+}
+
+// @public
+export interface IRelativeDateFilterPreset extends IDateFilterOption {
+    // (undocumented)
+    from: RelativeGranularityOffset;
+    // (undocumented)
+    granularity: DateFilterGranularity;
+    // (undocumented)
+    to: RelativeGranularityOffset;
+    // (undocumented)
+    type: RelativePresetType;
+}
+
+// @public
+export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity> extends IRelativeDateFilterPreset {
+    // (undocumented)
+    granularity: Key;
+}
+
+// @public
 export interface IResultAttributeHeader {
     // (undocumented)
     attributeHeaderItem: {
@@ -353,13 +628,59 @@ export interface IResultTotalHeader {
 }
 
 // @public
+export const isAbsoluteDateFilterForm: (option: DateFilterOption) => option is IAbsoluteDateFilterForm;
+
+// @public
+export const isAbsoluteDateFilterOption: (option: DateFilterOption) => option is AbsoluteDateFilterOption;
+
+// @public
+export const isAbsoluteDateFilterPreset: (option: DateFilterOption) => option is IAbsoluteDateFilterPreset;
+
+// @public
+export const isAllTimeDateFilter: (option: DateFilterOption) => option is IAllTimeDateFilter;
+
+// @public
 export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendError;
 
 // @public
 export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor;
 
+// @alpha
+export type IScheduledMail = IScheduledMailDefinition & {
+    ref: ObjRef;
+};
+
+// @alpha
+export interface IScheduledMailDefinition {
+    attachments: ScheduledMailAttachment;
+    bcc?: string[];
+    body: string;
+    lastSuccessfull?: string;
+    ref: ObjRef;
+    subject: string;
+    to: string[];
+    unsubscribed?: string[];
+    when: {
+        startDate: string;
+        endDate?: string;
+        recurrency: string;
+        timeZone: string;
+    };
+}
+
 // @public
 export function isDataTooLargeError(obj: any): obj is DataTooLargeError;
+
+// @alpha
+export interface ISectionDescription {
+    description: string;
+}
+
+// @alpha
+export interface ISectionHeader {
+    description?: string;
+    title: string;
+}
 
 // @public
 export interface ISettings {
@@ -387,6 +708,15 @@ export function isNotSupported(obj: any): obj is NotSupported;
 
 // @public
 export function isProtectedDataError(obj: any): obj is ProtectedDataError;
+
+// @public
+export const isRelativeDateFilterForm: (option: DateFilterOption) => option is IRelativeDateFilterForm;
+
+// @public
+export const isRelativeDateFilterOption: (option: DateFilterOption) => option is RelativeDateFilterOption;
+
+// @public
+export const isRelativeDateFilterPreset: (option: DateFilterOption) => option is IRelativeDateFilterPreset;
 
 // @public
 export function isResultAttributeHeader(obj: any): obj is IResultAttributeHeader;
@@ -427,6 +757,37 @@ export interface IUserSettings extends ISettings {
 // @public
 export interface IUserSettingsService {
     query(): Promise<IUserSettings>;
+}
+
+// @alpha
+export type IWidget = IWidgetDefinition & {
+    readonly ref: ObjRef;
+};
+
+// @alpha
+export type IWidgetAlert = IWidgetAlertDefinition & {
+    readonly ref: ObjRef;
+};
+
+// @alpha
+export interface IWidgetAlertDefinition {
+    readonly dashboard: ObjRef;
+    readonly filterContext?: IFilterContext;
+    readonly insight: ObjRef;
+    readonly isTriggered: boolean;
+    readonly threshold: number;
+    readonly whenTriggered: "underThreshold" | "aboveThreshold";
+}
+
+// @alpha
+export interface IWidgetDefinition {
+    readonly alerts: IWidgetAlert[];
+    readonly description: string;
+    // Warning: (ae-forgotten-export) The symbol "DrillDefinition" needs to be exported by the entry point index.d.ts
+    readonly drills: DrillDefinition[];
+    readonly insight?: ObjRef;
+    readonly title: string;
+    readonly type: WidgetType;
 }
 
 // @public
@@ -489,6 +850,17 @@ export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMe
 export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWorkspaceCatalogFactoryOptions {
     insight?: IInsightDefinition;
     items?: AttributeOrMeasure[];
+}
+
+// @alpha
+export interface IWorkspaceDashboards {
+    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    deleteDashboard(ref: ObjRef): Promise<void>;
+    getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
+    getDashboards(): Promise<IListedDashboard[]>;
+    updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboard): Promise<IDashboard>;
+    // (undocumented)
+    readonly workspace: string;
 }
 
 // @public
@@ -561,6 +933,12 @@ export interface IWorkspaceUserPermissions {
     hasPermission(permission: WorkspacePermission): boolean;
 }
 
+// @alpha
+export type Layout = IFluidLayout;
+
+// @alpha
+export type LayoutContent = Widget | Layout;
+
 // @public
 export class NoDataError extends AnalyticalBackendError {
     constructor(message: string, dataView?: IDataView, cause?: Error);
@@ -583,6 +961,9 @@ export class NotSupported extends AnalyticalBackendError {
 }
 
 // @public
+export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
+
+// @public
 export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;
 
 // @public
@@ -591,7 +972,28 @@ export class ProtectedDataError extends AnalyticalBackendError {
 }
 
 // @public
+export type RelativeDateFilterOption = IRelativeDateFilterForm | IRelativeDateFilterPreset;
+
+// @public
+export type RelativeFormType = "relativeForm";
+
+// @public
+export type RelativeGranularityOffset = number;
+
+// @public
+export type RelativePresetType = "relativePreset";
+
+// @alpha
+export type RelativeType = "relative";
+
+// @public
 export function resultHeaderName(header: IResultHeader): string;
+
+// @alpha
+export type ScheduledMailAttachment = IDashboardAttachment;
+
+// @alpha
+export type SectionHeader = ISectionHeader | ISectionDescription;
 
 // @public
 export enum SettingCatalog {
@@ -612,6 +1014,12 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
     // (undocumented)
     readonly responseBody: number;
 }
+
+// @alpha
+export type Widget = ILayoutWidget;
+
+// @alpha
+export type WidgetType = "kpi" | "insight";
 
 
 // (No @packageDocumentation comment for this package)
