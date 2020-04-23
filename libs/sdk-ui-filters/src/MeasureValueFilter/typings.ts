@@ -6,7 +6,6 @@ export interface IMeasureValueFilterCommonProps {
     filter: IMeasureValueFilter;
     measureIdentifier: string;
     onApply: (filter: IMeasureValueFilter) => void;
-    onCancel: () => void;
     usePercentage?: boolean;
     warningMessage?: string;
     locale?: string;

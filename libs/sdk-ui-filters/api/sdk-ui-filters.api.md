@@ -264,12 +264,16 @@ export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallba
 export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     // (undocumented)
     anchorEl?: EventTarget | string;
+    // (undocumented)
+    onCancel: () => void;
 }
 
 // @beta (undocumented)
 export interface IMeasureValueFilterProps extends IMeasureValueFilterCommonProps {
     // (undocumented)
     buttonTitle: string;
+    // (undocumented)
+    onCancel?: () => void;
 }
 
 // @beta (undocumented)
@@ -280,6 +284,8 @@ export interface IMeasureValueFilterState {
 
 // @beta (undocumented)
 export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilterProps, IMeasureValueFilterState> {
+    // (undocumented)
+    static defaultProps: Partial<IMeasureValueFilterProps>;
     // (undocumented)
     render(): JSX.Element;
     // (undocumented)

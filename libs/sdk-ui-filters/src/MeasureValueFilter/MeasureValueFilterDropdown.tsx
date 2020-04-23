@@ -18,6 +18,7 @@ import { IMeasureValueFilterCommonProps } from "./typings";
  * @beta
  */
 export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
+    onCancel: () => void;
     anchorEl?: EventTarget | string;
 }
 
