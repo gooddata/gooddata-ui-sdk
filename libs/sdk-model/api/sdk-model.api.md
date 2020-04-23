@@ -554,6 +554,7 @@ export interface IComparisonCondition {
     comparison: {
         operator: ComparisonConditionOperator;
         value: number;
+        treatNullValuesAs?: number;
     };
 }
 
@@ -955,6 +956,7 @@ export interface IRangeCondition {
         operator: RangeConditionOperator;
         from: number;
         to: number;
+        treatNullValuesAs?: number;
     };
 }
 
@@ -1421,7 +1423,10 @@ export const newMeasureMetadataObject: (ref: ObjRef, modifications?: BuilderModi
 export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
 
 // @public
-export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope, operator: ComparisonConditionOperator | RangeConditionOperator, val1: number, val2?: number): IMeasureValueFilter;
+export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope, operator: ComparisonConditionOperator, value: number, treatNullValuesAs?: number): IMeasureValueFilter;
+
+// @public
+export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope, operator: RangeConditionOperator, from: number, to: number, treatNullValuesAs?: number): IMeasureValueFilter;
 
 // @public
 export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: AttributeElements | string[]): INegativeAttributeFilter;

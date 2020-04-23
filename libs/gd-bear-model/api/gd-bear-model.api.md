@@ -505,6 +505,7 @@ export namespace GdcExecuteAFM {
         comparison: {
             operator: ComparisonConditionOperator;
             value: number;
+            treatNullValuesAs?: number;
         };
     }
     // (undocumented)
@@ -639,6 +640,7 @@ export namespace GdcExecuteAFM {
             operator: RangeConditionOperator;
             from: number;
             to: number;
+            treatNullValuesAs?: number;
         };
     }
     // (undocumented)
@@ -2166,6 +2168,7 @@ export namespace GdcVisualizationObject {
         comparison: {
             operator: ComparisonConditionOperator;
             value: number;
+            treatNullValuesAs?: number;
         };
     }
     // (undocumented)
@@ -2269,6 +2272,7 @@ export namespace GdcVisualizationObject {
             operator: RangeConditionOperator;
             from: number;
             to: number;
+            treatNullValuesAs?: number;
         };
     }
     // (undocumented)

@@ -44,6 +44,23 @@ Object {
 }
 `;
 
+exports[`filter factory newMeasureValueFilter should generate comparison filter for measure object with treatNullValuesAs 1`] = `
+Object {
+  "measureValueFilter": Object {
+    "condition": Object {
+      "comparison": Object {
+        "operator": "EQUAL_TO",
+        "treatNullValuesAs": 42,
+        "value": 11,
+      },
+    },
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
 exports[`filter factory newMeasureValueFilter should generate range filter for measure object 1`] = `
 Object {
   "measureValueFilter": Object {
@@ -52,6 +69,24 @@ Object {
         "from": 0,
         "operator": "BETWEEN",
         "to": 100,
+      },
+    },
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory newMeasureValueFilter should generate range filter for measure object with treatNullValuesAs 1`] = `
+Object {
+  "measureValueFilter": Object {
+    "condition": Object {
+      "range": Object {
+        "from": 0,
+        "operator": "BETWEEN",
+        "to": 100,
+        "treatNullValuesAs": 42,
       },
     },
     "measure": Object {

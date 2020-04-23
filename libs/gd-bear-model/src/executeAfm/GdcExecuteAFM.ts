@@ -165,6 +165,7 @@ export namespace GdcExecuteAFM {
         comparison: {
             operator: ComparisonConditionOperator;
             value: number;
+            treatNullValuesAs?: number;
         };
     }
 
@@ -175,6 +176,7 @@ export namespace GdcExecuteAFM {
             operator: RangeConditionOperator;
             from: number;
             to: number;
+            treatNullValuesAs?: number;
         };
     }
 
