@@ -12,20 +12,13 @@ import {
 
 import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
 import { Dropdown } from "./Dropdown";
-import { ISeparators } from "@gooddata/sdk-ui";
+import { IMeasureValueFilterCommonProps } from "./typings";
 
-export interface IDropdownProps {
-    filter?: IMeasureValueFilter;
-    onApply: (filter: IMeasureValueFilter) => void;
-    onCancel: () => void;
-    measureIdentifier: string;
-    usePercentage?: boolean;
-    warningMessage?: string;
-    locale?: string;
+/**
+ * @beta
+ */
+export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     anchorEl?: EventTarget | string;
-    separators?: ISeparators;
-    displayTreatNullAsZeroOption?: boolean;
-    treatNullAsZeroDefaultValue?: boolean;
 }
 
 const getFilterValue = (filter: IMeasureValueFilter | undefined): IMeasureValueFilterValue => {
@@ -63,8 +56,8 @@ const getTreatNullAsZeroValue = (
 /**
  * @beta
  */
-export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
-    public static defaultProps: Partial<IDropdownProps> = {
+export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValueFilterDropdownProps> {
+    public static defaultProps: Partial<IMeasureValueFilterDropdownProps> = {
         displayTreatNullAsZeroOption: false,
         treatNullAsZeroDefaultValue: false,
     };

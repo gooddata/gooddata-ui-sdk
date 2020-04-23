@@ -3,7 +3,7 @@ import * as React from "react";
 import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberFormat";
 import { ISeparators } from "@gooddata/sdk-ui";
 
-export interface IComparisonInputProps {
+interface IComparisonInputProps {
     value: number;
     usePercentage: boolean;
     disableAutofocus?: boolean;

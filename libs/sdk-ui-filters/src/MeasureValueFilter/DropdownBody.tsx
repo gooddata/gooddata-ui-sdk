@@ -11,7 +11,7 @@ import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
 import { isComparisonConditionOperator, isRangeConditionOperator } from "@gooddata/sdk-model";
 import TreatNullValuesAsZeroCheckbox from "./TreatNullValuesAsZeroCheckbox";
 
-export interface IDropdownBodyOwnProps {
+interface IDropdownBodyOwnProps {
     operator: MeasureValueFilterOperator;
     value: IMeasureValueFilterValue;
     usePercentage?: boolean;
@@ -30,7 +30,7 @@ export interface IDropdownBodyOwnProps {
     valuePrecision?: number;
 }
 
-export type IDropdownBodyProps = IDropdownBodyOwnProps & WrappedComponentProps;
+type IDropdownBodyProps = IDropdownBodyOwnProps & WrappedComponentProps;
 
 interface IDropdownBodyState {
     operator: MeasureValueFilterOperator;

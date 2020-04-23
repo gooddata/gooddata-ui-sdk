@@ -258,12 +258,38 @@ export interface IDateFilterOwnProps extends IStatePropsIntersection {
 export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallbackProps {
 }
 
-// Warning: (ae-forgotten-export) The symbol "IDropdownProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "IMeasureValueFilterCommonProps" needs to be exported by the entry point index.d.ts
 //
 // @beta (undocumented)
-export class MeasureValueFilterDropdown extends React_2.PureComponent<IDropdownProps> {
+export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     // (undocumented)
-    static defaultProps: Partial<IDropdownProps>;
+    anchorEl?: EventTarget | string;
+}
+
+// @beta (undocumented)
+export interface IMeasureValueFilterProps extends IMeasureValueFilterCommonProps {
+    // (undocumented)
+    buttonTitle: string;
+}
+
+// @beta (undocumented)
+export interface IMeasureValueFilterState {
+    // (undocumented)
+    displayDropdown: boolean;
+}
+
+// @beta (undocumented)
+export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilterProps, IMeasureValueFilterState> {
+    // (undocumented)
+    render(): JSX.Element;
+    // (undocumented)
+    state: IMeasureValueFilterState;
+    }
+
+// @beta (undocumented)
+export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureValueFilterDropdownProps> {
+    // (undocumented)
+    static defaultProps: Partial<IMeasureValueFilterDropdownProps>;
     // (undocumented)
     render(): JSX.Element;
 }

@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
 import * as React from "react";
+import { WrappedComponentProps } from "react-intl";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
-import { WrappedComponentProps } from "react-intl";
 
-export interface ITreatNullValuesAsZeroCheckboxProps {
+interface ITreatNullValuesAsZeroCheckboxProps {
     checked?: boolean;
     onChange: (checked: boolean) => void;
 }

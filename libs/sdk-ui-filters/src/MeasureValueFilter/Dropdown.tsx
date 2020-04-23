@@ -14,7 +14,7 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
  */
 const DROPDOWN_ALIGMENTS = alignPoints.map(align => ({ align, offset: { x: 1, y: 0 } }));
 
-export interface IDropdownOwnProps {
+interface IDropdownOwnProps {
     onApply: (operator: string, value: IMeasureValueFilterValue, treatNullValuesAsZero: boolean) => void;
     onCancel: () => void;
     operator?: MeasureValueFilterOperator;
@@ -28,7 +28,7 @@ export interface IDropdownOwnProps {
     treatNullAsZeroValue?: boolean;
 }
 
-export type IDropdownProps = WrappedComponentProps & IDropdownOwnProps;
+type IDropdownProps = WrappedComponentProps & IDropdownOwnProps;
 
 interface IDropdownState {
     displayDropdown: boolean;

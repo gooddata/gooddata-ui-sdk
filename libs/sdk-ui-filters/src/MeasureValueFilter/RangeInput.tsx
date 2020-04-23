@@ -3,7 +3,7 @@ import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberF
 import { ISeparators } from "@gooddata/sdk-ui";
 import * as React from "react";
 
-export interface IRangeInputProps {
+interface IRangeInputProps {
     from: number;
     to: number;
     usePercentage: boolean;

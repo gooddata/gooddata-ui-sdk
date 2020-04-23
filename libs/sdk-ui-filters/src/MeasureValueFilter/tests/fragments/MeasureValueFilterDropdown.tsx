@@ -27,7 +27,7 @@ export default class MeasureValueFilterFragment {
     };
 
     public clickCancel = () => {
-        return this.component
+        this.component
             .find(CLASS_CANCEL_BUTTON)
             .hostNodes()
             .simulate("click");

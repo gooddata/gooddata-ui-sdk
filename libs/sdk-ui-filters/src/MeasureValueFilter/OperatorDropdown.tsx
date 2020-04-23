@@ -10,12 +10,12 @@ import OperatorDropdownBody from "./OperatorDropdownBody";
 import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator";
 import { MeasureValueFilterOperator } from "./types";
 
-export interface IOperatorDropdownOwnProps {
+interface IOperatorDropdownOwnProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;
     operator: MeasureValueFilterOperator;
 }
 
-export type IOperatorDropdownProps = IOperatorDropdownOwnProps & WrappedComponentProps;
+type IOperatorDropdownProps = IOperatorDropdownOwnProps & WrappedComponentProps;
 
 interface IOperatorDropdownState {
     opened: boolean;
