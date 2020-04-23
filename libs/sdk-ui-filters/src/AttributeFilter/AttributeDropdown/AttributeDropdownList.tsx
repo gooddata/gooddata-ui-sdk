@@ -27,6 +27,7 @@ interface IAttributeDropdownListProps {
     selectedItems: Array<Partial<IAttributeElement>>;
     isInverted: boolean;
     isLoading: boolean;
+    isFullWidth: boolean;
     error?: any;
 
     searchString: string;
@@ -43,6 +44,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
     isLoading,
     selectedItems,
     isInverted,
+    isFullWidth,
     onRangeChange,
     onSelect,
     onSearch,
@@ -67,7 +69,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
             searchString={searchString}
             rowItem={<AttributeFilterItem />}
             maxSelectionSize={MAX_SELECTION_SIZE}
-            width={LIST_WIDTH}
+            width={isFullWidth ? undefined : LIST_WIDTH}
             itemHeight={ITEM_HEIGHT}
             height={ITEM_HEIGHT * VISIBLE_ITEMS_COUNT}
             onRangeChange={onRangeChange}

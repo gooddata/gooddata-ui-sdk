@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { injectIntl } from "react-intl";
+import MediaQuery from "react-responsive";
 import {
     IAttributeElement,
     IPositiveAttributeFilter,
@@ -27,6 +28,7 @@ import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
 } from "@gooddata/sdk-ui";
+import { MediaQueries } from "../constants";
 
 interface IAttributeFilterProps {
     backend: IAnalyticalBackend;
@@ -185,7 +187,14 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
     };
 
     public render() {
-        const { locale, workspace, backend, FilterError, titleWithSelection } = this.props;
+        const {
+            locale,
+            workspace,
+            backend,
+            FilterError,
+            titleWithSelection,
+            fullscreenOnMobile,
+        } = this.props;
         const { error, isLoading } = this.state;
         const { isInverted, selectedItems } = this.getInitialDropdownSelection();
 
@@ -194,24 +203,30 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
                 {error ? (
                     <FilterError error={error} />
                 ) : (
-                    <IntlTranslationsProvider>
-                        {(translationProps: ITranslationsComponentProps) => {
-                            return (
-                                <AttributeDropdown
-                                    titleWithSelection={titleWithSelection}
-                                    displayForm={this.getObjRef()}
-                                    backend={backend}
-                                    workspace={workspace}
-                                    onApply={this.onApply}
-                                    title={this.props.title || this.state.title}
-                                    isInverted={isInverted}
-                                    selectedItems={selectedItems}
-                                    isLoading={isLoading}
-                                    translationProps={translationProps}
-                                />
-                            );
-                        }}
-                    </IntlTranslationsProvider>
+                    <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                        {isMobile => (
+                            <IntlTranslationsProvider>
+                                {(translationProps: ITranslationsComponentProps) => {
+                                    return (
+                                        <AttributeDropdown
+                                            titleWithSelection={titleWithSelection}
+                                            displayForm={this.getObjRef()}
+                                            backend={backend}
+                                            workspace={workspace}
+                                            onApply={this.onApply}
+                                            title={this.props.title || this.state.title}
+                                            isInverted={isInverted}
+                                            selectedItems={selectedItems}
+                                            isLoading={isLoading}
+                                            translationProps={translationProps}
+                                            isMobile={isMobile}
+                                            fullscreenOnMobile={fullscreenOnMobile}
+                                        />
+                                    );
+                                }}
+                            </IntlTranslationsProvider>
+                        )}
+                    </MediaQuery>
                 )}
             </IntlWrapper>
         );

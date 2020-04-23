@@ -1,14 +1,14 @@
-const depRuiser = require("../../common/config/dep-cruiser/default.config");
+const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
-options = {
+let options = {
     forbidden: [
-        ...depRuiser.DefaultRules,
-        ...depRuiser.DefaultSdkRules,
-        depRuiser.isolatedSubmodule("AttributeFilter", "src/AttributeFilter"),
-        depRuiser.isolatedSubmodule("DateFilter", "src/DateFilter"),
-        depRuiser.isolatedSubmodule("MeasureValueFilter", "src/MeasureValueFilter"),
+        ...depCruiser.DefaultRules,
+        ...depCruiser.DefaultSdkRules,
+        depCruiser.moduleWithDependencies("AttributeFilter", "src/AttributeFilter", ["src/constants"]),
+        depCruiser.moduleWithDependencies("DateFilter", "src/DateFilter", ["src/constants"]),
+        depCruiser.isolatedSubmodule("MeasureValueFilter", "src/MeasureValueFilter"),
     ],
-    options: depRuiser.DefaultOptions,
+    options: depCruiser.DefaultOptions,
 };
 
 module.exports = options;
