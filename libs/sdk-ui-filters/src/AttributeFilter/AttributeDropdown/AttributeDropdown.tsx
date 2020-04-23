@@ -45,6 +45,7 @@ export interface IAttributeDropdownOwnProps {
 
     onApply: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
+    isMobile?: boolean;
     titleWithSelection?: boolean;
     FilterLoading?: React.ComponentType;
     isLoading?: boolean;
@@ -78,8 +79,9 @@ export class AttributeDropdownCore extends React.PureComponent<
     IAttributeDropdownProps,
     IAttributeDropdownState
 > {
-    public static defaultProps = {
+    public static defaultProps: Partial<IAttributeDropdownProps> = {
         fullscreenOnMobile: false,
+        isMobile: false,
         titleWithSelection: false,
         FilterLoading: DefaultFilterLoading,
         isLoading: false,
@@ -382,6 +384,7 @@ export class AttributeDropdownCore extends React.PureComponent<
 
     private renderDropdownBody() {
         const { selectedItems, isInverted, error, isLoading, validElements, searchString } = this.state;
+        const { isMobile, fullscreenOnMobile } = this.props;
 
         const shouldDisableApplyButton = error || isLoading || (validElements && !validElements.items.length);
         const hasTriedToLoadData = validElements && validElements.items;
@@ -392,6 +395,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                 isLoading={!hasTriedToLoadData && isLoading}
                 items={validElements ? this.emptyValueItems(validElements.items) : []}
                 isInverted={isInverted}
+                isFullWidth={fullscreenOnMobile && isMobile}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}
                 totalCount={validElements ? validElements.totalCount : LIMIT}

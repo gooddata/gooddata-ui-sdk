@@ -844,6 +844,16 @@
         "comment": "",
         "limit": 0
     },
+    "mvf.treatNullValuesAsZeroLabel": {
+        "value": "Treat blank values as 0",
+        "comment": "Checkbox label. 'blank values' are data rows without any value (empty), which can be considered to be 0 in calculations.",
+        "limit": 0
+    },
+    "mvf.treatNullValuesAsZeroTooltip": {
+        "value": "If the filter condition includes 0, blank values will be treated as 0 and included in calculations.",
+        "comment": "Checkbox label tooltip. 'blank values' are data rows without any value (empty), which can be considered to be 0 during calculations. If the filter is set to '< 1' for example, it includes values of 0 (less than one) and therefore all the blank (empty) values are going to be considered to be 0 in calculations.",
+        "limit": 0
+    },
     "attrf.all": {
         "value": "All",
         "comment": "",

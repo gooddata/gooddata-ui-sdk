@@ -93,6 +93,7 @@ export namespace GdcVisualizationObject {
         comparison: {
             operator: ComparisonConditionOperator;
             value: number;
+            treatNullValuesAs?: number;
         };
     }
 
@@ -103,6 +104,7 @@ export namespace GdcVisualizationObject {
             operator: RangeConditionOperator;
             from: number;
             to: number;
+            treatNullValuesAs?: number;
         };
     }
 

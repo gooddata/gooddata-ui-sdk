@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import invariant from "ts-invariant";
+import isNil from "lodash/isNil";
 import {
     AttributeElements,
     ComparisonConditionOperator,
@@ -127,22 +128,69 @@ export function newRelativeDateFilter(
  *   provided, then it is assumed this measure is in scope of execution and will be referenced by the filter by
  *   its local identifier
  * @param operator - comparison or range operator to use in the filter
+ * @param value - the value to compare to
+ * @param treatNullValuesAs - value to use instead of null values
+ * @public
+ */
+export function newMeasureValueFilter(
+    measureOrRef: IMeasure | ObjRefInScope,
+    operator: ComparisonConditionOperator,
+    value: number,
+    treatNullValuesAs?: number,
+): IMeasureValueFilter;
+
+/**
+ * Creates a new measure value filter.
+ *
+ * @param measureOrRef - instance of measure to filter, or reference of the measure object; if instance of measure is
+ *   provided, then it is assumed this measure is in scope of execution and will be referenced by the filter by
+ *   its local identifier
+ * @param operator - range operator to use in the filter
+ * @param from - the start of the range
+ * @param to - the end of the range
+ * @param treatNullValuesAs - value to use instead of null values
+ * @public
+ */
+export function newMeasureValueFilter(
+    measureOrRef: IMeasure | ObjRefInScope,
+    operator: RangeConditionOperator,
+    from: number,
+    to: number,
+    treatNullValuesAs?: number,
+): IMeasureValueFilter;
+
+/**
+ * Creates a new measure value filter.
+ *
+ * @param measureOrRef - instance of measure to filter, or reference of the measure object; if instance of measure is
+ *   provided, then it is assumed this measure is in scope of execution and will be referenced by the filter by
+ *   its local identifier
+ * @param operator - comparison or range operator to use in the filter
  * @param val1 - first numeric value, used as value in comparison or as 'from' value in range operators
- * @param val2 - second numeric value, required in range operators and used in 'to' value; optional and ignored with comparison operators
+ * @param val2OrTreatNullValuesAsInComparison - second numeric value, required in range operators and used in 'to' value; optional in comparison operators used as 'treatNullValuesAs' value
+ * @param treatNullValuesAsInRange - third numeric value, optional in range operators and used as 'treatNullValuesAs' value; optional and ignored in comparison operators
  * @public
  */
 export function newMeasureValueFilter(
     measureOrRef: IMeasure | ObjRefInScope,
     operator: ComparisonConditionOperator | RangeConditionOperator,
     val1: number,
-    val2?: number,
+    val2OrTreatNullValuesAsInComparison?: number,
+    treatNullValuesAsInRange?: number,
 ): IMeasureValueFilter {
     const ref: ObjRefInScope = isMeasure(measureOrRef)
         ? { localIdentifier: measureLocalId(measureOrRef) }
         : measureOrRef;
 
     if (operator === "BETWEEN" || operator === "NOT_BETWEEN") {
-        invariant(val2 !== undefined, "measure value filter with range operator requires two numeric values");
+        invariant(
+            val2OrTreatNullValuesAsInComparison !== undefined,
+            "measure value filter with range operator requires two numeric values",
+        );
+
+        const nullValuesProp = !isNil(treatNullValuesAsInRange)
+            ? { treatNullValuesAs: treatNullValuesAsInRange }
+            : {};
 
         return {
             measureValueFilter: {
@@ -151,12 +199,17 @@ export function newMeasureValueFilter(
                     range: {
                         operator,
                         from: val1,
-                        to: val2!,
+                        to: val2OrTreatNullValuesAsInComparison!,
+                        ...nullValuesProp,
                     },
                 },
             },
         };
     } else {
+        const nullValuesProp = !isNil(val2OrTreatNullValuesAsInComparison)
+            ? { treatNullValuesAs: val2OrTreatNullValuesAsInComparison }
+            : {};
+
         return {
             measureValueFilter: {
                 measure: ref,
@@ -164,6 +217,7 @@ export function newMeasureValueFilter(
                     comparison: {
                         operator,
                         value: val1,
+                        ...nullValuesProp,
                     },
                 },
             },

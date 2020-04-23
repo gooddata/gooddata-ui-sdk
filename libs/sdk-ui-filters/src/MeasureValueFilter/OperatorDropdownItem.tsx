@@ -12,14 +12,14 @@ import { MeasureValueFilterOperator } from "./types";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 
-export interface IOperatorDropdownItemOwnProps {
+interface IOperatorDropdownItemOwnProps {
     selectedOperator: MeasureValueFilterOperator;
     operator: MeasureValueFilterOperator;
     bubbleText?: string;
     onClick: (identifier: MeasureValueFilterOperator) => void;
 }
 
-export type IOperatorDropdownItemProps = IOperatorDropdownItemOwnProps & WrappedComponentProps;
+type IOperatorDropdownItemProps = IOperatorDropdownItemOwnProps & WrappedComponentProps;
 
 export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownItemProps> {
     public static defaultProps: any = {

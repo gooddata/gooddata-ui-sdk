@@ -4,7 +4,7 @@ import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import MediaQuery from "react-responsive";
 import { ExtendedDateFilters, IExtendedDateFilterErrors } from "./interfaces/ExtendedDateFilters";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import * as MediaQueries from "./constants/MediaQueries";
+import { MediaQueries } from "../constants";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExlusion";

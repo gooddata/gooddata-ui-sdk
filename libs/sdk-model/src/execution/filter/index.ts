@@ -162,6 +162,7 @@ export interface IComparisonCondition {
     comparison: {
         operator: ComparisonConditionOperator;
         value: number;
+        treatNullValuesAs?: number;
     };
 }
 
@@ -178,6 +179,7 @@ export interface IRangeCondition {
         operator: RangeConditionOperator;
         from: number;
         to: number;
+        treatNullValuesAs?: number;
     };
 }
 

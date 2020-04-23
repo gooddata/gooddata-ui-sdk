@@ -47,10 +47,11 @@ const getSeriesItemData = (
     seriesItem.map((pointValue: string) => {
         const value = parseValue(pointValue);
         const isTarget = isTargetSeries(seriesIndex, measureBucketsLocalIdentifiers);
-        const classNameProp = isTarget && value === null ? { className: "hidden-empty-series" } : {};
+        const nullValueProps =
+            isTarget && value === null ? { isNullTarget: true, className: "hidden-empty-series" } : {};
 
         return {
-            ...classNameProp,
+            ...nullValueProps,
             ...getValue(value, isTarget),
             format: unwrap(measureGroup.items[seriesIndex]).format,
             marker: {

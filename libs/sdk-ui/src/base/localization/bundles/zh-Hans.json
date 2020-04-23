@@ -168,6 +168,8 @@
     "mvf.operator.notBetween": "不介于",
     "mvf.operator.between.tooltip.bubble": "包含开始值和结束值。",
     "mvf.operator.notBetween.tooltip.bubble": "不包含开始值和结束值。",
+    "mvf.treatNullValuesAsZeroLabel": "将空白值视为0",
+    "mvf.treatNullValuesAsZeroTooltip": "如果筛选条件包括 0，则空白值将被视为 0 并被纳入计算中。",
     "attrf.all": "全部",
     "attrf.all_except": "除了"
 }

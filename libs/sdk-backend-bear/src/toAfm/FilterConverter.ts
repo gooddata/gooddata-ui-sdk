@@ -15,6 +15,7 @@ import {
     isPositiveAttributeFilter,
     MeasureValueFilterCondition,
 } from "@gooddata/sdk-model";
+import isNil from "lodash/isNil";
 import { toBearRef, toScopedBearRef } from "../fromObjRef/ObjRefConverter";
 
 function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
@@ -83,18 +84,28 @@ function trimConditionToSupportedPrecision(
     condition: MeasureValueFilterCondition,
 ): MeasureValueFilterCondition {
     if (isComparisonCondition(condition)) {
+        const nullValuesProp = !isNil(condition.comparison.treatNullValuesAs)
+            ? { treatNullValuesAs: condition.comparison.treatNullValuesAs }
+            : {};
+
         return {
             comparison: {
                 operator: condition.comparison.operator,
                 value: trimNumberToSupportedPrecision(condition.comparison.value),
+                ...nullValuesProp,
             },
         };
     } else {
+        const nullValuesProp = !isNil(condition.range.treatNullValuesAs)
+            ? { treatNullValuesAs: condition.range.treatNullValuesAs }
+            : {};
+
         return {
             range: {
                 operator: condition.range.operator,
                 from: trimNumberToSupportedPrecision(condition.range.from),
                 to: trimNumberToSupportedPrecision(condition.range.to),
+                ...nullValuesProp,
             },
         };
     }

@@ -635,10 +635,25 @@ describe("Drilldown Eventing", () => {
 
     describe("bullet chart", () => {
         const drillConfig = { dataView, onDrill: () => true };
+
         const targetPoint: any = {
             x: 1,
             y: 2,
             target: 100,
+            series: {
+                type: "bullet",
+                userOptions: {
+                    bulletChartMeasureType: "target",
+                },
+            },
+            drillIntersection: [],
+        };
+
+        const targetPointWithNullValue: any = {
+            x: 1,
+            y: 0,
+            target: 0,
+            isNullTarget: true,
             series: {
                 type: "bullet",
                 userOptions: {
@@ -737,6 +752,28 @@ describe("Drilldown Eventing", () => {
 
             expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.points).toEqual([
                 { intersection: [], type: "target", x: 1, y: 100 },
+                { intersection: [], type: "primary", x: 1, y: 2 },
+                { intersection: [], type: "comparative", x: 1, y: 3 },
+            ]);
+        });
+
+        it("should fire correct data for attribute drilling with null value target", () => {
+            const target: any = { dispatchEvent: jest.fn() };
+            const pointClickEventData: any = {
+                points: [targetPointWithNullValue, primaryPoint, comparativePoint],
+            };
+
+            chartClick(
+                drillConfig,
+                pointClickEventData as Highcharts.DrilldownEventObject,
+                target as EventTarget,
+                VisualizationTypes.BULLET,
+            );
+
+            jest.runAllTimers();
+
+            expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.points).toEqual([
+                { intersection: [], type: "target", x: 1, y: null },
                 { intersection: [], type: "primary", x: 1, y: 2 },
                 { intersection: [], type: "comparative", x: 1, y: 3 },
             ]);

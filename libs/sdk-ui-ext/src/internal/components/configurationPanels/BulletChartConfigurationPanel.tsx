@@ -33,7 +33,6 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
         const controlsDisabled = this.isControlDisabled();
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
-        const yAxisConfigurationDisabled = controlsDisabled || itemsOnYAxis === 0;
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
 
         return (
@@ -82,7 +81,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                     >
                         {isNameSubsectionVisible && (
                             <NameSubsection
-                                disabled={yAxisConfigurationDisabled}
+                                disabled={controlsDisabled || itemsOnYAxis !== 1}
                                 configPanelDisabled={controlsDisabled}
                                 axis={"yaxis"}
                                 properties={properties}
@@ -90,7 +89,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                             />
                         )}
                         <LabelSubsection
-                            disabled={yAxisConfigurationDisabled}
+                            disabled={controlsDisabled || itemsOnYAxis === 0}
                             configPanelDisabled={controlsDisabled}
                             axis={"yaxis"}
                             properties={properties}

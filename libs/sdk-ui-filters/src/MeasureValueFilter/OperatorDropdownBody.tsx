@@ -8,7 +8,7 @@ import { MeasureValueFilterOperator } from "./types";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-export interface IOperatorDropdownBodyOwnProps {
+interface IOperatorDropdownBodyOwnProps {
     selectedOperator: MeasureValueFilterOperator;
     onSelect: (operator: MeasureValueFilterOperator) => void;
     onClose: () => void;

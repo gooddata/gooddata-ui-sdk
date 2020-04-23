@@ -168,6 +168,8 @@
     "mvf.operator.notBetween": "no entre",
     "mvf.operator.between.tooltip.bubble": "Se incluyen los valores de inicio y fin.",
     "mvf.operator.notBetween.tooltip.bubble": "No se incluyen los valores de inicio y fin.",
+    "mvf.treatNullValuesAsZeroLabel": "Tratar valores en blanco como 0",
+    "mvf.treatNullValuesAsZeroTooltip": "Si la condición del filtro incluye 0, los valores en blanco se tratarán como 0 y se incluirán en los cálculos.",
     "attrf.all": "Todo",
     "attrf.all_except": "Todo excepto"
 }

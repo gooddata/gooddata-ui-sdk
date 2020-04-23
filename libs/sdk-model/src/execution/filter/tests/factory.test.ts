@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { Account, Won } from "../../../../__mocks__/model";
 import {
     newAbsoluteDateFilter,
@@ -63,6 +63,9 @@ describe("filter factory", () => {
                 newMeasureValueFilter({ identifier: "measureObjIdentifier" }, "EQUAL_TO", 11),
             ).toMatchSnapshot();
         });
+        it("should generate comparison filter for measure object with treatNullValuesAs", () => {
+            expect(newMeasureValueFilter(Won, "EQUAL_TO", 11, 42)).toMatchSnapshot();
+        });
         it("should generate range filter for measure object", () => {
             expect(newMeasureValueFilter(Won, "BETWEEN", 0, 100)).toMatchSnapshot();
         });
@@ -70,6 +73,9 @@ describe("filter factory", () => {
             expect(
                 newMeasureValueFilter({ identifier: "measureObjIdentifier" }, "BETWEEN", 0, 100),
             ).toMatchSnapshot();
+        });
+        it("should generate range filter for measure object with treatNullValuesAs", () => {
+            expect(newMeasureValueFilter(Won, "BETWEEN", 0, 100, 42)).toMatchSnapshot();
         });
     });
 });
