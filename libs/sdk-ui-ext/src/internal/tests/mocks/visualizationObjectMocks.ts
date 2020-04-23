@@ -23,6 +23,15 @@ export const attributeItemA1: IAttribute = {
     },
 };
 
+export const attributeItemA2: IAttribute = {
+    attribute: {
+        localIdentifier: "a1",
+        displayForm: {
+            uri: "/gdc/md/project/obj/1027",
+        },
+    },
+};
+
 export const oneMeasureOneView: IBucket[] = [
     {
         localIdentifier: "measures",

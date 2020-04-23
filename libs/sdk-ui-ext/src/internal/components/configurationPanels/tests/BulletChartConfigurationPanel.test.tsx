@@ -5,7 +5,7 @@ import BulletChartConfigurationPanel from "../BulletChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";
 import ConfigSection from "../../configurationControls/ConfigSection";
-import { attributeItemA1 } from "../../../tests/mocks/visualizationObjectMocks";
+import { attributeItemA1, attributeItemA2 } from "../../../tests/mocks/visualizationObjectMocks";
 import LabelSubsection from "../../configurationControls/axis/LabelSubsection";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IBucket, IInsightDefinition } from "@gooddata/sdk-model";
@@ -284,6 +284,60 @@ describe("BulletChartConfigurationPanel", () => {
 
             const yAxisSection = wrapper.find(LabelSubsection).at(1);
             expect(yAxisSection.props().disabled).toEqual(false);
+        });
+    });
+
+    describe("Y axis name configuration", () => {
+        const defaultProps: IConfigurationPanelContentProps = {
+            isError: false,
+            isLoading: false,
+            locale: DefaultLocale,
+            type: VisualizationTypes.BULLET,
+            featureFlags: {
+                enableAxisNameConfiguration: true,
+            },
+        };
+
+        it("should render name configuration panel enabled if there is an attribute", () => {
+            const insight = testInsight([
+                {
+                    localIdentifier: "measures",
+                    items: [testMeasure],
+                },
+                {
+                    localIdentifier: "view",
+                    items: [attributeItemA1],
+                },
+            ]);
+
+            const wrapper = createComponent({
+                ...defaultProps,
+                insight,
+            });
+
+            const yAxisSection = wrapper.find(NameSubsection).at(1);
+            expect(yAxisSection.props().disabled).toEqual(false);
+        });
+
+        it("should render name configuration panel disabled if there are two attributes", () => {
+            const insight = testInsight([
+                {
+                    localIdentifier: "measures",
+                    items: [testMeasure],
+                },
+                {
+                    localIdentifier: "view",
+                    items: [attributeItemA1, attributeItemA2],
+                },
+            ]);
+
+            const wrapper = createComponent({
+                ...defaultProps,
+                insight,
+            });
+
+            const yAxisSection = wrapper.find(NameSubsection).at(1);
+            expect(yAxisSection.props().disabled).toEqual(true);
         });
     });
 });
