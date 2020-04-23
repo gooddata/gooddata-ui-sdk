@@ -18,7 +18,7 @@
         "prettier-check": "prettier --check 'src/**/*.ts'",
         "prettier-write": "prettier --write 'src/**/*.ts'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.js --output-type err-html src/ >./ci/results/dep-cruiser.html",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint",
         "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
