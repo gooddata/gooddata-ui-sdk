@@ -168,6 +168,8 @@
     "mvf.operator.notBetween": "nicht zwischen",
     "mvf.operator.between.tooltip.bubble": "Start- und Endwerte sind enthalten.",
     "mvf.operator.notBetween.tooltip.bubble": "Start- und Endwerte sind nicht enthalten.",
+    "mvf.treatNullValuesAsZeroLabel": "Blindwerte als 0 betrachten",
+    "mvf.treatNullValuesAsZeroTooltip": "Wenn die Filterbedingung 0 einschließt, werden Blindwerte als 0 betrachtet und in die Berechnungen einbezogen.",
     "attrf.all": "Alle ",
     "attrf.all_except": "Alle außer"
 }
