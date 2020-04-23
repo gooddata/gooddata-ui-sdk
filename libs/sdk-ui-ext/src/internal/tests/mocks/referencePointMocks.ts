@@ -455,6 +455,31 @@ export const measuresOnSecondaryAxisAndAttributeReferencePoint: IReferencePoint 
     },
 };
 
+export const secondaryAndTertiaryMeasuresWithTwoAttributesReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [],
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "tertiary_measures",
+            items: masterMeasureItems.slice(1, 2),
+        },
+        {
+            localIdentifier: "attribute",
+            items: attributeItems.slice(0, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: attributeFilters.slice(0, 2),
+    },
+};
+
 export const measuresAndDateReferencePoint: IReferencePoint = {
     buckets: [
         {

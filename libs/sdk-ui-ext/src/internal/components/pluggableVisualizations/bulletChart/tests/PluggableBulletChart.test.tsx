@@ -196,7 +196,7 @@ describe("PluggableBulletChart", () => {
         };
 
         const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
-            referencePointMocks.secondaryMeasuresAndAttributeReferencePoint,
+            referencePointMocks.secondaryAndTertiaryMeasuresWithTwoAttributesReferencePoint,
         );
 
         const expectedUiConfig = {
@@ -224,13 +224,13 @@ describe("PluggableBulletChart", () => {
     describe("isError property", () => {
         it("should set to true if primary measure is missing", async () => {
             await bulletChart.getExtendedReferencePoint(
-                referencePointMocks.secondaryMeasuresAndAttributeReferencePoint,
+                referencePointMocks.secondaryAndTertiaryMeasuresWithTwoAttributesReferencePoint,
             );
 
             expect((bulletChart as any).isError).toEqual(true);
         });
 
-        it("should set to true if primary measure is missing", async () => {
+        it("should set to false if primary measure is present", async () => {
             await bulletChart.getExtendedReferencePoint(
                 referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
             );
