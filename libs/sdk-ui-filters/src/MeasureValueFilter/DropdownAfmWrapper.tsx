@@ -7,6 +7,7 @@ import {
     isRangeCondition,
     isRangeConditionOperator,
     measureValueFilterOperator,
+    isComparisonCondition,
 } from "@gooddata/sdk-model";
 
 import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
@@ -23,6 +24,8 @@ export interface IDropdownProps {
     locale?: string;
     anchorEl?: EventTarget | string;
     separators?: ISeparators;
+    displayTreatNullAsZeroOption?: boolean;
+    treatNullAsZeroDefaultValue?: boolean;
 }
 
 const getFilterValue = (filter: IMeasureValueFilter | undefined): IMeasureValueFilterValue => {
@@ -40,12 +43,44 @@ const getFilterValue = (filter: IMeasureValueFilter | undefined): IMeasureValueF
         : { value: condition.comparison.value };
 };
 
+const getTreatNullAsZeroValue = (
+    filter: IMeasureValueFilter | undefined,
+    treatNullAsZeroDefaultValue: boolean,
+): boolean => {
+    if (!filter || !measureValueFilterCondition(filter)) {
+        return treatNullAsZeroDefaultValue !== undefined && treatNullAsZeroDefaultValue;
+    }
+
+    const condition = measureValueFilterCondition(filter);
+
+    return (
+        (isComparisonCondition(condition) && condition.comparison.treatNullValuesAs !== undefined) ||
+        (isRangeCondition(condition) && condition.range.treatNullValuesAs !== undefined) ||
+        false
+    );
+};
+
 /**
  * @beta
  */
 export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
+    public static defaultProps: Partial<IDropdownProps> = {
+        displayTreatNullAsZeroOption: false,
+        treatNullAsZeroDefaultValue: false,
+    };
+
     public render() {
-        const { filter, onCancel, usePercentage, warningMessage, locale, anchorEl, separators } = this.props;
+        const {
+            filter,
+            onCancel,
+            usePercentage,
+            warningMessage,
+            locale,
+            anchorEl,
+            separators,
+            displayTreatNullAsZeroOption,
+            treatNullAsZeroDefaultValue,
+        } = this.props;
 
         return (
             <Dropdown
@@ -58,11 +93,17 @@ export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
                 locale={locale}
                 anchorEl={anchorEl}
                 separators={separators}
+                displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
+                treatNullAsZeroValue={getTreatNullAsZeroValue(filter, treatNullAsZeroDefaultValue)}
             />
         );
     }
 
-    private onApply = (operator: MeasureValueFilterOperator | null, value: IMeasureValueFilterValue) => {
+    private onApply = (
+        operator: MeasureValueFilterOperator | null,
+        value: IMeasureValueFilterValue,
+        treatNullValuesAsZero: boolean,
+    ) => {
         const { measureIdentifier, onApply } = this.props;
 
         if (operator === null || operator === "ALL") {
@@ -75,11 +116,17 @@ export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
                         operator,
                         value.from ?? 0,
                         value.to ?? 0,
+                        treatNullValuesAsZero ? 0 : undefined,
                     ),
                 );
             } else {
                 onApply(
-                    newMeasureValueFilter({ localIdentifier: measureIdentifier }, operator, value.value ?? 0),
+                    newMeasureValueFilter(
+                        { localIdentifier: measureIdentifier },
+                        operator,
+                        value.value ?? 0,
+                        treatNullValuesAsZero ? 0 : undefined,
+                    ),
                 );
             }
         }

@@ -15,7 +15,7 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 const DROPDOWN_ALIGMENTS = alignPoints.map(align => ({ align, offset: { x: 1, y: 0 } }));
 
 export interface IDropdownOwnProps {
-    onApply: (operator: string, value?: IMeasureValueFilterValue) => void;
+    onApply: (operator: string, value: IMeasureValueFilterValue, treatNullValuesAsZero: boolean) => void;
     onCancel: () => void;
     operator?: MeasureValueFilterOperator;
     value?: IMeasureValueFilterValue;
@@ -24,6 +24,8 @@ export interface IDropdownOwnProps {
     locale?: string;
     anchorEl: EventTarget | string;
     separators?: ISeparators;
+    displayTreatNullAsZeroOption?: boolean;
+    treatNullAsZeroValue?: boolean;
 }
 
 export type IDropdownProps = WrappedComponentProps & IDropdownOwnProps;
@@ -36,6 +38,8 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
     public static defaultProps: Partial<IDropdownProps> = {
         value: {},
         operator: "ALL",
+        displayTreatNullAsZeroOption: false,
+        treatNullAsZeroValue: false,
     };
 
     public render() {
@@ -48,6 +52,8 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
             onCancel,
             anchorEl,
             separators,
+            displayTreatNullAsZeroOption,
+            treatNullAsZeroValue,
         } = this.props;
 
         const selectedOperator: MeasureValueFilterOperator = operator !== null ? operator : "ALL";
@@ -70,13 +76,19 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
                     onCancel={onCancel}
                     onApply={this.onApply}
                     separators={separators}
+                    displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
+                    treatNullAsZeroValue={treatNullAsZeroValue}
                 />
             </Overlay>
         );
     }
 
-    private onApply = (operator: MeasureValueFilterOperator | null, value: IMeasureValueFilterValue) => {
-        this.props.onApply(operator, value);
+    private onApply = (
+        operator: MeasureValueFilterOperator | null,
+        value: IMeasureValueFilterValue,
+        treatNullValuesAsZero: boolean,
+    ) => {
+        this.props.onApply(operator, value, treatNullValuesAsZero);
     };
 }
 

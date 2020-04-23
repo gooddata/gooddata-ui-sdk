@@ -87,4 +87,12 @@ export default class MeasureValueFilterFragment {
     public getWarningMessage = () => this.component.find(".s-mvf-warning-message");
 
     public getWarningMessageText = () => this.getWarningMessage().text();
+
+    public toggleTreatNullAsCheckbox = () => {
+        const isChecked = this.getTreatNullAsCheckbox().props().checked;
+        this.getTreatNullAsCheckbox().simulate("change", { target: { checked: !isChecked } });
+        return this;
+    };
+
+    public getTreatNullAsCheckbox = () => this.component.find(".s-treat-null-values-as-zero .input-checkbox");
 }

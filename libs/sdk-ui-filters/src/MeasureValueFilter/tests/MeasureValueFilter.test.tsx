@@ -2,7 +2,7 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import noop = require("lodash/noop");
-import { newMeasureValueFilter } from "@gooddata/sdk-model";
+import { newMeasureValueFilter, IMeasureValueFilter } from "@gooddata/sdk-model";
 
 import MVFDropdownFragment from "./fragments/MeasureValueFilter";
 import { DropdownAfmWrapper, IDropdownProps } from "../DropdownAfmWrapper";
@@ -376,6 +376,18 @@ describe("Measure value filter", () => {
                 expect(component.isApplyButtonDisabled()).toEqual(false);
             });
 
+            it("should enable apply button when operator and value is unchanged, but treat-null-values-as checkbox has been toggled", () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "GREATER_THAN", 10);
+
+                const component = renderComponent({ filter, displayTreatNullAsZeroOption: true });
+
+                expect(component.isApplyButtonDisabled()).toEqual(true);
+
+                component.toggleTreatNullAsCheckbox();
+
+                expect(component.isApplyButtonDisabled()).toEqual(false);
+            });
+
             it("should handle the change from comparison to range filter", () => {
                 const onApply = jest.fn();
                 const component = renderComponent({ usePercentage: true, onApply });
@@ -447,6 +459,153 @@ describe("Measure value filter", () => {
                 .clickCancel();
 
             expect(onCancel).toBeCalled();
+        });
+    });
+
+    describe("filter with treat-null-values-as", () => {
+        it("should contain 'treatNullValuesAs' property if checked", () => {
+            const onApply = jest.fn();
+            const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "GREATER_THAN", 100);
+            const expectedFilter = newMeasureValueFilter(
+                { localIdentifier: "myMeasure" },
+                "GREATER_THAN",
+                100,
+                0,
+            );
+
+            const component = renderComponent({
+                filter,
+                onApply,
+                displayTreatNullAsZeroOption: true,
+            });
+
+            component.toggleTreatNullAsCheckbox().clickApply();
+
+            expect(onApply).toBeCalledWith(expectedFilter);
+        });
+
+        it("should contain 'treatNullValuesAs' equal to 0 if checked, but no 'treatNullAsZeroDefaultValue' was provided", () => {
+            const onApply = jest.fn();
+            const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "GREATER_THAN", 100);
+            const expectedFilter = newMeasureValueFilter(
+                { localIdentifier: "myMeasure" },
+                "GREATER_THAN",
+                100,
+                0,
+            );
+
+            const component = renderComponent({
+                filter,
+                onApply,
+                displayTreatNullAsZeroOption: true,
+            });
+
+            component.toggleTreatNullAsCheckbox().clickApply();
+
+            expect(onApply).toBeCalledWith(expectedFilter);
+        });
+
+        it("should be called with filter not containing 'treatNullValuesAs' property if treat-null-values-as checkbox was unchecked", () => {
+            const onApply = jest.fn();
+
+            const filterWithTreatNullValuesAsZero = newMeasureValueFilter(
+                { localIdentifier: "myMeasure" },
+                "GREATER_THAN",
+                100,
+                0,
+            );
+            const expectedFilter = newMeasureValueFilter(
+                { localIdentifier: "myMeasure" },
+                "GREATER_THAN",
+                100,
+            );
+
+            const component = renderComponent({
+                filter: filterWithTreatNullValuesAsZero,
+                onApply,
+                displayTreatNullAsZeroOption: true,
+            });
+
+            component.toggleTreatNullAsCheckbox().clickApply();
+
+            expect(onApply).toBeCalledWith(expectedFilter);
+        });
+    });
+
+    describe("treat-null-values-as checkbox", () => {
+        it("should not be displayed by default", () => {
+            const component = renderComponent();
+
+            expect(component.getTreatNullAsCheckbox().exists()).toEqual(false);
+        });
+
+        it("should not be displayed when all operator is selected", () => {
+            const component = renderComponent({ displayTreatNullAsZeroOption: true });
+
+            expect(component.getTreatNullAsCheckbox().exists()).toEqual(false);
+        });
+
+        it("should be displayed when enabled by 'displayOptionTreatNullValuesAs' prop and all operator is not selected", () => {
+            const component = renderComponent({ displayTreatNullAsZeroOption: true });
+
+            component.openOperatorDropdown().selectOperator("GREATER_THAN");
+
+            expect(component.getTreatNullAsCheckbox().exists()).toEqual(true);
+        });
+
+        describe("checked state", () => {
+            const renderComponentWithTreatNullAsZeroOption = (props?: Partial<IDropdownProps>) =>
+                renderComponent({ displayTreatNullAsZeroOption: true, ...props });
+
+            // we cannot use factory here, it does not allow creating empty filters
+            const emptyFilter: IMeasureValueFilter = {
+                measureValueFilter: {
+                    measure: {
+                        identifier: "myMeasure",
+                    },
+                },
+            };
+
+            it("should be checked when passed filter is empty and 'treatNullAsZeroDefaultValue' property is truthy", () => {
+                const component = renderComponentWithTreatNullAsZeroOption({
+                    treatNullAsZeroDefaultValue: true,
+                    filter: emptyFilter,
+                });
+
+                component.openOperatorDropdown().selectOperator("GREATER_THAN");
+
+                expect(component.getTreatNullAsCheckbox().props().checked).toEqual(true);
+            });
+
+            it("should not be checked when passed filter is empty and 'treatNullAsZeroDefaultValue' property is set to false", () => {
+                const component = renderComponentWithTreatNullAsZeroOption({
+                    treatNullAsZeroDefaultValue: false,
+                    filter: emptyFilter,
+                });
+
+                component.openOperatorDropdown().selectOperator("GREATER_THAN");
+
+                expect(component.getTreatNullAsCheckbox().props().checked).toEqual(false);
+            });
+
+            it("should be checked when passed filter has a condition with 'treatNullValuesAsZero' property set to true", () => {
+                const filter = newMeasureValueFilter(
+                    { localIdentifier: "myMeasure" },
+                    "GREATER_THAN",
+                    100,
+                    0,
+                );
+                const component = renderComponentWithTreatNullAsZeroOption({ filter });
+
+                expect(component.getTreatNullAsCheckbox().props().checked).toEqual(true);
+            });
+
+            it("should not be checked when passed filter has a condition without 'treatNullValuesAsZero' property even if 'treatNullAsZeroDefaultValue' property is truthy", () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "GREATER_THAN", 100);
+                const component = renderComponentWithTreatNullAsZeroOption({ filter });
+
+                expect(component.getTreatNullAsCheckbox().props().checked).toEqual(false);
+            });
         });
     });
 });

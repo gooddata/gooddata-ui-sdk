@@ -263,6 +263,8 @@ export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallba
 // @beta (undocumented)
 export class MeasureValueFilterDropdown extends React_2.PureComponent<IDropdownProps> {
     // (undocumented)
+    static defaultProps: Partial<IDropdownProps>;
+    // (undocumented)
     render(): JSX.Element;
 }
 

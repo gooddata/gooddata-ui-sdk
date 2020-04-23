@@ -37,6 +37,35 @@ storiesOf(`${FilterStories}/MeasureValueFilter`, module)
             scenarios,
         );
     })
+    .add("with-treat-null-as-option-enabled", () => {
+        return withMultipleScreenshots(
+            <div style={wrapperStyle} className="screenshot-target">
+                <MeasureValueFilterDropdown
+                    measureIdentifier="localIdentifier"
+                    onApply={action("applyClick")}
+                    onCancel={action("cancelClick")}
+                    anchorEl="screenshot-target"
+                    displayTreatNullAsZeroOption={true}
+                />
+            </div>,
+            scenarios,
+        );
+    })
+    .add("with-treat-null-as-option-enabled-and-checked-by-default", () => {
+        return withMultipleScreenshots(
+            <div style={wrapperStyle} className="screenshot-target">
+                <MeasureValueFilterDropdown
+                    measureIdentifier="localIdentifier"
+                    onApply={action("applyClick")}
+                    onCancel={action("cancelClick")}
+                    anchorEl="screenshot-target"
+                    displayTreatNullAsZeroOption={true}
+                    treatNullAsZeroDefaultValue={true}
+                />
+            </div>,
+            scenarios,
+        );
+    })
     .add("localized", () => {
         return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">

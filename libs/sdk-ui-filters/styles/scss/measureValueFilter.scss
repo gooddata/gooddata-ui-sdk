@@ -27,6 +27,16 @@ $dialog_width: 250px;
             margin-top: 4px;
         }
 
+        .gd-mvf-treat-null-values-as-zero {
+            margin-top: 8px;
+            font-size: 12px;
+
+            .inlineBubbleHelp {
+                margin-left: 4px;
+                font-size: 12px;
+            }
+        }
+
         &:last-child {
             padding-bottom: 10px;
         }
