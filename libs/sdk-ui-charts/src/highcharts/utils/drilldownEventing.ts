@@ -76,6 +76,13 @@ const getDrillPointCustomProps = (
     return {};
 };
 
+const getYValueForBulletChartTarget = (point: IHighchartsPointObject): number => {
+    if (point.isNullTarget) {
+        return null;
+    }
+    return point.target;
+};
+
 function composeDrillContextGroup(
     points: IHighchartsPointObject[],
     chartType: ChartType,
@@ -87,7 +94,7 @@ function composeDrillContextGroup(
 
         return {
             x: point.x,
-            y: elementChartType === "bullet" ? point.target : point.y,
+            y: elementChartType === "bullet" ? getYValueForBulletChartTarget(point) : point.y,
             intersection: point.drillIntersection,
             ...customProps,
         };
