@@ -8,7 +8,7 @@ import isEqual = require("lodash/isEqual");
 import { IAnalyticalBackend, IAnalyticalWorkspace, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IInsight, IFilter, insightProperties, IColorPalette, ObjRef, idRef } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisProps, IVisCallbacks, DefaultVisualizationCatalog } from "../internal";
+import { IVisualization, IVisCallbacks, DefaultVisualizationCatalog, IVisProps } from "../internal";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
 import {
     GoodDataSdkError,
@@ -20,6 +20,7 @@ import {
     ILoadingProps,
     ErrorComponent,
     IErrorProps,
+    IDrillableItem,
 } from "@gooddata/sdk-ui";
 
 /**
@@ -50,6 +51,17 @@ export interface IInsightViewProps extends Partial<IVisCallbacks> {
     insight: ObjRef | string;
 
     /**
+     * Configure chart drillability; e.g. which parts of the charts can be clicked.
+     */
+    drillableItems?: IDrillableItem[];
+
+    /**
+     * Configure color palette to use for the chart. If you do not specify this, then the palette will be
+     * obtained from style settings stored on the backend.
+     */
+    colorPalette?: IColorPalette;
+
+    /**
      * Additional filters to apply on top of the insight.
      */
     filters?: IFilter[];
@@ -70,11 +82,6 @@ export interface IInsightViewProps extends Partial<IVisCallbacks> {
      * Component to render while the insight is loading.
      */
     LoadingComponent?: React.ComponentType<ILoadingProps>;
-
-    /**
-     * TODO: SDK8: investigate this then remove or explain
-     */
-    visualizationProps?: IVisProps;
 }
 
 interface IInsightViewState {
@@ -94,6 +101,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     public static defaultProps: Partial<IInsightViewProps> = {
         ErrorComponent,
         filters: [],
+        drillableItems: [],
         locale: DefaultLocale,
         LoadingComponent,
         pushData: noop,
@@ -137,14 +145,18 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             return;
         }
 
-        this.visualization.update(
-            {
-                ...this.props.visualizationProps,
-                config: {
-                    ...(this.props.visualizationProps && this.props.visualizationProps.config),
-                    colorPalette: this.colorPalette,
-                },
+        const visProps: IVisProps = {
+            locale: this.props.locale,
+            custom: {
+                drillableItems: this.props.drillableItems,
             },
+            config: {
+                colorPalette: this.colorPalette,
+            },
+        };
+
+        this.visualization.update(
+            visProps,
             fillMissingTitles(this.insight, this.props.locale),
             this.getExecutionFactory(),
         );
@@ -191,7 +203,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             configPanelElement: ".gd-configuration-panel-content", // this is apparently a well-know constant (see BaseVisualization)
             element: `#${this.elementId}`,
             environment: "dashboards", // TODO get rid of this
-            locale: this.props.visualizationProps ? this.props.visualizationProps.locale : undefined,
+            locale: this.props.locale,
             projectId: this.props.workspace,
             visualizationProperties: insightProperties(this.insight),
             featureFlags: this.settings,
@@ -233,12 +245,9 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     };
 
     private updateColorPalette = async () => {
-        if (
-            this.props.visualizationProps &&
-            this.props.visualizationProps.config &&
-            this.props.visualizationProps.config.colorPalette
-        ) {
-            this.colorPalette = this.props.visualizationProps.config.colorPalette;
+        if (this.props.colorPalette) {
+            this.colorPalette = this.props.colorPalette;
+
             return;
         }
 

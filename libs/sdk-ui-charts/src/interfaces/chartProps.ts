@@ -30,7 +30,7 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
     locale?: string;
 
     /**
-     * Configure chart drillability; e.g. which parts of the
+     * Configure chart drillability; e.g. which parts of the charts can be clicked.
      */
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 

@@ -1,9 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
-import { AbstractExecutionFactory, IPreparedExecution, NotImplemented } from "@gooddata/sdk-backend-spi";
+import { IPreparedExecution, NotImplemented } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, IFilter } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types";
 import { BearPreparedExecution } from "./preparedExecution";
+import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 
 export class BearExecution extends AbstractExecutionFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, workspace: string) {

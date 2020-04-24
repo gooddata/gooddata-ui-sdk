@@ -2,21 +2,22 @@
 import * as React from "react";
 import { wrapDisplayName } from "./wrapDisplayName";
 
-/**
- * @internal
- */
 const WorkspaceContext = React.createContext<string | undefined>(undefined);
 WorkspaceContext.displayName = "WorkspaceContext";
 
 /**
- * @internal
+ * @public
  */
-interface IWorkspaceProviderProps {
+export interface IWorkspaceProviderProps {
+    /**
+     * Workspace with which the components should work with.
+     */
     workspace: string;
 }
 
 /**
- * WorkspaceProvider can be used to inject analytical workspace instance to all ui-sdk components in your app
+ * WorkspaceProvider can be used to inject analytical workspace instance to all ui-sdk components in your app.
+ *
  * @public
  */
 export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children, workspace }) => {
@@ -24,7 +25,8 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
 };
 
 /**
- * Hook to get workspace instance provided to BackendProvider
+ * Hook to get workspace instance provided to BackendProvider.
+ *
  * @public
  */
 export const useWorkspace = () => {
@@ -33,6 +35,12 @@ export const useWorkspace = () => {
     return workspace;
 };
 
+/**
+ * Wraps component into a WorkspaceContext consumer - injecting an instance of workspace from context into the
+ * workspace prop.
+ *
+ * @internal
+ */
 export function withWorkspace<T extends { workspace?: string }>(Chart: React.ComponentType<T>) {
     const ComponentWithInjectedWorkspace: React.FC<T> = props => {
         return (

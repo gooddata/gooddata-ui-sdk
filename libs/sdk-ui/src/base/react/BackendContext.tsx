@@ -3,21 +3,22 @@ import * as React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { wrapDisplayName } from "./wrapDisplayName";
 
-/**
- * @internal
- */
 const BackendContext = React.createContext<IAnalyticalBackend | undefined>(undefined);
 BackendContext.displayName = "BackendContext";
 
 /**
- * @internal
+ * @public
  */
-interface IBackendProviderProps {
+export interface IBackendProviderProps {
+    /**
+     * Specify instance of backend which should be used by components to communicate with the server.
+     */
     backend: IAnalyticalBackend;
 }
 
 /**
- * BackendProvider can be used to inject analytical backend instance to all ui-sdk components in your app
+ * BackendProvider can be used to inject analytical backend instance to all ui-sdk components in your app.
+ *
  * @public
  */
 export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, backend }) => {
@@ -25,7 +26,8 @@ export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, bac
 };
 
 /**
- * Hook to get analytical backend instance provided to BackendProvider
+ * Hook to get analytical backend instance provided to BackendProvider.
+ *
  * @public
  */
 export const useBackend = () => {
@@ -33,6 +35,12 @@ export const useBackend = () => {
     return backend;
 };
 
+/**
+ * Wraps component into a BackendContext consumer - injecting an instance of backend from context into the
+ * backend prop.
+ *
+ * @internal
+ */
 export function withBackend<T extends { backend?: IAnalyticalBackend }>(Chart: React.ComponentType<T>) {
     const ComponentWithInjectedBackend: React.FC<T> = props => {
         return (

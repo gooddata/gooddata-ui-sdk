@@ -30,6 +30,7 @@ import {
     AuthenticatedAsyncCall,
     IAuthenticatedAsyncCallContext,
     AuthProviderCallGuard,
+    TelemetryData,
 } from "@gooddata/sdk-backend-base";
 
 const CAPABILITIES: BackendCapabilities = {
@@ -87,11 +88,6 @@ type BearLegacyFunctions = {
  */
 type LegacyFunctionsSubscription = {
     onLegacyFunctionsReady?(functions: BearLegacyFunctions): void;
-};
-
-type TelemetryData = {
-    componentName?: string;
-    props?: string[];
 };
 
 /**

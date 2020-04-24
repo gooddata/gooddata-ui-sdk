@@ -18,7 +18,7 @@ export interface IAuthenticationProvider {
      * Returns the currently authenticated principal, or undefined if not authenticated.
      * Does not trigger authentication if no principal is available.
      */
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
 
     /**
      * Clear existing authentication.

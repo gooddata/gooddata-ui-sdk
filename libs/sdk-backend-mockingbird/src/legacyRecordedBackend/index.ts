@@ -1,7 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { GdcExecution } from "@gooddata/gd-bear-model";
 import {
-    AbstractExecutionFactory,
     AnalyticalBackendConfig,
     AuthenticatedPrincipal,
     IAnalyticalBackend,
@@ -38,6 +37,7 @@ import {
     IFilter,
     SortItem,
 } from "@gooddata/sdk-model";
+import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 
 const defaultConfig = { hostname: "test" };
 
