@@ -25,7 +25,12 @@ export const ExcludeCurrentPeriodToggle: React.FC<IExcludeCurrentPeriodTogglePro
 }) => (
     <div className="gd-extended-date-filter-exclude-current">
         <BubbleHoverTrigger>
-            <label className={cx("s-exclude-current-period", "input-checkbox-label")}>
+            <label
+                className={cx("s-exclude-current-period", "input-checkbox-label", {
+                    "s-exclude-current-perod-enabled": !disabled,
+                    "s-exclude-current-perod-disabled": disabled,
+                })}
+            >
                 <input
                     type="checkbox"
                     className="input-checkbox"

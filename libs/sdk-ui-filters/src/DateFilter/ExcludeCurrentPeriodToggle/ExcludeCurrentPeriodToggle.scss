@@ -1,0 +1,10 @@
+// (C) 2020 GoodData Corporation
+@import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
+
+.s-exclude-current-perod-disabled {
+    color: $gd-color-disabled;
+}
+
+.s-exclude-current-perod-enabled {
+    color: $gd-color-text;
+}

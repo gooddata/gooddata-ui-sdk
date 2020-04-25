@@ -72,7 +72,7 @@ const optionGetter = <V extends {}>({
 const itemHeightByTypeMap: { [key in SelectItemTypes]: number } = {
     option: 32,
     heading: 22,
-    error: 16,
+    error: 22,
     separator: 1,
 };
 
