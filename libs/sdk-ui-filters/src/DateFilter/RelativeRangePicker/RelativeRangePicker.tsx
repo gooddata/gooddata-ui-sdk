@@ -67,8 +67,17 @@ class RelativeRangePickerComponent extends React.Component<
     }
 
     private focusToField = (): void => {
+        const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
         if (this.toFieldRef.current) {
-            this.toFieldRef.current.focus();
+            /**
+             * Prevents hover style from persisting after switching to another field on
+             * touchscreen devices.
+             */
+            isTouchDevice
+                ? setTimeout(() => {
+                      this.toFieldRef.current.focus();
+                  }, 0)
+                : this.toFieldRef.current.focus();
         }
     };
 
