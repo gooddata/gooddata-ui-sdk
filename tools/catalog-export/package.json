@@ -35,6 +35,8 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
+        "@babel/core": "^7.7.2",
+        "@babel/plugin-transform-typescript": "^7.7.4",
         "@gooddata/gd-bear-client": "^8.0.0-alpha.62",
         "@gooddata/gd-bear-model": "^8.0.0-alpha.62",
         "chalk": "^2.4.2",
