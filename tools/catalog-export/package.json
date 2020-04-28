@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "8.0.0-alpha.61",
+    "version": "8.0.0-alpha.62",
     "author": "GoodData",
     "description": "GoodData SDK Catalog Export tooling",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/tools/catalog-export",
@@ -35,8 +35,8 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/gd-bear-client": "^8.0.0-alpha.61",
-        "@gooddata/gd-bear-model": "^8.0.0-alpha.61",
+        "@gooddata/gd-bear-client": "^8.0.0-alpha.62",
+        "@gooddata/gd-bear-model": "^8.0.0-alpha.62",
         "chalk": "^2.4.2",
         "commander": "^3.0.2",
         "inquirer": "^6.5.2",
