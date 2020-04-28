@@ -6,7 +6,7 @@ import chalk from "chalk";
 import gooddata from "@gooddata/gd-bear-client";
 import * as path from "path";
 import * as pkg from "../package.json";
-import { log, logBox, logError, logSuccess, printHeader } from "./cli/loggers";
+import { log, logBox, logError, logSuccess, logWarn, printHeader } from "./cli/loggers";
 import { clearLine, clearTerminal } from "./cli/clear";
 import { promptPassword, promptProjectId, promptUsername, requestFilePath } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
@@ -14,6 +14,7 @@ import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } 
 import { isCatalogExportError } from "./base/types";
 import { exportMetadataToCatalog } from "./exports/metaToCatalog";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript";
+import { exportMetadataToJavascript } from "./exports/metaToJavascript";
 
 program
     .version(pkg.version)
@@ -97,7 +98,13 @@ async function run() {
 
         if (filePath.endsWith(".ts")) {
             await exportMetadataToTypescript(projectId, filePath);
+        } else if (filePath.endsWith(".js")) {
+            await exportMetadataToJavascript(projectId, filePath);
         } else {
+            logWarn(
+                "Exporting catalog to JSON document is deprecated and will disappear in next major release together with CatalogHelper. Please switch to generating TypeScript or JavaScript code.",
+            );
+
             await exportMetadataToCatalog(projectId, filePath);
         }
 

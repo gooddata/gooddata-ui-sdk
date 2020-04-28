@@ -1,22 +1,88 @@
 # GoodData UI.SDK - Catalog Export
 
-Catalog Export utility can assist you with obtaining vital metadata about GoodData Logical Data Model (LDM)
-and User Data Model (UDM). This metadata is essential to specify what the different charts in GoodData.UI SDK
-should render.
+Catalog export is a command line program which loads metadata - Logical Data Model (LDM) and User Data Model (UDM)
+from the workspace of your choice and transforms it into TypeScript, JavaScript or JSON representation.
+
+-   The TypeScript and JavaScript code contains definition of LDM and UDM objects which you can use as inputs to
+    visualization components or the Execute component.
+
+-   The JSON document can be input to CatalogHelper utility which then lets you obtain document contents through
+    a convenient API. However, there is no interplay with the LDM Objects which you have to construct yourself before
+    you can use them as input to visualization components or the Execute component.
+
+## Usage Notes
+
+The program is able to run in interactive or silent modes:
+
+1.  The program reads input parameters from `.gdcatalogrc` config file. It will look for this file in the current directory.
+
+    If the configuration file is present, it is expected to be JSON and can contain any / all parameters which you would normally provide on the command line:
+
+    ```json
+    {
+        "hostname": "your.gooddata.hostname.com",
+        "projectId": "your gooddata project id",
+        "username": "email",
+        "password": "password",
+        "output": "desired_file_name.ts|js|json"
+    }
+    ```
+
+    > Note: TypeScript, JavaScript or JSON output will be generated based on the filename extension of the output.
+
+2.  The program reads input parameters from the command line. Run:
+
+    `npx gdc-catalog-export --help`
+
+    To learn more. Inputs from the command line take precedence over inputs in the config file.
+
+3.  If values of all required parameters are known at this point, the catalog export runs and performs the export.
+    If some of the parameters are missing the program will prompt you to enter them.
+
+> Note: the program does not accept passwords on the command line.
+> You can either put the password into .gdcatalogrc or enter it interactively.
+> **DO NOT save .gdcatalogrc into version control system**.
+
+## Recommendations
+
+Working with the catalog-export and its outputs on daily basis, we found a few good practices that we suggest for
+your consideration:
+
+-   Include the `@gooddata/catalog-export` as a devDependency of your application and define an NPM script `refresh-ldm`
+    to run the program with the necessary parameters. For example given that you have username and password in
+    config file:
+
+    ```json
+    {
+        "scripts": {
+            "refresh-ldm": "gdc-catalog-export --hostname \"your.domain.gooddata.com\" --projectId \"yourProjectId\" --output \"catalog.ts\""
+        }
+    }
+    ```
+
+-   Do not import the constants directly. Instead wrap the constants into a namespace as follows:
+
+    ```typescript
+    import * as ReferenceLdm from "./ldm/generatedFile";
+    export { ReferenceLdm };
+    ```
+
+-   Never modify the generated files
+
+-   If you need to modify the generated constants or add new LDM objects, do so through a layer of indirection -
+    in a different file adjacent to the generated code.
+
+## Important
+
+We are planning to drop support for export to JSON. We will drop this in next major together with the CatalogHelper.
+
+## Learn more
 
 Please read the official documentation site for more information:
 [Official documentation](https://sdk.gooddata.com/gooddata-ui/docs/gdc_catalog_export.html)
 
-On top of what is officially documented, the Catalog Export tool can newly also generate TypeScript
-code with constants initialized to valid instances of IAttribute(s) and IMeasure(s). We encourage you
-to explore this functionality as it brings the LDM and UDM 'to your fingertips' without the need
-to use `CatalogHelper` tool.
-
-To export your workspace's metadata into a TypeScript code, specify that data should be
-exported to a .ts file (for instance catalog.ts).
-
-This functionality is currently in alpha stage - the layout of the generated TypeScript files MAY
-change.
+Also, check out [the generated results](../reference-workspace/src/ldm/full.ts) to see example of the
+generated output.
 
 ## License
 

@@ -24,7 +24,7 @@
     },
     {
       "name": "@babel/plugin-transform-typescript",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@babel/preset-env",
