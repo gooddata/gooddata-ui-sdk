@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { ISettings } from "../../common/settings";
+import { IWorkspaceSettings, IUserWorkspaceSettings } from "../../common/settings";
 
 /**
  * This query service provides access to feature flags that are in effect for particular workspace.
@@ -13,16 +13,11 @@ export interface IWorkspaceSettingsService {
      * @returns promise of workspace settings
      */
     query(): Promise<IWorkspaceSettings>;
-}
 
-/**
- * Settings for particular workspace.
- *
- * @public
- */
-export interface IWorkspaceSettings extends ISettings {
     /**
-     * Workspace to which the settings belong.
+     * Asynchronously queries feature flags taking into account settings from both the workspace and the current user.
+     *
+     * @returns promise of user/workspace settings
      */
-    workspace: string;
+    queryForCurrentUser(): Promise<IUserWorkspaceSettings>;
 }

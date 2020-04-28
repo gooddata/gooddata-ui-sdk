@@ -10,10 +10,16 @@ export {
 
 export { AuthenticatedPrincipal, AuthenticationContext, IAuthenticationProvider } from "./auth";
 
-export { ISettings, SettingCatalog } from "./common/settings";
+export {
+    ISettings,
+    SettingCatalog,
+    IUserSettings,
+    IWorkspaceSettings,
+    IUserWorkspaceSettings,
+} from "./common/settings";
 
 export { IUserService } from "./user";
-export { IUserSettingsService, IUserSettings } from "./user/settings";
+export { IUserSettingsService } from "./user/settings";
 
 export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./workspace/execution";
 
@@ -41,7 +47,7 @@ export {
     attributeDescriptorName,
 } from "./workspace/execution/results";
 
-export { IWorkspaceSettingsService, IWorkspaceSettings } from "./workspace/settings";
+export { IWorkspaceSettingsService } from "./workspace/settings";
 
 export {
     IWorkspaceInsights,

@@ -28,3 +28,34 @@ export enum SettingCatalog {
 export interface ISettings {
     [key: string]: number | boolean | string;
 }
+
+/**
+ * Settings for particular user.
+ *
+ * @public
+ */
+export interface IUserSettings extends ISettings {
+    /**
+     * User to which the settings belong.
+     */
+    userId: string;
+}
+
+/**
+ * Settings for particular workspace.
+ *
+ * @public
+ */
+export interface IWorkspaceSettings extends ISettings {
+    /**
+     * Workspace to which the settings belong.
+     */
+    workspace: string;
+}
+
+/**
+ * Settings for particular combination of user and workspace.
+ *
+ * @public
+ */
+export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {}

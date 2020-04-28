@@ -213,12 +213,17 @@ export class UserModule {
      * Gets user specific feature flags
      *
      * @param {String} userId - A user identifier
+     * @param {String[]} sourceFilter - Optional list of setting item sources to include. Defaults to including everything
      * @return {IFeatureFlags} Hash table of feature flags and their values where feature flag is the key
      */
-    public getUserFeatureFlags(userId: string): Promise<IFeatureFlags> {
+    public getUserFeatureFlags(userId: string, sourceFilter?: string[]): Promise<IFeatureFlags> {
         return this.getUserConfigs(userId).then(settingItems => {
+            const filteredSettingItems = sourceFilter
+                ? settingItems.filter(item => sourceFilter.includes(item.settingItem.source))
+                : settingItems;
+
             const featureFlags: IFeatureFlags = {};
-            settingItems.forEach(settingItem => {
+            filteredSettingItems.forEach(settingItem => {
                 featureFlags[settingItem.settingItem.key] = parseSettingItemValue(
                     settingItem.settingItem.value,
                 );

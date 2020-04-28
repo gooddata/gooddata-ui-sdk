@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { UserModule } from "../user";
@@ -331,6 +331,69 @@ describe("user", () => {
                     .then(userConfigs => {
                         expect(userConfigs.length).toBe(2);
                         expect(userConfigs).toEqual(settingItems);
+                    });
+            });
+        });
+
+        describe("getUserFeatureFlags", () => {
+            const userId = "USER_ID";
+            const settingItems = [
+                {
+                    settingItem: {
+                        key: "activeFiltersByDefault",
+                        value: false,
+                        source: "user",
+                        links: {
+                            self: "/gdc/account/profile/USER_ID/config/activeFiltersByDefault",
+                        },
+                    },
+                },
+                {
+                    settingItem: {
+                        key: "platformEdition",
+                        value: "free",
+                        source: "catalog",
+                        links: {
+                            self: "/gdc/account/profile/USER_ID/config/platformEdition",
+                        },
+                    },
+                },
+            ];
+
+            it("should return user feature flags", () => {
+                fetchMock.mock(`/gdc/account/profile/${userId}/config`, {
+                    status: 200,
+                    body: JSON.stringify({
+                        settings: {
+                            items: settingItems,
+                        },
+                    }),
+                });
+                return createUser()
+                    .getUserFeatureFlags(userId)
+                    .then(userConfigs => {
+                        expect(userConfigs).toEqual({
+                            activeFiltersByDefault: false,
+                            platformEdition: "free",
+                        });
+                    });
+            });
+
+            it("should return user feature flags filtered by source", () => {
+                fetchMock.mock(`/gdc/account/profile/${userId}/config`, {
+                    status: 200,
+                    body: JSON.stringify({
+                        settings: {
+                            items: settingItems,
+                        },
+                    }),
+                });
+                return createUser()
+                    .getUserFeatureFlags(userId, ["user"])
+                    .then(userConfigs => {
+                        expect(userConfigs).toEqual({
+                            activeFiltersByDefault: false,
+                        });
                     });
             });
         });

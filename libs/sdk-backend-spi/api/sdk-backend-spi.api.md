@@ -744,6 +744,10 @@ export interface IUserSettingsService {
     query(): Promise<IUserSettings>;
 }
 
+// @public
+export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {
+}
+
 // @alpha
 export type IWidget = IWidgetDefinition & {
     readonly ref: ObjRef;
@@ -905,6 +909,7 @@ export interface IWorkspaceSettings extends ISettings {
 // @public
 export interface IWorkspaceSettingsService {
     query(): Promise<IWorkspaceSettings>;
+    queryForCurrentUser(): Promise<IUserWorkspaceSettings>;
 }
 
 // @public
