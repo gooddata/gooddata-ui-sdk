@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import get from "lodash/get";
 import ExportDialog, { IExportDialogData } from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
-import { IExtendedExportConfig } from "@gooddata/sdk-ui/dist/base/interfaces/Events";
+import { IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { IFilter } from "@gooddata/sdk-model";
 
 interface IExampleWithExportProps {
@@ -69,7 +69,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
             mergeHeaders,
         };
         if (includeFilterContext && filters) {
-            exportConfig.showFilters = filters;
+            // exportConfig.showFilters = filters;
         }
         setState(oldState => ({ ...oldState, showExportDialog: false, exportConfig }));
     };

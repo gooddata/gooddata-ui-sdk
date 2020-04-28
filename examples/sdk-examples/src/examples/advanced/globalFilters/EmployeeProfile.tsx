@@ -1,11 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState, useEffect } from "react";
-import { Kpi, BarChart, PieChart } from "@gooddata/sdk-ui";
+import { Kpi } from "@gooddata/sdk-ui";
+import { BarChart, PieChart } from "@gooddata/sdk-ui-charts";
 import {
     newMeasure,
     newAttribute,
     newPositiveAttributeFilter,
     IAttributeElementsByRef,
+    IAttributeElement,
+    SortDirection,
 } from "@gooddata/sdk-model";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { EmployeeCard } from "./EmployeeCard";
@@ -21,8 +24,25 @@ import {
 import { Layout } from "../../../components/Layout";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
-import { IValidElements } from "@gooddata/sdk-ui/dist/filters/AttributeFilter/AttributeElements";
 import { useBackend } from "../../../context/auth";
+
+interface IPaging {
+    count: number;
+    offset: number;
+    total: number;
+}
+export interface IValidElements {
+    items: Array<{
+        element: IAttributeElement;
+    }>;
+    paging: IPaging;
+    elementsMeta: {
+        attribute: string;
+        attributeDisplayForm: string;
+        filter: string;
+        order: SortDirection;
+    };
+}
 
 interface IEmployeeProfileProps {
     validElements: IValidElements;

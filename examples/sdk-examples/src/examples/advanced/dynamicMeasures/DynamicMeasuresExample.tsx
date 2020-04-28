@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState, useEffect } from "react";
-import { LineChart, ColumnChart, ErrorComponent, LoadingComponent, IChartConfig } from "@gooddata/sdk-ui";
+import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
+import { LineChart, ColumnChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import sdk from "@gooddata/gd-bear-client";

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { BarChart } from "@gooddata/sdk-ui";
+import { BarChart } from "@gooddata/sdk-ui-charts";
 import { newAttribute, newMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";

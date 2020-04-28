@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { Visualization } from "@gooddata/sdk-ui";
+import { InsightView } from "@gooddata/sdk-ui-ext";
 
 import { columnsVisualizationIdentifier, projectId } from "../../../constants/fixtures";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
@@ -88,7 +88,7 @@ export class ConfigurationColumnChartExample extends Component {
                     </button>
 
                     <div style={{ height: 300 }}>
-                        <Visualization
+                        <InsightView
                             projectId={projectId}
                             identifier={columnsVisualizationIdentifier}
                             config={config}

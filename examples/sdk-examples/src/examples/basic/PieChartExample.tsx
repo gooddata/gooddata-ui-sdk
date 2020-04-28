@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { PieChart } from "@gooddata/sdk-ui";
+import { PieChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure } from "@gooddata/sdk-model";
 
 import {

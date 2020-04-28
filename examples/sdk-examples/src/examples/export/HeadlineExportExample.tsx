@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { Headline } from "@gooddata/sdk-ui";
+import { Headline } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";

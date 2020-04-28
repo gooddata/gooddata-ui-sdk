@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { PivotTable } from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import {
     newMeasure,

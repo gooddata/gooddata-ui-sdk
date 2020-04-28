@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { ColumnChart } from "@gooddata/sdk-ui";
+import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import {
     newMeasure,
     newAttribute,

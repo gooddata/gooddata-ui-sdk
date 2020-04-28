@@ -1,7 +1,8 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Visualization, CoreComponents } from "@gooddata/sdk-ui";
+import { CoreComponents } from "@gooddata/sdk-ui";
+import { InsightView } from "@gooddata/sdk-ui-ext";
 import { ResponsiveContainer, BarChart, Bar, Legend, CartesianGrid, XAxis, YAxis } from "recharts";
 import { get, unzip, range } from "lodash";
 
@@ -112,9 +113,9 @@ const CustomBaseChart = props => {
 export class CustomVisualizationExample extends Component {
     render() {
         return (
-            <Visualization
-                projectId={projectId}
-                identifier={franchiseFeesVisualizationIdentifier}
+            <InsightView
+                workspace={projectId}
+                insight={franchiseFeesVisualizationIdentifier}
                 BaseChartComponent={CustomBaseChart}
             />
         );

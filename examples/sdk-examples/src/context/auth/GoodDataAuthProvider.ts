@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import sdk from "@gooddata/gd-bear-client";
 import { IAuthenticationProvider } from "@gooddata/sdk-backend-spi";
 
@@ -31,5 +31,13 @@ export class GoodDataAuthProvider implements IAuthenticationProvider {
             userId: user.login,
             userMeta: user,
         };
+    }
+
+    public async deauthenticate() {
+        return null;
+    }
+
+    public async getCurrentPrincipal() {
+        return null;
     }
 }

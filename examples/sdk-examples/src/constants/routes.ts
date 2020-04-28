@@ -1,15 +1,15 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { BasicComponents } from "../examples/basic";
 import { PivotTable } from "../examples/pivotTable";
 import { Visualization } from "../examples/visualization";
 import { Sorting } from "../examples/sorting";
 import { TimeOverTimeComparison } from "../examples/timeOverTimeComparison";
 import { ArithmeticMeasures } from "../examples/arithmeticMeasures";
-import { Execute } from "../examples/execution";
+// import { Execute } from "../examples/execution";
 import { PivotTableDrilling, DrillWithExternalData } from "../examples/drill";
 import { DateFilter } from "../examples/dateFilter";
 
-import { GlobalFilters } from "../examples/advanced/globalFilters";
+// import { GlobalFilters } from "../examples/advanced/globalFilters";
 import { DatePicker } from "../examples/advanced/datePicker";
 import { DynamicMeasures } from "../examples/advanced/dynamicMeasures";
 import { CustomLegend } from "../examples/advanced/customLegend";
@@ -19,7 +19,7 @@ import { Responsive } from "../examples/advanced/responsive";
 import { Export } from "../examples/export";
 
 import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
-import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
+// import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
 import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
 
 import { Login } from "../components/login";
@@ -35,7 +35,7 @@ import { AboutThisProject } from "../components/AboutThisProject";
 // import AggregationTest from "./AggregationTest";
 
 export const advancedUseCasesRoutes = [
-    { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
+    // { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
     { path: "/advanced/dynamic-measures", title: "Dynamic Measures", Component: DynamicMeasures },
     { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
     { path: "/advanced/responsive", title: "Responsive Chart", Component: Responsive },
@@ -98,7 +98,7 @@ export const sideNavigationRoutes = [
         Component: DateFilter,
     },
     { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasures },
-    { path: "/execute", title: "Execute Component", Component: Execute },
+    // { path: "/execute", title: "Execute Component", Component: Execute },
     {
         path: "/advanced",
         pathMatch: "full",
@@ -122,11 +122,11 @@ export const hiddenPaths = [
     // { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
     // TODO BB-1694 - Add Measure Value Filter example to the menu
     { path: "/hidden/measure-value-filter", title: "Measure Value Filter", Component: MeasureValueFilter },
-    {
-        path: "/hidden/measure-value-filter-component",
-        title: "Measure Value Filter Component",
-        Component: MeasureValueFilterComponent,
-    },
+    // {
+    //     path: "/hidden/measure-value-filter-component",
+    //     title: "Measure Value Filter Component",
+    //     Component: MeasureValueFilterComponent,
+    // },
     { path: "/hidden/on-drill-drilling", title: "New drill handling by onDrill", Component: OnDrillHandling },
 ];
 

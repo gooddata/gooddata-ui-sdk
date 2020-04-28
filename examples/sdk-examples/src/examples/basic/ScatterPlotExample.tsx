@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { ScatterPlot } from "@gooddata/sdk-ui";
+import { ScatterPlot } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import {

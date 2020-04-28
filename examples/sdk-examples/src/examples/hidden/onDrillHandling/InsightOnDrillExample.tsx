@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { InsightView } from "@gooddata/sdk-ui";
+import { InsightView } from "@gooddata/sdk-ui-ext";
 
 import { columnVisualizationIdentifier, totalSalesIdentifier } from "../../../constants/fixtures";
 import { useOnDrillExample } from "./useOnDrillExample";
@@ -20,13 +20,9 @@ export const InsightOnDrillExample: React.FC = () => {
         <div className="s-visualization-on-drill">
             <div style={style} className="s-visualization-chart">
                 <InsightView
-                    id={columnVisualizationIdentifier}
+                    insight={columnVisualizationIdentifier}
                     onDrill={onDrill}
-                    visualizationProps={{
-                        custom: {
-                            drillableItems,
-                        },
-                    }}
+                    drillableItems={drillableItems}
                 />
             </div>
             {renderDrillEvent}

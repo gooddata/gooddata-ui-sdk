@@ -1,19 +1,19 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import { InsightView } from "@gooddata/sdk-ui";
+import { InsightView } from "@gooddata/sdk-ui-ext";
 
 import { projectId, donutVisualizationIdentifier } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
 const style = { height: 300 };
-const visualizationProps = {
-    custom: {
-        drillableItems: [],
-    },
-    dimensions: {
-        height: 300,
-    },
-};
+// const visualizationProps = {
+//     custom: {
+//         drillableItems: [],
+//     },
+//     dimensions: {
+//         height: 300,
+//     },
+// };
 
 export const VisualizationDonutByIdentifierExample: React.FC = () => {
     const backend = useBackend();
@@ -22,8 +22,8 @@ export const VisualizationDonutByIdentifierExample: React.FC = () => {
             <InsightView
                 backend={backend}
                 workspace={projectId}
-                id={donutVisualizationIdentifier}
-                visualizationProps={visualizationProps}
+                insight={donutVisualizationIdentifier}
+                drillableItems={[]}
             />
         </div>
     );

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { BarChart } from "@gooddata/sdk-ui";
+import { BarChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import Measure from "react-measure";
@@ -47,10 +47,10 @@ export const ResponsiveExample: React.FC = () => {
                             contentRect.client && contentRect.client.height
                                 ? Math.floor(contentRect.client.height)
                                 : 0;
-                        const usedWidth =
-                            contentRect.client && contentRect.client.width
-                                ? Math.floor(contentRect.client.width)
-                                : 0;
+                        // const usedWidth =
+                        //     contentRect.client && contentRect.client.width
+                        //         ? Math.floor(contentRect.client.width)
+                        //         : 0;
                         return (
                             <div style={{ width: "100%", height: "100%" }} ref={measureRef}>
                                 {/*
@@ -58,7 +58,6 @@ export const ResponsiveExample: React.FC = () => {
                                 <BarChart
                                     backend={backend}
                                     workspace={projectId}
-                                    width={usedWidth}
                                     height={usedHeight}
                                     measures={[amount]}
                                     viewBy={locationResort}

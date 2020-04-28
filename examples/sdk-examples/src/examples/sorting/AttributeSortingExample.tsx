@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React from "react";
-import { ColumnChart } from "@gooddata/sdk-ui";
+import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newAttribute, newMeasure, newAttributeSort } from "@gooddata/sdk-model";
 
 import { totalSalesIdentifier, locationCityDisplayFormIdentifier, projectId } from "../../constants/fixtures";
