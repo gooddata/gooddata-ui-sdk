@@ -442,6 +442,13 @@
             "projectFolder": "skel/sdk-skel-ts",
             "reviewCategory": "tools",
             "shouldPublish": false
+        },
+        {
+            "packageName": "@gooddata/sdk-examples",
+            "projectFolder": "examples/sdk-examples",
+            "reviewCategory": "examples",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         }
         // {
         //   /**
