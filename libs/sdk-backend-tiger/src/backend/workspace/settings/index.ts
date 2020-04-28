@@ -1,5 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceSettings, IWorkspaceSettingsService } from "@gooddata/sdk-backend-spi";
+import {
+    IWorkspaceSettings,
+    IWorkspaceSettingsService,
+    IUserWorkspaceSettings,
+} from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
@@ -8,6 +12,15 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
     public query(): Promise<IWorkspaceSettings> {
         return this.authCall(async () => {
             return {
+                workspace: this.workspace,
+            };
+        });
+    }
+
+    public queryForCurrentUser(): Promise<IUserWorkspaceSettings> {
+        return this.authCall(async () => {
+            return {
+                userId: "dummy",
                 workspace: this.workspace,
             };
         });

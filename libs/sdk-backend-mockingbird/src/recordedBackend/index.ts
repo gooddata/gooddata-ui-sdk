@@ -21,6 +21,7 @@ import {
     IUserSettingsService,
     IWorkspaceUserPermissions,
     IWorkspaceDashboards,
+    IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedElementQueryFactory } from "./elements";
@@ -115,6 +116,13 @@ function recordedWorkspace(
             return {
                 async query(): Promise<IWorkspaceSettings> {
                     return {
+                        workspace,
+                        ...(implConfig.globalSettings ?? {}),
+                    };
+                },
+                async queryForCurrentUser(): Promise<IUserWorkspaceSettings> {
+                    return {
+                        userId: USER_ID,
                         workspace,
                         ...(implConfig.globalSettings ?? {}),
                     };
