@@ -1,6 +1,6 @@
-# gd-bear-model
+# GoodData Platform REST API request and response models
 
-> TypeScript interfaces and utilities for working with bear's domain model in UI SDK.
+> TypeScript interfaces and functions for working with bear's request and response types.
 
 ## Migration guide
 
@@ -26,36 +26,8 @@ $ yarn add -D @gooddata/gd-bear-model
 
 [Documentation](https://sdk.gooddata.com/gooddata-ui/)
 
-## Develop
-
-### Running the development
-
-To develop, you need to run the typescript compiler. By running `npm run dev`, the typescript compiler will be run in watch mode.
-
-```sh
-$ npm run dev
-```
-
-### Running tests
-
-To run tests (including watch mode), use `npm run test`.
-
-```sh
-$ npm run test
-```
-
-Alternatively, use `npm run test-once` to run all the tests without watch mode.
-
-### Deployment
-
-Use [CI job](TODO:-SDK8:-Update-with-link-after-job-when-job-is-created) for releasing.
-
-## Contributing
-
-Report bugs and features on our [issues page](https://github.com/gooddata/gooddata-ui-sdk/issues).
-
 ## License
 
-Copyright (C) 2007-2019, GoodData(R) Corporation. All rights reserved.
+Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
 
 For more information, please see [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/gd-bear-model/LICENSE)

@@ -63,3 +63,9 @@ do not anticipate breaking changes in the `InsightView`.
 
 The `InsightView` component is located in the extensions module purely due to dependency on the pluggable
 visualizations. It is safe to use in your production code.
+
+## License
+
+Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
+
+For more information, please see [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-ext/LICENSE)

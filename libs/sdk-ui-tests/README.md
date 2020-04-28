@@ -269,3 +269,9 @@ First, here are the safe types of changes in this area:
 
 -   Modifying existing snapshots & screenshots MAY mean we changed behavior of visualization
     and must ensure that this is captured in the migration guide.
+
+## License
+
+Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
+
+For more information, please see [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-tests/LICENSE)

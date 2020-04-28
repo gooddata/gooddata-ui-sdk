@@ -1,4 +1,4 @@
-# Mocking bird
+# Static / Mock implementation of Analytical Backend SPI
 
 This package contains test support and mock implementations of various concepts in the sdk-backend-spi.
 
@@ -37,3 +37,9 @@ existing tests green. However, it should not be used in any new tests and should
 
 Instead, our efforts need to be focused on enhancing the non-legacy recorded backend and having all
 tests (eventually also old tests) run against the reference workspace.
+
+## License
+
+Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
+
+For more information, please see [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-backend-mockingbird/LICENSE)

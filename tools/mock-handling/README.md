@@ -78,3 +78,9 @@ Go to `Settings... > JSON Schema Mappings`; when there, add the following mappin
 
 With these settings in place, IntelliJ will automatically map all mock definition, responses and results to be
 validated against the respective schemas.
+
+## License
+
+Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
+
+For more information, please see [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/mock-handling/LICENSE)
