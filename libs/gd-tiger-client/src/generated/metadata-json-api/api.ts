@@ -1,3 +1,4 @@
+// (C) 2020 GoodData Corporation
 // tslint:disable
 /**
  * Metadata JSON:API
@@ -115,6 +116,24 @@ export interface AttributeDatasetResourceAttribute {}
 /**
  *
  * @export
+ * @enum {string}
+ */
+export enum AttributeGranularityResourceAttribute {
+    Year = "year",
+    Day = "day",
+    Quarter = "quarter",
+    Month = "month",
+    Week = "week",
+    QuarterOfYear = "quarterOfYear",
+    MonthOfYear = "monthOfYear",
+    DayOfYear = "dayOfYear",
+    DayOfWeek = "dayOfWeek",
+    DayOfMonth = "dayOfMonth",
+    WeekOfYear = "weekOfYear",
+}
+/**
+ *
+ * @export
  * @interface AttributePatchResource
  */
 export interface AttributePatchResource {
@@ -132,10 +151,10 @@ export interface AttributePatchResource {
     type: AttributePatchResourceTypeEnum;
     /**
      *
-     * @type {AttributeResourceAttributesAttributes}
+     * @type {object}
      * @memberof AttributePatchResource
      */
-    attributes?: AttributeResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -166,10 +185,10 @@ export interface AttributePostResource {
     type: AttributePostResourceTypeEnum;
     /**
      *
-     * @type {AttributeResourceAttributesAttributes}
+     * @type {object}
      * @memberof AttributePostResource
      */
-    attributes?: AttributeResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -241,10 +260,10 @@ export interface AttributeResourceAttributesAttributes {
     description?: string | null;
     /**
      *
-     * @type {string}
+     * @type {AttributeGranularityResourceAttribute}
      * @memberof AttributeResourceAttributesAttributes
      */
-    granularity?: string | null;
+    granularity?: AttributeGranularityResourceAttribute | null;
     /**
      *
      * @type {Array<LabelResourceReference>}
@@ -272,10 +291,10 @@ export interface AttributeResourceAttributesAttributes {
 export interface AttributeResourcePatchAttributes {
     /**
      *
-     * @type {AttributeResourceAttributesAttributes}
+     * @type {object}
      * @memberof AttributeResourcePatchAttributes
      */
-    attributes?: AttributeResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -285,10 +304,10 @@ export interface AttributeResourcePatchAttributes {
 export interface AttributeResourcePostAttributes {
     /**
      *
-     * @type {AttributeResourceAttributesAttributes}
+     * @type {object}
      * @memberof AttributeResourcePostAttributes
      */
-    attributes?: AttributeResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -455,10 +474,10 @@ export interface DatasetPatchResource {
     type: DatasetPatchResourceTypeEnum;
     /**
      *
-     * @type {DatasetResourceAttributesAttributes}
+     * @type {object}
      * @memberof DatasetPatchResource
      */
-    attributes?: DatasetResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -489,10 +508,10 @@ export interface DatasetPostResource {
     type: DatasetPostResourceTypeEnum;
     /**
      *
-     * @type {DatasetResourceAttributesAttributes}
+     * @type {object}
      * @memberof DatasetPostResource
      */
-    attributes?: DatasetResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -604,6 +623,24 @@ export interface DatasetResourceAttributesAttributes {
      * @memberof DatasetResourceAttributesAttributes
      */
     title?: string | null;
+    /**
+     *
+     * @type {string}
+     * @memberof DatasetResourceAttributesAttributes
+     */
+    titleBase?: string | null;
+    /**
+     *
+     * @type {string}
+     * @memberof DatasetResourceAttributesAttributes
+     */
+    titlePattern?: string | null;
+    /**
+     *
+     * @type {DatasetTypeResourceAttribute}
+     * @memberof DatasetResourceAttributesAttributes
+     */
+    type?: DatasetTypeResourceAttribute | null;
 }
 /**
  *
@@ -613,10 +650,10 @@ export interface DatasetResourceAttributesAttributes {
 export interface DatasetResourcePatchAttributes {
     /**
      *
-     * @type {DatasetResourceAttributesAttributes}
+     * @type {object}
      * @memberof DatasetResourcePatchAttributes
      */
-    attributes?: DatasetResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -626,10 +663,10 @@ export interface DatasetResourcePatchAttributes {
 export interface DatasetResourcePostAttributes {
     /**
      *
-     * @type {DatasetResourceAttributesAttributes}
+     * @type {object}
      * @memberof DatasetResourcePostAttributes
      */
-    attributes?: DatasetResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -760,6 +797,15 @@ export interface DatasetResourcesResponseSchema extends Success {
 /**
  *
  * @export
+ * @enum {string}
+ */
+export enum DatasetTypeResourceAttribute {
+    NORMAL = "NORMAL",
+    DATE = "DATE",
+}
+/**
+ *
+ * @export
  * @interface FactDatasetResourceAttribute
  */
 export interface FactDatasetResourceAttribute {}
@@ -783,10 +829,10 @@ export interface FactPatchResource {
     type: FactPatchResourceTypeEnum;
     /**
      *
-     * @type {FactResourceAttributesAttributes}
+     * @type {object}
      * @memberof FactPatchResource
      */
-    attributes?: FactResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -817,10 +863,10 @@ export interface FactPostResource {
     type: FactPostResourceTypeEnum;
     /**
      *
-     * @type {FactResourceAttributesAttributes}
+     * @type {object}
      * @memberof FactPostResource
      */
-    attributes?: FactResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -917,10 +963,10 @@ export interface FactResourceAttributesAttributes {
 export interface FactResourcePatchAttributes {
     /**
      *
-     * @type {FactResourceAttributesAttributes}
+     * @type {object}
      * @memberof FactResourcePatchAttributes
      */
-    attributes?: FactResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -930,10 +976,10 @@ export interface FactResourcePatchAttributes {
 export interface FactResourcePostAttributes {
     /**
      *
-     * @type {FactResourceAttributesAttributes}
+     * @type {object}
      * @memberof FactResourcePostAttributes
      */
-    attributes?: FactResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -1156,10 +1202,10 @@ export interface LabelPatchResource {
     type: LabelPatchResourceTypeEnum;
     /**
      *
-     * @type {LabelResourceAttributesAttributes}
+     * @type {object}
      * @memberof LabelPatchResource
      */
-    attributes?: LabelResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -1190,10 +1236,10 @@ export interface LabelPostResource {
     type: LabelPostResourceTypeEnum;
     /**
      *
-     * @type {LabelResourceAttributesAttributes}
+     * @type {object}
      * @memberof LabelPostResource
      */
-    attributes?: LabelResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -1287,12 +1333,6 @@ export interface LabelResourceAttributesAttributes {
      * @memberof LabelResourceAttributesAttributes
      */
     title?: string | null;
-    /**
-     *
-     * @type {string}
-     * @memberof LabelResourceAttributesAttributes
-     */
-    type?: string | null;
 }
 /**
  *
@@ -1302,10 +1342,10 @@ export interface LabelResourceAttributesAttributes {
 export interface LabelResourcePatchAttributes {
     /**
      *
-     * @type {LabelResourceAttributesAttributes}
+     * @type {object}
      * @memberof LabelResourcePatchAttributes
      */
-    attributes?: LabelResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -1315,10 +1355,10 @@ export interface LabelResourcePatchAttributes {
 export interface LabelResourcePostAttributes {
     /**
      *
-     * @type {LabelResourceAttributesAttributes}
+     * @type {object}
      * @memberof LabelResourcePostAttributes
      */
-    attributes?: LabelResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -2191,10 +2231,10 @@ export interface SourcePatchResource {
     type: SourcePatchResourceTypeEnum;
     /**
      *
-     * @type {SourceResourceAttributesAttributes}
+     * @type {object}
      * @memberof SourcePatchResource
      */
-    attributes?: SourceResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -2225,10 +2265,10 @@ export interface SourcePostResource {
     type: SourcePostResourceTypeEnum;
     /**
      *
-     * @type {SourceResourceAttributesAttributes}
+     * @type {object}
      * @memberof SourcePostResource
      */
-    attributes?: SourceResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -2301,10 +2341,10 @@ export interface SourceResourceAttributesAttributes {
 export interface SourceResourcePatchAttributes {
     /**
      *
-     * @type {SourceResourceAttributesAttributes}
+     * @type {object}
      * @memberof SourceResourcePatchAttributes
      */
-    attributes?: SourceResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -2314,10 +2354,10 @@ export interface SourceResourcePatchAttributes {
 export interface SourceResourcePostAttributes {
     /**
      *
-     * @type {SourceResourceAttributesAttributes}
+     * @type {object}
      * @memberof SourceResourcePostAttributes
      */
-    attributes?: SourceResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -2521,10 +2561,10 @@ export interface TablePatchResource {
     type: TablePatchResourceTypeEnum;
     /**
      *
-     * @type {TableResourceAttributesAttributes}
+     * @type {object}
      * @memberof TablePatchResource
      */
-    attributes?: TableResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -2555,10 +2595,10 @@ export interface TablePostResource {
     type: TablePostResourceTypeEnum;
     /**
      *
-     * @type {TableResourceAttributesAttributes}
+     * @type {object}
      * @memberof TablePostResource
      */
-    attributes?: TableResourceAttributesAttributes;
+    attributes?: object;
 }
 
 /**
@@ -2637,10 +2677,10 @@ export interface TableResourceAttributesAttributes {
 export interface TableResourcePatchAttributes {
     /**
      *
-     * @type {TableResourceAttributesAttributes}
+     * @type {object}
      * @memberof TableResourcePatchAttributes
      */
-    attributes?: TableResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -2650,10 +2690,10 @@ export interface TableResourcePatchAttributes {
 export interface TableResourcePostAttributes {
     /**
      *
-     * @type {TableResourceAttributesAttributes}
+     * @type {object}
      * @memberof TableResourcePostAttributes
      */
-    attributes?: TableResourceAttributesAttributes;
+    attributes?: object;
 }
 /**
  *
@@ -3565,62 +3605,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Delete attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdDatasetsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdDatasetsDelete.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve dataset related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -3682,146 +3666,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdDatasetsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdDatasetsPatch.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferenceResponseSchema !== undefined
-                          ? datasetResourceReferenceResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdDatasetsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdDatasetsPost.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferenceResponseSchema !== undefined
-                          ? datasetResourceReferenceResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferenceResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -3947,62 +3791,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Delete attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdLabelsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdLabelsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdLabelsDelete.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/labels`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve label related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -4012,7 +3800,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -4030,7 +3817,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -4047,7 +3833,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute,
                 filterTags,
                 filterPrimary,
-                filterType,
                 filterSourceColumn,
                 filterId,
                 fields,
@@ -4104,10 +3889,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[primary]"] = filterPrimary;
             }
 
-            if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
-            }
-
             if (filterSourceColumn !== undefined) {
                 localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
             }
@@ -4132,146 +3913,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdLabelsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, labelResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdLabelsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdLabelsPatch.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/labels`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof labelResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      labelResourceReferencesResponseSchema !== undefined
-                          ? labelResourceReferencesResponseSchema
-                          : {},
-                  )
-                : labelResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdLabelsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, labelResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdLabelsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdLabelsPost.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/labels`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof labelResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      labelResourceReferencesResponseSchema !== undefined
-                          ? labelResourceReferencesResponseSchema
-                          : {},
-                  )
-                : labelResourceReferencesResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -4335,62 +3976,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(attributePatchResource !== undefined ? attributePatchResource : {})
                 : attributePatchResource || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdRelationshipsDatasetsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdRelationshipsDatasetsDelete.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/relationships/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -4466,202 +4051,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdRelationshipsDatasetsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdRelationshipsDatasetsPatch.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/relationships/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferenceResponseSchema !== undefined
-                          ? datasetResourceReferenceResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdRelationshipsDatasetsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdRelationshipsDatasetsPost.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/relationships/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferenceResponseSchema !== undefined
-                          ? datasetResourceReferenceResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsLabelsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdRelationshipsLabelsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdRelationshipsLabelsDelete.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/relationships/labels`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve label references related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -4671,7 +4060,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -4689,7 +4077,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -4706,7 +4093,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute,
                 filterTags,
                 filterPrimary,
-                filterType,
                 filterSourceColumn,
                 filterId,
                 fields,
@@ -4763,10 +4149,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[primary]"] = filterPrimary;
             }
 
-            if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
-            }
-
             if (filterSourceColumn !== undefined) {
                 localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
             }
@@ -4782,202 +4164,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             if (include !== undefined) {
                 localVarQueryParameter["include"] = include;
             }
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsLabelsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, labelResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdRelationshipsLabelsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdRelationshipsLabelsPatch.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/relationships/labels`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof labelResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      labelResourceReferencesResponseSchema !== undefined
-                          ? labelResourceReferencesResponseSchema
-                          : {},
-                  )
-                : labelResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsLabelsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, labelResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdRelationshipsLabelsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdRelationshipsLabelsPost.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/relationships/labels`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof labelResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      labelResourceReferencesResponseSchema !== undefined
-                          ? labelResourceReferencesResponseSchema
-                          : {},
-                  )
-                : labelResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdRelationshipsTagsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdRelationshipsTagsDelete.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
             if (contentType !== undefined && contentType !== null) {
                 localVarHeaderParameter["Content-Type"] = String(contentType);
@@ -5116,199 +4302,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdRelationshipsTagsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdRelationshipsTagsPatch.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdRelationshipsTagsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdRelationshipsTagsPost.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdTagsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdTagsDelete.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve tag related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -5428,140 +4421,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdTagsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdTagsPatch.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling attributesIdTagsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling attributesIdTagsPost.",
-                );
-            }
-            const localVarPath = `/attributes/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Create a Attribute
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {AttributePostResource} [attributePostResource]
@@ -5621,6 +4480,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -5628,6 +4488,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -5643,6 +4505,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -5650,6 +4513,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -5664,6 +4529,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter,
                 filterTitle,
                 filterDescription,
+                filterType,
                 filterAttributes,
                 filterFacts,
                 filterTags,
@@ -5671,6 +4537,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain,
                 filterReferenceProperties,
                 filterSourceTable,
+                filterTitleBase,
+                filterTitlePattern,
                 filterId,
                 fields,
                 include,
@@ -5707,6 +4575,10 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[description]"] = filterDescription;
             }
 
+            if (filterType !== undefined) {
+                localVarQueryParameter["filter[type]"] = filterType;
+            }
+
             if (filterAttributes !== undefined) {
                 localVarQueryParameter["filter[attributes]"] = filterAttributes;
             }
@@ -5735,6 +4607,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
             }
 
+            if (filterTitleBase !== undefined) {
+                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+            }
+
+            if (filterTitlePattern !== undefined) {
+                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+            }
+
             if (filterId !== undefined) {
                 localVarQueryParameter["filter[id]"] = filterId;
             }
@@ -5758,62 +4638,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             if (pageOffset !== undefined) {
                 localVarQueryParameter["page[offset]"] = pageOffset;
             }
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdAttributesDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdAttributesDelete.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
             if (contentType !== undefined && contentType !== null) {
                 localVarHeaderParameter["Content-Type"] = String(contentType);
@@ -5959,208 +4783,13 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, attributeResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdAttributesPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdAttributesPatch.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof attributeResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      attributeResourceReferencesResponseSchema !== undefined
-                          ? attributeResourceReferencesResponseSchema
-                          : {},
-                  )
-                : attributeResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, attributeResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdAttributesPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdAttributesPost.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof attributeResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      attributeResourceReferencesResponseSchema !== undefined
-                          ? attributeResourceReferencesResponseSchema
-                          : {},
-                  )
-                : attributeResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdDatasetsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdDatasetsDelete.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve dataset related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -6168,6 +4797,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -6181,6 +4812,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -6188,6 +4820,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -6200,6 +4834,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter,
                 filterTitle,
                 filterDescription,
+                filterType,
                 filterAttributes,
                 filterFacts,
                 filterTags,
@@ -6207,6 +4842,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain,
                 filterReferenceProperties,
                 filterSourceTable,
+                filterTitleBase,
+                filterTitlePattern,
                 filterId,
                 fields,
                 include,
@@ -6250,6 +4887,10 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[description]"] = filterDescription;
             }
 
+            if (filterType !== undefined) {
+                localVarQueryParameter["filter[type]"] = filterType;
+            }
+
             if (filterAttributes !== undefined) {
                 localVarQueryParameter["filter[attributes]"] = filterAttributes;
             }
@@ -6278,6 +4919,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
             }
 
+            if (filterTitleBase !== undefined) {
+                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+            }
+
+            if (filterTitlePattern !== undefined) {
+                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+            }
+
             if (filterId !== undefined) {
                 localVarQueryParameter["filter[id]"] = filterId;
             }
@@ -6298,146 +4947,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdDatasetsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdDatasetsPatch.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferencesResponseSchema !== undefined
-                          ? datasetResourceReferencesResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdDatasetsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdDatasetsPost.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferencesResponseSchema !== undefined
-                          ? datasetResourceReferencesResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferencesResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -6474,59 +4983,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 );
             }
             const localVarPath = `/datasets/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdFactsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdFactsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdFactsDelete.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/facts`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -6670,140 +5126,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdFactsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, factResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdFactsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdFactsPatch.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/facts`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof factResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      factResourceReferencesResponseSchema !== undefined
-                          ? factResourceReferencesResponseSchema
-                          : {},
-                  )
-                : factResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdFactsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, factResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdFactsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdFactsPost.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/facts`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof factResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      factResourceReferencesResponseSchema !== undefined
-                          ? factResourceReferencesResponseSchema
-                          : {},
-                  )
-                : factResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -6925,62 +5247,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(datasetPatchResource !== undefined ? datasetPatchResource : {})
                 : datasetPatchResource || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsAttributesDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsAttributesDelete.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -7117,208 +5383,13 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, attributeResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsAttributesPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsAttributesPatch.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof attributeResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      attributeResourceReferencesResponseSchema !== undefined
-                          ? attributeResourceReferencesResponseSchema
-                          : {},
-                  )
-                : attributeResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, attributeResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsAttributesPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsAttributesPost.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof attributeResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      attributeResourceReferencesResponseSchema !== undefined
-                          ? attributeResourceReferencesResponseSchema
-                          : {},
-                  )
-                : attributeResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsDatasetsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsDatasetsDelete.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve dataset references related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -7326,6 +5397,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -7339,6 +5412,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -7346,6 +5420,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -7358,6 +5434,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter,
                 filterTitle,
                 filterDescription,
+                filterType,
                 filterAttributes,
                 filterFacts,
                 filterTags,
@@ -7365,6 +5442,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain,
                 filterReferenceProperties,
                 filterSourceTable,
+                filterTitleBase,
+                filterTitlePattern,
                 filterId,
                 fields,
                 include,
@@ -7408,6 +5487,10 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[description]"] = filterDescription;
             }
 
+            if (filterType !== undefined) {
+                localVarQueryParameter["filter[type]"] = filterType;
+            }
+
             if (filterAttributes !== undefined) {
                 localVarQueryParameter["filter[attributes]"] = filterAttributes;
             }
@@ -7436,6 +5519,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
             }
 
+            if (filterTitleBase !== undefined) {
+                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+            }
+
+            if (filterTitlePattern !== undefined) {
+                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+            }
+
             if (filterId !== undefined) {
                 localVarQueryParameter["filter[id]"] = filterId;
             }
@@ -7447,202 +5538,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             if (include !== undefined) {
                 localVarQueryParameter["include"] = include;
             }
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsDatasetsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsDatasetsPatch.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferencesResponseSchema !== undefined
-                          ? datasetResourceReferencesResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsDatasetsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsDatasetsPost.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferencesResponseSchema !== undefined
-                          ? datasetResourceReferencesResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsFactsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsFactsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsFactsDelete.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/facts`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
             if (contentType !== undefined && contentType !== null) {
                 localVarHeaderParameter["Content-Type"] = String(contentType);
@@ -7781,202 +5676,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsFactsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, factResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsFactsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsFactsPatch.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/facts`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof factResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      factResourceReferencesResponseSchema !== undefined
-                          ? factResourceReferencesResponseSchema
-                          : {},
-                  )
-                : factResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsFactsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, factResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsFactsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsFactsPost.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/facts`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof factResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      factResourceReferencesResponseSchema !== undefined
-                          ? factResourceReferencesResponseSchema
-                          : {},
-                  )
-                : factResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsTagsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsTagsDelete.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve tag references related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -8083,199 +5782,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             if (include !== undefined) {
                 localVarQueryParameter["include"] = include;
             }
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsTagsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsTagsPatch.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdRelationshipsTagsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdRelationshipsTagsPost.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdTagsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdTagsDelete.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
             if (contentType !== undefined && contentType !== null) {
                 localVarHeaderParameter["Content-Type"] = String(contentType);
@@ -8404,140 +5910,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdTagsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdTagsPatch.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling datasetsIdTagsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling datasetsIdTagsPost.",
-                );
-            }
-            const localVarPath = `/datasets/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -8729,59 +6101,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Delete fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdDatasetsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdDatasetsDelete.",
-                );
-            }
-            const localVarPath = `/facts/{id}/datasets`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve dataset related to a fact resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -8840,140 +6159,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdDatasetsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdDatasetsPatch.",
-                );
-            }
-            const localVarPath = `/facts/{id}/datasets`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferenceResponseSchema !== undefined
-                          ? datasetResourceReferenceResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdDatasetsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdDatasetsPost.",
-                );
-            }
-            const localVarPath = `/facts/{id}/datasets`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferenceResponseSchema !== undefined
-                          ? datasetResourceReferenceResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferenceResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -9162,62 +6347,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Delete fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdRelationshipsDatasetsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdRelationshipsDatasetsDelete.",
-                );
-            }
-            const localVarPath = `/facts/{id}/relationships/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve dataset references related to a fact resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -9270,202 +6399,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             if (include !== undefined) {
                 localVarQueryParameter["include"] = include;
             }
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdRelationshipsDatasetsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdRelationshipsDatasetsPatch.",
-                );
-            }
-            const localVarPath = `/facts/{id}/relationships/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferenceResponseSchema !== undefined
-                          ? datasetResourceReferenceResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, datasetResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdRelationshipsDatasetsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdRelationshipsDatasetsPost.",
-                );
-            }
-            const localVarPath = `/facts/{id}/relationships/datasets`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof datasetResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      datasetResourceReferenceResponseSchema !== undefined
-                          ? datasetResourceReferenceResponseSchema
-                          : {},
-                  )
-                : datasetResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdRelationshipsTagsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdRelationshipsTagsDelete.",
-                );
-            }
-            const localVarPath = `/facts/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
             if (contentType !== undefined && contentType !== null) {
                 localVarHeaderParameter["Content-Type"] = String(contentType);
@@ -9604,199 +6537,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdRelationshipsTagsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdRelationshipsTagsPatch.",
-                );
-            }
-            const localVarPath = `/facts/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdRelationshipsTagsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdRelationshipsTagsPost.",
-                );
-            }
-            const localVarPath = `/facts/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdTagsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdTagsDelete.",
-                );
-            }
-            const localVarPath = `/facts/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve tag related to a fact resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -9916,140 +6656,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdTagsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdTagsPatch.",
-                );
-            }
-            const localVarPath = `/facts/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling factsIdTagsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling factsIdTagsPost.",
-                );
-            }
-            const localVarPath = `/facts/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Create a Fact
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {FactPostResource} [factPostResource]
@@ -10112,7 +6718,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -10132,7 +6737,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -10151,7 +6755,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute,
                 filterTags,
                 filterPrimary,
-                filterType,
                 filterSourceColumn,
                 filterId,
                 fields,
@@ -10201,10 +6804,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[primary]"] = filterPrimary;
             }
 
-            if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
-            }
-
             if (filterSourceColumn !== undefined) {
                 localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
             }
@@ -10232,62 +6831,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             if (pageOffset !== undefined) {
                 localVarQueryParameter["page[offset]"] = pageOffset;
             }
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdAttributesDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdAttributesDelete.",
-                );
-            }
-            const localVarPath = `/labels/{id}/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
             if (contentType !== undefined && contentType !== null) {
                 localVarHeaderParameter["Content-Type"] = String(contentType);
@@ -10365,146 +6908,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, attributeResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdAttributesPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdAttributesPatch.",
-                );
-            }
-            const localVarPath = `/labels/{id}/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof attributeResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      attributeResourceReferenceResponseSchema !== undefined
-                          ? attributeResourceReferenceResponseSchema
-                          : {},
-                  )
-                : attributeResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, attributeResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdAttributesPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdAttributesPost.",
-                );
-            }
-            const localVarPath = `/labels/{id}/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof attributeResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      attributeResourceReferenceResponseSchema !== undefined
-                          ? attributeResourceReferenceResponseSchema
-                          : {},
-                  )
-                : attributeResourceReferenceResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -10693,62 +7096,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Delete label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdRelationshipsAttributesDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdRelationshipsAttributesDelete.",
-                );
-            }
-            const localVarPath = `/labels/{id}/relationships/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve attribute references related to a label resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -10801,202 +7148,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             if (include !== undefined) {
                 localVarQueryParameter["include"] = include;
             }
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, attributeResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdRelationshipsAttributesPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdRelationshipsAttributesPatch.",
-                );
-            }
-            const localVarPath = `/labels/{id}/relationships/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof attributeResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      attributeResourceReferenceResponseSchema !== undefined
-                          ? attributeResourceReferenceResponseSchema
-                          : {},
-                  )
-                : attributeResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, attributeResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdRelationshipsAttributesPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdRelationshipsAttributesPost.",
-                );
-            }
-            const localVarPath = `/labels/{id}/relationships/attributes`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof attributeResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      attributeResourceReferenceResponseSchema !== undefined
-                          ? attributeResourceReferenceResponseSchema
-                          : {},
-                  )
-                : attributeResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdRelationshipsTagsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdRelationshipsTagsDelete.",
-                );
-            }
-            const localVarPath = `/labels/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
             if (contentType !== undefined && contentType !== null) {
                 localVarHeaderParameter["Content-Type"] = String(contentType);
@@ -11135,199 +7286,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Update label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdRelationshipsTagsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdRelationshipsTagsPatch.",
-                );
-            }
-            const localVarPath = `/labels/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdRelationshipsTagsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdRelationshipsTagsPost.",
-                );
-            }
-            const localVarPath = `/labels/{id}/relationships/tags`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdTagsDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdTagsDelete.",
-                );
-            }
-            const localVarPath = `/labels/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve tag related to a label resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -11440,140 +7398,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdTagsPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdTagsPatch.",
-                );
-            }
-            const localVarPath = `/labels/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tagResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling labelsIdTagsPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling labelsIdTagsPost.",
-                );
-            }
-            const localVarPath = `/labels/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tagResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tagResourceReferencesResponseSchema !== undefined
-                          ? tagResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tagResourceReferencesResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -13015,7 +8839,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -13033,7 +8856,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -13050,7 +8872,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute,
                 filterTags,
                 filterPrimary,
-                filterType,
                 filterSourceColumn,
                 filterId,
                 fields,
@@ -13102,10 +8923,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterPrimary !== undefined) {
                 localVarQueryParameter["filter[primary]"] = filterPrimary;
-            }
-
-            if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
             }
 
             if (filterSourceColumn !== undefined) {
@@ -14371,7 +10188,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -14389,7 +10205,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -14406,7 +10221,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute,
                 filterTags,
                 filterPrimary,
-                filterType,
                 filterSourceColumn,
                 filterId,
                 fields,
@@ -14461,10 +10275,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterPrimary !== undefined) {
                 localVarQueryParameter["filter[primary]"] = filterPrimary;
-            }
-
-            if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
             }
 
             if (filterSourceColumn !== undefined) {
@@ -15314,62 +11124,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Delete source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdRelationshipsTablesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling sourcesIdRelationshipsTablesDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling sourcesIdRelationshipsTablesDelete.",
-                );
-            }
-            const localVarPath = `/sources/{id}/relationships/tables`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve table references related to a source resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -15455,199 +11209,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             if (include !== undefined) {
                 localVarQueryParameter["include"] = include;
             }
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdRelationshipsTablesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tableResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling sourcesIdRelationshipsTablesPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling sourcesIdRelationshipsTablesPatch.",
-                );
-            }
-            const localVarPath = `/sources/{id}/relationships/tables`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tableResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tableResourceReferencesResponseSchema !== undefined
-                          ? tableResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tableResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdRelationshipsTablesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tableResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling sourcesIdRelationshipsTablesPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling sourcesIdRelationshipsTablesPost.",
-                );
-            }
-            const localVarPath = `/sources/{id}/relationships/tables`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tableResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tableResourceReferencesResponseSchema !== undefined
-                          ? tableResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tableResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdTablesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling sourcesIdTablesDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling sourcesIdTablesDelete.",
-                );
-            }
-            const localVarPath = `/sources/{id}/tables`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
             if (contentType !== undefined && contentType !== null) {
                 localVarHeaderParameter["Content-Type"] = String(contentType);
@@ -15755,140 +11316,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdTablesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tableResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling sourcesIdTablesPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling sourcesIdTablesPatch.",
-                );
-            }
-            const localVarPath = `/sources/{id}/tables`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tableResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tableResourceReferencesResponseSchema !== undefined
-                          ? tableResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tableResourceReferencesResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdTablesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, tableResourceReferencesResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling sourcesIdTablesPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling sourcesIdTablesPost.",
-                );
-            }
-            const localVarPath = `/sources/{id}/tables`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof tableResourceReferencesResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      tableResourceReferencesResponseSchema !== undefined
-                          ? tableResourceReferencesResponseSchema
-                          : {},
-                  )
-                : tableResourceReferencesResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -16240,62 +11667,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
-         * Delete table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdRelationshipsSourcesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling tablesIdRelationshipsSourcesDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling tablesIdRelationshipsSourcesDelete.",
-                );
-            }
-            const localVarPath = `/tables/{id}/relationships/sources`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve source references related to a table resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -16348,199 +11719,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             if (include !== undefined) {
                 localVarQueryParameter["include"] = include;
             }
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdRelationshipsSourcesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, sourceResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling tablesIdRelationshipsSourcesPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling tablesIdRelationshipsSourcesPatch.",
-                );
-            }
-            const localVarPath = `/tables/{id}/relationships/sources`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof sourceResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      sourceResourceReferenceResponseSchema !== undefined
-                          ? sourceResourceReferenceResponseSchema
-                          : {},
-                  )
-                : sourceResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdRelationshipsSourcesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, sourceResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling tablesIdRelationshipsSourcesPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling tablesIdRelationshipsSourcesPost.",
-                );
-            }
-            const localVarPath = `/tables/{id}/relationships/sources`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof sourceResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      sourceResourceReferenceResponseSchema !== undefined
-                          ? sourceResourceReferenceResponseSchema
-                          : {},
-                  )
-                : sourceResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdSourcesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling tablesIdSourcesDelete.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling tablesIdSourcesDelete.",
-                );
-            }
-            const localVarPath = `/tables/{id}/sources`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
             if (contentType !== undefined && contentType !== null) {
                 localVarHeaderParameter["Content-Type"] = String(contentType);
@@ -16615,140 +11793,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdSourcesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, sourceResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling tablesIdSourcesPatch.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling tablesIdSourcesPatch.",
-                );
-            }
-            const localVarPath = `/tables/{id}/sources`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof sourceResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      sourceResourceReferenceResponseSchema !== undefined
-                          ? sourceResourceReferenceResponseSchema
-                          : {},
-                  )
-                : sourceResourceReferenceResponseSchema || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdSourcesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { contentType, id, sourceResourceReferenceResponseSchema } = params;
-            // verify required parameter 'contentType' is not null or undefined
-            if (contentType === null || contentType === undefined) {
-                throw new RequiredError(
-                    "contentType",
-                    "Required parameter contentType was null or undefined when calling tablesIdSourcesPost.",
-                );
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling tablesIdSourcesPost.",
-                );
-            }
-            const localVarPath = `/tables/{id}/sources`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (contentType !== undefined && contentType !== null) {
-                localVarHeaderParameter["Content-Type"] = String(contentType);
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof sourceResourceReferenceResponseSchema !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(
-                      sourceResourceReferenceResponseSchema !== undefined
-                          ? sourceResourceReferenceResponseSchema
-                          : {},
-                  )
-                : sourceResourceReferenceResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -17312,6 +12356,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -17319,6 +12364,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -17332,6 +12379,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -17339,6 +12387,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -17351,6 +12401,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter,
                 filterTitle,
                 filterDescription,
+                filterType,
                 filterAttributes,
                 filterFacts,
                 filterTags,
@@ -17358,6 +12409,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain,
                 filterReferenceProperties,
                 filterSourceTable,
+                filterTitleBase,
+                filterTitlePattern,
                 filterId,
                 fields,
                 include,
@@ -17398,6 +12451,10 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[description]"] = filterDescription;
             }
 
+            if (filterType !== undefined) {
+                localVarQueryParameter["filter[type]"] = filterType;
+            }
+
             if (filterAttributes !== undefined) {
                 localVarQueryParameter["filter[attributes]"] = filterAttributes;
             }
@@ -17424,6 +12481,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterSourceTable !== undefined) {
                 localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+            }
+
+            if (filterTitleBase !== undefined) {
+                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+            }
+
+            if (filterTitlePattern !== undefined) {
+                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
             }
 
             if (filterId !== undefined) {
@@ -18073,7 +13138,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -18091,7 +13155,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -18108,7 +13171,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute,
                 filterTags,
                 filterPrimary,
-                filterType,
                 filterSourceColumn,
                 filterId,
                 fields,
@@ -18160,10 +13222,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterPrimary !== undefined) {
                 localVarQueryParameter["filter[primary]"] = filterPrimary;
-            }
-
-            if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
             }
 
             if (filterSourceColumn !== undefined) {
@@ -18781,6 +13839,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -18788,6 +13847,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -18801,6 +13862,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -18808,6 +13870,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -18820,6 +13884,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter,
                 filterTitle,
                 filterDescription,
+                filterType,
                 filterAttributes,
                 filterFacts,
                 filterTags,
@@ -18827,6 +13892,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterGrain,
                 filterReferenceProperties,
                 filterSourceTable,
+                filterTitleBase,
+                filterTitlePattern,
                 filterId,
                 fields,
                 include,
@@ -18870,6 +13937,10 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[description]"] = filterDescription;
             }
 
+            if (filterType !== undefined) {
+                localVarQueryParameter["filter[type]"] = filterType;
+            }
+
             if (filterAttributes !== undefined) {
                 localVarQueryParameter["filter[attributes]"] = filterAttributes;
             }
@@ -18896,6 +13967,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterSourceTable !== undefined) {
                 localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+            }
+
+            if (filterTitleBase !== undefined) {
+                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+            }
+
+            if (filterTitlePattern !== undefined) {
+                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
             }
 
             if (filterId !== undefined) {
@@ -19448,7 +14527,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -19466,7 +14544,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -19483,7 +14560,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute,
                 filterTags,
                 filterPrimary,
-                filterType,
                 filterSourceColumn,
                 filterId,
                 fields,
@@ -19538,10 +14614,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterPrimary !== undefined) {
                 localVarQueryParameter["filter[primary]"] = filterPrimary;
-            }
-
-            if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
             }
 
             if (filterSourceColumn !== undefined) {
@@ -20290,7 +15362,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -20308,7 +15379,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -20325,7 +15395,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute,
                 filterTags,
                 filterPrimary,
-                filterType,
                 filterSourceColumn,
                 filterId,
                 fields,
@@ -20380,10 +15449,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterPrimary !== undefined) {
                 localVarQueryParameter["filter[primary]"] = filterPrimary;
-            }
-
-            if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
             }
 
             if (filterSourceColumn !== undefined) {
@@ -20888,7 +15953,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -20906,7 +15970,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -20923,7 +15986,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttribute,
                 filterTags,
                 filterPrimary,
-                filterType,
                 filterSourceColumn,
                 filterId,
                 fields,
@@ -20978,10 +16040,6 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterPrimary !== undefined) {
                 localVarQueryParameter["filter[primary]"] = filterPrimary;
-            }
-
-            if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
             }
 
             if (filterSourceColumn !== undefined) {
@@ -21273,35 +16331,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Delete attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdDatasetsDelete(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve dataset related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -21320,68 +16349,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetResourceResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdDatasetsGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdDatasetsPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdDatasetsPost(
                 params,
                 options,
             );
@@ -21450,32 +16417,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Delete attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdLabelsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdLabelsDelete(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve label related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -21485,7 +16426,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -21503,7 +16443,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -21512,62 +16451,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelResourcesResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdLabelsGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdLabelsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdLabelsPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdLabelsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdLabelsPost(
                 params,
                 options,
             );
@@ -21599,34 +16482,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 params,
                 options,
             );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).attributesIdRelationshipsDatasetsDelete(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -21668,91 +16523,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).attributesIdRelationshipsDatasetsPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).attributesIdRelationshipsDatasetsPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsLabelsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).attributesIdRelationshipsLabelsDelete(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve label references related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -21762,7 +16532,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -21780,7 +16549,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -21791,85 +16559,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(
                 configuration,
             ).attributesIdRelationshipsLabelsGet(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsLabelsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).attributesIdRelationshipsLabelsPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsLabelsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).attributesIdRelationshipsLabelsPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).attributesIdRelationshipsTagsDelete(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -21913,86 +16602,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(
                 configuration,
             ).attributesIdRelationshipsTagsGet(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).attributesIdRelationshipsTagsPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).attributesIdRelationshipsTagsPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdTagsDelete(
-                params,
-                options,
-            );
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -22046,62 +16655,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdTagsPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).attributesIdTagsPost(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Create a Attribute
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {AttributePostResource} [attributePostResource]
@@ -22133,6 +16686,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -22140,6 +16694,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -22155,6 +16711,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -22162,6 +16719,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -22172,35 +16731,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetResourcesResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsGet(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdAttributesDelete(
-                params,
-                options,
-            );
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -22256,103 +16786,13 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdAttributesPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdAttributesPost(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdDatasetsDelete(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve dataset related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -22360,6 +16800,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -22373,6 +16815,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -22380,6 +16823,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -22387,68 +16832,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetResourcesResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdDatasetsGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdDatasetsPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdDatasetsPost(
                 params,
                 options,
             );
@@ -22475,32 +16858,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdDelete(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdFactsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<FactResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdFactsDelete(
                 params,
                 options,
             );
@@ -22545,62 +16902,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<FactResourcesResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdFactsGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdFactsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<FactResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdFactsPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdFactsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<FactResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdFactsPost(
                 params,
                 options,
             );
@@ -22671,34 +16972,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Delete dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsAttributesDelete(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve attribute references related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -22747,100 +17020,13 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsAttributesPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsAttributesPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsDatasetsDelete(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve dataset references related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -22848,6 +17034,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -22861,6 +17049,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -22868,6 +17057,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -22880,91 +17071,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(
                 configuration,
             ).datasetsIdRelationshipsDatasetsGet(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsDatasetsPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsDatasetsPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsFactsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<FactResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsFactsDelete(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -23017,85 +17123,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsFactsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<FactResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsFactsPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsFactsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<FactResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsFactsPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsTagsDelete(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve tag references related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -23139,86 +17166,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsTagsPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).datasetsIdRelationshipsTagsPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdTagsDelete(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve tag related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -23251,62 +17198,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourcesResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdTagsGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdTagsPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).datasetsIdTagsPost(
                 params,
                 options,
             );
@@ -23390,35 +17281,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Delete fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).factsIdDatasetsDelete(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve dataset related to a fact resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -23437,68 +17299,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetResourceResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).factsIdDatasetsGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).factsIdDatasetsPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).factsIdDatasetsPost(
                 params,
                 options,
             );
@@ -23592,34 +17392,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Delete fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).factsIdRelationshipsDatasetsDelete(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve dataset references related to a fact resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -23643,91 +17415,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(
                 configuration,
             ).factsIdRelationshipsDatasetsGet(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).factsIdRelationshipsDatasetsPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).factsIdRelationshipsDatasetsPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).factsIdRelationshipsTagsDelete(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -23769,87 +17456,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).factsIdRelationshipsTagsGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).factsIdRelationshipsTagsPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).factsIdRelationshipsTagsPost(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).factsIdTagsDelete(
                 params,
                 options,
             );
@@ -23906,62 +17512,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).factsIdTagsPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).factsIdTagsPost(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Create a Fact
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {FactPostResource} [factPostResource]
@@ -23993,7 +17543,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -24013,7 +17562,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -24025,35 +17573,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelResourcesResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).labelsGet(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).labelsIdAttributesDelete(
-                params,
-                options,
-            );
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -24081,68 +17600,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttributeResourceResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).labelsIdAttributesGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).labelsIdAttributesPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).labelsIdAttributesPost(
                 params,
                 options,
             );
@@ -24236,34 +17693,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Delete label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).labelsIdRelationshipsAttributesDelete(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve attribute references related to a label resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -24287,91 +17716,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(
                 configuration,
             ).labelsIdRelationshipsAttributesGet(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).labelsIdRelationshipsAttributesPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (
-            axios?: AxiosInstance,
-            basePath?: string,
-        ) => AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).labelsIdRelationshipsAttributesPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).labelsIdRelationshipsTagsDelete(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -24425,86 +17769,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).labelsIdRelationshipsTagsPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).labelsIdRelationshipsTagsPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).labelsIdTagsDelete(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve tag related to a label resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -24537,62 +17801,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourcesResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).labelsIdTagsGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).labelsIdTagsPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).labelsIdTagsPost(
                 params,
                 options,
             );
@@ -25195,7 +18403,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -25213,7 +18420,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -25751,7 +18957,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -25769,7 +18974,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -26127,31 +19331,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Delete source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdRelationshipsTablesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).sourcesIdRelationshipsTablesDelete(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve table references related to a source resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -26189,86 +19368,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdRelationshipsTablesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).sourcesIdRelationshipsTablesPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdRelationshipsTablesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).sourcesIdRelationshipsTablesPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdTablesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).sourcesIdTablesDelete(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve table related to a source resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -26295,62 +19394,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableResourcesResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).sourcesIdTablesGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdTablesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).sourcesIdTablesPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdTablesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableResourceReferencesResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).sourcesIdTablesPost(
                 params,
                 options,
             );
@@ -26506,31 +19549,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Delete table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdRelationshipsSourcesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).tablesIdRelationshipsSourcesDelete(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve source references related to a table resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -26560,86 +19578,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Update table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdRelationshipsSourcesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).tablesIdRelationshipsSourcesPatch(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdRelationshipsSourcesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
-                configuration,
-            ).tablesIdRelationshipsSourcesPost(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Delete table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdSourcesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).tablesIdSourcesDelete(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
          * Retrieve source related to a table resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -26658,62 +19596,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceResourceResponseSchema> {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).tablesIdSourcesGet(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Update table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdSourcesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).tablesIdSourcesPatch(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Create table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdSourcesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceResourceReferenceResponseSchema> {
-            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).tablesIdSourcesPost(
                 params,
                 options,
             );
@@ -26966,6 +19848,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -26973,6 +19856,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -26986,6 +19871,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -26993,6 +19879,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -27288,7 +20176,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -27306,7 +20193,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -27578,6 +20464,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -27585,6 +20472,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -27598,6 +20487,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -27605,6 +20495,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -27844,7 +20736,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -27862,7 +20753,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -28169,7 +21059,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -28187,7 +21076,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -28384,7 +21272,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -28402,7 +21289,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -28556,22 +21442,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).attributesGet(params, options)(axios, basePath);
         },
         /**
-         * Delete attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdDatasetsDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve dataset related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -28590,42 +21460,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<DatasetResourceResponseSchema> {
             return DefaultApiFp(configuration).attributesIdDatasetsGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdDatasetsPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdDatasetsPost(params, options)(axios, basePath);
         },
         /**
          * Delete a Attribute
@@ -28664,22 +21498,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).attributesIdGet(params, options)(axios, basePath);
         },
         /**
-         * Delete attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdLabelsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<LabelResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdLabelsDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve label related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -28689,7 +21507,6 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -28707,7 +21524,6 @@ export const DefaultApiFactory = function(
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -28716,42 +21532,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<LabelResourcesResponseSchema> {
             return DefaultApiFp(configuration).attributesIdLabelsGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdLabelsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<LabelResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdLabelsPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdLabelsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<LabelResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdLabelsPost(params, options)(axios, basePath);
         },
         /**
          * Update a Attribute
@@ -28770,25 +21550,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<Info> {
             return DefaultApiFp(configuration).attributesIdPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Delete attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdRelationshipsDatasetsDelete(params, options)(
-                axios,
-                basePath,
-            );
         },
         /**
          * Retrieve dataset references related to a attribute resource
@@ -28814,67 +21575,6 @@ export const DefaultApiFactory = function(
             );
         },
         /**
-         * Update attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdRelationshipsDatasetsPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create attribute relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdRelationshipsDatasetsPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsLabelsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<LabelResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdRelationshipsLabelsDelete(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
          * Retrieve label references related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -28884,7 +21584,6 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -28902,7 +21601,6 @@ export const DefaultApiFactory = function(
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -28911,67 +21609,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<LabelResourceReferencesResponseSchema> {
             return DefaultApiFp(configuration).attributesIdRelationshipsLabelsGet(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Update attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsLabelsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<LabelResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdRelationshipsLabelsPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create attribute relationship to a label resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsLabelsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<LabelResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdRelationshipsLabelsPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdRelationshipsTagsDelete(params, options)(
                 axios,
                 basePath,
             );
@@ -29014,64 +21651,6 @@ export const DefaultApiFactory = function(
             );
         },
         /**
-         * Update attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdRelationshipsTagsPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdRelationshipsTagsPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdTagsDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve tag related to a attribute resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -29106,42 +21685,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).attributesIdTagsGet(params, options)(axios, basePath);
         },
         /**
-         * Update attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdTagsPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create attribute relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        attributesIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).attributesIdTagsPost(params, options)(axios, basePath);
-        },
-        /**
          * Create a Attribute
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {AttributePostResource} [attributePostResource]
@@ -29163,6 +21706,7 @@ export const DefaultApiFactory = function(
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -29170,6 +21714,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -29185,6 +21731,7 @@ export const DefaultApiFactory = function(
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -29192,6 +21739,8 @@ export const DefaultApiFactory = function(
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -29202,22 +21751,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<DatasetResourcesResponseSchema> {
             return DefaultApiFp(configuration).datasetsGet(params, options)(axios, basePath);
-        },
-        /**
-         * Delete dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdAttributesDelete(params, options)(axios, basePath);
         },
         /**
          * Retrieve attribute related to a dataset resource
@@ -29256,64 +21789,13 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).datasetsIdAttributesGet(params, options)(axios, basePath);
         },
         /**
-         * Update dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdAttributesPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdAttributesPost(params, options)(axios, basePath);
-        },
-        /**
-         * Delete dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdDatasetsDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve dataset related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -29321,6 +21803,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -29334,6 +21818,7 @@ export const DefaultApiFactory = function(
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -29341,6 +21826,8 @@ export const DefaultApiFactory = function(
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -29348,42 +21835,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<DatasetResourcesResponseSchema> {
             return DefaultApiFp(configuration).datasetsIdDatasetsGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdDatasetsPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdDatasetsPost(params, options)(axios, basePath);
         },
         /**
          * Delete a Dataset
@@ -29400,22 +21851,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<void> {
             return DefaultApiFp(configuration).datasetsIdDelete(params, options)(axios, basePath);
-        },
-        /**
-         * Delete dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdFactsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<FactResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdFactsDelete(params, options)(axios, basePath);
         },
         /**
          * Retrieve fact related to a dataset resource
@@ -29450,42 +21885,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<FactResourcesResponseSchema> {
             return DefaultApiFp(configuration).datasetsIdFactsGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdFactsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<FactResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdFactsPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdFactsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<FactResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdFactsPost(params, options)(axios, basePath);
         },
         /**
          * Retrieve a dataset resource
@@ -29524,25 +21923,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<Info> {
             return DefaultApiFp(configuration).datasetsIdPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Delete dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsAttributesDelete(params, options)(
-                axios,
-                basePath,
-            );
         },
         /**
          * Retrieve attribute references related to a dataset resource
@@ -29584,73 +21964,13 @@ export const DefaultApiFactory = function(
             );
         },
         /**
-         * Update dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsAttributesPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create dataset relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsAttributesPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsDatasetsDelete(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
          * Retrieve dataset references related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -29658,6 +21978,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -29671,6 +21993,7 @@ export const DefaultApiFactory = function(
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -29678,6 +22001,8 @@ export const DefaultApiFactory = function(
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -29685,67 +22010,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<DatasetResourceReferencesResponseSchema> {
             return DefaultApiFp(configuration).datasetsIdRelationshipsDatasetsGet(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Update dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsDatasetsPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create dataset relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsDatasetsPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsFactsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<FactResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsFactsDelete(params, options)(
                 axios,
                 basePath,
             );
@@ -29788,67 +22052,6 @@ export const DefaultApiFactory = function(
             );
         },
         /**
-         * Update dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsFactsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<FactResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsFactsPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create dataset relationship to a fact resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsFactsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<FactResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsFactsPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsTagsDelete(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
          * Retrieve tag references related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -29886,64 +22089,6 @@ export const DefaultApiFactory = function(
             );
         },
         /**
-         * Update dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsTagsPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdRelationshipsTagsPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdTagsDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve tag related to a dataset resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -29976,42 +22121,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<TagResourcesResponseSchema> {
             return DefaultApiFp(configuration).datasetsIdTagsGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdTagsPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create dataset relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        datasetsIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).datasetsIdTagsPost(params, options)(axios, basePath);
         },
         /**
          * Create a Dataset
@@ -30068,22 +22177,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).factsGet(params, options)(axios, basePath);
         },
         /**
-         * Delete fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).factsIdDatasetsDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve dataset related to a fact resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -30102,42 +22195,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<DatasetResourceResponseSchema> {
             return DefaultApiFp(configuration).factsIdDatasetsGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).factsIdDatasetsPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).factsIdDatasetsPost(params, options)(axios, basePath);
         },
         /**
          * Delete a Fact
@@ -30194,25 +22251,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).factsIdPatch(params, options)(axios, basePath);
         },
         /**
-         * Delete fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsDatasetsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).factsIdRelationshipsDatasetsDelete(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
          * Retrieve dataset references related to a fact resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -30231,67 +22269,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
             return DefaultApiFp(configuration).factsIdRelationshipsDatasetsGet(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Update fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsDatasetsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).factsIdRelationshipsDatasetsPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create fact relationship to a dataset resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsDatasetsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<DatasetResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).factsIdRelationshipsDatasetsPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).factsIdRelationshipsTagsDelete(params, options)(
                 axios,
                 basePath,
             );
@@ -30331,61 +22308,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).factsIdRelationshipsTagsGet(params, options)(axios, basePath);
         },
         /**
-         * Update fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).factsIdRelationshipsTagsPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).factsIdRelationshipsTagsPost(params, options)(axios, basePath);
-        },
-        /**
-         * Delete fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).factsIdTagsDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve tag related to a fact resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -30420,42 +22342,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).factsIdTagsGet(params, options)(axios, basePath);
         },
         /**
-         * Update fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).factsIdTagsPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create fact relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        factsIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).factsIdTagsPost(params, options)(axios, basePath);
-        },
-        /**
          * Create a Fact
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {FactPostResource} [factPostResource]
@@ -30480,7 +22366,6 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -30500,7 +22385,6 @@ export const DefaultApiFactory = function(
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -30512,22 +22396,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<LabelResourcesResponseSchema> {
             return DefaultApiFp(configuration).labelsGet(params, options)(axios, basePath);
-        },
-        /**
-         * Delete label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdAttributesDelete(params, options)(axios, basePath);
         },
         /**
          * Retrieve attribute related to a label resource
@@ -30548,42 +22416,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<AttributeResourceResponseSchema> {
             return DefaultApiFp(configuration).labelsIdAttributesGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdAttributesPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdAttributesPost(params, options)(axios, basePath);
         },
         /**
          * Delete a Label
@@ -30640,25 +22472,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).labelsIdPatch(params, options)(axios, basePath);
         },
         /**
-         * Delete label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsAttributesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdRelationshipsAttributesDelete(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
          * Retrieve attribute references related to a label resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -30677,67 +22490,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<AttributeResourceReferenceResponseSchema> {
             return DefaultApiFp(configuration).labelsIdRelationshipsAttributesGet(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Update label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsAttributesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdRelationshipsAttributesPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create label relationship to a attribute resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsAttributesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<AttributeResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdRelationshipsAttributesPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdRelationshipsTagsDelete(params, options)(
                 axios,
                 basePath,
             );
@@ -30777,64 +22529,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).labelsIdRelationshipsTagsGet(params, options)(axios, basePath);
         },
         /**
-         * Update label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdRelationshipsTagsPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdRelationshipsTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdRelationshipsTagsPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdTagsDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdTagsDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve tag related to a label resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -30867,42 +22561,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<TagResourcesResponseSchema> {
             return DefaultApiFp(configuration).labelsIdTagsGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdTagsPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdTagsPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create label relationship to a tag resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        labelsIdTagsPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TagResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).labelsIdTagsPost(params, options)(axios, basePath);
         },
         /**
          * Create a Label
@@ -31323,7 +22981,6 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -31341,7 +22998,6 @@ export const DefaultApiFactory = function(
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -31724,7 +23380,6 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -31742,7 +23397,6 @@ export const DefaultApiFactory = function(
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -32002,25 +23656,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).sourcesIdPatch(params, options)(axios, basePath);
         },
         /**
-         * Delete source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdRelationshipsTablesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TableResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).sourcesIdRelationshipsTablesDelete(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
          * Retrieve table references related to a source resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -32052,64 +23687,6 @@ export const DefaultApiFactory = function(
             );
         },
         /**
-         * Update source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdRelationshipsTablesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TableResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).sourcesIdRelationshipsTablesPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdRelationshipsTablesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TableResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).sourcesIdRelationshipsTablesPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdTablesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<TableResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).sourcesIdTablesDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve table related to a source resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -32136,42 +23713,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<TableResourcesResponseSchema> {
             return DefaultApiFp(configuration).sourcesIdTablesGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdTablesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TableResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).sourcesIdTablesPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create source relationship to a table resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sourcesIdTablesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<TableResourceReferencesResponseSchema> {
-            return DefaultApiFp(configuration).sourcesIdTablesPost(params, options)(axios, basePath);
         },
         /**
          * Create a Source
@@ -32276,25 +23817,6 @@ export const DefaultApiFactory = function(
             return DefaultApiFp(configuration).tablesIdPatch(params, options)(axios, basePath);
         },
         /**
-         * Delete table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdRelationshipsSourcesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<SourceResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).tablesIdRelationshipsSourcesDelete(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
          * Retrieve source references related to a table resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -32318,64 +23840,6 @@ export const DefaultApiFactory = function(
             );
         },
         /**
-         * Update table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdRelationshipsSourcesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<SourceResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).tablesIdRelationshipsSourcesPatch(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Create table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdRelationshipsSourcesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<SourceResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).tablesIdRelationshipsSourcesPost(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Delete table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdSourcesDelete(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-            },
-            options?: any,
-        ): AxiosPromise<SourceResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).tablesIdSourcesDelete(params, options)(axios, basePath);
-        },
-        /**
          * Retrieve source related to a table resource
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -32394,42 +23858,6 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<SourceResourceResponseSchema> {
             return DefaultApiFp(configuration).tablesIdSourcesGet(params, options)(axios, basePath);
-        },
-        /**
-         * Update table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdSourcesPatch(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<SourceResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).tablesIdSourcesPatch(params, options)(axios, basePath);
-        },
-        /**
-         * Create table relationship to a source resource
-         * @param {'application/vnd.api+json' | 'application/json'} contentType
-         * @param {string} id
-         * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        tablesIdSourcesPost(
-            params: {
-                contentType: "application/vnd.api+json" | "application/json";
-                id: string;
-                sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-            },
-            options?: any,
-        ): AxiosPromise<SourceResourceReferenceResponseSchema> {
-            return DefaultApiFp(configuration).tablesIdSourcesPost(params, options)(axios, basePath);
         },
         /**
          * Create a Table
@@ -32596,6 +24024,7 @@ export const DefaultApiFactory = function(
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -32603,6 +24032,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -32616,6 +24047,7 @@ export const DefaultApiFactory = function(
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -32623,6 +24055,8 @@ export const DefaultApiFactory = function(
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -32815,7 +24249,6 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -32833,7 +24266,6 @@ export const DefaultApiFactory = function(
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -33023,6 +24455,7 @@ export const DefaultApiFactory = function(
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterTags] Filter by tags (csv)
@@ -33030,6 +24463,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterGrain] Filter by grain (csv)
          * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
          * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+         * @param {string} [filterTitleBase] Filter by titleBase (csv)
+         * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] dataset fields to include (csv)
          * @param {string} [include] dataset relationships to include (csv)
@@ -33043,6 +24478,7 @@ export const DefaultApiFactory = function(
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterType?: string;
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterTags?: string;
@@ -33050,6 +24486,8 @@ export const DefaultApiFactory = function(
                 filterGrain?: string;
                 filterReferenceProperties?: string;
                 filterSourceTable?: string;
+                filterTitleBase?: string;
+                filterTitlePattern?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -33224,7 +24662,6 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -33242,7 +24679,6 @@ export const DefaultApiFactory = function(
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -33472,7 +24908,6 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -33490,7 +24925,6 @@ export const DefaultApiFactory = function(
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -33650,7 +25084,6 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttribute] Filter by attribute (csv)
          * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterPrimary] Filter by primary (csv)
-         * @param {string} [filterType] Filter by type (csv)
          * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] label fields to include (csv)
@@ -33668,7 +25101,6 @@ export const DefaultApiFactory = function(
                 filterAttribute?: string;
                 filterTags?: string;
                 filterPrimary?: string;
-                filterType?: string;
                 filterSourceColumn?: string;
                 filterId?: string;
                 fields?: string;
@@ -33790,22 +25222,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<AttributeResourcesResponseSchema>;
 
     /**
-     * Delete attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
      * Retrieve dataset related to a attribute resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -33824,42 +25240,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<DatasetResourceResponseSchema>;
-
-    /**
-     * Update attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
-     * Create attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
 
     /**
      * Delete a Attribute
@@ -33898,22 +25278,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<AttributeResourceResponseSchema>;
 
     /**
-     * Delete attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdLabelsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<LabelResourceReferencesResponseSchema>;
-
-    /**
      * Retrieve label related to a attribute resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -33923,7 +25287,6 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -33942,7 +25305,6 @@ export interface DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -33950,42 +25312,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<LabelResourcesResponseSchema>;
-
-    /**
-     * Update attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdLabelsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<LabelResourceReferencesResponseSchema>;
-
-    /**
-     * Create attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdLabelsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<LabelResourceReferencesResponseSchema>;
 
     /**
      * Update a Attribute
@@ -34004,22 +25330,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<Info>;
-
-    /**
-     * Delete attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdRelationshipsDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
 
     /**
      * Retrieve dataset references related to a attribute resource
@@ -34042,58 +25352,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
 
     /**
-     * Update attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdRelationshipsDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
-     * Create attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdRelationshipsDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
-     * Delete attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdRelationshipsLabelsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<LabelResourceReferencesResponseSchema>;
-
-    /**
      * Retrieve label references related to a attribute resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -34103,7 +25361,6 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -34122,7 +25379,6 @@ export interface DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -34130,58 +25386,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<LabelResourceReferencesResponseSchema>;
-
-    /**
-     * Update attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdRelationshipsLabelsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<LabelResourceReferencesResponseSchema>;
-
-    /**
-     * Create attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdRelationshipsLabelsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<LabelResourceReferencesResponseSchema>;
-
-    /**
-     * Delete attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdRelationshipsTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
 
     /**
      * Retrieve tag references related to a attribute resource
@@ -34213,58 +25417,6 @@ export interface DefaultApiInterface {
             filterId?: string;
             fields?: string;
             include?: string;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Update attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdRelationshipsTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Create attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdRelationshipsTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Delete attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
         },
         options?: any,
     ): AxiosPromise<TagResourceReferencesResponseSchema>;
@@ -34304,42 +25456,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<TagResourcesResponseSchema>;
 
     /**
-     * Update attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Create attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    attributesIdTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
      * Create a Attribute
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {AttributePostResource} [attributePostResource]
@@ -34361,6 +25477,7 @@ export interface DefaultApiInterface {
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -34368,6 +25485,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -34384,6 +25503,7 @@ export interface DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -34391,6 +25511,8 @@ export interface DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -34400,22 +25522,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<DatasetResourcesResponseSchema>;
-
-    /**
-     * Delete dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdAttributesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferencesResponseSchema>;
 
     /**
      * Retrieve attribute related to a dataset resource
@@ -34454,64 +25560,13 @@ export interface DefaultApiInterface {
     ): AxiosPromise<AttributeResourcesResponseSchema>;
 
     /**
-     * Update dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdAttributesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferencesResponseSchema>;
-
-    /**
-     * Create dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdAttributesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferencesResponseSchema>;
-
-    /**
-     * Delete dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferencesResponseSchema>;
-
-    /**
      * Retrieve dataset related to a dataset resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -34519,6 +25574,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -34533,6 +25590,7 @@ export interface DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -34540,48 +25598,14 @@ export interface DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
         },
         options?: any,
     ): AxiosPromise<DatasetResourcesResponseSchema>;
-
-    /**
-     * Update dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferencesResponseSchema>;
-
-    /**
-     * Create dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferencesResponseSchema>;
 
     /**
      * Delete a Dataset
@@ -34598,22 +25622,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<void>;
-
-    /**
-     * Delete dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdFactsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<FactResourceReferencesResponseSchema>;
 
     /**
      * Retrieve fact related to a dataset resource
@@ -34648,42 +25656,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<FactResourcesResponseSchema>;
-
-    /**
-     * Update dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdFactsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<FactResourceReferencesResponseSchema>;
-
-    /**
-     * Create dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdFactsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<FactResourceReferencesResponseSchema>;
 
     /**
      * Retrieve a dataset resource
@@ -34724,22 +25696,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<Info>;
 
     /**
-     * Delete dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsAttributesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferencesResponseSchema>;
-
-    /**
      * Retrieve attribute references related to a dataset resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -34776,64 +25732,13 @@ export interface DefaultApiInterface {
     ): AxiosPromise<AttributeResourceReferencesResponseSchema>;
 
     /**
-     * Update dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsAttributesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferencesResponseSchema>;
-
-    /**
-     * Create dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsAttributesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferencesResponseSchema>;
-
-    /**
-     * Delete dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferencesResponseSchema>;
-
-    /**
      * Retrieve dataset references related to a dataset resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -34841,6 +25746,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -34855,6 +25762,7 @@ export interface DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -34862,64 +25770,14 @@ export interface DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
         },
         options?: any,
     ): AxiosPromise<DatasetResourceReferencesResponseSchema>;
-
-    /**
-     * Update dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferencesResponseSchema>;
-
-    /**
-     * Create dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferencesResponseSchema>;
-
-    /**
-     * Delete dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsFactsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<FactResourceReferencesResponseSchema>;
 
     /**
      * Retrieve fact references related to a dataset resource
@@ -34956,58 +25814,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<FactResourceReferencesResponseSchema>;
 
     /**
-     * Update dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsFactsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<FactResourceReferencesResponseSchema>;
-
-    /**
-     * Create dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsFactsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<FactResourceReferencesResponseSchema>;
-
-    /**
-     * Delete dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
      * Retrieve tag references related to a dataset resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -35037,58 +25843,6 @@ export interface DefaultApiInterface {
             filterId?: string;
             fields?: string;
             include?: string;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Update dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Create dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdRelationshipsTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Delete dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
         },
         options?: any,
     ): AxiosPromise<TagResourceReferencesResponseSchema>;
@@ -35126,42 +25880,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<TagResourcesResponseSchema>;
-
-    /**
-     * Update dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Create dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    datasetsIdTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
 
     /**
      * Create a Dataset
@@ -35218,22 +25936,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<FactResourcesResponseSchema>;
 
     /**
-     * Delete fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
      * Retrieve dataset related to a fact resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -35252,42 +25954,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<DatasetResourceResponseSchema>;
-
-    /**
-     * Update fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
-     * Create fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
 
     /**
      * Delete a Fact
@@ -35344,22 +26010,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<Info>;
 
     /**
-     * Delete fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdRelationshipsDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
      * Retrieve dataset references related to a fact resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -35378,58 +26028,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
-     * Update fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdRelationshipsDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
-     * Create fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdRelationshipsDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<DatasetResourceReferenceResponseSchema>;
-
-    /**
-     * Delete fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdRelationshipsTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
 
     /**
      * Retrieve tag references related to a fact resource
@@ -35461,58 +26059,6 @@ export interface DefaultApiInterface {
             filterId?: string;
             fields?: string;
             include?: string;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Update fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdRelationshipsTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Create fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdRelationshipsTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Delete fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
         },
         options?: any,
     ): AxiosPromise<TagResourceReferencesResponseSchema>;
@@ -35552,42 +26098,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<TagResourcesResponseSchema>;
 
     /**
-     * Update fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Create fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    factsIdTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
      * Create a Fact
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {FactPostResource} [factPostResource]
@@ -35612,7 +26122,6 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -35633,7 +26142,6 @@ export interface DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -35644,22 +26152,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<LabelResourcesResponseSchema>;
-
-    /**
-     * Delete label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdAttributesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferenceResponseSchema>;
 
     /**
      * Retrieve attribute related to a label resource
@@ -35680,42 +26172,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<AttributeResourceResponseSchema>;
-
-    /**
-     * Update label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdAttributesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferenceResponseSchema>;
-
-    /**
-     * Create label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdAttributesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferenceResponseSchema>;
 
     /**
      * Delete a Label
@@ -35772,22 +26228,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<Info>;
 
     /**
-     * Delete label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdRelationshipsAttributesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferenceResponseSchema>;
-
-    /**
      * Retrieve attribute references related to a label resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -35806,58 +26246,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<AttributeResourceReferenceResponseSchema>;
-
-    /**
-     * Update label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdRelationshipsAttributesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferenceResponseSchema>;
-
-    /**
-     * Create label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdRelationshipsAttributesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<AttributeResourceReferenceResponseSchema>;
-
-    /**
-     * Delete label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdRelationshipsTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
 
     /**
      * Retrieve tag references related to a label resource
@@ -35889,58 +26277,6 @@ export interface DefaultApiInterface {
             filterId?: string;
             fields?: string;
             include?: string;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Update label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdRelationshipsTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Create label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdRelationshipsTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Delete label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
         },
         options?: any,
     ): AxiosPromise<TagResourceReferencesResponseSchema>;
@@ -35978,42 +26314,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<TagResourcesResponseSchema>;
-
-    /**
-     * Update label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
-
-    /**
-     * Create label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    labelsIdTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TagResourceReferencesResponseSchema>;
 
     /**
      * Create a Label
@@ -36431,7 +26731,6 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -36450,7 +26749,6 @@ export interface DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -36805,7 +27103,6 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -36824,7 +27121,6 @@ export interface DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -37062,22 +27358,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<Info>;
 
     /**
-     * Delete source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    sourcesIdRelationshipsTablesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<TableResourceReferencesResponseSchema>;
-
-    /**
      * Retrieve table references related to a source resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -37101,58 +27381,6 @@ export interface DefaultApiInterface {
             filterId?: string;
             fields?: string;
             include?: string;
-        },
-        options?: any,
-    ): AxiosPromise<TableResourceReferencesResponseSchema>;
-
-    /**
-     * Update source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    sourcesIdRelationshipsTablesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TableResourceReferencesResponseSchema>;
-
-    /**
-     * Create source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    sourcesIdRelationshipsTablesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TableResourceReferencesResponseSchema>;
-
-    /**
-     * Delete source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    sourcesIdTablesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
         },
         options?: any,
     ): AxiosPromise<TableResourceReferencesResponseSchema>;
@@ -37184,42 +27412,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<TableResourcesResponseSchema>;
-
-    /**
-     * Update source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    sourcesIdTablesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TableResourceReferencesResponseSchema>;
-
-    /**
-     * Create source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    sourcesIdTablesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<TableResourceReferencesResponseSchema>;
 
     /**
      * Create a Source
@@ -37324,22 +27516,6 @@ export interface DefaultApiInterface {
     ): AxiosPromise<Info>;
 
     /**
-     * Delete table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    tablesIdRelationshipsSourcesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ): AxiosPromise<SourceResourceReferenceResponseSchema>;
-
-    /**
      * Retrieve source references related to a table resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -37355,58 +27531,6 @@ export interface DefaultApiInterface {
             id: string;
             fields?: string;
             include?: string;
-        },
-        options?: any,
-    ): AxiosPromise<SourceResourceReferenceResponseSchema>;
-
-    /**
-     * Update table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    tablesIdRelationshipsSourcesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<SourceResourceReferenceResponseSchema>;
-
-    /**
-     * Create table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    tablesIdRelationshipsSourcesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<SourceResourceReferenceResponseSchema>;
-
-    /**
-     * Delete table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    tablesIdSourcesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
         },
         options?: any,
     ): AxiosPromise<SourceResourceReferenceResponseSchema>;
@@ -37430,42 +27554,6 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<SourceResourceResponseSchema>;
-
-    /**
-     * Update table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    tablesIdSourcesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<SourceResourceReferenceResponseSchema>;
-
-    /**
-     * Create table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApiInterface
-     */
-    tablesIdSourcesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ): AxiosPromise<SourceResourceReferenceResponseSchema>;
 
     /**
      * Create a Table
@@ -37632,6 +27720,7 @@ export interface DefaultApiInterface {
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -37639,6 +27728,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -37653,6 +27744,7 @@ export interface DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -37660,6 +27752,8 @@ export interface DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -37851,7 +27945,6 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -37870,7 +27963,6 @@ export interface DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -38044,6 +28136,7 @@ export interface DefaultApiInterface {
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -38051,6 +28144,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -38065,6 +28160,7 @@ export interface DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -38072,6 +28168,8 @@ export interface DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -38227,7 +28325,6 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -38246,7 +28343,6 @@ export interface DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -38463,7 +28559,6 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -38482,7 +28577,6 @@ export interface DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -38629,7 +28723,6 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -38648,7 +28741,6 @@ export interface DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -38764,27 +28856,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Delete attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdDatasetsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve dataset related to a attribute resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -38804,52 +28875,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).attributesIdDatasetsGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdDatasetsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdDatasetsPost(params, options)(
             this.axios,
             this.basePath,
         );
@@ -38899,27 +28924,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Delete attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdLabelsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdLabelsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve label related to a attribute resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -38929,7 +28933,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -38948,7 +28951,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -38957,52 +28959,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).attributesIdLabelsGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdLabelsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdLabelsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdLabelsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdLabelsPost(params, options)(
             this.axios,
             this.basePath,
         );
@@ -39026,27 +28982,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).attributesIdPatch(params, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * Delete attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdRelationshipsDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdRelationshipsDatasetsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
     }
 
     /**
@@ -39075,73 +29010,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdRelationshipsDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdRelationshipsDatasetsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create attribute relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdRelationshipsDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdRelationshipsDatasetsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdRelationshipsLabelsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdRelationshipsLabelsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve label references related to a attribute resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -39151,7 +29019,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -39170,7 +29037,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -39179,73 +29045,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).attributesIdRelationshipsLabelsGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdRelationshipsLabelsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdRelationshipsLabelsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create attribute relationship to a label resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {LabelResourceReferencesResponseSchema} [labelResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdRelationshipsLabelsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdRelationshipsLabelsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdRelationshipsTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdRelationshipsTagsDelete(params, options)(
             this.axios,
             this.basePath,
         );
@@ -39291,73 +29090,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdRelationshipsTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdRelationshipsTagsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdRelationshipsTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdRelationshipsTagsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdTagsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve tag related to a attribute resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -39397,52 +29129,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdTagsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create attribute relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public attributesIdTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).attributesIdTagsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Create a Attribute
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {AttributePostResource} [attributePostResource]
@@ -39466,6 +29152,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -39473,6 +29160,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -39489,6 +29178,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -39496,6 +29186,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -39506,27 +29198,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).datasetsGet(params, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * Delete dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdAttributesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdAttributesDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
     }
 
     /**
@@ -39571,79 +29242,13 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdAttributesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdAttributesPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdAttributesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdAttributesPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdDatasetsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve dataset related to a dataset resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -39651,6 +29256,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -39665,6 +29272,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -39672,6 +29280,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -39679,52 +29289,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).datasetsIdDatasetsGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdDatasetsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdDatasetsPost(params, options)(
             this.axios,
             this.basePath,
         );
@@ -39746,27 +29310,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).datasetsIdDelete(params, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * Delete dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdFactsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdFactsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
     }
 
     /**
@@ -39803,52 +29346,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).datasetsIdFactsGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdFactsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdFactsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdFactsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdFactsPost(params, options)(
             this.axios,
             this.basePath,
         );
@@ -39897,27 +29394,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Delete dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsAttributesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsAttributesDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve attribute references related to a dataset resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -39959,79 +29435,13 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsAttributesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsAttributesPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create dataset relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferencesResponseSchema} [attributeResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsAttributesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsAttributesPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsDatasetsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve dataset references related to a dataset resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -40039,6 +29449,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -40053,6 +29465,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -40060,6 +29473,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -40067,73 +29482,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).datasetsIdRelationshipsDatasetsGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsDatasetsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create dataset relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferencesResponseSchema} [datasetResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsDatasetsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsFactsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsFactsDelete(params, options)(
             this.axios,
             this.basePath,
         );
@@ -40179,73 +29527,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsFactsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsFactsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create dataset relationship to a fact resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {FactResourceReferencesResponseSchema} [factResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsFactsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsFactsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsTagsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve tag references related to a dataset resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -40285,73 +29566,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsTagsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdRelationshipsTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdRelationshipsTagsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdTagsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve tag related to a dataset resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -40385,52 +29599,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).datasetsIdTagsGet(params, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * Update dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdTagsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create dataset relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public datasetsIdTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).datasetsIdTagsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
     }
 
     /**
@@ -40492,27 +29660,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Delete fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdDatasetsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve dataset related to a fact resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -40532,52 +29679,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).factsIdDatasetsGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdDatasetsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdDatasetsPost(params, options)(
             this.axios,
             this.basePath,
         );
@@ -40644,27 +29745,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Delete fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdRelationshipsDatasetsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdRelationshipsDatasetsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve dataset references related to a fact resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -40684,73 +29764,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).factsIdRelationshipsDatasetsGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdRelationshipsDatasetsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdRelationshipsDatasetsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create fact relationship to a dataset resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {DatasetResourceReferenceResponseSchema} [datasetResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdRelationshipsDatasetsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            datasetResourceReferenceResponseSchema?: DatasetResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdRelationshipsDatasetsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdRelationshipsTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdRelationshipsTagsDelete(params, options)(
             this.axios,
             this.basePath,
         );
@@ -40796,70 +29809,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdRelationshipsTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdRelationshipsTagsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdRelationshipsTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdRelationshipsTagsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdTagsDelete(params, options)(this.axios, this.basePath);
-    }
-
-    /**
      * Retrieve tag related to a fact resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -40896,46 +29845,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdTagsPatch(params, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * Create fact relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public factsIdTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).factsIdTagsPost(params, options)(this.axios, this.basePath);
-    }
-
-    /**
      * Create a Fact
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {FactPostResource} [factPostResource]
@@ -40962,7 +29871,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -40983,7 +29891,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -40995,27 +29902,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).labelsGet(params, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * Delete label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdAttributesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdAttributesDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
     }
 
     /**
@@ -41038,52 +29924,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).labelsIdAttributesGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdAttributesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdAttributesPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdAttributesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdAttributesPost(params, options)(
             this.axios,
             this.basePath,
         );
@@ -41150,27 +29990,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Delete label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdRelationshipsAttributesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdRelationshipsAttributesDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve attribute references related to a label resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -41190,73 +30009,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).labelsIdRelationshipsAttributesGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdRelationshipsAttributesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdRelationshipsAttributesPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create label relationship to a attribute resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {AttributeResourceReferenceResponseSchema} [attributeResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdRelationshipsAttributesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            attributeResourceReferenceResponseSchema?: AttributeResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdRelationshipsAttributesPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdRelationshipsTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdRelationshipsTagsDelete(params, options)(
             this.axios,
             this.basePath,
         );
@@ -41302,73 +30054,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdRelationshipsTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdRelationshipsTagsPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdRelationshipsTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdRelationshipsTagsPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdTagsDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdTagsDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve tag related to a label resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -41402,46 +30087,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).labelsIdTagsGet(params, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * Update label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdTagsPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdTagsPatch(params, options)(this.axios, this.basePath);
-    }
-
-    /**
-     * Create label relationship to a tag resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public labelsIdTagsPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).labelsIdTagsPost(params, options)(this.axios, this.basePath);
     }
 
     /**
@@ -41924,7 +30569,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -41943,7 +30587,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -42380,7 +31023,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -42399,7 +31041,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -42682,27 +31323,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Delete source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public sourcesIdRelationshipsTablesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).sourcesIdRelationshipsTablesDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve table references related to a source resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -42736,73 +31356,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public sourcesIdRelationshipsTablesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).sourcesIdRelationshipsTablesPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public sourcesIdRelationshipsTablesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).sourcesIdRelationshipsTablesPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public sourcesIdTablesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).sourcesIdTablesDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve table related to a source resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -42830,52 +31383,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).sourcesIdTablesGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public sourcesIdTablesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).sourcesIdTablesPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create source relationship to a table resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {TableResourceReferencesResponseSchema} [tableResourceReferencesResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public sourcesIdTablesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            tableResourceReferencesResponseSchema?: TableResourceReferencesResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).sourcesIdTablesPost(params, options)(
             this.axios,
             this.basePath,
         );
@@ -42994,27 +31501,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Delete table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public tablesIdRelationshipsSourcesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).tablesIdRelationshipsSourcesDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve source references related to a table resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -43040,73 +31526,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
-     * Update table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public tablesIdRelationshipsSourcesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).tablesIdRelationshipsSourcesPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public tablesIdRelationshipsSourcesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).tablesIdRelationshipsSourcesPost(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Delete table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public tablesIdSourcesDelete(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).tablesIdSourcesDelete(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
      * Retrieve source related to a table resource
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -43126,52 +31545,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
         options?: any,
     ) {
         return DefaultApiFp(this.configuration).tablesIdSourcesGet(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Update table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public tablesIdSourcesPatch(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).tablesIdSourcesPatch(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Create table relationship to a source resource
-     * @param {'application/vnd.api+json' | 'application/json'} contentType
-     * @param {string} id
-     * @param {SourceResourceReferenceResponseSchema} [sourceResourceReferenceResponseSchema]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public tablesIdSourcesPost(
-        params: {
-            contentType: "application/vnd.api+json" | "application/json";
-            id: string;
-            sourceResourceReferenceResponseSchema?: SourceResourceReferenceResponseSchema;
-        },
-        options?: any,
-    ) {
-        return DefaultApiFp(this.configuration).tablesIdSourcesPost(params, options)(
             this.axios,
             this.basePath,
         );
@@ -43371,6 +31744,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -43378,6 +31752,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -43392,6 +31768,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -43399,6 +31776,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -43619,7 +31998,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -43638,7 +32016,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -43845,6 +32222,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterTags] Filter by tags (csv)
@@ -43852,6 +32230,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterGrain] Filter by grain (csv)
      * @param {string} [filterReferenceProperties] Filter by referenceProperties (csv)
      * @param {string} [filterSourceTable] Filter by sourceTable (csv)
+     * @param {string} [filterTitleBase] Filter by titleBase (csv)
+     * @param {string} [filterTitlePattern] Filter by titlePattern (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] dataset fields to include (csv)
      * @param {string} [include] dataset relationships to include (csv)
@@ -43866,6 +32246,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterType?: string;
             filterAttributes?: string;
             filterFacts?: string;
             filterTags?: string;
@@ -43873,6 +32254,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterGrain?: string;
             filterReferenceProperties?: string;
             filterSourceTable?: string;
+            filterTitleBase?: string;
+            filterTitlePattern?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -44068,7 +32451,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -44087,7 +32469,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -44346,7 +32727,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -44365,7 +32745,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;
@@ -44537,7 +32916,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttribute] Filter by attribute (csv)
      * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterPrimary] Filter by primary (csv)
-     * @param {string} [filterType] Filter by type (csv)
      * @param {string} [filterSourceColumn] Filter by sourceColumn (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] label fields to include (csv)
@@ -44556,7 +32934,6 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttribute?: string;
             filterTags?: string;
             filterPrimary?: string;
-            filterType?: string;
             filterSourceColumn?: string;
             filterId?: string;
             fields?: string;

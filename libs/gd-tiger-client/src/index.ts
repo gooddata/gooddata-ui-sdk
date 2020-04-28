@@ -3,6 +3,7 @@ import { AxiosInstance } from "axios";
 import { tigerExecutionClientFactory } from "./execution";
 import { tigerLabelElementsClientFactory } from "./labelElements";
 import { tigerMetadataClientFactory } from "./metadata";
+import { tigerValidObjectsClientFactory } from "./validObjects";
 import { axios as defaultAxios, newAxios } from "./axios";
 
 export { ExecuteAFM } from "./gd-tiger-model/ExecuteAFM";
@@ -17,6 +18,7 @@ export interface ITigerClient {
     metadata: ReturnType<typeof tigerMetadataClientFactory>;
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
+    validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
 }
 
 /**
@@ -27,11 +29,13 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const execution = tigerExecutionClientFactory(axios);
     const labelElements = tigerLabelElementsClientFactory(axios);
     const metadata = tigerMetadataClientFactory(axios);
+    const validObjects = tigerValidObjectsClientFactory(axios);
 
     return {
         execution,
         labelElements,
         metadata,
+        validObjects,
     };
 };
 

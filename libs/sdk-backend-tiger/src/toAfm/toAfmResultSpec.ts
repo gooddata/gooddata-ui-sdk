@@ -6,7 +6,6 @@ import {
     bucketItems,
     bucketsFindAttribute,
     dimensionTotals,
-    IAttribute,
     IExecutionDefinition,
     isAttribute,
     totalIsNative,
@@ -14,19 +13,8 @@ import {
 import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
-import { toDisplayFormQualifier, toLocalIdentifier } from "./ObjRefConverter";
-
-function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
-    const alias = attribute.attribute.alias;
-    const aliasProp = alias ? { alias } : {};
-    const displayFromRef = attribute.attribute.displayForm;
-
-    return {
-        displayForm: toDisplayFormQualifier(displayFromRef),
-        localIdentifier: attribute.attribute.localIdentifier || `a${idx + 1}`,
-        ...aliasProp,
-    };
-}
+import { toLocalIdentifier } from "./ObjRefConverter";
+import { convertAttribute } from "./AttributeConverter";
 
 function convertAFM(def: IExecutionDefinition): ExecuteAFM.IAfm {
     const attributes: ExecuteAFM.IAttribute[] = def.attributes.map(convertAttribute);
