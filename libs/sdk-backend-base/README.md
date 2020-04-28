@@ -41,3 +41,58 @@ const enhancedBackend: IAnalyticalBackend = withEventing(realBackendImplementati
 
 You can then pass the `enhancedBackend` to the various React components offered by the SDK and be
 notified.
+
+## Normalizing Backend
+
+This decorator addresses the fact that two execution definitions may lead semantically same results but differ just
+in view-only details or technicalities. Before the execution is sent to the underlying backend this decorator will:
+
+-   Strip alias, measure format and title from measures
+-   Strip alias from attributes
+-   Remove any noop filters
+-   Normalize local identifiers
+
+The normalized execution is sent to the backend and before the results and data are passed back to the caller code,
+the decorator performs denormalization and restores the original values all in the right places in the result and
+data structures. To the caller, all of this optimization remains transparent and everything looks like the original
+execution actually executed.
+
+```typescript
+import {IAnalyticalBackend} from "@gooddata/sdk-backend-spi";
+import {withNormalization} from "@gooddata/sdk-backend-base";
+
+const realBackendImplementation = ...;
+const enhancedBackend: IAnalyticalBackend = withNormalization(realBackendImplementation);
+```
+
+## Caching Backend
+
+This decorator implements a naive client-side execution result caching with bounded cache size.
+The execution results will be evicted only if cache limits are reached using LRU policy. Browser ‘Refresh’ cleans the cache.
+
+If your app must deliver a snappy experience without too many loading indicators AND the data freshness is not a
+critical requirement, then this decorator can speed your application immensely.
+
+```typescript
+import {IAnalyticalBackend} from "@gooddata/sdk-backend-spi";
+import {withCaching} from "@gooddata/sdk-backend-base";
+
+const realBackendImplementation = ...;
+const enhancedBackend: IAnalyticalBackend = withCaching(realBackendImplementation);
+```
+
+The withCaching optionally accepts configuration which you can use to tweak the size of the different caches.
+
+The caching plays well with normalization:
+
+```typescript
+import {IAnalyticalBackend} from "@gooddata/sdk-backend-spi";
+import {withCaching, withNormalization} from "@gooddata/sdk-backend-base";
+
+const realBackendImplementation = ...;
+const enhancedBackend: IAnalyticalBackend = withNormalization(withCaching(realBackendImplementation));
+```
+
+This way the normalization first wipes any differences that are unimportant for the backend, effectively dispatching
+just the really unique executions to the underlying backend - the caching decorator. This greatly increases client-side
+cache hits for applications that dynamically change view-only properties of LDM objects.
