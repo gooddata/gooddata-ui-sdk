@@ -1,4 +1,4 @@
-# Analytical Backend foundations
+# Analytical Backend SPI - infrastructure and foundations
 
 This package contains foundational, reusable code useful for building new or decorating existing
 Analytical Backend implementations. This is lower-level, infrastructural code which may be useful
@@ -96,3 +96,9 @@ const enhancedBackend: IAnalyticalBackend = withNormalization(withCaching(realBa
 This way the normalization first wipes any differences that are unimportant for the backend, effectively dispatching
 just the really unique executions to the underlying backend - the caching decorator. This greatly increases client-side
 cache hits for applications that dynamically change view-only properties of LDM objects.
+
+## License
+
+Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
+
+For more information, please see [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-backend-base/LICENSE)

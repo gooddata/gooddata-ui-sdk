@@ -1,4 +1,4 @@
-# Catalog Export
+# GoodData UI.SDK - Catalog Export
 
 Catalog Export utility can assist you with obtaining vital metadata about GoodData Logical Data Model (LDM)
 and User Data Model (UDM). This metadata is essential to specify what the different charts in GoodData.UI SDK
@@ -12,8 +12,14 @@ code with constants initialized to valid instances of IAttribute(s) and IMeasure
 to explore this functionality as it brings the LDM and UDM 'to your fingertips' without the need
 to use `CatalogHelper` tool.
 
-To export your workspace's metadata into a TypeScript code, simply specify that data should be
+To export your workspace's metadata into a TypeScript code, specify that data should be
 exported to a .ts file (for instance catalog.ts).
 
 This functionality is currently in alpha stage - the layout of the generated TypeScript files MAY
 change.
+
+## License
+
+Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
+
+For more information, please see [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/catalog-export/LICENSE)

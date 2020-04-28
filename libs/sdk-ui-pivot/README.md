@@ -7,7 +7,13 @@ See the official SDK documentation for more information about the [PivotTable](h
 ## Technical notes
 
 -   The PivotTable is implemented using the community version of ag-grid library. The SDK adds layers of convenience to
-    construct and populate the table using results computed on the GoodData platform.
+    construct and populate the table using results computed by an analytical backend.
 
 -   All Pivot Table and ag-grid styles are scoped under the `gd-table-component` namespace; if your application uses
     ag-grid as well, GoodData.UI styles will not conflict with styles in your application.
+
+## License
+
+Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
+
+For more information, please see [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-pivot/LICENSE)
