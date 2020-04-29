@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { BarChart, ColumnChart, PieChart } from "@gooddata/sdk-ui";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
@@ -11,7 +11,7 @@ import {
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
-    projectId,
+    workspace,
 } from "../../../constants/fixtures";
 
 const totalSales = newMeasure(totalSalesIdentifier, m => m.aggregation("sum").localId(totalSalesIdentifier));
@@ -50,7 +50,7 @@ export class AggregationTest extends Component {
                 <h2 id="bar-chart">Bar chart</h2>
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <BarChart
-                        projectId={projectId}
+                        workspace={workspace}
                         measures={[totalSales]}
                         viewBy={locationResort}
                         onLoadingChanged={this.onLoadingChanged}
@@ -63,7 +63,7 @@ export class AggregationTest extends Component {
                 <h2 id="column-chart">Column chart</h2>
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <ColumnChart
-                        projectId={projectId}
+                        workspace={workspace}
                         measures={[totalSales]}
                         viewBy={month}
                         onLoadingChanged={this.onLoadingChanged}
@@ -77,7 +77,7 @@ export class AggregationTest extends Component {
 
                 <div style={{ height: 300 }} className="s-pie-chart">
                     <PieChart
-                        projectId={projectId}
+                        workspace={workspace}
                         measures={franchiseFeesMeasures}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}

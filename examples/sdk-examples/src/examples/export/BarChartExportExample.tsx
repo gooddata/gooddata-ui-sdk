@@ -7,7 +7,7 @@ import { ExampleWithExport } from "./ExampleWithExport";
 import {
     dateDatasetIdentifier,
     locationResortIdentifier,
-    projectId,
+    workspace,
     totalSalesIdentifier,
 } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
@@ -26,7 +26,7 @@ export const BarChartExportExample: React.FC = () => {
                 <div style={style} className="s-bar-chart">
                     <BarChart
                         backend={backend}
-                        workspace={projectId}
+                        workspace={workspace}
                         measures={measures}
                         viewBy={locationResort}
                         filters={filters}

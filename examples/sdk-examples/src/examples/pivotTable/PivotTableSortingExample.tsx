@@ -4,7 +4,7 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newMeasure, newAttribute, newAttributeSort } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     quarterDateIdentifier,
     monthDateIdentifier,
     locationStateDisplayFormIdentifier,
@@ -40,7 +40,7 @@ export const PivotTableSortingExample: React.FC = () => {
         <div style={style} className="s-pivot-table-sorting">
             <PivotTable
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={measures}
                 rows={attributes}
                 columns={columns}

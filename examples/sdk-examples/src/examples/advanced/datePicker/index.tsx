@@ -13,8 +13,7 @@ export const DatePicker: React.FC = () => (
         <h1>Date Picker</h1>
 
         <p>
-            This is an example of two custom date picker components filtering a visualization by absolute
-            date.
+            This is an example of two custom date picker components filtering a insightView by absolute date.
         </p>
 
         <ExampleWithSource for={DatePickerExample} source={DatePickerExampleSRC} />
@@ -22,8 +21,7 @@ export const DatePicker: React.FC = () => (
         <h1>Month Picker</h1>
 
         <p>
-            This is an example of two custom month picker components filtering a visualization by relative
-            date.
+            This is an example of two custom month picker components filtering a insightView by relative date.
         </p>
 
         <ExampleWithSource for={MonthPickerExample} source={MonthPickerExampleSRC} />

@@ -9,10 +9,10 @@ export const DynamicMeasures: React.FC = () => (
     <div>
         <h1>Dynamic Measures</h1>
 
-        <p>This is how you can dynamically set (add or remove) measures in your visualization.</p>
+        <p>This is how you can dynamically set (add or remove) measures in your insightView.</p>
         <p>
             Measures tagged with the franchise_fees tag are displayed in the multi-selection list on the left.
-            The visualizations display only the measures selected in the list.
+            The insightViews display only the measures selected in the list.
         </p>
 
         <ExampleWithSource for={DynamicMeasuresExample} source={DynamicMeasuresExampleSRC} />

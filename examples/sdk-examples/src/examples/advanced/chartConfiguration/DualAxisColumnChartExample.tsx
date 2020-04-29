@@ -7,7 +7,7 @@ import {
     totalSalesIdentifier,
     totalCostsIdentifier,
     locationStateDisplayFormIdentifier,
-    projectId,
+    workspace,
 } from "../../../constants/fixtures";
 import { useBackend } from "../../../context/auth";
 
@@ -59,7 +59,7 @@ export const DualAxisColumnChartExample: React.FC = () => {
         <div style={{ height: 300 }} className="s-dual-axis-column-chart">
             <ColumnChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[totalCosts, totalSales]}
                 viewBy={localState}
                 config={config}

@@ -7,7 +7,7 @@ import { ExampleWithExport } from "./ExampleWithExport";
 
 import {
     dateDatasetIdentifier,
-    projectId,
+    workspace,
     quarterDateIdentifier,
     monthDateIdentifier,
     locationStateDisplayFormIdentifier,
@@ -50,7 +50,7 @@ export const PivotTableExportExample: React.FC = () => {
                 <div style={style} className="s-pivot-table-sorting">
                     <PivotTable
                         backend={backend}
-                        workspace={projectId}
+                        workspace={workspace}
                         measures={measures}
                         rows={attributes}
                         columns={columns}

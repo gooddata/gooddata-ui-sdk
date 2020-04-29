@@ -1,9 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui";
 import PropTypes from "prop-types";
 
-import { employeeNameIdentifier, projectId } from "../../constants/fixtures";
+import { employeeNameIdentifier, workspace } from "../../constants/fixtures";
 
 export class AttributeFilterItem extends Component {
     static propTypes = {
@@ -40,7 +40,7 @@ export class AttributeElementsExample extends Component {
             <div style={{ minHeight: 500 }}>
                 <AttributeElements
                     identifier={employeeNameIdentifier}
-                    projectId={projectId}
+                    workspace={workspace}
                     options={{ limit: 20 }}
                 >
                     {({ validElements, loadMore, isLoading, error }) => {

@@ -4,7 +4,7 @@ import { ScatterPlot } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     franchiseFeesIdentifier,
     franchisedSalesIdentifier,
     locationResortIdentifier,
@@ -25,7 +25,7 @@ export const ScatterPlotExample: React.FC = () => {
         <div style={style} className="s-scatter-plot">
             <ScatterPlot
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 xAxisMeasure={xMeasure}
                 yAxisMeasure={yMeasure}
                 attribute={locationResort}

@@ -94,9 +94,8 @@ const enhance = withFormik<IRegistrationFormProps, IRegistrationFormValues>({
     displayName: "RegistrationForm", // helps with React DevTools
 });
 
-const CoreRegistrationForm: React.FC<
-    IRegistrationFormProps & FormikProps<IRegistrationFormValues>
-> = props => {
+const CoreRegistrationForm: React.FC<IRegistrationFormProps &
+    FormikProps<IRegistrationFormValues>> = props => {
     const {
         values,
         touched,

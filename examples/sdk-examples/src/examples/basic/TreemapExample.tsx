@@ -7,7 +7,7 @@ import {
     numberOfChecksIdentifier,
     locationCityDisplayFormIdentifier,
     locationStateDisplayFormIdentifier,
-    projectId,
+    workspace,
 } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
@@ -26,7 +26,7 @@ export const TreemapExample: React.FC = () => {
         <div style={style} className="s-tree-map">
             <Treemap
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[numberOfChecks]}
                 viewBy={locationState}
                 segmentBy={locationCity}

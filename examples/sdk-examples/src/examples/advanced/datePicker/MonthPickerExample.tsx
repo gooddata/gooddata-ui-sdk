@@ -10,7 +10,7 @@ import {
     totalSalesIdentifier,
     monthOfYearDateIdentifier,
     dateDatasetIdentifier,
-    projectId,
+    workspace,
 } from "../../../constants/fixtures";
 import { useBackend } from "../../../context/auth";
 
@@ -116,7 +116,7 @@ export const MonthPickerExample: React.FC = () => {
                 ) : (
                     <ColumnChart
                         backend={backend}
-                        workspace={projectId}
+                        workspace={workspace}
                         measures={measures}
                         viewBy={viewBy}
                         filters={filters}

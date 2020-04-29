@@ -8,7 +8,7 @@ import {
     dateDatasetIdentifier,
     franchiseFeesIdentifier,
     franchiseFeesAdRoyaltyIdentifier,
-    projectId,
+    workspace,
 } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
@@ -29,7 +29,7 @@ export const HeadlineExportExample: React.FC = () => {
                 <div className="s-headline" style={style}>
                     <Headline
                         backend={backend}
-                        workspace={projectId}
+                        workspace={workspace}
                         primaryMeasure={primaryMeasure}
                         secondaryMeasure={secondaryMeasure}
                         filters={filters}

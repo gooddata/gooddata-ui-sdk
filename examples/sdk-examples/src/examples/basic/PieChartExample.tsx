@@ -4,7 +4,7 @@ import { PieChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
@@ -24,7 +24,7 @@ export const PieChartExample: React.FC = () => {
 
     return (
         <div style={style} className="s-pie-chart">
-            <PieChart backend={backend} workspace={projectId} measures={measures} />
+            <PieChart backend={backend} workspace={workspace} measures={measures} />
         </div>
     );
 };

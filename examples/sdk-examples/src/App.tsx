@@ -10,7 +10,7 @@ import { Menu } from "./components/Menu";
 import { useAuth, AuthStatus } from "./context/auth";
 import { routes, sideNavigationRoutes, topNavigationRoutes, userRoutes } from "./constants/routes";
 import { BASEPATH } from "./constants/env";
-import { projectId } from "./constants/fixtures";
+import { workspace } from "./constants/fixtures";
 import { history } from "./history";
 
 export const App: React.FC = () => {
@@ -22,7 +22,7 @@ export const App: React.FC = () => {
 
     return (
         <BackendProvider backend={backend}>
-            <WorkspaceProvider workspace={projectId}>
+            <WorkspaceProvider workspace={workspace}>
                 <Router basepath={BASEPATH} history={history}>
                     <div className="mainWrapper">
                         <style jsx>{`

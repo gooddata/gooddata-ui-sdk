@@ -6,7 +6,7 @@ import { LoadingComponent, ErrorComponent, HeaderPredicates } from "@gooddata/sd
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newPositiveAttributeFilter, newAttribute } from "@gooddata/sdk-model";
 import {
-    projectId,
+    workspace,
     employeeNameIdentifier,
     averageDailyTotalSalesIdentifier,
     locationStateDisplayFormIdentifier,
@@ -166,7 +166,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         <div style={{ height: 200 }} className="s-state-table">
             <PivotTable
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[averageDailySalesMeasure]}
                 rows={[stateAttribute]}
                 drillableItems={[HeaderPredicates.identifierMatch(locationStateDisplayFormIdentifier)]}
@@ -182,7 +182,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         <div style={{ height: 300 }} className="s-employee-table">
             <PivotTable
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[averageDailySalesMeasure]}
                 rows={[employeeNameAttribute]}
                 drillableItems={[HeaderPredicates.identifierMatch(employeeNameIdentifier)]}
@@ -198,7 +198,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         <div style={{ height: 300 }} className="s-sales-chart">
             <ColumnChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[totalSalesMeasure]}
                 viewBy={locationNameAttribute}
                 filters={salesTableFilters}

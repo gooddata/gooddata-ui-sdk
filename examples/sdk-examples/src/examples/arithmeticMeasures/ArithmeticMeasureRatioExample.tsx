@@ -4,7 +4,7 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     locationStateDisplayFormIdentifier,
     numberOfRestaurantsIdentifier,
     totalSalesIdentifier,
@@ -39,7 +39,7 @@ export const ArithmeticMeasureRatioExample: React.FC = () => {
 
     return (
         <div style={style} className="s-table">
-            <PivotTable backend={backend} workspace={projectId} measures={measures} rows={rows} />
+            <PivotTable backend={backend} workspace={workspace} measures={measures} rows={rows} />
         </div>
     );
 };

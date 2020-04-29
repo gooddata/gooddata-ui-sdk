@@ -8,7 +8,7 @@ import sdk from "@gooddata/gd-bear-client";
 
 import { Layout } from "../../../components/Layout";
 import { SidebarItem } from "../../../components/SidebarItem";
-import { monthDateIdentifier, projectId, franchiseFeesTag } from "../../../constants/fixtures";
+import { monthDateIdentifier, workspace, franchiseFeesTag } from "../../../constants/fixtures";
 import { useBackend } from "../../../context/auth";
 
 interface IDynamicMeasuresExampleState {
@@ -24,7 +24,7 @@ const getNewMeasureDefinition = (measureItem: any, index: number) => {
 };
 
 const getMeasureListByTag = async (tag: string) => {
-    const result = await sdk.xhr.get(`/gdc/md/${projectId}/tags/${tag}`);
+    const result = await sdk.xhr.get(`/gdc/md/${workspace}/tags/${tag}`);
     const items = result.data.entries;
     const measureItems = (items as any).filter(item => item.category === "metric");
     const measures = await Promise.all(measureItems.map(measure => sdk.xhr.get(measure.link)));
@@ -163,7 +163,7 @@ export const DynamicMeasuresExample: React.FC = () => {
                     <div className="graph graph-line s-dynamic-measures-line-chart">
                         <LineChart
                             backend={backend}
-                            workspace={projectId}
+                            workspace={workspace}
                             measures={measures}
                             trendBy={attribute}
                             config={config}
@@ -172,7 +172,7 @@ export const DynamicMeasuresExample: React.FC = () => {
                     <div className="graph graph-column s-dynamic-measures-column-chart">
                         <ColumnChart
                             backend={backend}
-                            workspace={projectId}
+                            workspace={workspace}
                             measures={measures}
                             config={config}
                         />

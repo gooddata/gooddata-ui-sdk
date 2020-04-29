@@ -3,7 +3,7 @@ import React from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
-import { totalSalesIdentifier, locationResortIdentifier, projectId } from "../../constants/fixtures";
+import { totalSalesIdentifier, locationResortIdentifier, workspace } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
 const amount = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
@@ -17,7 +17,7 @@ export const BarChartExample: React.FC = () => {
 
     return (
         <div style={style} className="s-bar-chart">
-            <BarChart backend={backend} workspace={projectId} measures={[amount]} viewBy={locationResort} />
+            <BarChart backend={backend} workspace={workspace} measures={[amount]} viewBy={locationResort} />
         </div>
     );
 };

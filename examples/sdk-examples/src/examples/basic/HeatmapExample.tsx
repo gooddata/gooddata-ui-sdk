@@ -4,7 +4,7 @@ import { Heatmap } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     totalSalesIdentifier,
     menuCategoryAttributeDFIdentifier,
     locationStateDisplayFormIdentifier,
@@ -26,7 +26,7 @@ export const HeatmapExample: React.FC = () => {
         <div style={style} className="s-heat-map">
             <Heatmap
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measure={totalSales}
                 rows={locationState}
                 columns={menuCategory}

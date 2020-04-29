@@ -8,7 +8,7 @@ import {
     totalSalesIdentifier,
     quarterDateIdentifier,
     yearDateDataSetAttributeIdentifier,
-    projectId,
+    workspace,
 } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
@@ -29,7 +29,7 @@ export const SamePeriodColumnChartExample: React.FC = () => {
         <div style={style} className="s-column-chart">
             <ColumnChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[totalSales, totalSalesYearAgo]}
                 viewBy={viewBy}
             />

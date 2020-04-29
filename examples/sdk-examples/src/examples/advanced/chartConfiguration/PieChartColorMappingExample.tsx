@@ -4,7 +4,7 @@ import { PieChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { newMeasure } from "@gooddata/sdk-model";
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import {
-    projectId,
+    workspace,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
@@ -64,7 +64,7 @@ export const PieChartColorMappingExample: React.FC = () => {
 
     return (
         <div style={style} className="s-pie-chart">
-            <PieChart backend={backend} workspace={projectId} measures={measures} config={chartConfig} />
+            <PieChart backend={backend} workspace={workspace} measures={measures} config={chartConfig} />
         </div>
     );
 };

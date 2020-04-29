@@ -4,7 +4,7 @@ import { AreaChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     monthDateIdentifier,
     franchiseFeesIdentifier,
     franchiseFeesAdRoyaltyIdentifier,
@@ -35,7 +35,7 @@ export const StackedAreaChartExample: React.FC = () => {
         <div style={style} className="s-area-chart">
             <AreaChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={measures}
                 viewBy={viewBy}
                 config={chartConfig}

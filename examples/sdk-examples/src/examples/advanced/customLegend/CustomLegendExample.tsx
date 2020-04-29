@@ -4,7 +4,7 @@ import { PieChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
@@ -70,11 +70,9 @@ export const CustomLegendExample: React.FC = () => {
                 </div>
             )}
             <div style={style} className="s-pie-chart">
-                {/*
-                // @ts-ignore */}
                 <PieChart
                     backend={backend}
-                    workspace={projectId}
+                    workspace={workspace}
                     measures={measures}
                     config={chartConfig}
                     onLegendReady={onLegendReady}

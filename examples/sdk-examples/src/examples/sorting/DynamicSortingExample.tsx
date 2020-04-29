@@ -17,7 +17,7 @@ import {
     locationStateAttributeCaliforniaUri,
     monthDateIdentifier,
     monthDateIdentifierJanuary,
-    projectId,
+    workspace,
 } from "../../constants/fixtures";
 import { SortDirection } from "@gooddata/gd-bear-client";
 import { useBackend } from "../../context/auth";
@@ -220,7 +220,7 @@ export const DynamicSortingExample: React.FC = () => {
             <div style={style} className="s-dynamic-sorting-chart">
                 <ColumnChart
                     backend={backend}
-                    workspace={projectId}
+                    workspace={workspace}
                     measures={[newMeasure(totalSalesIdentifier, m => m.localId(totalSalesIdentifier))]}
                     viewBy={newAttribute(monthDateIdentifier, a => a.localId(monthDateIdentifier))}
                     stackBy={newAttribute(locationStateDisplayFormIdentifier, a =>

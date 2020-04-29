@@ -29,8 +29,8 @@ export const DrillWithExternalData = () => (
         <div>
             <h1>Drill With External Data</h1>
             <p>
-                Here is how you can use visualization drilling to display 3rd party content based on the
-                clicked item.
+                Here is how you can use insightView drilling to display 3rd party content based on the clicked
+                item.
             </p>
             <p>
                 You can display a mock user profile by clicking on an employee name. An request is created

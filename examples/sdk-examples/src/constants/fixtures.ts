@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { BACKEND_URL } from "./env";
 
 const demoProject = {
@@ -18,39 +18,39 @@ if (!demoProjectId) {
 }
 
 // tslint:disable-next-line no-console
-console.log("The /gdc proxy is connected to: ", backendUrl, " with projectId: ", demoProjectId);
+console.log("The /gdc proxy is connected to: ", backendUrl, " with workspace: ", demoProjectId);
 
-// your projectId would be probably static (you may ignore the code above)
+// your workspace would be probably static (you may ignore the code above)
 export const backendUrlForInfo = backendUrl;
-export const projectId = demoProjectId;
+export const workspace = demoProjectId;
 
 export const averageCheckSizeByServerIdentifier = "afewRzGAersh";
 export const averageDailyTotalSalesIdentifier = "aagJGHg1bxap";
-export const barVisualizationIdentifier = "aaKaMZUJeyGo";
-export const barVisualizationUri = `/gdc/md/${demoProjectId}/obj/9285`;
-export const dualAxisBarVisualizationIdentifier = "acSoPx4Mc7Rr";
-export const lineVisualizationIdentifier = "aaAaDFt4c1yC";
-export const lineVisualizationUri = `/gdc/md/${demoProjectId}/obj/9276`;
-export const areaVisualizationIdentifier = "acCaGDIrc1iU";
-export const areaVisualizationUri = `/gdc/md/${demoProjectId}/obj/9278`;
-export const headlineVisualizationIdentifier = "aaiaOcMqbyMj";
-export const headlineVisualizationUri = `/gdc/md/${demoProjectId}/obj/9279`;
-export const scatterVisualizationIdentifier = "ab4aHg6lej5e";
-export const scatterVisualizationUri = `/gdc/md/${demoProjectId}/obj/9277`;
-export const bubbleVisualizationIdentifier = "abNaJG2Aed2M";
-export const bubbleVisualizationUri = `/gdc/md/${demoProjectId}/obj/9280`;
-export const pieVisualizationIdentifier = "aaraOcrmdjZd";
-export const pieVisualizationUri = `/gdc/md/${demoProjectId}/obj/9281`;
-export const donutVisualizationIdentifier = "absaJEALgcdO";
-export const donutVisualizationUri = `/gdc/md/${demoProjectId}/obj/9282`;
-export const treemapVisualizationIdentifier = "aajaObFleXdD";
-export const treemapVisualizationUri = `/gdc/md/${demoProjectId}/obj/9283`;
-export const heatmapVisualizationIdentifier = "abkaJfMYiiCU";
-export const heatmapVisualizationUri = `/gdc/md/${demoProjectId}/obj/9284`;
-export const columnsVisualizationIdentifier = "aabOspdLbbvs";
-export const columnVisualizationIdentifier = "acFJltTsifSQ";
-export const columnVisualizationUri = `/gdc/md/${demoProjectId}/obj/6862`;
-export const comboVisualizationIdentifier = "aaTJJW6adsaj";
+export const barInsightViewIdentifier = "aaKaMZUJeyGo";
+export const barInsightViewUri = `/gdc/md/${demoProjectId}/obj/9285`;
+export const dualAxisBarInsightViewIdentifier = "acSoPx4Mc7Rr";
+export const lineInsightViewIdentifier = "aaAaDFt4c1yC";
+export const lineInsightViewUri = `/gdc/md/${demoProjectId}/obj/9276`;
+export const areaInsightViewIdentifier = "acCaGDIrc1iU";
+export const areaInsightViewUri = `/gdc/md/${demoProjectId}/obj/9278`;
+export const headlineInsightViewIdentifier = "aaiaOcMqbyMj";
+export const headlineInsightViewUri = `/gdc/md/${demoProjectId}/obj/9279`;
+export const scatterInsightViewIdentifier = "ab4aHg6lej5e";
+export const scatterInsightViewUri = `/gdc/md/${demoProjectId}/obj/9277`;
+export const bubbleInsightViewIdentifier = "abNaJG2Aed2M";
+export const bubbleInsightViewUri = `/gdc/md/${demoProjectId}/obj/9280`;
+export const pieInsightViewIdentifier = "aaraOcrmdjZd";
+export const pieInsightViewUri = `/gdc/md/${demoProjectId}/obj/9281`;
+export const donutInsightViewIdentifier = "absaJEALgcdO";
+export const donutInsightViewUri = `/gdc/md/${demoProjectId}/obj/9282`;
+export const treemapInsightViewIdentifier = "aajaObFleXdD";
+export const treemapInsightViewUri = `/gdc/md/${demoProjectId}/obj/9283`;
+export const heatmapInsightViewIdentifier = "abkaJfMYiiCU";
+export const heatmapInsightViewUri = `/gdc/md/${demoProjectId}/obj/9284`;
+export const columnsInsightViewIdentifier = "aabOspdLbbvs";
+export const columnInsightViewIdentifier = "acFJltTsifSQ";
+export const columnInsightViewUri = `/gdc/md/${demoProjectId}/obj/6862`;
+export const comboInsightViewIdentifier = "aaTJJW6adsaj";
 export const dateDatasetIdentifier = "date.dataset.dt";
 export const dateDataSetUri = `/gdc/md/${demoProjectId}/obj/2180`;
 export const employeeNameIdentifier = "label.employee.employeename";
@@ -59,7 +59,7 @@ export const franchiseFeesIdentifier = "aaEGaXAEgB7U";
 export const franchiseFeesIdentifierOngoingRoyalty = "aaWGcgnsfxIg";
 export const franchiseFeesInitialFranchiseFeeIdentifier = "aaDHcv6wevkl";
 export const franchiseFeesTag = "franchise_fees";
-export const franchiseFeesVisualizationIdentifier = "aahnVeLugyFj";
+export const franchiseFeesInsightViewIdentifier = "aahnVeLugyFj";
 export const franchisedSalesIdentifier = "aclF4oDIe5hP";
 export const locationCityAttributeIdentifier = "attr.restaurantlocation.locationcity";
 export const locationCityAttributeUri = `/gdc/md/${demoProjectId}/obj/2208`;
@@ -83,8 +83,8 @@ export const quarterDateIdentifier = "date.aam81lMifn6q";
 export const monthDateIdentifier = "date.abm81lMifn6q";
 export const monthDateIdentifierJanuary = `/gdc/md/${demoProjectId}/obj/2071/elements?id=1`;
 export const numberOfChecksIdentifier = "aeOt50ngicOD";
-export const tableVisualizationIdentifier = "aatFRvXBdilm";
-export const tableVisualizationUri = `/gdc/md/${demoProjectId}/obj/8702`;
+export const tableInsightViewIdentifier = "aatFRvXBdilm";
+export const tableInsightViewUri = `/gdc/md/${demoProjectId}/obj/8702`;
 export const totalSalesIdentifier = "aa7ulGyKhIE5";
 export const totalCostsIdentifier = "aaQHncjzfrtR";
 export const totalSalesLocalIdentifier = "c11c27a0b0314a83bfe5b64ab9de7b89";

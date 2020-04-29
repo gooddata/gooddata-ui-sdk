@@ -4,7 +4,7 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     quarterDateIdentifier,
     monthDateIdentifier,
     locationStateDisplayFormIdentifier,
@@ -59,7 +59,7 @@ export const PivotTableExample: React.FC<IPivotTableExampleProps> = ({
         <div style={style} className={className}>
             <PivotTable
                 backend={backend}
-                workspace={hasError ? "incorrectProjectId" : projectId}
+                workspace={hasError ? "incorrectProjectId" : workspace}
                 measures={measures}
                 rows={attributes}
                 columns={columns}

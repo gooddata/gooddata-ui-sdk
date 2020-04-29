@@ -21,15 +21,15 @@ export const MeasureValueFilter: React.FC = () => (
         </p>
         <hr className="separator" />
         <h2>Comparison and range filters</h2>
-        <p>Example of filtering of visualization by either one or two measure values.</p>
+        <p>Example of filtering of insightView by either one or two measure values.</p>
         <div className="s-measure-value-filter-example-1">
             <ExampleWithSource for={MeasureValueFilterExample} source={MeasureValueFilterExampleSRC} />
         </div>
         <h2>Filter by measure value shown in %</h2>
         <p>
-            When visualization is filtered by a measure that is shown in %, the filter value is in{" "}
+            When insightView is filtered by a measure that is shown in %, the filter value is in{" "}
             <b>the original measure scale</b> and not in the percentage scale that is displayed in the
-            visualization.
+            insightView.
         </p>
         <div className="s-measure-value-filter-example-2">
             <ExampleWithSource
@@ -39,9 +39,9 @@ export const MeasureValueFilter: React.FC = () => (
         </div>
         <h2>Filter by measure value stacked to 100%</h2>
         <p>
-            When visualization is filtered by a measure that is stacked to 100%, the filter value is in{" "}
+            When insightView is filtered by a measure that is stacked to 100%, the filter value is in{" "}
             <b>the original measure scale</b> and not in the percentage scale that is displayed in the
-            visualization.
+            insightView.
         </p>
         <div className="s-measure-value-filter-example-3">
             <ExampleWithSource
@@ -51,7 +51,7 @@ export const MeasureValueFilter: React.FC = () => (
         </div>
         <h2>Filter by measure value formatted in %</h2>
         <p>
-            When the visualization is filtered by a measure that is formatted in %, the filter value is in{" "}
+            When the insightView is filtered by a measure that is formatted in %, the filter value is in{" "}
             <b>the form of a ratio</b> (for instance 0.5 which is 50%) and not in the percentage scale. This
             applies to measures that have percentage format set by measure <em>format</em> property,
             calculated measures with percentage format set in metadata catalog, and arithmetic measures with{" "}

@@ -448,7 +448,7 @@
             "projectFolder": "examples/sdk-examples",
             "reviewCategory": "examples",
             "versionPolicyName": "sdk",
-            "shouldPublish": true
+            "shouldPublish": false
         }
         // {
         //   /**

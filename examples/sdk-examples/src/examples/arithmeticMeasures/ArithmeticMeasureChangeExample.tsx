@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     monthDateIdentifier,
     totalSalesIdentifier,
     dateDatasetIdentifier,
@@ -46,7 +46,7 @@ export const ArithmeticMeasureChangeExample: React.FC = () => {
         <div style={style} className="s-table">
             <PivotTable
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={measures}
                 filters={filters}
                 rows={rows}

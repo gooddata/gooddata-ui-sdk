@@ -9,7 +9,7 @@ import {
     totalSalesIdentifier,
     monthDateIdentifier,
     dateDatasetIdentifier,
-    projectId,
+    workspace,
 } from "../../../constants/fixtures";
 import { useBackend } from "../../../context/auth";
 import { newMeasure, newAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
@@ -88,7 +88,7 @@ export const DatePickerExample: React.FC = () => {
                 ) : (
                     <ColumnChart
                         backend={backend}
-                        workspace={projectId}
+                        workspace={workspace}
                         viewBy={viewBy}
                         measures={measures}
                         filters={filters}

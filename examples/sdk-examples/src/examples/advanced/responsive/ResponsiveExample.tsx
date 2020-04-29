@@ -5,7 +5,7 @@ import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import Measure from "react-measure";
 
-import { projectId, totalSalesIdentifier, locationResortIdentifier } from "../../../constants/fixtures";
+import { workspace, totalSalesIdentifier, locationResortIdentifier } from "../../../constants/fixtures";
 import { useBackend } from "../../../context/auth";
 
 interface IResponsiveExampleState {
@@ -47,17 +47,11 @@ export const ResponsiveExample: React.FC = () => {
                             contentRect.client && contentRect.client.height
                                 ? Math.floor(contentRect.client.height)
                                 : 0;
-                        // const usedWidth =
-                        //     contentRect.client && contentRect.client.width
-                        //         ? Math.floor(contentRect.client.width)
-                        //         : 0;
                         return (
                             <div style={{ width: "100%", height: "100%" }} ref={measureRef}>
-                                {/*
-                                // @ts-ignore */}
                                 <BarChart
                                     backend={backend}
-                                    workspace={projectId}
+                                    workspace={workspace}
                                     height={usedHeight}
                                     measures={[amount]}
                                     viewBy={locationResort}
