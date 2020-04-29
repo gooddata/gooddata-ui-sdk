@@ -23,12 +23,14 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
 
     public queryForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return this.authCall(async (sdk, context) => {
-            const workspaceFeatureFlags = await sdk.project.getProjectFeatureFlags(this.workspace);
-
             const userLoginMd5 = userLoginMd5FromAuthenticatedPrincipal(context.principal);
-            // the getUserFeatureFlags returns all the feature flags (including the defaults)
-            // so we have to filter only the user specific values so as not to use defaults everywhere
-            const userFeatureFlags = await sdk.user.getUserFeatureFlags(userLoginMd5, ["user"]);
+
+            const [workspaceFeatureFlags, userFeatureFlags] = await Promise.all([
+                sdk.project.getProjectFeatureFlags(this.workspace),
+                // the getUserFeatureFlags returns all the feature flags (including the defaults)
+                // so we have to filter only the user specific values so as not to use defaults everywhere
+                sdk.user.getUserFeatureFlags(userLoginMd5, ["user"]),
+            ]);
 
             return {
                 userId: userLoginMd5,
