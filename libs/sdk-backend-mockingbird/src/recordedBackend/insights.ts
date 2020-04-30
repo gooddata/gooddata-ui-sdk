@@ -18,6 +18,8 @@ import {
     isUriRef,
     visClassId,
     visClassUri,
+    ObjectType,
+    IMetadataObject,
 } from "@gooddata/sdk-model";
 import { InsightRecording, RecordingIndex } from "./types";
 import { identifierToRecording, RecordingPager } from "./utils";
@@ -124,6 +126,14 @@ export class RecordedInsights implements IWorkspaceInsights {
     public async getVisualizationClasses(): Promise<IVisualizationClass[]> {
         return this.visClasses;
     }
+
+    public getReferencedObjects = async (
+        _insight: IInsight,
+        _types?: Array<Exclude<ObjectType, "insight" | "tag">>,
+    ): Promise<IMetadataObject[]> => {
+        // return empty array for now
+        return [];
+    };
 
     private async getVisualizationClassByUri(uri: string): Promise<IVisualizationClass> {
         const result = this.visClasses.find(visClass => visClassUri(visClass) === uri);

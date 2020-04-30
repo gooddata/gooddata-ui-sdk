@@ -21,6 +21,7 @@ export namespace GdcMetadataObject {
         | GdcMetadata.IFact
         | GdcMetadata.IAttributeDisplayForm
         | GdcMetadata.IKpiAlert
+        | GdcMetadata.IDataSet
         | GdcDashboard.IAnalyticalDashboard
         | GdcDashboardExport.IFilterContext
         | GdcScheduledMail.IScheduledMail
@@ -35,6 +36,7 @@ export namespace GdcMetadataObject {
         | GdcMetadata.IWrappedFact
         | GdcMetadata.IWrappedAttributeDisplayForm
         | GdcMetadata.IWrappedKpiAlert
+        | GdcMetadata.IWrappedDataSet
         | GdcDashboard.IWrappedAnalyticalDashboard
         | GdcDashboardExport.IWrappedFilterContext
         | GdcScheduledMail.IWrappedScheduledMail

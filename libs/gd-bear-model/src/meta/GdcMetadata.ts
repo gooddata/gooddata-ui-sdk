@@ -126,6 +126,13 @@ export namespace GdcMetadata {
         };
     }
 
+    export interface IDataSet extends IMetadataObject {
+        attributes: Uri[];
+        dataLoadingColumns: Uri[];
+        facts: Uri[];
+        mode: string;
+    }
+
     export interface IWrappedAttribute {
         attribute: IAttribute;
     }
@@ -144,6 +151,10 @@ export namespace GdcMetadata {
 
     export interface IWrappedKpiAlert {
         kpiAlert: IKpiAlert;
+    }
+
+    export interface IWrappedDataSet {
+        dataSet: IDataSet;
     }
 
     export interface IWrappedAttributeElement {
@@ -363,10 +374,18 @@ export namespace GdcMetadata {
     }
 
     export function isKpiAlert(obj: any): obj is IKpiAlert {
-        return !isEmpty(obj) && (obj as IAttribute).meta.category === "kpiAlert";
+        return !isEmpty(obj) && (obj as IKpiAlert).meta.category === "kpiAlert";
     }
 
     export function isWrappedKpiAlert(obj: any): obj is IWrappedKpiAlert {
         return !isEmpty(obj) && obj.hasOwnProperty("kpiAlert");
+    }
+
+    export function isDataSet(obj: any): obj is IDataSet {
+        return !isEmpty(obj) && (obj as IDataSet).meta.category === "dataSet";
+    }
+
+    export function isWrappedDataSet(obj: any): obj is IWrappedDataSet {
+        return !isEmpty(obj) && obj.hasOwnProperty("dataSet");
     }
 }

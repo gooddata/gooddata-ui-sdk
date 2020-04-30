@@ -11,6 +11,8 @@ import {
     IInsightDefinition,
     ObjRef,
     objRefToString,
+    ObjectType,
+    IMetadataObject,
 } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToUri } from "../../../fromObjRef";
@@ -85,5 +87,13 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
         ref: ObjRef,
     ): Promise<void> => {
         return this.authCall(async () => undefined);
+    };
+
+    public getReferencedObjects = async (
+        _insight: IInsight,
+        _types?: Array<Exclude<ObjectType, "insight" | "tag">>,
+    ): Promise<IMetadataObject[]> => {
+        // return empty array for now
+        return this.authCall(async () => []);
     };
 }
