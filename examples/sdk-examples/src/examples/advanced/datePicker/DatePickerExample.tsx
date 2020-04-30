@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { ColumnChart, ErrorComponent } from "@gooddata/sdk-ui";
+import { ErrorComponent } from "@gooddata/sdk-ui";
+import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
@@ -8,7 +9,7 @@ import {
     totalSalesIdentifier,
     monthDateIdentifier,
     dateDatasetIdentifier,
-    projectId,
+    workspace,
 } from "../../../constants/fixtures";
 import { useBackend } from "../../../context/auth";
 import { newMeasure, newAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
@@ -87,7 +88,7 @@ export const DatePickerExample: React.FC = () => {
                 ) : (
                     <ColumnChart
                         backend={backend}
-                        workspace={projectId}
+                        workspace={workspace}
                         viewBy={viewBy}
                         measures={measures}
                         filters={filters}

@@ -1,16 +1,17 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Visualization, CoreComponents } from "@gooddata/sdk-ui";
+import { CoreComponents } from "@gooddata/sdk-ui";
+import { InsightView } from "@gooddata/sdk-ui-ext";
 import { ResponsiveContainer, BarChart, Bar, Legend, CartesianGrid, XAxis, YAxis } from "recharts";
 import { get, unzip, range } from "lodash";
 
-import { projectId, franchiseFeesVisualizationIdentifier } from "../../constants/fixtures";
+import { workspace, franchiseFeesInsightViewIdentifier } from "../../constants/fixtures";
 import { DEFAULT_COLOR_PALETTE } from "../../constants/colors";
 
 const { BaseChart } = CoreComponents;
 
-export class CustomVisualization extends Component {
+export class CustominsightView extends Component {
     static propTypes = {
         height: PropTypes.number,
         executionResult: PropTypes.object.isRequired,
@@ -75,7 +76,7 @@ export class CustomVisualization extends Component {
         });
 
         return (
-            <div className="s-visualization-custom">
+            <div className="s-insightView-custom">
                 <ResponsiveContainer width="100%" height={height}>
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
@@ -104,21 +105,20 @@ export class CustomVisualization extends Component {
 }
 
 const CustomBaseChart = props => {
-    return (
-        <BaseChart {...props} visualizationComponent={visProps => <CustomVisualization {...visProps} />} />
-    );
+    return <BaseChart {...props} insightViewComponent={visProps => <CustominsightView {...visProps} />} />;
 };
 
-export class CustomVisualizationExample extends Component {
+export class CustominsightViewExample extends Component {
     render() {
         return (
-            <Visualization
-                projectId={projectId}
-                identifier={franchiseFeesVisualizationIdentifier}
-                BaseChartComponent={CustomBaseChart}
+            <InsightView
+                workspace={workspace}
+                insight={franchiseFeesInsightViewIdentifier}
+                // TODO: SDK8 Decide whether add dimesion prop to InsightView
+                // BaseChartComponent={CustomBaseChart}
             />
         );
     }
 }
 
-export default CustomVisualizationExample;
+export default CustominsightViewExample;

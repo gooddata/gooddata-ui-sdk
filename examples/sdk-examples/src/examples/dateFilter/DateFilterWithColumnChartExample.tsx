@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { DateFilter, ColumnChart, DateFilterHelpers, ExtendedDateFilters } from "@gooddata/sdk-ui";
+import { DateFilter, DateFilterHelpers, ExtendedDateFilters } from "@gooddata/sdk-ui-filters";
+import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import { totalSalesIdentifier, dateDatasetIdentifier, monthDateIdentifier } from "../../constants/fixtures";

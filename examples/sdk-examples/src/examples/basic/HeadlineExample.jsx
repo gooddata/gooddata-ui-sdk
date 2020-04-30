@@ -1,10 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     franchiseFeesIdentifier,
     franchiseFeesAdRoyaltyIdentifier,
 } from "../../constants/fixtures";
@@ -34,7 +34,7 @@ export class HeadlineExample extends Component {
                 </style>
                 <div className="column">
                     <Headline
-                        projectId={projectId}
+                        workspace={workspace}
                         primaryMeasure={primaryMeasure}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
@@ -42,7 +42,7 @@ export class HeadlineExample extends Component {
                 </div>
                 <div className="column">
                     <Headline
-                        projectId={projectId}
+                        workspace={workspace}
                         primaryMeasure={primaryMeasure}
                         secondaryMeasure={secondaryMeasure}
                         onLoadingChanged={this.onLoadingChanged}

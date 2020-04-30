@@ -1,15 +1,18 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { AttributeElements } from "@gooddata/sdk-ui";
-import { projectId, employeeNameIdentifier } from "../../../constants/fixtures";
+import { AttributeElements } from "@gooddata/sdk-ui-filters";
+import { idRef } from "@gooddata/sdk-model";
+import { workspace, employeeNameIdentifier } from "../../../constants/fixtures";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
 import { EmployeeProfile } from "./EmployeeProfile";
 
-const options = { limit: 20 };
-
 export const GlobalFiltersExample = () => (
-    <AttributeElements identifier={employeeNameIdentifier} projectId={projectId} options={options}>
+    <AttributeElements
+        displayForm={idRef(employeeNameIdentifier, "displayForm")}
+        workspace={workspace}
+        limit={20}
+    >
         {({ validElements, error, isLoading }) => {
             if (error) {
                 return <CustomError message="There was an error getting Employee Name attribute values" />;
@@ -28,6 +31,7 @@ export const GlobalFiltersExample = () => (
                     </div>
                 );
             }
+
             return <EmployeeProfile validElements={validElements} />;
         }}
     </AttributeElements>

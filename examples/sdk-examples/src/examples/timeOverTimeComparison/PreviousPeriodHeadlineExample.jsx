@@ -1,10 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui";
 import { newMeasure, newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
 
-import { totalSalesIdentifier, dateDataSetUri, projectId } from "../../constants/fixtures";
+import { totalSalesIdentifier, dateDataSetUri, workspace } from "../../constants/fixtures";
 
 export class PreviousPeriodHeadlineExample extends Component {
     onLoadingChanged(...params) {
@@ -27,7 +27,7 @@ export class PreviousPeriodHeadlineExample extends Component {
         return (
             <div style={{ height: 125 }} className="s-headline">
                 <Headline
-                    projectId={projectId}
+                    workspace={workspace}
                     primaryMeasure={primaryMeasure}
                     secondaryMeasure={secondaryMeasure}
                     filters={[newRelativeDateFilter(dateDataSetUri, "GDC.time.year", -2, -1)]}

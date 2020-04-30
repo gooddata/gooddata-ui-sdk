@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { LineChart, AttributeFilter, ErrorComponent } from "@gooddata/sdk-ui";
 import { newAttribute, newMeasure } from "@gooddata/sdk-model";
@@ -7,7 +7,7 @@ import {
     totalSalesIdentifier,
     locationResortIdentifier,
     locationResortUri,
-    projectId,
+    workspace,
 } from "../../constants/fixtures";
 
 export class AttributeFilterExample extends Component {
@@ -93,7 +93,7 @@ export class AttributeFilterExample extends Component {
             <div className="s-attribute-filter">
                 <AttributeFilter
                     identifier={locationResortIdentifier}
-                    projectId={projectId}
+                    workspace={projectworkspaceId}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}
                 />
@@ -102,7 +102,7 @@ export class AttributeFilterExample extends Component {
                         <ErrorComponent message={error} />
                     ) : (
                         <LineChart
-                            projectId={projectId}
+                            workspace={workspace}
                             measures={[totalSales]}
                             trendBy={locationResort}
                             filters={filters}

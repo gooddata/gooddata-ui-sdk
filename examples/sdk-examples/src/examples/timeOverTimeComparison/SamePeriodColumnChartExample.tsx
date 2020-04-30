@@ -1,14 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React from "react";
-import { ColumnChart } from "@gooddata/sdk-ui";
+import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute, newPopMeasure } from "@gooddata/sdk-model";
 
 import {
     totalSalesIdentifier,
     quarterDateIdentifier,
     yearDateDataSetAttributeIdentifier,
-    projectId,
+    workspace,
 } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
@@ -29,7 +29,7 @@ export const SamePeriodColumnChartExample: React.FC = () => {
         <div style={style} className="s-column-chart">
             <ColumnChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[totalSales, totalSalesYearAgo]}
                 viewBy={viewBy}
             />

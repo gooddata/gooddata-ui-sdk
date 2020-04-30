@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { projectId } from "../constants/fixtures";
+import { workspace } from "../constants/fixtures";
 import logicalDataModel from "../static/logicalDataModel.png";
 
 export const AboutThisProject: React.FC = () => (
     <div>
         <h1>About This Project</h1>
         <p>
-            This project (ID <code>{projectId}</code>) is created specifically for testing purposes. You can
+            This project (ID <code>{workspace}</code>) is created specifically for testing purposes. You can
             use the data from this project for testing or trying out the functionality of GoodData.UI.
         </p>
         <p>

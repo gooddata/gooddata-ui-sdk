@@ -1,11 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { PieChart, IChartConfig } from "@gooddata/sdk-ui";
+import { PieChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { newMeasure } from "@gooddata/sdk-model";
-import { IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
-
+import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import {
-    projectId,
+    workspace,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
@@ -27,7 +26,7 @@ const measures = [
 const chartConfig: IChartConfig = {
     colorMapping: [
         {
-            predicate: (headerItem: IMeasureHeaderItem) => {
+            predicate: (headerItem: IMeasureDescriptor) => {
                 return headerItem.measureHeaderItem
                     ? headerItem.measureHeaderItem &&
                           headerItem.measureHeaderItem.localIdentifier === "franchiseFeesAdRoyaltyIdentifier"
@@ -39,7 +38,7 @@ const chartConfig: IChartConfig = {
             },
         },
         {
-            predicate: (headerItem: IMeasureHeaderItem) => {
+            predicate: (headerItem: IMeasureDescriptor) => {
                 return headerItem.measureHeaderItem
                     ? headerItem.measureHeaderItem &&
                           headerItem.measureHeaderItem.localIdentifier ===
@@ -65,7 +64,7 @@ export const PieChartColorMappingExample: React.FC = () => {
 
     return (
         <div style={style} className="s-pie-chart">
-            <PieChart backend={backend} workspace={projectId} measures={measures} config={chartConfig} />
+            <PieChart backend={backend} workspace={workspace} measures={measures} config={chartConfig} />
         </div>
     );
 };

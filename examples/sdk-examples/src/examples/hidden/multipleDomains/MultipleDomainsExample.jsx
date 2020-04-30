@@ -1,16 +1,16 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { keyBy, mapValues } from "lodash";
 import { Kpi } from "@gooddata/sdk-ui";
 import { factory } from "@gooddata/gd-bear-client";
 
-import { totalSalesIdentifier, projectId } from "../../../constants/fixtures";
+import { totalSalesIdentifier, workspace } from "../../../constants/fixtures";
 
 export class MultipleDomainsExample extends Component {
     constructor() {
         super();
         this.state = {
-            sdk2Config: { projectId: "", measureId: "" },
+            sdk2Config: { workspace: "", measureId: "" },
             sdk2LoginError: "",
             sdk2: false,
         };
@@ -45,10 +45,10 @@ export class MultipleDomainsExample extends Component {
         return (
             <div>
                 <h2>Default SDK:</h2>
-                KPI: <Kpi projectId={projectId} measure={totalSalesIdentifier} />
+                KPI: <Kpi workspace={workspace} measure={totalSalesIdentifier} />
                 <hr className="separator" />
                 <h2>Second SDK:</h2>
-                KPI: <Kpi projectId={sdk2Config.projectId} measure={sdk2Config.measureId} sdk={sdk2} />
+                KPI: <Kpi workspace={sdk2Config.workspace} measure={sdk2Config.measureId} sdk={sdk2} />
                 <h3>Login to second SDK first:</h3>
                 <div className="gd-message warning contrast">
                     <div className="gd-message-text">
@@ -89,7 +89,7 @@ export class MultipleDomainsExample extends Component {
                                 <td>
                                     <input
                                         type="text"
-                                        name="projectId"
+                                        name="workspace"
                                         defaultValue="kytra720hke4d84e8ozohoz7uycn53mi"
                                     />
                                 </td>

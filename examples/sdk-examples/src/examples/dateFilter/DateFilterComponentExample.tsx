@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { DateFilter, ExtendedDateFilters } from "@gooddata/sdk-ui";
+import { DateFilter, ExtendedDateFilters } from "@gooddata/sdk-ui-filters";
 
 const dateFrom = new Date();
 dateFrom.setMonth(dateFrom.getMonth() - 1);

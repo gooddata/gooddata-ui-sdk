@@ -3,7 +3,7 @@ import React from "react";
 import { Kpi } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
 
-import { totalSalesIdentifier, projectId } from "../../constants/fixtures";
+import { totalSalesIdentifier, workspace } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
 const totalSales = newMeasure(totalSalesIdentifier);
@@ -26,7 +26,7 @@ export const KpiExample = () => {
                     width: 300px;
                 }
             `}</style>
-            <Kpi backend={backend} workspace={projectId} measure={totalSales} />
+            <Kpi backend={backend} workspace={workspace} measure={totalSales} />
         </div>
     );
 };

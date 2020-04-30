@@ -1,15 +1,15 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { useState, useEffect } from "react";
 import sdk from "@gooddata/gd-bear-client";
 
-import { projectId } from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
 import { useAuth, AuthStatus } from "../../context/auth";
 import { DemoProjectAuthStatus, IDemoProjectState } from "./types";
 
 const uriToId = (uri: string) => uri.split("/").pop();
 const isDemoProjectAssignedToUser = (projects: any[]) =>
     projects.some(project => {
-        return uriToId(project.links.metadata) === projectId;
+        return uriToId(project.links.metadata) === workspace;
     });
 
 const initialState = {
@@ -28,7 +28,7 @@ export const useDemoProjectAuth = () => {
     const setCheckProjectAvailabilityError = (error: string) =>
         setState(state => ({
             ...state,
-            error: `Could not confirm demo project availability. Examples might not have access to the demo project with id ${projectId}.
+            error: `Could not confirm demo project availability. Examples might not have access to the demo project with id ${workspace}.
             You can try logging out and logging back in. ${error}`,
         }));
 

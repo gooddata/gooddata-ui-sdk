@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { Executor, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
+import { RawExecute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
 import get from "lodash/get";
 
-import { totalSalesIdentifier, projectId } from "../../constants/fixtures";
+import { totalSalesIdentifier, workspace } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
 interface IExecuteExampleState {
@@ -49,13 +49,13 @@ export const ExecuteExample: React.FC = () => {
     const measure = newMeasure(willFail ? null : totalSalesIdentifier);
 
     const execution = backend
-        .workspace(projectId)
+        .workspace(workspace)
         .execution()
         .forItems([measure]);
 
     return (
         <div>
-            <Executor execution={execution}>
+            <RawExecute execution={execution}>
                 {({ error, isLoading, result }) => {
                     if (error) {
                         return (
@@ -107,7 +107,7 @@ export const ExecuteExample: React.FC = () => {
                         </div>
                     );
                 }}
-            </Executor>
+            </RawExecute>
         </div>
     );
 };

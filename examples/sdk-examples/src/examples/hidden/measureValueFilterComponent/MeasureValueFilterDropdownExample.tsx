@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { PivotTable, MeasureValueFilterDropdown } from "@gooddata/sdk-ui";
+import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import {
     franchiseFeesIdentifier,
@@ -36,7 +37,7 @@ export const MeasureValueFilterDropdownExample: React.FC = () => {
         <div>
             <MeasureValueFilterDropdown
                 onApply={onApply}
-                measureTitle={franchiseSalesMeasure.measure.title}
+                // measureTitle={franchiseSalesMeasure.measure.title}
                 measureIdentifier={franchiseSalesMeasure.measure.localIdentifier}
                 filter={filter || null}
             />

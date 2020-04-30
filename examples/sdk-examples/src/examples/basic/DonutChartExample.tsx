@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { DonutChart } from "@gooddata/sdk-ui";
+import { DonutChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
@@ -24,7 +24,7 @@ export const DonutChartExample: React.FC = () => {
 
     return (
         <div style={style} className="s-donut-chart">
-            <DonutChart backend={backend} workspace={projectId} measures={measures} />
+            <DonutChart backend={backend} workspace={workspace} measures={measures} />
         </div>
     );
 };

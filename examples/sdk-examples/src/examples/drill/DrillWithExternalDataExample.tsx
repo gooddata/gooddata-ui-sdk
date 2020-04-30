@@ -1,16 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import fetch from "isomorphic-fetch";
-import {
-    PivotTable,
-    ColumnChart,
-    LoadingComponent,
-    ErrorComponent,
-    HeaderPredicateFactory,
-} from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
+import { LoadingComponent, ErrorComponent, HeaderPredicates } from "@gooddata/sdk-ui";
+import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newPositiveAttributeFilter, newAttribute } from "@gooddata/sdk-model";
 import {
-    projectId,
+    workspace,
     employeeNameIdentifier,
     averageDailyTotalSalesIdentifier,
     locationStateDisplayFormIdentifier,
@@ -170,10 +166,10 @@ export const DrillWithExternalDataExample: React.FC = () => {
         <div style={{ height: 200 }} className="s-state-table">
             <PivotTable
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[averageDailySalesMeasure]}
                 rows={[stateAttribute]}
-                drillableItems={[HeaderPredicateFactory.identifierMatch(locationStateDisplayFormIdentifier)]}
+                drillableItems={[HeaderPredicates.identifierMatch(locationStateDisplayFormIdentifier)]}
                 onDrill={onStateDrill}
             />
         </div>
@@ -186,10 +182,10 @@ export const DrillWithExternalDataExample: React.FC = () => {
         <div style={{ height: 300 }} className="s-employee-table">
             <PivotTable
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[averageDailySalesMeasure]}
                 rows={[employeeNameAttribute]}
-                drillableItems={[HeaderPredicateFactory.identifierMatch(employeeNameIdentifier)]}
+                drillableItems={[HeaderPredicates.identifierMatch(employeeNameIdentifier)]}
                 filters={employeeTableFilters}
                 onDrill={onEmployeeDrill}
             />
@@ -202,11 +198,11 @@ export const DrillWithExternalDataExample: React.FC = () => {
         <div style={{ height: 300 }} className="s-sales-chart">
             <ColumnChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[totalSalesMeasure]}
                 viewBy={locationNameAttribute}
                 filters={salesTableFilters}
-                drillableItems={[HeaderPredicateFactory.identifierMatch(locationNameDisplayFormIdentifier)]}
+                drillableItems={[HeaderPredicates.identifierMatch(locationNameDisplayFormIdentifier)]}
                 onDrill={onLocationDrill}
             />
         </div>

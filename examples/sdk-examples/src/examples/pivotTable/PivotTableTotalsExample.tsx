@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { PivotTable } from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newMeasure, newAttribute, ITotal } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     quarterDateIdentifier,
     monthDateIdentifier,
     locationStateDisplayFormIdentifier,
@@ -74,7 +74,7 @@ export const PivotTableTotalsExample: React.FC = () => {
             <PivotTable
                 backend={backend}
                 config={config}
-                workspace={projectId}
+                workspace={workspace}
                 measures={measures}
                 rows={attributes}
                 columns={columns}

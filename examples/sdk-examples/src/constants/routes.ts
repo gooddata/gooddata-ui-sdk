@@ -1,7 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { BasicComponents } from "../examples/basic";
 import { PivotTable } from "../examples/pivotTable";
-import { Visualization } from "../examples/visualization";
+import { InsightView } from "../examples/insightView";
 import { Sorting } from "../examples/sorting";
 import { TimeOverTimeComparison } from "../examples/timeOverTimeComparison";
 import { ArithmeticMeasures } from "../examples/arithmeticMeasures";
@@ -49,11 +49,11 @@ export const advancedUseCasesRoutes = [
     { path: "/advanced/chart-configuration", title: "Chart Configuration", Component: ChartConfiguration },
 ];
 
-export const visualizationUseCasesRoutes = [
+export const insightViewUseCasesRoutes = [
     {
-        path: "/visualization/visualization-by-identifier",
-        title: "Visualization by identifier",
-        Component: Visualization,
+        path: "/InsightView/InsightView-by-identifier",
+        title: "InsightView by identifier",
+        Component: InsightView,
     },
 ];
 
@@ -66,8 +66,7 @@ export const drillingUseCasesRoutes = [
     { path: "/drilling/pivot-table-drilling", title: "Pivot table drilling", Component: PivotTableDrilling },
 ];
 
-const VisualizationUseCasesRoutes = props =>
-    WithSubRoutes({ ...props, subRoutes: visualizationUseCasesRoutes });
+const InsightViewUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: InsightViewUseCasesRoutes });
 const AdvancedUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
 const DrillingUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: drillingUseCasesRoutes });
 
@@ -75,11 +74,11 @@ export const sideNavigationRoutes = [
     { path: "/", title: "Basic Components", Component: BasicComponents, exact: true },
     { path: "/pivot-table", title: "Pivot Table", Component: PivotTable },
     {
-        path: "/visualization",
+        path: "/insightView",
         pathMatch: "full",
-        redirectTo: visualizationUseCasesRoutes[0].path,
-        title: "Visualization Component",
-        Component: VisualizationUseCasesRoutes,
+        redirectTo: insightViewUseCasesRoutes[0].path,
+        title: "insightView Component",
+        Component: insightViewUseCasesRoutes,
     },
     { path: "/sorting", title: "Sorting", Component: Sorting },
     {
@@ -143,7 +142,7 @@ export const topNavigationRoutes = [{ path: "/", title: "Live Examples", Compone
 
 export const routes = [
     ...sideNavigationRoutes,
-    ...visualizationUseCasesRoutes,
+    ...insightViewUseCasesRoutes,
     ...advancedUseCasesRoutes,
     ...drillingUseCasesRoutes,
     ...hiddenPaths,

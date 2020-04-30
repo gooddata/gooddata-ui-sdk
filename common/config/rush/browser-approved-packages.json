@@ -16,27 +16,47 @@
     },
     {
       "name": "@babel/core",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@babel/plugin-proposal-class-properties",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "@babel/plugin-proposal-export-default-from",
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@babel/plugin-proposal-object-rest-spread",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "@babel/plugin-transform-async-to-generator",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@babel/plugin-transform-typescript",
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@babel/polyfill",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@babel/preset-env",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@babel/preset-react",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@babel/preset-typescript",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "@babel/runtime",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@formatjs/intl-pluralrules",
@@ -48,19 +68,27 @@
     },
     {
       "name": "@gooddata/gd-bear-client",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/gd-bear-filters",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "@gooddata/gd-bear-model",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/gd-tiger-client",
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/gd-ui-filters",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@gooddata/goodstrap",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/js-utils",
@@ -72,7 +100,7 @@
     },
     {
       "name": "@gooddata/mock-js",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/numberjs",
@@ -88,7 +116,7 @@
     },
     {
       "name": "@gooddata/sdk-backend-bear",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "@gooddata/sdk-backend-mockingbird",
@@ -96,31 +124,31 @@
     },
     {
       "name": "@gooddata/sdk-backend-spi",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-model",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-ui-charts",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-ui-ext",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-ui-filters",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-ui-pivot",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/test-storybook",
@@ -128,7 +156,7 @@
     },
     {
       "name": "@gooddata/tslint-config",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@microsoft/api-extractor",
@@ -336,15 +364,23 @@
     },
     {
       "name": "babel-loader",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "babel-plugin-lodash",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "babel-plugin-require-context-hook",
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "babel-polyfill",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "babel-runtime",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "caller-callsite",
@@ -356,15 +392,23 @@
     },
     {
       "name": "circular-dependency-plugin",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "classnames",
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "clean-webpack-plugin",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "commander",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "compression-webpack-plugin",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "core-js",
@@ -372,7 +416,7 @@
     },
     {
       "name": "css-loader",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "custom-event",
@@ -391,16 +435,20 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "dotenv-webpack",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "downshift",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "enzyme",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "enzyme-adapter-react-16",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "fast-levenshtein",
@@ -416,11 +464,19 @@
     },
     {
       "name": "file-loader",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "fixed-data-table-2",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "fork-ts-checker-webpack-plugin",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "formik",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "foundation-sites",
@@ -439,8 +495,16 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "history",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "hoist-non-react-statics",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "html-webpack-plugin",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "http-status-codes",
@@ -456,15 +520,15 @@
     },
     {
       "name": "invariant",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "isomorphic-fetch",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "jest",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "jest-environment-enzyme",
@@ -484,7 +548,7 @@
     },
     {
       "name": "jest-junit",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "js-object-pretty-print",
@@ -512,7 +576,7 @@
     },
     {
       "name": "lodash",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "lodash-webpack-plugin",
@@ -536,7 +600,7 @@
     },
     {
       "name": "moment",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "node-fetch",
@@ -544,7 +608,7 @@
     },
     {
       "name": "node-sass",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "node-sass-magic-importer",
@@ -568,7 +632,7 @@
     },
     {
       "name": "prettier",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "prompt",
@@ -576,7 +640,7 @@
     },
     {
       "name": "prop-types",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "qs",
@@ -587,8 +651,16 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "raw-loader",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "react",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "react-datepicker",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "react-day-picker",
@@ -603,24 +675,56 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "react-ga",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "react-google-recaptcha",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "react-helmet",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "react-intl",
       "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "react-measure",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "react-responsive",
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "react-router-dom",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "react-scripts",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "react-select",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "react-syntax-highlighter",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "react-test-renderer",
       "allowedCategories": [ "examples" ]
     },
     {
       "name": "react-window",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "require-context.macro",
@@ -636,7 +740,7 @@
     },
     {
       "name": "sass-loader",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "serve",
@@ -645,6 +749,10 @@
     {
       "name": "spark-md5",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "stats-webpack-plugin",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "stringify-object",
@@ -656,15 +764,23 @@
     },
     {
       "name": "style-loader",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "styled-jsx",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "supertest",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "testcafe",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "testcafe-live",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "ts-invariant",
@@ -688,11 +804,11 @@
     },
     {
       "name": "tslint",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "tslint-config-prettier",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "typescript",
@@ -712,15 +828,19 @@
     },
     {
       "name": "webpack",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "webpack-cli",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "webpack-dev-server",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "yup",
+      "allowedCategories": [ "examples" ]
     }
   ]
 }

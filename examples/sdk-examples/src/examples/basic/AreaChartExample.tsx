@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { AreaChart } from "@gooddata/sdk-ui";
+import { AreaChart } from "@gooddata/sdk-ui-charts";
 import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     monthDateIdentifier,
     franchiseFeesIdentifier,
     franchiseFeesAdRoyaltyIdentifier,
@@ -48,7 +48,7 @@ export const AreaChartExample: React.FC = () => {
         <div style={style} className="s-area-chart">
             <AreaChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={measures}
                 viewBy={viewBy}
                 config={chartConfig}

@@ -4,12 +4,12 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 import { BarChartExportExample } from "./BarChartExportExample";
 import { PivotTableExportExample } from "./PivotTableExportExample";
-import { VisualizationColumnChartExportExample } from "./VisualizationColumnChartExportExample";
+import { insightViewColumnChartExportExample } from "./InsightViewColumnChartExportExample";
 // import HeadlineExportExample from "./HeadlineExportExample";
 
 import BarChartExportExampleSRC from "!raw-loader!./BarChartExportExample";
 import PivotTableExportExampleSRC from "!raw-loader!./PivotTableExportExample";
-import VisualizationColumnChartExportExampleSRC from "!raw-loader!./VisualizationColumnChartExportExample";
+import insightViewColumnChartExportExampleSRC from "!raw-loader!./InsightViewColumnChartExportExample";
 // import HeadlineExportExampleSRC from "!raw-loader!./HeadlineExportExample";
 
 export const Export: React.FC = () => (
@@ -17,7 +17,7 @@ export const Export: React.FC = () => (
         <h1>Export</h1>
         <p>
             These examples show how to export data for components like
-            <code>ColumnChart, Table/Pivot Table or Visualization</code>.
+            <code>ColumnChart, Table/Pivot Table or insightView</code>.
         </p>
 
         <hr className="separator" />
@@ -32,10 +32,10 @@ export const Export: React.FC = () => (
 
         <hr className="separator" />
 
-        <h2>Export Visualization Data</h2>
+        <h2>Export insightView Data</h2>
         <ExampleWithSource
-            for={VisualizationColumnChartExportExample}
-            source={VisualizationColumnChartExportExampleSRC}
+            for={insightViewColumnChartExportExample}
+            source={insightViewColumnChartExportExampleSRC}
         />
 
         <hr className="separator" />

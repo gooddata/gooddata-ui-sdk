@@ -1,6 +1,6 @@
 dependencies:
   '@gooddata/gd-bear-client': 'link:../../libs/gd-bear-client'
-  '@gooddata/goodstrap': 64.6.7_react-dom@16.12.0+react@16.12.0
+  '@gooddata/goodstrap': 68.5.2_react-dom@16.12.0+react@16.12.0
   '@gooddata/sdk-backend-bear': 'link:../../libs/sdk-backend-bear'
   '@gooddata/sdk-backend-spi': 'link:../../libs/sdk-backend-spi'
   '@gooddata/sdk-model': 'link:../../libs/sdk-model'
@@ -57,7 +57,7 @@ devDependencies:
   jest: 24.9.0
   jest-junit: 3.7.0
   node-sass: 4.13.0
-  prettier: 1.18.2
+  prettier: 1.19.1
   raw-loader: 0.5.1
   sass-loader: 8.0.0_node-sass@4.13.0+webpack@4.41.2
   stats-webpack-plugin: 0.7.0_webpack@4.41.2
@@ -891,6 +891,13 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-rqrjxfdiHPsnuPur0jKrIIGQCIgoTWMTjlbWE69G4QJ6TIOVnnRnIJhUxNTL/VwDmEAVX08Tq3B1nirer5341w==
+  /@babel/runtime-corejs2/7.9.2:
+    dependencies:
+      core-js: 2.6.11
+      regenerator-runtime: 0.13.5
+    dev: false
+    resolution:
+      integrity: sha512-ayjSOxuK2GaSDJFCtLgHnYjuMyIpViNujWrZo8GUpN60/n7juzJKK5yOo6RFVb0zdU9ACJFK+MsZrUnj3OmXMw==
   /@babel/runtime/7.7.6:
     dependencies:
       regenerator-runtime: 0.13.3
@@ -936,10 +943,38 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-r5160ogAvGyHsal38Kux7YYtodEKOj89RGb28ht1jh3SJb08VwRwAKKJL0bGb04Zd/3r9FL3BFIc3bBidYffCA==
-  /@gooddata/goodstrap/64.6.7_react-dom@16.12.0+react@16.12.0:
+  /@formatjs/intl-displaynames/1.2.7:
     dependencies:
-      '@gooddata/js-utils': 3.5.0
-      babel-runtime: 6.25.0
+      '@formatjs/intl-utils': 2.2.3
+    dev: false
+    resolution:
+      integrity: sha512-yOjYzFwP/2AaBJ/YbBONNdXKUa1yLyy/qRBU365MtdxKZDNLEIjvD9+L+GHkHE14rJ82pbP+gs7ZME24YM/XRw==
+  /@formatjs/intl-listformat/1.4.5:
+    dependencies:
+      '@formatjs/intl-utils': 2.2.3
+    dev: false
+    resolution:
+      integrity: sha512-UHZdNuFZxZYhNsUIl31g0zuhRt4mD/j18HlY1t/w6nwe3p5qLySi4ZmxHplGdZMl54ap6Z4+XGEgnxxwqQ4R1g==
+  /@formatjs/intl-relativetimeformat/4.5.13:
+    dependencies:
+      '@formatjs/intl-utils': 2.2.3
+    dev: false
+    resolution:
+      integrity: sha512-DocBGUaxOydgs0PuN2YGX0zw4ibYqZXLpHn9jnIpn4Gi4YopEEf+6Xf0DGMfaRvjnPe1QztagoaIOtyLvG47fw==
+  /@formatjs/intl-unified-numberformat/3.3.4:
+    dependencies:
+      '@formatjs/intl-utils': 2.2.3
+    dev: false
+    resolution:
+      integrity: sha512-RhgGUOiMvpCOMc0EqM28JgyfFyAKsw1EfnrDAdqMKAZhbUcRj73iQwdusKXoOp++3DAEg9L2TUUes9QcAv5Ypw==
+  /@formatjs/intl-utils/2.2.3:
+    dev: false
+    resolution:
+      integrity: sha512-CeswyzLq2A3uu7dFptBTn1j815B/stndfHMr+ZPj0QxaN/Q9zLRTQxMYskRW07uPp+a7XobLFqEJHLrMu/tZEw==
+  /@gooddata/goodstrap/68.5.2_react-dom@16.12.0+react@16.12.0:
+    dependencies:
+      '@babel/runtime-corejs2': 7.9.2
+      '@gooddata/js-utils': 3.10.5
       classnames: 2.2.6
       custom-event: 1.0.1
       element-closest-polyfill: 1.0.0
@@ -957,7 +992,7 @@ packages:
       react-day-picker: 7.1.10_react@16.12.0
       react-document-title: 2.0.3_react@16.12.0
       react-dom: 16.12.0_react@16.12.0
-      react-intl: 2.9.0_prop-types@15.7.2+react@16.12.0
+      react-intl: 3.12.1_react@16.12.0
       react-native-listener: 1.1.0
       react-portal: 4.2.0_react@16.12.0
       react-responsive: 3.0.0_react@16.12.0
@@ -970,14 +1005,15 @@ packages:
       react: ^16.5.2
       react-dom: ^16.5.2
     resolution:
-      integrity: sha512-IegDSr/zkxbSAFjQWRbfgYAoR6Z7XZExUfRHlb681/X/SK4DRENerfyA340hUNYLVYh5mFI2mXmOsZZMyMHxvg==
-  /@gooddata/js-utils/3.5.0:
+      integrity: sha512-OvGX2GaAzJ9zp1T2w0etzfGJOo/Uzpdtz6tYzORV9Wmq6CgvIgStpvZ99oSJqyKpJyI1eEdb0omNqvVlFjkpxw==
+  /@gooddata/js-utils/3.10.5:
     dependencies:
+      '@gooddata/typings': 2.24.0
       js-cookie: 2.2.1
       lodash: 4.17.15
     dev: false
     resolution:
-      integrity: sha512-wK8u+60rUee/bsICzqAj8XjMGGb1g6dn46rq6/UjJAk6h72UffmpT66ZiKfIw5XpJRe2NMLEVwwc2GbBqnJ/YA==
+      integrity: sha512-be6BFAbe6kmBjJy/AEq8LR67WFAJ2AybBBj7tKwLFcjUj/V1wOl/biswOVMn2yHjGNOYhNiPeWOXLpJGQCEYPw==
   /@gooddata/mock-js/1.34.0:
     dependencies:
       '@gooddata/typings': 2.20.0
@@ -1013,6 +1049,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-41XAGijJIetam7LytV+Zxgrq8b1o3+BLbNtEGKpGtl0gaQ7aDArDKnoA8uM/ibzLZCPpqixATGOwUT7M8mXR1A==
+  /@gooddata/typings/2.24.0:
+    dependencies:
+      lodash: 4.17.15
+    dev: false
+    resolution:
+      integrity: sha512-rLp3hk6DtlMeRxi9t9MaJ+Umwa04AkjH0hlxR//rPLaH9bFgLQ28NxS6wuB3XLvuOHU6vfmyF1X3Bi2LB8nzPQ==
   /@jest/console/24.9.0:
     dependencies:
       '@jest/source-map': 24.9.0
@@ -1259,6 +1301,17 @@ packages:
     dev: true
     resolution:
       integrity: sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
+  /@types/hoist-non-react-statics/3.3.1:
+    dependencies:
+      '@types/react': 16.9.16
+      hoist-non-react-statics: 3.3.2
+    dev: false
+    resolution:
+      integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
+  /@types/invariant/2.2.32:
+    dev: false
+    resolution:
+      integrity: sha512-WjY4WVFaehHv+TOgm+dS3UI559NvsPGFz/C0nIo7KOOdC+HeC7Y3/yLzdJYQ3+oFQaTXrOVm7cNtIgMataIDVg==
   /@types/istanbul-lib-coverage/2.0.1:
     dev: true
     resolution:
@@ -1292,7 +1345,6 @@ packages:
     resolution:
       integrity: sha512-vRuMyoOr5yfNf8QWxXegOjeyjpWJxFePzHzmBOIzDIzo+rSqF94RW0PkS6y4T2+VjAWLXHWrfbIJY3E3aS7lUw==
   /@types/prop-types/15.7.3:
-    dev: true
     resolution:
       integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
   /@types/react-dom/16.9.4:
@@ -1305,7 +1357,6 @@ packages:
     dependencies:
       '@types/prop-types': 15.7.3
       csstype: 2.6.7
-    dev: true
     resolution:
       integrity: sha512-dQ3wlehuBbYlfvRXfF5G+5TbZF3xqgkikK7DWAsQXe2KnzV+kjD4W2ea+ThCrKASZn9h98bjjPzoTYzfRqyBkw==
   /@types/seedrandom/2.4.27:
@@ -2512,13 +2563,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-HAsC62MxL18If/IEUIJ7QlydTBk=
-  /babel-runtime/6.25.0:
-    dependencies:
-      core-js: 2.6.11
-      regenerator-runtime: 0.10.5
-    dev: false
-    resolution:
-      integrity: sha1-M7mOql1IK7AajRqmtDetKwGuxBw=
   /babel-runtime/6.26.0:
     dependencies:
       core-js: 2.6.11
@@ -3776,7 +3820,6 @@ packages:
     resolution:
       integrity: sha512-GBrLZYZ4X4x6/QEoBnIrqb8B/f5l4+8me2dkom/j1Gtbxy0kBv6OGzKuAsGM75bkGwGAFkt56Iwg28S3XTZgSA==
   /csstype/2.6.7:
-    dev: true
     resolution:
       integrity: sha512-9Mcn9sFbGBAdmimWb2gLVDtFJzeKtDGIr76TUqmjZrw9LFXBMSU70lcs+C0/7fyCd6iBDqmksUcCOUIkisPHsQ==
   /cuint/0.2.2:
@@ -5602,12 +5645,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
-  /hoist-non-react-statics/3.3.1:
+  /hoist-non-react-statics/3.3.2:
     dependencies:
       react-is: 16.12.0
     dev: false
     resolution:
-      integrity: sha512-wbg3bpgA/ZqWrZuMOeJi8+SKMhr7X9TesL/rXMjTzh0p0JUBo3II8DHboYbuIXWRlttrUFxwcu/5kygrCw8fJw==
+      integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
   /home-or-tmp/2.0.0:
     dependencies:
       os-homedir: 1.0.2
@@ -5966,27 +6009,23 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-mT34yGKMNceBQUoVn7iCDKDntA7SC6gycMAWzGx1z/CMCTV7b2AAtXlo3nRyHZ1FelRkQbQjprHSYGwzLtkVbw==
-  /intl-format-cache/2.2.9:
+  /intl-format-cache/4.2.25:
     dev: false
     resolution:
-      integrity: sha512-Zv/u8wRpekckv0cLkwpVdABYST4hZNTDaX7reFetrYTJwxExR2VyTqQm+l0WmL0Qo8Mjb9Tf33qnfj0T7pjxdQ==
-  /intl-messageformat-parser/1.4.0:
-    dev: false
-    resolution:
-      integrity: sha1-tD1FqXRoytvkQzHXS7Ho3qRPwHU=
-  /intl-messageformat/2.2.0:
+      integrity: sha512-ZwHX7n/Inusc8j/8+Ng6Ik4xHmDkSxOk/kT0KOnEqxpIQQ/2o9TV5aUeorf+RbYA84yLawOcBy4SRZAHSTNTAA==
+  /intl-messageformat-parser/3.6.4:
     dependencies:
-      intl-messageformat-parser: 1.4.0
+      '@formatjs/intl-unified-numberformat': 3.3.4
     dev: false
     resolution:
-      integrity: sha1-NFvNRt5jC3aDMwwuUhd/9eq0hPw=
-  /intl-relativeformat/2.2.0:
+      integrity: sha512-RgPGwue0mJtoX2Ax8EmMzJzttxjnva7gx0Q7mKJ4oALrTZvtmCeAw5Msz2PcjW4dtCh/h7vN/8GJCxZO1uv+OA==
+  /intl-messageformat/7.8.4:
     dependencies:
-      intl-messageformat: 2.2.0
-    deprecated: 'This package has been deprecated, please see migration guide at ''https://github.com/formatjs/formatjs/tree/master/packages/intl-relativeformat#migration-guide'''
+      intl-format-cache: 4.2.25
+      intl-messageformat-parser: 3.6.4
     dev: false
     resolution:
-      integrity: sha512-4bV/7kSKaPEmu6ArxXf9xjv1ny74Zkwuey8Pm01NH4zggPP7JHwg2STk8Y3JdspCKRDriwIyLRfEXnj2ZLr4Bw==
+      integrity: sha512-yS0cLESCKCYjseCOGXuV4pxJm/buTfyCJ1nzQjryHmSehlptbZbn9fnlk1I9peLopZGGbjj46yHHiTAEZ1qOTA==
   /invariant/2.2.2:
     dependencies:
       loose-envify: 1.4.0
@@ -6714,6 +6753,9 @@ packages:
       node: '>=6'
     peerDependencies:
       jest-resolve: '*'
+    peerDependenciesMeta:
+      jest-resolve:
+        optional: true
     resolution:
       integrity: sha512-pgFw2tm54fzgYvc/OHrnysABEObZCUNFnhjoRjaVOCN8NYc032/gVjPaHD4Aq6ApkSieWtfKAFQtmDKAmhupnQ==
   /jest-regex-util/24.9.0:
@@ -8797,13 +8839,13 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=
-  /prettier/1.18.2:
+  /prettier/1.19.1:
     dev: true
     engines:
       node: '>=4'
     hasBin: true
     resolution:
-      integrity: sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
+      integrity: sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
   /pretty-error/2.1.1:
     dependencies:
       renderkid: 2.0.3
@@ -9206,21 +9248,26 @@ packages:
       react: ^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0
     resolution:
       integrity: sha512-jQJgYCA3S0j+cuOwzuCd1OjmBmnZLdqQdiLKRYrsMMzbjUrVDS5RvJUDwJqA7sKuksDuzFtm6hZGKFu7Mjk5aw==
-  /react-intl/2.9.0_prop-types@15.7.2+react@16.12.0:
+  /react-intl/3.12.1_react@16.12.0:
     dependencies:
-      hoist-non-react-statics: 3.3.1
-      intl-format-cache: 2.2.9
-      intl-messageformat: 2.2.0
-      intl-relativeformat: 2.2.0
-      invariant: 2.2.4
-      prop-types: 15.7.2
+      '@formatjs/intl-displaynames': 1.2.7
+      '@formatjs/intl-listformat': 1.4.5
+      '@formatjs/intl-relativetimeformat': 4.5.13
+      '@formatjs/intl-unified-numberformat': 3.3.4
+      '@formatjs/intl-utils': 2.2.3
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/invariant': 2.2.32
+      hoist-non-react-statics: 3.3.2
+      intl-format-cache: 4.2.25
+      intl-messageformat: 7.8.4
+      intl-messageformat-parser: 3.6.4
       react: 16.12.0
+      shallow-equal: 1.2.1
     dev: false
     peerDependencies:
-      prop-types: ^15.5.4
-      react: ^0.14.9 || ^15.0.0 || ^16.0.0
+      react: ^16.3.0
     resolution:
-      integrity: sha512-27jnDlb/d2A7mSJwrbOBnUgD+rPep+abmoJE511Tf8BnoONIAUehy/U1zZCHGO17mnOwMWxqN4qC0nW11cD6rA==
+      integrity: sha512-cgumW29mwROIqyp8NXStYsoIm27+8FqnxykiLSawWjOxGIBeLuN/+p2srei5SRIumcJefOkOIHP+NDck05RgHg==
   /react-is/16.12.0:
     resolution:
       integrity: sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
@@ -9610,6 +9657,10 @@ packages:
   /regenerator-runtime/0.13.3:
     resolution:
       integrity: sha512-naKIZz2GQ8JWh///G7L3X6LaQUAMp2lvb1rvwwsURe/VXwD6VMfr+/1NuNw3ag8v2kY1aQ/go5SNn79O9JU7yw==
+  /regenerator-runtime/0.13.5:
+    dev: false
+    resolution:
+      integrity: sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
   /regenerator-transform/0.10.1:
     dependencies:
       babel-runtime: 6.26.0
@@ -10024,6 +10075,13 @@ packages:
       node-sass: ^4.0.0
       sass: ^1.3.0
       webpack: ^4.36.0
+    peerDependenciesMeta:
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
     resolution:
       integrity: sha512-+qeMu563PN7rPdit2+n5uuYVR0SSVwm0JsOUsaJXzgYcClWSlmX0iHDnmeOobPkf5kUglVot3QS6SyLyaQoJ4w==
   /sax/1.2.4:
@@ -10239,6 +10297,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-/6KqX+GVUdqPuPPd2LxDDxzX6CAbjJehAAOKlNpqqUpAqPM6HeL8f+o3a+JsyGjn2lv0WY8UsTgUJjU9Ok55NA==
+  /shallow-equal/1.2.1:
+    dev: false
+    resolution:
+      integrity: sha512-S4vJDjHHMBaiZuT9NPb616CSmLf618jawtv3sufLl6ivK8WocjAo58cXwbRV1cgqxH0Qbv+iUt6m05eqEa2IRA==
   /shallowequal/1.1.0:
     dev: false
     resolution:
@@ -12197,7 +12259,7 @@ specifiers:
   '@babel/preset-typescript': ^7.6.0
   '@babel/runtime': ^7.4.4
   '@gooddata/gd-bear-client': 'file:../../libs/gd-bear-client'
-  '@gooddata/goodstrap': ^64.6.1
+  '@gooddata/goodstrap': ^68.2.2
   '@gooddata/mock-js': ^1.31.0
   '@gooddata/sdk-backend-bear': 'file:../../libs/sdk-backend-bear'
   '@gooddata/sdk-backend-spi': 'file:../../libs/sdk-backend-spi'
@@ -12230,7 +12292,7 @@ specifiers:
   lodash: ^4.17.15
   moment: ^2.23.0
   node-sass: ^4.12.0
-  prettier: ~1.18.2
+  prettier: ~1.19.1
   prop-types: ^15.6.0
   raw-loader: ^0.5.1
   react: ^16.10.1

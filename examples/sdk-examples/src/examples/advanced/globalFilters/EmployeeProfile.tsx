@@ -1,6 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState, useEffect } from "react";
-import { Kpi, BarChart, PieChart } from "@gooddata/sdk-ui";
+import { Kpi } from "@gooddata/sdk-ui";
+import { BarChart, PieChart } from "@gooddata/sdk-ui-charts";
+import { IElementQueryResult } from "@gooddata/sdk-backend-spi";
 import {
     newMeasure,
     newAttribute,
@@ -11,7 +13,7 @@ import { SidebarItem } from "../../../components/SidebarItem";
 import { EmployeeCard } from "./EmployeeCard";
 import { KpiMetricBox } from "./KpiMetricBox";
 import {
-    projectId,
+    workspace,
     employeeNameIdentifier,
     averageDailyTotalSalesIdentifier,
     averageCheckSizeByServerIdentifier,
@@ -21,11 +23,10 @@ import {
 import { Layout } from "../../../components/Layout";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
-import { IValidElements } from "@gooddata/sdk-ui/dist/filters/AttributeFilter/AttributeElements";
 import { useBackend } from "../../../context/auth";
 
 interface IEmployeeProfileProps {
-    validElements: IValidElements;
+    validElements: IElementQueryResult;
 }
 
 interface IEmployeeProfileState {
@@ -45,11 +46,11 @@ const menuItemNameAttribute = newAttribute(menuItemNameAttributeDFIdentifier, a 
 export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements }) => {
     const backend = useBackend();
     const [{ selectedEmployeeUri }, setState] = useState<IEmployeeProfileState>({
-        selectedEmployeeUri: validElements.items[0].element.uri,
+        selectedEmployeeUri: validElements.items[0].uri,
     });
 
     useEffect(() => {
-        const newDefaultEmployeeUri = validElements.items[0].element.uri;
+        const newDefaultEmployeeUri = validElements.items[0].uri;
         if (newDefaultEmployeeUri !== selectedEmployeeUri) {
             setState({
                 selectedEmployeeUri: newDefaultEmployeeUri,
@@ -99,8 +100,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
 
     const selectedEmployeesUris: IAttributeElementsByRef = { uris: [selectedEmployeeUri] };
     const employeeFilter = newPositiveAttributeFilter(employeeNameIdentifier, selectedEmployeesUris);
-    const selectedEmployee = validElements.items.find(item => item.element.uri === selectedEmployeeUri)
-        .element;
+    const selectedEmployee = validElements.items.find(item => item.uri === selectedEmployeeUri);
 
     const employeeName = selectedEmployee.title;
 
@@ -158,7 +158,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                     backend={backend}
                                     filters={[employeeFilter]}
                                     measure={averageDailyTotalSales}
-                                    workspace={projectId}
+                                    workspace={workspace}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
@@ -171,7 +171,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                     backend={backend}
                                     filters={[employeeFilter]}
                                     measure={averageCheckSizeByServer}
-                                    workspace={projectId}
+                                    workspace={workspace}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
@@ -187,7 +187,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                     measures={measures}
                                     viewBy={menuCategoryAttribute}
                                     filters={[employeeFilter]}
-                                    workspace={projectId}
+                                    workspace={workspace}
                                     LoadingComponent={CustomLoading}
                                     ErrorComponent={CustomError}
                                     config={{ legend: { position: "bottom" } }}
@@ -202,7 +202,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                     measures={measures}
                                     viewBy={menuItemNameAttribute}
                                     filters={[employeeFilter]}
-                                    workspace={projectId}
+                                    workspace={workspace}
                                     LoadingComponent={CustomLoading}
                                     ErrorComponent={CustomError}
                                 />

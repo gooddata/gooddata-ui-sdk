@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { BarChart } from "@gooddata/sdk-ui";
+import { BarChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute, IFilter, newMeasureValueFilter } from "@gooddata/sdk-model";
 import {
     franchiseFeesIdentifier,

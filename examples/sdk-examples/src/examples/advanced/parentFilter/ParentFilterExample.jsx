@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { AttributeElements, BarChart } from "@gooddata/sdk-ui";
 import { newMeasure, newAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
@@ -6,7 +6,7 @@ import Select from "react-select";
 import "react-select/dist/react-select.css";
 
 import {
-    projectId,
+    workspace,
     locationStateAttributeIdentifier,
     locationStateDisplayFormIdentifier,
     locationCityAttributeIdentifier,
@@ -43,7 +43,7 @@ export class ParentFilterExample extends Component {
         });
     };
 
-    renderVisualization(stateFilterValues, cityFilterValues) {
+    renderinsightView(stateFilterValues, cityFilterValues) {
         const visFilters = [];
 
         if (stateFilterValues.length) {
@@ -75,7 +75,7 @@ export class ParentFilterExample extends Component {
                     measures={[measureTotalSales]}
                     viewBy={viewByLocationName}
                     filters={visFilters}
-                    projectId={projectId}
+                    workspace={workspace}
                     height={500}
                 />
             </div>
@@ -87,7 +87,7 @@ export class ParentFilterExample extends Component {
             <AttributeElements
                 key={key}
                 identifier={displayFormIdentifier}
-                projectId={projectId}
+                workspace={workspace}
                 options={options}
             >
                 {({ validElements, isLoading, error }) => {
@@ -187,7 +187,7 @@ export class ParentFilterExample extends Component {
                 {stateFilter}
                 &emsp;and&emsp; {cityFilter}
                 <hr className="separator" />
-                {this.renderVisualization(stateFilterValues, cityFilterValues)}
+                {this.renderinsightView(stateFilterValues, cityFilterValues)}
             </div>
         );
     }

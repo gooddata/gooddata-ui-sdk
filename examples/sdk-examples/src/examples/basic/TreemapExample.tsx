@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { Treemap } from "@gooddata/sdk-ui";
+import { Treemap } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import {
     numberOfChecksIdentifier,
     locationCityDisplayFormIdentifier,
     locationStateDisplayFormIdentifier,
-    projectId,
+    workspace,
 } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
@@ -26,7 +26,7 @@ export const TreemapExample: React.FC = () => {
         <div style={style} className="s-tree-map">
             <Treemap
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={[numberOfChecks]}
                 viewBy={locationState}
                 segmentBy={locationCity}

@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { PivotTable } from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
     locationStateDisplayFormIdentifier,
@@ -54,7 +54,7 @@ export const ArithmeticMeasureSumExample: React.FC = () => {
 
     return (
         <div style={style} className="s-table">
-            <PivotTable backend={backend} workspace={projectId} measures={measures} rows={rows} />
+            <PivotTable backend={backend} workspace={workspace} measures={measures} rows={rows} />
         </div>
     );
 };

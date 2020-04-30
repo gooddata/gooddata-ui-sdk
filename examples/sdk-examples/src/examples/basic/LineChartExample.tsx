@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { LineChart } from "@gooddata/sdk-ui";
+import { LineChart } from "@gooddata/sdk-ui-charts";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     monthDateIdentifier,
     franchiseFeesIdentifier,
     franchiseFeesAdRoyaltyIdentifier,
@@ -35,7 +35,7 @@ export const LineChartExample: React.FC = () => {
         <div style={style} className="s-line-chart">
             <LineChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 measures={measures}
                 trendBy={trendBy}
                 config={chartConfig}

@@ -1,11 +1,11 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { PivotTable, Table, HeaderPredicateFactory, Model } from "@gooddata/react-components";
 
 import "@gooddata/react-components/styles/css/main.css";
 
 import {
-    projectId,
+    workspace,
     quarterDateIdentifier,
     monthDateIdentifier,
     locationStateDisplayFormIdentifier,
@@ -102,9 +102,9 @@ const bucketPresets = {
             measures,
             rows,
             columns: rows.map(attribute => ({
-                visualizationAttribute: {
-                    ...attribute.visualizationAttribute,
-                    localIdentifier: `${attribute.visualizationAttribute.localIdentifier}_2`,
+                insightViewAttribute: {
+                    ...attribute.insightViewAttribute,
+                    localIdentifier: `${attribute.insightViewAttribute.localIdentifier}_2`,
                 },
             })),
         },
@@ -533,7 +533,7 @@ export class PivotTableDrillingExample extends Component {
             const firstAttribute = rows[0];
             return (
                 firstAttribute !== undefined &&
-                total.attributeIdentifier === firstAttribute.visualizationAttribute.localIdentifier
+                total.attributeIdentifier === firstAttribute.insightViewAttribute.localIdentifier
             );
         });
 
@@ -748,7 +748,7 @@ export class PivotTableDrillingExample extends Component {
                         // width. To get around this problem we completely
                         // reset both table components.
                         key={`${pivotTableSizeKey}__${maxHeightPresetKey}__${groupRows}`}
-                        projectId={projectId}
+                        workspace={workspace}
                         pageSize={20}
                         {...bucketPropsWithFilters}
                         {...filtersProp}
@@ -768,7 +768,7 @@ export class PivotTableDrillingExample extends Component {
                 <div style={{ height: 300 }}>
                     <Table
                         key={`${pivotTableSizeKey}__${maxHeightPresetKey}__${groupRows}`}
-                        projectId={projectId}
+                        workspace={workspace}
                         {...tableBucketProps}
                         {...filtersProp}
                         drillableItems={drillableItems}

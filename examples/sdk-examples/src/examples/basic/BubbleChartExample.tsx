@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { BubbleChart } from "@gooddata/sdk-ui";
+import { BubbleChart } from "@gooddata/sdk-ui-charts";
 import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     franchiseFeesIdentifier,
     franchisedSalesIdentifier,
     averageCheckSizeByServerIdentifier,
@@ -29,7 +29,7 @@ export const BubbleChartExample: React.FC = () => {
         <div style={style} className="s-bubble-chart">
             <BubbleChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 xAxisMeasure={xMeasure}
                 yAxisMeasure={yMeasure}
                 viewBy={locationResort}

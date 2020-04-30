@@ -1,8 +1,8 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui";
 
-import { employeeNameIdentifier, projectId } from "../../constants/fixtures";
+import { employeeNameIdentifier, workspace } from "../../constants/fixtures";
 
 export class AttributeFilterComponentExample extends Component {
     onApply(...params) {
@@ -14,7 +14,7 @@ export class AttributeFilterComponentExample extends Component {
             <div>
                 <AttributeFilter
                     identifier={employeeNameIdentifier}
-                    projectId={projectId}
+                    workspace={workspace}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}
                 />

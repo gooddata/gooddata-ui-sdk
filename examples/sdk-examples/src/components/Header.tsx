@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { NavLink, Link, withRouter } from "react-router-dom";
 import { CustomLoading } from "./CustomLoading";
-import { projectId, backendUrlForInfo } from "../constants/fixtures";
+import { workspace, backendUrlForInfo } from "../constants/fixtures";
 import favicon from "../static/favicon.ico";
 import logo from "../static/gooddata.svg";
 import { BASEPATH } from "../constants/env";
@@ -49,7 +49,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({
                 </span>
                 <span className="backendInfoItem">
                     Project ID:
-                    <span className="backendInfoValue">{projectId}</span>
+                    <span className="backendInfoValue">{workspace}</span>
                 </span>
                 <span className="backendInfoItem">
                     <span className="backendInfoValue">

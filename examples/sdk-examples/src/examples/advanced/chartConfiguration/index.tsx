@@ -10,8 +10,8 @@ import { PieChartColorMappingExample } from "./PieChartColorMappingExample";
 import PieChartColorMappingExampleSRC from "!raw-loader!./PieChartColorMappingExample";
 import { DualAxisColumnChartExample } from "./DualAxisColumnChartExample";
 import DualAxisColumnChartExampleSRC from "!raw-loader!./DualAxisColumnChartExample";
-import VisualizationDualAxisBarChartExample from "./VisualizationDualAxisBarChartExample";
-import VisualizationDualAxisBarChartExampleSRC from "!raw-loader!./VisualizationDualAxisBarChartExample";
+import insightViewDualAxisBarChartExample from "./InsightViewDualAxisBarChartExample";
+import insightViewDualAxisBarChartExampleSRC from "!raw-loader!./insightViewDualAxisBarChartExample";
 
 export const ChartConfiguration = () => (
     <div>
@@ -32,15 +32,15 @@ export const ChartConfiguration = () => (
         </div>
         {/* 
         <div>
-            <h1>Customize chart visualization</h1>
+            <h1>Customize chart insightView</h1>
 
             <h2>Dual Axis Bar chart</h2>
 
             <hr className="separator" />
 
             <ExampleWithSource
-                for={VisualizationDualAxisBarChartExample}
-                source={VisualizationDualAxisBarChartExampleSRC}
+                for={insightViewDualAxisBarChartExample}
+                source={insightViewDualAxisBarChartExampleSRC}
             />
 
             <h2>Column chart</h2>

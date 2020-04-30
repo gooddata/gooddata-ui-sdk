@@ -1,12 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { Executor, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
+import { RawExecute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { newAttribute } from "@gooddata/sdk-model";
 import toPairs from "lodash/toPairs";
 import groupBy from "lodash/groupBy";
 
 import {
-    projectId,
+    workspace,
     locationStateDisplayFormIdentifier,
     locationNameDisplayFormIdentifier,
 } from "../../constants/fixtures";
@@ -28,7 +28,7 @@ const resultStyle = {
 export const ExecuteAttributeValuesExample: React.FC = () => {
     const backend = useBackend();
     const execution = backend
-        .workspace(projectId)
+        .workspace(workspace)
         .execution()
         .forItems([
             newAttribute(locationStateDisplayFormIdentifier),
@@ -37,7 +37,7 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
 
     return (
         <div>
-            <Executor execution={execution}>
+            <RawExecute execution={execution}>
                 {({ error, isLoading, result }) => {
                     if (error) {
                         return (
@@ -51,10 +51,13 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
                         return <LoadingComponent />;
                     }
 
-                    const [[locationStateHeaders, locationNameHeaders]] = result.headerItems();
+                    const [[locationStateHeaders, locationNameHeaders]] = result.dataView.headerItems;
                     const locationStates = locationStateHeaders.map(getAttributeHeaderItemName);
                     const locations = locationNameHeaders.map(getAttributeHeaderItemName);
-                    const locationsByState = groupBy(locations, withIndex(index => locationStates[index]));
+                    const locationsByState = groupBy(
+                        locations,
+                        withIndex(index => locationStates[index]),
+                    );
                     const locationStateLocationsPairs = toPairs(locationsByState);
 
                     return (
@@ -79,7 +82,7 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
                         </div>
                     );
                 }}
-            </Executor>
+            </RawExecute>
         </div>
     );
 };

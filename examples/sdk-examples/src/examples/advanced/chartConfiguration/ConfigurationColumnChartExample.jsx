@@ -1,8 +1,8 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { Visualization } from "@gooddata/sdk-ui";
+import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { columnsVisualizationIdentifier, projectId } from "../../../constants/fixtures";
+import { columnsInsightViewIdentifier, workspace } from "../../../constants/fixtures";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 
 const defaultProperties = {};
@@ -74,7 +74,7 @@ export class ConfigurationColumnChartExample extends Component {
 
         return (
             <div>
-                <div className="s-visualization-column">
+                <div className="s-insightView-column">
                     <button className="s-change-palette" onClick={this.onPaletteChange}>
                         Change palette
                     </button>
@@ -88,10 +88,11 @@ export class ConfigurationColumnChartExample extends Component {
                     </button>
 
                     <div style={{ height: 300 }}>
-                        <Visualization
-                            projectId={projectId}
-                            identifier={columnsVisualizationIdentifier}
-                            config={config}
+                        <InsightView
+                            workspace={workspace}
+                            insight={columnsInsightViewIdentifier}
+                            // TODO: SDK8 Decide whether add dimesion prop to InsightView
+                            // config={config}
                         />
                     </div>
                 </div>

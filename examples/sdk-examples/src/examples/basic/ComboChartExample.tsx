@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { ComboChart } from "@gooddata/sdk-ui";
+import { ComboChart } from "@gooddata/sdk-ui-charts";
 import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     locationResortIdentifier,
@@ -26,7 +26,7 @@ export const ComboChartExample: React.FC = () => {
         <div style={style} className="s-combo-chart">
             <ComboChart
                 backend={backend}
-                workspace={projectId}
+                workspace={workspace}
                 primaryMeasures={columnMeasures}
                 secondaryMeasures={lineMeasures}
                 viewBy={locationResort}

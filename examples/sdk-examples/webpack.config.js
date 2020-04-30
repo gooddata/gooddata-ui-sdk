@@ -29,7 +29,7 @@ function SimplestProgressPlugin() {
         const percentInt = Math.ceil(percent * 100);
         if (percentInt >= lastPercent + 5) {
             lastPercent = percentInt;
-            process.stderr.write(`${percentInt}% `);
+            process.stdout.write(`${percentInt}% `);
         }
     });
 }
@@ -86,7 +86,9 @@ module.exports = async (env, argv) => {
             BASEPATH: JSON.stringify(basePath),
         }),
         new SimplestProgressPlugin(),
-        new Dotenv(),
+        new Dotenv({
+            silent: true,
+        }),
         new ForkTsCheckerWebpackPlugin({
             tslint: true,
             reportFiles: ["src/**/*.{ts,tsx}"],

@@ -28,7 +28,7 @@ export const OnDrillHandling: React.FC = () => (
 
         <hr className="separator" />
 
-        <h2 id="visualization">Insight</h2>
+        <h2 id="insightView">Insight</h2>
         <ExampleWithSource for={InsightOnDrillExample} source={InsightOnDrillExampleSRC} />
     </div>
 );

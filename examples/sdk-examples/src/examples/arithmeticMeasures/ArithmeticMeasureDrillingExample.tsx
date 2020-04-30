@@ -1,10 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { PivotTable, HeaderPredicates } from "@gooddata/sdk-ui";
+import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
 import {
-    projectId,
+    workspace,
     locationStateDisplayFormIdentifier,
     numberOfRestaurantsIdentifier,
     totalSalesIdentifier,
@@ -60,7 +61,7 @@ export const ArithmeticMeasureDrillingExample: React.FC = () => {
             <div style={style} className="s-table">
                 <PivotTable
                     backend={backend}
-                    workspace={projectId}
+                    workspace={workspace}
                     measures={measures}
                     rows={rows}
                     drillableItems={drillableItems}

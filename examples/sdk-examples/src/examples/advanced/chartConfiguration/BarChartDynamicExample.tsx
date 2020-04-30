@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { BarChart, IChartConfig } from "@gooddata/sdk-ui";
+import { BarChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import {
     totalSalesIdentifier,
     locationResortIdentifier,
     menuCategoryAttributeDFIdentifier,
-    projectId,
+    workspace,
 } from "../../../constants/fixtures";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 import { useBackend } from "../../../context/auth";
@@ -98,7 +98,7 @@ export const BarChartDynamicExample: React.FC = () => {
                 <div style={style}>
                     <BarChart
                         backend={backend}
-                        workspace={projectId}
+                        workspace={workspace}
                         measures={[amount]}
                         viewBy={locationResort}
                         stackBy={menuCategory}
