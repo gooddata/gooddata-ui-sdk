@@ -1,20 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { AttributeElements, BarChart } from "@gooddata/sdk-ui";
-import { newMeasure, newAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import Select from "react-select";
 import "react-select/dist/react-select.css";
 
-import {
-    workspace,
-    locationStateAttributeIdentifier,
-    locationStateDisplayFormIdentifier,
-    locationCityAttributeIdentifier,
-    locationCityDisplayFormIdentifier,
-    locationIdAttributeIdentifier,
-    locationNameDisplayFormIdentifier,
-    totalSalesIdentifier,
-} from "../../../constants/fixtures";
+import { workspace } from "../../../constants/fixtures";
+import { Ldm, LdmExt } from "../../../ldm";
 
 export class ParentFilterExample extends Component {
     constructor(props) {
@@ -49,7 +41,7 @@ export class ParentFilterExample extends Component {
         if (stateFilterValues.length) {
             visFilters.push(
                 newPositiveAttributeFilter(
-                    locationStateDisplayFormIdentifier,
+                    Ldm.LocationState,
                     stateFilterValues.map(filter => filter.value),
                 ),
             );
@@ -57,23 +49,17 @@ export class ParentFilterExample extends Component {
         if (cityFilterValues.length) {
             visFilters.push(
                 newPositiveAttributeFilter(
-                    locationCityDisplayFormIdentifier,
+                    Ldm.LocationCity,
                     cityFilterValues.map(filter => filter.value),
                 ),
             );
         }
 
-        const measureTotalSales = newMeasure(totalSalesIdentifier, m =>
-            m.format("#,##0").alias("$ Total Sales"),
-        );
-
-        const viewByLocationName = newAttribute(locationNameDisplayFormIdentifier);
-
         return (
             <div style={{ height: 500 }}>
                 <BarChart
-                    measures={[measureTotalSales]}
-                    viewBy={viewByLocationName}
+                    measures={[LdmExt.TotalSales1]}
+                    viewBy={Ldm.LocationName.Default}
                     filters={visFilters}
                     workspace={workspace}
                     height={500}
@@ -130,7 +116,7 @@ export class ParentFilterExample extends Component {
         // State (parent) filter
         const stateFilter = this.renderFilter(
             "state",
-            locationStateDisplayFormIdentifier,
+            Ldm.LocationState.attribute.displayForm,
             stateFilterValues,
             "all states",
             { limit: 20 },
@@ -148,7 +134,7 @@ export class ParentFilterExample extends Component {
                 attributes: [
                     {
                         displayForm: {
-                            identifier: locationCityDisplayFormIdentifier,
+                            identifier: Ldm.LocationCity.attribute.displayForm,
                         },
                         localIdentifier: "childAttribute",
                     },
@@ -158,14 +144,14 @@ export class ParentFilterExample extends Component {
                         expression: {
                             value:
                                 // parent attribute identifier surrounded by '{}'
-                                `({${locationStateAttributeIdentifier}}` +
+                                `({${Ldm.LocationState.attribute.displayForm}}` +
                                 // selected parent values surrounded by '[]' and separated by ','
                                 ` IN (${selectedParentItems}))` +
                                 // attribute identifier of common attribute between parent
                                 // and child attributes surrounded by '{}'
-                                ` OVER {${locationIdAttributeIdentifier}}` +
+                                ` OVER {${Ldm.LocationId.attribute.displayForm}}` +
                                 // child attribute identifier surrounded by '{}'
-                                ` TO {${locationCityAttributeIdentifier}}`,
+                                ` TO {${Ldm.LocationCity.attribute.displayForm}}`,
                         },
                     },
                 ],
@@ -174,7 +160,7 @@ export class ParentFilterExample extends Component {
         }
         const cityFilter = this.renderFilter(
             "city",
-            locationCityDisplayFormIdentifier,
+            Ldm.LocationCity.attribute.displayForm,
             cityFilterValues,
             "all cities",
             cityOptions,

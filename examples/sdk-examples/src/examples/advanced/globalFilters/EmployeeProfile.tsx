@@ -3,23 +3,12 @@ import React, { useState, useEffect } from "react";
 import { Kpi } from "@gooddata/sdk-ui";
 import { BarChart, PieChart } from "@gooddata/sdk-ui-charts";
 import { IElementQueryResult } from "@gooddata/sdk-backend-spi";
-import {
-    newMeasure,
-    newAttribute,
-    newPositiveAttributeFilter,
-    IAttributeElementsByRef,
-} from "@gooddata/sdk-model";
+import { newPositiveAttributeFilter, IAttributeElementsByRef } from "@gooddata/sdk-model";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { EmployeeCard } from "./EmployeeCard";
 import { KpiMetricBox } from "./KpiMetricBox";
-import {
-    workspace,
-    employeeNameIdentifier,
-    averageDailyTotalSalesIdentifier,
-    averageCheckSizeByServerIdentifier,
-    menuItemNameAttributeDFIdentifier,
-    menuCategoryAttributeDFIdentifier,
-} from "../../../constants/fixtures";
+import { workspace } from "../../../constants/fixtures";
+import { Ldm, LdmExt } from "../../../ldm";
 import { Layout } from "../../../components/Layout";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
@@ -33,15 +22,7 @@ interface IEmployeeProfileState {
     selectedEmployeeUri: string;
 }
 
-const averageDailyTotalSales = newMeasure(averageDailyTotalSalesIdentifier, m =>
-    m.alias("$ Avg Daily Total Sales").format("$#,##0"),
-);
-const averageCheckSizeByServer = newMeasure(averageCheckSizeByServerIdentifier, m =>
-    m.alias("$ Avg Check Size By Server").format("$#,##0"),
-);
-const measures = [averageDailyTotalSales];
-const menuCategoryAttribute = newAttribute(menuCategoryAttributeDFIdentifier);
-const menuItemNameAttribute = newAttribute(menuItemNameAttributeDFIdentifier, a => a.alias("Menu Item name"));
+const measures = [LdmExt.AvgDailyTotalSales];
 
 export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements }) => {
     const backend = useBackend();
@@ -99,7 +80,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
     );
 
     const selectedEmployeesUris: IAttributeElementsByRef = { uris: [selectedEmployeeUri] };
-    const employeeFilter = newPositiveAttributeFilter(employeeNameIdentifier, selectedEmployeesUris);
+    const employeeFilter = newPositiveAttributeFilter(Ldm.EmployeeName.Default, selectedEmployeesUris);
     const selectedEmployee = validElements.items.find(item => item.uri === selectedEmployeeUri);
 
     const employeeName = selectedEmployee.title;
@@ -157,7 +138,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                 <Kpi
                                     backend={backend}
                                     filters={[employeeFilter]}
-                                    measure={averageDailyTotalSales}
+                                    measure={LdmExt.AvgDailyTotalSales}
                                     workspace={workspace}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
@@ -170,7 +151,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                 <Kpi
                                     backend={backend}
                                     filters={[employeeFilter]}
-                                    measure={averageCheckSizeByServer}
+                                    measure={LdmExt.AvgCheckSizeByServer}
                                     workspace={workspace}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
@@ -185,7 +166,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                 <PieChart
                                     backend={backend}
                                     measures={measures}
-                                    viewBy={menuCategoryAttribute}
+                                    viewBy={Ldm.MenuCategory}
                                     filters={[employeeFilter]}
                                     workspace={workspace}
                                     LoadingComponent={CustomLoading}
@@ -200,7 +181,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                 <BarChart
                                     backend={backend}
                                     measures={measures}
-                                    viewBy={menuItemNameAttribute}
+                                    viewBy={LdmExt.MenuItemName}
                                     filters={[employeeFilter]}
                                     workspace={workspace}
                                     LoadingComponent={CustomLoading}

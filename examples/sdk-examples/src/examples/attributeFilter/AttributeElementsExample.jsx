@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui";
 import PropTypes from "prop-types";
 
-import { employeeNameIdentifier, workspace } from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm } from "../../ldm";
 
 export class AttributeFilterItem extends Component {
     static propTypes = {
@@ -39,7 +40,7 @@ export class AttributeElementsExample extends Component {
         return (
             <div style={{ minHeight: 500 }}>
                 <AttributeElements
-                    identifier={employeeNameIdentifier}
+                    identifier={Ldm.EmployeeName.Default.attribute.displayForm}
                     workspace={workspace}
                     options={{ limit: 20 }}
                 >

@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from "react";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 import { LineChart, ColumnChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { newMeasure, newAttribute } from "@gooddata/sdk-model";
+import { newMeasure } from "@gooddata/sdk-model";
 
 import sdk from "@gooddata/gd-bear-client";
 
 import { Layout } from "../../../components/Layout";
 import { SidebarItem } from "../../../components/SidebarItem";
-import { monthDateIdentifier, workspace, franchiseFeesTag } from "../../../constants/fixtures";
+import { workspace } from "../../../constants/fixtures";
+import { Ldm, LdmExt } from "../../../ldm";
 import { useBackend } from "../../../context/auth";
 
 interface IDynamicMeasuresExampleState {
@@ -43,7 +44,7 @@ export const DynamicMeasuresExample: React.FC = () => {
     });
 
     useEffect(() => {
-        getMeasureListByTag(franchiseFeesTag)
+        getMeasureListByTag(LdmExt.franchiseFeesTag)
             .then(measures => {
                 const updatedState = measures.length
                     ? {
@@ -56,8 +57,8 @@ export const DynamicMeasuresExample: React.FC = () => {
                     : {
                           measureList: null,
                           error: {
-                              message: `No measures with tag ${franchiseFeesTag}`,
-                              description: `Please check your project. Franchise fees measures should have assigned the tag ${franchiseFeesTag}.`,
+                              message: `No measures with tag ${LdmExt.franchiseFeesTag}`,
+                              description: `Please check your project. Franchise fees measures should have assigned the tag ${LdmExt.franchiseFeesTag}.`,
                           },
                       };
 
@@ -67,7 +68,7 @@ export const DynamicMeasuresExample: React.FC = () => {
                 setState({
                     measureList: null,
                     error: {
-                        message: `There was Error while requesting measures by tag ${franchiseFeesTag}`,
+                        message: `There was Error while requesting measures by tag ${LdmExt.franchiseFeesTag}`,
                         description: JSON.stringify(error),
                     },
                 });
@@ -146,8 +147,6 @@ export const DynamicMeasuresExample: React.FC = () => {
         const measures = selectedMeasures.map(getNewMeasureDefinition);
 
         if (selectedMeasures.length) {
-            const attribute = newAttribute(monthDateIdentifier);
-
             content = (
                 <div className="graph-wrapper">
                     {/* language=CSS */}
@@ -165,7 +164,7 @@ export const DynamicMeasuresExample: React.FC = () => {
                             backend={backend}
                             workspace={workspace}
                             measures={measures}
-                            trendBy={attribute}
+                            trendBy={Ldm.DateMonth.Short}
                             config={config}
                         />
                     </div>

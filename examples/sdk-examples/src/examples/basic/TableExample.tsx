@@ -1,29 +1,17 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasure, newAttribute, ITotal } from "@gooddata/sdk-model";
+import { ITotal } from "@gooddata/sdk-model";
 
-import {
-    workspace,
-    monthDateIdentifier,
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const measures = [
-    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("franchiseFeesIdentifier")),
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
-        m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
-    ),
-    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
-        m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
-    ),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
-        m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
-    ),
+    LdmExt.FranchiseFees,
+    LdmExt.FranchiseFeesAdRoyalty,
+    LdmExt.FranchiseFeesInitialFranchiseFee,
+    LdmExt.FranchiseFeesOngoingRoyalty,
 ];
 
 const totals: ITotal[] = [
@@ -49,7 +37,7 @@ const totals: ITotal[] = [
     },
 ];
 
-const attributes = [newAttribute(monthDateIdentifier, a => a.localId("month"))];
+const attributes = [LdmExt.monthDate];
 
 const style = { height: 300 };
 

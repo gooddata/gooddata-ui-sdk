@@ -2,7 +2,8 @@
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { workspace, treemapInsightViewIdentifier } from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const style = { height: 300 };
@@ -21,7 +22,7 @@ export const InsightViewTreemapByIdentifierExample: React.FC = () => {
 
     return (
         <div style={style} className="s-insightView-treemap">
-            <InsightView backend={backend} workspace={workspace} insight={treemapInsightViewIdentifier} />
+            <InsightView backend={backend} workspace={workspace} insight={Ldm.Insights.TreemapChart} />
         </div>
     );
 };

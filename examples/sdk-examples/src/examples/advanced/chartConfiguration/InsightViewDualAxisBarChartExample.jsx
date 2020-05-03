@@ -3,12 +3,8 @@ import React, { Component } from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import {
-    workspace,
-    dualAxisBarInsightViewIdentifier,
-    totalSalesLocalIdentifier,
-    totalCostsLocalIdentifier,
-} from "../../../constants/fixtures";
+import { workspace } from "../../../constants/fixtures";
+import { Ldm } from "../../../ldm";
 
 export class insightViewDualAxisBarChartExample extends Component {
     render() {
@@ -35,7 +31,7 @@ export class insightViewDualAxisBarChartExample extends Component {
             <div style={{ height: 300 }} className="s-insightView-dual-axis-bar">
                 <InsightView
                     workspace={workspace}
-                    insight={dualAxisBarInsightViewIdentifier}
+                    insight={Ldm.Insights.DualAxisBarChart}
                     // config={config}
                 />
             </div>

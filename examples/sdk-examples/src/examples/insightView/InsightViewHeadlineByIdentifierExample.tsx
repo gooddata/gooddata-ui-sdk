@@ -2,7 +2,8 @@
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { workspace, headlineInsightViewIdentifier } from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const style = { height: 300 };
@@ -21,7 +22,7 @@ export const InsightViewHeadlineByIdentifierExample: React.FC = () => {
 
     return (
         <div style={style} className="s-insightView-headline">
-            <InsightView backend={backend} workspace={workspace} insight={headlineInsightViewIdentifier} />
+            <InsightView backend={backend} workspace={workspace} insight={Ldm.Insights.HeadlineChart} />
         </div>
     );
 };

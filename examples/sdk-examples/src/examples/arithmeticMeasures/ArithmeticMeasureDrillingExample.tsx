@@ -2,35 +2,17 @@
 import React, { useState } from "react";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
+import { measureLocalId } from "@gooddata/sdk-model";
 
-import {
-    workspace,
-    locationStateDisplayFormIdentifier,
-    numberOfRestaurantsIdentifier,
-    totalSalesIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
-const localIdentifiers = {
-    numberOfRestaurants: "numberOfRestaurants",
-    totalSales: "totalSales",
-    averageRestaurantSales: "averageRestaurantSales",
-};
+const measures = [LdmExt.NrRestaurants, LdmExt.TotalSales2, LdmExt.arithmeticMeasure1];
 
-const measures = [
-    newMeasure(numberOfRestaurantsIdentifier, m =>
-        m.format("#,##0").localId(localIdentifiers.numberOfRestaurants),
-    ),
-    newMeasure(totalSalesIdentifier, m => m.format("#,##0").localId(localIdentifiers.totalSales)),
-    newArithmeticMeasure([localIdentifiers.totalSales, localIdentifiers.numberOfRestaurants], "ratio", m =>
-        m.format("#,##0").title("$ Avg Restaurant Sales"),
-    ),
-];
+const rows = [Ldm.LocationState];
 
-const rows = [newAttribute(locationStateDisplayFormIdentifier)];
-
-const drillableItems = [HeaderPredicates.composedFromIdentifier(totalSalesIdentifier)];
+const drillableItems = [HeaderPredicates.composedFromIdentifier(measureLocalId(LdmExt.TotalSales2))];
 
 const style = { height: 200 };
 

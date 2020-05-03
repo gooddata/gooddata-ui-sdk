@@ -2,77 +2,54 @@
 import React, { useState } from "react";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasure, newAttribute, ITotal } from "@gooddata/sdk-model";
+import { ITotal, attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 
-import {
-    workspace,
-    quarterDateIdentifier,
-    monthDateIdentifier,
-    locationStateDisplayFormIdentifier,
-    locationNameDisplayFormIdentifier,
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-    menuCategoryAttributeDFIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const measures = [
-    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("franchiseFeesIdentifier")),
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
-        m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
-    ),
-    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
-        m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
-    ),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
-        m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
-    ),
+    LdmExt.FranchiseFees,
+    LdmExt.FranchiseFeesAdRoyalty,
+    LdmExt.FranchiseFeesInitialFranchiseFee,
+    LdmExt.FranchiseFeesOngoingRoyalty,
 ];
 
-const attributes = [
-    newAttribute(locationStateDisplayFormIdentifier, a => a.localId("state")),
-    newAttribute(locationNameDisplayFormIdentifier, a => a.localId("name")),
-    newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
-];
+const attributes = [LdmExt.LocationState, LdmExt.LocationName, LdmExt.MenuCategory];
 
-const columns = [
-    newAttribute(quarterDateIdentifier, a => a.localId("quarter")),
-    newAttribute(monthDateIdentifier, a => a.localId("month")),
-];
+const columns = [LdmExt.quaterDate, LdmExt.monthDate];
 
 const totals: ITotal[] = [
     {
-        measureIdentifier: "franchiseFeesIdentifier",
+        measureIdentifier: "franchiseFees",
         type: "sum",
-        attributeIdentifier: "state",
+        attributeIdentifier: "locationState",
     },
     {
-        measureIdentifier: "franchiseFeesAdRoyaltyIdentifier",
+        measureIdentifier: "franchiseFeesAdRoyalty",
         type: "sum",
-        attributeIdentifier: "state",
+        attributeIdentifier: "locationState",
     },
     {
-        measureIdentifier: "franchiseFeesIdentifier",
+        measureIdentifier: "franchiseFees",
         type: "max",
-        attributeIdentifier: "state",
+        attributeIdentifier: "locationState",
     },
     {
-        measureIdentifier: "franchiseFeesIdentifier",
+        measureIdentifier: "franchiseFees",
         type: "sum",
         attributeIdentifier: "menu",
     },
     {
-        measureIdentifier: "franchiseFeesAdRoyaltyIdentifier",
+        measureIdentifier: "franchiseFeesAdRoyalty",
         type: "sum",
         attributeIdentifier: "menu",
     },
 ];
 
 const drillableItems = [
-    HeaderPredicates.identifierMatch(menuCategoryAttributeDFIdentifier),
-    HeaderPredicates.identifierMatch(franchiseFeesIdentifier),
+    HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.MenuCategory)),
+    HeaderPredicates.identifierMatch(measureLocalId(LdmExt.FranchiseFees)),
 ];
 
 const style = { height: 500 };

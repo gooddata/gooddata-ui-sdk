@@ -77,7 +77,7 @@ export const sideNavigationRoutes = [
         path: "/insightView",
         pathMatch: "full",
         redirectTo: insightViewUseCasesRoutes[0].path,
-        title: "insightView Component",
+        title: "InsightView Component",
         Component: InsightViewUseCasesRoutes,
     },
     { path: "/sorting", title: "Sorting", Component: Sorting },

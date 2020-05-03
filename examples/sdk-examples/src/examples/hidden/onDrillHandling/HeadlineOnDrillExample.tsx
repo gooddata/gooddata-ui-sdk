@@ -1,14 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { newMeasure } from "@gooddata/sdk-model";
+import { measureIdentifier } from "@gooddata/sdk-model";
 
-import { franchiseFeesIdentifier, franchiseFeesAdRoyaltyIdentifier } from "../../../constants/fixtures";
+import { LdmExt } from "../../../ldm";
 import { useOnDrillExample } from "./useOnDrillExample";
 
-const primaryMeasure = newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("m1"));
+const primaryMeasure = LdmExt.FranchiseFees;
 
-const secondaryMeasure = newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0").localId("m2"));
+const secondaryMeasure = LdmExt.FranchiseFeesAdRoyalty;
 
 export const HeadlineOnDrillExample: React.FC = () => {
     const { onDrill, renderDrillEvent } = useOnDrillExample();
@@ -30,7 +30,7 @@ export const HeadlineOnDrillExample: React.FC = () => {
                         onDrill={onDrill}
                         drillableItems={[
                             {
-                                identifier: franchiseFeesIdentifier,
+                                identifier: measureIdentifier(LdmExt.FranchisedSales),
                             },
                         ]}
                     />

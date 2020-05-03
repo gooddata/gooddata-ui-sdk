@@ -2,23 +2,15 @@
 
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure, newAttribute, newPopMeasure } from "@gooddata/sdk-model";
+import { newPopMeasure } from "@gooddata/sdk-model";
 
-import {
-    totalSalesIdentifier,
-    quarterDateIdentifier,
-    yearDateDataSetAttributeIdentifier,
-    workspace,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
-const totalSales = newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales"));
-const totalSalesYearAgo = newPopMeasure(
-    totalSales.measure.localIdentifier,
-    yearDateDataSetAttributeIdentifier,
-    m => m.alias("$ Total Sales - SP year ago"),
+const totalSalesYearAgo = newPopMeasure(Ldm.$TotalSales, LdmExt.yearDateDataSetAttributeIdentifier, m =>
+    m.alias("$ Total Sales - SP year ago"),
 );
-const viewBy = newAttribute(quarterDateIdentifier);
 
 const style = { height: 300 };
 
@@ -30,8 +22,8 @@ export const SamePeriodColumnChartExample: React.FC = () => {
             <ColumnChart
                 backend={backend}
                 workspace={workspace}
-                measures={[totalSales, totalSalesYearAgo]}
-                viewBy={viewBy}
+                measures={[Ldm.$TotalSales, totalSalesYearAgo]}
+                viewBy={Ldm.DateQuarter}
             />
         </div>
     );

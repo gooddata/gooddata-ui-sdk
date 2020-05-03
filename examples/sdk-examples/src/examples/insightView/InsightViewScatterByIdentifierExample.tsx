@@ -3,7 +3,8 @@ import React from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { workspace, scatterInsightViewIdentifier } from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const style = { height: 300 };
@@ -22,7 +23,7 @@ export const InsightViewScatterByIdentifierExample: React.FC = () => {
 
     return (
         <div style={style} className="s-insightView-scatter">
-            <InsightView backend={backend} workspace={workspace} insight={scatterInsightViewIdentifier} />
+            <InsightView backend={backend} workspace={workspace} insight={Ldm.Insights.ScatterChart} />
         </div>
     );
 };

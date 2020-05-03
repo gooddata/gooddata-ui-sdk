@@ -1,42 +1,22 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasure, newAttribute, ITotal } from "@gooddata/sdk-model";
+import { ITotal } from "@gooddata/sdk-model";
 
-import {
-    workspace,
-    quarterDateIdentifier,
-    monthDateIdentifier,
-    locationStateDisplayFormIdentifier,
-    locationNameDisplayFormIdentifier,
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-    menuCategoryAttributeDFIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const measures = [
-    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("franchiseFeesIdentifier")),
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
-        m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
-    ),
-    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
-        m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
-    ),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
-        m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
-    ),
+    LdmExt.FranchiseFees,
+    LdmExt.FranchiseFeesAdRoyalty,
+    LdmExt.FranchiseFeesInitialFranchiseFee,
+    LdmExt.FranchiseFeesOngoingRoyalty,
 ];
 
-const attributes = [
-    newAttribute(locationStateDisplayFormIdentifier, a => a.localId("state")),
-    newAttribute(locationNameDisplayFormIdentifier),
-    newAttribute(menuCategoryAttributeDFIdentifier),
-];
+const attributes = [LdmExt.LocationState, Ldm.LocationName.Default, Ldm.MenuCategory];
 
-const columns = [newAttribute(quarterDateIdentifier), newAttribute(monthDateIdentifier)];
+const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
 const totals: ITotal[] = [
     {
         measureIdentifier: "franchiseFeesIdentifier",

@@ -1,34 +1,24 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasure, newAttribute, newAttributeSort } from "@gooddata/sdk-model";
+import { newAttributeSort, modifyAttribute } from "@gooddata/sdk-model";
 
-import {
-    workspace,
-    quarterDateIdentifier,
-    monthDateIdentifier,
-    locationStateDisplayFormIdentifier,
-    locationNameDisplayFormIdentifier,
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-    menuCategoryAttributeDFIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const measures = [
-    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
+    LdmExt.FranchiseFees,
+    LdmExt.FranchiseFeesAdRoyalty,
+    LdmExt.FranchiseFeesInitialFranchiseFee,
+    LdmExt.FranchiseFeesOngoingRoyalty,
 ];
 const attributes = [
-    newAttribute(locationStateDisplayFormIdentifier),
-    newAttribute(locationNameDisplayFormIdentifier),
-    newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
+    Ldm.LocationState,
+    Ldm.LocationName.Default,
+    modifyAttribute(Ldm.MenuCategory, a => a.localId("menu")),
 ];
-const columns = [newAttribute(quarterDateIdentifier), newAttribute(monthDateIdentifier)];
+const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
 const sortBy = [newAttributeSort("menu", "asc")];
 
 const style = { height: 300 };

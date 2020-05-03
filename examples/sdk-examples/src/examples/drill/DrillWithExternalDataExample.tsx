@@ -4,17 +4,9 @@ import fetch from "isomorphic-fetch";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { LoadingComponent, ErrorComponent, HeaderPredicates } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure, newPositiveAttributeFilter, newAttribute } from "@gooddata/sdk-model";
-import {
-    workspace,
-    employeeNameIdentifier,
-    averageDailyTotalSalesIdentifier,
-    locationStateDisplayFormIdentifier,
-    locationStateAttributeUri,
-    totalSalesIdentifier,
-    locationNameDisplayFormIdentifier,
-    locationNameAttributeUri,
-} from "../../constants/fixtures";
+import { newPositiveAttributeFilter, attributeLocalId } from "@gooddata/sdk-model";
+import { workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 import { EmployeeProfile } from "./EmployeeProfile";
 import { useBackend } from "../../context/auth";
 
@@ -38,7 +30,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                 : drillTarget.drillContext.points[0].intersection[1];
         const location = {
             name,
-            uri: `${locationNameAttributeUri}/elements?id=${id}`,
+            uri: `${LdmExt.locationNameAttributeUri}/elements?id=${id}`,
         };
         setState(oldState => ({
             ...oldState,
@@ -51,7 +43,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         const { name, id } = drillTarget.drillContext.row[0];
         const state = {
             name,
-            uri: `${locationStateAttributeUri}/elements?id=${id}`,
+            uri: `${LdmExt.locationStateAttributeUri}/elements?id=${id}`,
         };
         setState(oldState => ({
             ...oldState,
@@ -126,22 +118,20 @@ export const DrillWithExternalDataExample: React.FC = () => {
         const filters = [];
         if (state) {
             filters.push(
-                newPositiveAttributeFilter(locationStateDisplayFormIdentifier, { uris: [state.uri] }),
+                newPositiveAttributeFilter(Ldm.LocationState, {
+                    uris: [state.uri],
+                }),
             );
         }
         if (location) {
             filters.push(
-                newPositiveAttributeFilter(locationNameDisplayFormIdentifier, { uris: [location.uri] }),
+                newPositiveAttributeFilter(Ldm.LocationName.Default, {
+                    uris: [location.uri],
+                }),
             );
         }
         return filters;
     };
-
-    const getMeasure = (identifier, localIdentifier, alias) =>
-        newMeasure(identifier, m => m.alias(alias).localId(localIdentifier));
-
-    const getAttribute = (identifier, localIdentifier) =>
-        newAttribute(identifier, a => a.localId(localIdentifier));
 
     const renderEmployeeDetails = employeeData => {
         if (employeeData.isError) {
@@ -156,53 +146,44 @@ export const DrillWithExternalDataExample: React.FC = () => {
 
     const { state, location } = componentState;
 
-    const averageDailySalesMeasure = getMeasure(
-        averageDailyTotalSalesIdentifier,
-        "averageDailyTotalSales",
-        "Average Sales",
-    );
-    const stateAttribute = getAttribute(locationStateDisplayFormIdentifier, "locationState");
     const stateTable = (
         <div style={{ height: 200 }} className="s-state-table">
             <PivotTable
                 backend={backend}
                 workspace={workspace}
-                measures={[averageDailySalesMeasure]}
-                rows={[stateAttribute]}
-                drillableItems={[HeaderPredicates.identifierMatch(locationStateDisplayFormIdentifier)]}
+                measures={[LdmExt.AvgDailyTotalSales]}
+                rows={[LdmExt.LocationState]}
+                drillableItems={[HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.LocationState))]}
                 onDrill={onStateDrill}
             />
         </div>
     );
 
-    const employeeNameAttribute = getAttribute(employeeNameIdentifier, "employeeName");
-    const locationNameAttribute = getAttribute(locationNameDisplayFormIdentifier, "locationName");
     const employeeTableFilters = getFilters(state, location);
     const employeeTable = (
         <div style={{ height: 300 }} className="s-employee-table">
             <PivotTable
                 backend={backend}
                 workspace={workspace}
-                measures={[averageDailySalesMeasure]}
-                rows={[employeeNameAttribute]}
-                drillableItems={[HeaderPredicates.identifierMatch(employeeNameIdentifier)]}
+                measures={[LdmExt.AvgDailyTotalSales]}
+                rows={[LdmExt.EmployeeName]}
+                drillableItems={[HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.EmployeeName))]}
                 filters={employeeTableFilters}
                 onDrill={onEmployeeDrill}
             />
         </div>
     );
 
-    const totalSalesMeasure = getMeasure(totalSalesIdentifier, "totalSales", "Total Sales");
     const salesTableFilters = getFilters(state, location);
     const totalSalesChart = (
         <div style={{ height: 300 }} className="s-sales-chart">
             <ColumnChart
                 backend={backend}
                 workspace={workspace}
-                measures={[totalSalesMeasure]}
-                viewBy={locationNameAttribute}
+                measures={[LdmExt.TotalSales2]}
+                viewBy={LdmExt.LocationName}
                 filters={salesTableFilters}
-                drillableItems={[HeaderPredicates.identifierMatch(locationNameDisplayFormIdentifier)]}
+                drillableItems={[HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.LocationName))]}
                 onDrill={onLocationDrill}
             />
         </div>

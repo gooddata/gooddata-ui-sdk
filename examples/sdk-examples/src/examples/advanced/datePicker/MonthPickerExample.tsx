@@ -2,16 +2,12 @@
 import React, { useState } from "react";
 import { ErrorComponent } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure, newAttribute, newRelativeDateFilter } from "@gooddata/sdk-model";
+import { newRelativeDateFilter } from "@gooddata/sdk-model";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
-import {
-    totalSalesIdentifier,
-    monthOfYearDateIdentifier,
-    dateDatasetIdentifier,
-    workspace,
-} from "../../../constants/fixtures";
+import { workspace } from "../../../constants/fixtures";
+import { Ldm, LdmExt } from "../../../ldm";
 import { useBackend } from "../../../context/auth";
 
 const dateFormat = "YYYY-MM-DD";
@@ -21,9 +17,7 @@ const withGTM0 = time => time.utcOffset("+00:00", true);
 
 const currentDate = withGTM0(moment().startOf("months"));
 
-const measures = [newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"))];
-
-const viewBy = newAttribute(monthOfYearDateIdentifier);
+const measures = [LdmExt.TotalSales1];
 
 const style = { height: 300 };
 
@@ -65,7 +59,7 @@ export const MonthPickerExample: React.FC = () => {
 
     const filters = [
         newRelativeDateFilter(
-            dateDatasetIdentifier,
+            LdmExt.dateDatasetIdentifier,
             "GDC.time.month",
             Math.floor(from.diff(currentDate, "months", true)),
             Math.floor(to.diff(currentDate, "months", true)),
@@ -118,7 +112,7 @@ export const MonthPickerExample: React.FC = () => {
                         backend={backend}
                         workspace={workspace}
                         measures={measures}
-                        viewBy={viewBy}
+                        viewBy={Ldm.DateMonthYear.Short}
                         filters={filters}
                     />
                 )}

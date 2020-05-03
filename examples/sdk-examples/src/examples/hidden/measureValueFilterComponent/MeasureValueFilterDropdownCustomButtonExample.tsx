@@ -2,30 +2,11 @@
 import React, { useState } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
+import { measureIdentifier } from "@gooddata/sdk-model";
+import { Ldm, LdmExt } from "../../../ldm";
 
-import {
-    franchiseFeesIdentifier,
-    franchisedSalesIdentifier,
-    locationNameDisplayFormIdentifier,
-} from "../../../constants/fixtures";
-import {
-    newMeasure,
-    newAttribute,
-    isComparisonConditionOperator,
-    isRangeConditionOperator,
-} from "@gooddata/sdk-model";
-
-const franchiseFeesMeasure = newMeasure(franchiseFeesIdentifier, m =>
-    m.format("#,##0").title("Franchise Fees"),
-);
-
-const franchiseSalesMeasure = newMeasure(franchisedSalesIdentifier, m =>
-    m.format("#,##0").title("Franchise Sales"),
-);
-
-const measures = [franchiseFeesMeasure, franchiseSalesMeasure];
-
-const attributes = [newAttribute(locationNameDisplayFormIdentifier)];
+const measures = [LdmExt.FranchiseFees, LdmExt.FranchisedSales];
+const attributes = [Ldm.LocationName.Default];
 
 interface IDropdownButtonProps {
     isActive?: boolean;
@@ -90,7 +71,7 @@ export const MeasureValueFilterDropdownCustomButtonExample: React.FC = () => {
                 // TODO: Decide whether MeasureValueFilterDropdown will accept these props
                 // button={DropdownButton}
                 // measureTitle={franchiseSalesMeasure.measure.title}
-                measureIdentifier={franchiseSalesMeasure.measure.localIdentifier}
+                measureIdentifier={measureIdentifier(LdmExt.FranchiseFees)}
                 filter={filter || null}
             />
             <hr className="separator" />

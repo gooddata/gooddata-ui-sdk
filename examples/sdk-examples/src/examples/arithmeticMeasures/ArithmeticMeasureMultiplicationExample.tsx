@@ -1,41 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
-import {
-    workspace,
-    locationStateDisplayFormIdentifier,
-    numberOfRestaurantsIdentifier,
-    averageRestaurantDailyCostsIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
-const localIdentifiers = {
-    numberOfRestaurants: "numberOfRestaurants",
-    averageRestaurantDailyCosts: "averageRestaurantDailyCosts",
-    averageStateDailyCosts: "averageStateDailyCosts",
-};
+const measures = [LdmExt.NrRestaurants, LdmExt.averageRestaurantDailyCosts, LdmExt.arithmeticMeasure2];
 
-const measures = [
-    newMeasure(numberOfRestaurantsIdentifier, m =>
-        m.format("#,##0").localId(localIdentifiers.numberOfRestaurants),
-    ),
-    newMeasure(averageRestaurantDailyCostsIdentifier, m =>
-        m.format("#,##0").localId(localIdentifiers.averageRestaurantDailyCosts),
-    ),
-    newArithmeticMeasure(
-        [localIdentifiers.numberOfRestaurants, localIdentifiers.averageRestaurantDailyCosts],
-        "multiplication",
-        m =>
-            m
-                .format("#,##0")
-                .title("$ Avg State Daily Costs")
-                .localId(localIdentifiers.averageStateDailyCosts),
-    ),
-];
-
-const rows = [newAttribute(locationStateDisplayFormIdentifier)];
+const rows = [Ldm.LocationState];
 const style = { height: 200 };
 
 export const ArithmeticMeasureMultiplicationExample: React.FC = () => {

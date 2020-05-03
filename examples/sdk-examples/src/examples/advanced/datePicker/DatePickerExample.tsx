@@ -5,19 +5,13 @@ import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
-import {
-    totalSalesIdentifier,
-    monthDateIdentifier,
-    dateDatasetIdentifier,
-    workspace,
-} from "../../../constants/fixtures";
+import { workspace } from "../../../constants/fixtures";
+import { LdmExt } from "../../../ldm";
 import { useBackend } from "../../../context/auth";
-import { newMeasure, newAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 const dateFormat = "YYYY-MM-DD";
-const measures = [newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales").format("#,##0"))];
-const viewBy = newAttribute(monthDateIdentifier, a => a.alias("Month"));
-
+const measures = [LdmExt.TotalSales1];
 export const DatePickerExample: React.FC = () => {
     const backend = useBackend();
     const [state, setState] = useState({
@@ -55,7 +49,7 @@ export const DatePickerExample: React.FC = () => {
     const { from, to, error } = state;
 
     const filters = [
-        newAbsoluteDateFilter(dateDatasetIdentifier, from.format(dateFormat), to.format(dateFormat)),
+        newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, from.format(dateFormat), to.format(dateFormat)),
     ];
 
     return (
@@ -89,7 +83,7 @@ export const DatePickerExample: React.FC = () => {
                     <ColumnChart
                         backend={backend}
                         workspace={workspace}
-                        viewBy={viewBy}
+                        viewBy={LdmExt.monthDate}
                         measures={measures}
                         filters={filters}
                     />

@@ -4,7 +4,8 @@ import { keyBy, mapValues } from "lodash";
 import { Kpi } from "@gooddata/sdk-ui";
 import { factory } from "@gooddata/gd-bear-client";
 
-import { totalSalesIdentifier, workspace } from "../../../constants/fixtures";
+import { workspace } from "../../../constants/fixtures";
+import { Ldm } from "../../../ldm";
 
 export class MultipleDomainsExample extends Component {
     constructor() {
@@ -45,7 +46,7 @@ export class MultipleDomainsExample extends Component {
         return (
             <div>
                 <h2>Default SDK:</h2>
-                KPI: <Kpi workspace={workspace} measure={totalSalesIdentifier} />
+                KPI: <Kpi workspace={workspace} measure={Ldm.$TotalSales.measure.definition} />
                 <hr className="separator" />
                 <h2>Second SDK:</h2>
                 KPI: <Kpi workspace={sdk2Config.workspace} measure={sdk2Config.measureId} sdk={sdk2} />

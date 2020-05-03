@@ -1,51 +1,19 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
-import {
-    workspace,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-    locationStateDisplayFormIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
-
-const localIdentifiers = {
-    franchiseFeesAdRoyalty: "franchiseFeesAdRoyalty",
-    franchiseFeesOngoingRoyalty: "franchiseFeesOngoingRoyalty",
-    franchiseFeesSum: "franchiseFeesSum",
-    franchiseFeesDifference: "franchiseFeesDifference",
-};
+import { Ldm, LdmExt } from "../../ldm";
 
 const measures = [
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
-        m.format("#,##0").localId(localIdentifiers.franchiseFeesAdRoyalty),
-    ),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
-        m.format("#,##0").localId(localIdentifiers.franchiseFeesOngoingRoyalty),
-    ),
-    newArithmeticMeasure(
-        [localIdentifiers.franchiseFeesOngoingRoyalty, localIdentifiers.franchiseFeesAdRoyalty],
-        "sum",
-        m =>
-            m
-                .format("#,##0")
-                .title("$ Ongoing / Ad Royalty Sum")
-                .localId(localIdentifiers.franchiseFeesSum),
-    ),
-    newArithmeticMeasure(
-        [localIdentifiers.franchiseFeesOngoingRoyalty, localIdentifiers.franchiseFeesAdRoyalty],
-        "difference",
-        m =>
-            m
-                .format("#,##0")
-                .title("$ Ongoing / Ad Royalty Difference")
-                .localId(localIdentifiers.franchiseFeesDifference),
-    ),
+    LdmExt.FranchiseFeesAdRoyalty,
+    LdmExt.FranchiseFeesOngoingRoyalty,
+    LdmExt.arithmeticMeasure4,
+    LdmExt.arithmeticMeasure5,
 ];
 
-const rows = [newAttribute(locationStateDisplayFormIdentifier)];
+const rows = [Ldm.LocationState];
 
 const style = { height: 200 };
 

@@ -2,7 +2,8 @@
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { workspace, areaInsightViewIdentifier } from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const style = { height: 300 };
@@ -20,7 +21,7 @@ export const InsightViewAreaByIdentifierExample: React.FC = () => {
     const backend = useBackend();
     return (
         <div style={style} className="s-insightView-area">
-            <InsightView backend={backend} workspace={workspace} insight={areaInsightViewIdentifier} />
+            <InsightView backend={backend} workspace={workspace} insight={Ldm.Insights.AreaChart} />
         </div>
     );
 };

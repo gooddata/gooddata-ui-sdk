@@ -1,43 +1,28 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasure, newAttribute, newAttributeSort, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { newAttributeSort, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
 
-import {
-    dateDatasetIdentifier,
-    workspace,
-    quarterDateIdentifier,
-    monthDateIdentifier,
-    locationStateDisplayFormIdentifier,
-    locationNameDisplayFormIdentifier,
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-    menuCategoryAttributeDFIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const measures = [
-    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
+    LdmExt.FranchiseFees,
+    LdmExt.FranchiseFeesAdRoyalty,
+    LdmExt.FranchiseFeesInitialFranchiseFee,
+    LdmExt.FranchiseFeesOngoingRoyalty,
 ];
 
-const attributes = [
-    newAttribute(locationStateDisplayFormIdentifier),
-    newAttribute(locationNameDisplayFormIdentifier),
-    newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
-];
+const attributes = [Ldm.LocationState, Ldm.LocationName.Default, LdmExt.MenuCategory];
 
-const columns = [newAttribute(quarterDateIdentifier), newAttribute(monthDateIdentifier)];
+const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
 
 const sortBy = [newAttributeSort("menu", "asc")];
 
-const filters = [newAbsoluteDateFilter(dateDatasetIdentifier, "2017-01-01", "2017-12-31")];
+const filters = [newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, "2017-01-01", "2017-12-31")];
 
 const style = { height: 300 };
 

@@ -1,30 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { BarChart, ColumnChart, PieChart } from "@gooddata/sdk-ui";
-import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
-import {
-    totalSalesIdentifier,
-    locationResortIdentifier,
-    monthDateIdentifier,
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-    workspace,
-} from "../../../constants/fixtures";
-
-const totalSales = newMeasure(totalSalesIdentifier, m => m.aggregation("sum").localId(totalSalesIdentifier));
-
-const locationResort = newAttribute(locationResortIdentifier);
-const month = newAttribute(monthDateIdentifier);
-
-const franchiseFeesMeasures = [
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-].map(identifier => newMeasure(identifier, m => m.aggregation("sum").localId(identifier)));
+import { workspace } from "../../../constants/fixtures";
+import { Ldm, LdmExt } from "../../../ldm";
 
 export class AggregationTest extends Component {
     onLoadingChanged(...params) {
@@ -51,8 +30,8 @@ export class AggregationTest extends Component {
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <BarChart
                         workspace={workspace}
-                        measures={[totalSales]}
-                        viewBy={locationResort}
+                        measures={[LdmExt.TotalSales3]}
+                        viewBy={Ldm.LocationResort}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
                     />
@@ -64,8 +43,8 @@ export class AggregationTest extends Component {
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <ColumnChart
                         workspace={workspace}
-                        measures={[totalSales]}
-                        viewBy={month}
+                        measures={[$TotalSales]}
+                        viewBy={Ldm.DateMonth.Short}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
                     />
@@ -78,7 +57,7 @@ export class AggregationTest extends Component {
                 <div style={{ height: 300 }} className="s-pie-chart">
                     <PieChart
                         workspace={workspace}
-                        measures={franchiseFeesMeasures}
+                        measures={LdmExt.franchiseFeesMeasures}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
                     />

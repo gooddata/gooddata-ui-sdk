@@ -1,14 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { LineChart, AttributeFilter, ErrorComponent } from "@gooddata/sdk-ui";
-import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
-import {
-    totalSalesIdentifier,
-    locationResortIdentifier,
-    locationResortUri,
-    workspace,
-} from "../../constants/fixtures";
+import { locationResortUri, workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 
 export class AttributeFilterExample extends Component {
     constructor(props) {
@@ -80,19 +75,10 @@ export class AttributeFilterExample extends Component {
     render() {
         const { filters, error } = this.state;
 
-        const totalSales = newMeasure(totalSalesIdentifier, m =>
-            m
-                .format("#,##0")
-                .alias("$ Total Sales")
-                .localId("totalSales"),
-        );
-
-        const locationResort = newAttribute(locationResortIdentifier);
-
         return (
             <div className="s-attribute-filter">
                 <AttributeFilter
-                    identifier={locationResortIdentifier}
+                    identifier={Ldm.LocationResort.attribute.displayForm}
                     workspace={projectworkspaceId}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}
@@ -103,8 +89,8 @@ export class AttributeFilterExample extends Component {
                     ) : (
                         <LineChart
                             workspace={workspace}
-                            measures={[totalSales]}
-                            trendBy={locationResort}
+                            measures={[LdmExt.TotalSales2]}
+                            trendBy={Ldm.LocationResort}
                             filters={filters}
                             onLoadingChanged={this.onLoadingChanged}
                             onError={this.onError}

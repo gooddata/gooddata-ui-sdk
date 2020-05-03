@@ -1,37 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
-import {
-    totalSalesIdentifier,
-    totalCostsIdentifier,
-    locationStateDisplayFormIdentifier,
-    workspace,
-} from "../../../constants/fixtures";
+import { workspace } from "../../../constants/fixtures";
+import { LdmExt } from "../../../ldm";
 import { useBackend } from "../../../context/auth";
-
-const totalCostsLocalIdentifier = "totalCosts";
-const totalSalesLocalIdentifier = "totalSales";
-const locationStateLocalIdentifier = "locationState";
-
-const totalCosts = newMeasure(totalCostsIdentifier, m =>
-    m
-        .format("#,##0")
-        .alias("$ Total Costs")
-        .localId(totalCostsLocalIdentifier),
-);
-
-const totalSales = newMeasure(totalSalesIdentifier, m =>
-    m
-        .format("#,##0")
-        .alias("$ Total Sales")
-        .localId(totalSalesLocalIdentifier),
-);
-
-const localState = newAttribute(locationStateDisplayFormIdentifier, a =>
-    a.localId(locationStateLocalIdentifier),
-);
+import { measureLocalId } from "@gooddata/sdk-model";
 
 const config = {
     secondary_yaxis: {
@@ -40,7 +14,7 @@ const config = {
         rotation: "auto",
         min: "-75000000",
         max: "75000000",
-        measures: [totalCostsLocalIdentifier],
+        measures: [measureLocalId(LdmExt.TotalCosts)],
     },
     yaxis: {
         visible: true,
@@ -48,7 +22,7 @@ const config = {
         rotation: "auto",
         min: "-75000000",
         max: "75000000",
-        measures: [totalSalesLocalIdentifier],
+        measures: [measureLocalId(LdmExt.TotalSales2)],
     },
 };
 
@@ -60,8 +34,8 @@ export const DualAxisColumnChartExample: React.FC = () => {
             <ColumnChart
                 backend={backend}
                 workspace={workspace}
-                measures={[totalCosts, totalSales]}
-                viewBy={localState}
+                measures={[LdmExt.TotalCosts, LdmExt.TotalSales2]}
+                viewBy={LdmExt.LocationState}
                 config={config}
             />
         </div>

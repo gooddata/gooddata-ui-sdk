@@ -2,9 +2,9 @@
 
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newAttribute, newMeasure, newAttributeSort } from "@gooddata/sdk-model";
-
-import { totalSalesIdentifier, locationCityDisplayFormIdentifier, workspace } from "../../constants/fixtures";
+import { newAttributeSort } from "@gooddata/sdk-model";
+import { Ldm, LdmExt } from "../../ldm";
+import { workspace } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 
 const style = { height: 300 };
@@ -17,11 +17,9 @@ export const AttributeSortingExample: React.FC = () => {
             <ColumnChart
                 backend={backend}
                 workspace={workspace}
-                measures={[newMeasure(totalSalesIdentifier)]}
-                viewBy={newAttribute(locationCityDisplayFormIdentifier, a =>
-                    a.localId(locationCityDisplayFormIdentifier),
-                )}
-                sortBy={[newAttributeSort(locationCityDisplayFormIdentifier, "desc")]}
+                measures={[Ldm.$TotalSales]}
+                viewBy={LdmExt.LocationCity}
+                sortBy={[newAttributeSort(LdmExt.LocationCity, "desc")]}
             />
         </div>
     );

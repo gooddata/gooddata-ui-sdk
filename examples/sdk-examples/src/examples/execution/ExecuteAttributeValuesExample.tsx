@@ -1,15 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { RawExecute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
-import { newAttribute } from "@gooddata/sdk-model";
 import toPairs from "lodash/toPairs";
 import groupBy from "lodash/groupBy";
 
-import {
-    workspace,
-    locationStateDisplayFormIdentifier,
-    locationNameDisplayFormIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 const getAttributeHeaderItemName = x => x.attributeHeaderItem.name;
@@ -30,10 +26,7 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
     const execution = backend
         .workspace(workspace)
         .execution()
-        .forItems([
-            newAttribute(locationStateDisplayFormIdentifier),
-            newAttribute(locationNameDisplayFormIdentifier),
-        ]);
+        .forItems([Ldm.LocationState, Ldm.LocationName.Default]);
 
     return (
         <div>

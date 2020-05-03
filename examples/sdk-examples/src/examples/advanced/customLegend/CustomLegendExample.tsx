@@ -1,14 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { PieChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure } from "@gooddata/sdk-model";
-
-import {
-    workspace,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-} from "../../../constants/fixtures";
+import { workspace } from "../../../constants/fixtures";
+import { LdmExt } from "../../../ldm";
 import { useBackend } from "../../../context/auth";
 
 interface ICustomChartExampleState {
@@ -28,9 +22,9 @@ const chartConfig = {
 const legendItemStyle = { display: "flex", margin: "10px 0", cursor: "pointer" };
 
 const measures = [
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
+    LdmExt.FranchiseFeesAdRoyalty,
+    LdmExt.FranchiseFeesInitialFranchiseFee,
+    LdmExt.FranchiseFeesOngoingRoyalty,
 ];
 
 const style = { height: 300 };

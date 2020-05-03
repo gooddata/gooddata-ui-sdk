@@ -1,24 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { BubbleChart } from "@gooddata/sdk-ui-charts";
-import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
-import {
-    workspace,
-    franchiseFeesIdentifier,
-    franchisedSalesIdentifier,
-    averageCheckSizeByServerIdentifier,
-    locationResortIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
-const xMeasure = newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"));
+const xMeasure = LdmExt.FranchiseFees;
 
-const yMeasure = newMeasure(franchisedSalesIdentifier, m => m.format("#,##0"));
-
-const size = newMeasure(averageCheckSizeByServerIdentifier);
-
-const locationResort = newAttribute(locationResortIdentifier);
+const yMeasure = LdmExt.FranchisedSales;
 
 const style = { height: 300 };
 
@@ -32,8 +22,8 @@ export const BubbleChartExample: React.FC = () => {
                 workspace={workspace}
                 xAxisMeasure={xMeasure}
                 yAxisMeasure={yMeasure}
-                viewBy={locationResort}
-                size={size}
+                viewBy={Ldm.LocationResort}
+                size={Ldm.AvgCheckSizeByServer}
             />
         </div>
     );

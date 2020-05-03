@@ -2,7 +2,8 @@
 import React, { Component } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui";
 
-import { employeeNameIdentifier, workspace } from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm } from "../../ldm";
 
 export class AttributeFilterComponentExample extends Component {
     onApply(...params) {
@@ -13,7 +14,7 @@ export class AttributeFilterComponentExample extends Component {
         return (
             <div>
                 <AttributeFilter
-                    identifier={employeeNameIdentifier}
+                    identifier={Ldm.EmployeeName.Default}
                     workspace={workspace}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}

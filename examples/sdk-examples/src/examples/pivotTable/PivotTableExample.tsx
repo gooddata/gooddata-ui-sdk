@@ -1,20 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from "react";
+import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
-import {
-    workspace,
-    quarterDateIdentifier,
-    monthDateIdentifier,
-    locationStateDisplayFormIdentifier,
-    locationNameDisplayFormIdentifier,
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-    menuCategoryAttributeDFIdentifier,
-} from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 interface IPivotTableExampleProps {
@@ -38,22 +27,16 @@ export const PivotTableExample: React.FC<IPivotTableExampleProps> = ({
 
     const measures = withMeasures
         ? [
-              newMeasure(franchiseFeesIdentifier, m => m.format("#,##0")),
-              newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
-              newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
-              newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
+              LdmExt.FranchiseFees,
+              LdmExt.FranchiseFeesAdRoyalty,
+              LdmExt.FranchiseFeesInitialFranchiseFee,
+              LdmExt.FranchiseFeesOngoingRoyalty,
           ]
         : [];
 
-    const attributes = withAttributes
-        ? [
-              newAttribute(locationStateDisplayFormIdentifier),
-              newAttribute(locationNameDisplayFormIdentifier),
-              newAttribute(menuCategoryAttributeDFIdentifier),
-          ]
-        : [];
+    const attributes = withAttributes ? [Ldm.LocationState, Ldm.LocationName.Default, Ldm.MenuCategory] : [];
 
-    const columns = withPivot ? [newAttribute(quarterDateIdentifier), newAttribute(monthDateIdentifier)] : [];
+    const columns = withPivot ? [Ldm.DateQuarter, Ldm.DateMonth.Short] : [];
 
     return (
         <div style={style} className={className}>

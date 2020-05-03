@@ -1,20 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasure, newAttribute, IFilter, newMeasureValueFilter } from "@gooddata/sdk-model";
-import { franchiseFeesIdentifier, locationNameDisplayFormIdentifier } from "../../../constants/fixtures";
+import { newMeasureValueFilter } from "@gooddata/sdk-model";
+import { Ldm, LdmExt } from "../../../ldm";
 
-const franchiseFees = newMeasure(franchiseFeesIdentifier, m => m.title("Franchise Fees").format("#,##0"));
+const measures = [LdmExt.FranchiseFees, LdmExt.franchiseFeesAsPercents];
 
-const franchiseFeesAsPercents = newMeasure(franchiseFeesIdentifier, m =>
-    m.title("Franchise Fees shown in %").ratio(),
-);
+const attributes = [Ldm.LocationName.Default];
 
-const measures = [franchiseFees, franchiseFeesAsPercents];
-
-const attributes = [newAttribute(locationNameDisplayFormIdentifier)];
-
-const greaterThanFilter = newMeasureValueFilter(franchiseFeesAsPercents, "GREATER_THAN", 700000);
+const greaterThanFilter = newMeasureValueFilter(LdmExt.franchiseFeesAsPercents, "GREATER_THAN", 700000);
 
 const filterPresets = [
     {

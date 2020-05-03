@@ -105,6 +105,7 @@
         "examples-testcafe": "./scripts/run-testcafe.sh visual",
         "examples-testcafe-live": "./scripts/run-testcafe.sh live",
         "examples-testcafe-ci": "./scripts/run-testcafe.sh ci",
+        "refresh-ldm": "./scripts/refresh-ldm.sh && npm run build",
         "heroku-postbuild": "npm run examples-build developer"
     }
 }
