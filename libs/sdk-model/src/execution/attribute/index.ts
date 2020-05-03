@@ -143,7 +143,7 @@ export function attributeAlias(attribute: IAttribute): string | undefined {
  * @returns value of attribute display form object ref
  * @public
  */
-export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjRef {
+export function attributeDisplayFormRef(attribute: IAttribute): ObjRef {
     invariant(attribute, "attribute must not be undefined");
 
     return attribute.attribute.displayForm;

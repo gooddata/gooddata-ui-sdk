@@ -47,9 +47,6 @@ export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" 
 export function attributeAlias(attribute: IAttribute): string | undefined;
 
 // @public
-export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjRef;
-
-// @public
 export class AttributeBuilder {
     // Warning: (ae-forgotten-export) The symbol "AttributeBuilderInput" needs to be exported by the entry point index.d.ts
     //
@@ -78,6 +75,9 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
     // (undocumented)
     attribute(ref: ObjRef): this;
 }
+
+// @public
+export function attributeDisplayFormRef(attribute: IAttribute): ObjRef;
 
 // @public
 export function attributeIdentifier(attribute: IAttribute): string | undefined;
@@ -1202,6 +1202,9 @@ export function measureAggregation(measure: IMeasure): MeasureAggregation | unde
 export function measureAlias(measure: IMeasure): string | undefined;
 
 // @public
+export function measureArithmeticOperands(measure: IMeasure<IArithmeticMeasureDefinition>): string[];
+
+// @public
 export function measureArithmeticOperands(measure: IMeasure): string[] | undefined;
 
 // @public
@@ -1280,6 +1283,12 @@ export type MeasureInBucket = {
     idx: number;
     measure: IMeasure;
 };
+
+// @public
+export function measureItem(measure: IMeasure<IMeasureDefinition>): ObjRef;
+
+// @public
+export function measureItem(measure: IMeasure): ObjRef | undefined;
 
 // @public
 export function measureLocalId(measureOrLocalId: MeasureOrLocalId): string;

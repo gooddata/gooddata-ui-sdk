@@ -10,7 +10,7 @@ import {
     IAttribute,
     attributeLocalId,
     attributeAlias,
-    attributeAttributeDisplayFormObjRef,
+    attributeDisplayFormRef,
     insightTitle,
     insightFilters,
     insightProperties,
@@ -32,7 +32,7 @@ const convertAttribute = (attribute: IAttribute): GdcVisualizationObject.IAttrib
     return {
         visualizationAttribute: {
             localIdentifier: attributeLocalId(attribute),
-            displayForm: attributeAttributeDisplayFormObjRef(attribute),
+            displayForm: attributeDisplayFormRef(attribute),
             ...(alias && { alias }),
         },
     };

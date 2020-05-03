@@ -21,7 +21,7 @@ export {
     attributeUri,
     attributeIdentifier,
     attributeAlias,
-    attributeAttributeDisplayFormObjRef,
+    attributeDisplayFormRef,
 } from "./execution/attribute";
 
 export {
@@ -161,6 +161,7 @@ export {
     anyMeasure,
     idMatchMeasure,
     measureDoesComputeRatio,
+    measureItem,
     measureUri,
     measureIdentifier,
     measureMasterIdentifier,

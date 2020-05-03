@@ -292,13 +292,13 @@ export function measureLocalId(measureOrLocalId: MeasureOrLocalId): string {
 export function measureUri(measure: IMeasure): string | undefined {
     invariant(measure, "measure must be specified");
 
-    if (!isSimpleMeasure(measure)) {
+    const ref = measureItem(measure);
+
+    if (!ref) {
         return undefined;
     }
 
-    const qualifier = measure.measure.definition.measureDefinition.item;
-
-    return isUriRef(qualifier) ? qualifier.uri : undefined;
+    return isUriRef(ref) ? ref.uri : undefined;
 }
 
 /**
@@ -312,13 +312,36 @@ export function measureUri(measure: IMeasure): string | undefined {
 export function measureIdentifier(measure: IMeasure): string | undefined {
     invariant(measure, "measure must be specified");
 
-    if (!isSimpleMeasure(measure)) {
+    const ref = measureItem(measure);
+
+    if (!ref) {
         return undefined;
     }
 
-    const qualifier = measure.measure.definition.measureDefinition.item;
+    return isIdentifierRef(ref) ? ref.identifier : undefined;
+}
 
-    return isIdentifierRef(qualifier) ? qualifier.identifier : undefined;
+/**
+ * Gets reference of LDM object from which the measure is calculated (fact or MAQL metric).
+ *
+ * @param measure - measure to get LDM object reference from
+ * @returns object reference
+ * @public
+ */
+export function measureItem(measure: IMeasure<IMeasureDefinition>): ObjRef;
+
+/**
+ * Gets reference of LDM object from which the measure is calculated (fact or MAQL metric).
+ *
+ * @param measure - measure to get LDM object reference from
+ * @returns object reference or undefined if not simple measure
+ * @public
+ */
+export function measureItem(measure: IMeasure): ObjRef | undefined;
+export function measureItem(measure: IMeasure): ObjRef | undefined {
+    invariant(measure, "measure must be specified");
+
+    return (measure.measure.definition as any).measureDefinition?.item;
 }
 
 /**
@@ -359,16 +382,23 @@ export function measureMasterIdentifier(measure: IMeasure): string | undefined {
 }
 
 /**
+ * Gets identifiers of arithmetic operands from the provided arithmetic measure.
+ *
+ * @param measure - measure to get arithmetic operands from
+ * @returns array of local identifiers of measures that are used as arithmetic operands
+ * @public
+ */
+export function measureArithmeticOperands(measure: IMeasure<IArithmeticMeasureDefinition>): string[];
+/**
  * Gets identifiers of arithmetic operands from the provided measure. If the measure is not an arithmetic measure, then
  * undefined is returned.
- *
- * TODO: revisit; perhaps should return empty array?
  *
  * @param measure - measure to get arithmetic operands from
  * @returns array of local identifiers of measures that are used as arithmetic operands, undefined if input measure
  * is not arithmetic
  * @public
  */
+export function measureArithmeticOperands(measure: IMeasure): string[] | undefined;
 export function measureArithmeticOperands(measure: IMeasure): string[] | undefined {
     invariant(measure, "measure must be specified");
 
