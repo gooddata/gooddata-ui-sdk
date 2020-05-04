@@ -51,7 +51,7 @@ export const advancedUseCasesRoutes = [
 
 export const insightViewUseCasesRoutes = [
     {
-        path: "/InsightView/InsightView-by-identifier",
+        path: "/insightView/insightView-by-identifier",
         title: "InsightView by identifier",
         Component: InsightView,
     },
@@ -66,7 +66,7 @@ export const drillingUseCasesRoutes = [
     { path: "/drilling/pivot-table-drilling", title: "Pivot table drilling", Component: PivotTableDrilling },
 ];
 
-const InsightViewUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: InsightViewUseCasesRoutes });
+const InsightViewUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: insightViewUseCasesRoutes });
 const AdvancedUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
 const DrillingUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: drillingUseCasesRoutes });
 
@@ -78,7 +78,7 @@ export const sideNavigationRoutes = [
         pathMatch: "full",
         redirectTo: insightViewUseCasesRoutes[0].path,
         title: "insightView Component",
-        Component: insightViewUseCasesRoutes,
+        Component: InsightViewUseCasesRoutes,
     },
     { path: "/sorting", title: "Sorting", Component: Sorting },
     {
