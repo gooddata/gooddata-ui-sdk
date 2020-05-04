@@ -31,7 +31,7 @@ export interface IAttributeElementsByValue {
  *
  * @public
  */
-export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
+export type IAttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
 
 /**
  * Positive attribute filter essentially adds an `IN <set>` condition to the execution on the backend. When
@@ -51,7 +51,7 @@ export interface IPositiveAttributeFilter {
          * Display form whose attribute elements are included in the 'in' list.
          */
         displayForm: ObjRef;
-        in: AttributeElements;
+        in: IAttributeElements;
     };
 }
 
@@ -70,7 +70,7 @@ export interface IPositiveAttributeFilter {
 export interface INegativeAttributeFilter {
     negativeAttributeFilter: {
         displayForm: ObjRef;
-        notIn: AttributeElements;
+        notIn: IAttributeElements;
     };
 }
 
@@ -377,7 +377,7 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean {
  * @returns true if empty = attribute elements not specified in any way (URI or value)
  * @internal
  */
-export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean {
+export function attributeElementsIsEmpty(attributeElements: IAttributeElements): boolean {
     invariant(attributeElements, "attribute elements must be specified");
 
     if (isAttributeElementsByRef(attributeElements)) {
@@ -396,8 +396,8 @@ export function attributeElementsIsEmpty(attributeElements: AttributeElements): 
  */
 export function filterAttributeElements(
     filter: IPositiveAttributeFilter | INegativeAttributeFilter,
-): AttributeElements;
-export function filterAttributeElements(filter: IFilter): AttributeElements | undefined {
+): IAttributeElements;
+export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined {
     invariant(filter, "attribute elements must be specified");
 
     if (!isAttributeFilter(filter)) {

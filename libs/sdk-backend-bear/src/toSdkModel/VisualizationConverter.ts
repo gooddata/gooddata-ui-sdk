@@ -6,7 +6,7 @@ import {
     IMeasure,
     IMeasureDefinitionType,
     IFilter,
-    AttributeElements,
+    IAttributeElements,
     IAttribute,
     IMeasureFilter,
 } from "@gooddata/sdk-model";
@@ -22,7 +22,7 @@ import { deserializeProperties, serializeProperties } from "./PropertiesConverte
 // as the objId is not always just a number
 const isUriLike = (value: string): boolean => /\/gdc\/md\/\S+\/obj\/\S+/.test(value);
 
-const convertAttributeElements = (items: string[]): AttributeElements => {
+const convertAttributeElements = (items: string[]): IAttributeElements => {
     if (!items.length) {
         return { values: [] }; // TODO is this OK or we want to throw?
     }

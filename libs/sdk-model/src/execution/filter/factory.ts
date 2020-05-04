@@ -2,7 +2,7 @@
 import invariant from "ts-invariant";
 import isNil from "lodash/isNil";
 import {
-    AttributeElements,
+    IAttributeElements,
     ComparisonConditionOperator,
     IAbsoluteDateFilter,
     IMeasureValueFilter,
@@ -26,7 +26,7 @@ import { idRef } from "../../objRef/factory";
  */
 export function newPositiveAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
-    inValues: AttributeElements | string[],
+    inValues: IAttributeElements | string[],
 ): IPositiveAttributeFilter {
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
@@ -34,7 +34,7 @@ export function newPositiveAttributeFilter(
         ? idRef(attributeOrRef)
         : attributeAttributeDisplayFormObjRef(attributeOrRef);
 
-    const inObject: AttributeElements = Array.isArray(inValues) ? { values: inValues } : inValues;
+    const inObject: IAttributeElements = Array.isArray(inValues) ? { values: inValues } : inValues;
 
     return {
         positiveAttributeFilter: {
@@ -54,7 +54,7 @@ export function newPositiveAttributeFilter(
  */
 export function newNegativeAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
-    notInValues: AttributeElements | string[],
+    notInValues: IAttributeElements | string[],
 ): INegativeAttributeFilter {
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
@@ -62,7 +62,9 @@ export function newNegativeAttributeFilter(
         ? idRef(attributeOrRef)
         : attributeAttributeDisplayFormObjRef(attributeOrRef);
 
-    const notInObject: AttributeElements = Array.isArray(notInValues) ? { values: notInValues } : notInValues;
+    const notInObject: IAttributeElements = Array.isArray(notInValues)
+        ? { values: notInValues }
+        : notInValues;
 
     return {
         negativeAttributeFilter: {

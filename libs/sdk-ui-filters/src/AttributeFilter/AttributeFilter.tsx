@@ -10,7 +10,7 @@ import {
     isPositiveAttributeFilter,
     filterAttributeElements,
     isAttributeElementsByValue,
-    AttributeElements,
+    IAttributeElements,
     isAttributeElementsByRef,
     IAttributeFilter,
     newNegativeAttributeFilter,
@@ -117,7 +117,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         }
     };
 
-    private getSelectedItems = (elements: AttributeElements): Array<Partial<IAttributeElement>> => {
+    private getSelectedItems = (elements: IAttributeElements): Array<Partial<IAttributeElement>> => {
         if (isAttributeElementsByValue(elements)) {
             return elements.values.map(
                 (title): Partial<IAttributeElement> => ({

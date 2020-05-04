@@ -24,7 +24,7 @@ export type DateFilterType = RelativeType | AbsoluteType;
  * Attribute filter of the filter context
  * @alpha
  */
-export interface IAttributeFilter {
+export interface IDashboardAttributeFilter {
     attributeFilter: {
         /**
          * Display form object ref
@@ -47,7 +47,7 @@ export interface IAttributeFilter {
  * Date filter of the filter context
  * @alpha
  */
-export interface IDateFilter {
+export interface IDashboardDateFilter {
     dateFilter: {
         /**
          * Date filter type - relative or absolute
@@ -85,7 +85,7 @@ export interface IDateFilter {
  * Supported filter context items
  * @alpha
  */
-export type FilterContextItem = IAttributeFilter | IDateFilter;
+export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
 /**
  * Filter context consists of configured attribute and date filters
