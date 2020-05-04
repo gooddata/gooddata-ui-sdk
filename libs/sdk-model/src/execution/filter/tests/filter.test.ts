@@ -10,7 +10,7 @@ import {
 } from "../factory";
 import {
     filterIsEmpty,
-    AttributeElements,
+    IAttributeElements,
     IFilter,
     filterAttributeElements,
     filterAttributeDisplayForm,
@@ -57,7 +57,7 @@ describe("filterIsEmpty", () => {
 });
 
 describe("filterAttributeElements", () => {
-    const Scenarios: Array<[string, IFilter | null | undefined, AttributeElements | undefined]> = [
+    const Scenarios: Array<[string, IFilter | null | undefined, IAttributeElements | undefined]> = [
         ["undefined for date filter", AbsoluteDateFilter, undefined],
         [
             "empty values for positive attribute filter with empty values",

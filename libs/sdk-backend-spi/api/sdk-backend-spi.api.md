@@ -142,7 +142,7 @@ export type DateString = string;
 export type ErrorConverter = (e: any) => AnalyticalBackendError;
 
 // @alpha
-export type FilterContextItem = IAttributeFilter | IDateFilter;
+export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
 // @public
 export type GUID = string;
@@ -222,16 +222,6 @@ export interface IAttributeDescriptor {
     };
 }
 
-// @alpha
-export interface IAttributeFilter {
-    // (undocumented)
-    attributeFilter: {
-        displayForm: ObjRef;
-        negativeSelection: boolean;
-        attributeElements: ObjRef[];
-    };
-}
-
 // @public
 export interface IAuthenticationProvider {
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
@@ -262,6 +252,29 @@ export interface IDashboardAttachment {
 }
 
 // @alpha
+export interface IDashboardAttributeFilter {
+    // (undocumented)
+    attributeFilter: {
+        displayForm: ObjRef;
+        negativeSelection: boolean;
+        attributeElements: ObjRef[];
+    };
+}
+
+// @alpha
+export interface IDashboardDateFilter {
+    // (undocumented)
+    dateFilter: {
+        type: DateFilterType;
+        granularity: DateFilterGranularity;
+        from?: DateString | number;
+        to?: DateString | number;
+        dataSet?: ObjRef;
+        attribute?: ObjRef;
+    };
+}
+
+// @alpha
 export interface IDashboardDefinition {
     readonly created: string;
     readonly dateFilterConfig?: IDateFilterConfig;
@@ -286,19 +299,6 @@ export interface IDataView {
     readonly result: IExecutionResult;
     readonly totalCount: number[];
     readonly totals?: DataValue[][][];
-}
-
-// @alpha
-export interface IDateFilter {
-    // (undocumented)
-    dateFilter: {
-        type: DateFilterType;
-        granularity: DateFilterGranularity;
-        from?: DateString | number;
-        to?: DateString | number;
-        dataSet?: ObjRef;
-        attribute?: ObjRef;
-    };
 }
 
 // @alpha

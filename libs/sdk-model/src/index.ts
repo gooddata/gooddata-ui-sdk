@@ -87,7 +87,7 @@ export {
 export {
     IAttributeElementsByRef,
     IAttributeElementsByValue,
-    AttributeElements,
+    IAttributeElements,
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
     IAbsoluteDateFilter,

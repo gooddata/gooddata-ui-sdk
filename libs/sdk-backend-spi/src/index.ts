@@ -128,8 +128,8 @@ export {
     AbsoluteType,
     DateFilterType,
     FilterContextItem,
-    IAttributeFilter,
-    IDateFilter,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
     IFilterContextDefinition,
     RelativeType,
 } from "./workspace/dashboards/filterContext";
