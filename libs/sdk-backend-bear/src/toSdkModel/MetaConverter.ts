@@ -10,6 +10,7 @@ import {
     newMeasureMetadataObject,
     IMetadataObject,
     ObjectType,
+    newDataSetMetadataObject,
 } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
@@ -21,6 +22,7 @@ export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataO
             .title(obj.meta.title)
             .description(obj.meta.summary)
             .id(obj.meta.identifier)
+            .production(obj.meta.isProduction === 1)
             .uri(obj.meta.uri);
 
     if (GdcMetadata.isAttribute(obj)) {
@@ -38,6 +40,8 @@ export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataO
         );
     } else if (GdcMetadata.isFact(obj)) {
         return newFactMetadataObject(ref, f => f.modify(commonModifications));
+    } else if (GdcMetadata.isDataSet(obj)) {
+        return newDataSetMetadataObject(ref, ds => ds.modify(commonModifications));
     }
 
     throw new UnexpectedError(

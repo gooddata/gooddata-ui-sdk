@@ -29,6 +29,7 @@ import { IMetadataObject } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWorkspace } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
+import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
@@ -863,6 +864,7 @@ export interface IWorkspaceInsights {
     deleteInsight(ref: ObjRef): Promise<void>;
     getInsight(ref: ObjRef): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
+    getReferencedObjects(insight: IInsight, types?: Array<Exclude<ObjectType, "insight" | "tag">>): Promise<IMetadataObject[]>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
     updateInsight(insight: IInsight): Promise<IInsight>;

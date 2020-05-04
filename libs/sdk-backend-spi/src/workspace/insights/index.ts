@@ -1,6 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { IVisualizationClass, IInsight, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
+import {
+    IVisualizationClass,
+    IInsight,
+    IInsightDefinition,
+    ObjRef,
+    IMetadataObject,
+    ObjectType,
+} from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
 /**
@@ -64,6 +71,17 @@ export interface IWorkspaceInsights {
      * @returns promise of undefined
      */
     deleteInsight(ref: ObjRef): Promise<void>;
+
+    /**
+     * Get all metadata objects referenced by a given insight.
+     *
+     * @param insight - insight to get referenced objects for
+     * @param types - optional array of object types to include
+     */
+    getReferencedObjects(
+        insight: IInsight,
+        types?: Array<Exclude<ObjectType, "insight" | "tag">>,
+    ): Promise<IMetadataObject[]>;
 }
 
 /**
