@@ -454,7 +454,6 @@
             "packageName": "@gooddata/sdk-examples",
             "projectFolder": "examples/sdk-examples",
             "reviewCategory": "examples",
-            "versionPolicyName": "sdk",
             "shouldPublish": false
         }
         // {
