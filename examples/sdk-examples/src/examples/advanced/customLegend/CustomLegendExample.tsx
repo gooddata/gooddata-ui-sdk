@@ -1,9 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { PieChart } from "@gooddata/sdk-ui-charts";
-import { workspace } from "../../../constants/fixtures";
 import { LdmExt } from "../../../ldm";
-import { useBackend } from "../../../context/auth";
 
 interface ICustomChartExampleState {
     legendItems: Array<{
@@ -30,7 +28,6 @@ const measures = [
 const style = { height: 300 };
 
 export const CustomLegendExample: React.FC = () => {
-    const backend = useBackend();
     const [{ legendItems }, setState] = useState<ICustomChartExampleState>({
         legendItems: [],
     });
@@ -64,13 +61,7 @@ export const CustomLegendExample: React.FC = () => {
                 </div>
             )}
             <div style={style} className="s-pie-chart">
-                <PieChart
-                    backend={backend}
-                    workspace={workspace}
-                    measures={measures}
-                    config={chartConfig}
-                    onLegendReady={onLegendReady}
-                />
+                <PieChart measures={measures} config={chartConfig} onLegendReady={onLegendReady} />
             </div>
         </div>
     );

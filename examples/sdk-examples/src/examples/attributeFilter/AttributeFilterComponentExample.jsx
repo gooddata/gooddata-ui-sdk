@@ -1,8 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui";
-
-import { workspace } from "../../constants/fixtures";
 import { Ldm } from "../../ldm";
 
 export class AttributeFilterComponentExample extends Component {
@@ -15,7 +13,6 @@ export class AttributeFilterComponentExample extends Component {
             <div>
                 <AttributeFilter
                     identifier={Ldm.EmployeeName.Default}
-                    workspace={workspace}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}
                 />

@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { LineChart, AttributeFilter, ErrorComponent } from "@gooddata/sdk-ui";
 
-import { locationResortUri, workspace } from "../../constants/fixtures";
+import { locationResortUri } from "../../constants/fixtures";
 import { Ldm, LdmExt } from "../../ldm";
 
 export class AttributeFilterExample extends Component {
@@ -88,7 +88,6 @@ export class AttributeFilterExample extends Component {
                         <ErrorComponent message={error} />
                     ) : (
                         <LineChart
-                            workspace={workspace}
                             measures={[LdmExt.TotalSales2]}
                             trendBy={Ldm.LocationResort}
                             filters={filters}

@@ -11,7 +11,7 @@ import PieChartColorMappingExampleSRC from "!raw-loader!./PieChartColorMappingEx
 import { DualAxisColumnChartExample } from "./DualAxisColumnChartExample";
 import DualAxisColumnChartExampleSRC from "!raw-loader!./DualAxisColumnChartExample";
 import insightViewDualAxisBarChartExample from "./InsightViewDualAxisBarChartExample";
-import insightViewDualAxisBarChartExampleSRC from "!raw-loader!./insightViewDualAxisBarChartExample";
+import insightViewDualAxisBarChartExampleSRC from "!raw-loader!./InsightViewDualAxisBarChartExample";
 
 export const ChartConfiguration = () => (
     <div>
@@ -30,7 +30,7 @@ export const ChartConfiguration = () => (
 
             <ExampleWithSource for={DualAxisColumnChartExample} source={DualAxisColumnChartExampleSRC} />
         </div>
-        {/* 
+
         <div>
             <h1>Customize chart insightView</h1>
 
@@ -51,7 +51,7 @@ export const ChartConfiguration = () => (
                 for={ConfigurationColumnChartExample}
                 source={ConfigurationColumnChartExampleSRC}
             />
-        </div> */}
+        </div>
 
         <div>
             <h1>Pie Chart with color mapping</h1>

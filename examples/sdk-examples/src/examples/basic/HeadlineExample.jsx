@@ -1,9 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui";
-
-import { workspace } from "../../constants/fixtures";
-
 import { LdmExt } from "../../ldm";
 
 export class HeadlineExample extends Component {
@@ -31,7 +28,6 @@ export class HeadlineExample extends Component {
                 </style>
                 <div className="column">
                     <Headline
-                        workspace={workspace}
                         primaryMeasure={primaryMeasure}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}
@@ -39,7 +35,6 @@ export class HeadlineExample extends Component {
                 </div>
                 <div className="column">
                     <Headline
-                        workspace={workspace}
                         primaryMeasure={primaryMeasure}
                         secondaryMeasure={secondaryMeasure}
                         onLoadingChanged={this.onLoadingChanged}

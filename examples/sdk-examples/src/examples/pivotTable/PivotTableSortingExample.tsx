@@ -2,10 +2,7 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newAttributeSort, modifyAttribute } from "@gooddata/sdk-model";
-
-import { workspace } from "../../constants/fixtures";
 import { Ldm, LdmExt } from "../../ldm";
-import { useBackend } from "../../context/auth";
 
 const measures = [
     LdmExt.FranchiseFees,
@@ -24,13 +21,9 @@ const sortBy = [newAttributeSort("menu", "asc")];
 const style = { height: 300 };
 
 export const PivotTableSortingExample: React.FC = () => {
-    const backend = useBackend();
-
     return (
         <div style={style} className="s-pivot-table-sorting">
             <PivotTable
-                backend={backend}
-                workspace={workspace}
                 measures={measures}
                 rows={attributes}
                 columns={columns}

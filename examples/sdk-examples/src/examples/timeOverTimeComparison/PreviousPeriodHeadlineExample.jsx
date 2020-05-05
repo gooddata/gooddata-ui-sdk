@@ -3,8 +3,6 @@
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui";
 import { newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
-
-import { workspace } from "../../constants/fixtures";
 import { LdmExt } from "../../ldm";
 
 export class PreviousPeriodHeadlineExample extends Component {
@@ -26,7 +24,6 @@ export class PreviousPeriodHeadlineExample extends Component {
         return (
             <div style={{ height: 125 }} className="s-headline">
                 <Headline
-                    workspace={workspace}
                     primaryMeasure={primaryMeasure}
                     secondaryMeasure={secondaryMeasure}
                     filters={[newRelativeDateFilter(LdmExt.dateDataSetUri, "GDC.time.year", -2, -1)]}

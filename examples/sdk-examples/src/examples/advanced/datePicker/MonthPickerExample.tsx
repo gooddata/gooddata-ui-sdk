@@ -1,14 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { ErrorComponent } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newRelativeDateFilter } from "@gooddata/sdk-model";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-
-import { workspace } from "../../../constants/fixtures";
+import { ErrorComponent } from "@gooddata/sdk-ui";
 import { Ldm, LdmExt } from "../../../ldm";
-import { useBackend } from "../../../context/auth";
 
 const dateFormat = "YYYY-MM-DD";
 
@@ -22,7 +19,6 @@ const measures = [LdmExt.TotalSales1];
 const style = { height: 300 };
 
 export const MonthPickerExample: React.FC = () => {
-    const backend = useBackend();
     const [state, setState] = useState({
         from: withGTM0(moment("2016-01-01", dateFormat)),
         to: withGTM0(moment("2017-01-01", dateFormat)),
@@ -108,13 +104,7 @@ export const MonthPickerExample: React.FC = () => {
                 {error ? (
                     <ErrorComponent message={error} />
                 ) : (
-                    <ColumnChart
-                        backend={backend}
-                        workspace={workspace}
-                        measures={measures}
-                        viewBy={Ldm.DateMonthYear.Short}
-                        filters={filters}
-                    />
+                    <ColumnChart measures={measures} viewBy={Ldm.DateMonthYear.Short} filters={filters} />
                 )}
             </div>
         </div>

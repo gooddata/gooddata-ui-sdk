@@ -10,7 +10,6 @@ import { Layout } from "../../../components/Layout";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { workspace } from "../../../constants/fixtures";
 import { Ldm, LdmExt } from "../../../ldm";
-import { useBackend } from "../../../context/auth";
 
 interface IDynamicMeasuresExampleState {
     measureList: null | any[];
@@ -36,8 +35,6 @@ const getMeasureListByTag = async (tag: string) => {
 const config: IChartConfig = { legend: { position: "bottom" } };
 
 export const DynamicMeasuresExample: React.FC = () => {
-    const backend = useBackend();
-
     const [{ measureList, error }, setState] = useState<IDynamicMeasuresExampleState>({
         measureList: null,
         error: null,
@@ -160,21 +157,10 @@ export const DynamicMeasuresExample: React.FC = () => {
                         }
                     `}</style>
                     <div className="graph graph-line s-dynamic-measures-line-chart">
-                        <LineChart
-                            backend={backend}
-                            workspace={workspace}
-                            measures={measures}
-                            trendBy={Ldm.DateMonth.Short}
-                            config={config}
-                        />
+                        <LineChart measures={measures} trendBy={Ldm.DateMonth.Short} config={config} />
                     </div>
                     <div className="graph graph-column s-dynamic-measures-column-chart">
-                        <ColumnChart
-                            backend={backend}
-                            workspace={workspace}
-                            measures={measures}
-                            config={config}
-                        />
+                        <ColumnChart measures={measures} config={config} />
                     </div>
                 </div>
             );

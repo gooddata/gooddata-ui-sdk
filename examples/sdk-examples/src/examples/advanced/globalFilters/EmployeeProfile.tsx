@@ -1,18 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState, useEffect } from "react";
-import { Kpi } from "@gooddata/sdk-ui";
 import { BarChart, PieChart } from "@gooddata/sdk-ui-charts";
 import { IElementQueryResult } from "@gooddata/sdk-backend-spi";
 import { newPositiveAttributeFilter, IAttributeElementsByRef } from "@gooddata/sdk-model";
+import { Kpi } from "@gooddata/sdk-ui";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { EmployeeCard } from "./EmployeeCard";
 import { KpiMetricBox } from "./KpiMetricBox";
-import { workspace } from "../../../constants/fixtures";
 import { Ldm, LdmExt } from "../../../ldm";
 import { Layout } from "../../../components/Layout";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
-import { useBackend } from "../../../context/auth";
 
 interface IEmployeeProfileProps {
     validElements: IElementQueryResult;
@@ -25,7 +23,6 @@ interface IEmployeeProfileState {
 const measures = [LdmExt.AvgDailyTotalSales];
 
 export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements }) => {
-    const backend = useBackend();
     const [{ selectedEmployeeUri }, setState] = useState<IEmployeeProfileState>({
         selectedEmployeeUri: validElements.items[0].uri,
     });
@@ -45,9 +42,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
         });
 
     const buildSidebarItem = (item, selectedEmployeeUri) => {
-        const {
-            element: { title, uri },
-        } = item;
+        const { title, uri } = item;
 
         return (
             <SidebarItem
@@ -136,10 +131,8 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                         <div className="kpis">
                             <KpiMetricBox title="Daily sales">
                                 <Kpi
-                                    backend={backend}
                                     filters={[employeeFilter]}
                                     measure={LdmExt.AvgDailyTotalSales}
-                                    workspace={workspace}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
@@ -149,10 +142,8 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
 
                             <KpiMetricBox title="Average check amount">
                                 <Kpi
-                                    backend={backend}
                                     filters={[employeeFilter]}
                                     measure={LdmExt.AvgCheckSizeByServer}
-                                    workspace={workspace}
                                     LoadingComponent={(...otherProps) => (
                                         <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
@@ -164,11 +155,9 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                             <h2>Average daily total sales by menu category</h2>
                             <div className="pie-chart">
                                 <PieChart
-                                    backend={backend}
                                     measures={measures}
                                     viewBy={Ldm.MenuCategory}
                                     filters={[employeeFilter]}
-                                    workspace={workspace}
                                     LoadingComponent={CustomLoading}
                                     ErrorComponent={CustomError}
                                     config={{ legend: { position: "bottom" } }}
@@ -179,11 +168,9 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                             <h2>Average daily total sales by menu item</h2>
                             <div className="bar-chart">
                                 <BarChart
-                                    backend={backend}
                                     measures={measures}
                                     viewBy={LdmExt.MenuItemName}
                                     filters={[employeeFilter]}
-                                    workspace={workspace}
                                     LoadingComponent={CustomLoading}
                                     ErrorComponent={CustomError}
                                 />

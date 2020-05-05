@@ -5,13 +5,10 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { LoadingComponent, ErrorComponent, HeaderPredicates } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newPositiveAttributeFilter, attributeLocalId } from "@gooddata/sdk-model";
-import { workspace } from "../../constants/fixtures";
 import { Ldm, LdmExt } from "../../ldm";
 import { EmployeeProfile } from "./EmployeeProfile";
-import { useBackend } from "../../context/auth";
 
 export const DrillWithExternalDataExample: React.FC = () => {
-    const backend = useBackend();
     const [componentState, setState] = useState({
         state: null,
         location: null,
@@ -149,8 +146,6 @@ export const DrillWithExternalDataExample: React.FC = () => {
     const stateTable = (
         <div style={{ height: 200 }} className="s-state-table">
             <PivotTable
-                backend={backend}
-                workspace={workspace}
                 measures={[LdmExt.AvgDailyTotalSales]}
                 rows={[LdmExt.LocationState]}
                 drillableItems={[HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.LocationState))]}
@@ -163,8 +158,6 @@ export const DrillWithExternalDataExample: React.FC = () => {
     const employeeTable = (
         <div style={{ height: 300 }} className="s-employee-table">
             <PivotTable
-                backend={backend}
-                workspace={workspace}
                 measures={[LdmExt.AvgDailyTotalSales]}
                 rows={[LdmExt.EmployeeName]}
                 drillableItems={[HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.EmployeeName))]}
@@ -178,8 +171,6 @@ export const DrillWithExternalDataExample: React.FC = () => {
     const totalSalesChart = (
         <div style={{ height: 300 }} className="s-sales-chart">
             <ColumnChart
-                backend={backend}
-                workspace={workspace}
                 measures={[LdmExt.TotalSales2]}
                 viewBy={LdmExt.LocationName}
                 filters={salesTableFilters}

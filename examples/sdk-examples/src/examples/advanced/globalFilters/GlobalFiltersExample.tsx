@@ -1,15 +1,18 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
+import { attributeAttributeDisplayFormObjRef } from "@gooddata/sdk-model";
 import { workspace } from "../../../constants/fixtures";
 import { Ldm } from "../../../ldm";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
 import { EmployeeProfile } from "./EmployeeProfile";
+import { useBackend } from "../../../context/auth";
 
 export const GlobalFiltersExample = () => (
     <AttributeElements
-        displayForm={Ldm.EmployeeName.Default.attribute.displayForm}
+        backend={useBackend()}
+        displayForm={attributeAttributeDisplayFormObjRef(Ldm.EmployeeName.Default)}
         workspace={workspace}
         limit={20}
     >

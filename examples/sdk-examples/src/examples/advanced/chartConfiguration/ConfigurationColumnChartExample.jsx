@@ -1,8 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
-
-import { workspace } from "../../../constants/fixtures";
 import { Ldm } from "../../../ldm";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 
@@ -71,7 +69,7 @@ export class ConfigurationColumnChartExample extends Component {
     }
 
     render() {
-        const { config } = this.state;
+        // const { config } = this.state;
 
         return (
             <div>
@@ -90,7 +88,6 @@ export class ConfigurationColumnChartExample extends Component {
 
                     <div style={{ height: 300 }}>
                         <InsightView
-                            workspace={workspace}
                             insight={Ldm.Insights.ColumnsChart}
                             // TODO: SDK8 Decide whether add dimesion prop to InsightView
                             // config={config}

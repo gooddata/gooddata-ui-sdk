@@ -2,10 +2,7 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newPreviousPeriodMeasure, newArithmeticMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
-
-import { workspace } from "../../constants/fixtures";
 import { Ldm, LdmExt } from "../../ldm";
-import { useBackend } from "../../context/auth";
 
 const totalSalesYearAgoBucketItem = newPreviousPeriodMeasure(
     LdmExt.TotalSales1,
@@ -26,17 +23,9 @@ const filters = [newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, "2017-01-01
 const style = { height: 200 };
 
 export const ArithmeticMeasureChangeExample: React.FC = () => {
-    const backend = useBackend();
-
     return (
         <div style={style} className="s-table">
-            <PivotTable
-                backend={backend}
-                workspace={workspace}
-                measures={measures}
-                filters={filters}
-                rows={rows}
-            />
+            <PivotTable measures={measures} filters={filters} rows={rows} />
         </div>
     );
 };

@@ -8,11 +8,8 @@ import {
     IMeasureSortItem,
     newAttributeLocator,
 } from "@gooddata/sdk-model";
-
-import { workspace } from "../../constants/fixtures";
 import { LdmExt } from "../../ldm";
 import { SortDirection } from "@gooddata/gd-bear-client";
-import { useBackend } from "../../context/auth";
 
 interface ISortOption {
     key: string;
@@ -37,7 +34,6 @@ const getOrderLabel = (direction: SortDirection) => {
 const style = { height: 600 };
 
 export const DynamicSortingExample: React.FC = () => {
-    const backend = useBackend();
     const [state, setState] = useState<IDynamicSortingExampleState>({
         sortOption: undefined,
         direction: "asc",
@@ -205,8 +201,6 @@ export const DynamicSortingExample: React.FC = () => {
 
             <div style={style} className="s-dynamic-sorting-chart">
                 <ColumnChart
-                    backend={backend}
-                    workspace={workspace}
                     measures={[LdmExt.TotalSales1]}
                     viewBy={LdmExt.monthDate}
                     stackBy={LdmExt.LocationState}

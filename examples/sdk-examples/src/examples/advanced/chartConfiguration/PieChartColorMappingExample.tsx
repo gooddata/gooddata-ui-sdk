@@ -2,9 +2,7 @@
 import React from "react";
 import { PieChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import { workspace } from "../../../constants/fixtures";
 import { LdmExt } from "../../../ldm";
-import { useBackend } from "../../../context/auth";
 import { modifyMeasure } from "@gooddata/sdk-model";
 
 const measures = [
@@ -54,11 +52,9 @@ const chartConfig: IChartConfig = {
 const style = { height: 300 };
 
 export const PieChartColorMappingExample: React.FC = () => {
-    const backend = useBackend();
-
     return (
         <div style={style} className="s-pie-chart">
-            <PieChart backend={backend} workspace={workspace} measures={measures} config={chartConfig} />
+            <PieChart measures={measures} config={chartConfig} />
         </div>
     );
 };

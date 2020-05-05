@@ -4,8 +4,6 @@ import { AttributeElements, BarChart } from "@gooddata/sdk-ui";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import Select from "react-select";
 import "react-select/dist/react-select.css";
-
-import { workspace } from "../../../constants/fixtures";
 import { Ldm, LdmExt } from "../../../ldm";
 
 export class ParentFilterExample extends Component {
@@ -61,7 +59,6 @@ export class ParentFilterExample extends Component {
                     measures={[LdmExt.TotalSales1]}
                     viewBy={Ldm.LocationName.Default}
                     filters={visFilters}
-                    workspace={workspace}
                     height={500}
                 />
             </div>
@@ -70,12 +67,7 @@ export class ParentFilterExample extends Component {
 
     renderFilter(key, displayFormIdentifier, filterValues, placeholder, options, onChange) {
         return (
-            <AttributeElements
-                key={key}
-                identifier={displayFormIdentifier}
-                workspace={workspace}
-                options={options}
-            >
+            <AttributeElements key={key} identifier={displayFormIdentifier} options={options}>
                 {({ validElements, isLoading, error }) => {
                     if (error) {
                         return <div>{error}</div>;

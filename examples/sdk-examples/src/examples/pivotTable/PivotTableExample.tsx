@@ -1,10 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-
-import { workspace } from "../../constants/fixtures";
 import { Ldm, LdmExt } from "../../ldm";
-import { useBackend } from "../../context/auth";
 
 interface IPivotTableExampleProps {
     className?: string;
@@ -20,11 +17,8 @@ export const PivotTableExample: React.FC<IPivotTableExampleProps> = ({
     withMeasures,
     withAttributes,
     withPivot,
-    hasError,
     className,
 }) => {
-    const backend = useBackend();
-
     const measures = withMeasures
         ? [
               LdmExt.FranchiseFees,
@@ -40,14 +34,7 @@ export const PivotTableExample: React.FC<IPivotTableExampleProps> = ({
 
     return (
         <div style={style} className={className}>
-            <PivotTable
-                backend={backend}
-                workspace={hasError ? "incorrectProjectId" : workspace}
-                measures={measures}
-                rows={attributes}
-                columns={columns}
-                pageSize={20}
-            />
+            <PivotTable measures={measures} rows={attributes} columns={columns} pageSize={20} />
         </div>
     );
 };

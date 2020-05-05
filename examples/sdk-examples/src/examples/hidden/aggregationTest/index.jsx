@@ -1,8 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { BarChart, ColumnChart, PieChart } from "@gooddata/sdk-ui";
-
-import { workspace } from "../../../constants/fixtures";
 import { Ldm, LdmExt } from "../../../ldm";
 
 export class AggregationTest extends Component {
@@ -29,7 +27,6 @@ export class AggregationTest extends Component {
                 <h2 id="bar-chart">Bar chart</h2>
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <BarChart
-                        workspace={workspace}
                         measures={[LdmExt.TotalSales3]}
                         viewBy={Ldm.LocationResort}
                         onLoadingChanged={this.onLoadingChanged}
@@ -42,7 +39,6 @@ export class AggregationTest extends Component {
                 <h2 id="column-chart">Column chart</h2>
                 <div style={{ height: 300 }} className="s-bar-chart">
                     <ColumnChart
-                        workspace={workspace}
                         measures={[$TotalSales]}
                         viewBy={Ldm.DateMonth.Short}
                         onLoadingChanged={this.onLoadingChanged}
@@ -56,7 +52,6 @@ export class AggregationTest extends Component {
 
                 <div style={{ height: 300 }} className="s-pie-chart">
                     <PieChart
-                        workspace={workspace}
                         measures={LdmExt.franchiseFeesMeasures}
                         onLoadingChanged={this.onLoadingChanged}
                         onError={this.onError}

@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ITotal, attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
-
-import { workspace } from "../../constants/fixtures";
 import { LdmExt } from "../../ldm";
-import { useBackend } from "../../context/auth";
 
 const measures = [
     LdmExt.FranchiseFees,
@@ -55,7 +52,6 @@ const drillableItems = [
 const style = { height: 500 };
 
 export const PivotTableDrillExample: React.FC = () => {
-    const backend = useBackend();
     const [{ drillEvent }, setState] = useState({
         drillEvent: null,
     });
@@ -82,8 +78,6 @@ export const PivotTableDrillExample: React.FC = () => {
             {renderDrillValue}
             <div style={style} className="s-pivot-table-drill">
                 <PivotTable
-                    backend={backend}
-                    workspace={workspace}
                     measures={measures}
                     rows={attributes}
                     columns={columns}

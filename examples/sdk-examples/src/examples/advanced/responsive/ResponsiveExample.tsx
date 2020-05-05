@@ -4,16 +4,13 @@ import { BarChart } from "@gooddata/sdk-ui-charts";
 
 import Measure from "react-measure";
 
-import { workspace } from "../../../constants/fixtures";
 import { Ldm, LdmExt } from "../../../ldm";
-import { useBackend } from "../../../context/auth";
 
 interface IResponsiveExampleState {
     size: [number, number];
 }
 
 export const ResponsiveExample: React.FC = () => {
-    const backend = useBackend();
     const [
         {
             size: [width, height],
@@ -47,8 +44,6 @@ export const ResponsiveExample: React.FC = () => {
                         return (
                             <div style={{ width: "100%", height: "100%" }} ref={measureRef}>
                                 <BarChart
-                                    backend={backend}
-                                    workspace={workspace}
                                     height={usedHeight}
                                     measures={[LdmExt.TotalSales1]}
                                     viewBy={Ldm.LocationResort}

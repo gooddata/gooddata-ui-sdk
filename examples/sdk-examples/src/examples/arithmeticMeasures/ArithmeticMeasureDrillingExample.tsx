@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { measureLocalId } from "@gooddata/sdk-model";
-
-import { workspace } from "../../constants/fixtures";
 import { Ldm, LdmExt } from "../../ldm";
-import { useBackend } from "../../context/auth";
 
 const measures = [LdmExt.NrRestaurants, LdmExt.TotalSales2, LdmExt.arithmeticMeasure1];
 
@@ -17,7 +14,6 @@ const drillableItems = [HeaderPredicates.composedFromIdentifier(measureLocalId(L
 const style = { height: 200 };
 
 export const ArithmeticMeasureDrillingExample: React.FC = () => {
-    const backend = useBackend();
     const [{ drillEvent }, setState] = useState({
         drillEvent: null,
     });
@@ -42,8 +38,6 @@ export const ArithmeticMeasureDrillingExample: React.FC = () => {
             {renderDrillEvent}
             <div style={style} className="s-table">
                 <PivotTable
-                    backend={backend}
-                    workspace={workspace}
                     measures={measures}
                     rows={rows}
                     drillableItems={drillableItems}

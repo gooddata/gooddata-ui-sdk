@@ -2,12 +2,8 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { newAttributeSort, newAbsoluteDateFilter } from "@gooddata/sdk-model";
-
 import { ExampleWithExport } from "./ExampleWithExport";
-
-import { workspace } from "../../constants/fixtures";
 import { Ldm, LdmExt } from "../../ldm";
-import { useBackend } from "../../context/auth";
 
 const measures = [
     LdmExt.FranchiseFees,
@@ -27,15 +23,11 @@ const filters = [newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, "2017-01-01
 const style = { height: 300 };
 
 export const PivotTableExportExample: React.FC = () => {
-    const backend = useBackend();
-
     return (
         <ExampleWithExport filters={filters}>
             {onExportReady => (
                 <div style={style} className="s-pivot-table-sorting">
                     <PivotTable
-                        backend={backend}
-                        workspace={workspace}
                         measures={measures}
                         rows={attributes}
                         columns={columns}

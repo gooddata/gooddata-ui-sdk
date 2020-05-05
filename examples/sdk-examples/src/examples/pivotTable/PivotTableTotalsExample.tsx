@@ -2,10 +2,7 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ITotal } from "@gooddata/sdk-model";
-
-import { workspace } from "../../constants/fixtures";
 import { Ldm, LdmExt } from "../../ldm";
-import { useBackend } from "../../context/auth";
 
 const measures = [
     LdmExt.FranchiseFees,
@@ -47,14 +44,10 @@ const config = {
 };
 
 export const PivotTableTotalsExample: React.FC = () => {
-    const backend = useBackend();
-
     return (
         <div style={style} className="s-pivot-table-totals">
             <PivotTable
-                backend={backend}
                 config={config}
-                workspace={workspace}
                 measures={measures}
                 rows={attributes}
                 columns={columns}

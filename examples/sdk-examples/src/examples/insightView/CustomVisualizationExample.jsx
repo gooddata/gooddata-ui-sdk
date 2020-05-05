@@ -6,7 +6,6 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
 import { ResponsiveContainer, BarChart, Bar, Legend, CartesianGrid, XAxis, YAxis } from "recharts";
 import { get, unzip, range } from "lodash";
 
-import { workspace } from "../../constants/fixtures";
 import { Ldm } from "../../ldm";
 import { DEFAULT_COLOR_PALETTE } from "../../constants/colors";
 
@@ -113,7 +112,6 @@ export class CustominsightViewExample extends Component {
     render() {
         return (
             <InsightView
-                workspace={workspace}
                 insight={Ldm.Insights.FranchiseFees}
                 // TODO: SDK8 Decide whether add dimesion prop to InsightView
                 // BaseChartComponent={CustomBaseChart}
