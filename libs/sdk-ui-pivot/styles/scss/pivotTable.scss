@@ -236,6 +236,16 @@ $header-cell-resize-width: 20px;
             overflow: auto !important;
             border-top: none;
         }
+
+        .gd-cell-drillable {
+            font-weight: bold;
+            color: $gd-color-text;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 }
 
