@@ -12,7 +12,7 @@ export namespace GdcVisualizationWidget {
         meta: GdcMetadata.IObjectMeta;
         content: {
             visualization: string;
-            dateDataSe?: string;
+            dateDataSet?: string;
             ignoreDashboardFilters: Array<
                 GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference
             >;
