@@ -228,7 +228,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             return [];
         }
 
-        const [includeTagsIdentifiers, excludeTagsIdentifiers, dataSetIdentifier] = await Promise.all([
+        const [includeTagsIds, excludeTagsIds, dataSetIdentifier] = await Promise.all([
             objRefsToIdentifiers(includeTags, this.authCall),
             objRefsToIdentifiers(excludeTags, this.authCall),
             dataset ? objRefToIdentifier(dataset, this.authCall) : Promise.resolve(""),
@@ -240,8 +240,8 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
                 includeAvailableDateAttributes: true,
                 dataSetIdentifier,
                 attributesMap: this.mappings.attributeByDisplayFormUri,
-                includeObjectsWithTags: includeTagsIdentifiers,
-                excludeObjectsWithTags: excludeTagsIdentifiers,
+                includeObjectsWithTags: includeTagsIds.length ? includeTagsIds : undefined,
+                excludeObjectsWithTags: excludeTagsIds.length ? excludeTagsIds : undefined,
             }),
         );
         return result.dateDataSets.map(convertDateDataset);

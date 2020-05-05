@@ -215,8 +215,8 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 returnAllDateDataSets: true,
                 dataSetIdentifier: dataSetId,
                 attributesMap,
-                excludeObjectsWithTags: excludeTagsIds,
-                includeObjectsWithTags: includeTagsIds,
+                excludeObjectsWithTags: excludeTagsIds.length ? excludeTagsIds : undefined,
+                includeObjectsWithTags: includeTagsIds.length ? includeTagsIds : undefined,
             }),
         );
         return result.dateDataSets.map(convertDateDataset);
@@ -236,8 +236,8 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         return this.authCall(sdk =>
             sdk.catalogue.loadAllItems(this.workspace, {
                 types: bearItemTypes,
-                includeWithTags: includeTagsIds,
-                excludeWithTags: excludeTagsIds,
+                includeWithTags: includeTagsIds.length ? includeTagsIds : undefined,
+                excludeWithTags: excludeTagsIds.length ? excludeTagsIds : undefined,
                 production: getProductionFlag(this.options),
                 csvDataSets: dataset ? [dataSetId] : [],
             }),
@@ -266,8 +266,8 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const bearCatalogGroups = await this.authCall(sdk =>
             sdk.catalogue.loadGroups(this.workspace, {
-                includeWithTags: includeTagsIds,
-                excludeWithTags: excludeTagsIds,
+                includeWithTags: includeTagsIds.length ? includeTagsIds : undefined,
+                excludeWithTags: excludeTagsIds.length ? excludeTagsIds : undefined,
                 production: getProductionFlag(this.options),
                 csvDataSets: dataset ? [dataSetId] : [],
             }),
