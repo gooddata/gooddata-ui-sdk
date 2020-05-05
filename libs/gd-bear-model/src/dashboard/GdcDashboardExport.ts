@@ -2,6 +2,7 @@
 import isEmpty from "lodash/isEmpty";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
 import { GdcMetadata } from "../meta/GdcMetadata";
+import { Uri, Timestamp } from "../aliases";
 
 /**
  * @public
@@ -20,6 +21,19 @@ export namespace GdcDashboardExport {
 
     export interface IWrappedFilterContext {
         filterContext: IFilterContext;
+    }
+
+    /**
+     * Temporary filter context stored during exports
+     */
+    export interface ITempFilterContext {
+        uri: Uri;
+        created: Timestamp;
+        filters: FilterContextItem[];
+    }
+
+    export interface IWrappedTempFilterContext {
+        tempFilterContext: ITempFilterContext;
     }
 
     export interface IAttributeFilter {
@@ -57,5 +71,18 @@ export namespace GdcDashboardExport {
 
     export function isWrappedFilterContext(obj: any): obj is IWrappedFilterContext {
         return !isEmpty(obj) && (obj as IWrappedFilterContext).hasOwnProperty("filterContext");
+    }
+
+    export function isTempFilterContext(obj: any): obj is ITempFilterContext {
+        return (
+            !isEmpty(obj) &&
+            (obj as ITempFilterContext).created &&
+            (obj as ITempFilterContext).uri &&
+            (obj as ITempFilterContext).filters.every(x => isDateFilter(x) || isAttributeFilter(x))
+        );
+    }
+
+    export function isWrappedTempFilterContext(obj: any): obj is IWrappedFilterContext {
+        return !isEmpty(obj) && (obj as IWrappedFilterContext).hasOwnProperty("tempFilterContext");
     }
 }

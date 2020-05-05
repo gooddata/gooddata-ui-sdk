@@ -239,11 +239,28 @@ export namespace GdcDashboardExport {
     // (undocumented)
     export function isFilterContext(obj: any): obj is IFilterContext;
     // (undocumented)
+    export function isTempFilterContext(obj: any): obj is ITempFilterContext;
+    // (undocumented)
     export function isWrappedFilterContext(obj: any): obj is IWrappedFilterContext;
+    // (undocumented)
+    export function isWrappedTempFilterContext(obj: any): obj is IWrappedFilterContext;
+    export interface ITempFilterContext {
+        // (undocumented)
+        created: Timestamp;
+        // (undocumented)
+        filters: FilterContextItem[];
+        // (undocumented)
+        uri: Uri;
+    }
     // (undocumented)
     export interface IWrappedFilterContext {
         // (undocumented)
         filterContext: IFilterContext;
+    }
+    // (undocumented)
+    export interface IWrappedTempFilterContext {
+        // (undocumented)
+        tempFilterContext: ITempFilterContext;
     }
     // (undocumented)
     export type RelativeType = "relative";
@@ -2434,7 +2451,7 @@ export namespace GdcVisualizationWidget {
         // (undocumented)
         content: {
             visualization: string;
-            dateDataSe?: string;
+            dateDataSet?: string;
             ignoreDashboardFilters: Array<GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference>;
             drills?: IDrillDefinition;
         };
