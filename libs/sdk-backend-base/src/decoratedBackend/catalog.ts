@@ -50,7 +50,7 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
     }
 
     public includeTags(tags: ObjRef[]): IWorkspaceCatalogFactory {
-        return this.createNew(this.decorated.excludeTags(tags));
+        return this.createNew(this.decorated.includeTags(tags));
     }
 
     public withOptions(options: IWorkspaceCatalogFactoryOptions): IWorkspaceCatalogFactory {
