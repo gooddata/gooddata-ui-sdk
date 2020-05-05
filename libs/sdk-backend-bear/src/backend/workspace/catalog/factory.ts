@@ -9,6 +9,7 @@ import {
     ICatalogDateDataset,
     CatalogItem,
     ObjRef,
+    Identifier,
 } from "@gooddata/sdk-model";
 import { GdcMetadata, GdcCatalog } from "@gooddata/gd-bear-model";
 import {
@@ -23,7 +24,7 @@ import {
 import { BearAuthenticatedCallGuard } from "../../../types";
 import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey } from "./types";
 import { BearWorkspaceCatalog } from "./catalog";
-import { objRefToIdentifier } from "../../../fromObjRef/api";
+import { objRefToIdentifier, objRefsToIdentifiers } from "../../../fromObjRef/api";
 
 type BearDisplayFormOrAttribute = GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute;
 
@@ -100,7 +101,15 @@ const getProductionFlag = ({
     return sanitizedProduction ? 1 : 0;
 };
 
+type TagsAndDataSetIds = {
+    includeTagsIds: Identifier[];
+    excludeTagsIds: Identifier[];
+    dataSetId: Identifier;
+};
+
 export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
+    private tagsAndDatasetIdsPromise: Promise<TagsAndDataSetIds> | null = null;
+
     constructor(
         private readonly authCall: BearAuthenticatedCallGuard,
         public readonly workspace: string,
@@ -192,52 +201,45 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadDateDatasets = async (attributesMap: IAttributeByKey): Promise<ICatalogDateDataset[]> => {
-        const { types, dataset } = this.options;
-
-        let dataSetIdentifier: string;
-        if (dataset) {
-            dataSetIdentifier = await objRefToIdentifier(dataset, this.authCall);
-        }
+        const { types } = this.options;
 
         const includeDateDatasets = types.includes("dateDataset");
         if (!includeDateDatasets) {
             return [];
         }
 
+        const { includeTagsIds, excludeTagsIds, dataSetId } = await this.getTagsAndDatasetIds();
+
         const result = await this.authCall(sdk =>
             sdk.catalogue.loadDateDataSets(this.workspace, {
                 returnAllDateDataSets: true,
-                dataSetIdentifier,
+                dataSetIdentifier: dataSetId,
                 attributesMap,
+                excludeObjectsWithTags: excludeTagsIds,
+                includeObjectsWithTags: includeTagsIds,
             }),
         );
         return result.dateDataSets.map(convertDateDataset);
     };
 
     private loadBearCatalogItems = async (): Promise<GdcCatalog.CatalogItem[]> => {
-        const { types, includeTags, excludeTags, dataset } = this.options;
+        const { types, dataset } = this.options;
 
         const compatibleBearItemTypes = types.filter(isCompatibleCatalogItemType);
         if (compatibleBearItemTypes.length === 0) {
             return [];
         }
 
-        const includeTagsIdentifiers = await this.objRefsToIdentifiers(includeTags);
-        const excludeTagsIdentifiers = await this.objRefsToIdentifiers(excludeTags);
-
-        let dataSetIdentifier: string;
-        if (dataset) {
-            dataSetIdentifier = await objRefToIdentifier(dataset, this.authCall);
-        }
+        const { includeTagsIds, excludeTagsIds, dataSetId } = await this.getTagsAndDatasetIds();
 
         const bearItemTypes = compatibleBearItemTypes.map(convertItemType);
         return this.authCall(sdk =>
             sdk.catalogue.loadAllItems(this.workspace, {
                 types: bearItemTypes,
-                includeWithTags: includeTagsIdentifiers,
-                excludeWithTags: excludeTagsIdentifiers,
+                includeWithTags: includeTagsIds,
+                excludeWithTags: excludeTagsIds,
                 production: getProductionFlag(this.options),
-                csvDataSets: dataset ? [dataSetIdentifier] : [],
+                csvDataSets: dataset ? [dataSetId] : [],
             }),
         );
     };
@@ -258,29 +260,37 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadCatalogGroups = async (): Promise<ICatalogGroup[]> => {
-        const { includeTags, excludeTags, dataset } = this.options;
+        const { dataset } = this.options;
 
-        const includeTagsIdentifiers = await this.objRefsToIdentifiers(includeTags);
-        const excludeTagsIdentifiers = await this.objRefsToIdentifiers(excludeTags);
-
-        let dataSetIdentifier: string;
-        if (dataset) {
-            dataSetIdentifier = await objRefToIdentifier(dataset, this.authCall);
-        }
+        const { includeTagsIds, excludeTagsIds, dataSetId } = await this.getTagsAndDatasetIds();
 
         const bearCatalogGroups = await this.authCall(sdk =>
             sdk.catalogue.loadGroups(this.workspace, {
-                includeWithTags: includeTagsIdentifiers,
-                excludeWithTags: excludeTagsIdentifiers,
+                includeWithTags: includeTagsIds,
+                excludeWithTags: excludeTagsIds,
                 production: getProductionFlag(this.options),
-                csvDataSets: dataset ? [dataSetIdentifier] : [],
+                csvDataSets: dataset ? [dataSetId] : [],
             }),
         );
 
         return bearCatalogGroups.map(convertGroup);
     };
 
-    private objRefsToIdentifiers = async (objRefs: ObjRef[]) => {
-        return Promise.all(objRefs.map(ref => objRefToIdentifier(ref, this.authCall)));
+    private getTagsAndDatasetIds = async (): Promise<TagsAndDataSetIds> => {
+        if (!this.tagsAndDatasetIdsPromise) {
+            const { dataset, includeTags, excludeTags } = this.options;
+
+            this.tagsAndDatasetIdsPromise = Promise.all([
+                objRefsToIdentifiers(includeTags, this.authCall),
+                objRefsToIdentifiers(excludeTags, this.authCall),
+                dataset ? objRefToIdentifier(dataset, this.authCall) : Promise.resolve(""),
+            ]).then(([includeTagsIds, excludeTagsIds, dataSetId]) => ({
+                dataSetId,
+                excludeTagsIds,
+                includeTagsIds,
+            }));
+        }
+
+        return this.tagsAndDatasetIdsPromise;
     };
 }

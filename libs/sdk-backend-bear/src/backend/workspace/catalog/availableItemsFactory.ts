@@ -25,7 +25,7 @@ import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { IUriMappings } from "./types";
 import { BearWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
 import { BearAuthenticatedCallGuard } from "../../../types";
-import { objRefToIdentifier } from "../../../fromObjRef/api";
+import { objRefToIdentifier, objRefsToIdentifiers } from "../../../fromObjRef/api";
 
 const catalogItemUri = (catalogItem: CatalogItem): string => {
     if (isCatalogAttribute(catalogItem)) {
@@ -221,17 +221,18 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
     private loadAvailableDateDatasets = async (
         sanitizedVisualizationObject: GdcVisualizationObject.IVisualizationObject,
     ): Promise<ICatalogDateDataset[]> => {
-        const { types, dataset } = this.options;
+        const { types, includeTags, excludeTags, dataset } = this.options;
 
         const includeDateDatasets = types.includes("dateDataset");
         if (!includeDateDatasets) {
             return [];
         }
 
-        let dataSetIdentifier: string;
-        if (dataset) {
-            dataSetIdentifier = await objRefToIdentifier(dataset, this.authCall);
-        }
+        const [includeTagsIdentifiers, excludeTagsIdentifiers, dataSetIdentifier] = await Promise.all([
+            objRefsToIdentifiers(includeTags, this.authCall),
+            objRefsToIdentifiers(excludeTags, this.authCall),
+            dataset ? objRefToIdentifier(dataset, this.authCall) : Promise.resolve(""),
+        ]);
 
         const result = await this.authCall(sdk =>
             sdk.catalogue.loadDateDataSets(this.workspace, {
@@ -239,6 +240,8 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
                 includeAvailableDateAttributes: true,
                 dataSetIdentifier,
                 attributesMap: this.mappings.attributeByDisplayFormUri,
+                includeObjectsWithTags: includeTagsIdentifiers,
+                excludeObjectsWithTags: excludeTagsIdentifiers,
             }),
         );
         return result.dateDataSets.map(convertDateDataset);
