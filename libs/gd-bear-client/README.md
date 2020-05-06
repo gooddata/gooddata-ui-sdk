@@ -59,7 +59,7 @@ The REST API versions in the table are just for your information as the values a
 
 You have two options:
 
--   [download `gooddata.js` or `gooddata.min.js`](https://unpkg.com/@gooddata/gd-bear-client@latest/dist/) from the latest release
+-   [download `gooddata.js` or `gooddata.min.js`](https://unpkg.com/@gooddata/gd-bear-client@latest/umd/) from the latest release
 -   build on your own:
     ```bash
     git clone https://github.com/gooddata/gooddata-js.git
