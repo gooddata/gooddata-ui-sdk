@@ -14,6 +14,7 @@ import { DatePicker } from "../examples/advanced/datePicker";
 import { DynamicMeasures } from "../examples/advanced/dynamicMeasures";
 import { CustomLegend } from "../examples/advanced/customLegend";
 import { LoadingAndError } from "../examples/advanced/loadingAndError";
+import { ParentFilter } from "../examples/advanced/parentFilter";
 import { ChartConfiguration } from "../examples/advanced/chartConfiguration";
 import { Responsive } from "../examples/advanced/responsive";
 import { Export } from "../examples/export";
@@ -41,7 +42,7 @@ export const advancedUseCasesRoutes = [
     { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
     { path: "/advanced/responsive", title: "Responsive Chart", Component: Responsive },
     { path: "/advanced/custom-legend", title: "Custom Legend", Component: CustomLegend },
-    // { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },
+    { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },
     {
         path: "/advanced/loading-and-error",
         title: "Loading and Error Components",

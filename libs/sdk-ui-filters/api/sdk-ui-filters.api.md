@@ -18,25 +18,9 @@ import { OnError } from '@gooddata/sdk-ui';
 import * as React_2 from 'react';
 
 // Warning: (ae-forgotten-export) The symbol "IAttributeElementsProps" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "IAttributeElementsState" needs to be exported by the entry point index.d.ts
 //
-// @public
-export class AttributeElements extends React_2.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentDidUpdate(prevProps: IAttributeElementsProps): void;
-    // (undocumented)
-    static defaultProps: Partial<IAttributeElementsProps>;
-    // (undocumented)
-    getValidElements: () => Promise<void>;
-    // (undocumented)
-    loadMore: () => Promise<void>;
-    // (undocumented)
-    render(): React_2.ReactNode;
-    // (undocumented)
-    state: IAttributeElementsState;
-}
+// @public (undocumented)
+export const AttributeElements: React_2.ComponentType<IAttributeElementsProps>;
 
 // Warning: (ae-forgotten-export) The symbol "IAttributeFilterProps" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "IAttributeFilterState" needs to be exported by the entry point index.d.ts

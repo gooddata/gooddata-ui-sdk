@@ -184,3 +184,9 @@ export const dateDataSetUri = `/gdc/md/${workspace}/obj/2180`;
 export const locationNameAttributeUri = `/gdc/md/${workspace}/obj/2204`;
 export const locationResortUri = `/gdc/md/${workspace}/obj/2206`;
 export const tableInsightViewUri = `/gdc/md/${workspace}/obj/8702`;
+
+// ===============================================================================================
+
+export const locationStateAttributeIdentifier = "attr.restaurantlocation.locationstate";
+export const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
+export const locationCityAttributeIdentifier = "attr.restaurantlocation.locationcity";

@@ -3,14 +3,14 @@ import * as React from "react";
 import isEqual = require("lodash/isEqual");
 import { IAnalyticalBackend, IElementQueryOptions, IElementQueryResult } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { defaultErrorHandler, OnError } from "@gooddata/sdk-ui";
+import { defaultErrorHandler, OnError, withContexts } from "@gooddata/sdk-ui";
 
 import { AttributeElementsDefaultChildren } from "./AttributeElementsDefaultChildren";
 import { IAttributeElementsChildren } from "./types";
 
 export interface IAttributeElementsProps {
-    backend: IAnalyticalBackend;
-    workspace: string;
+    backend?: IAnalyticalBackend;
+    workspace?: string;
     displayForm: ObjRef;
 
     limit?: number;
@@ -32,7 +32,7 @@ interface IAttributeElementsState {
  * TODO: SDK8: add docs
  * @public
  */
-export class AttributeElements extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
+class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
     public static defaultProps: Partial<IAttributeElementsProps> = {
         options: {},
         children: AttributeElementsDefaultChildren,
@@ -121,3 +121,5 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         });
     }
 }
+
+export const AttributeElements = withContexts(AttributeElementsCore);
