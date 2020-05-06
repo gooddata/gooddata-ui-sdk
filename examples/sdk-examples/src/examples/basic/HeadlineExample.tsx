@@ -1,18 +1,20 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { Headline } from "@gooddata/sdk-ui";
+import { Headline } from "@gooddata/sdk-ui-charts";
 import { LdmExt } from "../../ldm";
 
 export class HeadlineExample extends Component {
-    onLoadingChanged(...params) {
+    public onLoadingChanged(...params) {
+        // tslint:disable-next-line:no-console
         return console.log("ColumnChartExample onLoadingChanged", ...params);
     }
 
-    onError(...params) {
+    public onError(...params) {
+        // tslint:disable-next-line:no-console
         return console.log("ColumnChartExample onError", ...params);
     }
 
-    render() {
+    public render() {
         const primaryMeasure = LdmExt.FranchiseFees;
 
         const secondaryMeasure = LdmExt.FranchiseFeesAdRoyalty;

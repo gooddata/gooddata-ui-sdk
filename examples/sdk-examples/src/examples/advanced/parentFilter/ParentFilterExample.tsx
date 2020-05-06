@@ -10,6 +10,8 @@ import {
 import Select from "react-select";
 import "react-select/dist/react-select.css";
 import { Ldm, LdmExt } from "../../../ldm";
+import { useBackend } from "../../../context/auth";
+import { workspace } from "../../../constants/fixtures";
 
 interface IParentFilterExampleState {
     stateFilterValues: any[];
@@ -61,34 +63,18 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
 
         if (stateFilterValues.length) {
             visFilters.push(
-                newPositiveAttributeFilter(
-                    Ldm.LocationState,
-                    stateFilterValues.map(filter => filter.value),
-                ),
+                newPositiveAttributeFilter(Ldm.LocationState, {
+                    uris: stateFilterValues.map(filter => filter.value),
+                }),
             );
         }
         if (cityFilterValues.length) {
             visFilters.push(
-                newPositiveAttributeFilter(
-                    Ldm.LocationCity,
-                    cityFilterValues.map(filter => filter.value),
-                ),
+                newPositiveAttributeFilter(Ldm.LocationCity, {
+                    uris: cityFilterValues.map(filter => filter.value),
+                }),
             );
         }
-        console.log(stateFilterValues);
-        console.log(cityFilterValues);
-        console.log(
-            newPositiveAttributeFilter(
-                Ldm.LocationCity,
-                cityFilterValues.map(filter => filter.value),
-            ),
-        );
-        console.log(
-            newPositiveAttributeFilter(
-                Ldm.LocationState,
-                stateFilterValues.map(filter => filter.value),
-            ),
-        );
 
         return (
             <div style={{ height: 500 }}>
@@ -104,7 +90,13 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
 
     public renderFilter(key, displayForm, filterValues, placeholder, options, onChange) {
         return (
-            <AttributeElements key={key} displayForm={displayForm} options={options}>
+            <AttributeElements
+                backend={useBackend()}
+                workspace={workspace}
+                key={key}
+                displayForm={displayForm}
+                options={options}
+            >
                 {({ validElements, isLoading, error }) => {
                     if (error) {
                         return <div>{error}</div>;
