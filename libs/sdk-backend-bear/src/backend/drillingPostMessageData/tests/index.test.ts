@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { IUriIdentifierPair } from "@gooddata/gd-bear-client/lib/metadata";
+import { IUriIdentifierPair } from "@gooddata/gd-bear-client";
 import { sanitizeDrillingActivationPostMessageData } from "..";
 import { IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 

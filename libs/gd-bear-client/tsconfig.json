@@ -5,7 +5,7 @@
         "module": "commonjs",
         "lib": ["es6", "dom"],
         "declaration": true,
-        "outDir": "./lib",
+        "outDir": "./dist",
         "strict": true,
         "noImplicitAny": true,
         "strictNullChecks": true,
@@ -18,5 +18,5 @@
             "@gooddata/gd-bear-model": ["gd-bear-model/src"]
         }
     },
-    "exclude": ["node_modules", "lib"]
+    "exclude": ["node_modules", "dist"]
 }

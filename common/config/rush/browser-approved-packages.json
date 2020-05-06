@@ -355,10 +355,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "awesome-typescript-loader",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "axios",
       "allowedCategories": [ "production" ]
     },

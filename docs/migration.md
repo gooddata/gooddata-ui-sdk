@@ -65,6 +65,10 @@
 
 -   The exported HeaderPredicateFactory is now exported as HeaderPredicates
 
+-   The UMD version of gd-bear-client is now exposed in the `/umd` folder (not `/dist` as in previous versions)
+
+    -   to migrate, please update the import paths appropriately
+
 #### Styling changes
 
 -   Styles were also split into the respective packages (chart styles to sdk-ui-charts etc)
