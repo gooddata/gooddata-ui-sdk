@@ -141,41 +141,6 @@
                     "type": "string"
                 }
             },
-            "MetaElementFields": {
-                "description": "metaElement fields to include (csv)",
-                "in": "query",
-                "name": "fields",
-                "schema": {
-                    "default": "id,name,parent,children,natures",
-                    "type": "string"
-                }
-            },
-            "MetaElementInclude": {
-                "description": "metaElement relationships to include (csv)",
-                "in": "query",
-                "name": "include",
-                "schema": {
-                    "default": "MetaElement,MetaElement",
-                    "type": "string"
-                }
-            },
-            "MetaElementPrimaryKey": {
-                "in": "path",
-                "name": "id",
-                "required": true,
-                "schema": {
-                    "$ref": "#/components/schemas/MetaElementIdResourceAttribute"
-                }
-            },
-            "MetaElementSort": {
-                "description": "metaElement sort order (csv)",
-                "in": "query",
-                "name": "sort",
-                "schema": {
-                    "example": "id,name,parent,children,natures",
-                    "type": "string"
-                }
-            },
             "MetricFields": {
                 "description": "metric fields to include (csv)",
                 "in": "query",
@@ -710,46 +675,6 @@
                 },
                 "description": "OK"
             },
-            "MetaElementResourceReferenceResponse": {
-                "content": {
-                    "application/vnd.api+json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/MetaElementResourceReferenceResponseSchema"
-                        }
-                    }
-                },
-                "description": "OK"
-            },
-            "MetaElementResourceReferencesResponse": {
-                "content": {
-                    "application/vnd.api+json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/MetaElementResourceReferencesResponseSchema"
-                        }
-                    }
-                },
-                "description": "OK"
-            },
-            "MetaElementResourceResponse": {
-                "content": {
-                    "application/vnd.api+json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/MetaElementResourceResponseSchema"
-                        }
-                    }
-                },
-                "description": "OK"
-            },
-            "MetaElementResourcesResponse": {
-                "content": {
-                    "application/vnd.api+json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/MetaElementResourcesResponseSchema"
-                        }
-                    }
-                },
-                "description": "OK"
-            },
             "MetricResourceReferenceResponse": {
                 "content": {
                     "application/vnd.api+json": {
@@ -1078,6 +1003,12 @@
                 "required": ["type"],
                 "type": "object"
             },
+            "AttributePostResources": {
+                "items": {
+                    "$ref": "#/components/schemas/AttributePostResource"
+                },
+                "type": "array"
+            },
             "AttributeResourceAttributes": {
                 "properties": {
                     "attributes": {
@@ -1299,6 +1230,12 @@
                 },
                 "required": ["type"],
                 "type": "object"
+            },
+            "DatasetPostResources": {
+                "items": {
+                    "$ref": "#/components/schemas/DatasetPostResource"
+                },
+                "type": "array"
             },
             "DatasetReferencePropertiesResourceAttribute": {
                 "items": {
@@ -1563,6 +1500,12 @@
                 "required": ["type"],
                 "type": "object"
             },
+            "FactPostResources": {
+                "items": {
+                    "$ref": "#/components/schemas/FactPostResource"
+                },
+                "type": "array"
+            },
             "FactResourceAttributes": {
                 "properties": {
                     "attributes": {
@@ -1805,6 +1748,12 @@
                 "required": ["type"],
                 "type": "object"
             },
+            "LabelPostResources": {
+                "items": {
+                    "$ref": "#/components/schemas/LabelPostResource"
+                },
+                "type": "array"
+            },
             "LabelPrimaryResourceAttribute": {
                 "nullable": false,
                 "type": "boolean"
@@ -2002,266 +1951,6 @@
                 "description": "Non-standard meta-information that can not be represented as an attribute or relationship.",
                 "type": "object"
             },
-            "MetaElementChildrenResourceAttribute": {
-                "items": {
-                    "$ref": "#/components/schemas/MetaElementResourceReference"
-                },
-                "nullable": true,
-                "type": "array",
-                "uniqueItems": false
-            },
-            "MetaElementIdResourceAttribute": {
-                "description": "The JSON:API resource ID",
-                "nullable": false,
-                "type": "string"
-            },
-            "MetaElementNameResourceAttribute": {
-                "nullable": true,
-                "type": "string"
-            },
-            "MetaElementNaturesResourceAttribute": {
-                "additionalProperties": {
-                    "properties": {
-                        "booleanArrays": {
-                            "additionalProperties": {
-                                "items": {
-                                    "type": "boolean"
-                                },
-                                "type": "array",
-                                "uniqueItems": false
-                            },
-                            "type": "object"
-                        },
-                        "booleans": {
-                            "additionalProperties": {
-                                "type": "boolean"
-                            },
-                            "type": "object"
-                        },
-                        "doubleArrays": {
-                            "additionalProperties": {
-                                "items": {
-                                    "format": "double",
-                                    "type": "number"
-                                },
-                                "type": "array",
-                                "uniqueItems": false
-                            },
-                            "type": "object"
-                        },
-                        "doubles": {
-                            "additionalProperties": {
-                                "format": "double",
-                                "type": "number"
-                            },
-                            "type": "object"
-                        },
-                        "intArrays": {
-                            "additionalProperties": {
-                                "items": {
-                                    "format": "int32",
-                                    "type": "integer"
-                                },
-                                "type": "array",
-                                "uniqueItems": false
-                            },
-                            "type": "object"
-                        },
-                        "ints": {
-                            "additionalProperties": {
-                                "format": "int32",
-                                "type": "integer"
-                            },
-                            "type": "object"
-                        },
-                        "stringArrays": {
-                            "additionalProperties": {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array",
-                                "uniqueItems": false
-                            },
-                            "type": "object"
-                        },
-                        "strings": {
-                            "additionalProperties": {
-                                "type": "string"
-                            },
-                            "type": "object"
-                        }
-                    },
-                    "type": "object"
-                },
-                "nullable": true,
-                "type": "object"
-            },
-            "MetaElementParentResourceAttribute": {
-                "$ref": "#/components/schemas/MetaElementResourceReference",
-                "nullable": true
-            },
-            "MetaElementPatchResource": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/MetaElementResourceReference"
-                    },
-                    {
-                        "$ref": "#/components/schemas/MetaElementResourcePatchAttributes"
-                    }
-                ]
-            },
-            "MetaElementPostResource": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/MetaElementPostResourceReference"
-                    },
-                    {
-                        "$ref": "#/components/schemas/MetaElementResourcePostAttributes"
-                    }
-                ]
-            },
-            "MetaElementPostResourceReference": {
-                "properties": {
-                    "id": {
-                        "$ref": "#/components/schemas/MetaElementIdResourceAttribute"
-                    },
-                    "type": {
-                        "description": "The JSON:API resource type (MetaElement)",
-                        "enum": ["MetaElement"],
-                        "type": "string"
-                    }
-                },
-                "required": ["type"],
-                "type": "object"
-            },
-            "MetaElementResourceAttributes": {
-                "properties": {
-                    "attributes": {
-                        "properties": {
-                            "children": {
-                                "$ref": "#/components/schemas/MetaElementChildrenResourceAttribute"
-                            },
-                            "name": {
-                                "$ref": "#/components/schemas/MetaElementNameResourceAttribute"
-                            },
-                            "natures": {
-                                "$ref": "#/components/schemas/MetaElementNaturesResourceAttribute"
-                            },
-                            "parent": {
-                                "$ref": "#/components/schemas/MetaElementParentResourceAttribute"
-                            }
-                        },
-                        "type": "object"
-                    }
-                },
-                "type": "object"
-            },
-            "MetaElementResourcePatchAttributes": {
-                "properties": {
-                    "attributes": {
-                        "properties": {},
-                        "type": "object"
-                    }
-                },
-                "type": "object"
-            },
-            "MetaElementResourcePostAttributes": {
-                "properties": {
-                    "attributes": {
-                        "properties": {},
-                        "type": "object"
-                    }
-                },
-                "type": "object"
-            },
-            "MetaElementResourceReference": {
-                "properties": {
-                    "id": {
-                        "$ref": "#/components/schemas/MetaElementIdResourceAttribute"
-                    },
-                    "type": {
-                        "description": "The JSON:API resource type (MetaElement)",
-                        "enum": ["MetaElement"],
-                        "type": "string"
-                    }
-                },
-                "required": ["id", "type"],
-                "type": "object"
-            },
-            "MetaElementResourceReferenceResponseSchema": {
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/MetaElementResourceReference"
-                    }
-                },
-                "type": "object"
-            },
-            "MetaElementResourceReferencesResponseSchema": {
-                "properties": {
-                    "data": {
-                        "items": {
-                            "$ref": "#/components/schemas/MetaElementResourceReference"
-                        },
-                        "type": "array"
-                    }
-                },
-                "type": "object"
-            },
-            "MetaElementResourceResponseSchema": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/Success"
-                    },
-                    {
-                        "properties": {
-                            "data": {
-                                "$ref": "#/components/schemas/MetaElementResourceSchema"
-                            }
-                        },
-                        "required": ["data"]
-                    }
-                ]
-            },
-            "MetaElementResourceSchema": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/MetaElementResourceReference"
-                    },
-                    {
-                        "$ref": "#/components/schemas/MetaElementResourceAttributes"
-                    },
-                    {
-                        "properties": {
-                            "links": {
-                                "type": "object"
-                            },
-                            "relationships": {
-                                "type": "object"
-                            }
-                        },
-                        "type": "object"
-                    }
-                ],
-                "required": ["attributes"]
-            },
-            "MetaElementResourcesResponseSchema": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/Success"
-                    },
-                    {
-                        "properties": {
-                            "data": {
-                                "items": {
-                                    "$ref": "#/components/schemas/MetaElementResourceSchema"
-                                },
-                                "type": "array"
-                            }
-                        },
-                        "required": ["data"]
-                    }
-                ]
-            },
             "MetricAstResourceAttribute": {
                 "nullable": true,
                 "type": "string"
@@ -2344,6 +2033,12 @@
                 },
                 "required": ["type"],
                 "type": "object"
+            },
+            "MetricPostResources": {
+                "items": {
+                    "$ref": "#/components/schemas/MetricPostResource"
+                },
+                "type": "array"
             },
             "MetricResourceAttributes": {
                 "properties": {
@@ -2601,6 +2296,12 @@
                 "required": ["type"],
                 "type": "object"
             },
+            "SourcePostResources": {
+                "items": {
+                    "$ref": "#/components/schemas/SourcePostResource"
+                },
+                "type": "array"
+            },
             "SourceResourceAttributes": {
                 "properties": {
                     "attributes": {
@@ -2822,6 +2523,12 @@
                 "required": ["type"],
                 "type": "object"
             },
+            "TablePostResources": {
+                "items": {
+                    "$ref": "#/components/schemas/TablePostResource"
+                },
+                "type": "array"
+            },
             "TableResourceAttributes": {
                 "properties": {
                     "attributes": {
@@ -3018,6 +2725,12 @@
                 },
                 "required": ["type"],
                 "type": "object"
+            },
+            "TagPostResources": {
+                "items": {
+                    "$ref": "#/components/schemas/TagPostResource"
+                },
+                "type": "array"
             },
             "TagResourceAttributes": {
                 "properties": {
@@ -3264,6 +2977,12 @@
                 },
                 "required": ["type"],
                 "type": "object"
+            },
+            "VisualizationObjectPostResources": {
+                "items": {
+                    "$ref": "#/components/schemas/VisualizationObjectPostResource"
+                },
+                "type": "array"
             },
             "VisualizationObjectResourceAttributes": {
                 "properties": {
@@ -3580,170 +3299,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "post": {
-                "description": "Create a Attribute",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AttributePostResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AttributeResourceResponseSchema"
-                                }
-                            }
-                        },
-                        "description": "Created"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/AttributeResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
         "/attributes/{id}": {
-            "delete": {
-                "description": "Delete a Attribute",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/AttributePrimaryKey"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/AttributeResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            },
             "get": {
                 "description": "Retrieve a attribute resource",
                 "parameters": [
@@ -3823,99 +3381,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "patch": {
-                "description": "Update a Attribute",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/AttributePrimaryKey"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AttributePatchResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Info"
-                                }
-                            }
-                        },
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/AttributeResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
-        "/attributes/{id}/datasets": {
+        "/attributes/{id}/dataset": {
             "get": {
                 "description": "Retrieve dataset related to a attribute resource",
                 "parameters": [
@@ -4138,7 +3606,7 @@
                 }
             }
         },
-        "/attributes/{id}/relationships/datasets": {
+        "/attributes/{id}/relationships/dataset": {
             "get": {
                 "description": "Retrieve dataset references related to a attribute resource",
                 "parameters": [
@@ -4820,170 +4288,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "post": {
-                "description": "Create a Dataset",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DatasetPostResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/DatasetResourceResponseSchema"
-                                }
-                            }
-                        },
-                        "description": "Created"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/DatasetResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
         "/datasets/{id}": {
-            "delete": {
-                "description": "Delete a Dataset",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/DatasetPrimaryKey"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/DatasetResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            },
             "get": {
                 "description": "Retrieve a dataset resource",
                 "parameters": [
@@ -5010,96 +4317,6 @@
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/DatasetResourceResponse"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/DatasetResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            },
-            "patch": {
-                "description": "Update a Dataset",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/DatasetPrimaryKey"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DatasetPatchResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Info"
-                                }
-                            }
-                        },
-                        "description": "OK"
                     },
                     "202": {
                         "$ref": "#/components/responses/DatasetResourceReferencesResponse"
@@ -5296,7 +4513,140 @@
                 }
             }
         },
-        "/datasets/{id}/datasets": {
+        "/datasets/{id}/facts": {
+            "get": {
+                "description": "Retrieve fact related to a dataset resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/DatasetPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by description (csv)",
+                        "in": "query",
+                        "name": "filter[description]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by dataset (csv)",
+                        "in": "query",
+                        "name": "filter[dataset]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by sourceColumn (csv)",
+                        "in": "query",
+                        "name": "filter[sourceColumn]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/FactFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/FactInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/FactResourcesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/FactResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
+        "/datasets/{id}/references": {
             "get": {
                 "description": "Retrieve dataset related to a dataset resource",
                 "parameters": [
@@ -5433,139 +4783,6 @@
                     },
                     "202": {
                         "$ref": "#/components/responses/DatasetResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            }
-        },
-        "/datasets/{id}/facts": {
-            "get": {
-                "description": "Retrieve fact related to a dataset resource",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/DatasetPrimaryKey"
-                    },
-                    {
-                        "$ref": "#/components/parameters/NestedFilter"
-                    },
-                    {
-                        "description": "Filter by title (csv)",
-                        "in": "query",
-                        "name": "filter[title]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by description (csv)",
-                        "in": "query",
-                        "name": "filter[description]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by tags (csv)",
-                        "in": "query",
-                        "name": "filter[tags]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by dataset (csv)",
-                        "in": "query",
-                        "name": "filter[dataset]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by sourceColumn (csv)",
-                        "in": "query",
-                        "name": "filter[sourceColumn]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by id (csv)",
-                        "in": "query",
-                        "name": "filter[id]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/FactFields"
-                    },
-                    {
-                        "$ref": "#/components/parameters/FactInclude"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/FactResourcesResponse"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/FactResourceReferencesResponse"
                     },
                     "204": {
                         "$ref": "#/components/responses/NoContent"
@@ -5759,7 +4976,140 @@
                 }
             }
         },
-        "/datasets/{id}/relationships/datasets": {
+        "/datasets/{id}/relationships/facts": {
+            "get": {
+                "description": "Retrieve fact references related to a dataset resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/DatasetPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by description (csv)",
+                        "in": "query",
+                        "name": "filter[description]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by dataset (csv)",
+                        "in": "query",
+                        "name": "filter[dataset]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by sourceColumn (csv)",
+                        "in": "query",
+                        "name": "filter[sourceColumn]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/FactFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/FactInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/FactResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/FactResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
+        "/datasets/{id}/relationships/references": {
             "get": {
                 "description": "Retrieve dataset references related to a dataset resource",
                 "parameters": [
@@ -5896,139 +5246,6 @@
                     },
                     "202": {
                         "$ref": "#/components/responses/DatasetResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            }
-        },
-        "/datasets/{id}/relationships/facts": {
-            "get": {
-                "description": "Retrieve fact references related to a dataset resource",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/DatasetPrimaryKey"
-                    },
-                    {
-                        "$ref": "#/components/parameters/NestedFilter"
-                    },
-                    {
-                        "description": "Filter by title (csv)",
-                        "in": "query",
-                        "name": "filter[title]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by description (csv)",
-                        "in": "query",
-                        "name": "filter[description]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by tags (csv)",
-                        "in": "query",
-                        "name": "filter[tags]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by dataset (csv)",
-                        "in": "query",
-                        "name": "filter[dataset]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by sourceColumn (csv)",
-                        "in": "query",
-                        "name": "filter[sourceColumn]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by id (csv)",
-                        "in": "query",
-                        "name": "filter[id]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/FactFields"
-                    },
-                    {
-                        "$ref": "#/components/parameters/FactInclude"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/FactResourceReferencesResponse"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/FactResourceReferencesResponse"
                     },
                     "204": {
                         "$ref": "#/components/responses/NoContent"
@@ -6484,170 +5701,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "post": {
-                "description": "Create a Fact",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/FactPostResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/FactResourceResponseSchema"
-                                }
-                            }
-                        },
-                        "description": "Created"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/FactResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
         "/facts/{id}": {
-            "delete": {
-                "description": "Delete a Fact",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/FactPrimaryKey"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/FactResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            },
             "get": {
                 "description": "Retrieve a fact resource",
                 "parameters": [
@@ -6727,99 +5783,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "patch": {
-                "description": "Update a Fact",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/FactPrimaryKey"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/FactPatchResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Info"
-                                }
-                            }
-                        },
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/FactResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
-        "/facts/{id}/datasets": {
+        "/facts/{id}/dataset": {
             "get": {
                 "description": "Retrieve dataset related to a fact resource",
                 "parameters": [
@@ -6901,7 +5867,7 @@
                 }
             }
         },
-        "/facts/{id}/relationships/datasets": {
+        "/facts/{id}/relationships/dataset": {
             "get": {
                 "description": "Retrieve dataset references related to a fact resource",
                 "parameters": [
@@ -7394,170 +6360,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "post": {
-                "description": "Create a Label",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/LabelPostResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/LabelResourceResponseSchema"
-                                }
-                            }
-                        },
-                        "description": "Created"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/LabelResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
         "/labels/{id}": {
-            "delete": {
-                "description": "Delete a Label",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/LabelPrimaryKey"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/LabelResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            },
             "get": {
                 "description": "Retrieve a label resource",
                 "parameters": [
@@ -7637,99 +6442,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "patch": {
-                "description": "Update a Label",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/LabelPrimaryKey"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/LabelPatchResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Info"
-                                }
-                            }
-                        },
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/LabelResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
-        "/labels/{id}/attributes": {
+        "/labels/{id}/attribute": {
             "get": {
                 "description": "Retrieve attribute related to a label resource",
                 "parameters": [
@@ -7811,7 +6526,7 @@
                 }
             }
         },
-        "/labels/{id}/relationships/attributes": {
+        "/labels/{id}/relationships/attribute": {
             "get": {
                 "description": "Retrieve attribute references related to a label resource",
                 "parameters": [
@@ -8107,469 +6822,6 @@
                     },
                     "202": {
                         "$ref": "#/components/responses/TagResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            }
-        },
-        "/meta/element": {
-            "get": {
-                "description": "Retrieve a List of metaElement resources",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/NestedFilter"
-                    },
-                    {
-                        "description": "Filter by id (csv)",
-                        "in": "query",
-                        "name": "filter[id]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by name (csv)",
-                        "in": "query",
-                        "name": "filter[name]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by parent (csv)",
-                        "in": "query",
-                        "name": "filter[parent]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by children (csv)",
-                        "in": "query",
-                        "name": "filter[children]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by natures (csv)",
-                        "in": "query",
-                        "name": "filter[natures]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementFields"
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementInclude"
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementSort"
-                    },
-                    {
-                        "$ref": "#/components/parameters/PageLimit"
-                    },
-                    {
-                        "$ref": "#/components/parameters/PageOffset"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/MetaElementResourcesResponse"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/MetaElementResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            }
-        },
-        "/meta/element/{id}": {
-            "get": {
-                "description": "Retrieve a metaElement resource",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementPrimaryKey"
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementFields"
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementInclude"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/MetaElementResourceResponse"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/MetaElementResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            }
-        },
-        "/meta/element/{id}/meta/element": {
-            "get": {
-                "description": "Retrieve metaElement related to a metaElement resource",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementPrimaryKey"
-                    },
-                    {
-                        "$ref": "#/components/parameters/NestedFilter"
-                    },
-                    {
-                        "description": "Filter by id (csv)",
-                        "in": "query",
-                        "name": "filter[id]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by name (csv)",
-                        "in": "query",
-                        "name": "filter[name]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by parent (csv)",
-                        "in": "query",
-                        "name": "filter[parent]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by children (csv)",
-                        "in": "query",
-                        "name": "filter[children]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by natures (csv)",
-                        "in": "query",
-                        "name": "filter[natures]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementFields"
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementInclude"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/MetaElementResourceResponse"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/MetaElementResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            }
-        },
-        "/meta/element/{id}/relationships/meta/element": {
-            "get": {
-                "description": "Retrieve metaElement references related to a metaElement resource",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementPrimaryKey"
-                    },
-                    {
-                        "$ref": "#/components/parameters/NestedFilter"
-                    },
-                    {
-                        "description": "Filter by id (csv)",
-                        "in": "query",
-                        "name": "filter[id]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by name (csv)",
-                        "in": "query",
-                        "name": "filter[name]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by parent (csv)",
-                        "in": "query",
-                        "name": "filter[parent]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by children (csv)",
-                        "in": "query",
-                        "name": "filter[children]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Filter by natures (csv)",
-                        "in": "query",
-                        "name": "filter[natures]",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementFields"
-                    },
-                    {
-                        "$ref": "#/components/parameters/MetaElementInclude"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/MetaElementResourceReferenceResponse"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/MetaElementResourceReferencesResponse"
                     },
                     "204": {
                         "$ref": "#/components/responses/NoContent"
@@ -12287,170 +10539,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "post": {
-                "description": "Create a Source",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SourcePostResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SourceResourceResponseSchema"
-                                }
-                            }
-                        },
-                        "description": "Created"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/SourceResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
         "/sources/{id}": {
-            "delete": {
-                "description": "Delete a Source",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/SourcePrimaryKey"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/SourceResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            },
             "get": {
                 "description": "Retrieve a source resource",
                 "parameters": [
@@ -12477,96 +10568,6 @@
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/SourceResourceResponse"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/SourceResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            },
-            "patch": {
-                "description": "Update a Source",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/SourcePrimaryKey"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SourcePatchResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Info"
-                                }
-                            }
-                        },
-                        "description": "OK"
                     },
                     "202": {
                         "$ref": "#/components/responses/SourceResourceReferencesResponse"
@@ -12953,170 +10954,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "post": {
-                "description": "Create a Table",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/TablePostResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/TableResourceResponseSchema"
-                                }
-                            }
-                        },
-                        "description": "Created"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/TableResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
         "/tables/{id}": {
-            "delete": {
-                "description": "Delete a Table",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/TablePrimaryKey"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/TableResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
-            },
             "get": {
                 "description": "Retrieve a table resource",
                 "parameters": [
@@ -13196,99 +11036,9 @@
                         "$ref": "#/components/responses/505"
                     }
                 }
-            },
-            "patch": {
-                "description": "Update a Table",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "Content-Type",
-                        "required": true,
-                        "schema": {
-                            "default": "application/vnd.api+json",
-                            "enum": ["application/vnd.api+json", "application/json"],
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/TablePrimaryKey"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/TablePatchResource"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Info"
-                                }
-                            }
-                        },
-                        "description": "OK"
-                    },
-                    "202": {
-                        "$ref": "#/components/responses/TableResourceReferencesResponse"
-                    },
-                    "204": {
-                        "$ref": "#/components/responses/NoContent"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/400"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/401"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/403"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/404"
-                    },
-                    "405": {
-                        "$ref": "#/components/responses/405"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/409"
-                    },
-                    "412": {
-                        "$ref": "#/components/responses/412"
-                    },
-                    "415": {
-                        "$ref": "#/components/responses/415"
-                    },
-                    "422": {
-                        "$ref": "#/components/responses/422"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/500"
-                    },
-                    "501": {
-                        "$ref": "#/components/responses/501"
-                    },
-                    "502": {
-                        "$ref": "#/components/responses/502"
-                    },
-                    "503": {
-                        "$ref": "#/components/responses/503"
-                    },
-                    "504": {
-                        "$ref": "#/components/responses/504"
-                    },
-                    "505": {
-                        "$ref": "#/components/responses/505"
-                    }
-                }
             }
         },
-        "/tables/{id}/relationships/sources": {
+        "/tables/{id}/relationships/source": {
             "get": {
                 "description": "Retrieve source references related to a table resource",
                 "parameters": [
@@ -13370,7 +11120,7 @@
                 }
             }
         },
-        "/tables/{id}/sources": {
+        "/tables/{id}/source": {
             "get": {
                 "description": "Retrieve source related to a table resource",
                 "parameters": [

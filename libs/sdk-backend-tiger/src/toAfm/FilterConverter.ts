@@ -68,11 +68,11 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): ExecuteA
         return null;
     }
 
-    const dataSetRef = absoluteDateFilter.dataSet;
+    const datasetRef = absoluteDateFilter.dataSet;
 
     return {
         absoluteDateFilter: {
-            dataSet: toDateDataSetQualifier(dataSetRef),
+            dataset: toDateDataSetQualifier(datasetRef),
             from: String(absoluteDateFilter.from),
             to: String(absoluteDateFilter.to),
         },
@@ -86,11 +86,11 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteA
         return null;
     }
 
-    const dataSetRef = relativeDateFilter.dataSet;
+    const datasetRef = relativeDateFilter.dataSet;
 
     return {
         relativeDateFilter: {
-            dataSet: toDateDataSetQualifier(dataSetRef),
+            dataset: toDateDataSetQualifier(datasetRef),
             granularity: relativeDateFilter.granularity,
             from: Number(relativeDateFilter.from),
             to: Number(relativeDateFilter.to),

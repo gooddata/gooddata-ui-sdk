@@ -59,9 +59,9 @@ exports[`measure converter should return converted previous period measure from 
 Object {
   "definition": Object {
     "previousPeriodMeasure": Object {
-      "dateDataSets": Array [
+      "dateDatasets": Array [
         Object {
-          "dataSet": Object {
+          "dataset": Object {
             "identifier": Object {
               "id": "bar",
               "type": "dataSet",
@@ -260,7 +260,7 @@ Object {
       "filters": Array [
         Object {
           "absoluteDateFilter": Object {
-            "dataSet": Object {
+            "dataset": Object {
               "identifier": Object {
                 "id": "closed",
                 "type": "dataSet",
@@ -272,7 +272,7 @@ Object {
         },
         Object {
           "relativeDateFilter": Object {
-            "dataSet": Object {
+            "dataset": Object {
               "identifier": Object {
                 "id": "closed",
                 "type": "dataSet",
