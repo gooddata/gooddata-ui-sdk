@@ -1,9 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2020 GoodData Corporation
 import React from "react";
 
 import PivotTableDynamicExample from "./PivotTableDynamicExample";
 
-export const PivotTableDynamic = () => (
+export const PivotTableDynamic: React.FC = () => (
     <div>
         <h1>Pivot Table Dynamic example</h1>
 

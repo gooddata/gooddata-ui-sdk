@@ -1,22 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import Measure from "react-measure";
 
-import { workspace, totalSalesIdentifier, locationResortIdentifier } from "../../../constants/fixtures";
-import { useBackend } from "../../../context/auth";
+import { Ldm, LdmExt } from "../../../ldm";
 
 interface IResponsiveExampleState {
     size: [number, number];
 }
 
-const amount = newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales").format("#,##0"));
-const locationResort = newAttribute(locationResortIdentifier);
-
 export const ResponsiveExample: React.FC = () => {
-    const backend = useBackend();
     const [
         {
             size: [width, height],
@@ -50,11 +44,9 @@ export const ResponsiveExample: React.FC = () => {
                         return (
                             <div style={{ width: "100%", height: "100%" }} ref={measureRef}>
                                 <BarChart
-                                    backend={backend}
-                                    workspace={workspace}
                                     height={usedHeight}
-                                    measures={[amount]}
-                                    viewBy={locationResort}
+                                    measures={[LdmExt.TotalSales1]}
+                                    viewBy={Ldm.LocationResort}
                                 />
                             </div>
                         );

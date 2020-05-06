@@ -1,16 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { newAttribute, newMeasure } from "@gooddata/sdk-model";
-
-import {
-    totalSalesIdentifier,
-    locationResortIdentifier,
-    menuCategoryAttributeDFIdentifier,
-    workspace,
-} from "../../../constants/fixtures";
+import { Ldm, LdmExt } from "../../../ldm";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
-import { useBackend } from "../../../context/auth";
 
 interface IBarChartDynamicExampleState {
     config: IChartConfig;
@@ -19,16 +11,9 @@ interface IBarChartDynamicExampleState {
     customSeparatorUsed: boolean;
 }
 
-const amount = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
-
-const locationResort = newAttribute(locationResortIdentifier);
-
-const menuCategory = newAttribute(menuCategoryAttributeDFIdentifier);
-
 const style = { height: 300 };
 
 export const BarChartDynamicExample: React.FC = () => {
-    const backend = useBackend();
     const [{ config }, setState] = useState<IBarChartDynamicExampleState>({
         config: {},
         customPaletteUsed: false,
@@ -97,11 +82,9 @@ export const BarChartDynamicExample: React.FC = () => {
 
                 <div style={style}>
                     <BarChart
-                        backend={backend}
-                        workspace={workspace}
-                        measures={[amount]}
-                        viewBy={locationResort}
-                        stackBy={menuCategory}
+                        measures={[LdmExt.TotalSales1]}
+                        viewBy={Ldm.LocationResort}
+                        stackBy={Ldm.MenuCategory}
                         config={config}
                     />
                 </div>

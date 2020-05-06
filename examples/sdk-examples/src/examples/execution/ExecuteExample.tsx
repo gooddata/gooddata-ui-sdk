@@ -4,7 +4,8 @@ import { RawExecute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
 import get from "lodash/get";
 
-import { totalSalesIdentifier, workspace } from "../../constants/fixtures";
+import { workspace } from "../../constants/fixtures";
+import { LdmExt } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
 interface IExecuteExampleState {
@@ -46,7 +47,7 @@ export const ExecuteExample: React.FC = () => {
         </p>
     );
 
-    const measure = newMeasure(willFail ? null : totalSalesIdentifier);
+    const measure = newMeasure(willFail ? null : LdmExt.totalSalesIdentifier);
 
     const execution = backend
         .workspace(workspace)

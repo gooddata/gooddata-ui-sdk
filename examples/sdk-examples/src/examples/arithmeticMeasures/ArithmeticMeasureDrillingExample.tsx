@@ -2,40 +2,18 @@
 import React, { useState } from "react";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
+import { measureLocalId } from "@gooddata/sdk-model";
+import { Ldm, LdmExt } from "../../ldm";
 
-import {
-    workspace,
-    locationStateDisplayFormIdentifier,
-    numberOfRestaurantsIdentifier,
-    totalSalesIdentifier,
-} from "../../constants/fixtures";
-import { useBackend } from "../../context/auth";
+const measures = [LdmExt.NrRestaurants, LdmExt.TotalSales2, LdmExt.arithmeticMeasure1];
 
-const localIdentifiers = {
-    numberOfRestaurants: "numberOfRestaurants",
-    totalSales: "totalSales",
-    averageRestaurantSales: "averageRestaurantSales",
-};
+const rows = [Ldm.LocationState];
 
-const measures = [
-    newMeasure(numberOfRestaurantsIdentifier, m =>
-        m.format("#,##0").localId(localIdentifiers.numberOfRestaurants),
-    ),
-    newMeasure(totalSalesIdentifier, m => m.format("#,##0").localId(localIdentifiers.totalSales)),
-    newArithmeticMeasure([localIdentifiers.totalSales, localIdentifiers.numberOfRestaurants], "ratio", m =>
-        m.format("#,##0").title("$ Avg Restaurant Sales"),
-    ),
-];
-
-const rows = [newAttribute(locationStateDisplayFormIdentifier)];
-
-const drillableItems = [HeaderPredicates.composedFromIdentifier(totalSalesIdentifier)];
+const drillableItems = [HeaderPredicates.composedFromIdentifier(measureLocalId(LdmExt.TotalSales2))];
 
 const style = { height: 200 };
 
 export const ArithmeticMeasureDrillingExample: React.FC = () => {
-    const backend = useBackend();
     const [{ drillEvent }, setState] = useState({
         drillEvent: null,
     });
@@ -60,8 +38,6 @@ export const ArithmeticMeasureDrillingExample: React.FC = () => {
             {renderDrillEvent}
             <div style={style} className="s-table">
                 <PivotTable
-                    backend={backend}
-                    workspace={workspace}
                     measures={measures}
                     rows={rows}
                     drillableItems={drillableItems}

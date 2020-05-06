@@ -64,7 +64,7 @@
     },
     {
       "name": "@gooddata/catalog-export",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "@gooddata/gd-bear-client",

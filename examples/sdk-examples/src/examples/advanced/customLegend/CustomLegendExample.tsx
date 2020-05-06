@@ -1,15 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { PieChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure } from "@gooddata/sdk-model";
-
-import {
-    workspace,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-} from "../../../constants/fixtures";
-import { useBackend } from "../../../context/auth";
+import { LdmExt } from "../../../ldm";
 
 interface ICustomChartExampleState {
     legendItems: Array<{
@@ -28,15 +20,14 @@ const chartConfig = {
 const legendItemStyle = { display: "flex", margin: "10px 0", cursor: "pointer" };
 
 const measures = [
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
+    LdmExt.FranchiseFeesAdRoyalty,
+    LdmExt.FranchiseFeesInitialFranchiseFee,
+    LdmExt.FranchiseFeesOngoingRoyalty,
 ];
 
 const style = { height: 300 };
 
 export const CustomLegendExample: React.FC = () => {
-    const backend = useBackend();
     const [{ legendItems }, setState] = useState<ICustomChartExampleState>({
         legendItems: [],
     });
@@ -70,13 +61,7 @@ export const CustomLegendExample: React.FC = () => {
                 </div>
             )}
             <div style={style} className="s-pie-chart">
-                <PieChart
-                    backend={backend}
-                    workspace={workspace}
-                    measures={measures}
-                    config={chartConfig}
-                    onLegendReady={onLegendReady}
-                />
+                <PieChart measures={measures} config={chartConfig} onLegendReady={onLegendReady} />
             </div>
         </div>
     );

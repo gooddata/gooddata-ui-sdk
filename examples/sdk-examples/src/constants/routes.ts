@@ -21,6 +21,7 @@ import { Export } from "../examples/export";
 import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
 import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
 import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
+import { PivotTableDynamic } from "../examples/hidden/pivotTableDynamic";
 
 import { Login } from "../components/login";
 import { Registration } from "../components/registration";
@@ -77,7 +78,7 @@ export const sideNavigationRoutes = [
         path: "/insightView",
         pathMatch: "full",
         redirectTo: insightViewUseCasesRoutes[0].path,
-        title: "insightView Component",
+        title: "InsightView Component",
         Component: InsightViewUseCasesRoutes,
     },
     { path: "/sorting", title: "Sorting", Component: Sorting },
@@ -118,7 +119,7 @@ export const sideNavigationRoutes = [
 export const hiddenPaths = [
     // { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     // { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
-    // { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
+    { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
     // TODO BB-1694 - Add Measure Value Filter example to the menu
     { path: "/hidden/measure-value-filter", title: "Measure Value Filter", Component: MeasureValueFilter },
     {

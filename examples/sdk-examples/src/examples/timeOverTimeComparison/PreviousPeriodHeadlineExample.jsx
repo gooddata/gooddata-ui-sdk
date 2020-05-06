@@ -2,9 +2,8 @@
 
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui";
-import { newMeasure, newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
-
-import { totalSalesIdentifier, dateDataSetUri, workspace } from "../../constants/fixtures";
+import { newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
+import { LdmExt } from "../../ldm";
 
 export class PreviousPeriodHeadlineExample extends Component {
     onLoadingChanged(...params) {
@@ -16,21 +15,18 @@ export class PreviousPeriodHeadlineExample extends Component {
     }
 
     render() {
-        const primaryMeasure = newMeasure(totalSalesIdentifier, m =>
-            m.alias("$ Total Sales").localId("totalSales"),
-        );
+        const primaryMeasure = LdmExt.TotalSales2;
         const secondaryMeasure = newPreviousPeriodMeasure(
             "totalSales",
-            [{ dataSet: dateDataSetUri, periodsAgo: 1 }],
+            [{ dataSet: LdmExt.dateDataSetUri, periodsAgo: 1 }],
             m => m.alias("$ Total Sales - period ago"),
         );
         return (
             <div style={{ height: 125 }} className="s-headline">
                 <Headline
-                    workspace={workspace}
                     primaryMeasure={primaryMeasure}
                     secondaryMeasure={secondaryMeasure}
-                    filters={[newRelativeDateFilter(dateDataSetUri, "GDC.time.year", -2, -1)]}
+                    filters={[newRelativeDateFilter(LdmExt.dateDataSetUri, "GDC.time.year", -2, -1)]}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

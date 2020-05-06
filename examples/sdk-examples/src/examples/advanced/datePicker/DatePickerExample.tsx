@@ -1,25 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { ErrorComponent } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-
-import {
-    totalSalesIdentifier,
-    monthDateIdentifier,
-    dateDatasetIdentifier,
-    workspace,
-} from "../../../constants/fixtures";
-import { useBackend } from "../../../context/auth";
-import { newMeasure, newAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { ErrorComponent } from "@gooddata/sdk-ui";
+import { LdmExt } from "../../../ldm";
+import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 const dateFormat = "YYYY-MM-DD";
-const measures = [newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales").format("#,##0"))];
-const viewBy = newAttribute(monthDateIdentifier, a => a.alias("Month"));
-
+const measures = [LdmExt.TotalSales1];
 export const DatePickerExample: React.FC = () => {
-    const backend = useBackend();
     const [state, setState] = useState({
         from: moment("2017-01-01", dateFormat),
         to: moment("2017-12-31", dateFormat),
@@ -55,7 +45,7 @@ export const DatePickerExample: React.FC = () => {
     const { from, to, error } = state;
 
     const filters = [
-        newAbsoluteDateFilter(dateDatasetIdentifier, from.format(dateFormat), to.format(dateFormat)),
+        newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, from.format(dateFormat), to.format(dateFormat)),
     ];
 
     return (
@@ -86,13 +76,7 @@ export const DatePickerExample: React.FC = () => {
                 {error ? (
                     <ErrorComponent message={error} />
                 ) : (
-                    <ColumnChart
-                        backend={backend}
-                        workspace={workspace}
-                        viewBy={viewBy}
-                        measures={measures}
-                        filters={filters}
-                    />
+                    <ColumnChart viewBy={LdmExt.monthDate} measures={measures} filters={filters} />
                 )}
             </div>
         </div>

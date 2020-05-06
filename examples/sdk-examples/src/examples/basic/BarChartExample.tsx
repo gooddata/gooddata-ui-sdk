@@ -1,23 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { newAttribute, newMeasure } from "@gooddata/sdk-model";
-
-import { totalSalesIdentifier, locationResortIdentifier, workspace } from "../../constants/fixtures";
-import { useBackend } from "../../context/auth";
-
-const amount = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
-
-const locationResort = newAttribute(locationResortIdentifier);
+import { Ldm, LdmExt } from "../../ldm";
 
 const style = { height: 300 };
 
 export const BarChartExample: React.FC = () => {
-    const backend = useBackend();
-
     return (
         <div style={style} className="s-bar-chart">
-            <BarChart backend={backend} workspace={workspace} measures={[amount]} viewBy={locationResort} />
+            <BarChart measures={[LdmExt.TotalSales1]} viewBy={Ldm.LocationResort} />
         </div>
     );
 };

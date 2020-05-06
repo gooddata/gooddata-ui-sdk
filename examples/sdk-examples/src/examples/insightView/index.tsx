@@ -37,7 +37,7 @@ import InsightViewHeatmapByIdentifierExampleSRC from "!raw-loader!./InsightViewH
 
 export const InsightView = () => (
     <div>
-        <h1>insightView by identifier</h1>
+        <h1>InsightView by identifier</h1>
 
         <p>
             These are the examples of the generic insightView component that uses identifier to identify

@@ -1,40 +1,29 @@
 // (C) 2007-2020 GoodData Corporation
-import React, { Component } from "react";
-import { PivotTable, Table, HeaderPredicateFactory, Model } from "@gooddata/react-components";
-
-import "@gooddata/react-components/styles/css/main.css";
-
+import React from "react";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import {
-    workspace,
-    quarterDateIdentifier,
-    monthDateIdentifier,
-    locationStateDisplayFormIdentifier,
-    locationNameDisplayFormIdentifier,
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    menuCategoryAttributeDFIdentifier,
-    locationStateAttributeCaliforniaUri,
-    monthDateIdentifierJanuary,
-    dateDatasetIdentifier,
-} from "../utils/fixtures";
-import { createColumnTotal } from "../utils/helpers";
-import { ElementWithParam } from "./utils/ElementWithParam";
+    attributeLocalId,
+    measureLocalId,
+    attributeIdentifier,
+    measureIdentifier,
+    newPositiveAttributeFilter,
+    newRelativeDateFilter,
+    newAttributeSort,
+    newMeasureSort,
+    newAttributeLocator,
+} from "@gooddata/sdk-model";
+import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { LdmExt, Ldm } from "../../../ldm";
+import { createColumnTotal } from "../../../utils/helpers";
+import { ElementWithParam } from "../../pivotTable/ElementWithParam";
 
-const measureFranchiseFees = Model.measure(franchiseFeesIdentifier).localIdentifier(franchiseFeesIdentifier);
-const measureAdRoyalty = Model.measure(franchiseFeesAdRoyaltyIdentifier).localIdentifier(
-    franchiseFeesAdRoyaltyIdentifier,
-);
-const attributeLocationState = Model.attribute(locationStateDisplayFormIdentifier).localIdentifier(
-    locationStateDisplayFormIdentifier,
-);
-const attributeLocationName = Model.attribute(locationNameDisplayFormIdentifier).localIdentifier(
-    locationNameDisplayFormIdentifier,
-);
-const attributeMenuCategory = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier(
-    menuCategoryAttributeDFIdentifier,
-);
-const attributeQuarter = Model.attribute(quarterDateIdentifier).localIdentifier(quarterDateIdentifier);
-const attributeMonth = Model.attribute(monthDateIdentifier).localIdentifier(monthDateIdentifier);
+const measureFranchiseFees = LdmExt.FranchiseFees;
+const measureAdRoyalty = LdmExt.FranchiseFeesAdRoyalty;
+const attributeLocationState = LdmExt.LocationState;
+const attributeLocationName = LdmExt.LocationName;
+const attributeMenuCategory = LdmExt.MenuCategory;
+const attributeQuarter = LdmExt.quaterDate;
+const attributeMonth = LdmExt.monthDate;
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
 const columns = [attributeQuarter, attributeMonth];
@@ -103,8 +92,8 @@ const bucketPresets = {
             rows,
             columns: rows.map(attribute => ({
                 insightViewAttribute: {
-                    ...attribute.insightViewAttribute,
-                    localIdentifier: `${attribute.insightViewAttribute.localIdentifier}_2`,
+                    ...attribute,
+                    localIdentifier: `${attributeLocalId(attribute)}_2`,
                 },
             })),
         },
@@ -132,61 +121,71 @@ const drillingPresets = {
     measure: {
         label: "Measure Franchise Fees",
         key: "measure",
-        drillableItem: HeaderPredicateFactory.identifierMatch(franchiseFeesIdentifier),
+        drillableItem: HeaderPredicates.identifierMatch(measureIdentifier(LdmExt.FranchiseFees)),
     },
     attributeMonth: {
         label: "Attribute Month",
         key: "attributeMonth",
-        drillableItem: HeaderPredicateFactory.identifierMatch(monthDateIdentifier),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.monthDate)),
     },
     attributeQuarter: {
         label: "Attribute Quarter",
         key: "attributeQuarter",
-        drillableItem: HeaderPredicateFactory.identifierMatch(quarterDateIdentifier),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.quaterDate)),
     },
     attributeLocationState: {
         label: "Attribute Location state",
         key: "attributeLocationState",
-        drillableItem: HeaderPredicateFactory.identifierMatch(locationStateDisplayFormIdentifier),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationState)),
     },
     attributeMenuCategory: {
         label: "Attribute Menu category",
         key: "attributeMenuCategory",
-        drillableItem: HeaderPredicateFactory.identifierMatch(menuCategoryAttributeDFIdentifier),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.MenuCategory)),
     },
     attributeValueCalifornia: {
         label: "Attribute value California",
         key: "attributeValueCalifornia",
-        drillableItem: HeaderPredicateFactory.uriMatch(locationStateAttributeCaliforniaUri),
+        drillableItem: HeaderPredicates.uriMatch(LdmExt.locationStateAttributeCaliforniaUri),
     },
     attributeValueJanuary: {
         label: "Attribute value January",
         key: "attributeValueJanuary",
-        drillableItem: HeaderPredicateFactory.uriMatch(monthDateIdentifierJanuary),
+        drillableItem: HeaderPredicates.uriMatch(LdmExt.monthDateIdentifierJanuary),
     },
 };
 const totalPresets = {
     franchiseFeesSum: {
         label: "Franchise Fees Sum",
         key: "franchiseFeesSum",
-        totalItem: createColumnTotal(franchiseFeesIdentifier, locationStateDisplayFormIdentifier),
+        totalItem: createColumnTotal(
+            measureLocalId(LdmExt.FranchiseFees),
+            attributeLocalId(LdmExt.LocationState),
+        ),
     },
     franchiseFeesAvg: {
         label: "Franchise Fees Average",
         key: "franchiseFeesAvg",
-        totalItem: createColumnTotal(franchiseFeesIdentifier, locationStateDisplayFormIdentifier, "avg"),
+        totalItem: createColumnTotal(
+            measureLocalId(LdmExt.FranchiseFees),
+            attributeLocalId(LdmExt.LocationState),
+            "avg",
+        ),
     },
     franchiseFeesAdRoyaltySum: {
         label: "Franchise Fees Ad Royalty Sum",
         key: "franchiseFeesAdRoyaltySum",
-        totalItem: createColumnTotal(franchiseFeesAdRoyaltyIdentifier, locationStateDisplayFormIdentifier),
+        totalItem: createColumnTotal(
+            measureLocalId(LdmExt.FranchiseFeesAdRoyalty),
+            attributeLocalId(LdmExt.LocationState),
+        ),
     },
     franchiseFeesAdRoyaltyMax: {
         label: "Franchise Fees Ad Royalty Max",
         key: "franchiseFeesAdRoyaltyMax",
         totalItem: createColumnTotal(
-            franchiseFeesAdRoyaltyIdentifier,
-            locationStateDisplayFormIdentifier,
+            measureLocalId(LdmExt.FranchiseFeesAdRoyalty),
+            attributeLocalId(LdmExt.LocationState),
             "max",
         ),
     },
@@ -194,8 +193,8 @@ const totalPresets = {
         label: "Subtotal Franchise Fees Max by Location State",
         key: "franchiseFeesMaxByLocationState",
         totalItem: createColumnTotal(
-            franchiseFeesAdRoyaltyIdentifier,
-            locationNameDisplayFormIdentifier,
+            measureLocalId(LdmExt.FranchiseFeesAdRoyalty),
+            attributeLocalId(LdmExt.LocationName),
             "max",
         ),
     },
@@ -204,19 +203,19 @@ const filterPresets = {
     attributeCalifornia: {
         label: "Attribute (California)",
         key: "attributeCalifornia",
-        filterItem: Model.positiveAttributeFilter(locationStateDisplayFormIdentifier, [
-            locationStateAttributeCaliforniaUri,
+        filterItem: newPositiveAttributeFilter(attributeIdentifier(LdmExt.LocationState), [
+            LdmExt.locationStateAttributeCaliforniaUri,
         ]),
     },
     lastYear: {
         label: "Last year",
         key: "lastYear",
-        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, "GDC.time.year", -1, -1),
+        filterItem: newRelativeDateFilter(LdmExt.dateDatasetIdentifier, "GDC.time.year", -1, -1),
     },
     noData: {
         label: "No Data",
         key: "noData",
-        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, "GDC.time.year", 1, 1),
+        filterItem: newRelativeDateFilter(LdmExt.dateDatasetIdentifier, "GDC.time.year", 1, 1),
     },
     franchiseFeesCalifornia: {
         label: "Franchise Fees California",
@@ -225,11 +224,7 @@ const filterPresets = {
     },
 };
 
-const franchiseFeesCalifornia = Model.measure(franchiseFeesIdentifier)
-    .localIdentifier("franchiseFeesCalifornia")
-    .alias("FranchiseFees (California)")
-    .filters(filterPresets.attributeCalifornia.filterItem);
-
+const franchiseFeesCalifornia = Ldm.$FranchiseFees;
 const sortingPresets = {
     noSort: {
         label: "No sort",
@@ -239,44 +234,44 @@ const sortingPresets = {
     byMenuCategory: {
         label: "By Menu Category ASC",
         key: "byMenuCategory",
-        sortBy: [Model.attributeSortItem(menuCategoryAttributeDFIdentifier, "asc")],
+        sortBy: [newAttributeSort(LdmExt.MenuCategory, "asc")],
     },
     byLocationState: {
         label: "By Location State DESC",
         key: "byLocationState",
-        sortBy: [Model.attributeSortItem(locationStateDisplayFormIdentifier, "desc")],
+        sortBy: [newAttributeSort(LdmExt.LocationState, "desc")],
     },
     byQ1JanFranchiseFees: {
         label: "by Q1 / Jan / FranchiseFees DESC",
         key: "byQ1JanFranchiseFees",
         sortBy: [
-            Model.measureSortItem(franchiseFeesIdentifier, "desc").attributeLocators(
-                {
-                    attributeIdentifier: quarterDateIdentifier,
-                    element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
-                },
-                {
-                    attributeIdentifier: monthDateIdentifier,
-                    element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
-                },
-            ),
+            newMeasureSort(LdmExt.FranchiseFees, "desc", [
+                newAttributeLocator(
+                    Ldm.DateQuarter,
+                    "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                ),
+                newAttributeLocator(
+                    Ldm.DateMonth.Short,
+                    "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                ),
+            ]),
         ],
     },
     byLocationStateAndQ1JanFranchiseFees: {
         label: "By Location State ASC And Q1 Jan Franchise Fees DESC",
         key: "byLocationStateAndQ1JanFranchiseFees",
         sortBy: [
-            Model.attributeSortItem(locationStateDisplayFormIdentifier, "asc"),
-            Model.measureSortItem(franchiseFeesIdentifier, "desc").attributeLocators(
-                {
-                    attributeIdentifier: quarterDateIdentifier,
-                    element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
-                },
-                {
-                    attributeIdentifier: monthDateIdentifier,
-                    element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
-                },
-            ),
+            newAttributeSort(LdmExt.LocationState, "asc"),
+            newMeasureSort(LdmExt.FranchiseFees, "desc", [
+                newAttributeLocator(
+                    Ldm.DateQuarter,
+                    "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                ),
+                newAttributeLocator(
+                    Ldm.DateMonth.Short,
+                    "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                ),
+            ]),
         ],
     },
 };
@@ -374,8 +369,22 @@ export const getTotalItems = totalKeys => {
 export const getGroupRows = groupRowsKey => {
     return groupRowsPresets[groupRowsKey].value;
 };
+interface IPivotTableDrillingExampleState {
+    bucketPresetKey: string;
+    drillEvent: Event;
+    drillingPresetKeys: any;
+    filterPresetKeys: any;
+    drillableItems: any;
+    totalPresetKeys: any;
+    sortingPresetKey: string;
+    menuPresetKey: string;
+    pivotTableSizeKey: string;
+    maxHeightPresetKey: string;
+    groupRowsKey: string;
+    drillHandlingKey: string;
+}
 
-export class PivotTableDrillingExample extends Component {
+export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDrillingExampleState> {
     constructor(props) {
         super(props);
 
@@ -402,7 +411,7 @@ export class PivotTableDrillingExample extends Component {
         };
     }
 
-    onDrillingPresetChange = drillingPresetKey => {
+    public onDrillingPresetChange = drillingPresetKey => {
         const drillingPresetKeys = {
             ...this.state.drillingPresetKeys,
             [drillingPresetKey]: !this.state.drillingPresetKeys[drillingPresetKey],
@@ -412,7 +421,7 @@ export class PivotTableDrillingExample extends Component {
             drillableItems: getDrillableItems(drillingPresetKeys),
         });
     };
-    onTotalPresetChange = totalPresetKey => {
+    public onTotalPresetChange = totalPresetKey => {
         const totalPresetKeys = {
             ...this.state.totalPresetKeys,
             [totalPresetKey]: !this.state.totalPresetKeys[totalPresetKey],
@@ -421,7 +430,7 @@ export class PivotTableDrillingExample extends Component {
             totalPresetKeys,
         });
     };
-    onFilterPresetChange = filterPresetKey => {
+    public onFilterPresetChange = filterPresetKey => {
         const filterPresetKeys = {
             ...this.state.filterPresetKeys,
             [filterPresetKey]: !this.state.filterPresetKeys[filterPresetKey],
@@ -430,46 +439,46 @@ export class PivotTableDrillingExample extends Component {
             filterPresetKeys,
         });
     };
-    onBucketPresetChange = bucketPresetKey => {
+    public onBucketPresetChange = bucketPresetKey => {
         this.setState({
             bucketPresetKey,
         });
     };
-    onSortingPresetChange = sortingPresetKey => {
+    public onSortingPresetChange = sortingPresetKey => {
         this.setState({
             sortingPresetKey,
         });
     };
-    onMenuPresetChange = menuPresetKey => {
+    public onMenuPresetChange = menuPresetKey => {
         this.setState({
             menuPresetKey,
         });
     };
-    onPivotTableSizeChange = pivotTableSizeKey => {
+    public onPivotTableSizeChange = pivotTableSizeKey => {
         this.setState({
             pivotTableSizeKey,
         });
     };
-    onMaxHeightPresetChange = maxHeightPresetKey => {
+    public onMaxHeightPresetChange = maxHeightPresetKey => {
         this.setState({
             maxHeightPresetKey,
         });
     };
 
-    onGroupRowsPresetChange = groupRowsKey => {
+    public onGroupRowsPresetChange = groupRowsKey => {
         this.setState({
             groupRowsKey,
         });
     };
 
-    onDrillHandlingChange = drillHandlingKey => {
+    public onDrillHandlingChange = drillHandlingKey => {
         this.setState({
             drillHandlingKey,
         });
     };
 
-    onFiredDrillEvent = drillEvent => {
-        // eslint-disable-next-line no-console
+    public onFiredDrillEvent = drillEvent => {
+        // tslint:disable-next-line:no-console
         console.log(
             "onFiredDrillEvent",
             drillEvent,
@@ -481,15 +490,15 @@ export class PivotTableDrillingExample extends Component {
         return true;
     };
 
-    onDrill = drillEvent => {
-        // eslint-disable-next-line no-console
+    public onDrill = drillEvent => {
+        // tslint:disable-next-line:no-console
         console.log("onDrill", drillEvent, JSON.stringify(drillEvent.drillContext.intersection, null, 2));
         this.setState({
             drillEvent,
         });
     };
 
-    render() {
+    public render() {
         const {
             bucketPresetKey,
             sortingPresetKey,
@@ -533,7 +542,7 @@ export class PivotTableDrillingExample extends Component {
             const firstAttribute = rows[0];
             return (
                 firstAttribute !== undefined &&
-                total.attributeIdentifier === firstAttribute.insightViewAttribute.localIdentifier
+                total.attributeIdentifier === attributeIdentifier(firstAttribute)
             );
         });
 
@@ -748,7 +757,6 @@ export class PivotTableDrillingExample extends Component {
                         // width. To get around this problem we completely
                         // reset both table components.
                         key={`${pivotTableSizeKey}__${maxHeightPresetKey}__${groupRows}`}
-                        workspace={workspace}
                         pageSize={20}
                         {...bucketPropsWithFilters}
                         {...filtersProp}
@@ -766,9 +774,8 @@ export class PivotTableDrillingExample extends Component {
 
                 <h2>Table component for reference</h2>
                 <div style={{ height: 300 }}>
-                    <Table
+                    <PivotTable
                         key={`${pivotTableSizeKey}__${maxHeightPresetKey}__${groupRows}`}
-                        workspace={workspace}
                         {...tableBucketProps}
                         {...filtersProp}
                         drillableItems={drillableItems}

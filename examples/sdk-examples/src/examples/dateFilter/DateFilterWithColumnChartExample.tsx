@@ -2,15 +2,10 @@
 import React, { useState } from "react";
 import { DateFilter, DateFilterHelpers, ExtendedDateFilters } from "@gooddata/sdk-ui-filters";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
-import { totalSalesIdentifier, dateDatasetIdentifier, monthDateIdentifier } from "../../constants/fixtures";
+import { Ldm, LdmExt } from "../../ldm";
 
-const amountMeasure = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
-
-const monthAttribute = newAttribute(monthDateIdentifier);
-
-const measures = [amountMeasure];
+const measures = [LdmExt.TotalSales1];
 
 const availableGranularities: ExtendedDateFilters.DateFilterGranularity[] = ["GDC.time.year"];
 
@@ -125,7 +120,7 @@ export const DateFilterWithColumnChartExample: React.FC = () => {
     const dateFilter = DateFilterHelpers.mapOptionToAfm(
         state.selectedFilterOption,
         {
-            identifier: dateDatasetIdentifier,
+            identifier: LdmExt.dateDatasetIdentifier,
         },
         state.excludeCurrentPeriod,
     );
@@ -146,7 +141,7 @@ export const DateFilterWithColumnChartExample: React.FC = () => {
             <div style={columnChartContainerStyle}>
                 <ColumnChart
                     measures={measures}
-                    viewBy={monthAttribute}
+                    viewBy={Ldm.DateMonth.Short}
                     filters={dateFilter ? [dateFilter] : []}
                 />
             </div>

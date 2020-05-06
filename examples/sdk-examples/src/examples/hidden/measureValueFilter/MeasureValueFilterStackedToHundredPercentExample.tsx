@@ -1,27 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure, newAttribute, IFilter, newMeasureValueFilter } from "@gooddata/sdk-model";
-import {
-    franchiseFeesIdentifier,
-    locationNameDisplayFormIdentifier,
-    franchisedSalesIdentifier,
-} from "../../../constants/fixtures";
+import { newMeasureValueFilter } from "@gooddata/sdk-model";
+import { Ldm, LdmExt } from "../../../ldm";
 
-const franchiseFees = newMeasure(franchiseFeesIdentifier, m => m.title("Franchise Fees").format("#,##0"));
+const measures = [LdmExt.FranchiseFees, LdmExt.FranchisedSales];
 
-const franchiseSales = newMeasure(franchisedSalesIdentifier, m =>
-    m
-        .localId("franchiseSales")
-        .title("Franchise Sales")
-        .format("#,##0"),
-);
+const attributes = [Ldm.LocationName.Default];
 
-const measures = [franchiseFees, franchiseSales];
-
-const attributes = [newAttribute(locationNameDisplayFormIdentifier)];
-
-const greaterThanFilter = newMeasureValueFilter(franchiseFees, "GREATER_THAN", 700000);
+const greaterThanFilter = newMeasureValueFilter(LdmExt.FranchiseFees, "GREATER_THAN", 700000);
 
 const filterPresets = [
     {

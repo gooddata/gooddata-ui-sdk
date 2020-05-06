@@ -1,46 +1,29 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newMeasure, newAttribute, newAttributeSort } from "@gooddata/sdk-model";
-
-import {
-    workspace,
-    quarterDateIdentifier,
-    monthDateIdentifier,
-    locationStateDisplayFormIdentifier,
-    locationNameDisplayFormIdentifier,
-    franchiseFeesIdentifier,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-    menuCategoryAttributeDFIdentifier,
-} from "../../constants/fixtures";
-import { useBackend } from "../../context/auth";
+import { newAttributeSort, modifyAttribute } from "@gooddata/sdk-model";
+import { Ldm, LdmExt } from "../../ldm";
 
 const measures = [
-    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
+    LdmExt.FranchiseFees,
+    LdmExt.FranchiseFeesAdRoyalty,
+    LdmExt.FranchiseFeesInitialFranchiseFee,
+    LdmExt.FranchiseFeesOngoingRoyalty,
 ];
 const attributes = [
-    newAttribute(locationStateDisplayFormIdentifier),
-    newAttribute(locationNameDisplayFormIdentifier),
-    newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
+    Ldm.LocationState,
+    Ldm.LocationName.Default,
+    modifyAttribute(Ldm.MenuCategory, a => a.localId("menu")),
 ];
-const columns = [newAttribute(quarterDateIdentifier), newAttribute(monthDateIdentifier)];
+const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
 const sortBy = [newAttributeSort("menu", "asc")];
 
 const style = { height: 300 };
 
 export const PivotTableSortingExample: React.FC = () => {
-    const backend = useBackend();
-
     return (
         <div style={style} className="s-pivot-table-sorting">
             <PivotTable
-                backend={backend}
-                workspace={workspace}
                 measures={measures}
                 rows={attributes}
                 columns={columns}

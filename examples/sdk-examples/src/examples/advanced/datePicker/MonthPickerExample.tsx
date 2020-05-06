@@ -1,18 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { ErrorComponent } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newMeasure, newAttribute, newRelativeDateFilter } from "@gooddata/sdk-model";
+import { newRelativeDateFilter } from "@gooddata/sdk-model";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-
-import {
-    totalSalesIdentifier,
-    monthOfYearDateIdentifier,
-    dateDatasetIdentifier,
-    workspace,
-} from "../../../constants/fixtures";
-import { useBackend } from "../../../context/auth";
+import { ErrorComponent } from "@gooddata/sdk-ui";
+import { Ldm, LdmExt } from "../../../ldm";
 
 const dateFormat = "YYYY-MM-DD";
 
@@ -21,14 +14,11 @@ const withGTM0 = time => time.utcOffset("+00:00", true);
 
 const currentDate = withGTM0(moment().startOf("months"));
 
-const measures = [newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"))];
-
-const viewBy = newAttribute(monthOfYearDateIdentifier);
+const measures = [LdmExt.TotalSales1];
 
 const style = { height: 300 };
 
 export const MonthPickerExample: React.FC = () => {
-    const backend = useBackend();
     const [state, setState] = useState({
         from: withGTM0(moment("2016-01-01", dateFormat)),
         to: withGTM0(moment("2017-01-01", dateFormat)),
@@ -65,7 +55,7 @@ export const MonthPickerExample: React.FC = () => {
 
     const filters = [
         newRelativeDateFilter(
-            dateDatasetIdentifier,
+            LdmExt.dateDatasetIdentifier,
             "GDC.time.month",
             Math.floor(from.diff(currentDate, "months", true)),
             Math.floor(to.diff(currentDate, "months", true)),
@@ -114,13 +104,7 @@ export const MonthPickerExample: React.FC = () => {
                 {error ? (
                     <ErrorComponent message={error} />
                 ) : (
-                    <ColumnChart
-                        backend={backend}
-                        workspace={workspace}
-                        measures={measures}
-                        viewBy={viewBy}
-                        filters={filters}
-                    />
+                    <ColumnChart measures={measures} viewBy={Ldm.DateMonthYear.Short} filters={filters} />
                 )}
             </div>
         </div>

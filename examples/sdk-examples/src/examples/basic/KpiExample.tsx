@@ -1,16 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { Kpi } from "@gooddata/sdk-ui";
-import { newMeasure } from "@gooddata/sdk-model";
-
-import { totalSalesIdentifier, workspace } from "../../constants/fixtures";
-import { useBackend } from "../../context/auth";
-
-const totalSales = newMeasure(totalSalesIdentifier);
+import { Ldm } from "../../ldm";
 
 export const KpiExample = () => {
-    const backend = useBackend();
-
     return (
         <div className="kpi">
             <style jsx>{`
@@ -26,7 +19,7 @@ export const KpiExample = () => {
                     width: 300px;
                 }
             `}</style>
-            <Kpi backend={backend} workspace={workspace} measure={totalSales} />
+            <Kpi measure={Ldm.$TotalSales} />
         </div>
     );
 };

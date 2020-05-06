@@ -2,52 +2,14 @@
 import React, { useState } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
-import {
-    newMeasure,
-    newAttribute,
-    newArithmeticMeasure,
-    IFilter,
-    newMeasureValueFilter,
-} from "@gooddata/sdk-model";
-import {
-    franchiseFeesIdentifier,
-    franchisedSalesIdentifier,
-    locationNameDisplayFormIdentifier,
-} from "../../../constants/fixtures";
+import { IFilter, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { Ldm, LdmExt } from "../../../ldm";
 
-const franchiseFees = newMeasure(franchiseFeesIdentifier, m =>
-    m
-        .localId("franchiseFees")
-        .title("Franchise Fees")
-        .format("#,##0"),
-);
+const measures = [LdmExt.FranchiseFees, LdmExt.FranchisedSales, LdmExt.arithmeticMeasure6];
 
-const franchiseSales = newMeasure(franchisedSalesIdentifier, m =>
-    m
-        .localId("franchiseSales")
-        .title("Franchise Sales")
-        .format("#,##0"),
-);
+const attributes = [Ldm.LocationName.Default];
 
-const franchiseFeesFormattedAsPercentage = newArithmeticMeasure(
-    [franchiseSales, franchiseFees],
-    "change",
-    m =>
-        m
-            .localId("franchiseFeesFormattedAsPercentage")
-            .title("Change formatted as %")
-            .format("#,##0%"),
-);
-
-const measures = [franchiseFees, franchiseSales, franchiseFeesFormattedAsPercentage];
-
-const attributes = [newAttribute(locationNameDisplayFormIdentifier)];
-
-const greaterThanFilter: IFilter = newMeasureValueFilter(
-    franchiseFeesFormattedAsPercentage,
-    "GREATER_THAN",
-    10,
-);
+const greaterThanFilter: IFilter = newMeasureValueFilter(LdmExt.arithmeticMeasure6, "GREATER_THAN", 10);
 
 const filterPresets = [
     {

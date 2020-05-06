@@ -1,25 +1,17 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PieChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { newMeasure } from "@gooddata/sdk-model";
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import {
-    workspace,
-    franchiseFeesAdRoyaltyIdentifier,
-    franchiseFeesInitialFranchiseFeeIdentifier,
-    franchiseFeesIdentifierOngoingRoyalty,
-} from "../../../constants/fixtures";
-import { useBackend } from "../../../context/auth";
+import { LdmExt } from "../../../ldm";
+import { modifyMeasure } from "@gooddata/sdk-model";
 
 const measures = [
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
-        m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
+    modifyMeasure(LdmExt.FranchiseFeesAdRoyalty, m => m.localId("franchiseFeesAdRoyaltyIdentifier")),
+    modifyMeasure(LdmExt.FranchiseFeesInitialFranchiseFee, m =>
+        m.localId("franchiseFeesInitialFranchiseFeeIdentifier"),
     ),
-    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
-        m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
-    ),
-    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
-        m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
+    modifyMeasure(LdmExt.FranchiseFeesOngoingRoyalty, m =>
+        m.localId("franchiseFeesIdentifierOngoingRoyalty"),
     ),
 ];
 
@@ -60,11 +52,9 @@ const chartConfig: IChartConfig = {
 const style = { height: 300 };
 
 export const PieChartColorMappingExample: React.FC = () => {
-    const backend = useBackend();
-
     return (
         <div style={style} className="s-pie-chart">
-            <PieChart backend={backend} workspace={workspace} measures={measures} config={chartConfig} />
+            <PieChart measures={measures} config={chartConfig} />
         </div>
     );
 };

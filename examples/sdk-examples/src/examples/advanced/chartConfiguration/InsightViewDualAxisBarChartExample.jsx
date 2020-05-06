@@ -2,15 +2,9 @@
 import React, { Component } from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
+import { Ldm } from "../../../ldm";
 
-import {
-    workspace,
-    dualAxisBarInsightViewIdentifier,
-    totalSalesLocalIdentifier,
-    totalCostsLocalIdentifier,
-} from "../../../constants/fixtures";
-
-export class insightViewDualAxisBarChartExample extends Component {
+export class InsightViewDualAxisBarChartExample extends Component {
     render() {
         // const config = {
         //     secondary_xaxis: {
@@ -34,8 +28,7 @@ export class insightViewDualAxisBarChartExample extends Component {
         return (
             <div style={{ height: 300 }} className="s-insightView-dual-axis-bar">
                 <InsightView
-                    workspace={workspace}
-                    insight={dualAxisBarInsightViewIdentifier}
+                    insight={Ldm.Insights.DualAxisBarChart}
                     // config={config}
                 />
             </div>
@@ -43,4 +36,4 @@ export class insightViewDualAxisBarChartExample extends Component {
     }
 }
 
-export default insightViewDualAxisBarChartExample;
+export default InsightViewDualAxisBarChartExample;

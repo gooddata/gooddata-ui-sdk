@@ -2,8 +2,7 @@
 import React, { Component } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui";
 import PropTypes from "prop-types";
-
-import { employeeNameIdentifier, workspace } from "../../constants/fixtures";
+import { Ldm } from "../../ldm";
 
 export class AttributeFilterItem extends Component {
     static propTypes = {
@@ -39,8 +38,7 @@ export class AttributeElementsExample extends Component {
         return (
             <div style={{ minHeight: 500 }}>
                 <AttributeElements
-                    identifier={employeeNameIdentifier}
-                    workspace={workspace}
+                    identifier={Ldm.EmployeeName.Default.attribute.displayForm}
                     options={{ limit: 20 }}
                 >
                     {({ validElements, loadMore, isLoading, error }) => {

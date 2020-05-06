@@ -55,7 +55,7 @@ your consideration:
     ```json
     {
         "scripts": {
-            "refresh-ldm": "gdc-catalog-export --hostname \"your.domain.gooddata.com\" --projectId \"yourProjectId\" --output \"catalog.ts\""
+            "refresh-ldm": "gdc-catalog-export --hostname \"your.domain.gooddata.com\" --project-id \"yourProjectId\" --output \"catalog.ts\""
         }
     }
     ```
