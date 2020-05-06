@@ -16,7 +16,7 @@ import { BubbleChartExample } from "./BubbleChartExample";
 import { TreemapExample } from "./TreemapExample";
 import { HeatmapExample } from "./HeatmapExample";
 import { TableExample } from "./TableExample";
-// import { HeadlineExample } from "../components/HeadlineExample";
+import { HeadlineExample } from "./HeadlineExample";
 import { KpiExample } from "./KpiExample";
 
 import BarChartExampleSRC from "!raw-loader!./BarChartExample";
@@ -32,7 +32,7 @@ import BubbleChartExampleSRC from "!raw-loader!./BubbleChartExample";
 import TreemapExampleSRC from "!raw-loader!./TreemapExample";
 import HeatmapExampleSRC from "!raw-loader!./HeatmapExample";
 import TableExampleSRC from "!raw-loader!./TableExample";
-// import HeadlineExampleSRC from "!raw-loader!./HeadlineExample";
+import HeadlineExampleSRC from "!raw-loader!./HeadlineExample";
 import KpiExampleSRC from "!raw-loader!./KpiExample";
 
 export const BasicComponents: React.FC = () => (
@@ -93,8 +93,8 @@ export const BasicComponents: React.FC = () => (
         <h2 id="table">Table</h2>
         <ExampleWithSource for={TableExample} source={TableExampleSRC} />
 
-        {/* <h2 id="table">Headline</h2>
-        <ExampleWithSource for={HeadlineExample} source={HeadlineExampleSRC} /> */}
+        <h2 id="table">Headline</h2>
+        <ExampleWithSource for={HeadlineExample} source={HeadlineExampleSRC} />
 
         <h2 id="kpi">KPI</h2>
         <p>

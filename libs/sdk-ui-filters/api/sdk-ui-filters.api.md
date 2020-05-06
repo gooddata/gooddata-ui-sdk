@@ -4,7 +4,6 @@
 
 ```ts
 
-import { defaultErrorHandler } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IElementQueryOptions } from '@gooddata/sdk-backend-spi';
@@ -19,33 +18,13 @@ import * as React_2 from 'react';
 
 // Warning: (ae-forgotten-export) The symbol "IAttributeElementsProps" needs to be exported by the entry point index.d.ts
 //
-// @public (undocumented)
+// @public
 export const AttributeElements: React_2.ComponentType<IAttributeElementsProps>;
 
 // Warning: (ae-forgotten-export) The symbol "IAttributeFilterProps" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "IAttributeFilterState" needs to be exported by the entry point index.d.ts
 //
 // @public
-export class AttributeFilter extends React_2.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentDidUpdate(prevProps: IAttributeFilterProps): void;
-    // (undocumented)
-    static defaultProps: {
-        locale: string;
-        FilterError: React_2.FC<import("react-intl").WithIntlProps<import("react-intl").WrappedComponentProps<any>>> & {
-            WrappedComponent: React_2.ComponentType<import("react-intl").WrappedComponentProps<any>>;
-        };
-        fullscreenOnMobile: boolean;
-        onError: typeof defaultErrorHandler;
-        titleWithSelection: boolean;
-    };
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    state: IAttributeFilterState;
-}
+export const AttributeFilter: React_2.ComponentType<IAttributeFilterProps>;
 
 // Warning: (ae-forgotten-export) The symbol "IDateFilterState" needs to be exported by the entry point index.d.ts
 //

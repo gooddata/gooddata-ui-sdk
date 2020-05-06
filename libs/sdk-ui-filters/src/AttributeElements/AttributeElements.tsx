@@ -26,12 +26,6 @@ interface IAttributeElementsState {
     error?: any;
 }
 
-/**
- * AttributeElements
- * is a component that lists attribute values using a children function
- * TODO: SDK8: add docs
- * @public
- */
 class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
     public static defaultProps: Partial<IAttributeElementsProps> = {
         options: {},
@@ -121,5 +115,12 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
         });
     }
 }
+
+/**
+ * AttributeElements
+ * is a component that lists attribute values using a children function
+ * TODO: SDK8: add docs
+ * @public
+ */
 
 export const AttributeElements = withContexts(AttributeElementsCore);

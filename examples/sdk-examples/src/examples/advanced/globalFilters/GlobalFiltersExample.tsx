@@ -2,20 +2,13 @@
 import React from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
 import { attributeAttributeDisplayFormObjRef } from "@gooddata/sdk-model";
-import { workspace } from "../../../constants/fixtures";
 import { Ldm } from "../../../ldm";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
 import { EmployeeProfile } from "./EmployeeProfile";
-import { useBackend } from "../../../context/auth";
 
 export const GlobalFiltersExample = () => (
-    <AttributeElements
-        backend={useBackend()}
-        displayForm={attributeAttributeDisplayFormObjRef(Ldm.EmployeeName.Default)}
-        workspace={workspace}
-        limit={20}
-    >
+    <AttributeElements displayForm={attributeAttributeDisplayFormObjRef(Ldm.EmployeeName.Default)} limit={20}>
         {({ validElements, error, isLoading }) => {
             if (error) {
                 return <CustomError message="There was an error getting Employee Name attribute values" />;

@@ -10,12 +10,15 @@ import {
 import Select from "react-select";
 import "react-select/dist/react-select.css";
 import { Ldm, LdmExt } from "../../../ldm";
-import { useBackend } from "../../../context/auth";
-import { workspace } from "../../../constants/fixtures";
+
+interface IFilterValue {
+    value: string;
+    label: string;
+}
 
 interface IParentFilterExampleState {
-    stateFilterValues: any[];
-    cityFilterValues: any[];
+    stateFilterValues: IFilterValue[];
+    cityFilterValues: IFilterValue[];
 }
 
 interface ICityOptions {
@@ -58,7 +61,7 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
         });
     };
 
-    public renderInsightView(stateFilterValues: any[], cityFilterValues: any[]) {
+    public renderInsightView(stateFilterValues: IFilterValue[], cityFilterValues: IFilterValue[]) {
         const visFilters = [];
 
         if (stateFilterValues.length) {
@@ -90,13 +93,7 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
 
     public renderFilter(key, displayForm, filterValues, placeholder, options, onChange) {
         return (
-            <AttributeElements
-                backend={useBackend()}
-                workspace={workspace}
-                key={key}
-                displayForm={displayForm}
-                options={options}
-            >
+            <AttributeElements key={key} displayForm={displayForm} options={options}>
                 {({ validElements, isLoading, error }) => {
                     if (error) {
                         return <div>{error}</div>;

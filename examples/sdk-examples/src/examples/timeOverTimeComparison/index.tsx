@@ -21,10 +21,10 @@ export const TimeOverTimeComparison: React.FC = () => (
 
         <h2>Comparing to the same period previous year</h2>
         <ExampleWithSource for={SamePeriodColumnChartExample} source={SamePeriodColumnChartExampleSrc} />
-        {/* 
+
         <hr className="separator" />
 
         <h2>Comparing to the previous period</h2>
-        <ExampleWithSource for={PreviousPeriodHeadlineExample} source={PreviousPeriodHeadlineExampleSrc} /> */}
+        <ExampleWithSource for={PreviousPeriodHeadlineExample} source={PreviousPeriodHeadlineExampleSrc} />
     </div>
 );

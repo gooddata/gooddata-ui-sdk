@@ -1,20 +1,21 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { AttributeElements } from "@gooddata/sdk-ui";
-import PropTypes from "prop-types";
+import { AttributeElements } from "@gooddata/sdk-ui-filters";
+import { attributeAttributeDisplayFormObjRef } from "@gooddata/sdk-model";
 import { Ldm } from "../../ldm";
 
-export class AttributeFilterItem extends Component {
-    static propTypes = {
-        title: PropTypes.string.isRequired,
-        uri: PropTypes.string.isRequired,
-    };
+interface IAttributeFilterItemProps {
+    title: string;
+    uri: string;
+}
 
-    onChange(uri) {
+export class AttributeFilterItem extends Component<IAttributeFilterItemProps> {
+    public onChange(uri) {
+        // tslint:disable-next-line:no-console
         return event => console.log("AttributeFilterItem onChange", uri, event.target.value === "on");
     }
 
-    render() {
+    public render() {
         const { title, uri } = this.props;
         return (
             <label className="gd-list-item s-attribute-filter-list-item" style={{ display: "inline-flex" }}>
@@ -26,34 +27,31 @@ export class AttributeFilterItem extends Component {
 }
 
 export class AttributeElementsExample extends Component {
-    buildAttributeFilterItem(item) {
-        const {
-            element: { title, uri },
-        } = item;
+    public buildAttributeFilterItem(item) {
+        const { title, uri } = item;
 
         return <AttributeFilterItem key={uri} uri={uri} title={title} />;
     }
 
-    render() {
+    public render() {
         return (
             <div style={{ minHeight: 500 }}>
                 <AttributeElements
-                    identifier={Ldm.EmployeeName.Default.attribute.displayForm}
-                    options={{ limit: 20 }}
+                    displayForm={attributeAttributeDisplayFormObjRef(Ldm.EmployeeName.Default)}
+                    limit={20}
                 >
                     {({ validElements, loadMore, isLoading, error }) => {
-                        const { offset = null, count = null, total = null } = validElements
-                            ? validElements.paging
-                            : {};
+                        const { offset = null, items = null, totalCount = null } = validElements ?? {};
                         if (error) {
                             return <div>{error}</div>;
                         }
+                        const count = items ? items.length : undefined;
                         return (
                             <div>
                                 <button
                                     className="gd-button gd-button-secondary s-show-more-filters-button"
                                     onClick={loadMore}
-                                    disabled={isLoading || offset + count === total}
+                                    disabled={isLoading || offset + count === totalCount}
                                 >
                                     More
                                 </button>
@@ -65,7 +63,7 @@ export class AttributeElementsExample extends Component {
                                     <br />
                                     count: {count}
                                     <br />
-                                    total: {total}
+                                    total: {totalCount}
                                     <br />
                                     nextOffset: {offset + count}
                                 </pre>

@@ -1,18 +1,20 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { AttributeFilter } from "@gooddata/sdk-ui";
+import { AttributeFilter } from "@gooddata/sdk-ui-filters";
+import { attributeIdentifier } from "@gooddata/sdk-model";
 import { Ldm } from "../../ldm";
 
 export class AttributeFilterComponentExample extends Component {
-    onApply(...params) {
+    public onApply(...params) {
+        // tslint:disable-next-line:no-console
         console.log("AttributeFilterComponentExample onApply", ...params);
     }
 
-    render() {
+    public render() {
         return (
             <div>
                 <AttributeFilter
-                    identifier={Ldm.EmployeeName.Default}
+                    identifier={attributeIdentifier(Ldm.EmployeeName.Default)}
                     fullscreenOnMobile={false}
                     onApply={this.onApply}
                 />
