@@ -5,7 +5,7 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
 import { Ldm } from "../../../ldm";
 
 export class InsightViewDualAxisBarChartExample extends Component {
-    render() {
+    public render() {
         // const config = {
         //     secondary_xaxis: {
         //         visible: true,

@@ -2,7 +2,7 @@
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { attributeIdentifier, idRef } from "@gooddata/sdk-model";
 import * as React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { AttributeElements } from "../AttributeElements";
@@ -19,7 +19,7 @@ describe("AttributeElements", () => {
     const anotherIdentifier = attributeIdentifier(ReferenceLdm.Department);
 
     const renderComponent = (props: any = {}) =>
-        shallow(
+        mount(
             <AttributeElements
                 {...props}
                 backend={backend}

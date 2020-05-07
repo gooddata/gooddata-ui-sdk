@@ -27,12 +27,13 @@ import {
     IntlWrapper,
     IntlTranslationsProvider,
     ITranslationsComponentProps,
+    withContexts,
 } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants";
 
 interface IAttributeFilterProps {
-    backend: IAnalyticalBackend;
-    workspace: string;
+    backend?: IAnalyticalBackend;
+    workspace?: string;
 
     identifier?: string;
     filter?: IPositiveAttributeFilter | INegativeAttributeFilter;
@@ -43,7 +44,7 @@ interface IAttributeFilterProps {
     titleWithSelection?: boolean;
     locale?: string;
     FilterLoading?: React.ComponentType;
-    FilterError?: React.ComponentType<{ error?: any }>;
+    FilterError?: any;
 
     onError?: OnError;
 }
@@ -59,13 +60,7 @@ const DefaultFilterError = injectIntl(({ intl }) => {
     return <div className="gd-message error s-button-error">{text}</div>;
 });
 
-/**
- * AttributeFilter is a component that renders a dropdown populated with attribute values
- * for specified attribute display form.
- * TODO: SDK8: add docs
- * @public
- */
-export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
+class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
     public static defaultProps = {
         locale: "en-US",
         FilterError: DefaultFilterError,
@@ -232,3 +227,12 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         );
     }
 }
+
+/**
+ * AttributeFilter is a component that renders a dropdown populated with attribute values
+ * for specified attribute display form.
+ * TODO: SDK8: add docs
+ * @public
+ */
+
+export const AttributeFilter = withContexts(AttributeFilterCore);

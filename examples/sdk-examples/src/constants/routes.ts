@@ -14,9 +14,11 @@ import { DatePicker } from "../examples/advanced/datePicker";
 import { DynamicMeasures } from "../examples/advanced/dynamicMeasures";
 import { CustomLegend } from "../examples/advanced/customLegend";
 import { LoadingAndError } from "../examples/advanced/loadingAndError";
+import { ParentFilter } from "../examples/advanced/parentFilter";
 import { ChartConfiguration } from "../examples/advanced/chartConfiguration";
 import { Responsive } from "../examples/advanced/responsive";
 import { Export } from "../examples/export";
+import { AttributeFilter } from "../examples/attributeFilter";
 
 import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
 import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
@@ -28,9 +30,6 @@ import { Registration } from "../components/registration";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisProject } from "../components/AboutThisProject";
 
-// import AttributeFilter from "./AttributeFilter";
-// import ParentFilter from "./ParentFilter";
-
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
 // import AggregationTest from "./AggregationTest";
@@ -41,7 +40,7 @@ export const advancedUseCasesRoutes = [
     { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
     { path: "/advanced/responsive", title: "Responsive Chart", Component: Responsive },
     { path: "/advanced/custom-legend", title: "Custom Legend", Component: CustomLegend },
-    // { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },
+    { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },
     {
         path: "/advanced/loading-and-error",
         title: "Loading and Error Components",
@@ -87,11 +86,11 @@ export const sideNavigationRoutes = [
         title: "Time Over Time Comparison",
         Component: TimeOverTimeComparison,
     },
-    // {
-    //     path: "/attribute-filter-components",
-    //     title: "Attribute Filter Components",
-    //     Component: AttributeFilter,
-    // },
+    {
+        path: "/attribute-filter-components",
+        title: "Attribute Filter Components",
+        Component: AttributeFilter,
+    },
     {
         path: "/date-filter-component",
         title: "Date Filter Component",

@@ -1,32 +1,35 @@
 // (C) 2007-2020 GoodData Corporation
 
 import React, { Component } from "react";
-import { Headline } from "@gooddata/sdk-ui";
+import { Headline } from "@gooddata/sdk-ui-charts";
 import { newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
 import { LdmExt } from "../../ldm";
 
 export class PreviousPeriodHeadlineExample extends Component {
-    onLoadingChanged(...params) {
+    public onLoadingChanged(...params) {
+        // tslint:disable-next-line:no-console
         return console.log("PreviousPeriodHeadlineExample onLoadingChanged", ...params);
     }
 
-    onError(...params) {
+    public onError(...params) {
+        // tslint:disable-next-line:no-console
         return console.log("PreviousPeriodHeadlineExample onError", ...params);
     }
 
-    render() {
+    public render() {
         const primaryMeasure = LdmExt.TotalSales2;
         const secondaryMeasure = newPreviousPeriodMeasure(
-            "totalSales",
-            [{ dataSet: LdmExt.dateDataSetUri, periodsAgo: 1 }],
+            LdmExt.TotalSales2,
+            [{ dataSet: LdmExt.dateDatasetIdentifier, periodsAgo: 1 }],
             m => m.alias("$ Total Sales - period ago"),
         );
+
         return (
             <div style={{ height: 125 }} className="s-headline">
                 <Headline
                     primaryMeasure={primaryMeasure}
                     secondaryMeasure={secondaryMeasure}
-                    filters={[newRelativeDateFilter(LdmExt.dateDataSetUri, "GDC.time.year", -2, -1)]}
+                    filters={[newRelativeDateFilter(LdmExt.dateDatasetIdentifier, "GDC.time.year", -2, -1)]}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

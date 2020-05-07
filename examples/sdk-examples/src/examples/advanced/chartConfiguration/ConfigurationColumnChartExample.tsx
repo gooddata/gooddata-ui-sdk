@@ -4,14 +4,19 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
 import { Ldm } from "../../../ldm";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 
-const defaultProperties = {};
+interface IConfigurationColumnChartExampleState {
+    config: object;
+    customPaletteUsed: boolean;
+    customLegendUsed: boolean;
+    customSeparatorUsed: boolean;
+}
 
-export class ConfigurationColumnChartExample extends Component {
+export class ConfigurationColumnChartExample extends Component<{}, IConfigurationColumnChartExampleState> {
     constructor(props) {
         super(props);
 
         this.state = {
-            config: defaultProperties,
+            config: {},
             customPaletteUsed: false,
             customLegendUsed: true,
             customSeparatorUsed: true,
@@ -21,7 +26,7 @@ export class ConfigurationColumnChartExample extends Component {
         this.onSeparatorChange = this.onSeparatorChange.bind(this);
     }
 
-    onPaletteChange() {
+    public onPaletteChange() {
         const { config: currentConfig, customPaletteUsed } = this.state;
         const colorPaletteProp = {
             colorPalette: customPaletteUsed ? undefined : CUSTOM_COLOR_PALETTE,
@@ -35,7 +40,7 @@ export class ConfigurationColumnChartExample extends Component {
         });
     }
 
-    onLegendChange() {
+    public onLegendChange() {
         const { config: currentConfig, customLegendUsed } = this.state;
         const legendProp = {
             legend: {
@@ -52,7 +57,7 @@ export class ConfigurationColumnChartExample extends Component {
         });
     }
 
-    onSeparatorChange() {
+    public onSeparatorChange() {
         const { config: currentConfig, customSeparatorUsed } = this.state;
         const separatorProp = {
             separators: customSeparatorUsed
@@ -68,7 +73,7 @@ export class ConfigurationColumnChartExample extends Component {
         });
     }
 
-    render() {
+    public render() {
         // const { config } = this.state;
 
         return (
