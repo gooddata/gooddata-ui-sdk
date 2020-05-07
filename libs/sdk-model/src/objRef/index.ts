@@ -34,7 +34,15 @@ export type UriRef = {
  *
  * @public
  */
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight";
+export type ObjectType =
+    | "measure"
+    | "fact"
+    | "attribute"
+    | "displayForm"
+    | "dataSet"
+    | "tag"
+    | "insight"
+    | "variable";
 
 /**
  * Model object reference using object's unique identifier.

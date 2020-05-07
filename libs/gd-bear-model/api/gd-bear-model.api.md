@@ -1416,6 +1416,16 @@ export namespace GdcMetadata {
         updated: string;
     }
     // (undocumented)
+    export interface IPrompt extends IMetadataObject {
+        // (undocumented)
+        content: {
+            type: "scalar";
+        } | {
+            type: "filter";
+            attribute: Uri;
+        };
+    }
+    // (undocumented)
     export function isAttribute(obj: any): obj is IAttribute;
     // (undocumented)
     export function isAttributeDisplayForm(obj: any): obj is IAttributeDisplayForm;
@@ -1428,6 +1438,8 @@ export namespace GdcMetadata {
     // (undocumented)
     export function isMetric(obj: any): obj is IMetric;
     // (undocumented)
+    export function isPrompt(obj: any): obj is IPrompt;
+    // (undocumented)
     export function isWrappedAttribute(obj: any): obj is IWrappedAttribute;
     // (undocumented)
     export function isWrappedAttributeDisplayForm(obj: any): obj is IWrappedAttributeDisplayForm;
@@ -1439,6 +1451,8 @@ export namespace GdcMetadata {
     export function isWrappedKpiAlert(obj: any): obj is IWrappedKpiAlert;
     // (undocumented)
     export function isWrappedMetric(obj: any): obj is IWrappedMetric;
+    // (undocumented)
+    export function isWrappedPrompt(obj: any): obj is IWrappedPrompt;
     export interface IValidElementsParams {
         // (undocumented)
         afm?: GdcExecuteAFM.IAfm;
@@ -1541,6 +1555,11 @@ export namespace GdcMetadata {
         metric: IMetric;
     }
     // (undocumented)
+    export interface IWrappedPrompt {
+        // (undocumented)
+        prompt: IPrompt;
+    }
+    // (undocumented)
     export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget";
     // (undocumented)
     export type SortDirection = "asc" | "desc";
@@ -1549,11 +1568,11 @@ export namespace GdcMetadata {
 // @public (undocumented)
 export namespace GdcMetadataObject {
     // (undocumented)
-    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcDashboard.IAnalyticalDashboard | GdcDashboardExport.IFilterContext | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject;
+    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcDashboard.IAnalyticalDashboard | GdcDashboardExport.IFilterContext | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject;
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)
-    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcDashboard.IWrappedAnalyticalDashboard | GdcDashboardExport.IWrappedFilterContext | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualizationObjectResponse;
+    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcDashboard.IWrappedAnalyticalDashboard | GdcDashboardExport.IWrappedFilterContext | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualizationObjectResponse;
 }
 
 // @public

@@ -96,6 +96,17 @@ export namespace GdcMetadata {
         content: any; // TODO
     }
 
+    export interface IPrompt extends IMetadataObject {
+        content:
+            | {
+                  type: "scalar";
+              }
+            | {
+                  type: "filter";
+                  attribute: Uri;
+              };
+    }
+
     export interface IAttributeDisplayForm extends IMetadataObject {
         content: {
             expression: MaqlExpression;
@@ -143,6 +154,10 @@ export namespace GdcMetadata {
 
     export interface IWrappedFact {
         fact: IFact;
+    }
+
+    export interface IWrappedPrompt {
+        prompt: IPrompt;
     }
 
     export interface IWrappedAttributeDisplayForm {
@@ -387,5 +402,13 @@ export namespace GdcMetadata {
 
     export function isWrappedDataSet(obj: any): obj is IWrappedDataSet {
         return !isEmpty(obj) && obj.hasOwnProperty("dataSet");
+    }
+
+    export function isPrompt(obj: any): obj is IPrompt {
+        return !isEmpty(obj) && (obj as IPrompt).meta.category === "prompt";
+    }
+
+    export function isWrappedPrompt(obj: any): obj is IWrappedPrompt {
+        return !isEmpty(obj) && obj.hasOwnProperty("prompt");
     }
 }

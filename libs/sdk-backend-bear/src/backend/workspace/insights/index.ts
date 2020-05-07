@@ -40,6 +40,8 @@ const objectTypeToObjectCategory = (
             return "attributeDisplayForm";
         case "measure":
             return "metric";
+        case "variable":
+            return "prompt";
         default:
             return type;
     }

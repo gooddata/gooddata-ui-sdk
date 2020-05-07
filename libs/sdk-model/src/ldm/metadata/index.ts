@@ -7,6 +7,7 @@ import { IAttributeDisplayFormMetadataObject } from "./attributeDisplayForm";
 import { IFactMetadataObject } from "./fact";
 import { IMeasureMetadataObject } from "./measure";
 import { IDataSetMetadataObject } from "./dataSet";
+import { IVariableMetadataObject } from "./variable";
 
 export { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "./attribute/factory";
 export {
@@ -16,6 +17,7 @@ export {
 export { FactMetadataObjectBuilder, newFactMetadataObject } from "./fact/factory";
 export { MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "./measure/factory";
 export { DataSetMetadataObjectBuilder, newDataSetMetadataObject } from "./dataSet/factory";
+export { VariableMetadataObjectBuilder, newVariableMetadataObject } from "./variable/factory";
 
 export {
     IMetadataObject,
@@ -24,6 +26,7 @@ export {
     IFactMetadataObject,
     IMeasureMetadataObject,
     IDataSetMetadataObject,
+    IVariableMetadataObject,
 };
 
 /**
@@ -36,7 +39,8 @@ export type MetadataObject =
     | IAttributeDisplayFormMetadataObject
     | IFactMetadataObject
     | IMeasureMetadataObject
-    | IDataSetMetadataObject;
+    | IDataSetMetadataObject
+    | IVariableMetadataObject;
 
 /**
  * Get metadata object identifier

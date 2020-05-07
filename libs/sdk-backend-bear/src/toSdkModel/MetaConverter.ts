@@ -11,6 +11,7 @@ import {
     IMetadataObject,
     ObjectType,
     newDataSetMetadataObject,
+    newVariableMetadataObject,
 } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
@@ -42,6 +43,8 @@ export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataO
         return newFactMetadataObject(ref, f => f.modify(commonModifications));
     } else if (GdcMetadata.isDataSet(obj)) {
         return newDataSetMetadataObject(ref, ds => ds.modify(commonModifications));
+    } else if (GdcMetadata.isPrompt(obj)) {
+        return newVariableMetadataObject(ref, v => v.modify(commonModifications));
     }
 
     throw new UnexpectedError(

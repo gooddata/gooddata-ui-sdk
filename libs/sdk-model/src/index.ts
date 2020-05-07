@@ -329,10 +329,12 @@ export {
     AttributeDisplayFormMetadataObjectBuilder,
     AttributeMetadataObjectBuilder,
     DataSetMetadataObjectBuilder,
+    VariableMetadataObjectBuilder,
     FactMetadataObjectBuilder,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IDataSetMetadataObject,
+    IVariableMetadataObject,
     IFactMetadataObject,
     IMeasureMetadataObject,
     IMetadataObject,
@@ -345,6 +347,7 @@ export {
     newFactMetadataObject,
     newMeasureMetadataObject,
     newDataSetMetadataObject,
+    newVariableMetadataObject,
     metadataObjectId,
 } from "./ldm/metadata";
 
