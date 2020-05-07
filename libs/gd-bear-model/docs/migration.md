@@ -32,7 +32,7 @@ The package `@gooddata/typings` was renamed to `@gooddata/gd-bear-model`.
 
 -   Type `VisualizationClass` renamed to `GdcVisualizationClass`
 
--   Type `DashboardExport` renamed to `GdcDashboardExport`
+-   Type `DashboardExport` renamed to `GdcFilterContext`
 
 -   Types exported from `DashboardLayout` are now located under `GdcDashboardLayout` namespace
 

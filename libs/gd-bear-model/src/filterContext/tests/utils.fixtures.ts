@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
-import { GdcDashboardExport } from "../GdcDashboardExport";
+import { GdcFilterContext } from "../GdcFilterContext";
 
-export const relativeDateFilter: GdcDashboardExport.FilterContextItem = {
+export const relativeDateFilter: GdcFilterContext.FilterContextItem = {
     dateFilter: {
         type: "relative",
         from: -11,
@@ -10,7 +10,7 @@ export const relativeDateFilter: GdcDashboardExport.FilterContextItem = {
     },
 };
 
-export const absoluteDateFilter: GdcDashboardExport.FilterContextItem = {
+export const absoluteDateFilter: GdcFilterContext.FilterContextItem = {
     dateFilter: {
         type: "absolute",
         from: "2019-08-06",
@@ -19,7 +19,7 @@ export const absoluteDateFilter: GdcDashboardExport.FilterContextItem = {
     },
 };
 
-export const attributeFilter: GdcDashboardExport.FilterContextItem = {
+export const attributeFilter: GdcFilterContext.FilterContextItem = {
     attributeFilter: {
         displayForm: "/gdc/md/testProjectId/obj/700",
         negativeSelection: false,
@@ -27,7 +27,7 @@ export const attributeFilter: GdcDashboardExport.FilterContextItem = {
     },
 };
 
-export const dateFilterWithUndefinedRange: GdcDashboardExport.FilterContextItem = {
+export const dateFilterWithUndefinedRange: GdcFilterContext.FilterContextItem = {
     dateFilter: {
         type: "relative",
         from: undefined,

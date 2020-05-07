@@ -4,7 +4,7 @@ import first from "lodash/first";
 import flow from "lodash/flow";
 import { GdcMetadata } from "./GdcMetadata";
 import { GdcDashboard } from "../dashboard/GdcDashboard";
-import { GdcDashboardExport } from "../dashboard/GdcDashboardExport";
+import { GdcFilterContext } from "../filterContext/GdcFilterContext";
 import { GdcScheduledMail } from "../scheduledMail/GdcScheduledMail";
 import { GdcProjectDashboard } from "../projectDashboard/GdcProjectDashboard";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
@@ -24,7 +24,7 @@ export namespace GdcMetadataObject {
         | GdcMetadata.IDataSet
         | GdcMetadata.IPrompt
         | GdcDashboard.IAnalyticalDashboard
-        | GdcDashboardExport.IFilterContext
+        | GdcFilterContext.IFilterContext
         | GdcScheduledMail.IScheduledMail
         | GdcProjectDashboard.IProjectDashboard
         | GdcExtendedDateFilters.IDateFilterConfig
@@ -40,7 +40,7 @@ export namespace GdcMetadataObject {
         | GdcMetadata.IWrappedDataSet
         | GdcMetadata.IWrappedPrompt
         | GdcDashboard.IWrappedAnalyticalDashboard
-        | GdcDashboardExport.IWrappedFilterContext
+        | GdcFilterContext.IWrappedFilterContext
         | GdcScheduledMail.IWrappedScheduledMail
         | GdcProjectDashboard.IWrappedProjectDashboard
         | GdcExtendedDateFilters.IWrappedDateFilterConfig

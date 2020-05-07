@@ -7,7 +7,7 @@ import { Uri, Timestamp } from "../aliases";
 /**
  * @public
  */
-export namespace GdcDashboardExport {
+export namespace GdcFilterContext {
     export type RelativeType = "relative";
     export type AbsoluteType = "absolute";
     export type DateFilterType = RelativeType | AbsoluteType;

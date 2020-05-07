@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 import omitBy from "lodash/omitBy";
 import isUndefined from "lodash/isUndefined";
-import { GdcDashboardExport } from "./GdcDashboardExport";
-import isDateFilter = GdcDashboardExport.isDateFilter;
+import { GdcFilterContext } from "./GdcFilterContext";
+import isDateFilter = GdcFilterContext.isDateFilter;
 
-function sanitizeDateFilter(filter: GdcDashboardExport.IDateFilter): GdcDashboardExport.IDateFilter {
+function sanitizeDateFilter(filter: GdcFilterContext.IDateFilter): GdcFilterContext.IDateFilter {
     const {
         dateFilter: { from, to, type, granularity },
         dateFilter,
@@ -26,10 +26,10 @@ function sanitizeDateFilter(filter: GdcDashboardExport.IDateFilter): GdcDashboar
  * @public
  */
 export function sanitizeDateFilters(
-    filters: GdcDashboardExport.FilterContextItem[],
-): GdcDashboardExport.FilterContextItem[] {
+    filters: GdcFilterContext.FilterContextItem[],
+): GdcFilterContext.FilterContextItem[] {
     return filters.map(
-        (filter: GdcDashboardExport.FilterContextItem): GdcDashboardExport.FilterContextItem => {
+        (filter: GdcFilterContext.FilterContextItem): GdcFilterContext.FilterContextItem => {
             if (isDateFilter(filter)) {
                 return sanitizeDateFilter(filter);
             }
