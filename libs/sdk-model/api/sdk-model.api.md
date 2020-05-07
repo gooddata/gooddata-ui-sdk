@@ -1144,6 +1144,12 @@ export interface ITotal {
 }
 
 // @public
+export interface IVariableMetadataObject extends IMetadataObject {
+    // (undocumented)
+    type: "variable";
+}
+
+// @public
 export interface IVisualizationClass {
     // (undocumented)
     visualizationClass: {
@@ -1320,7 +1326,7 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 export function measureValueFilterOperator(filter: IMeasureValueFilter): ComparisonConditionOperator | RangeConditionOperator | undefined;
 
 // @public
-export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject;
+export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject;
 
 // @public
 export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends Builder<T> implements IMetadataObjectBuilder {
@@ -1450,7 +1456,10 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | string, attrib
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight";
+export const newVariableMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<VariableMetadataObjectBuilder<IVariableMetadataObject>, IVariableMetadataObject>) => IVariableMetadataObject;
+
+// @public
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -1540,6 +1549,10 @@ export type UriRef = {
 
 // @public
 export function uriRef(uri: Uri): UriRef;
+
+// @public
+export class VariableMetadataObjectBuilder<T extends IVariableMetadataObject = IVariableMetadataObject> extends MetadataObjectBuilder<T> {
+}
 
 // @public
 export function visClassId(vc: IVisualizationClass): string;

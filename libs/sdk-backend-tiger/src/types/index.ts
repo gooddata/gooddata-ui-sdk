@@ -7,7 +7,7 @@ import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
  *
  * @public
  */
-export type TigerAfmType = "label" | "metric" | "dataSet" | "fact" | "attribute";
+export type TigerAfmType = "label" | "metric" | "dataSet" | "fact" | "attribute" | "variable";
 
 /**
  * Tiger authenticated call guard

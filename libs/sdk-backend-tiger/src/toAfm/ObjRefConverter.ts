@@ -19,6 +19,7 @@ const tigerAfmTypeByObjectAfmType: {
     displayForm: "label",
     dataSet: "dataSet",
     fact: "fact",
+    variable: "variable",
 };
 
 const isValidAfmType = (obj: any): obj is AfmObjectType => {

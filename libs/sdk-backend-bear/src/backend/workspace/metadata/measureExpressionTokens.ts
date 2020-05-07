@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import flow from "lodash/flow";
 import filter from "lodash/fp/filter";
 import map from "lodash/fp/map";
@@ -16,7 +16,7 @@ const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
     ["text", /^[^\{\}\[\]]+/],
     ["quoted_text", /^"(?:[^"\\]|\\\\.)*"/],
     ["identifier", /^\{.*\}/],
-    ["element_uri", /^\[[a-zA-Z0-9\\\/]+elements\?id=.*]/],
+    ["element_uri", /^\[[a-zA-Z0-9\\\/]+elements\?id=\d+]/],
     ["uri", /^\[[a-zA-Z0-9\\\/]+]/],
 ];
 
