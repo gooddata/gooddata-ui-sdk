@@ -132,11 +132,11 @@ function convertPreviousPeriodMeasureDefinition(
     return {
         previousPeriodMeasure: {
             measureIdentifier: toLocalIdentifier(previousPeriodMeasure.measureIdentifier),
-            dateDataSets: previousPeriodMeasure.dateDataSets.map(dateDataSet => {
-                const dataSetRef = dateDataSet.dataSet;
+            dateDatasets: previousPeriodMeasure.dateDataSets.map(dateDataSet => {
+                const datasetRef = dateDataSet.dataSet;
 
                 return {
-                    dataSet: toDateDataSetQualifier(dataSetRef),
+                    dataset: toDateDataSetQualifier(datasetRef),
                     periodsAgo: dateDataSet.periodsAgo,
                 };
             }),

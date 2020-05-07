@@ -78,11 +78,11 @@ export namespace ExecuteAFM {
 
     export interface IPreviousPeriodMeasure {
         measureIdentifier: ILocalIdentifierQualifier;
-        dateDataSets: IPreviousPeriodDateDataSet[];
+        dateDatasets: IPreviousPeriodDateDataset[];
     }
 
-    export interface IPreviousPeriodDateDataSet {
-        dataSet: ObjQualifier;
+    export interface IPreviousPeriodDateDataset {
+        dataset: ObjQualifier;
         periodsAgo: number;
     }
 
@@ -127,7 +127,7 @@ export namespace ExecuteAFM {
 
     export interface IAbsoluteDateFilter {
         absoluteDateFilter: {
-            dataSet: ObjQualifier;
+            dataset: ObjQualifier;
             from: string;
             to: string;
         };
@@ -135,7 +135,7 @@ export namespace ExecuteAFM {
 
     export interface IRelativeDateFilter {
         relativeDateFilter: {
-            dataSet: ObjQualifier;
+            dataset: ObjQualifier;
             granularity: string;
             from: number;
             to: number;

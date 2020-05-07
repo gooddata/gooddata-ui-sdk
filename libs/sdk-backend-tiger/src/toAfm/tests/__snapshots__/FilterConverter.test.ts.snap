@@ -3,7 +3,7 @@
 exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter from model to AFM with all attributes 1`] = `
 Object {
   "absoluteDateFilter": Object {
-    "dataSet": Object {
+    "dataset": Object {
       "identifier": Object {
         "id": "closed",
         "type": "dataSet",
@@ -22,7 +22,7 @@ exports[`tiger filter converter from model to AFM convert absolute date filter s
 exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with date granularity 1`] = `
 Object {
   "relativeDateFilter": Object {
-    "dataSet": Object {
+    "dataset": Object {
       "identifier": Object {
         "id": "closed",
         "type": "dataSet",
@@ -38,7 +38,7 @@ Object {
 exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with missing 'to' parameter 1`] = `
 Object {
   "relativeDateFilter": Object {
-    "dataSet": Object {
+    "dataset": Object {
       "identifier": Object {
         "id": "closed",
         "type": "dataSet",
@@ -56,7 +56,7 @@ exports[`tiger filter converter from model to AFM convert relative date filter s
 exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with month granularity 1`] = `
 Object {
   "relativeDateFilter": Object {
-    "dataSet": Object {
+    "dataset": Object {
       "identifier": Object {
         "id": "closed",
         "type": "dataSet",
@@ -72,7 +72,7 @@ Object {
 exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with quarter granularity 1`] = `
 Object {
   "relativeDateFilter": Object {
-    "dataSet": Object {
+    "dataset": Object {
       "identifier": Object {
         "id": "closed",
         "type": "dataSet",
@@ -88,7 +88,7 @@ Object {
 exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with week granularity 1`] = `
 Object {
   "relativeDateFilter": Object {
-    "dataSet": Object {
+    "dataset": Object {
       "identifier": Object {
         "id": "closed",
         "type": "dataSet",
@@ -104,7 +104,7 @@ Object {
 exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with year granularity 1`] = `
 Object {
   "relativeDateFilter": Object {
-    "dataSet": Object {
+    "dataset": Object {
       "identifier": Object {
         "id": "closed",
         "type": "dataSet",
@@ -120,7 +120,7 @@ Object {
 exports[`tiger filter converter from model to AFM convert visualization object filter should return absolute date filter 1`] = `
 Object {
   "absoluteDateFilter": Object {
-    "dataSet": Object {
+    "dataset": Object {
       "identifier": Object {
         "id": "closed",
         "type": "dataSet",
@@ -173,7 +173,7 @@ Object {
 exports[`tiger filter converter from model to AFM convert visualization object filter should return relative date filter 1`] = `
 Object {
   "relativeDateFilter": Object {
-    "dataSet": Object {
+    "dataset": Object {
       "identifier": Object {
         "id": "closed",
         "type": "dataSet",
