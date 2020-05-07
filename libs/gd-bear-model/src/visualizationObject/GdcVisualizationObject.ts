@@ -222,6 +222,10 @@ export namespace GdcVisualizationObject {
         visualizationObject: IVisualizationObject;
     }
 
+    export function isVisualization(obj: any): obj is IVisualization {
+        return !isEmpty(obj) && (obj as IVisualization).visualizationObject !== undefined;
+    }
+
     export function isMeasure(bucketItem: IMeasure | IAttribute): bucketItem is IMeasure {
         return !isEmpty(bucketItem) && (bucketItem as IMeasure).measure !== undefined;
     }

@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-
 import { ObjRef } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
 import { IWidgetAlert } from "./alert";
 
 /**
@@ -180,9 +180,27 @@ export interface IWidgetDefinition {
  * See {@link IWidgetDefinition}]
  * @alpha
  */
-export type IWidget = IWidgetDefinition & {
+export interface IWidget extends IWidgetDefinition {
     /**
      * Visualization widget or kpi object ref
      */
     readonly ref: ObjRef;
-};
+
+    /**
+     * Visualization widget or kpi uri
+     */
+    readonly uri: string;
+
+    /**
+     * Visualization widget or kpi identifier
+     */
+    readonly identifier: string;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IWidget}.
+ * @alpha
+ */
+export function isWidget(obj: any): obj is IWidget {
+    return !isEmpty(obj) && ((obj as IWidget).type === "kpi" || (obj as IWidget).type === "insight");
+}

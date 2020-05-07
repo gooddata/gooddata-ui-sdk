@@ -18,7 +18,9 @@ export interface IWorkspaceDashboards {
     getDashboards(): Promise<IListedDashboard[]>;
 
     /**
-     * Load dashboard by it's reference
+     * Load dashboard by it's reference,
+     * and optionally override filter context with the custom filter context
+     * (custom filter context is used mainly for exporting)
      *
      * @param ref - dashboard ref
      * @param filterContextRef - Override dashboard filter context with the custom filter context

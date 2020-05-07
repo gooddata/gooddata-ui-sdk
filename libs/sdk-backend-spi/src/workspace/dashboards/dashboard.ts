@@ -1,8 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { Layout } from "./layout";
-import { IWidget } from "./widget";
-import { IFilterContext } from "./filterContext";
+import { IFilterContext, ITempFilterContext } from "./filterContext";
 import {
     GUID,
     DateFilterConfigMode,
@@ -74,9 +73,9 @@ export interface IDashboardDefinition {
     readonly updated: string;
 
     /**
-     * Dashboard layout
+     * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
      */
-    readonly layout: Layout;
+    readonly layout?: Layout;
 
     /**
      * Dashboard scheduled emails
@@ -84,14 +83,10 @@ export interface IDashboardDefinition {
     readonly scheduledMails: IScheduledMail[];
 
     /**
-     * Dashboard widgets
+     * Dashboard filter context, or temporary filter context
+     * (temporary filter context is used to override original filter context during the export)
      */
-    readonly widgets: IWidget[];
-
-    /**
-     * Dashboard filter context
-     */
-    readonly filterContext: IFilterContext[];
+    readonly filterContext: IFilterContext | ITempFilterContext;
 
     /**
      * Dashboard extended date filter config
@@ -146,7 +141,7 @@ export interface IListedDashboard {
  * See {@link IDashboardDefinition}
  * @alpha
  */
-export type IDashboard = IDashboardDefinition & {
+export interface IDashboard extends IDashboardDefinition {
     /**
      * Dashboard object ref
      */
@@ -161,4 +156,4 @@ export type IDashboard = IDashboardDefinition & {
      * Dashboard identifier
      */
     readonly identifier: string;
-};
+}

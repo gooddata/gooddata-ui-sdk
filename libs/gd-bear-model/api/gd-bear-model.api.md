@@ -263,6 +263,10 @@ export namespace GdcDashboardLayout {
         title: string;
     }
     // (undocumented)
+    export function isFluidLayout(obj: any): obj is IFluidLayout;
+    // (undocumented)
+    export function isLayoutWidget(obj: any): obj is IPersistedWidget;
+    // (undocumented)
     export type Layout = IFluidLayout;
     // (undocumented)
     export type LayoutContent = Widget | Layout;
@@ -1145,7 +1149,7 @@ export namespace GdcFilterContext {
     // (undocumented)
     export function isWrappedFilterContext(obj: any): obj is IWrappedFilterContext;
     // (undocumented)
-    export function isWrappedTempFilterContext(obj: any): obj is IWrappedFilterContext;
+    export function isWrappedTempFilterContext(obj: any): obj is IWrappedTempFilterContext;
     export interface ITempFilterContext {
         // (undocumented)
         created: Timestamp;
@@ -1214,6 +1218,15 @@ export namespace GdcKpi {
         projectDashboard: string;
         // (undocumented)
         projectDashboardTab: string;
+    }
+    // (undocumented)
+    export function isKpi(obj: any): obj is IKPI;
+    // (undocumented)
+    export function isWrappedKpi(obj: any): obj is IWrappedKPI;
+    // (undocumented)
+    export interface IWrappedKPI {
+        // (undocumented)
+        kpi: IKPI;
     }
 }
 
@@ -1568,11 +1581,11 @@ export namespace GdcMetadata {
 // @public (undocumented)
 export namespace GdcMetadataObject {
     // (undocumented)
-    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject;
+    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject;
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)
-    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualizationObjectResponse;
+    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization;
 }
 
 // @public
@@ -2382,6 +2395,8 @@ export namespace GdcVisualizationObject {
     export function isRangeCondition(condition: MeasureValueFilterCondition): condition is IRangeCondition;
     // (undocumented)
     export function isRelativeDateFilter(filter: DateFilter): filter is IRelativeDateFilter;
+    // (undocumented)
+    export function isVisualization(obj: any): obj is IVisualization;
     // (undocumented)
     export interface ITotal {
         // (undocumented)

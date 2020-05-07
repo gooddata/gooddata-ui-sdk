@@ -1,5 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { GdcVisualizationObject } from "../visualizationObject/GdcVisualizationObject";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * @public
@@ -57,5 +58,13 @@ export namespace GdcDashboardLayout {
 
     export interface ISectionDescription {
         description: string;
+    }
+
+    export function isFluidLayout(obj: any): obj is IFluidLayout {
+        return !isEmpty(obj) && !!(obj as IFluidLayout).fluidLayout;
+    }
+
+    export function isLayoutWidget(obj: any): obj is IPersistedWidget {
+        return !isEmpty(obj) && !!(obj as IPersistedWidget).widget;
     }
 }

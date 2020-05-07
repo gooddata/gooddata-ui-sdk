@@ -10,6 +10,7 @@ import { GdcProjectDashboard } from "../projectDashboard/GdcProjectDashboard";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
 import { GdcVisualizationWidget } from "../visualizationWidget/GdcVisualizationWidget";
 import { GdcVisualizationObject } from "../visualizationObject/GdcVisualizationObject";
+import { GdcKpi } from "../kpi/GdcKpi";
 
 /**
  * @public
@@ -25,6 +26,8 @@ export namespace GdcMetadataObject {
         | GdcMetadata.IPrompt
         | GdcDashboard.IAnalyticalDashboard
         | GdcFilterContext.IFilterContext
+        | GdcFilterContext.ITempFilterContext
+        | GdcKpi.IKPI
         | GdcScheduledMail.IScheduledMail
         | GdcProjectDashboard.IProjectDashboard
         | GdcExtendedDateFilters.IDateFilterConfig
@@ -41,11 +44,13 @@ export namespace GdcMetadataObject {
         | GdcMetadata.IWrappedPrompt
         | GdcDashboard.IWrappedAnalyticalDashboard
         | GdcFilterContext.IWrappedFilterContext
+        | GdcFilterContext.IWrappedTempFilterContext
+        | GdcKpi.IWrappedKPI
         | GdcScheduledMail.IWrappedScheduledMail
         | GdcProjectDashboard.IWrappedProjectDashboard
         | GdcExtendedDateFilters.IWrappedDateFilterConfig
         | GdcVisualizationWidget.IWrappedVisualizationWidget
-        | GdcVisualizationObject.IVisualizationObjectResponse;
+        | GdcVisualizationObject.IVisualization;
 
     export function unwrapMetadataObject(object: WrappedObject): IObject {
         const unwrappedObject: IObject = flow(values, first)(object);

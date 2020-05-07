@@ -19,7 +19,12 @@ import {
 import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
 import { objRefToUri } from "../../../fromObjRef/api";
 import { BearAuthenticatedCallGuard } from "../../../types";
-import { convertMetadataObject, convertMetadataObjectXrefEntry } from "../../../toSdkModel/MetaConverter";
+import {
+    convertMetadataObject,
+    convertMetadataObjectXrefEntry,
+    SupportedMetadataObject,
+    SupportedWrappedMetadataObject,
+} from "../../../toSdkModel/MetaConverter";
 import { getObjectIdFromUri } from "../../../utils/api";
 
 export class BearWorkspaceMetadata implements IWorkspaceMetadata {
@@ -91,9 +96,11 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
             ...allExpressionElementAttributeUris,
         ]);
         const allExpressionWrappedObjects = await this.authCall(sdk =>
-            sdk.md.getObjects(this.workspace, allExpressionUris),
+            sdk.md.getObjects<SupportedWrappedMetadataObject>(this.workspace, allExpressionUris),
         );
-        const allExpressionObjects = allExpressionWrappedObjects.map(GdcMetadataObject.unwrapMetadataObject);
+        const allExpressionObjects = allExpressionWrappedObjects.map(
+            GdcMetadataObject.unwrapMetadataObject,
+        ) as SupportedMetadataObject[];
         const allExpressionElements = await Promise.all(
             expressionElementUris.map(elementUri =>
                 this.authCall(sdk => sdk.md.getAttributeElementDefaultDisplayFormValue(elementUri)),

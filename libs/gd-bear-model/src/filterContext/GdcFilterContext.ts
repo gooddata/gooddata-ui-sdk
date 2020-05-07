@@ -82,7 +82,7 @@ export namespace GdcFilterContext {
         );
     }
 
-    export function isWrappedTempFilterContext(obj: any): obj is IWrappedFilterContext {
-        return !isEmpty(obj) && (obj as IWrappedFilterContext).hasOwnProperty("tempFilterContext");
+    export function isWrappedTempFilterContext(obj: any): obj is IWrappedTempFilterContext {
+        return !isEmpty(obj) && (obj as IWrappedTempFilterContext).hasOwnProperty("tempFilterContext");
     }
 }
