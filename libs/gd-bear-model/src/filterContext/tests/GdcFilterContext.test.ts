@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { GdcDashboardExport } from "../GdcDashboardExport";
-import { attributeFilter, dateFilter } from "./GdcDashboardExport.fixtures";
+import { GdcFilterContext } from "../GdcFilterContext";
+import { attributeFilter, dateFilter } from "./GdcFilterContext.fixtures";
 
-describe("GdcDashboardExport", () => {
+describe("GdcFilterContext", () => {
     describe("isAttributeFilter", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
@@ -12,7 +12,7 @@ describe("GdcDashboardExport", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcDashboardExport.isAttributeFilter(input)).toBe(expectedResult);
+            expect(GdcFilterContext.isAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -24,7 +24,7 @@ describe("GdcDashboardExport", () => {
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(GdcDashboardExport.isDateFilter(input)).toBe(expectedResult);
+            expect(GdcFilterContext.isDateFilter(input)).toBe(expectedResult);
         });
     });
 });

@@ -1,14 +1,14 @@
 // (C) 2019 GoodData Corporation
-import { GdcDashboardExport } from "../GdcDashboardExport";
+import { GdcFilterContext } from "../GdcFilterContext";
 
-export const attributeFilter: GdcDashboardExport.IAttributeFilter = {
+export const attributeFilter: GdcFilterContext.IAttributeFilter = {
     attributeFilter: {
         displayForm: "/uri/attr",
         negativeSelection: true,
         attributeElements: ["/uri/attr?id=1", "/uri/attr?id=2"],
     },
 };
-export const dateFilter: GdcDashboardExport.IDateFilter = {
+export const dateFilter: GdcFilterContext.IDateFilter = {
     dateFilter: {
         type: "relative",
         granularity: "GDC.time.date",

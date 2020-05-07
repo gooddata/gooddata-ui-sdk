@@ -3,7 +3,7 @@ import { MetadataModule } from "./metadata";
 import { XhrModule } from "./xhr";
 import { UserModule } from "./user";
 import cloneDeepWith from "lodash/cloneDeepWith";
-import { GdcKpi, GdcDashboard, GdcDashboardExport, GdcVisualizationWidget } from "@gooddata/gd-bear-model";
+import { GdcKpi, GdcDashboard, GdcFilterContext, GdcVisualizationWidget } from "@gooddata/gd-bear-model";
 
 /**
  * Modify how and what should be copied to the cloned dashboard
@@ -274,7 +274,7 @@ export class MetadataModuleExt {
         projectId: string,
         dashboardUri: string,
     ): Promise<
-        Array<GdcKpi.IKPI | GdcDashboardExport.IFilterContext | GdcVisualizationWidget.IVisualizationWidget>
+        Array<GdcKpi.IKPI | GdcFilterContext.IFilterContext | GdcVisualizationWidget.IVisualizationWidget>
     > {
         const uris = await this.getObjectsUrisInDashboard(projectId, dashboardUri);
         return this.metadataModule.getObjects<any>(projectId, uris); // TODO improve types

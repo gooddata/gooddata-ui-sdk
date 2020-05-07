@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { GdcDashboardExport, sanitizeDateFilters } from "@gooddata/gd-bear-model";
+// (C) 2019-2020 GoodData Corporation
+import { GdcFilterContext, sanitizeDateFilters } from "@gooddata/gd-bear-model";
 import { ApiResponse, XhrModule } from "../xhr";
 import { IExportResponse } from "../interfaces";
 import { handleHeadPolling, IPollingOptions } from "../util";
@@ -8,7 +8,7 @@ import { isExportFinished } from "../utils/export";
 interface IDashboardExportPayload {
     dashboardExport: {
         dashboardUri: string;
-        filters?: GdcDashboardExport.FilterContextItem[];
+        filters?: GdcFilterContext.FilterContextItem[];
     };
 }
 
@@ -18,7 +18,7 @@ export class DashboardModule {
     public async exportToPdf(
         projectId: string,
         dashboardUri: string,
-        filters: GdcDashboardExport.FilterContextItem[] = [],
+        filters: GdcFilterContext.FilterContextItem[] = [],
         pollingOptions: IPollingOptions = {},
     ): Promise<IExportResponse> {
         const sanitizedFilters = sanitizeDateFilters(filters);
@@ -45,7 +45,7 @@ export class DashboardModule {
 
     private getDashboardExportPayload(
         dashboardUri: string,
-        filters: GdcDashboardExport.FilterContextItem[],
+        filters: GdcFilterContext.FilterContextItem[],
     ): IDashboardExportPayload {
         if (filters.length) {
             return {

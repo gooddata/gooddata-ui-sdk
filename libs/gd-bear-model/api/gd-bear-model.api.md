@@ -195,78 +195,6 @@ export namespace GdcDashboard {
 }
 
 // @public (undocumented)
-export namespace GdcDashboardExport {
-    // (undocumented)
-    export type AbsoluteType = "absolute";
-    // (undocumented)
-    export type DateFilterType = RelativeType | AbsoluteType;
-    // (undocumented)
-    export type FilterContextItem = IAttributeFilter | IDateFilter;
-    // (undocumented)
-    export interface IAttributeFilter {
-        // (undocumented)
-        attributeFilter: {
-            displayForm: string;
-            negativeSelection: boolean;
-            attributeElements: string[];
-        };
-    }
-    // (undocumented)
-    export interface IDateFilter {
-        // (undocumented)
-        dateFilter: {
-            type: DateFilterType;
-            granularity: GdcExtendedDateFilters.DateFilterGranularity;
-            from?: GdcExtendedDateFilters.DateString | number;
-            to?: GdcExtendedDateFilters.DateString | number;
-            dataSet?: string;
-            attribute?: string;
-        };
-    }
-    // (undocumented)
-    export interface IFilterContext {
-        // (undocumented)
-        content: {
-            filters: FilterContextItem[];
-        };
-        // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
-    }
-    // (undocumented)
-    export function isAttributeFilter(filter: FilterContextItem): filter is IAttributeFilter;
-    // (undocumented)
-    export function isDateFilter(filter: FilterContextItem): filter is IDateFilter;
-    // (undocumented)
-    export function isFilterContext(obj: any): obj is IFilterContext;
-    // (undocumented)
-    export function isTempFilterContext(obj: any): obj is ITempFilterContext;
-    // (undocumented)
-    export function isWrappedFilterContext(obj: any): obj is IWrappedFilterContext;
-    // (undocumented)
-    export function isWrappedTempFilterContext(obj: any): obj is IWrappedFilterContext;
-    export interface ITempFilterContext {
-        // (undocumented)
-        created: Timestamp;
-        // (undocumented)
-        filters: FilterContextItem[];
-        // (undocumented)
-        uri: Uri;
-    }
-    // (undocumented)
-    export interface IWrappedFilterContext {
-        // (undocumented)
-        filterContext: IFilterContext;
-    }
-    // (undocumented)
-    export interface IWrappedTempFilterContext {
-        // (undocumented)
-        tempFilterContext: ITempFilterContext;
-    }
-    // (undocumented)
-    export type RelativeType = "relative";
-}
-
-// @public (undocumented)
 export namespace GdcDashboardLayout {
     // (undocumented)
     export interface IFluidLayout {
@@ -1169,6 +1097,78 @@ export namespace GdcExtendedDateFilters {
 }
 
 // @public (undocumented)
+export namespace GdcFilterContext {
+    // (undocumented)
+    export type AbsoluteType = "absolute";
+    // (undocumented)
+    export type DateFilterType = RelativeType | AbsoluteType;
+    // (undocumented)
+    export type FilterContextItem = IAttributeFilter | IDateFilter;
+    // (undocumented)
+    export interface IAttributeFilter {
+        // (undocumented)
+        attributeFilter: {
+            displayForm: string;
+            negativeSelection: boolean;
+            attributeElements: string[];
+        };
+    }
+    // (undocumented)
+    export interface IDateFilter {
+        // (undocumented)
+        dateFilter: {
+            type: DateFilterType;
+            granularity: GdcExtendedDateFilters.DateFilterGranularity;
+            from?: GdcExtendedDateFilters.DateString | number;
+            to?: GdcExtendedDateFilters.DateString | number;
+            dataSet?: string;
+            attribute?: string;
+        };
+    }
+    // (undocumented)
+    export interface IFilterContext {
+        // (undocumented)
+        content: {
+            filters: FilterContextItem[];
+        };
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export function isAttributeFilter(filter: FilterContextItem): filter is IAttributeFilter;
+    // (undocumented)
+    export function isDateFilter(filter: FilterContextItem): filter is IDateFilter;
+    // (undocumented)
+    export function isFilterContext(obj: any): obj is IFilterContext;
+    // (undocumented)
+    export function isTempFilterContext(obj: any): obj is ITempFilterContext;
+    // (undocumented)
+    export function isWrappedFilterContext(obj: any): obj is IWrappedFilterContext;
+    // (undocumented)
+    export function isWrappedTempFilterContext(obj: any): obj is IWrappedFilterContext;
+    export interface ITempFilterContext {
+        // (undocumented)
+        created: Timestamp;
+        // (undocumented)
+        filters: FilterContextItem[];
+        // (undocumented)
+        uri: Uri;
+    }
+    // (undocumented)
+    export interface IWrappedFilterContext {
+        // (undocumented)
+        filterContext: IFilterContext;
+    }
+    // (undocumented)
+    export interface IWrappedTempFilterContext {
+        // (undocumented)
+        tempFilterContext: ITempFilterContext;
+    }
+    // (undocumented)
+    export type RelativeType = "relative";
+}
+
+// @public (undocumented)
 export namespace GdcKpi {
     // (undocumented)
     export interface IKPI {
@@ -1568,11 +1568,11 @@ export namespace GdcMetadata {
 // @public (undocumented)
 export namespace GdcMetadataObject {
     // (undocumented)
-    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcDashboard.IAnalyticalDashboard | GdcDashboardExport.IFilterContext | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject;
+    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject;
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)
-    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcDashboard.IWrappedAnalyticalDashboard | GdcDashboardExport.IWrappedFilterContext | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualizationObjectResponse;
+    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualizationObjectResponse;
 }
 
 // @public
@@ -2494,7 +2494,7 @@ export type MaqlExpression = string;
 export type NumberAsString = string;
 
 // @public (undocumented)
-export function sanitizeDateFilters(filters: GdcDashboardExport.FilterContextItem[]): GdcDashboardExport.FilterContextItem[];
+export function sanitizeDateFilters(filters: GdcFilterContext.FilterContextItem[]): GdcFilterContext.FilterContextItem[];
 
 // @public (undocumented)
 export type Timestamp = string;

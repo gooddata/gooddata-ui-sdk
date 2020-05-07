@@ -6,7 +6,7 @@ export { GdcExtendedDateFilters } from "./extendedDateFilters/GdcExtendedDateFil
 export { GdcVisualizationObject } from "./visualizationObject/GdcVisualizationObject";
 export { GdcVisualizationClass } from "./visualizationObject/GdcVisualizationClass";
 export { GdcVisualizationWidget } from "./visualizationWidget/GdcVisualizationWidget";
-export { GdcDashboardExport } from "./dashboard/GdcDashboardExport";
+export { GdcFilterContext } from "./filterContext/GdcFilterContext";
 export { GdcDashboardLayout } from "./dashboard/GdcDashboardLayout";
 export { GdcDashboard } from "./dashboard/GdcDashboard";
 export { GdcCatalog } from "./catalog/GdcCatalog";
@@ -22,5 +22,5 @@ export { GdcProjectDashboard } from "./projectDashboard/GdcProjectDashboard";
 export { GdcPaging } from "./base/GdcPaging";
 export { MaqlExpression, NumberAsString, Timestamp, Uri } from "./aliases";
 
-export { sanitizeDateFilters } from "./dashboard/utils";
+export { sanitizeDateFilters } from "./filterContext/utils";
 export { getAttributesDisplayForms } from "./visualizationObject/utils";
