@@ -10,6 +10,8 @@ import { PivotTableRowGroupingExample } from "./PivotTableRowGroupingExample";
 import PivotTableRowGroupingExampleSRC from "!raw-loader!./PivotTableRowGroupingExample";
 import { PivotTableSubtotalsExample } from "./PivotTableSubtotalsExample";
 import PivotTableSubtotalsExampleSRC from "!raw-loader!./PivotTableSubtotalsExample";
+import { PivotTableDrillExample } from "./PivotTableDrillExample";
+import PivotTableDrillExampleSRC from "!raw-loader!./PivotTableDrillExample";
 // import { PivotTableExample } from "./PivotTableExample";
 // import PivotTableExampleSRC from "!raw-loader!./PivotTableExample";
 
@@ -26,6 +28,10 @@ export const PivotTable: React.FC = () => (
 
         <h2 id="measures-row-attributes-and-column-attributes">Example of Pivot Table with Totals</h2>
         <ExampleWithSource for={PivotTableTotalsExample} source={PivotTableTotalsExampleSRC} />
+
+        <hr className="separator" />
+        <h2 id="measures-row-attributes-and-column-attributes">Example of Drill Event</h2>
+        <ExampleWithSource for={PivotTableDrillExample} source={PivotTableDrillExampleSRC} />
 
         <hr className="separator" />
 
