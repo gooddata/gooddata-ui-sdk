@@ -1,9 +1,0 @@
-{
-    "_note": "This config is used for stories/ directory to add typings.d.ts for IDE integration, and for disabling .d.ts output.",
-    "extends": "../tsconfig.json",
-    "include": ["../src/typings.d.ts", "./*.ts", "./*.tsx"],
-    "exclude": ["src/**/*.spec.ts"],
-    "compilerOptions": {
-        "declaration": false
-    }
-}

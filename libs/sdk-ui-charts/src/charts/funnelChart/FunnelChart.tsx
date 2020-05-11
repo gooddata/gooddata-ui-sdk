@@ -55,8 +55,6 @@ export interface IFunnelChartBucketProps {
 export interface IFunnelChartProps extends IBucketChartProps, IFunnelChartBucketProps {}
 
 /**
- * [FunnelChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/pie_chart_component.html)
- * is a component with bucket props measures, viewBy, filters
  *
  * @public
  */
