@@ -118,7 +118,7 @@ export {
     isRangeConditionOperator,
     filterIsEmpty,
     filterAttributeElements,
-    filterAttributeDisplayForm,
+    filterObjRef,
     IAbsoluteDateFilterValues,
     IRelativeDateFilterValues,
     absoluteDateFilterValues,

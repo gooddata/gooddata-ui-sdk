@@ -12,7 +12,7 @@ type AttributeBuilderInput = Identifier | ObjRef | IAttribute;
 /**
  * Builder for attributes.
  *
- * Do not instantiate this class directly. Instead use {@link newAttribute}.
+ * Do not instantiate this class directly. Instead use {@link newAttribute} or {@link modifyAttribute}.
  *
  * @public
  */
@@ -37,25 +37,61 @@ export class AttributeBuilder {
         }
     }
 
-    public alias = (alias: string) => {
+    /**
+     * Sets alias - alternative title - for the attribute. This value will then be used in various
+     * chart-specific descriptive elements. For convenience if no alias is specified, the attribute
+     * will fall back to server-defined value.
+     *
+     * @param alias - alias to use instead of attribute title; undefined to use server-defined value
+     */
+    public alias = (alias?: string | undefined) => {
+        if (!alias) {
+            return this.noAlias();
+        }
+
         this.attribute.alias = alias;
 
         return this;
     };
 
+    /**
+     * Resets alias - alternative title - set for the attribute. The server-defined title of the attribute
+     * will be used instead.
+     */
     public noAlias = () => {
         delete this.attribute.alias;
 
         return this;
     };
 
-    public localId = (localId: string) => {
+    /**
+     * Sets local identifier (localId) for the attribute. LocalId can be used to reference the attribute
+     * within the execution definition.
+     *
+     * Normally, builder will generate localId based on contents of the attribute definition - taking all
+     * properties into account: in typical scenarios you don't have to call this function at all. The only exception
+     * where you have to provide custom local id is if your execution must contain the exact same attribute twice.
+     *
+     * For convenience, this method also accepts 'undefined', which indicates that the default local id generation
+     * logic should be used.
+     *
+     * @param localId - local identifier to set; if not specified, the builder will ensure local id will
+     * be generated
+     */
+    public localId = (localId?: Identifier | undefined) => {
+        if (!localId || localId.trim().length === 0) {
+            return this.defaultLocalId();
+        }
+
         this.attribute.localIdentifier = localId;
         this.customLocalId = true;
 
         return this;
     };
 
+    /**
+     * Indicates that the attribute's localId should be generated using the default local-id generator logic.
+     */
     public defaultLocalId = () => {
         this.attribute.localIdentifier = "";
         this.customLocalId = false;
@@ -63,6 +99,9 @@ export class AttributeBuilder {
         return this;
     };
 
+    /**
+     * Creates the IAttribute instance.
+     */
     public build = () => {
         const localIdentifier = this.getOrGenerateLocalId();
 

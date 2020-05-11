@@ -6,7 +6,7 @@ import {
     IPositiveAttributeFilter,
     filterAttributeElements,
     isAttributeElementsByRef,
-    filterAttributeDisplayForm,
+    filterObjRef,
     INegativeAttributeFilter,
     isNegativeAttributeFilter,
     IRelativeDateFilter,
@@ -45,7 +45,7 @@ const convertRelativeDateFilter = (
 ): GdcVisualizationObject.IRelativeDateFilter => {
     return {
         relativeDateFilter: {
-            dataSet: toBearRef(filterAttributeDisplayForm(filter)),
+            dataSet: toBearRef(filterObjRef(filter)),
             ...relativeDateFilterValues(filter),
         },
     };
@@ -56,7 +56,7 @@ const convertAbsoluteDateFilter = (
 ): GdcVisualizationObject.IAbsoluteDateFilter => {
     return {
         absoluteDateFilter: {
-            dataSet: toBearRef(filterAttributeDisplayForm(filter)),
+            dataSet: toBearRef(filterObjRef(filter)),
             ...absoluteDateFilterValues(filter),
         },
     };
@@ -68,7 +68,7 @@ const convertNegativeAttributeFilter = (
     const elements = filterAttributeElements(filter);
     return {
         negativeAttributeFilter: {
-            displayForm: toBearRef(filterAttributeDisplayForm(filter)),
+            displayForm: toBearRef(filterObjRef(filter)),
             notIn: isAttributeElementsByRef(elements) ? elements.uris : elements.values,
         },
     };
@@ -80,7 +80,7 @@ const convertPositiveAttributeFilter = (
     const elements = filterAttributeElements(filter);
     return {
         positiveAttributeFilter: {
-            displayForm: toBearRef(filterAttributeDisplayForm(filter)),
+            displayForm: toBearRef(filterObjRef(filter)),
             in: isAttributeElementsByRef(elements) ? elements.uris : elements.values,
         },
     };

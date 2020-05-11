@@ -278,6 +278,8 @@ export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasu
  * @public
  */
 export function measureLocalId(measureOrLocalId: MeasureOrLocalId): string {
+    invariant(measureOrLocalId, "measure or local id must be specified");
+
     return typeof measureOrLocalId === "string" ? measureOrLocalId : measureOrLocalId.measure.localIdentifier;
 }
 
@@ -362,6 +364,16 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean {
 }
 
 /**
+ * Gets identifier of master measure for the provided PoP measure or Previous Period measure.
+ *
+ * @param measure - derived measure
+ * @returns master measure identifier
+ * @public
+ */
+export function measureMasterIdentifier(
+    measure: IMeasure<IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition>,
+): string;
+/**
  * Gets identifier of master measure for the provided derived measure (PoP measure or Previous Period measure).
  * If the measure is not derived or is derived and does not specify master measure id, then undefined is returned.
  *
@@ -369,6 +381,7 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean {
  * @returns master measure identifier, undefined if input measure not derived or does not specify master
  * @public
  */
+export function measureMasterIdentifier(measure: IMeasure): string | undefined;
 export function measureMasterIdentifier(measure: IMeasure): string | undefined {
     invariant(measure, "measure must be specified");
 
@@ -410,6 +423,16 @@ export function measureArithmeticOperands(measure: IMeasure): string[] | undefin
 }
 
 /**
+ * Gets arithmetic operator from the provided arithmetic measure.
+ *
+ * @param measure - arithmetic measure to get arithmetic operator from
+ * @returns arithmetic operator of the measure
+ * @public
+ */
+export function measureArithmeticOperator(
+    measure: IMeasure<IArithmeticMeasureDefinition>,
+): ArithmeticMeasureOperator;
+/**
  * Gets arithmetic operator from the provided measure. If the measure is not an arithmetic measure, then
  * undefined is returned.
  *
@@ -417,6 +440,7 @@ export function measureArithmeticOperands(measure: IMeasure): string[] | undefin
  * @returns arithmetic operator of the measure, or undefined if measure is not arithmetic
  * @public
  */
+export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureOperator | undefined;
 export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureOperator | undefined {
     invariant(measure, "measure must be specified");
 
@@ -465,7 +489,8 @@ export function measureFormat(measure: IMeasure): string | undefined {
 }
 
 /**
- * Gets measure aggregation.
+ * Gets measure aggregation from a measure. Measure aggregation is applicable and optional only for
+ * simple measures. Passing any other measure to this function guarantees that undefined will be returned
  *
  * @param measure - measure to get the aggregation of
  * @returns measure aggregation if specified, undefined otherwise
@@ -499,12 +524,22 @@ export function measureFilters(measure: IMeasure): IMeasureFilter[] | undefined 
 }
 
 /**
- * Gets measure popAttribute.
+ * Gets attribute used for period-over-period measure calculation.
  *
  * @param measure - measure to get the popAttribute of
- * @returns measure popAttribute if specified, undefined otherwise
+ * @returns measure popAttribute
  * @public
  */
+export function measurePopAttribute(measure: IMeasure<IPoPMeasureDefinition>): ObjRef;
+/**
+ * Gets attribute used for period-over-period measure calculation. If the input measure is not a period over
+ * period measure, then undefined will be returned.
+ *
+ * @param measure - measure to get the popAttribute of
+ * @returns measure popAttribute, undefined if input is not a PoP measure
+ * @public
+ */
+export function measurePopAttribute(measure: IMeasure): ObjRef | undefined;
 export function measurePopAttribute(measure: IMeasure): ObjRef | undefined {
     invariant(measure, "measure must be specified");
 
@@ -516,12 +551,26 @@ export function measurePopAttribute(measure: IMeasure): ObjRef | undefined {
 }
 
 /**
- * Gets measure previous period date data sets.
+ * Gets date data sets used in previous-period measure.
+ *
+ * @param measure - measure to get the previous period date data sets of
+ * @returns previous period date data sets
+ * @public
+ */
+export function measurePreviousPeriodDateDataSets(
+    measure: IMeasure<IPreviousPeriodMeasureDefinition>,
+): IPreviousPeriodDateDataSet[];
+/**
+ * Gets date data sets used in previous-period measure. If the input is not a previous period measure, then undefined
+ * will be returned.
  *
  * @param measure - measure to get the previous period date data sets of
  * @returns measure previous period date data sets if specified, undefined otherwise
  * @public
  */
+export function measurePreviousPeriodDateDataSets(
+    measure: IMeasure,
+): IPreviousPeriodDateDataSet[] | undefined;
 export function measurePreviousPeriodDateDataSets(
     measure: IMeasure,
 ): IPreviousPeriodDateDataSet[] | undefined {

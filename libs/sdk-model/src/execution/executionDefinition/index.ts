@@ -20,15 +20,50 @@ import { filterFingerprint } from "../filter/fingerprint";
  * Execution definition contains 100% complete description of what will the execution compute and how will
  * the resulting data look like.
  *
+ * While the execution definition is part of the public API, it is a low-level structure and as such SHOULD NOT
+ * be used in the typical application code. The UI.SDK offers several convenience layers to construct the execution
+ * definition. The typical flows start in the Analytical Workspace.
+ *
  * @public
  */
 export interface IExecutionDefinition {
+    /**
+     * Analytical Workspace against which the execution should be run.
+     */
     readonly workspace: string;
+
+    /**
+     * Buckets describe logical grouping within attributes and measures - they serve as a metadata
+     * about the execution. They ARE NOT used during the execution itself. MAY be empty.
+     */
     readonly buckets: IBucket[];
+
+    /**
+     * Attributes to slice the results by. MAY be empty. If not specified, then measures MUST be specified.
+     */
     readonly attributes: IAttribute[];
+
+    /**
+     * Measures to calculate. MAY be empty. If not specified, then attributes MUST be specified.
+     */
     readonly measures: IMeasure[];
+
+    /**
+     * Filters to apply during the execution. MAY be empty.
+     */
     readonly filters: IFilter[];
+
+    /**
+     * Sorting to apply on the results. MAY be empty.
+     */
     readonly sortBy: SortItem[];
+
+    /**
+     * Dimensionality and contents of dimensions. MUST be specified.
+     *
+     * The dimensions specify how the result should be organized. For instance which attributes should be
+     * used to slice the row dimension, in which dimension should the measures be located.
+     */
     readonly dimensions: IDimension[];
 }
 

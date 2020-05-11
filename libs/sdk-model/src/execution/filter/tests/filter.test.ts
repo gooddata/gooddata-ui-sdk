@@ -13,7 +13,7 @@ import {
     IAttributeElements,
     IFilter,
     filterAttributeElements,
-    filterAttributeDisplayForm,
+    filterObjRef,
     measureValueFilterCondition,
     measureValueFilterMeasure,
     absoluteDateFilterValues,
@@ -116,11 +116,11 @@ describe("filterAttributeDisplayForm", () => {
     ];
 
     it.each(Scenarios)("should return %s", (_, input, expectedResult) => {
-        expect(filterAttributeDisplayForm(input as any)).toEqual(expectedResult);
+        expect(filterObjRef(input as any)).toEqual(expectedResult);
     });
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
-        expect(() => filterAttributeDisplayForm(input)).toThrow();
+        expect(() => filterObjRef(input)).toThrow();
     });
 });
 

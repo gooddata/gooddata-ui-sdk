@@ -309,7 +309,7 @@ export enum ComputeRatioRule {
 
 /**
  * Applies compute ratio rule to all measures in a list - this MAY be done to sanitize measure definitions
- * so that the computed results make sense when visualized in a chart
+ * so that the computed results make sense when visualized in a chart.
  *
  * The function will return a new list with updated measures according to the specified rule; see {@link ComputeRatioRule}.
  *

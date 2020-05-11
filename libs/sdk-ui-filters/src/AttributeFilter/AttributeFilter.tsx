@@ -6,7 +6,7 @@ import {
     IAttributeElement,
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
-    filterAttributeDisplayForm,
+    filterObjRef,
     isPositiveAttributeFilter,
     filterAttributeElements,
     isAttributeElementsByValue,
@@ -100,7 +100,7 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         }
 
         if (filter) {
-            return filterAttributeDisplayForm(filter);
+            return filterObjRef(filter);
         }
 
         if (identifier) {

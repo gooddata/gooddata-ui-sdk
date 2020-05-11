@@ -87,14 +87,12 @@ export interface IAbsoluteDateFilter {
         dataSet: ObjRef;
 
         /**
-         * Start date (including): this is in format DDMMYYYY
-         * TODO: double-check date format
+         * Start date (including): this is in format 'YYYY-MM-DD'
          */
         from: string;
 
         /**
-         * End date (including): this is in format DDMMYYYY
-         * TODO: double-check date format
+         * End date (including): this is in format 'YYYY-MM-DD'
          */
         to: string;
     };
@@ -388,15 +386,24 @@ export function attributeElementsIsEmpty(attributeElements: IAttributeElements):
 }
 
 /**
- * Gets attribute elements for attribute filters.
+ * Gets attribute elements specified on the attribute filter.
  *
- * @param filter - filter to work with
+ * @param filter - attribute filter to work with
  * @returns attribute elements, undefined if not available
  * @public
  */
 export function filterAttributeElements(
     filter: IPositiveAttributeFilter | INegativeAttributeFilter,
 ): IAttributeElements;
+/**
+ * Gets attribute elements specified on a filter. If the provided filter is not an attribute filter, then
+ * undefined is returned
+ *
+ * @param filter - filter to work with
+ * @returns attribute elements, undefined if not available
+ * @public
+ */
+export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined;
 export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined {
     invariant(filter, "attribute elements must be specified");
 
@@ -410,16 +417,27 @@ export function filterAttributeElements(filter: IFilter): IAttributeElements | u
 }
 
 /**
- * Gets attribute display form for filter.
+ * Gets reference to object being used for filtering. For attribute filters, this will be reference to the display
+ * form. For date filters this will be reference to the data set.
  *
  * @param filter - filter to work with
- * @returns filter attribute display form, undefined if not available
+ * @returns reference to object used for filtering (display form for attr filters, data set for date filters)
  * @public
  */
-export function filterAttributeDisplayForm(
+export function filterObjRef(
     filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter,
 ): ObjRef;
-export function filterAttributeDisplayForm(filter: IFilter): ObjRef | undefined {
+/**
+ * Gets reference to object being used for filtering. For attribute filters, this will be reference to the display
+ * form. For date filters this will be reference to the data set. For measure value filter, this will be undefined.
+ *
+ * @param filter - filter to work with
+ * @returns reference to object used for filtering (display form for attr filters, data set for date filters), undefined
+ *  for measure value filters
+ * @public
+ */
+export function filterObjRef(filter: IFilter): ObjRef | undefined;
+export function filterObjRef(filter: IFilter): ObjRef | undefined {
     invariant(filter, "filter must be specified");
 
     if (isPositiveAttributeFilter(filter)) {
