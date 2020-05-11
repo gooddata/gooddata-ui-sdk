@@ -8,7 +8,7 @@ import {
     CatalogItem,
     ICatalogGroup,
     ICatalogDateDataset,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IInsightDefinition,
     ObjRef,
     isCatalogAttribute,
@@ -87,7 +87,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
         return this.withOptions({ excludeTags: tags });
     }
 
-    public forItems(items: AttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory {
+    public forItems(items: IAttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({ items });
     }
 

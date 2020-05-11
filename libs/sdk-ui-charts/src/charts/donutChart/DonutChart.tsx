@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { AttributeOrMeasure, IAttribute, IFilter, newBucket } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure, IAttribute, IFilter, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -41,7 +41,7 @@ const donutChartDefinition: IChartDefinition<IDonutChartBucketProps, IDonutChart
  * @public
  */
 export interface IDonutChartBucketProps {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     viewBy?: IAttribute;
     filters?: IFilter[];
 }

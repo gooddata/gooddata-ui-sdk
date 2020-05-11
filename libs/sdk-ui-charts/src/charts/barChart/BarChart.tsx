@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     applyRatioRule,
     IAttribute,
     IFilter,
     newBucket,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
@@ -59,11 +59,11 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
  * @public
  */
 export interface IBarChartBucketProps {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     viewBy?: IAttribute | IAttribute[];
     stackBy?: IAttribute;
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**

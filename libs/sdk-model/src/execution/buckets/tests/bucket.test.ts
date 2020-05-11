@@ -2,7 +2,7 @@
 
 import {
     applyRatioRule,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     bucketAttribute,
     bucketAttributes,
     bucketIsEmpty,
@@ -195,7 +195,7 @@ describe("bucketMeasures", () => {
 });
 
 describe("bucketItems", () => {
-    const Scenarios: Array<[string, any, AttributeOrMeasure[]]> = [
+    const Scenarios: Array<[string, any, IAttributeOrMeasure[]]> = [
         ["no items in empty bucket", EmptyBucket, []],
         ["items in populated bucket", BucketWithMeasureAndAttr, [Won, Account.Name]],
     ];

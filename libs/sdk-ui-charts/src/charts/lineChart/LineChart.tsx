@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IAttribute,
     IFilter,
-    SortItem,
+    ISortItem,
     newBucket,
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
@@ -55,11 +55,11 @@ const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartPro
  * @public
  */
 export interface ILineChartBucketProps {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     trendBy?: IAttribute;
     segmentBy?: IAttribute;
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**

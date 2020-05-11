@@ -21,7 +21,7 @@ import {
     IDimension,
     IExecutionDefinition,
     IFilter,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
@@ -91,7 +91,7 @@ function recordedPreparedExecution(
         withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
             return executionFactory.forDefinition(defWithDimensions(definition, ...dim));
         },
-        withSorting(...items: SortItem[]): IPreparedExecution {
+        withSorting(...items: ISortItem[]): IPreparedExecution {
             return executionFactory.forDefinition(defWithSorting(definition, items));
         },
         execute(): Promise<IExecutionResult> {

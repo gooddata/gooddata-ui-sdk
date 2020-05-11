@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { AttributeOrMeasure, IAttribute, IFilter, SortItem, newBucket } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure, IAttribute, IFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -41,10 +41,10 @@ const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps>
  * @public
  */
 export interface IPieChartBucketProps {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     viewBy?: IAttribute;
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**

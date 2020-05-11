@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     applyRatioRule,
     IAttribute,
     IFilter,
     newBucket,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { truncate } from "../_commons/truncate";
 import { IChartConfig, IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
@@ -67,7 +67,7 @@ function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
 export function getBucketsProps(
     props: IAreaChartBucketProps,
 ): {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     viewBy: IAttribute[];
     stackBy: IAttribute[];
 } {
@@ -136,11 +136,11 @@ export function verifyBuckets(props: IAreaChartProps): void {
  * @public
  */
 export interface IAreaChartBucketProps {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     viewBy?: IAttribute | IAttribute[];
     stackBy?: IAttribute;
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**

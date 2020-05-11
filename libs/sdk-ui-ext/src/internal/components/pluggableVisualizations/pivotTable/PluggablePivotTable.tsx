@@ -22,7 +22,7 @@ import {
     isMeasureLocator,
     isMeasureSort,
     measureLocalId,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -84,14 +84,14 @@ export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
 // removes attribute sortItems with invalid identifiers
 // removes measure sortItems with invalid identifiers and invalid number of locators
 function adaptSortItemsToPivotTable(
-    originalSortItems: SortItem[],
+    originalSortItems: ISortItem[],
     measureLocalIdentifiers: string[],
     rowAttributeLocalIdentifiers: string[],
     columnAttributeLocalIdentifiers: string[],
-): SortItem[] {
+): ISortItem[] {
     const attributeLocalIdentifiers = [...rowAttributeLocalIdentifiers, ...columnAttributeLocalIdentifiers];
 
-    return originalSortItems.reduce((sortItems: SortItem[], sortItem: SortItem) => {
+    return originalSortItems.reduce((sortItems: ISortItem[], sortItem: ISortItem) => {
         if (isMeasureSort(sortItem)) {
             // filter out invalid locators
             const filteredSortItem: IMeasureSortItem = {
@@ -134,11 +134,11 @@ function adaptSortItemsToPivotTable(
 }
 
 export function adaptReferencePointSortItemsToPivotTable(
-    originalSortItems: SortItem[],
+    originalSortItems: ISortItem[],
     measures: IBucketItem[],
     rowAttributes: IBucketItem[],
     columnAttributes: IBucketItem[],
-): SortItem[] {
+): ISortItem[] {
     const measureLocalIdentifiers = measures.map(measure => measure.localIdentifier);
     const rowAttributeLocalIdentifiers = rowAttributes.map(rowAttribute => rowAttribute.localIdentifier);
     const columnAttributeLocalIdentifiers = columnAttributes.map(
@@ -153,7 +153,7 @@ export function adaptReferencePointSortItemsToPivotTable(
     );
 }
 
-function adaptMdObjectSortItemsToPivotTable(originalSortItems: SortItem[], buckets: IBucket[]): SortItem[] {
+function adaptMdObjectSortItemsToPivotTable(originalSortItems: ISortItem[], buckets: IBucket[]): ISortItem[] {
     const measureLocalIdentifiers = bucketsMeasures(buckets).map(measureLocalId);
 
     const rowBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
@@ -195,17 +195,17 @@ const isMeasureSortItemVisible = (sortItem: IMeasureSortItem, filters: IBucketFi
         return isVisible;
     }, true);
 
-export const isSortItemVisible = (sortItem: SortItem, filters: IBucketFilter[]): boolean =>
+export const isSortItemVisible = (sortItem: ISortItem, filters: IBucketFilter[]): boolean =>
     isAttributeSort(sortItem)
         ? isAttributeSortItemVisible(sortItem, filters)
         : isMeasureSortItemVisible(sortItem, filters);
 
 export function addDefaultSort(
-    sortItems: SortItem[],
+    sortItems: ISortItem[],
     filters: IBucketFilter[],
     rowAttributes: IBucketItem[],
     previousRowAttributes?: IBucketItem[],
-): SortItem[] {
+): ISortItem[] {
     // cannot construct default sort without a row
     if (rowAttributes.length < 1) {
         return sortItems;
@@ -309,7 +309,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             },
         ]);
 
-        const originalSortItems: SortItem[] = get(newReferencePoint.properties, "sortItems", []);
+        const originalSortItems: ISortItem[] = get(newReferencePoint.properties, "sortItems", []);
 
         newReferencePoint.properties = {
             sortItems: addDefaultSort(

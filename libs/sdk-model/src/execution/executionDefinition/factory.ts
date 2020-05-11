@@ -7,8 +7,8 @@ import {
     newDimension,
     newTwoDimensional,
 } from "../base/dimension";
-import { SortItem } from "../base/sort";
-import { AttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets";
+import { ISortItem } from "../base/sort";
+import { IAttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets";
 import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray";
 import { IFilter } from "../filter";
 import { insightBuckets, insightFilters, insightSorts, IInsightDefinition } from "../../insight";
@@ -55,7 +55,7 @@ export function emptyDef(workspace: string): IExecutionDefinition {
  */
 export function newDefForItems(
     workspace: string,
-    items: AttributeOrMeasure[],
+    items: IAttributeOrMeasure[],
     filters: IFilter[] = [],
 ): IExecutionDefinition {
     invariant(workspace, "workspace to create exec def for must be specified");
@@ -151,7 +151,7 @@ export function newDefForInsight(
  * @returns new execution with the updated sorts
  * @public
  */
-export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem[]): IExecutionDefinition {
+export function defWithSorting(definition: IExecutionDefinition, sorts: ISortItem[]): IExecutionDefinition {
     return defSetSorts(definition, sorts);
 }
 

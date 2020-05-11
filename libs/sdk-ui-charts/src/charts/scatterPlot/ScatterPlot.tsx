@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IAttribute, IFilter, IMeasure, newBucket, SortItem } from "@gooddata/sdk-model";
+import { IAttribute, IFilter, IMeasure, newBucket, ISortItem } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -46,7 +46,7 @@ export interface IScatterPlotBucketProps {
     yAxisMeasure?: IMeasure;
     attribute?: IAttribute;
     filters?: IFilter[];
-    sortBy?: SortItem[]; // TODO would it be removed? if not dont forget to test
+    sortBy?: ISortItem[]; // TODO would it be removed? if not dont forget to test
 }
 
 /**

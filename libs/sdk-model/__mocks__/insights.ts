@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { SortItem, VisualizationProperties } from "../src";
+import { ISortItem, VisualizationProperties } from "../src";
 import { IBucket } from "../src/execution/buckets";
 import { IInsight } from "../src/insight";
 import { IFilter } from "../src/execution/filter";
@@ -52,7 +52,7 @@ export class InsightBuilder {
         return this;
     };
 
-    public sorts = (sorts: SortItem[]): InsightBuilder => {
+    public sorts = (sorts: ISortItem[]): InsightBuilder => {
         this.insight.sorts = sorts;
 
         return this;

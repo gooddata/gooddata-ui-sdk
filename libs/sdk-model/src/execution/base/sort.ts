@@ -11,7 +11,7 @@ import invariant from "ts-invariant";
  *
  * @public
  */
-export type SortItem = IAttributeSortItem | IMeasureSortItem;
+export type ISortItem = IAttributeSortItem | IMeasureSortItem;
 
 /**
  * Sorting direction.
@@ -59,7 +59,7 @@ export interface IMeasureSortItem {
         /**
          * Locators explicitly specifying the exact slice of the measure values to sort by.
          */
-        locators: LocatorItem[];
+        locators: ILocatorItem[];
     };
 }
 
@@ -68,7 +68,7 @@ export interface IMeasureSortItem {
  *
  * @public
  */
-export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
+export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 /**
  * Locator that specifies a concrete attribute element for which the measure values are sliced.
@@ -164,7 +164,7 @@ export type SortEntityIds = {
  *
  * @public
  */
-export function sortEntityIds(sort: SortItem): SortEntityIds {
+export function sortEntityIds(sort: ISortItem): SortEntityIds {
     invariant(sort, "sort item must be specified");
 
     const res: SortEntityIds = {

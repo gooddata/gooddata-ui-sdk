@@ -19,7 +19,7 @@ import { modifySimpleMeasure } from "../measure/factory";
  *
  * @public
  */
-export type AttributeOrMeasure = IMeasure | IAttribute;
+export type IAttributeOrMeasure = IMeasure | IAttribute;
 
 /**
  * Bucket is a logical, user-defined grouping of attributes, measures and totals. Buckets can be used to create
@@ -30,7 +30,7 @@ export type AttributeOrMeasure = IMeasure | IAttribute;
  */
 export interface IBucket {
     localIdentifier?: Identifier;
-    items: AttributeOrMeasure[];
+    items: IAttributeOrMeasure[];
     totals?: ITotal[];
 }
 
@@ -110,11 +110,11 @@ export function isBucket(obj: any): obj is IBucket {
  */
 export function newBucket(
     localId: string,
-    ...content: Array<AttributeOrMeasure | ITotal | undefined>
+    ...content: Array<IAttributeOrMeasure | ITotal | undefined>
 ): IBucket {
     invariant(localId, "local identifier must be specified");
 
-    const items: AttributeOrMeasure[] = [];
+    const items: IAttributeOrMeasure[] = [];
     const totals: ITotal[] = [];
 
     (content ? content : []).forEach(i => {
@@ -262,7 +262,7 @@ export function bucketMeasures(bucket: IBucket, predicate: MeasurePredicate = an
  * @returns empty list if no items
  * @public
  */
-export function bucketItems(bucket: IBucket): AttributeOrMeasure[] {
+export function bucketItems(bucket: IBucket): IAttributeOrMeasure[] {
     invariant(bucket, "bucket must be specified");
 
     return bucket.items;
@@ -321,7 +321,7 @@ export enum ComputeRatioRule {
  * @returns new list with modified measures; the original list and measures in it are left intact
  * @public
  */
-export function applyRatioRule<T extends AttributeOrMeasure>(
+export function applyRatioRule<T extends IAttributeOrMeasure>(
     items: T[],
     rule: ComputeRatioRule = ComputeRatioRule.SINGLE_MEASURE_ONLY,
 ): T[] {
@@ -347,7 +347,7 @@ export function applyRatioRule<T extends AttributeOrMeasure>(
  * @returns an instance of measure with compute ratio disabled
  * @public
  */
-export function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T {
+export function disableComputeRatio<T extends IAttributeOrMeasure>(item: T): T {
     if (isSimpleMeasure(item)) {
         return modifySimpleMeasure(item, m => m.noRatio()) as T;
     }

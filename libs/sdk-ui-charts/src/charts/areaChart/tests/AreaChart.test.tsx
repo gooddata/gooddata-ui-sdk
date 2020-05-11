@@ -4,12 +4,12 @@ import { mount, ReactWrapper } from "enzyme";
 
 import { AreaChart } from "../AreaChart";
 import { IChartConfig } from "../../../interfaces";
-import { AttributeOrMeasure } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { CoreAreaChart } from "../CoreAreaChart";
 
-function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
+function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
     return mount(<AreaChart config={config} workspace="test" backend={dummyBackend()} measures={measures} />);
 }
 

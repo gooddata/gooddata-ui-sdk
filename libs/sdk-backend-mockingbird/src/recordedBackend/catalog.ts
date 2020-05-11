@@ -21,7 +21,7 @@ import {
     isCatalogFact,
     isCatalogMeasure,
     isCatalogAttribute,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IInsightDefinition,
 } from "@gooddata/sdk-model";
 
@@ -172,7 +172,7 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
         return new RecordedAvailableCatalogFactory(this.workspace, this.groups, this.items, newOptions);
     }
 
-    public forItems(_items: AttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory {
+    public forItems(_items: IAttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory {
         // availability not implemented yet
         return this;
     }

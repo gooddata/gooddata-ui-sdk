@@ -7,14 +7,14 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import {
     attributeLocalId,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     MeasureGroupIdentifier,
     newTwoDimensional,
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { CoreBarChart } from "../CoreBarChart";
 
-function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
+function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
     return mount(<BarChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />);
 }
 

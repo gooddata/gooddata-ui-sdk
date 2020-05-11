@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     defaultDimensionsGenerator,
     defWithDimensions,
     IBucket,
@@ -29,7 +29,7 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
     public abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
     public abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
 
-    public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
+    public forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
         const def = defWithDimensions(
             newDefForItems(this.workspace, items, filters),
             defaultDimensionsGenerator,

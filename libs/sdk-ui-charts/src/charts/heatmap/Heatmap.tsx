@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { AttributeOrMeasure, IAttribute, IFilter, newBucket, SortItem } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure, IAttribute, IFilter, newBucket, ISortItem } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { heatmapDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -41,11 +41,11 @@ const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = 
  * @public
  */
 export interface IHeatmapBucketProps {
-    measure: AttributeOrMeasure;
+    measure: IAttributeOrMeasure;
     rows?: IAttribute;
     columns?: IAttribute;
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**

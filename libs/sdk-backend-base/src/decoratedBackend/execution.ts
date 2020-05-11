@@ -9,14 +9,14 @@ import {
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     DimensionGenerator,
     IBucket,
     IDimension,
     IExecutionDefinition,
     IFilter,
     IInsightDefinition,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import identity = require("lodash/identity");
 
@@ -43,7 +43,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
         return this.wrap(this.decorated.forDefinition(def));
     }
 
-    public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
+    public forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
         return this.wrap(this.decorated.forItems(items, filters));
     }
 
@@ -102,7 +102,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
         return this.createNew(this.decorated.withDimensions(...dim));
     }
 
-    public withSorting(...items: SortItem[]): IPreparedExecution {
+    public withSorting(...items: ISortItem[]): IPreparedExecution {
         return this.createNew(this.decorated.withSorting(...items));
     }
 

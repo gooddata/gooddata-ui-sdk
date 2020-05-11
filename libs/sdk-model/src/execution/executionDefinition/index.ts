@@ -5,7 +5,7 @@ import SparkMD5 from "spark-md5";
 import invariant from "ts-invariant";
 import { IAttribute } from "../attribute";
 import { dimensionTotals, IDimension } from "../base/dimension";
-import { SortItem } from "../base/sort";
+import { ISortItem } from "../base/sort";
 import { ITotal } from "../base/totals";
 import { IBucket } from "../buckets";
 import { IFilter } from "../filter";
@@ -56,7 +56,7 @@ export interface IExecutionDefinition {
     /**
      * Sorting to apply on the results. MAY be empty.
      */
-    readonly sortBy: SortItem[];
+    readonly sortBy: ISortItem[];
 
     /**
      * Dimensionality and contents of dimensions. MUST be specified.
@@ -103,7 +103,7 @@ export function defWithFilters(def: IExecutionDefinition, filters: IFilter[] = [
  * @returns always new instance
  * @public
  */
-export function defSetSorts(def: IExecutionDefinition, sortBy: SortItem[] = []): IExecutionDefinition {
+export function defSetSorts(def: IExecutionDefinition, sortBy: ISortItem[] = []): IExecutionDefinition {
     invariant(def, "execution definition to set sorts in must be defined");
 
     return {

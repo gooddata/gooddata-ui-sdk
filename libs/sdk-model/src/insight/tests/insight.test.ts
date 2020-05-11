@@ -14,7 +14,7 @@ import {
     newMeasureSort,
     newPositiveAttributeFilter,
     newTotal,
-    SortItem,
+    ISortItem,
     VisualizationProperties,
 } from "../..";
 import { newInsight } from "../../../__mocks__/insights";
@@ -227,7 +227,7 @@ describe("insightSorts", () => {
             .sorts([newMeasureSort(Won, "desc", [newAttributeLocator(Activity.Subject, "myActivity")])]),
     );
 
-    const Scenarios: Array<[string, any, SortItem[]]> = [
+    const Scenarios: Array<[string, any, ISortItem[]]> = [
         ["no sorts for empty insight", EmptyInsight, []],
         ["no sorts if insight without sorts ", InsightWithTwoBuckets, []],
         ["valid attribute sort", InsightWithValidAttributeSort, [AccountSort]],

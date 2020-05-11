@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import intersection = require("lodash/intersection");
-import { SortEntityIds, sortEntityIds, SortItem } from "../execution/base/sort";
+import { SortEntityIds, sortEntityIds, ISortItem } from "../execution/base/sort";
 import { anyBucket, BucketPredicate, IBucket } from "../execution/buckets";
 import { IFilter } from "../execution/filter";
 import { IMeasure, measureLocalId } from "../execution/measure";
@@ -76,7 +76,7 @@ export type IInsightDefinition = {
         /**
          * Sorting to apply on the data.
          */
-        sorts: SortItem[];
+        sorts: ISortItem[];
 
         /**
          * Visualization-specific properties. This object MAY contain customization metadata for this insight such as:
@@ -331,7 +331,7 @@ export function insightFilters(insight: IInsightDefinition): IFilter[] {
  * @returns array of valid sorts
  * @public
  */
-export function insightSorts(insight: IInsightDefinition): SortItem[] {
+export function insightSorts(insight: IInsightDefinition): ISortItem[] {
     invariant(insight, "insight must be specified");
 
     const attributeIds = insightAttributes(insight).map(attributeLocalId);
@@ -491,7 +491,7 @@ export function insightSetProperties<T extends IInsightDefinition>(
  * @returns always new instance
  * @public
  */
-export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts: SortItem[] = []): T {
+export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts: ISortItem[] = []): T {
     invariant(insight, "insight must be specified");
 
     // tslint:disable-next-line: no-object-literal-type-assertion

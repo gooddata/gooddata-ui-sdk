@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IDataView, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
-import { IColor, IColorPalette, Identifier, ITotal, SortItem } from "@gooddata/sdk-model";
+import { IColor, IColorPalette, Identifier, ITotal, ISortItem } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 
@@ -49,7 +49,7 @@ export interface IDrillableItemPushData {
 export interface IPushData {
     dataView?: IDataView;
     properties?: {
-        sortItems?: SortItem[];
+        sortItems?: ISortItem[];
         totals?: ITotal[];
     };
     propertiesMeta?: any;

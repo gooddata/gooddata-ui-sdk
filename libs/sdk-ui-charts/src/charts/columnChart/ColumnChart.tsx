@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     applyRatioRule,
     IAttribute,
     IFilter,
     newBucket,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { truncate } from "../_commons/truncate";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -60,11 +60,11 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
  * @public
  */
 export interface IColumnChartBucketProps {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     viewBy?: IAttribute | IAttribute[];
     stackBy?: IAttribute;
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**

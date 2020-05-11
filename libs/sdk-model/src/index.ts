@@ -68,9 +68,9 @@ export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./execution
 export {
     SortDirection,
     IAttributeSortItem,
-    SortItem,
+    ISortItem,
     IMeasureSortItem,
-    LocatorItem,
+    ILocatorItem,
     IAttributeLocatorItem,
     IMeasureLocatorItem,
     isMeasureLocator,
@@ -193,7 +193,7 @@ export {
 } from "./execution/measure/factory";
 
 export {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IBucket,
     isBucket,
     idMatchBucket,

@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { AttributeOrMeasure, IAttribute, IFilter, newBucket } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure, IAttribute, IFilter, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { treemapDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -51,7 +51,7 @@ const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = 
  * @public
  */
 export interface ITreemapBucketProps {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     viewBy?: IAttribute;
     segmentBy?: IAttribute;
     filters?: IFilter[];

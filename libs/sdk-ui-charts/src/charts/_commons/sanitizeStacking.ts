@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     bucketItems,
     bucketsFind,
     IBucket,
@@ -13,12 +13,12 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../interfaces";
 
-function isItemsArray(obj: any): obj is AttributeOrMeasure[] {
+function isItemsArray(obj: any): obj is IAttributeOrMeasure[] {
     return !isEmpty(obj) && (isMeasure(obj[0]) || isAttribute(obj));
 }
 
 export function sanitizeConfig(
-    input: AttributeOrMeasure[] | IBucket[] = [],
+    input: IAttributeOrMeasure[] | IBucket[] = [],
     config: IChartConfig = {},
 ): IChartConfig {
     if (!input.length) {
@@ -41,7 +41,7 @@ export function sanitizeConfig(
     return config;
 }
 
-function isComputeRatioMeasure(bucketItem: AttributeOrMeasure): boolean {
+function isComputeRatioMeasure(bucketItem: IAttributeOrMeasure): boolean {
     return isMeasure(bucketItem) && measureDoesComputeRatio(bucketItem);
 }
 

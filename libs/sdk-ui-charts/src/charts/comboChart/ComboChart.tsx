@@ -6,7 +6,7 @@ import {
     IFilter,
     IMeasure,
     newBucket,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { defaultDimensions } from "../_commons/dimensions";
@@ -88,7 +88,7 @@ export interface IComboChartBucketProps {
     secondaryMeasures?: IMeasure[];
     viewBy?: IAttribute | IAttribute[];
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**

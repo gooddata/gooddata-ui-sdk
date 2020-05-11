@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { AttributeOrMeasure, IAttribute, IFilter, ITotal, SortItem, TotalType } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure, IAttribute, IFilter, ITotal, ISortItem, TotalType } from "@gooddata/sdk-model";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
 
@@ -79,12 +79,12 @@ export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucke
  * @public
  */
 export interface IPivotTableBucketProps {
-    measures?: AttributeOrMeasure[];
+    measures?: IAttributeOrMeasure[];
     rows?: IAttribute[];
     columns?: IAttribute[];
     totals?: ITotal[];
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**

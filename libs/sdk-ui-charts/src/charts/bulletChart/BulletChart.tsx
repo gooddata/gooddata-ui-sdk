@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IAttribute,
     IFilter,
     newBucket,
-    SortItem,
+    ISortItem,
     disableComputeRatio,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -75,12 +75,12 @@ const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletCh
  * @public
  */
 export interface IBulletChartBucketProps {
-    primaryMeasure: AttributeOrMeasure;
-    targetMeasure?: AttributeOrMeasure;
-    comparativeMeasure?: AttributeOrMeasure;
+    primaryMeasure: IAttributeOrMeasure;
+    targetMeasure?: IAttributeOrMeasure;
+    comparativeMeasure?: IAttributeOrMeasure;
     viewBy?: IAttribute[];
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**

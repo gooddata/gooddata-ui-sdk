@@ -5,7 +5,7 @@ import { ColumnChart } from "../ColumnChart";
 import { IChartConfig } from "../../../interfaces";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     newMeasureSort,
     newTwoDimensional,
     attributeLocalId,
@@ -14,7 +14,7 @@ import {
 import { CoreColumnChart } from "../CoreColumnChart";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 
-function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
+function renderChart(measures: IAttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
     return mount(
         <ColumnChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />,
     );
