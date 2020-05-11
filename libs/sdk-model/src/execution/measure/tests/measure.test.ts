@@ -18,6 +18,7 @@ import {
     measureFilters,
     measureFormat,
     measureIdentifier,
+    measureItem,
     measureLocalId,
     measureMasterIdentifier,
     measurePopAttribute,
@@ -28,7 +29,7 @@ import {
 import { ObjRef } from "../../../objRef";
 import { newPositiveAttributeFilter } from "../../filter/factory";
 import { IFilter } from "../../filter";
-import { idRef } from "../../../objRef/factory";
+import { idRef, uriRef } from "../../../objRef/factory";
 
 const SimpleMeasureWithIdentifier = Won;
 const SimpleMeasureWithRatio = modifySimpleMeasure(Won, m => m.ratio());
@@ -46,6 +47,19 @@ const InvalidScenarios: Array<[string, any]> = [
     ["measure is undefined", undefined],
     ["measure is null", null],
 ];
+
+describe("measureItem", () => {
+    const Scenarios: Array<[string, any, ObjRef | undefined]> = [
+        ["undefined for arithmetic measure", ArithmeticMeasure, undefined],
+        ["undefined for PoP measure", PopMeasure, undefined],
+        ["undefined for Previous Period measure", PreviousPeriodMeasure, undefined],
+        ["ref for simple measure", SimpleMeasureWithUri, uriRef("/uri")],
+    ];
+
+    it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
+        expect(measureItem(measureArg)).toEqual(expectedResult);
+    });
+});
 
 describe("measureUri", () => {
     const Scenarios: Array<[string, any, string | undefined]> = [

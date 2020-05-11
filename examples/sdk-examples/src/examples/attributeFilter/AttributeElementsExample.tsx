@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
-import { attributeAttributeDisplayFormObjRef } from "@gooddata/sdk-model";
+import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 import { Ldm } from "../../ldm";
 
 interface IAttributeFilterItemProps {
@@ -36,10 +36,7 @@ export class AttributeElementsExample extends Component {
     public render() {
         return (
             <div style={{ minHeight: 500 }}>
-                <AttributeElements
-                    displayForm={attributeAttributeDisplayFormObjRef(Ldm.EmployeeName.Default)}
-                    limit={20}
-                >
+                <AttributeElements displayForm={attributeDisplayFormRef(Ldm.EmployeeName.Default)} limit={20}>
                     {({ validElements, loadMore, isLoading, error }) => {
                         const { offset = null, items = null, totalCount = null } = validElements ?? {};
                         if (error) {

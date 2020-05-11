@@ -11,7 +11,7 @@ import {
     IRelativeDateFilter,
     RangeConditionOperator,
 } from "./index";
-import { IAttribute, attributeAttributeDisplayFormObjRef } from "../attribute";
+import { IAttribute, attributeDisplayFormRef } from "../attribute";
 import { ObjRefInScope, ObjRef, isObjRef, Identifier } from "../../objRef";
 import { IMeasure, isMeasure, measureLocalId } from "../measure";
 import { idRef } from "../../objRef/factory";
@@ -32,7 +32,7 @@ export function newPositiveAttributeFilter(
         ? attributeOrRef
         : typeof attributeOrRef === "string"
         ? idRef(attributeOrRef)
-        : attributeAttributeDisplayFormObjRef(attributeOrRef);
+        : attributeDisplayFormRef(attributeOrRef);
 
     const inObject: IAttributeElements = Array.isArray(inValues) ? { values: inValues } : inValues;
 
@@ -60,7 +60,7 @@ export function newNegativeAttributeFilter(
         ? attributeOrRef
         : typeof attributeOrRef === "string"
         ? idRef(attributeOrRef)
-        : attributeAttributeDisplayFormObjRef(attributeOrRef);
+        : attributeDisplayFormRef(attributeOrRef);
 
     const notInObject: IAttributeElements = Array.isArray(notInValues)
         ? { values: notInValues }

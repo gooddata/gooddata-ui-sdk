@@ -21,7 +21,7 @@ export {
     attributeUri,
     attributeIdentifier,
     attributeAlias,
-    attributeAttributeDisplayFormObjRef,
+    attributeDisplayFormRef,
 } from "./execution/attribute";
 
 export {
@@ -118,7 +118,7 @@ export {
     isRangeConditionOperator,
     filterIsEmpty,
     filterAttributeElements,
-    filterAttributeDisplayForm,
+    filterObjRef,
     IAbsoluteDateFilterValues,
     IRelativeDateFilterValues,
     absoluteDateFilterValues,
@@ -161,6 +161,7 @@ export {
     anyMeasure,
     idMatchMeasure,
     measureDoesComputeRatio,
+    measureItem,
     measureUri,
     measureIdentifier,
     measureMasterIdentifier,

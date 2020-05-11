@@ -83,16 +83,17 @@ export const idMatchAttribute: (id: string) => AttributePredicate = id => attr =
 //
 
 /**
- * Gets local identifier of an attribute.
+ * Gets local identifier of an attribute. For convenience and fluency, this function accepts both attribute object and
+ * identifier.
  *
- * @param attribute - attribute to work with
+ * @param attributeOrId - attribute to work with or the identifier
  * @returns value of local identifier
  * @public
  */
-export function attributeLocalId(attribute: IAttribute): string {
-    invariant(attribute, "attribute must not be undefined");
+export function attributeLocalId(attributeOrId: IAttribute | Identifier): string {
+    invariant(attributeOrId, "attribute must not be undefined");
 
-    return attribute.attribute.localIdentifier;
+    return typeof attributeOrId === "string" ? attributeOrId : attributeOrId.attribute.localIdentifier;
 }
 
 /**
@@ -143,7 +144,7 @@ export function attributeAlias(attribute: IAttribute): string | undefined {
  * @returns value of attribute display form object ref
  * @public
  */
-export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjRef {
+export function attributeDisplayFormRef(attribute: IAttribute): ObjRef {
     invariant(attribute, "attribute must not be undefined");
 
     return attribute.attribute.displayForm;

@@ -70,17 +70,16 @@ export function isTotal(obj: any): obj is ITotal {
  */
 export function newTotal(
     type: TotalType,
-    measureOrId: IMeasure | string,
-    attributeOrId: IAttribute | string,
+    measureOrId: IMeasure | Identifier,
+    attributeOrId: IAttribute | Identifier,
     alias?: string,
 ): ITotal {
     invariant(type, "total type must be specified");
     invariant(measureOrId, "measure or measure local id must be specified");
     invariant(attributeOrId, "attribute or attribute local id must be specified");
 
-    const measureIdentifier = typeof measureOrId === "string" ? measureOrId : measureLocalId(measureOrId);
-    const attributeIdentifier =
-        typeof attributeOrId === "string" ? attributeOrId : attributeLocalId(attributeOrId);
+    const measureIdentifier = measureLocalId(measureOrId);
+    const attributeIdentifier = attributeLocalId(attributeOrId);
     const aliasProp = alias ? { alias } : {};
 
     return {

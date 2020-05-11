@@ -92,11 +92,15 @@ export type IInsightDefinition = {
 
         /**
          * Last update date - YYYY-MM-DD HH:mm:ss
+         *
+         * TODO: move to insight
          */
         updated?: string;
 
         /**
          * Insight is locked for editing & deleting
+         *
+         * TODO: move to insight
          */
         isLocked?: boolean;
     };

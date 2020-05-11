@@ -24,6 +24,7 @@ import { Identifier, isObjRef, ObjRef, objRefToString } from "../../objRef";
 import { IMeasureFilter } from "../filter";
 import { idRef } from "../../objRef/factory";
 import SparkMD5 from "spark-md5";
+import invariant, { InvariantError } from "ts-invariant";
 
 /**
  * Simplified Previous Period Data DataSet specification
@@ -56,13 +57,34 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
         this.measure = { localIdentifier: "" };
     }
 
-    public localId = (localId: Identifier) => {
+    /**
+     * Sets local identifier (localId) for the measure. LocalId can be used to reference the measure
+     * within the execution definition.
+     *
+     * Normally, builder will generate localId based on contents of the measure definition - taking all
+     * properties into account: in typical scenarios you don't have to call this function at all. The only exception
+     * where you have to provide custom local id is if your execution must contain the exact same measure twice.
+     *
+     * For convenience, this method also accepts 'undefined', which indicates that the default local id generation
+     * logic should be used.
+     *
+     * @param localId - local identifier to set; if not specified, the builder will ensure local id will
+     * be generated
+     */
+    public localId = (localId?: Identifier | undefined) => {
+        if (!localId || localId.trim().length === 0) {
+            return this.defaultLocalId();
+        }
+
         this.measure.localIdentifier = localId;
         this.customLocalId = true;
 
         return this;
     };
 
+    /**
+     * Indicates that the measure's localId should be generated using the default local-id generator logic.
+     */
     public defaultLocalId = () => {
         this.measure.localIdentifier = "";
         this.customLocalId = false;
@@ -70,36 +92,80 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
         return this;
     };
 
-    public alias = (alias: string) => {
+    /**
+     * Sets alias - alternative title - for the measure. This value will then be used in various
+     * chart-specific descriptive elements. For convenience if no alias is specified, the measure
+     * will fall back to using either title (if specified) or server-defined title as the ultimate fallback
+     *
+     * @param alias - alias to use instead of measure title; undefined to use the title instead
+     */
+    public alias = (alias?: string | undefined) => {
+        if (!alias) {
+            return this.noAlias();
+        }
         this.measure.alias = alias;
         return this;
     };
 
+    /**
+     * Resets alias - alternative title - set for the measure. The measure title will be used if specified, otherwise
+     * the server-defined title will be used instead.
+     */
     public noAlias = () => {
         delete this.measure.alias;
         return this;
     };
 
-    public format = (format: string) => {
-        this.measure.format = format;
+    /**
+     * Sets alternative title for the measure. This value will then be used in various chart-specific
+     * descriptive elements. For convenience if no title is specified, the measure will fall back to server-defined
+     * value.
+     *
+     * @param title - alternative title to use instead of server-defined value; undefined to use server-defined value
+     */
+    public title = (title?: string | undefined) => {
+        if (!title) {
+            return this.noTitle();
+        }
 
-        return this;
-    };
-
-    public defaultFormat = () => {
-        delete this.measure.format;
-
-        return this;
-    };
-
-    public title = (title: string) => {
         this.measure.title = title;
 
         return this;
     };
 
+    /**
+     * Resets alternative title for the measure. The server-defined title of the measure will be used
+     * instead.
+     */
     public noTitle = () => {
         delete this.measure.title;
+
+        return this;
+    };
+
+    /**
+     * Sets measure format to use when rendering values calculated from this measure. The format string
+     * is described in more detail here {@link https://help.gooddata.com/doc/en/reporting-and-dashboards/reports/working-with-reports/formatting-numbers-in-reports}.
+     *
+     * For convenience, if you do not specify any format, then a default server-defined value will be used instead.
+     *
+     * @param format - measure format string; or undefined if you want to fall back to server-defined value
+     */
+    public format = (format?: string | undefined) => {
+        if (!format) {
+            return this.defaultFormat();
+        }
+
+        this.measure.format = format;
+
+        return this;
+    };
+
+    /**
+     * Resets format string to the server-defined value.
+     */
+    public defaultFormat = () => {
+        delete this.measure.format;
 
         return this;
     };
@@ -206,32 +272,78 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
         }
     }
 
-    public aggregation = (aggregation: MeasureAggregation) => {
+    /**
+     * Sets aggregation to use for measures created from facts. By default the aggregation is SUM. For convenience
+     * the aggregation can be specified also for measures created from metrics - and in that case it will be ignored.
+     *
+     * For convenience, the aggregation may be undefined and it means the value should be reset to the default.
+     *
+     * @param aggregation - aggregation to use; if undefined will reset to default
+     */
+    public aggregation = (aggregation?: MeasureAggregation | undefined) => {
+        if (!aggregation) {
+            return this.defaultAggregation();
+        }
+
         this.measureDefinition.aggregation = aggregation;
 
         return this;
     };
 
-    public noAggregation = () => {
+    /**
+     * Resets measure aggregation to the default (SUM).
+     */
+    public defaultAggregation = () => {
         delete this.measureDefinition.aggregation;
 
         return this;
     };
 
-    public ratio = () => {
+    /**
+     * Indicates that the measure values should be calculated as percent contributions to the total unsliced
+     * value.
+     *
+     * This method works as 'turn-on-toggle' by default, however you can specify the actual boolean parameter and
+     * turn the ratio computation off using this method.
+     *
+     * @param value - set the compute ratio indicator to this value
+     */
+    public ratio = (value: boolean = true) => {
+        if (!value) {
+            return this.noRatio();
+        }
+
         this.measureDefinition.computeRatio = true;
 
         return this;
     };
 
+    /**
+     * Resets compute as ratio indicator.
+     */
     public noRatio = () => {
         delete this.measureDefinition.computeRatio;
 
         return this;
     };
 
+    /**
+     * Sets filters to apply when calculating the values of this measure. These filters apply only to this particular
+     * measure calculation and do not impact the rest of the execution.
+     *
+     * @param filters - filters to apply to this measure
+     */
     public filters = (...filters: IMeasureFilter[]) => {
         this.measureDefinition.filters = filters;
+
+        return this;
+    };
+
+    /**
+     * Resets measure filters - this will remove all filters from the measure.
+     */
+    public noFilters = () => {
+        this.measureDefinition.filters = [];
 
         return this;
     };
@@ -278,7 +390,7 @@ type ArithmeticMeasureBuilderInput =
  * @public
  */
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
-    private arithmeticMeasure: IArithmeticMeasureDefinition["arithmeticMeasure"];
+    private readonly arithmeticMeasure: IArithmeticMeasureDefinition["arithmeticMeasure"];
 
     /**
      * @internal
@@ -299,12 +411,22 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
         }
     }
 
+    /**
+     * Sets arithmetic operator to apply when calculating the arithmetic measure.
+     *
+     * @param op - operator
+     */
     public operator = (op: ArithmeticMeasureOperator) => {
         this.arithmeticMeasure.operator = op;
 
         return this;
     };
 
+    /**
+     * Sets operands for arithmetic: other measures specified by either value or local identifier -
+     *
+     * @param measuresOrLocalIds - array of measures and/or localIds of measures to use as operands
+     */
     public operands = (measuresOrLocalIds: MeasureOrLocalId[]) => {
         this.arithmeticMeasure.measureIdentifiers = measuresOrLocalIds.map(measureLocalId);
 
@@ -361,12 +483,24 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
         }
     }
 
+    /**
+     * Sets master measure from which this period-over-period measure should be calculated.
+     *
+     * @param measureOrLocalId - measure value or measure local identifier
+     */
     public masterMeasure = (measureOrLocalId: MeasureOrLocalId) => {
         this.popMeasureDefinition.measureIdentifier = measureLocalId(measureOrLocalId);
 
         return this;
     };
 
+    /**
+     * Sets period-over-period date dimension attribute to use for offsetting. For convenience the attribute
+     * may be specified by either object reference or as a string - in which case it is assumed this is identifier
+     * of the attribute object.
+     *
+     * @param popAttrIdOrRef - reference of the PoP attribute, or identifier
+     */
     public popAttribute = (popAttrIdOrRef: ObjRef | Identifier) => {
         this.popMeasureDefinition.popAttribute = isObjRef(popAttrIdOrRef)
             ? popAttrIdOrRef
@@ -420,12 +554,22 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
         }
     }
 
+    /**
+     * Sets master measure from which this previous period measure should be calculated.
+     *
+     * @param measureOrLocalId - measure value or measure local identifier
+     */
     public masterMeasure = (measureOrLocalId: MeasureOrLocalId) => {
         this.previousPeriodMeasure.measureIdentifier = measureLocalId(measureOrLocalId);
 
         return this;
     };
 
+    /**
+     * Sets date data set + offset within the data set to use when calculating values of this measure.
+     *
+     * @param dd - date data set + offset
+     */
     public dateDataSets = (dd: IPreviousPeriodDateDataSetSimple[]) => {
         this.previousPeriodMeasure.dateDataSets = this.convertDd(dd);
     };
@@ -489,6 +633,8 @@ export function modifyMeasure<T extends IMeasureDefinitionType>(
     measure: IMeasure<T>,
     modifications: MeasureModifications<MeasureBuilderBase<IMeasureDefinitionType>> = identity,
 ): IMeasure<T> {
+    invariant(measure, "measure must be specified");
+
     const builder = createBuilder(measure);
 
     return modifications(builder).build() as IMeasure<T>;
@@ -505,7 +651,7 @@ function createBuilder(measure: IMeasure): MeasureBuilderBase<IMeasureDefinition
         return new PreviousPeriodMeasureBuilder(measure);
     }
 
-    throw new Error();
+    throw new InvariantError("unexpected measure type");
 }
 
 /**
@@ -522,6 +668,8 @@ export function modifySimpleMeasure(
     measure: IMeasure<IMeasureDefinition>,
     modifications: MeasureModifications<MeasureBuilder> = identity,
 ): IMeasure<IMeasureDefinition> {
+    invariant(measure, "measure must be specified");
+
     const builder = new MeasureBuilder(measure);
 
     return modifications(builder).build();

@@ -33,10 +33,7 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
     // (undocumented)
     protected generateLocalId(): string;
     // Warning: (ae-forgotten-export) The symbol "MeasureOrLocalId" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
     operands: (measuresOrLocalIds: MeasureOrLocalId[]) => this;
-    // (undocumented)
     operator: (op: ArithmeticMeasureOperator) => this;
 }
 
@@ -47,17 +44,12 @@ export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" 
 export function attributeAlias(attribute: IAttribute): string | undefined;
 
 // @public
-export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjRef;
-
-// @public
 export class AttributeBuilder {
     // Warning: (ae-forgotten-export) The symbol "AttributeBuilderInput" needs to be exported by the entry point index.d.ts
     //
     // @internal
     constructor(input: AttributeBuilderInput);
-    // (undocumented)
-    alias: (alias: string) => this;
-    // (undocumented)
+    alias: (alias?: string | undefined) => this;
     build: () => {
         attribute: {
             localIdentifier: string;
@@ -65,11 +57,8 @@ export class AttributeBuilder {
             alias?: string | undefined;
         };
     };
-    // (undocumented)
     defaultLocalId: () => this;
-    // (undocumented)
-    localId: (localId: string) => this;
-    // (undocumented)
+    localId: (localId?: string | undefined) => this;
     noAlias: () => this;
 }
 
@@ -78,6 +67,9 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
     // (undocumented)
     attribute(ref: ObjRef): this;
 }
+
+// @public
+export function attributeDisplayFormRef(attribute: IAttribute): ObjRef;
 
 // @public
 export function attributeIdentifier(attribute: IAttribute): string | undefined;
@@ -90,7 +82,7 @@ export type AttributeInBucket = {
 };
 
 // @public
-export function attributeLocalId(attribute: IAttribute): string;
+export function attributeLocalId(attributeOrId: IAttribute | Identifier): string;
 
 // @public
 export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject = IAttributeMetadataObject> extends MetadataObjectBuilder<T> {
@@ -335,13 +327,19 @@ export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMeta
 export const factoryNotationFor: (data: any) => string;
 
 // @public
-export function filterAttributeDisplayForm(filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter): ObjRef;
-
-// @public
 export function filterAttributeElements(filter: IPositiveAttributeFilter | INegativeAttributeFilter): IAttributeElements;
 
 // @public
+export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined;
+
+// @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
+
+// @public
+export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter): ObjRef;
+
+// @public
+export function filterObjRef(filter: IFilter): ObjRef | undefined;
 
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
@@ -655,19 +653,12 @@ export interface IDrillingActivationPostMessageData {
 
 // @public
 export interface IExecutionDefinition {
-    // (undocumented)
     readonly attributes: IAttribute[];
-    // (undocumented)
     readonly buckets: IBucket[];
-    // (undocumented)
     readonly dimensions: IDimension[];
-    // (undocumented)
     readonly filters: IFilter[];
-    // (undocumented)
     readonly measures: IMeasure[];
-    // (undocumented)
     readonly sortBy: SortItem[];
-    // (undocumented)
     readonly workspace: string;
 }
 
@@ -1202,7 +1193,13 @@ export function measureAggregation(measure: IMeasure): MeasureAggregation | unde
 export function measureAlias(measure: IMeasure): string | undefined;
 
 // @public
+export function measureArithmeticOperands(measure: IMeasure<IArithmeticMeasureDefinition>): string[];
+
+// @public
 export function measureArithmeticOperands(measure: IMeasure): string[] | undefined;
+
+// @public
+export function measureArithmeticOperator(measure: IMeasure<IArithmeticMeasureDefinition>): ArithmeticMeasureOperator;
 
 // @public
 export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureOperator | undefined;
@@ -1211,52 +1208,40 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     // @internal
     constructor(measureOrRef: IMeasure<IMeasureDefinition> | ObjRef);
-    // (undocumented)
-    aggregation: (aggregation: MeasureAggregation) => this;
+    aggregation: (aggregation?: "max" | "sum" | "count" | "avg" | "min" | "median" | "runsum" | undefined) => this;
     // (undocumented)
     protected buildDefinition(): IMeasureDefinition;
-    // (undocumented)
+    defaultAggregation: () => this;
     filters: (...filters: (import("../filter").IPositiveAttributeFilter | import("../filter").INegativeAttributeFilter | import("../filter").IAbsoluteDateFilter | import("../filter").IRelativeDateFilter)[]) => this;
     // (undocumented)
     protected generateLocalId(): string;
-    // (undocumented)
-    noAggregation: () => this;
-    // (undocumented)
+    noFilters: () => this;
     noRatio: () => this;
-    // (undocumented)
-    ratio: () => this;
+    ratio: (value?: boolean) => this;
 }
 
 // @public
 export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     // @internal
     protected constructor();
-    // (undocumented)
-    alias: (alias: string) => this;
+    alias: (alias?: string | undefined) => this;
     // (undocumented)
     build: () => IMeasure<T>;
     protected abstract buildDefinition(): T;
     // (undocumented)
     protected customLocalId: boolean;
-    // (undocumented)
     defaultFormat: () => this;
-    // (undocumented)
     defaultLocalId: () => this;
-    // (undocumented)
-    format: (format: string) => this;
+    format: (format?: string | undefined) => this;
     protected abstract generateLocalId(): string;
     // Warning: (ae-forgotten-export) The symbol "MeasureEnvelope" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     protected initializeFromExisting(measure: MeasureEnvelope): void;
-    // (undocumented)
-    localId: (localId: string) => this;
-    // (undocumented)
+    localId: (localId?: string | undefined) => this;
     noAlias: () => this;
-    // (undocumented)
     noTitle: () => this;
-    // (undocumented)
-    title: (title: string) => this;
+    title: (title?: string | undefined) => this;
 }
 
 // @public
@@ -1282,7 +1267,16 @@ export type MeasureInBucket = {
 };
 
 // @public
+export function measureItem(measure: IMeasure<IMeasureDefinition>): ObjRef;
+
+// @public
+export function measureItem(measure: IMeasure): ObjRef | undefined;
+
+// @public
 export function measureLocalId(measureOrLocalId: MeasureOrLocalId): string;
+
+// @public
+export function measureMasterIdentifier(measure: IMeasure<IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition>): string;
 
 // @public
 export function measureMasterIdentifier(measure: IMeasure): string | undefined;
@@ -1299,10 +1293,16 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
 export type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
 
 // @public
+export function measurePopAttribute(measure: IMeasure<IPoPMeasureDefinition>): ObjRef;
+
+// @public
 export function measurePopAttribute(measure: IMeasure): ObjRef | undefined;
 
 // @public
 export type MeasurePredicate = (measure: IMeasure) => boolean;
+
+// @public
+export function measurePreviousPeriodDateDataSets(measure: IMeasure<IPreviousPeriodMeasureDefinition>): IPreviousPeriodDateDataSet[];
 
 // @public
 export function measurePreviousPeriodDateDataSets(measure: IMeasure): IPreviousPeriodDateDataSet[] | undefined;
@@ -1450,7 +1450,7 @@ export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, d
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: string, from: number, to: number): IRelativeDateFilter;
 
 // @public
-export function newTotal(type: TotalType, measureOrId: IMeasure | string, attributeOrId: IAttribute | string, alias?: string): ITotal;
+export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, attributeOrId: IAttribute | Identifier, alias?: string): ITotal;
 
 // @public
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
@@ -1482,9 +1482,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     protected buildDefinition(): IPoPMeasureDefinition;
     // (undocumented)
     protected generateLocalId(): string;
-    // (undocumented)
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
-    // (undocumented)
     popAttribute: (popAttrIdOrRef: string | import("../../objRef").UriRef | import("../../objRef").IdentifierRef) => void;
     }
 
@@ -1496,11 +1494,9 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
     constructor(input: PreviousPeriodMeasureBuilderInput);
     // (undocumented)
     protected buildDefinition(): IPreviousPeriodMeasureDefinition;
-    // (undocumented)
     dateDataSets: (dd: IPreviousPeriodDateDataSetSimple[]) => void;
     // (undocumented)
     protected generateLocalId(): string;
-    // (undocumented)
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
     }
 

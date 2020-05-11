@@ -5,7 +5,7 @@ import { BarChart } from "@gooddata/sdk-ui-charts";
 import {
     newPositiveAttributeFilter,
     attributeIdentifier,
-    attributeAttributeDisplayFormObjRef,
+    attributeDisplayFormRef,
 } from "@gooddata/sdk-model";
 import Select from "react-select";
 import "react-select/dist/react-select.css";
@@ -133,7 +133,7 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
         // State (parent) filter
         const stateFilter = this.renderFilter(
             "state",
-            attributeAttributeDisplayFormObjRef(Ldm.LocationState),
+            attributeDisplayFormRef(Ldm.LocationState),
             stateFilterValues,
             "all states",
             { limit: 20 },
@@ -181,7 +181,7 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
         }
         const cityFilter = this.renderFilter(
             "city",
-            attributeAttributeDisplayFormObjRef(Ldm.LocationCity),
+            attributeDisplayFormRef(Ldm.LocationCity),
             cityFilterValues,
             "all cities",
             cityOptions,

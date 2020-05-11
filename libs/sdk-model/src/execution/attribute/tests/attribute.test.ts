@@ -6,7 +6,7 @@ import {
     attributeUri,
     IAttribute,
     attributeAlias,
-    attributeAttributeDisplayFormObjRef,
+    attributeDisplayFormRef,
 } from "../index";
 import { Account, Activity, ActivityType } from "../../../../__mocks__/model";
 import { ObjRef } from "../../../objRef";
@@ -102,11 +102,11 @@ describe("attributeAttributeDisplayFormObjRef", () => {
     ];
 
     it.each(Scenarios)("should %s", (_desc, input, expectedResult) => {
-        expect(attributeAttributeDisplayFormObjRef(input)).toEqual(expectedResult);
+        expect(attributeDisplayFormRef(input)).toEqual(expectedResult);
     });
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
-        expect(() => attributeAttributeDisplayFormObjRef(input)).toThrow();
+        expect(() => attributeDisplayFormRef(input)).toThrow();
     });
 });
 
