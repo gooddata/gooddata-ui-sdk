@@ -9,7 +9,7 @@ import { GroupingProviderFactory, IGroupingProvider } from "./GroupingProvider";
 import { createRowData } from "./agGridData";
 import { areTotalsChanged, isInvalidGetRowsRequest } from "./agGridDataSourceUtils";
 import isEqual = require("lodash/isEqual");
-import { dimensionSetTotals, ITotal, SortItem, defTotals } from "@gooddata/sdk-model";
+import { dimensionSetTotals, ITotal, ISortItem, defTotals } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 
 export function createAgGridDatasource(
@@ -87,7 +87,7 @@ export class AgGridDatasource implements IDatasource {
 
     private transformResult = (
         params: IGetRowsParams,
-        desiredSorts: SortItem[],
+        desiredSorts: ISortItem[],
         desiredTotals: ITotal[],
     ): void => {
         const { startRow, endRow, failCallback, sortModel } = params;

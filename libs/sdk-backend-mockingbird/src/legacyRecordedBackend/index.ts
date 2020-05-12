@@ -35,7 +35,7 @@ import {
     IDimension,
     IExecutionDefinition,
     IFilter,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 
@@ -270,7 +270,7 @@ function recordedPreparedExecution(
         withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
             return executionFactory.forDefinition(defWithDimensions(definition, ...dim));
         },
-        withSorting(...items: SortItem[]): IPreparedExecution {
+        withSorting(...items: ISortItem[]): IPreparedExecution {
             return executionFactory.forDefinition(defWithSorting(definition, items));
         },
         execute(): Promise<IExecutionResult> {

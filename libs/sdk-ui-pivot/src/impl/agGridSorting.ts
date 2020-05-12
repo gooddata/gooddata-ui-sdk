@@ -1,9 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { getIdsFromUri, getParsedFields } from "./agGridUtils";
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE, ID_SEPARATOR } from "./agGridConst";
 import { assortDimensionDescriptors } from "./agGridHeaders";
 import { ISortModelItem } from "./agGridTypes";
-import { IAttributeSortItem, IMeasureSortItem, SortDirection, SortItem } from "@gooddata/sdk-model";
+import { IAttributeSortItem, IMeasureSortItem, SortDirection, ISortItem } from "@gooddata/sdk-model";
 import { IAttributeDescriptor, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import invariant = require("invariant");
 
@@ -78,7 +78,7 @@ export const getSortItemByColId = (
     invariant(false, `could not find header matching ${colId}`);
 };
 
-export function getSortsFromModel(sortModel: ISortModelItem[], result: IExecutionResult): SortItem[] {
+export function getSortsFromModel(sortModel: ISortModelItem[], result: IExecutionResult): ISortItem[] {
     return sortModel.map((sortModelItem: ISortModelItem) => {
         const { colId, sort } = sortModelItem;
         const sortHeader = getSortItemByColId(result, colId, sort);

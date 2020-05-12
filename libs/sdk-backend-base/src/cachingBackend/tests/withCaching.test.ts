@@ -4,7 +4,7 @@ import { IAnalyticalBackend, IExecutionResult } from "@gooddata/sdk-backend-spi"
 import { withCaching } from "../index";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { AttributeOrMeasure } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure } from "@gooddata/sdk-model";
 
 function createBackend(realBackend: IAnalyticalBackend = dummyBackendEmptyData()): IAnalyticalBackend {
     return withCaching(realBackend, {
@@ -15,7 +15,7 @@ function createBackend(realBackend: IAnalyticalBackend = dummyBackendEmptyData()
     });
 }
 
-function doExecution(backend: IAnalyticalBackend, items: AttributeOrMeasure[]): Promise<IExecutionResult> {
+function doExecution(backend: IAnalyticalBackend, items: IAttributeOrMeasure[]): Promise<IExecutionResult> {
     return backend
         .workspace("test")
         .execution()

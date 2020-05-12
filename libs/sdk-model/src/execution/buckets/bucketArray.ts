@@ -1,8 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     anyBucket,
     AttributeInBucket,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     bucketAttributes,
     bucketIsEmpty,
     bucketItems,
@@ -195,7 +195,7 @@ export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[] {
  * @returns empty list if none
  * @public
  */
-export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[] {
+export function bucketsItems(buckets: IBucket[]): IAttributeOrMeasure[] {
     invariant(buckets, "buckets must be specified");
 
     return flatMap(buckets, b => bucketItems(b));

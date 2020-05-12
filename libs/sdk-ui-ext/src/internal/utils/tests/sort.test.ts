@@ -33,7 +33,7 @@ import {
     newAttribute,
     newBucket,
     newMeasure,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 
 const attributeSort: IAttributeSortItem = {
@@ -76,7 +76,7 @@ describe("createSorts", () => {
     describe("default sorting", () => {
         describe("table", () => {
             it("should sort by first row attribute ASC", () => {
-                const expectedSorts: SortItem[] = [
+                const expectedSorts: ISortItem[] = [
                     {
                         attributeSortItem: {
                             attributeIdentifier: "a1",
@@ -88,7 +88,7 @@ describe("createSorts", () => {
             });
 
             it("should sort by first row attribute ASC if there are some measures", () => {
-                const expectedSorts: SortItem[] = [
+                const expectedSorts: ISortItem[] = [
                     {
                         attributeSortItem: {
                             attributeIdentifier: "a1",
@@ -100,7 +100,7 @@ describe("createSorts", () => {
             });
 
             it("should sort by first measure DESC if there are no row attributes", () => {
-                const expectedSort: SortItem[] = [
+                const expectedSort: ISortItem[] = [
                     {
                         measureSortItem: {
                             direction: "desc",
@@ -118,14 +118,14 @@ describe("createSorts", () => {
             });
 
             it("should not sort by column attribute", () => {
-                const expectedSorts: SortItem[] = [];
+                const expectedSorts: ISortItem[] = [];
                 expect(createSorts("table", insightWithNoMeasureAndOneColumn)).toEqual(expectedSorts);
             });
         });
 
         describe("bar", () => {
             it("should sort by first measure for basic bar chart", () => {
-                const expectedSort: SortItem[] = [
+                const expectedSort: ISortItem[] = [
                     {
                         measureSortItem: {
                             direction: "desc",
@@ -142,7 +142,7 @@ describe("createSorts", () => {
                 expect(createSorts("bar", insightWithSingleMeasureAndViewBy)).toEqual(expectedSort);
             });
             it("should sort by group for bar chart with 1 measure and 2 viewBy", () => {
-                const expectedSort: SortItem[] = [
+                const expectedSort: ISortItem[] = [
                     {
                         attributeSortItem: {
                             direction: "desc",
@@ -163,7 +163,7 @@ describe("createSorts", () => {
             });
 
             it("should sort by group for bar chart with 2 measure and 2 viewBy", () => {
-                const expectedSort: SortItem[] = [
+                const expectedSort: ISortItem[] = [
                     {
                         attributeSortItem: {
                             direction: "desc",
@@ -189,7 +189,7 @@ describe("createSorts", () => {
             });
 
             it("should sort by group for bar chart with 2 measure and 2 viewBy and canSortStackTotalValue is true", () => {
-                const expectedSort: SortItem[] = [
+                const expectedSort: ISortItem[] = [
                     {
                         attributeSortItem: {
                             direction: "desc",
@@ -210,7 +210,7 @@ describe("createSorts", () => {
             });
 
             it("should return area sort for stacked bar chart", () => {
-                const expectedSort: SortItem[] = [
+                const expectedSort: ISortItem[] = [
                     {
                         measureSortItem: {
                             direction: "desc",
@@ -248,7 +248,7 @@ describe("createSorts", () => {
     });
 
     it("should extract sort from visualization properties", () => {
-        const sortItems: SortItem[] = [
+        const sortItems: ISortItem[] = [
             {
                 measureSortItem: {
                     direction: "desc",
@@ -268,7 +268,7 @@ describe("createSorts", () => {
     });
 
     it("should ignore sort from visualization properties if localIdentifier is missing in AFM", () => {
-        const sortItems: SortItem[] = [
+        const sortItems: ISortItem[] = [
             {
                 measureSortItem: {
                     direction: "desc",

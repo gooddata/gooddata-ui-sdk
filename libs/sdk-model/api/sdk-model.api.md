@@ -17,7 +17,7 @@ export const anyBucket: BucketPredicate;
 export const anyMeasure: MeasurePredicate;
 
 // @public
-export function applyRatioRule<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
+export function applyRatioRule<T extends IAttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
 // @public
 export function areObjRefsEqual<T extends ObjRefInScope | null | undefined>(a: T, b: T): boolean;
@@ -92,9 +92,6 @@ export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject =
 export type AttributeModifications = (builder: AttributeBuilder) => AttributeBuilder;
 
 // @public
-export type AttributeOrMeasure = IMeasure | IAttribute;
-
-// @public
 export type AttributePredicate = (attribute: IAttribute) => boolean;
 
 // @public
@@ -113,7 +110,7 @@ export function bucketAttributes(bucket: IBucket, predicate?: AttributePredicate
 export function bucketIsEmpty(bucket: IBucket): boolean;
 
 // @public
-export function bucketItems(bucket: IBucket): AttributeOrMeasure[];
+export function bucketItems(bucket: IBucket): IAttributeOrMeasure[];
 
 // @public
 export function bucketMeasure(bucket: IBucket, idOrFun?: string | MeasurePredicate): IMeasure | undefined;
@@ -143,7 +140,7 @@ export function bucketsFindMeasure(buckets: IBucket[], idOrFun?: string | Measur
 export function bucketsIsEmpty(buckets: IBucket[]): boolean;
 
 // @public
-export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[];
+export function bucketsItems(buckets: IBucket[]): IAttributeOrMeasure[];
 
 // @public
 export function bucketsMeasures(buckets: IBucket[], predicate?: MeasurePredicate): IMeasure[];
@@ -281,7 +278,7 @@ export function defFingerprint(def: IExecutionDefinition): string;
 export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
 
 // @public
-export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IExecutionDefinition;
+export function defSetSorts(def: IExecutionDefinition, sortBy?: ISortItem[]): IExecutionDefinition;
 
 // @public
 export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
@@ -293,7 +290,7 @@ export function defWithDimensions(definition: IExecutionDefinition, ...dims: Arr
 export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition;
 
 // @public
-export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem[]): IExecutionDefinition;
+export function defWithSorting(definition: IExecutionDefinition, sorts: ISortItem[]): IExecutionDefinition;
 
 // @public
 export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
@@ -311,7 +308,7 @@ export function dimensionsFindItem(dims: IDimension[], localId: string): ItemInD
 export function dimensionTotals(dim: IDimension): ITotal[];
 
 // @public
-export function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T;
+export function disableComputeRatio<T extends IAttributeOrMeasure>(item: T): T;
 
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
@@ -444,6 +441,9 @@ export interface IAttributeMetadataObject extends IMetadataObject {
 }
 
 // @public
+export type IAttributeOrMeasure = IMeasure | IAttribute;
+
+// @public
 export interface IAttributeSortItem {
     // (undocumented)
     attributeSortItem: {
@@ -456,7 +456,7 @@ export interface IAttributeSortItem {
 // @public
 export interface IBucket {
     // (undocumented)
-    items: AttributeOrMeasure[];
+    items: IAttributeOrMeasure[];
     // (undocumented)
     localIdentifier?: Identifier;
     // (undocumented)
@@ -658,7 +658,7 @@ export interface IExecutionDefinition {
     readonly dimensions: IDimension[];
     readonly filters: IFilter[];
     readonly measures: IMeasure[];
-    readonly sortBy: SortItem[];
+    readonly sortBy: ISortItem[];
     readonly workspace: string;
 }
 
@@ -697,12 +697,15 @@ export type IInsightDefinition = {
         visualizationUrl: string;
         buckets: IBucket[];
         filters: IFilter[];
-        sorts: SortItem[];
+        sorts: ISortItem[];
         properties: VisualizationProperties;
         updated?: string;
         isLocked?: boolean;
     };
 };
+
+// @public
+export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 // @public
 export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
@@ -757,7 +760,7 @@ export interface IMeasureSortItem {
     // (undocumented)
     measureSortItem: {
         direction: SortDirection;
-        locators: LocatorItem[];
+        locators: ILocatorItem[];
     };
 }
 
@@ -832,7 +835,7 @@ export class InsightDefinitionBuilder {
     // (undocumented)
     properties: (properties: VisualizationProperties) => InsightDefinitionBuilder;
     // (undocumented)
-    sorts: (sorts: SortItem[]) => InsightDefinitionBuilder;
+    sorts: (sorts: ISortItem[]) => InsightDefinitionBuilder;
     // (undocumented)
     title: (title: string) => InsightDefinitionBuilder;
 }
@@ -870,10 +873,10 @@ export function insightProperties(insight: IInsightDefinition): VisualizationPro
 export function insightSetProperties<T extends IInsightDefinition>(insight: T, properties?: VisualizationProperties): T;
 
 // @public
-export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts?: SortItem[]): T;
+export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts?: ISortItem[]): T;
 
 // @public
-export function insightSorts(insight: IInsightDefinition): SortItem[];
+export function insightSorts(insight: IInsightDefinition): ISortItem[];
 
 // @public
 export function insightTitle(insight: IInsightDefinition): string;
@@ -1078,6 +1081,9 @@ export function isNegativeAttributeFilter(obj: any): obj is INegativeAttributeFi
 export function isObjRef(obj: any): obj is ObjRef;
 
 // @public
+export type ISortItem = IAttributeSortItem | IMeasureSortItem;
+
+// @public
 export function isPoPMeasure(obj: any): obj is IMeasure<IPoPMeasureDefinition>;
 
 // @public
@@ -1179,9 +1185,6 @@ export type LocalIdRef = {
 
 // @public
 export function localIdRef(localIdentifier: Identifier): LocalIdRef;
-
-// @public
-export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 // @public
 export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
@@ -1376,7 +1379,7 @@ export const newAttributeMetadataObject: (ref: ObjRef, modifications?: BuilderMo
 export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection?: SortDirection, aggregation?: boolean): IAttributeSortItem;
 
 // @public
-export function newBucket(localId: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
+export function newBucket(localId: string, ...content: Array<IAttributeOrMeasure | ITotal | undefined>): IBucket;
 
 // @public
 export const newCatalogAttribute: (modifications?: BuilderModifications<CatalogAttributeBuilder<ICatalogAttribute>, ICatalogAttribute>) => ICatalogAttribute;
@@ -1406,7 +1409,7 @@ export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?
 export function newDefForInsight(workspace: string, insight: IInsightDefinition, filters?: IFilter[]): IExecutionDefinition;
 
 // @public
-export function newDefForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
+export function newDefForItems(workspace: string, items: IAttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
 
 // @public
 export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimension;
@@ -1524,10 +1527,7 @@ export type SortEntityIds = {
 // Warning: (ae-incompatible-release-tags) The symbol "sortEntityIds" is marked as @public, but its signature references "SortEntityIds" which is marked as @internal
 //
 // @public
-export function sortEntityIds(sort: SortItem): SortEntityIds;
-
-// @public
-export type SortItem = IAttributeSortItem | IMeasureSortItem;
+export function sortEntityIds(sort: ISortItem): SortEntityIds;
 
 // @public
 export function totalIsNative(total: ITotal): boolean;

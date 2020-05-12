@@ -5,7 +5,7 @@ import {
     insightBuckets,
     insightVisualizationUrl,
     IBucket,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     isMeasure,
     IAttribute,
     attributeLocalId,
@@ -38,7 +38,7 @@ const convertAttribute = (attribute: IAttribute): GdcVisualizationObject.IAttrib
     };
 };
 
-const convertBucketItem = (bucketItem: AttributeOrMeasure): GdcVisualizationObject.BucketItem => {
+const convertBucketItem = (bucketItem: IAttributeOrMeasure): GdcVisualizationObject.BucketItem => {
     return isMeasure(bucketItem) ? convertMeasure(bucketItem) : convertAttribute(bucketItem);
 };
 

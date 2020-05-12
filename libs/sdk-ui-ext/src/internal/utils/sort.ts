@@ -20,7 +20,7 @@ import {
     SortDirection,
     SortEntityIds,
     sortEntityIds,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { SORT_DIR_ASC, SORT_DIR_DESC } from "../constants/sort";
@@ -28,7 +28,7 @@ import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interface
 
 import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
 
-export function getMeasureSortItems(identifier: string, direction: SortDirection): SortItem[] {
+export function getMeasureSortItems(identifier: string, direction: SortDirection): ISortItem[] {
     return [newMeasureSort(identifier, direction)];
 }
 
@@ -36,7 +36,7 @@ export function getAttributeSortItem(
     identifier: string,
     direction: SortDirection = "asc",
     aggregation: boolean = false,
-): SortItem {
+): ISortItem {
     const attributeSortItemWithoutAggregation = {
         attributeIdentifier: identifier,
         direction,
@@ -54,7 +54,7 @@ export function getAttributeSortItem(
     return attributeSortItem;
 }
 
-function getDefaultTableSort(insight: IInsightDefinition): SortItem[] {
+function getDefaultTableSort(insight: IInsightDefinition): ISortItem[] {
     const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
     const rowAttributes = rowBucket ? bucketAttributes(rowBucket) : [];
 
@@ -77,7 +77,7 @@ function getDefaultTableSort(insight: IInsightDefinition): SortItem[] {
 function getDefaultBarChartSort(
     insight: IInsightDefinition,
     canSortStackTotalValue: boolean = false,
-): SortItem[] {
+): ISortItem[] {
     const measures = insightMeasures(insight);
     const viewBucket = insightBucket(insight, BucketNames.VIEW);
     const stackBucket = insightBucket(insight, BucketNames.STACK);
@@ -113,7 +113,7 @@ export function getDefaultTreemapSortFromBuckets(
     viewBy: IBucket,
     segmentBy: IBucket,
     measures: IMeasure[],
-): SortItem[] {
+): ISortItem[] {
     const viewAttr = viewBy ? bucketAttributes(viewBy) : [];
     const stackAttr = segmentBy ? bucketAttributes(segmentBy) : [];
 
@@ -124,7 +124,7 @@ export function getDefaultTreemapSortFromBuckets(
     return [];
 }
 
-export function getDefaultTreemapSort(insight: IInsightDefinition): SortItem[] {
+export function getDefaultTreemapSort(insight: IInsightDefinition): ISortItem[] {
     return getDefaultTreemapSortFromBuckets(
         insightBucket(insight, BucketNames.VIEW),
         insightBucket(insight, BucketNames.SEGMENT),
@@ -137,7 +137,7 @@ export function createSorts(
     type: string,
     insight: IInsightDefinition,
     canSortStackTotalValue: boolean = false,
-): SortItem[] {
+): ISortItem[] {
     switch (type) {
         case VisualizationTypes.TABLE:
             const sorts = insightSorts(insight);
@@ -162,7 +162,7 @@ export function getBucketItemIdentifiers(referencePoint: IExtendedReferencePoint
     }, []);
 }
 
-function isSortItemValid(item: SortItem, identifiers: string[]) {
+function isSortItemValid(item: ISortItem, identifiers: string[]) {
     const sortIdentifiers: SortEntityIds = sortEntityIds(item);
 
     return every(sortIdentifiers.allIdentifiers, id => includes(identifiers, id));
@@ -192,7 +192,7 @@ export function removeInvalidSort(referencePoint: Readonly<IExtendedReferencePoi
         const identifiers = getBucketItemIdentifiers(referencePoint);
 
         let sortItems = referencePoint.properties.sortItems || [];
-        sortItems = sortItems.filter((item: SortItem) => {
+        sortItems = sortItems.filter((item: ISortItem) => {
             return isSortItemValid(item, identifiers);
         });
 

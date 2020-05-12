@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     applyRatioRule,
     IAttribute,
     IFilter,
     newBucket,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { truncate } from "../_commons/truncate";
 import { IChartConfig, IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
@@ -67,7 +67,7 @@ function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
 export function getBucketsProps(
     props: IAreaChartBucketProps,
 ): {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     viewBy: IAttribute[];
     stackBy: IAttribute[];
 } {
@@ -131,16 +131,52 @@ export function verifyBuckets(props: IAreaChartProps): void {
 //
 
 /**
- * TODO: SDK8: describe buckets
- *
  * @public
  */
 export interface IAreaChartBucketProps {
-    measures: AttributeOrMeasure[];
+    /**
+     * Specify one or more measures to display on area chart.
+     *
+     * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
+     * attribute elements will be charted.
+     */
+    measures: IAttributeOrMeasure[];
+
+    /**
+     * Optionally specify attributes to slice and optionally stack the area chart.
+     *
+     * -  If you specify single attribute, then elements of this attribute will be used to slice the measures along the
+     *    X axis.
+     *
+     * -  If you specify two attributes, then the first attribute will be used to slice the measures along the X axis,
+     *    and the second attribute will be used for stacking.
+     *
+     * -  If you specify three or more attributes, only the first two attributes will be used.
+     *
+     * Note: using two measures in viewBy is a convenience. It is equivalent to specifying single viewBy and single
+     * stackBy attribute. In either case, as soon as the area chart is stacked, only the first measure will be
+     * calculated and charted.
+     */
     viewBy?: IAttribute | IAttribute[];
+
+    /**
+     * Optionally specify attribute to stack by. This is only applicable if you specify at most single viewBy
+     * attribute.
+     *
+     * Note: stacking area chart using attribute elements means only a single measure can be charted. The component
+     * will take the first measure.
+     */
     stackBy?: IAttribute;
+
+    /**
+     * Optionally specify filters to apply on the data to chart.
+     */
     filters?: IFilter[];
-    sortBy?: SortItem[];
+
+    /**
+     * Optionally specify how to sort the data to chart.
+     */
+    sortBy?: ISortItem[];
 }
 
 /**
@@ -150,7 +186,13 @@ export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProp
 
 /**
  * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
- * is a component with bucket props measures, viewBy, stacksBy, filters
+ *
+ * Area chart shows data as an area under a line intersecting dots. It can display either:
+ *
+ * - multiple measures sliced by a single attribute, as different areas
+ * - or a single measure split by one attribute into multiple areas with points intersecting attribute values
+ *
+ * Areas for multiple measures stack by default. Alternatively, the areas can overlap if ```{ stackMeasures: false }```.
  *
  * @remarks See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart
  * @public

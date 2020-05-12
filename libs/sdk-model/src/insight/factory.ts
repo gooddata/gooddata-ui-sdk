@@ -3,7 +3,7 @@ import identity = require("lodash/identity");
 import { IInsightDefinition, VisualizationProperties } from "./index";
 import { IBucket } from "../execution/buckets";
 import { IFilter } from "../execution/filter";
-import { SortItem } from "../execution/base/sort";
+import { ISortItem } from "../execution/base/sort";
 
 /*
  * Factory & builder for insight instances. Keeping it in test infrastructure for now, will see later on
@@ -68,7 +68,7 @@ export class InsightDefinitionBuilder {
         return this;
     };
 
-    public sorts = (sorts: SortItem[]): InsightDefinitionBuilder => {
+    public sorts = (sorts: ISortItem[]): InsightDefinitionBuilder => {
         this.insight.sorts = sorts;
 
         return this;

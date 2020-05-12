@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { AttributeInBucket, MeasureInBucket, newBucket, IBucket, AttributeOrMeasure } from "../index";
+import { AttributeInBucket, MeasureInBucket, newBucket, IBucket, IAttributeOrMeasure } from "../index";
 import { Account, Activity, Velocity, Won } from "../../../../__mocks__/model";
 import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute";
 import {
@@ -249,7 +249,7 @@ describe("bucketsById", () => {
 });
 
 describe("bucketsItems", () => {
-    const Scenarios: Array<[string, any, AttributeOrMeasure[]]> = [
+    const Scenarios: Array<[string, any, IAttributeOrMeasure[]]> = [
         ["no items when buckets empty", [], []],
         ["no items when only empty bucket", [EmptyBucket], []],
         ["items from non-empty bucket", [EmptyBucket, MixedBucket1], [Activity.Default, Won]],

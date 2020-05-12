@@ -4,7 +4,7 @@ import { withExecution } from "./withExecution";
 import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withLoading";
 import {
     attributeLocalId,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     DimensionItem,
     IAttribute,
     IDimension,
@@ -14,7 +14,7 @@ import {
     MeasureGroupIdentifier,
     newDimension,
     newTwoDimensional,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
@@ -46,7 +46,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
      * Data series will be built using the provided measures that are optionally further scoped for
      * elements of the specified attributes.
      */
-    seriesBy: AttributeOrMeasure[];
+    seriesBy: IAttributeOrMeasure[];
 
     /**
      * Optionally slice all data series by elements of these attributes.
@@ -66,7 +66,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     /**
      * Optional sorting to apply on server side.
      */
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 
     /**
      * Specifies whether `Execute` should trigger execution and loading right after it is
@@ -110,7 +110,7 @@ const CoreExecute: React.FC<Props> = (props: Props) => {
 /**
  * When caller desires just data series and no slicing, create a single-dim result.
  */
-function seriesOnlyDim(seriesBy: AttributeOrMeasure[]): IDimension[] {
+function seriesOnlyDim(seriesBy: IAttributeOrMeasure[]): IDimension[] {
     return [
         newDimension(
             seriesBy
@@ -129,7 +129,7 @@ function seriesOnlyDim(seriesBy: AttributeOrMeasure[]): IDimension[] {
  * -  measures & scoping attributes will be in columns (second dim)
  */
 function seriesAndSlicesDim(
-    seriesBy: AttributeOrMeasure[],
+    seriesBy: IAttributeOrMeasure[],
     slices: IAttribute[],
     totals: ITotal[],
 ): IDimension[] {

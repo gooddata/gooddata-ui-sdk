@@ -111,9 +111,7 @@ function convertDimensions(def: IExecutionDefinition): GdcExecuteAFM.IDimension[
 }
 
 function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IResultSpec {
-    // TODO: SDK8: why this???
-    // Workaround because we can handle only 1 sort item for now
-    const sortsProp = !isEmpty(def.sortBy) ? { sorts: def.sortBy.slice(0, 1) } : {};
+    const sortsProp = !isEmpty(def.sortBy) ? { sorts: def.sortBy } : {};
     const dims = convertDimensions(def);
     const dimsProp = !isEmpty(dims) ? { dimensions: dims } : {};
 

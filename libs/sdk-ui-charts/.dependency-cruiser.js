@@ -1,14 +1,14 @@
-const depRuiser = require("../../common/config/dep-cruiser/default.config");
+const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
 options = {
     forbidden: [
-        ...depRuiser.DefaultRules,
-        ...depRuiser.DefaultSdkRules,
-        depRuiser.isolatedSubmodule("chart-interfaces", "src/interfaces"),
-        depRuiser.moduleWithDependencies("highcharts", "src/highcharts", ["src/interfaces"]),
-        depRuiser.moduleWithDependencies("charts", "src/charts", ["src/highcharts", "src/interfaces"]),
+        ...depCruiser.DefaultRules,
+        ...depCruiser.DefaultSdkRules,
+        depCruiser.isolatedSubmodule("chart-interfaces", "src/interfaces"),
+        depCruiser.moduleWithDependencies("highcharts", "src/highcharts", ["src/interfaces"]),
+        depCruiser.moduleWithDependencies("charts", "src/charts", ["src/highcharts", "src/interfaces"]),
     ],
-    options: depRuiser.DefaultOptions,
+    options: depCruiser.DefaultOptions,
 };
 
 module.exports = options;

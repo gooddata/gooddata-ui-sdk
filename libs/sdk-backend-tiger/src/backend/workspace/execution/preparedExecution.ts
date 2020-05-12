@@ -8,7 +8,7 @@ import {
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { TigerExecutionResult } from "./executionResult";
 import { toAfmExecution } from "../../../toAfm/toAfmResultSpec";
@@ -38,7 +38,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
         return this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen));
     }
 
-    public withSorting(...items: SortItem[]): IPreparedExecution {
+    public withSorting(...items: ISortItem[]): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
     }
 

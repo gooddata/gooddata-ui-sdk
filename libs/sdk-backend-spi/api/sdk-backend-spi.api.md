@@ -4,13 +4,13 @@
 
 ```ts
 
-import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
+import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
@@ -26,13 +26,13 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasureExpressionToken } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
+import { ISortItem } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWorkspace } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
-import { SortItem } from '@gooddata/sdk-model';
 import { WorkspacePermission } from '@gooddata/sdk-model';
 
 // @public
@@ -381,7 +381,7 @@ export interface IExecutionFactory {
     forDefinition(def: IExecutionDefinition): IPreparedExecution;
     forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
-    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 }
 
 // @public
@@ -548,7 +548,7 @@ export interface IPreparedExecution {
     execute(): Promise<IExecutionResult>;
     fingerprint(): string;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
-    withSorting(...items: SortItem[]): IPreparedExecution;
+    withSorting(...items: ISortItem[]): IPreparedExecution;
 }
 
 // @public
@@ -788,7 +788,7 @@ export interface IWorkspaceCatalog extends IWorkspaceCatalogMethods {
 // @public
 export interface IWorkspaceCatalogAvailableItemsFactory extends IWorkspaceCatalogFactoryMethods<IWorkspaceCatalogAvailableItemsFactory, IWorkspaceCatalogWithAvailableItemsFactoryOptions> {
     forInsight(insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory;
-    forItems(items: AttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory;
+    forItems(items: IAttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory;
     load(): Promise<IWorkspaceCatalogWithAvailableItems>;
 }
 
@@ -839,7 +839,7 @@ export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMe
 // @public
 export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWorkspaceCatalogFactoryOptions {
     insight?: IInsightDefinition;
-    items?: AttributeOrMeasure[];
+    items?: IAttributeOrMeasure[];
 }
 
 // @alpha

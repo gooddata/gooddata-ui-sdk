@@ -3,7 +3,7 @@ import set = require("lodash/set");
 import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
 import { IMeasureGroupDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
+import { IBucket, IAttributeOrMeasure } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { isLineChart } from "../../utils/common";
@@ -27,8 +27,8 @@ export const COMBO_SUPPORTED_CHARTS = [
 
 const DEFAULT_COMBO_CHART_TYPES = [VisualizationTypes.COLUMN, VisualizationTypes.LINE];
 
-function getMeasureIndices(bucketItems: AttributeOrMeasure[], measureGroupIdentifiers: string[]): number[] {
-    return bucketItems.reduce((result: number[], item: AttributeOrMeasure) => {
+function getMeasureIndices(bucketItems: IAttributeOrMeasure[], measureGroupIdentifiers: string[]): number[] {
+    return bucketItems.reduce((result: number[], item: IAttributeOrMeasure) => {
         const localIdentifier = get(item, ["measure", "localIdentifier"], "");
 
         if (localIdentifier) {

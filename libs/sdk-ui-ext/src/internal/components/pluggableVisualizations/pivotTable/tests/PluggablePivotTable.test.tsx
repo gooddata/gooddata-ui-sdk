@@ -28,7 +28,7 @@ import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import { IDrillableItem, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 import { CorePivotTable } from "@gooddata/sdk-ui-pivot";
-import { SortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
+import { ISortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 const getMockReferencePoint = (
@@ -36,7 +36,7 @@ const getMockReferencePoint = (
     rows: IBucketItem[] = [],
     columns: IBucketItem[] = [],
     filterItems: IFiltersBucketItem[] = [],
-    sortItems: SortItem[] = [],
+    sortItems: ISortItem[] = [],
     measuresIsShowInPercentEnabled = false,
 ): IExtendedReferencePoint => ({
     buckets: [
@@ -349,7 +349,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with filtered sortItems (in this case identical)", () => {
                 return extendedReferencePointPromise.then(extendedReferencePoint => {
-                    const expectedSortItems: SortItem[] = sourceReferencePoint.properties.sortItems;
+                    const expectedSortItems: ISortItem[] = sourceReferencePoint.properties.sortItems;
                     expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
                 });
             });
@@ -390,7 +390,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with filtered sortItems (in this case identical)", () => {
                 return extendedReferencePointPromise.then(extendedReferencePoint => {
-                    const expectedSortItems: SortItem[] = sourceReferencePoint.properties.sortItems;
+                    const expectedSortItems: ISortItem[] = sourceReferencePoint.properties.sortItems;
                     expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
                 });
             });
@@ -414,7 +414,7 @@ describe("PluggablePivotTable", () => {
                     validMeasureSort,
                 ],
             );
-            const expectedSortItems: SortItem[] = [validAttributeSort, validMeasureSort];
+            const expectedSortItems: ISortItem[] = [validAttributeSort, validMeasureSort];
 
             const extendedReferencePointPromise: Promise<IExtendedReferencePoint> = pivotTable.getExtendedReferencePoint(
                 mockPivotTableReferencePoint,
@@ -763,7 +763,7 @@ describe("adaptReferencePointSortItemsToPivotTable", () => {
         true,
     );
 
-    const sourceSortItems: SortItem[] = [
+    const sourceSortItems: ISortItem[] = [
         invalidAttributeSort,
         invalidMeasureSortInvalidMeasure,
         invalidMeasureSortInvalidAttribute,
@@ -778,7 +778,7 @@ describe("adaptReferencePointSortItemsToPivotTable", () => {
     const columnAttributes: IBucketItem[] = mockPivotTableReferencePoint.buckets[2].items;
 
     it("should remove invalid sort items", async () => {
-        const expectedSortItems: SortItem[] = [validAttributeSort, validMeasureSort];
+        const expectedSortItems: ISortItem[] = [validAttributeSort, validMeasureSort];
 
         expect(
             adaptReferencePointSortItemsToPivotTable(
@@ -815,18 +815,18 @@ describe("addDefaultSort", () => {
     const productRowId = "38f1d87b8b7c42c1b9a37395a24f7313";
     const productRow = rowFor(productRowId, "attr.product");
 
-    const sortFor = (localId: string, direction: SortDirection): SortItem => ({
+    const sortFor = (localId: string, direction: SortDirection): ISortItem => ({
         attributeSortItem: {
             attributeIdentifier: localId,
             direction,
         },
     });
 
-    const defaultSortFor = (localId: string): SortItem => sortFor(localId, "asc");
+    const defaultSortFor = (localId: string): ISortItem => sortFor(localId, "asc");
 
     describe("with no filters specified", () => {
         it("should not add the default sort if no row is specified", () => {
-            const expected: SortItem[] = [];
+            const expected: ISortItem[] = [];
             const actual = addDefaultSort([], [], [], []);
             expect(actual).toEqual(expected);
         });

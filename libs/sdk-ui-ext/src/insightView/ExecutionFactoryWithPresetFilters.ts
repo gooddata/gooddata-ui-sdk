@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IBucket,
     IFilter,
     IInsightDefinition,
@@ -21,7 +21,7 @@ export class ExecutionFactoryWithPresetFilters implements IExecutionFactory {
     public forDefinition = (def: IExecutionDefinition): IPreparedExecution => {
         return this.factory.forDefinition(defWithFilters(def, this.presetFilters));
     };
-    public forItems = (items: AttributeOrMeasure[], filters: IFilter[] = []): IPreparedExecution => {
+    public forItems = (items: IAttributeOrMeasure[], filters: IFilter[] = []): IPreparedExecution => {
         return this.factory.forItems(items, [...this.presetFilters, ...filters]);
     };
     public forBuckets = (buckets: IBucket[], filters: IFilter[] = []): IPreparedExecution => {

@@ -6,7 +6,7 @@ import {
     ICatalogAttribute,
     ICatalogMeasure,
     ICatalogFact,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     ICatalogDateDataset,
     IInsightDefinition,
     ObjRef,
@@ -57,7 +57,7 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
     /**
      * Get only catalog items that are available for the provided execution items
      */
-    items?: AttributeOrMeasure[];
+    items?: IAttributeOrMeasure[];
 
     /**
      * Get only items that are available for the provided insight
@@ -110,7 +110,7 @@ export interface IWorkspaceCatalogAvailableItemsFactory
      * @param items - execution items
      * @returns catalog available items factory
      */
-    forItems(items: AttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory;
+    forItems(items: IAttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory;
 
     /**
      * Setup catalog to fetch only items that are valid for the provided insight definition

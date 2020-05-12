@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     applyRatioRule,
     IAttribute,
     IFilter,
     newBucket,
-    SortItem,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
@@ -55,25 +55,54 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
 //
 
 /**
- * TODO: SDK8: add docs
  * @public
  */
 export interface IBarChartBucketProps {
-    measures: AttributeOrMeasure[];
+    /**
+     * Specify one or more measures to display on the bar chart.
+     *
+     * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
+     * attribute elements will be charted.
+     */
+    measures: IAttributeOrMeasure[];
+
+    /**
+     * Optionally specify one or two attributes to slice the measures along the Y axis.
+     *
+     * If you specify two attributes, the values of these attributes will appear on the Y axis as grouped. For each
+     * value of the first attribute there will be all applicable values of the second attribute. For each value of the
+     * second attribute there will be a bar indicating the respective slice's value.
+     */
     viewBy?: IAttribute | IAttribute[];
+
+    /**
+     * Optionally specify attribute to stack the bars by.
+     */
     stackBy?: IAttribute;
+
+    /**
+     * Optionally specify filters to apply on the data to chart.
+     */
     filters?: IFilter[];
-    sortBy?: SortItem[];
+
+    /**
+     * Optionally specify how to sort the data to chart.
+     */
+    sortBy?: ISortItem[];
 }
 
 /**
- * TODO: SDK8: add docs
  * @public
  */
 export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps {}
 
 /**
- * TODO: SDK8: add docs
+ * [BarChart](http://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html)
+ *
+ * Bar chart shows data in horizontal bars. Bar charts can display one or multiple metrics side by side divided by
+ * attribute values or a single measure stacked by attribute values.
+ *
+ * @remarks See {@link IBarChartProps} to learn how to configure the AreaChart
  * @public
  */
 export const BarChart = withChart(barChartDefinition)(CoreBarChart);

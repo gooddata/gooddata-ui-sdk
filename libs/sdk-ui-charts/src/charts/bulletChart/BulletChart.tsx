@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IAttribute,
     IFilter,
     newBucket,
-    SortItem,
+    ISortItem,
     disableComputeRatio,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -71,26 +71,55 @@ const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletCh
 //
 
 /**
- * TODO: SDK8: add docs
  * @public
  */
 export interface IBulletChartBucketProps {
-    primaryMeasure: AttributeOrMeasure;
-    targetMeasure?: AttributeOrMeasure;
-    comparativeMeasure?: AttributeOrMeasure;
-    viewBy?: IAttribute[];
+    /**
+     * Specify primary measure. This will be charted as the primary bar.
+     */
+    primaryMeasure: IAttributeOrMeasure;
+
+    /**
+     * Optionally specify measure which contains the target/goal value. The value will be charted as the thick
+     * line to reach.
+     */
+    targetMeasure?: IAttributeOrMeasure;
+
+    /**
+     * Optionally specify measure to use for comparison. This will be charted as the secondary bar.
+     */
+    comparativeMeasure?: IAttributeOrMeasure;
+
+    /**
+     * Optionally specify one or two attributes to use for slicing the measures.
+     *
+     * If you specify two attributes, the values of these attributes will appear on the Y axis as grouped. For each
+     * value of the first attribute there will be all applicable values of the second attribute. For each value of the
+     * second attribute, there will be a bullet.
+     */
+    viewBy?: IAttribute | IAttribute[];
+
+    /**
+     * Optionally specify filters to apply on the data to chart.
+     */
     filters?: IFilter[];
-    sortBy?: SortItem[];
+
+    /**
+     * Optionally specify how to sort the data to chart.
+     */
+    sortBy?: ISortItem[];
 }
 
 /**
- * TODO: SDK8: add docs
  * @public
  */
 export interface IBulletChartProps extends IBulletChartBucketProps, IBucketChartProps {}
 
 /**
  * [BulletChart](http://sdk.gooddata.com/gooddata-ui/docs/bullet_chart_component.html)
+ *
+ * Bullet chart is a variation of a bar chart that displays performance of a measure (primary measure) and its progress
+ * towards a goal (target measure). Optionally, the primary measure can also be compared to another measure (comparative measure).
  *
  * @public
  */

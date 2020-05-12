@@ -2,7 +2,7 @@
 import stringify from "json-stable-stringify";
 import invariant from "ts-invariant";
 import { IAttribute } from "../attribute";
-import { SortItem } from "../base/sort";
+import { ISortItem } from "../base/sort";
 
 /**
  * @internal
@@ -16,6 +16,6 @@ export function attributeFingerprint(attribute: IAttribute): string {
 /**
  * @internal
  */
-export function sortFingerprint(sort: SortItem): string {
+export function sortFingerprint(sort: ISortItem): string {
     return stringify(sort);
 }

@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IAttribute, IFilter, IMeasure, newBucket, SortItem } from "@gooddata/sdk-model";
+import { IAttribute, IFilter, IMeasure, newBucket, ISortItem } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -28,6 +28,7 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters)
+            .withSorting(...props.sortBy)
             .withDimensions(pointyChartDimensions);
     },
 };
@@ -37,28 +38,48 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
 //
 
 /**
- * TODO: SDK8
- *
  * @public
  */
 export interface IScatterPlotBucketProps {
+    /**
+     * Optionally specify measure which will be used to position data points on the X axis.
+     */
     xAxisMeasure?: IMeasure;
+
+    /**
+     * Optionally specify measure which will be used to position data points on the Y axis.
+     */
     yAxisMeasure?: IMeasure;
+
+    /**
+     * Optionally specify attribute whose values will be used to create data points.
+     */
     attribute?: IAttribute;
+
+    /**
+     * Optionally specify filters to apply on the data to chart.
+     */
     filters?: IFilter[];
-    sortBy?: SortItem[]; // TODO would it be removed? if not dont forget to test
+
+    /**
+     * Optionally specify how to sort the data to chart.
+     */
+    sortBy?: ISortItem[];
 }
 
 /**
- * TODO: SDK8
- *
  * @public
  */
 export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucketProps {}
 
 /**
  * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
- * is a component with bucket props xAxisMeasure, yAxisMeasure, attribute, filters
+ *
+ * Scatter plot shows data as points using Cartesian coordinates.
+ *
+ * Scatter plots typically have a minimum of two measures, one for the X-axis and the other for the Y-axis, and one
+ * attribute, which determines the meaning of each data point. Scatter plots are useful for analyzing trends between
+ * two measures or for tracking the magnitude of two measures from the same chart.
  *
  * @public
  */

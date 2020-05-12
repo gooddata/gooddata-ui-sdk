@@ -5,7 +5,6 @@
 ```ts
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
-import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { AuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { AuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { CatalogItem } from '@gooddata/sdk-model';
@@ -13,6 +12,7 @@ import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
@@ -32,12 +32,12 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
+import { ISortItem } from '@gooddata/sdk-model';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
-import { SortItem } from '@gooddata/sdk-model';
 
 // Warning: (ae-internal-missing-underscore) The name "AbstractExecutionFactory" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -53,7 +53,7 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
     // (undocumented)
     abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     // (undocumented)
-    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
     }
 
 // @beta
@@ -154,7 +154,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
     // (undocumented)
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     // (undocumented)
-    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
     protected wrap: (execution: IPreparedExecution) => IPreparedExecution;
     }
 
@@ -196,7 +196,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     // (undocumented)
-    withSorting(...items: SortItem[]): IPreparedExecution;
+    withSorting(...items: ISortItem[]): IPreparedExecution;
 }
 
 // @alpha (undocumented)

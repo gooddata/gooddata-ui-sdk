@@ -2,8 +2,14 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-04-19T16:35:41.113Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-05-12T08:55:24.450Z; */
 
+const fp_01aa64219649fe6bb801a2037977a25f = {
+    definition: require("./uiTestScenarios/executions/01aa64219649fe6bb801a2037977a25f/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/01aa64219649fe6bb801a2037977a25f/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/01aa64219649fe6bb801a2037977a25f/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/01aa64219649fe6bb801a2037977a25f/scenarios.json"),
+};
 const fp_04938271f1ee4e3845b40f5b91ad3224 = {
     definition: require("./uiTestScenarios/executions/04938271f1ee4e3845b40f5b91ad3224/definition.json"),
     executionResult: require("./uiTestScenarios/executions/04938271f1ee4e3845b40f5b91ad3224/executionResult.json"),
@@ -327,6 +333,7 @@ const fp_85c9c68fa4651582251a9a1f33ecaa29 = {
     definition: require("./uiTestScenarios/executions/85c9c68fa4651582251a9a1f33ecaa29/definition.json"),
     executionResult: require("./uiTestScenarios/executions/85c9c68fa4651582251a9a1f33ecaa29/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/85c9c68fa4651582251a9a1f33ecaa29/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/85c9c68fa4651582251a9a1f33ecaa29/scenarios.json"),
 };
 const fp_863fac91cdd10a93d45eec657fb1fe62 = {
     definition: require("./uiTestScenarios/executions/863fac91cdd10a93d45eec657fb1fe62/definition.json"),
@@ -612,12 +619,6 @@ const fp_ebc7e80338269a6b2f6602c3b35dbe96 = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ebc7e80338269a6b2f6602c3b35dbe96/dataView_o0_0s100_1000.json"),
     scenarios: require("./uiTestScenarios/executions/ebc7e80338269a6b2f6602c3b35dbe96/scenarios.json"),
 };
-const fp_ede6ed5b53346e0853f0b4e5accab07b = {
-    definition: require("./uiTestScenarios/executions/ede6ed5b53346e0853f0b4e5accab07b/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/ede6ed5b53346e0853f0b4e5accab07b/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/ede6ed5b53346e0853f0b4e5accab07b/dataView_all.json"),
-    scenarios: require("./uiTestScenarios/executions/ede6ed5b53346e0853f0b4e5accab07b/scenarios.json"),
-};
 const fp_f0e70e94c36c6f923597c79fa31b4a53 = {
     definition: require("./uiTestScenarios/executions/f0e70e94c36c6f923597c79fa31b4a53/definition.json"),
     executionResult: require("./uiTestScenarios/executions/f0e70e94c36c6f923597c79fa31b4a53/executionResult.json"),
@@ -668,6 +669,20 @@ const fp_ff5156936750ccf35ec9eb7f1dd14d9e = {
     scenarios: require("./uiTestScenarios/executions/ff5156936750ccf35ec9eb7f1dd14d9e/scenarios.json"),
 };
 export const Scenarios = {
+    ScatterPlot: {
+        XAndYAxisMeasuresAndAttributeWithAttrSorting: {
+            scenarioIndex: 0,
+            execution: fp_01aa64219649fe6bb801a2037977a25f,
+        },
+        XAndYAxisMeasuresAndAttribute: { scenarioIndex: 1, execution: fp_1557e2c074106b9d118b06fb7dba8d9b },
+        XAxisMeasureAndAttribute: { scenarioIndex: 2, execution: fp_aedac6ac1aa25085501290c27004b164 },
+        YAxisMeasureAndAttribute: { scenarioIndex: 3, execution: fp_aedac6ac1aa25085501290c27004b164 },
+        XAndYAxisMeasuresAndAttributeWithNullsInData: {
+            scenarioIndex: 0,
+            execution: fp_dcaaae38f505d6a1ca4ebbc4ab97c50d,
+        },
+        XAxisMeasure: { scenarioIndex: 5, execution: fp_f83d8f5aafdacc5ff9da46bfcfe6daa4 },
+    },
     PivotTable: {
         TwoMeasuresAndMultipleSubtotals: { scenarioIndex: 0, execution: fp_053cd718b22eb3357818f28b0fa166ff },
         SingleColumn: { scenarioIndex: 0, execution: fp_0b6d39a2a523ba72b848c938e1e2203f },
@@ -802,20 +817,6 @@ export const Scenarios = {
         XAxisMeasureWithViewBy: { scenarioIndex: 0, execution: fp_aedac6ac1aa25085501290c27004b164 },
         ArithmeticMeasure: { scenarioIndex: 0, execution: fp_b434ab2f932f1218ac73b9fab621adee },
         XAxisMeasure: { scenarioIndex: 0, execution: fp_f83d8f5aafdacc5ff9da46bfcfe6daa4 },
-    },
-    ScatterPlot: {
-        XAndYAxisMeasuresAndAttribute: { scenarioIndex: 1, execution: fp_1557e2c074106b9d118b06fb7dba8d9b },
-        XAndYAxisMeasuresAndAttributeWithAttrSorting: {
-            scenarioIndex: 2,
-            execution: fp_1557e2c074106b9d118b06fb7dba8d9b,
-        },
-        XAxisMeasureAndAttribute: { scenarioIndex: 2, execution: fp_aedac6ac1aa25085501290c27004b164 },
-        YAxisMeasureAndAttribute: { scenarioIndex: 3, execution: fp_aedac6ac1aa25085501290c27004b164 },
-        XAndYAxisMeasuresAndAttributeWithNullsInData: {
-            scenarioIndex: 0,
-            execution: fp_dcaaae38f505d6a1ca4ebbc4ab97c50d,
-        },
-        XAxisMeasure: { scenarioIndex: 5, execution: fp_f83d8f5aafdacc5ff9da46bfcfe6daa4 },
     },
     BulletChart: {
         PrimaryTargetAndComparativeMeasuresWithViewByAndSort: {
@@ -957,13 +958,13 @@ export const Scenarios = {
         TwoMeasuresAndViewBy: { scenarioIndex: 5, execution: fp_1c5fcffd61024015b8fac470f75d9722 },
         TwoMeasuresAndSegmentBy: { scenarioIndex: 6, execution: fp_1c5fcffd61024015b8fac470f75d9722 },
         ArithmeticMeasuresAndSegment: { scenarioIndex: 0, execution: fp_3166c155ac455528d275b550a95997fa },
+        SingleMeasureViewByAndSegment: { scenarioIndex: 0, execution: fp_85c9c68fa4651582251a9a1f33ecaa29 },
         SingleMeasureAndViewByFilteredToOneElement: {
             scenarioIndex: 0,
             execution: fp_add15f4f85c00e6bde3fb6dbe8b799bc,
         },
         SingleMeasureAndViewBy: { scenarioIndex: 9, execution: fp_e0ef20686dd1bf50204ff7cb5f13d707 },
         TwoMeasures: { scenarioIndex: 3, execution: fp_e975310240f33587bd33973ec671566a },
-        SingleMeasureViewByAndSegment: { scenarioIndex: 0, execution: fp_ede6ed5b53346e0853f0b4e5accab07b },
         SingleMeasureAndSegment: { scenarioIndex: 0, execution: fp_f0e7e6c0ddda2c6063ec6f5834cdce5d },
         SingleMeasure: { scenarioIndex: 6, execution: fp_f83d8f5aafdacc5ff9da46bfcfe6daa4 },
     },
@@ -2588,6 +2589,7 @@ const catalog = {
 const visClasses = { items: require("./metadata/visClasses/items.json") };
 export const Recordings = {
     executions: {
+        fp_01aa64219649fe6bb801a2037977a25f,
         fp_04938271f1ee4e3845b40f5b91ad3224,
         fp_053cd718b22eb3357818f28b0fa166ff,
         fp_05d63f8b3c854a77b766a1548760deb4,
@@ -2694,7 +2696,6 @@ export const Recordings = {
         fp_e8b9c9fb0c3c99122dd390a0b8cce8a1,
         fp_e975310240f33587bd33973ec671566a,
         fp_ebc7e80338269a6b2f6602c3b35dbe96,
-        fp_ede6ed5b53346e0853f0b4e5accab07b,
         fp_f0e70e94c36c6f923597c79fa31b4a53,
         fp_f0e7e6c0ddda2c6063ec6f5834cdce5d,
         fp_f2875dcdd0d66374386d92ff5990c91d,

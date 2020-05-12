@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IAttribute,
     IFilter,
-    SortItem,
+    ISortItem,
     newBucket,
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
@@ -50,28 +50,48 @@ const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartPro
 //
 
 /**
- * TODO: SDK8: add docs
- *
  * @public
  */
 export interface ILineChartBucketProps {
-    measures: AttributeOrMeasure[];
+    /**
+     * Specify one or more measures whose values will be displayed on the line chart.
+     *
+     * If you specify two or more measures, values of each measure will have their own line.
+     */
+    measures: IAttributeOrMeasure[];
+
+    /**
+     * Optionally specify single attribute whose values will be used to slice the lines along the X axis.
+     */
     trendBy?: IAttribute;
+
+    /**
+     * Optionally specify single attribute whose values will be used to segment the measure values. The line
+     * chart will display one line per measure values pertaining to the segmentBy attribute values.
+     */
     segmentBy?: IAttribute;
+
+    /**
+     * Optionally specify filters to apply on the data to chart.
+     */
     filters?: IFilter[];
-    sortBy?: SortItem[];
+
+    /**
+     * Optionally specify how to sort the data to chart.
+     */
+    sortBy?: ISortItem[];
 }
 
 /**
- * TODO: SDK8: add docs
- *
  * @public
  */
 export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {}
 
 /**
  * [LineChart](http://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html)
- * is a component with bucket props measures, trendBy, segmentBy, filters
+ *
+ * Line chart shows data as line-connected dots. Line charts can display either multiple measures as individual lines
+ * or a single measure split by one attribute into multiple lines with points intersecting attribute values.
  *
  * @public
  */

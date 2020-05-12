@@ -1,11 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IBucket,
     IDimension,
     IFilter,
     IInsightDefinition,
-    SortItem,
+    ISortItem,
     IExecutionDefinition,
     DimensionGenerator,
 } from "@gooddata/sdk-model";
@@ -45,7 +45,7 @@ export interface IExecutionFactory {
      * @param items - list of attributes and measures, must not be empty
      * @param filters - list of filters, may not be provided
      */
-    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 
     /**
      * Prepares a new execution for a list of buckets. Attributes and measures WILL be transferred to the
@@ -126,7 +126,7 @@ export interface IPreparedExecution {
      * @param items - items to sort by
      * @returns new execution with the updated sorts
      */
-    withSorting(...items: SortItem[]): IPreparedExecution;
+    withSorting(...items: ISortItem[]): IPreparedExecution;
 
     /**
      * Configures dimensions of the resulting data. Any dimension settings accumulated so far WILL be wiped out.

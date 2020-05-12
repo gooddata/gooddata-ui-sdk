@@ -2,7 +2,7 @@
 import {
     IInsightDefinition,
     IBucket,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     isMeasure,
     IMeasure,
     insightMeasures,
@@ -193,9 +193,9 @@ function buildMeasureTitles(
 }
 
 function updateBucketItemTitle(
-    bucketItem: AttributeOrMeasure,
+    bucketItem: IAttributeOrMeasure,
     measureTitleProps: IMeasureTitleProps[],
-): AttributeOrMeasure {
+): IAttributeOrMeasure {
     if (isMeasure(bucketItem)) {
         const localId = measureLocalId(bucketItem);
         const measureTitleProp = findMeasureTitleItem(measureTitleProps, localId);

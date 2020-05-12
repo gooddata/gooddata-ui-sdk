@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { AttributeOrMeasure, IAttribute, IFilter, newBucket, SortItem } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure, IAttribute, IFilter, newBucket, ISortItem } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -41,10 +41,10 @@ const funnelChartDefinition: IChartDefinition<IFunnelChartBucketProps, IFunnelCh
  * @public
  */
 export interface IFunnelChartBucketProps {
-    measures: AttributeOrMeasure[];
+    measures: IAttributeOrMeasure[];
     viewBy?: IAttribute;
     filters?: IFilter[];
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
 }
 
 /**
@@ -55,8 +55,6 @@ export interface IFunnelChartBucketProps {
 export interface IFunnelChartProps extends IBucketChartProps, IFunnelChartBucketProps {}
 
 /**
- * [FunnelChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/pie_chart_component.html)
- * is a component with bucket props measures, viewBy, filters
  *
  * @public
  */

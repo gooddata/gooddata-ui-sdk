@@ -2,7 +2,7 @@
 import {
     IInsight,
     IBucket,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IMeasure,
     IMeasureDefinitionType,
     IFilter,
@@ -122,7 +122,7 @@ const convertAttribute = (attribute: GdcVisualizationObject.IAttribute): IAttrib
     return { attribute: attribute.visualizationAttribute };
 };
 
-const convertBucketItem = (bucketItem: GdcVisualizationObject.BucketItem): AttributeOrMeasure => {
+const convertBucketItem = (bucketItem: GdcVisualizationObject.BucketItem): IAttributeOrMeasure => {
     return GdcVisualizationObject.isMeasure(bucketItem)
         ? convertMeasure(bucketItem)
         : convertAttribute(bucketItem);

@@ -4,17 +4,17 @@
 
 ```ts
 
-import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
+import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
+import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import * as React_2 from 'react';
-import { SortItem } from '@gooddata/sdk-model';
 import { WrappedComponentProps } from 'react-intl';
 
 // Warning: (ae-internal-missing-underscore) The name "CorePivotTable" should be prefixed with an underscore because the declaration is marked as @internal
@@ -57,11 +57,11 @@ export interface IPivotTableBucketProps {
     // (undocumented)
     filters?: IFilter[];
     // (undocumented)
-    measures?: AttributeOrMeasure[];
+    measures?: IAttributeOrMeasure[];
     // (undocumented)
     rows?: IAttribute[];
     // (undocumented)
-    sortBy?: SortItem[];
+    sortBy?: ISortItem[];
     // (undocumented)
     totals?: ITotal[];
 }

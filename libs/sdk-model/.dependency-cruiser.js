@@ -1,8 +1,8 @@
-const depRuiser = require("../../common/config/dep-cruiser/default.config");
+const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
 options = {
-    forbidden: [...depRuiser.DefaultRules, ...depRuiser.DefaultSdkRules],
-    options: depRuiser.DefaultOptions,
+    forbidden: [...depCruiser.DefaultRules, ...depCruiser.DefaultSdkRules],
+    options: depCruiser.DefaultOptions,
 };
 
 module.exports = options;

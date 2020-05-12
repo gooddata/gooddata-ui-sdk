@@ -7,7 +7,7 @@ import {
     CatalogItemType,
     CatalogItem,
     ICatalogGroup,
-    AttributeOrMeasure,
+    IAttributeOrMeasure,
     IInsightDefinition,
     ObjRef,
     insightMeasures,
@@ -101,7 +101,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         return this.withOptions({ excludeTags: tags });
     }
 
-    public forItems(items: AttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory {
+    public forItems(items: IAttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({ items });
     }
 
