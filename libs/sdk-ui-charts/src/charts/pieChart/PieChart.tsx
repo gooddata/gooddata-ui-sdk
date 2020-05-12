@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IAttributeOrMeasure, IAttribute, IFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, IFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -27,6 +27,7 @@ const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps>
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters)
+            .withSorting(...props.sortBy)
             .withDimensions(roundChartDimensions);
     },
 };
@@ -36,27 +37,46 @@ const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps>
 //
 
 /**
- * TODO: SDK8: add docs
- *
  * @public
  */
 export interface IPieChartBucketProps {
+    /**
+     * Specify one or more measures to segment the pie chart.
+     *
+     * If you specify a single measure, then you may further specify the viewBy attribute - there will be a
+     * pie slice per attribute value.
+     *
+     * If you specify multiple measures, then there will be a pie slice for each measure value. You may not
+     * specify the viewBy in this case.
+     */
     measures: IAttributeOrMeasure[];
+
+    /**
+     * Optionally specify viewBy attribute that will be used to create the pie slices. There will be a slice
+     * for each value of the attribute.
+     */
     viewBy?: IAttribute;
+
+    /**
+     * Optionally specify filters to apply on the data to chart.
+     */
     filters?: IFilter[];
+
+    /**
+     * Optionally specify how to sort the data to chart.
+     */
     sortBy?: ISortItem[];
 }
 
 /**
- * TODO: SDK8: add docs
- *
  * @public
  */
 export interface IPieChartProps extends IBucketChartProps, IPieChartBucketProps {}
 
 /**
  * [PieChart](http://sdk.gooddata.com/gooddata-ui/docs/pie_chart_component.html)
- * is a component with bucket props measures, viewBy, filters
+ *
+ * Pie chart shows data as proportional segments of a disc. Pie charts can be segmented by either multiple measures or an attribute.
  *
  * @public
  */
