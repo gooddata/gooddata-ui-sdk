@@ -5,9 +5,11 @@ import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { DateFilterComponentExample } from "./DateFilterComponentExample";
 import DateFilterComponentExampleSRC from "!raw-loader!./DateFilterComponentExample";
+import DateFilterComponentExampleSRCJS from "!raw-loader!../../../examplesJS/dateFilter/DateFilterComponentExample";
 
 import { DateFilterWithColumnChartExample } from "./DateFilterWithColumnChartExample";
 import DateFilterWithColumnChartExampleSRC from "!raw-loader!./DateFilterWithColumnChartExample";
+import DateFilterWithColumnChartExampleSRCJS from "!raw-loader!../../../examplesJS/dateFilter/DateFilterWithColumnChartExample";
 
 export const DateFilter: React.FC = () => (
     <div>
@@ -19,7 +21,11 @@ export const DateFilter: React.FC = () => (
 
         <h2>Date Filter</h2>
         <p>This example shows a full-featured date filter component.</p>
-        <ExampleWithSource for={DateFilterComponentExample} source={DateFilterComponentExampleSRC} />
+        <ExampleWithSource
+            for={DateFilterComponentExample}
+            source={DateFilterComponentExampleSRC}
+            sourceJS={DateFilterComponentExampleSRCJS}
+        />
 
         <h2>Filtering a report</h2>
         <p>
@@ -29,6 +35,7 @@ export const DateFilter: React.FC = () => (
         <ExampleWithSource
             for={DateFilterWithColumnChartExample}
             source={DateFilterWithColumnChartExampleSRC}
+            sourceJS={DateFilterWithColumnChartExampleSRCJS}
         />
     </div>
 );

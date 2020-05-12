@@ -71,6 +71,9 @@
         "@gooddata/sdk-ui-filters": "^8.0.0-alpha.68",
         "@gooddata/sdk-ui-pivot": "^8.0.0-alpha.68",
         "@types/node": "^12.12.26",
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.7.2",
+        "@babel/plugin-transform-typescript": "^7.7.4",
         "babel-polyfill": "^6.26.0",
         "formik": "^0.11.11",
         "history": "^4.7.2",
@@ -99,13 +102,14 @@
         "validate": "npm run prettier-check",
         "validate-ci": "npm run prettier-check",
         "examples?": "# Default is developer domain, other options: yarn examples [sec,secure,stg,stg2,stg3,demo,developer or URL]",
-        "start": "bash scripts/run-examples.sh",
-        "build": "bash scripts/build-examples.sh",
+        "start": "npm run refresh-examplesjs && bash scripts/run-examples.sh",
+        "build": "npm run refresh-examplesjs && bash scripts/build-examples.sh",
         "examples-server": "node server/src/index.js",
         "examples-testcafe": "./scripts/run-testcafe.sh visual",
         "examples-testcafe-live": "./scripts/run-testcafe.sh live",
         "examples-testcafe-ci": "./scripts/run-testcafe.sh ci",
         "refresh-ldm": "./scripts/refresh-ldm.sh && npm run build",
+        "refresh-examplesjs": "bash ./scripts/refresh-examplesJS.sh",
         "heroku-postbuild": "npm run examples-build developer"
     }
 }

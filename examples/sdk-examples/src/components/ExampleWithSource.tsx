@@ -7,11 +7,19 @@ import { okaidia } from "react-syntax-highlighter/dist/esm/styles/prism";
 interface IExampleWithSourceProps {
     for: React.ComponentType;
     source: string;
+    sourceJS?: string;
 }
 
-export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({ for: Component, source }) => {
+export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({
+    for: Component,
+    source,
+    sourceJS,
+}) => {
     const [{ hidden }, setState] = useState({ hidden: true });
+    const [{ viewJS }, setViewJS] = useState({ viewJS: false });
     const toggle = () => setState(({ hidden: _hidden }) => ({ hidden: !_hidden }));
+    const toggleToJS = () => setViewJS({ viewJS: true });
+    const toggleToTS = () => setViewJS({ viewJS: false });
     const iconClassName = hidden ? "icon-navigatedown" : "icon-navigateup";
 
     return (
@@ -52,6 +60,21 @@ export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({ for: Comp
                 </button>
                 {hidden ? (
                     ""
+                ) : viewJS ? (
+                    <button className={`gd-button gd-button-secondary icon-right`} onClick={toggleToTS}>
+                        TS
+                    </button>
+                ) : (
+                    <button className={`gd-button gd-button-secondary icon-right`} onClick={toggleToJS}>
+                        JS
+                    </button>
+                )}
+                {hidden ? (
+                    ""
+                ) : viewJS ? (
+                    <SyntaxHighlighter language="jsx" style={okaidia}>
+                        {sourceJS}
+                    </SyntaxHighlighter>
                 ) : (
                     <SyntaxHighlighter language="jsx" style={okaidia}>
                         {source}

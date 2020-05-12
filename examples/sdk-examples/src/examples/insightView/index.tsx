@@ -24,7 +24,7 @@ import InsightViewColumnChartByIdentifierExampleSRC from "!raw-loader!./InsightV
 import InsightViewComboChartByIdentifierExampleSRC from "!raw-loader!./InsightViewComboChartByIdentifierExample";
 // import insightViewTableExampleSRC from "!raw-loader!./insightViewTableByIdentifierExample";
 // import CustominsightViewExampleSRC from "!raw-loader!./CustominsightViewExample";
-import InsightViewBarByIdentifierExampleSrc from "!raw-loader!./InsightViewBarByIdentifierExample";
+import InsightViewBarByIdentifierExampleSRC from "!raw-loader!./InsightViewBarByIdentifierExample";
 import InsightViewLineByIdentifierExampleSRC from "!raw-loader!./InsightViewLineByIdentifierExample";
 import InsightViewAreaByIdentifierExampleSRC from "!raw-loader!./InsightViewAreaByIdentifierExample";
 import InsightViewHeadlineByIdentifierExampleSRC from "!raw-loader!./InsightViewHeadlineByIdentifierExample";
@@ -34,6 +34,21 @@ import InsightViewPieByIdentifierExampleSRC from "!raw-loader!./InsightViewPieBy
 import InsightViewDonutByIdentifierExampleSRC from "!raw-loader!./InsightViewDonutByIdentifierExample";
 import InsightViewTreemapByIdentifierExampleSRC from "!raw-loader!./InsightViewTreemapByIdentifierExample";
 import InsightViewHeatmapByIdentifierExampleSRC from "!raw-loader!./InsightViewHeatmapByIdentifierExample";
+
+import InsightViewColumnChartByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewColumnChartByIdentifierExample";
+import InsightViewComboChartByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewComboChartByIdentifierExample";
+// import insightViewTableExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/insightViewTableByIdentifierExample";
+// import CustominsightViewExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/CustominsightViewExample";
+import InsightViewBarByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewBarByIdentifierExample";
+import InsightViewLineByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewLineByIdentifierExample";
+import InsightViewAreaByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewAreaByIdentifierExample";
+import InsightViewHeadlineByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewHeadlineByIdentifierExample";
+import InsightViewScatterByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewScatterByIdentifierExample";
+import InsightViewBubbleByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewBubbleByIdentifierExample";
+import InsightViewPieByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewPieByIdentifierExample";
+import InsightViewDonutByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewDonutByIdentifierExample";
+import InsightViewTreemapByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewTreemapByIdentifierExample";
+import InsightViewHeatmapByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewHeatmapByIdentifierExample";
 
 export const InsightView = () => (
     <div>
@@ -50,28 +65,36 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewColumnChartByIdentifierExample}
             source={InsightViewColumnChartByIdentifierExampleSRC}
+            sourceJS={InsightViewColumnChartByIdentifierExampleSRCJS}
         />
 
-        <hr className="separator" />
-        {/*         
-        <h2 id="table">Table</h2>
-        <ExampleWithSource for={insightViewTableExample} source={insightViewTableExampleSRC} />
-        
-        <hr className="separator" /> 
-        <h2 id="custom">Custom insightView</h2>
-        <p>
-            Using <a href="https://github.com/recharts/recharts">Recharts library</a>
-        </p>
-        <ExampleWithSource for={CustominsightViewExample} source={CustominsightViewExampleSRC} />
+        {/* <hr className="separator" />
 
-       
+    <h2 id="table">Table</h2>
+    <ExampleWithSource
+      for={insightViewTableExample}
+      source={insightViewTableExampleSRC}
+      sourceJS={insightViewTableExampleSRCJS}
+    />
+
+    <hr className="separator" />
+    <h2 id="custom">Custom insightView</h2>
+    <p>
+      Using <a href="https://github.com/recharts/recharts">Recharts library</a>
+    </p>
+    <ExampleWithSource
+      for={CustominsightViewExample}
+      source={CustominsightViewExampleSRC}
+      sourceJS={CustominsightViewExampleSRCJS}
+    /> */}
+
         <hr className="separator" />
-        */}
 
         <h2 id="bar">Bar Chart</h2>
         <ExampleWithSource
             for={InsightViewBarByIdentifierExample}
-            source={InsightViewBarByIdentifierExampleSrc}
+            source={InsightViewBarByIdentifierExampleSRC}
+            sourceJS={InsightViewBarByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -80,6 +103,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewLineByIdentifierExample}
             source={InsightViewLineByIdentifierExampleSRC}
+            sourceJS={InsightViewLineByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -88,6 +112,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewAreaByIdentifierExample}
             source={InsightViewAreaByIdentifierExampleSRC}
+            sourceJS={InsightViewAreaByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -96,6 +121,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewHeadlineByIdentifierExample}
             source={InsightViewHeadlineByIdentifierExampleSRC}
+            sourceJS={InsightViewHeadlineByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -104,6 +130,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewScatterByIdentifierExample}
             source={InsightViewScatterByIdentifierExampleSRC}
+            sourceJS={InsightViewScatterByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -111,6 +138,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewBubbleByIdentifierExample}
             source={InsightViewBubbleByIdentifierExampleSRC}
+            sourceJS={InsightViewBubbleByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -119,6 +147,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewPieByIdentifierExample}
             source={InsightViewPieByIdentifierExampleSRC}
+            sourceJS={InsightViewPieByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -127,6 +156,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewDonutByIdentifierExample}
             source={InsightViewDonutByIdentifierExampleSRC}
+            sourceJS={InsightViewDonutByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -134,6 +164,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewTreemapByIdentifierExample}
             source={InsightViewTreemapByIdentifierExampleSRC}
+            sourceJS={InsightViewTreemapByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -142,6 +173,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewHeatmapByIdentifierExample}
             source={InsightViewHeatmapByIdentifierExampleSRC}
+            sourceJS={InsightViewHeatmapByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -150,6 +182,7 @@ export const InsightView = () => (
         <ExampleWithSource
             for={InsightViewComboChartByIdentifierExample}
             source={InsightViewComboChartByIdentifierExampleSRC}
+            sourceJS={InsightViewComboChartByIdentifierExampleSRCJS}
         />
     </div>
 );

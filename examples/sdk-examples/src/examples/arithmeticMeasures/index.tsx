@@ -16,6 +16,12 @@ import ArithmeticMeasureRatioExampleSrc from "!raw-loader!./ArithmeticMeasureRat
 import ArithmeticMeasureChangeExampleSrc from "!raw-loader!./ArithmeticMeasureChangeExample";
 import ArithmeticMeasureDrillingExampleSrc from "!raw-loader!./ArithmeticMeasureDrillingExample";
 
+import ArithmeticMeasureSumExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureSumExample";
+import ArithmeticMeasureMultiplicationExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureMultiplicationExample";
+import ArithmeticMeasureRatioExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureRatioExample";
+import ArithmeticMeasureChangeExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureChangeExample";
+import ArithmeticMeasureDrillingExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureDrillingExample";
+
 export const ArithmeticMeasures: React.FC = () => (
     <div>
         <h1>Arithmetic Measures</h1>
@@ -34,7 +40,11 @@ export const ArithmeticMeasures: React.FC = () => (
 
         <h2>Ratio</h2>
         <p>Take two measures and divide them (e.g. gross margin = gross profit / net sales).</p>
-        <ExampleWithSource for={ArithmeticMeasureRatioExample} source={ArithmeticMeasureRatioExampleSrc} />
+        <ExampleWithSource
+            for={ArithmeticMeasureRatioExample}
+            source={ArithmeticMeasureRatioExampleSrc}
+            sourceJS={ArithmeticMeasureRatioExampleSrcJS}
+        />
 
         <h2>Change</h2>
         <p>Calculate percentual change between two measures.</p>
@@ -44,23 +54,33 @@ export const ArithmeticMeasures: React.FC = () => (
             <Link to="/time-over-time-comparison">Time Over Time Comparison</Link> with Arithmetic Measures to
             display trend of the given metric.
         </p>
-        <ExampleWithSource for={ArithmeticMeasureChangeExample} source={ArithmeticMeasureChangeExampleSrc} />
+        <ExampleWithSource
+            for={ArithmeticMeasureChangeExample}
+            source={ArithmeticMeasureChangeExampleSrc}
+            sourceJS={ArithmeticMeasureChangeExampleSrcJS}
+        />
 
         <h2>Sum and difference</h2>
         <p>Add or subtract two measures (e.g. revenue in 2017 - revenue in 2016).</p>
-        <ExampleWithSource for={ArithmeticMeasureSumExample} source={ArithmeticMeasureSumExampleSrc} />
+        <ExampleWithSource
+            for={ArithmeticMeasureSumExample}
+            source={ArithmeticMeasureSumExampleSrc}
+            sourceJS={ArithmeticMeasureSumExampleSrcJS}
+        />
 
         <h2>Multiplication</h2>
         <p>Multiply two measures (e.g. price per unit x volume = revenue).</p>
         <ExampleWithSource
             for={ArithmeticMeasureMultiplicationExample}
             source={ArithmeticMeasureMultiplicationExampleSrc}
+            sourceJS={ArithmeticMeasureMultiplicationExampleSrcJS}
         />
 
         <h2>Arithmetic Measures with Drilling</h2>
         <ExampleWithSource
             for={ArithmeticMeasureDrillingExample}
             source={ArithmeticMeasureDrillingExampleSrc}
+            sourceJS={ArithmeticMeasureDrillingExampleSrcJS}
         />
     </div>
 );

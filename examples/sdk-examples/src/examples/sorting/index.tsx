@@ -11,6 +11,10 @@ import MeasureSortingExampleSRC from "!raw-loader!./MeasureSortingExample";
 import AttributeSortingExampleSRC from "!raw-loader!./AttributeSortingExample";
 import DynamicSortingExampleSRC from "!raw-loader!./DynamicSortingExample";
 
+import MeasureSortingExampleSRCJS from "!raw-loader!../../../examplesJS/sorting/MeasureSortingExample";
+import AttributeSortingExampleSRCJS from "!raw-loader!../../../examplesJS/sorting/AttributeSortingExample";
+import DynamicSortingExampleSRCJS from "!raw-loader!../../../examplesJS/sorting/DynamicSortingExample";
+
 export const Sorting: React.FC = () => (
     <div>
         <h1>Sorting</h1>
@@ -24,14 +28,22 @@ export const Sorting: React.FC = () => (
         <p>
             You can sort data by a measure value with the <code>measureSortItem</code>.
         </p>
-        <ExampleWithSource for={MeasureSortingExample} source={MeasureSortingExampleSRC} />
+        <ExampleWithSource
+            for={MeasureSortingExample}
+            source={MeasureSortingExampleSRC}
+            sourceJS={MeasureSortingExampleSRCJS}
+        />
         <hr className="separator" />
 
         <h2>Sorting by Attribute</h2>
         <p>
             You can sort data by an attribute value with the <code>attributeSortItem</code> property.
         </p>
-        <ExampleWithSource for={AttributeSortingExample} source={AttributeSortingExampleSRC} />
+        <ExampleWithSource
+            for={AttributeSortingExample}
+            source={AttributeSortingExampleSRC}
+            sourceJS={AttributeSortingExampleSRCJS}
+        />
 
         <hr className="separator" />
 
@@ -42,6 +54,10 @@ export const Sorting: React.FC = () => (
             <code>measureSortItem</code> with an <code>attributeLocator</code> property. Sorting by an
             attribute value works the same way as in the previous example.
         </p>
-        <ExampleWithSource for={DynamicSortingExample} source={DynamicSortingExampleSRC} />
+        <ExampleWithSource
+            for={DynamicSortingExample}
+            source={DynamicSortingExampleSRC}
+            sourceJS={DynamicSortingExampleSRCJS}
+        />
     </div>
 );

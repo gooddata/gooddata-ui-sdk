@@ -4,6 +4,7 @@ import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { DynamicMeasuresExample } from "./DynamicMeasuresExample";
 import DynamicMeasuresExampleSRC from "!raw-loader!./DynamicMeasuresExample";
+import DynamicMeasuresExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/dynamicMeasures/DynamicMeasuresExample";
 
 export const DynamicMeasures: React.FC = () => (
     <div>
@@ -15,6 +16,10 @@ export const DynamicMeasures: React.FC = () => (
             The insightViews display only the measures selected in the list.
         </p>
 
-        <ExampleWithSource for={DynamicMeasuresExample} source={DynamicMeasuresExampleSRC} />
+        <ExampleWithSource
+            for={DynamicMeasuresExample}
+            source={DynamicMeasuresExampleSRC}
+            sourceJS={DynamicMeasuresExampleSRCJS}
+        />
     </div>
 );
