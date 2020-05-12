@@ -52,7 +52,26 @@
             }
         ],
         "filters": [],
-        "sorts": [],
+        "sorts": [
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "asc"
+                }
+            },
+            {
+                "measureSortItem": {
+                    "direction": "desc",
+                    "locators": [
+                        {
+                            "measureLocatorItem": {
+                                "measureIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
         "properties": {
             "properties": {
                 "controls": {}

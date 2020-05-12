@@ -10,15 +10,6 @@
                 },
                 "localIdentifier": "a_label.product.id.name"
             }
-        },
-        {
-            "attribute": {
-                "displayForm": {
-                    "identifier": "label.owner.region",
-                    "type": "displayForm"
-                },
-                "localIdentifier": "a_label.owner.region"
-            }
         }
     ],
     "measures": [
@@ -33,16 +24,35 @@
                     }
                 }
             }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m_abZgFKGPaGYM",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "abZgFKGPaGYM"
+                        }
+                    }
+                }
+            }
         }
     ],
     "dimensions": [
         {
-            "itemIdentifiers": ["a_label.product.id.name", "a_label.owner.region"]
+            "itemIdentifiers": ["a_label.product.id.name"]
         },
         {
             "itemIdentifiers": ["measureGroup"]
         }
     ],
     "filters": [],
-    "sortBy": []
+    "sortBy": [
+        {
+            "attributeSortItem": {
+                "attributeIdentifier": "a_label.product.id.name",
+                "direction": "desc"
+            }
+        }
+    ]
 }

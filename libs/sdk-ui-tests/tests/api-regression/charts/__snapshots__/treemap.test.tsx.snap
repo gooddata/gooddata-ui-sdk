@@ -235,7 +235,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -410,7 +429,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -526,7 +564,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -684,7 +741,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -835,7 +911,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -943,7 +1038,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -1055,7 +1169,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -1163,7 +1296,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -1275,7 +1427,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -1391,7 +1562,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -1503,7 +1693,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -1615,7 +1824,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -1727,7 +1955,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -1839,7 +2086,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -1951,7 +2217,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -2063,7 +2348,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
@@ -2503,7 +2807,26 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_aangOxLSeztu",
+            },
+          },
+        ],
+      },
+    },
+  ],
   "workspace": "testWorkspace",
 }
 `;
