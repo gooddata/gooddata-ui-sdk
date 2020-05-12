@@ -37,25 +37,46 @@ const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = 
 //
 
 /**
- * TODO: SDK8: add docs
  * @public
  */
 export interface IHeatmapBucketProps {
+    /**
+     * Specify measure whose values will be charted on the heatmap.
+     */
     measure: IAttributeOrMeasure;
+
+    /**
+     * Optionally specify attribute, whose values will be used to create rows in the heatmap.
+     */
     rows?: IAttribute;
+
+    /**
+     * Optionally specify attribute, whose values will be used to create columns in the heatmap.
+     */
     columns?: IAttribute;
+
+    /**
+     * Optionally specify filters to apply on the data to chart.
+     */
     filters?: IFilter[];
+
+    /**
+     * Optionally specify how to sort the data to chart.
+     */
     sortBy?: ISortItem[];
 }
 
 /**
- * TODO: SDK8: add docs
  * @public
  */
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {}
 
 /**
- * TODO: SDK8: add docs
+ * [Heatmap](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/heatmap_component.html)
+ *
+ * Heatmap represents data as a matrix where individual values are represented as colors.
+ * Heatmaps can help you discover trends and understand complex datasets.
+ *
  * @public
  */
 export const Heatmap = withChart(heatmapDefinition)(CoreHeatmap);
