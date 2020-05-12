@@ -217,7 +217,7 @@ export function newAttributeSort(
 ): IAttributeSortItem {
     invariant(attributeOrId, "attribute to create sort for must be defined");
 
-    const id: string = typeof attributeOrId === "string" ? attributeOrId : attributeLocalId(attributeOrId);
+    const id: string = attributeLocalId(attributeOrId);
 
     if (!aggregation) {
         return {
@@ -254,7 +254,7 @@ export function newMeasureSort(
 ): IMeasureSortItem {
     invariant(measureOrId, "measure to create sort for must be defined");
 
-    const id: string = typeof measureOrId === "string" ? measureOrId : measureLocalId(measureOrId);
+    const id: string = measureLocalId(measureOrId);
 
     return {
         measureSortItem: {
@@ -286,8 +286,7 @@ export function newAttributeLocator(
     invariant(attributeOrId, "attribute to create sort locator for must be defined");
     invariant(element, "attribute element must be defined");
 
-    const localId: string =
-        typeof attributeOrId === "string" ? attributeOrId : attributeLocalId(attributeOrId);
+    const localId: string = attributeLocalId(attributeOrId);
 
     return {
         attributeLocatorItem: {
