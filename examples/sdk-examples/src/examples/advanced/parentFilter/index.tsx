@@ -5,6 +5,7 @@ import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import ParentFilterExample from "./ParentFilterExample";
 import ParentFilterExampleSRC from "!raw-loader!./ParentFilterExample";
+import ParentFilterExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/parentFilter/ParentFilterExample";
 
 export const ParentFilter = () => (
     <div>
@@ -17,6 +18,10 @@ export const ParentFilter = () => (
 
         <hr className="separator" />
 
-        <ExampleWithSource for={ParentFilterExample} source={ParentFilterExampleSRC} />
+        <ExampleWithSource
+            for={ParentFilterExample}
+            source={ParentFilterExampleSRC}
+            sourceJS={ParentFilterExampleSRCJS}
+        />
     </div>
 );

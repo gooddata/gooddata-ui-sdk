@@ -8,6 +8,9 @@ import { ExampleWithSource } from "../../components/ExampleWithSource";
 import ExecuteExampleSRC from "!raw-loader!./ExecuteExample";
 import ExecuteAttributeValuesExampleSRC from "!raw-loader!./ExecuteAttributeValuesExample";
 
+import ExecuteExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteExample";
+import ExecuteAttributeValuesExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteAttributeValuesExample";
+
 export const Execute: React.FC = () => (
     <div>
         <h1>Execute</h1>
@@ -21,7 +24,7 @@ export const Execute: React.FC = () => (
 
         <hr className="separator" />
 
-        <ExampleWithSource for={ExecuteExample} source={ExecuteExampleSRC} />
+        <ExampleWithSource for={ExecuteExample} source={ExecuteExampleSRC} sourceJS={ExecuteExampleSRCJS} />
 
         <hr className="separator" />
 
@@ -30,6 +33,10 @@ export const Execute: React.FC = () => (
 
         <hr className="separator" />
 
-        <ExampleWithSource for={ExecuteAttributeValuesExample} source={ExecuteAttributeValuesExampleSRC} />
+        <ExampleWithSource
+            for={ExecuteAttributeValuesExample}
+            source={ExecuteAttributeValuesExampleSRC}
+            sourceJS={ExecuteAttributeValuesExampleSRCJS}
+        />
     </div>
 );

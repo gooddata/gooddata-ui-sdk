@@ -9,6 +9,9 @@ import PreviousPeriodHeadlineExample from "./PreviousPeriodHeadlineExample";
 import SamePeriodColumnChartExampleSrc from "!raw-loader!./SamePeriodColumnChartExample";
 import PreviousPeriodHeadlineExampleSrc from "!raw-loader!./PreviousPeriodHeadlineExample";
 
+import SamePeriodColumnChartExampleSrcJS from "!raw-loader!../../../examplesJS/timeOverTimeComparison/SamePeriodColumnChartExample";
+import PreviousPeriodHeadlineExampleSrcJS from "!raw-loader!../../../examplesJS/timeOverTimeComparison/PreviousPeriodHeadlineExample";
+
 export const TimeOverTimeComparison: React.FC = () => (
     <div>
         <h1>Time Over Time Comparison</h1>
@@ -20,11 +23,19 @@ export const TimeOverTimeComparison: React.FC = () => (
         <hr className="separator" />
 
         <h2>Comparing to the same period previous year</h2>
-        <ExampleWithSource for={SamePeriodColumnChartExample} source={SamePeriodColumnChartExampleSrc} />
+        <ExampleWithSource
+            for={SamePeriodColumnChartExample}
+            source={SamePeriodColumnChartExampleSrc}
+            sourceJS={SamePeriodColumnChartExampleSrcJS}
+        />
 
         <hr className="separator" />
 
         <h2>Comparing to the previous period</h2>
-        <ExampleWithSource for={PreviousPeriodHeadlineExample} source={PreviousPeriodHeadlineExampleSrc} />
+        <ExampleWithSource
+            for={PreviousPeriodHeadlineExample}
+            source={PreviousPeriodHeadlineExampleSrc}
+            sourceJS={PreviousPeriodHeadlineExampleSrcJS}
+        />
     </div>
 );

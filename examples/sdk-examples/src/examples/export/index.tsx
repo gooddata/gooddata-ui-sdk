@@ -12,6 +12,11 @@ import PivotTableExportExampleSRC from "!raw-loader!./PivotTableExportExample";
 import insightViewColumnChartExportExampleSRC from "!raw-loader!./InsightViewColumnChartExportExample";
 // import HeadlineExportExampleSRC from "!raw-loader!./HeadlineExportExample";
 
+import BarChartExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/BarChartExportExample";
+import PivotTableExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/PivotTableExportExample";
+import insightViewColumnChartExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/InsightViewColumnChartExportExample";
+// import HeadlineExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/HeadlineExportExample";
+
 export const Export: React.FC = () => (
     <div>
         <h1>Export</h1>
@@ -23,12 +28,20 @@ export const Export: React.FC = () => (
         <hr className="separator" />
 
         <h2>Export Chart Data</h2>
-        <ExampleWithSource for={BarChartExportExample} source={BarChartExportExampleSRC} />
+        <ExampleWithSource
+            for={BarChartExportExample}
+            source={BarChartExportExampleSRC}
+            sourceJS={BarChartExportExampleSRCJS}
+        />
 
         <hr className="separator" />
 
         <h2>Export Pivot Table Data</h2>
-        <ExampleWithSource for={PivotTableExportExample} source={PivotTableExportExampleSRC} />
+        <ExampleWithSource
+            for={PivotTableExportExample}
+            source={PivotTableExportExampleSRC}
+            sourceJS={PivotTableExportExampleSRCJS}
+        />
 
         <hr className="separator" />
 
@@ -36,11 +49,16 @@ export const Export: React.FC = () => (
         <ExampleWithSource
             for={insightViewColumnChartExportExample}
             source={insightViewColumnChartExportExampleSRC}
+            sourceJS={insightViewColumnChartExportExampleSRCJS}
         />
 
         <hr className="separator" />
-        {/* 
-        <h2>Export Headline Data</h2>
-        <ExampleWithSource for={HeadlineExportExample} source={HeadlineExportExampleSRC} />  */}
+
+        {/* <h2>Export Headline Data</h2>
+    <ExampleWithSource
+      for={HeadlineExportExample}
+      source={HeadlineExportExampleSRC}
+      sourceJS={HeadlineExportExampleSRCJS}
+    /> */}
     </div>
 );

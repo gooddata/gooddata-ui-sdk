@@ -3,14 +3,20 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 import { PivotTableDrillExample } from "./PivotTableDrillExample";
 import PivotTableDrillExampleSRC from "!raw-loader!./PivotTableDrillExample";
+import PivotTableDrillExampleSRCJS from "!raw-loader!../../../examplesJS/drill/PivotTableDrillExample";
 import { DrillWithExternalDataExample } from "./DrillWithExternalDataExample";
 import DrillWithExternalDataExampleSRC from "!raw-loader!./DrillWithExternalDataExample";
+import DrillWithExternalDataExampleSRCJS from "!raw-loader!../../../examplesJS/drill/DrillWithExternalDataExample";
 
 export const PivotTableDrilling: React.FC = () => (
     <div>
         <h1>Pivot Table Drilling</h1>
 
-        <ExampleWithSource for={PivotTableDrillExample} source={PivotTableDrillExampleSRC} />
+        <ExampleWithSource
+            for={PivotTableDrillExample}
+            source={PivotTableDrillExampleSRC}
+            sourceJS={PivotTableDrillExampleSRCJS}
+        />
     </div>
 );
 
@@ -38,6 +44,10 @@ export const DrillWithExternalData = () => (
             </p>
         </div>
 
-        <ExampleWithSource for={DrillWithExternalDataExample} source={DrillWithExternalDataExampleSRC} />
+        <ExampleWithSource
+            for={DrillWithExternalDataExample}
+            source={DrillWithExternalDataExampleSRC}
+            sourceJS={DrillWithExternalDataExampleSRCJS}
+        />
     </div>
 );

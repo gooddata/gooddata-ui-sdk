@@ -4,6 +4,7 @@ import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { GlobalFiltersExample } from "./GlobalFiltersExample";
 import GlobalFiltersExampleSRC from "!raw-loader!./GlobalFiltersExample";
+import GlobalFiltersExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/globalFilters/GlobalFiltersExample";
 
 export const GlobalFilters: React.FC = () => (
     <div className="example-wrapper">
@@ -31,6 +32,10 @@ export const GlobalFilters: React.FC = () => (
             </p>
         </div>
 
-        <ExampleWithSource for={GlobalFiltersExample} source={GlobalFiltersExampleSRC} />
+        <ExampleWithSource
+            for={GlobalFiltersExample}
+            source={GlobalFiltersExampleSRC}
+            sourceJS={GlobalFiltersExampleSRCJS}
+        />
     </div>
 );

@@ -11,6 +11,10 @@ import AttributeFilterComponentExampleSRC from "!raw-loader!./AttributeFilterCom
 import AttributeElementsExampleSRC from "!raw-loader!./AttributeElementsExample";
 import AttributeFilterExampleSRC from "!raw-loader!./AttributeFilterExample";
 
+import AttributeFilterComponentExampleSRCJS from "!raw-loader!../../../examplesJS/attributeFilter/AttributeFilterComponentExample";
+import AttributeElementsExampleSRCJS from "!raw-loader!../../../examplesJS/attributeFilter/AttributeElementsExample";
+import AttributeFilterExampleSRCJS from "!raw-loader!../../../examplesJS/attributeFilter/AttributeFilterExample";
+
 export const AttributeFilter = () => (
     <div>
         <h1>Attribute Filter Component</h1>
@@ -31,6 +35,7 @@ export const AttributeFilter = () => (
         <ExampleWithSource
             for={AttributeFilterComponentExample}
             source={AttributeFilterComponentExampleSRC}
+            sourceJS={AttributeFilterComponentExampleSRCJS}
         />
 
         <hr className="separator" />
@@ -39,7 +44,11 @@ export const AttributeFilter = () => (
 
         <p>This example shows how to add attribute filter component into a report.</p>
 
-        <ExampleWithSource for={AttributeFilterExample} source={AttributeFilterExampleSRC} />
+        <ExampleWithSource
+            for={AttributeFilterExample}
+            source={AttributeFilterExampleSRC}
+            sourceJS={AttributeFilterExampleSRCJS}
+        />
 
         <hr className="separator" />
 
@@ -52,6 +61,10 @@ export const AttributeFilter = () => (
             The children function will receive isLoading state, possible error state, attribute metadata,
             paging, attribute values and a loadMore function.
         </p>
-        <ExampleWithSource for={AttributeElementsExample} source={AttributeElementsExampleSRC} />
+        <ExampleWithSource
+            for={AttributeElementsExample}
+            source={AttributeElementsExampleSRC}
+            sourceJS={AttributeElementsExampleSRCJS}
+        />
     </div>
 );

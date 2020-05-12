@@ -15,6 +15,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@babel/cli",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@babel/core",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -31,12 +35,16 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "@babel/plugin-syntax-jsx",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@babel/plugin-transform-async-to-generator",
       "allowedCategories": [ "examples" ]
     },
     {
       "name": "@babel/plugin-transform-typescript",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/polyfill",
@@ -372,6 +380,10 @@
     },
     {
       "name": "babel-polyfill",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "babel-preset-react-app",
       "allowedCategories": [ "examples" ]
     },
     {

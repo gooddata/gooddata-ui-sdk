@@ -4,6 +4,7 @@ import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { ResponsiveExample } from "./ResponsiveExample";
 import ResponsiveExampleSRC from "!raw-loader!./ResponsiveExample";
+import ResponsiveExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/responsive/ResponsiveExample";
 
 export const Responsive: React.FC = () => (
     <div>
@@ -16,6 +17,10 @@ export const Responsive: React.FC = () => (
             component or equivalent.
         </p>
 
-        <ExampleWithSource for={ResponsiveExample} source={ResponsiveExampleSRC} />
+        <ExampleWithSource
+            for={ResponsiveExample}
+            source={ResponsiveExampleSRC}
+            sourceJS={ResponsiveExampleSRCJS}
+        />
     </div>
 );
