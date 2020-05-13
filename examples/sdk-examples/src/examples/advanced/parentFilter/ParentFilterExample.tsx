@@ -8,7 +8,6 @@ import {
     attributeDisplayFormRef,
 } from "@gooddata/sdk-model";
 import Select from "react-select";
-import "react-select/dist/react-select.css";
 import { Ldm, LdmExt } from "../../../ldm";
 
 interface IFilterValue {
