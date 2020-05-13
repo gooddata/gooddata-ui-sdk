@@ -80,7 +80,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
             <IntlWrapper locale={locale}>
                 <IntlTranslationsProvider>
                     {(translationProps: ITranslationsComponentProps) => {
-                        // TODO: SDK8: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
+                        // TODO: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
                         fixEmptyHeaderItems(dataView, translationProps.emptyHeaderString);
 
                         return (

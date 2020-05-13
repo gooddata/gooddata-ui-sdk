@@ -5,7 +5,7 @@ export { Chart, ChartTransformation };
 export { Visualization } from "./Visualization";
 
 /*
- * TODO: SDK8: none of the stuff below this comment should be exported from highcharts. it should either be hidden
+ * TODO: none of the stuff below this comment should be exported from highcharts. it should either be hidden
  *  or moved elsewhere.
  */
 

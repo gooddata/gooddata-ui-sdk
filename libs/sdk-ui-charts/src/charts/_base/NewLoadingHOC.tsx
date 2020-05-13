@@ -55,7 +55,7 @@ export interface ILoadingInjectedProps {
      */
     error?: string;
 
-    // TODO: SDK8: take this out of here
+    // TODO: take this out of here
     intl: IntlShape;
 
     /**

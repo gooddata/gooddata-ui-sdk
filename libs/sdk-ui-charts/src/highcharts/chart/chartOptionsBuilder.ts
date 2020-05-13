@@ -1510,9 +1510,6 @@ function getTooltipFactory(
     return buildTooltipFactory(viewByAttribute, type, config, isDualAxis);
 }
 
-/**
- * TODO: SDK8: docs
- */
 export function getChartOptions(
     dataView: IDataView,
     chartConfig: IChartConfig,

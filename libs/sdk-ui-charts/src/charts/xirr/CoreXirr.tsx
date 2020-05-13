@@ -53,7 +53,7 @@ export class XirrStateless extends React.Component<Props, {}> {
             <IntlWrapper locale={locale}>
                 <IntlTranslationsProvider>
                     {(props: ITranslationsComponentProps) => {
-                        // TODO: SDK8: evil; fix this conceptually
+                        // TODO: evil; fix this conceptually
                         fixEmptyHeaderItems(dataView, props.emptyHeaderString);
 
                         return (
