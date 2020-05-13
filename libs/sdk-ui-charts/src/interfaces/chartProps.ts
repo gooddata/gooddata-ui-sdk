@@ -117,20 +117,22 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
 /**
  * Props for all bucket charts.
  *
- * TODO: SDK8: revisit the naming
  * @public
  */
 export interface IBucketChartProps extends ICommonChartProps {
     /**
      * Analytical backend, from which the chart will obtain data to visualize
      *
+     * If you do not specify instance of analytical backend using this prop, then you MUST have
+     * BackendProvider up in the component tree.
      */
     backend?: IAnalyticalBackend;
 
     /**
-     * Workspace, from which the chart will obtain data to visualize.
+     * Identifier of analytical workspace, from which the chart will obtain data to visualize.
      *
-     * TODO: SDK8: perhaps should also accept IAnalyticalWorkspace as input
+     * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
+     * component tree.
      */
     workspace?: string;
 }
