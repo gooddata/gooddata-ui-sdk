@@ -90,7 +90,7 @@ dependencies:
   chalk: 2.4.2
   circular-dependency-plugin: 5.2.0_webpack@4.43.0
   classnames: 2.2.6
-  clean-webpack-plugin: 2.0.2_webpack@4.43.0
+  clean-webpack-plugin: 3.0.0_webpack@4.43.0
   commander: 3.0.2
   compression-webpack-plugin: 3.1.0_webpack@4.43.0
   core-js: 2.6.11
@@ -154,7 +154,7 @@ dependencies:
   react-measure: 2.3.0
   react-responsive: 8.0.3
   react-router-dom: 4.3.1
-  react-select: 1.3.0
+  react-select: 3.1.0
   react-syntax-highlighter: 12.2.1
   react-test-renderer: 16.13.1
   react-window: 1.8.5
@@ -5693,17 +5693,18 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==
-  /clean-webpack-plugin/2.0.2_webpack@4.43.0:
+  /clean-webpack-plugin/3.0.0_webpack@4.43.0:
     dependencies:
+      '@types/webpack': 4.41.12
       del: 4.1.1
       webpack: 4.43.0_webpack@4.43.0
     dev: false
     engines:
-      node: '>=6.9.0'
+      node: '>=8.9.0'
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-pi1111o4OBd9qvacbgs+NRqClfVPKVIc66B4d8kx6Ho/L+i9entQ/NpK600CsTYTPu3kWvKwwyKarsYMvC2xeA==
+      integrity: sha512-MciirUH5r+cYLGCOL5JX/ZLzOZbVr1ot3Fw+KcvbhUb6PM+yycqd9ZhIlcigQ5gl+XhppNmw3bEFuaaMNyLj3A==
   /cli-boxes/2.2.0:
     dev: false
     engines:
@@ -6930,6 +6931,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
+  /dom-helpers/5.1.4:
+    dependencies:
+      '@babel/runtime': 7.9.6
+      csstype: 2.6.10
+    dev: false
+    resolution:
+      integrity: sha512-TjMyeVUvNEnOnhzs6uAn9Ya47GmMo3qq7m+Lr/3ON0Rs5kHvb8I+SQYjLUSYn7qhEm0QjW0yrBkvz9yOrwwz1A==
   /dom-serializer/0.1.1:
     dependencies:
       domelementtype: 1.3.1
@@ -13944,30 +13952,40 @@ packages:
       react: '>=15'
     resolution:
       integrity: sha512-yrvL8AogDh2X42Dt9iknk4wF4V8bWREPirFfS9gLU1huk6qK41sg7Z/1S81jjTrGHxa3B8R3J6xIkDAA6CVarg==
-  /react-select/1.3.0:
+  /react-select/3.1.0:
     dependencies:
-      classnames: 2.2.6
+      '@babel/runtime': 7.9.6
+      '@emotion/cache': 10.0.29
+      '@emotion/core': 10.0.28
+      '@emotion/css': 10.0.27
+      memoize-one: 5.1.1
       prop-types: 15.7.2
       react-input-autosize: 2.2.2
+      react-transition-group: 4.4.1
     dev: false
     peerDependencies:
-      react: ^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0
-      react-dom: ^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0
+      react: ^16.8.0
+      react-dom: ^16.8.0
     resolution:
-      integrity: sha512-g/QAU1HZrzSfxkwMAo/wzi6/ezdWye302RGZevsATec07hI/iSxcpB1hejFIp7V63DJ8mwuign6KmB3VjdlinQ==
-  /react-select/1.3.0_react-dom@16.13.1+react@16.13.1:
+      integrity: sha512-wBFVblBH1iuCBprtpyGtd1dGMadsG36W5/t2Aj8OE6WbByDg5jIFyT7X5gT+l0qmT5TqWhxX+VsKJvCEl2uL9g==
+  /react-select/3.1.0_react-dom@16.13.1+react@16.13.1:
     dependencies:
-      classnames: 2.2.6
+      '@babel/runtime': 7.9.6
+      '@emotion/cache': 10.0.29
+      '@emotion/core': 10.0.28_react@16.13.1
+      '@emotion/css': 10.0.27
+      memoize-one: 5.1.1
       prop-types: 15.7.2
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       react-input-autosize: 2.2.2_react@16.13.1
+      react-transition-group: 4.4.1_react-dom@16.13.1+react@16.13.1
     dev: false
     peerDependencies:
-      react: ^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0
-      react-dom: ^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0
+      react: ^16.8.0
+      react-dom: ^16.8.0
     resolution:
-      integrity: sha512-g/QAU1HZrzSfxkwMAo/wzi6/ezdWye302RGZevsATec07hI/iSxcpB1hejFIp7V63DJ8mwuign6KmB3VjdlinQ==
+      integrity: sha512-wBFVblBH1iuCBprtpyGtd1dGMadsG36W5/t2Aj8OE6WbByDg5jIFyT7X5gT+l0qmT5TqWhxX+VsKJvCEl2uL9g==
   /react-side-effect/1.2.0:
     dependencies:
       shallowequal: 1.1.0
@@ -14164,6 +14182,32 @@ packages:
       react-dom: '>=15.0.0'
     resolution:
       integrity: sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==
+  /react-transition-group/4.4.1:
+    dependencies:
+      '@babel/runtime': 7.9.6
+      dom-helpers: 5.1.4
+      loose-envify: 1.4.0
+      prop-types: 15.7.2
+    dev: false
+    peerDependencies:
+      react: '>=16.6.0'
+      react-dom: '>=16.6.0'
+    resolution:
+      integrity: sha512-Djqr7OQ2aPUiYurhPalTrVy9ddmFCCzwhqQmtN+J3+3DzLO209Fdr70QrN8Z3DsglWql6iY1lDWAfpFiBtuKGw==
+  /react-transition-group/4.4.1_react-dom@16.13.1+react@16.13.1:
+    dependencies:
+      '@babel/runtime': 7.9.6
+      dom-helpers: 5.1.4
+      loose-envify: 1.4.0
+      prop-types: 15.7.2
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+    dev: false
+    peerDependencies:
+      react: '>=16.6.0'
+      react-dom: '>=16.6.0'
+    resolution:
+      integrity: sha512-Djqr7OQ2aPUiYurhPalTrVy9ddmFCCzwhqQmtN+J3+3DzLO209Fdr70QrN8Z3DsglWql6iY1lDWAfpFiBtuKGw==
   /react-window/1.8.5:
     dependencies:
       '@babel/runtime': 7.9.6
@@ -18186,7 +18230,7 @@ packages:
       babel-polyfill: 6.26.0
       babel-runtime: 6.26.0
       circular-dependency-plugin: 5.2.0_webpack@4.43.0
-      clean-webpack-plugin: 2.0.2_webpack@4.43.0
+      clean-webpack-plugin: 3.0.0_webpack@4.43.0
       compression-webpack-plugin: 3.1.0_webpack@4.43.0
       css-loader: 3.5.3_webpack@4.43.0
       dotenv-webpack: 1.7.0_webpack@4.43.0
@@ -18215,7 +18259,7 @@ packages:
       react-helmet: 6.0.0_react@16.13.1
       react-measure: 2.3.0_react-dom@16.13.1+react@16.13.1
       react-router-dom: 4.3.1_react@16.13.1
-      react-select: 1.3.0_react-dom@16.13.1+react@16.13.1
+      react-select: 3.1.0_react-dom@16.13.1+react@16.13.1
       react-syntax-highlighter: 12.2.1_react@16.13.1
       react-test-renderer: 16.13.1_react@16.13.1
       recharts: 1.8.5_react-dom@16.13.1+react@16.13.1
@@ -18236,7 +18280,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-examples'
     resolution:
-      integrity: sha512-NZ/nX0dgrqmPszox1OQLaMWjfw8yh5UY2RDjE2TQBUa1SN/jrdrpVo/PwHmjUnmyqU6qkoDLV8LsYxX1D6fMvw==
+      integrity: sha512-lkF66vpJBg2S0XJW0FmIxu8oycsPLPcvMZk4BPWkqW13ddiodvFoNXewF0MxdcyePK1NSVc10PAysRTuqBYkRg==
       tarball: 'file:projects/sdk-examples.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -18744,7 +18788,7 @@ specifiers:
   chalk: ^2.4.2
   circular-dependency-plugin: ^5.2.0
   classnames: ^2.2.6
-  clean-webpack-plugin: ^2.0.2
+  clean-webpack-plugin: ^3.0.0
   commander: ^3.0.2
   compression-webpack-plugin: ^3.1.0
   core-js: ^2.6.10
@@ -18808,7 +18852,7 @@ specifiers:
   react-measure: ^2.3.0
   react-responsive: ^8.0.1
   react-router-dom: ^4.2.2
-  react-select: ^1.2.1
+  react-select: ^3.1.0
   react-syntax-highlighter: ^12.2.1
   react-test-renderer: ^16.4.2
   react-window: ^1.8.5
