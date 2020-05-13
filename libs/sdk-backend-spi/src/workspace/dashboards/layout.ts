@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
+import { IWidget } from "./widget";
 
 /**
  * Dashboard layout
@@ -27,7 +27,7 @@ export interface ILayoutWidget {
     /**
      * Widget object reference
      */
-    widget: ObjRef;
+    widget: IWidget;
 }
 
 /**

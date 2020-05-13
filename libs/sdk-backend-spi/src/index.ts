@@ -132,6 +132,8 @@ export {
     IDashboardDateFilter,
     IFilterContextDefinition,
     RelativeType,
+    ITempFilterContext,
+    ITempFilterContextDefinition,
 } from "./workspace/dashboards/filterContext";
 export {
     Layout,
@@ -147,7 +149,7 @@ export {
     SectionHeader,
     Widget,
 } from "./workspace/dashboards/layout";
-export { IWidget, IWidgetDefinition, WidgetType } from "./workspace/dashboards/widget";
+export { IWidget, IWidgetDefinition, WidgetType, isWidget } from "./workspace/dashboards/widget";
 export { IWidgetAlert, IWidgetAlertDefinition } from "./workspace/dashboards/alert";
 export {
     AbsoluteDateFilterOption,

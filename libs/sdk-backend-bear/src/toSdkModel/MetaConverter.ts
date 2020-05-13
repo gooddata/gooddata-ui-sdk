@@ -15,7 +15,41 @@ import {
 } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
+const supportedMetadataObjectsTypeGuards = [
+    GdcMetadata.isAttribute,
+    GdcMetadata.isAttributeDisplayForm,
+    GdcMetadata.isMetric,
+    GdcMetadata.isFact,
+    GdcMetadata.isDataSet,
+    GdcMetadata.isPrompt,
+];
+
+export type SupportedWrappedMetadataObject =
+    | GdcMetadata.IWrappedAttribute
+    | GdcMetadata.IWrappedAttributeDisplayForm
+    | GdcMetadata.IWrappedMetric
+    | GdcMetadata.IWrappedFact
+    | GdcMetadata.IWrappedDataSet
+    | GdcMetadata.IWrappedPrompt;
+
+export type SupportedMetadataObject =
+    | GdcMetadata.IAttribute
+    | GdcMetadata.IAttributeDisplayForm
+    | GdcMetadata.IMetric
+    | GdcMetadata.IFact
+    | GdcMetadata.IDataSet
+    | GdcMetadata.IPrompt;
+
+const isSupportedMetadataObject = (obj: any): obj is SupportedMetadataObject =>
+    supportedMetadataObjectsTypeGuards.some(isType => isType(obj));
+
 export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataObject => {
+    if (!isSupportedMetadataObject(obj)) {
+        throw new UnexpectedError(
+            `Cannot convert metadata object, convertor not found! (${JSON.stringify(obj, null, 4)})`,
+        );
+    }
+
     const ref = uriRef(obj.meta.uri);
 
     const commonModifications = <T extends IMetadataObjectBuilder>(builder: T) =>
@@ -43,13 +77,10 @@ export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataO
         return newFactMetadataObject(ref, f => f.modify(commonModifications));
     } else if (GdcMetadata.isDataSet(obj)) {
         return newDataSetMetadataObject(ref, ds => ds.modify(commonModifications));
-    } else if (GdcMetadata.isPrompt(obj)) {
+    } else {
+        // is prompt
         return newVariableMetadataObject(ref, v => v.modify(commonModifications));
     }
-
-    throw new UnexpectedError(
-        `Cannot convert metadata object, convertor not found! (${JSON.stringify(obj, null, 4)})`,
-    );
 };
 
 /**

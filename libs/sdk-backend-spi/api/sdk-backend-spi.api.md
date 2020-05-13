@@ -231,11 +231,11 @@ export interface IAuthenticationProvider {
 }
 
 // @alpha
-export type IDashboard = IDashboardDefinition & {
+export interface IDashboard extends IDashboardDefinition {
+    readonly identifier: string;
     readonly ref: ObjRef;
     readonly uri: string;
-    readonly identifier: string;
-};
+}
 
 // @public
 export interface IDashboardAddedPresets {
@@ -280,12 +280,11 @@ export interface IDashboardDefinition {
     readonly created: string;
     readonly dateFilterConfig?: IDateFilterConfig;
     readonly description: string;
-    readonly filterContext: IFilterContext[];
-    readonly layout: Layout;
+    readonly filterContext: IFilterContext | ITempFilterContext;
+    readonly layout?: Layout;
     readonly scheduledMails: IScheduledMail[];
     readonly title: string;
     readonly updated: string;
-    readonly widgets: IWidget[];
 }
 
 // @public
@@ -425,9 +424,14 @@ export interface IExtendedDateFilterErrors {
 }
 
 // @alpha
-export type IFilterContext = IFilterContextDefinition & {
+export interface IFilterContext extends IFilterContextDefinition {
+    // (undocumented)
+    readonly identifier: string;
+    // (undocumented)
     readonly ref: ObjRef;
-};
+    // (undocumented)
+    readonly uri: string;
+}
 
 // @alpha
 export interface IFilterContextDefinition {
@@ -490,7 +494,7 @@ export interface IInsightQueryResult extends IPagedResource<IInsight> {
 
 // @alpha
 export interface ILayoutWidget {
-    widget: ObjRef;
+    widget: IWidget;
 }
 
 // @alpha
@@ -722,6 +726,23 @@ export function isUnexpectedError(obj: any): obj is UnexpectedError;
 // @public
 export function isUnexpectedResponseError(obj: any): obj is UnexpectedResponseError;
 
+// @alpha
+export function isWidget(obj: any): obj is IWidget;
+
+// @alpha
+export interface ITempFilterContext extends ITempFilterContextDefinition {
+    // (undocumented)
+    readonly ref: ObjRef;
+    // (undocumented)
+    readonly uri: string;
+}
+
+// @alpha
+export interface ITempFilterContextDefinition {
+    readonly created: string;
+    readonly filters: FilterContextItem[];
+}
+
 // @public
 export interface ITotalDescriptor {
     // (undocumented)
@@ -750,9 +771,11 @@ export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSetting
 }
 
 // @alpha
-export type IWidget = IWidgetDefinition & {
+export interface IWidget extends IWidgetDefinition {
+    readonly identifier: string;
     readonly ref: ObjRef;
-};
+    readonly uri: string;
+}
 
 // @alpha
 export type IWidgetAlert = IWidgetAlertDefinition & {

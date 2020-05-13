@@ -114,6 +114,38 @@ export interface IFilterContextDefinition {
  * See {@link IFilterContextDefinition}
  * @alpha
  */
-export type IFilterContext = IFilterContextDefinition & {
+export interface IFilterContext extends IFilterContextDefinition {
     readonly ref: ObjRef;
-};
+
+    readonly uri: string;
+
+    readonly identifier: string;
+}
+
+/**
+ * Temporary filter context serves to override original dashboard filter context during the dashboard export
+ *
+ * @alpha
+ */
+export interface ITempFilterContextDefinition {
+    /**
+     * Filter context created time
+     * YYYY-MM-DD HH:mm:ss
+     */
+    readonly created: string;
+
+    /**
+     * Attribute or date filters
+     */
+    readonly filters: FilterContextItem[];
+}
+
+/**
+ * See {@link ITempFilterContextDefinition}
+ * @alpha
+ */
+export interface ITempFilterContext extends ITempFilterContextDefinition {
+    readonly ref: ObjRef;
+
+    readonly uri: string;
+}
