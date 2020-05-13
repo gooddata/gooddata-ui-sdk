@@ -114,8 +114,6 @@ export interface IComboChartBucketProps {
 }
 
 /**
- * TODO: SDK8: add docs
- *
  * @public
  */
 export interface IComboChartProps extends IBucketChartProps, IComboChartBucketProps {}
