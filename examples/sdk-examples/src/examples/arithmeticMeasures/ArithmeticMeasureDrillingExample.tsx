@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
@@ -14,18 +14,13 @@ const drillableItems = [HeaderPredicates.composedFromIdentifier(measureLocalId(L
 const style = { height: 200 };
 
 export const ArithmeticMeasureDrillingExample: React.FC = () => {
-    const [{ drillEvent }, setState] = useState({
-        drillEvent: null,
-    });
+    const [drillEvent, setDrillEvent] = useState<IDrillEvent>();
 
-    const onDrill = _drillEvent =>
-        setState({
-            drillEvent: _drillEvent,
-        });
+    const onDrill = (drillEvent: IDrillEvent) => setDrillEvent(drillEvent);
 
     let renderDrillEvent;
     if (drillEvent) {
-        const averageSales = drillEvent.drillContext.row[drillEvent.drillContext.columnIndex];
+        const averageSales = drillEvent.drillContext.row![drillEvent.drillContext.columnIndex!];
         renderDrillEvent = (
             <h3>
                 You have clicked <span className="s-drill-value">{averageSales}</span>

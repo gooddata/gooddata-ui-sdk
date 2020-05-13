@@ -52,8 +52,8 @@ export const useDemoProjectAuth = () => {
     // get user projects
     useEffect(() => {
         const getProjects = async () => {
-            const userId = uriToId(profileUri);
-            const projects = await sdk.project.getProjects(userId);
+            const userId = profileUri ? uriToId(profileUri) : undefined;
+            const projects = userId ? await sdk.project.getProjects(userId) : undefined;
             return projects;
         };
 

@@ -2,25 +2,25 @@
 import React, { useState } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
-import { measureIdentifier } from "@gooddata/sdk-model";
+import { measureIdentifier, IMeasureValueFilter } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../../ldm";
 
 const measures = [LdmExt.FranchiseFees, LdmExt.FranchisedSales];
 const attributes = [Ldm.LocationName.Default];
 
-interface IDropdownButtonProps {
-    isActive?: boolean;
-    measureTitle: string;
-    operator: string;
-    operatorTitle: string;
-    onClick: () => void;
-    value: {
-        to: string;
-        from: string;
-        value: string;
-    };
-}
 // TODO: Decide whether MeasureValueFilterDropdown will accept these props
+// interface IDropdownButtonProps {
+//     isActive?: boolean;
+//     measureTitle: string;
+//     operator: string;
+//     operatorTitle: string;
+//     onClick: () => void;
+//     value: {
+//         to: string;
+//         from: string;
+//         value: string;
+//     };
+// }
 // const DropdownButton: React.FC<IDropdownButtonProps> = props => {
 //     const { onClick, measureTitle, isActive, operatorTitle, operator, value } = props;
 //     const mainColor = isActive ? "#0e69c9" : "#1787ff";
@@ -56,13 +56,11 @@ interface IDropdownButtonProps {
 const style = { height: 300 };
 
 export const MeasureValueFilterDropdownCustomButtonExample: React.FC = () => {
-    const [state, setState] = useState({ filter: null });
+    const [filter, setFilter] = useState<IMeasureValueFilter | undefined>();
 
-    const onApply = filter => {
-        setState({ filter });
+    const onApply = (filter: IMeasureValueFilter) => {
+        setFilter(filter);
     };
-
-    const { filter } = state;
 
     return (
         <div>
@@ -72,7 +70,7 @@ export const MeasureValueFilterDropdownCustomButtonExample: React.FC = () => {
                 // button={DropdownButton}
                 // measureTitle={franchiseSalesMeasure.measure.title}
                 measureIdentifier={measureIdentifier(LdmExt.FranchiseFees)}
-                filter={filter || null}
+                filter={filter || undefined}
             />
             <hr className="separator" />
             <div style={style} className="s-pivot-table">

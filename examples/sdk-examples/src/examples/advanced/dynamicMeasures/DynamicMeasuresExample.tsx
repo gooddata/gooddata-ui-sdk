@@ -26,8 +26,8 @@ const getNewMeasureDefinition = (measureItem: any, index: number) => {
 const getMeasureListByTag = async (tag: string) => {
     const result = await sdk.xhr.get(`/gdc/md/${workspace}/tags/${tag}`);
     const items = result.data.entries;
-    const measureItems = (items as any).filter(item => item.category === "metric");
-    const measures = await Promise.all(measureItems.map(measure => sdk.xhr.get(measure.link)));
+    const measureItems = items.filter((item: any) => item.category === "metric");
+    const measures = await Promise.all(measureItems.map((measure: any) => sdk.xhr.get(measure.link)));
     const measuresMeta = measures.map((measure: any) => measure.data.metric.meta);
     return measuresMeta;
 };
@@ -72,10 +72,10 @@ export const DynamicMeasuresExample: React.FC = () => {
             });
     }, []);
 
-    const onMeasureChange = measureIdentifier => {
-        const updatedMeasure = measureList.find(measure => measure.identifier === measureIdentifier);
-        const updatedMeasureIndex = measureList.indexOf(updatedMeasure);
-        const updatedMeasures = [...measureList];
+    const onMeasureChange = (measureIdentifier: string) => {
+        const updatedMeasure = measureList!.find(measure => measure.identifier === measureIdentifier);
+        const updatedMeasureIndex = measureList!.indexOf(updatedMeasure);
+        const updatedMeasures = [...measureList!];
         updatedMeasures[updatedMeasureIndex] = {
             ...updatedMeasure,
             isSelected: !updatedMeasure.isSelected,

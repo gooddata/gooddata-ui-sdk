@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { attributeIdentifier, measureIdentifier, ITotal } from "@gooddata/sdk-model";
 
 import { LdmExt, Ldm } from "../../ldm";
@@ -46,19 +46,19 @@ const totals: ITotal[] = [
 ];
 
 const drillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(Ldm.MenuCategory)),
-    HeaderPredicates.identifierMatch(measureIdentifier(Ldm.$FranchiseFees)),
+    HeaderPredicates.identifierMatch(attributeIdentifier(Ldm.MenuCategory)!),
+    HeaderPredicates.identifierMatch(measureIdentifier(Ldm.$FranchiseFees)!),
 ];
 
 export class PivotTableDrillExample extends Component<{}, { drillEvent: any }> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             drillEvent: null,
         };
     }
 
-    public onDrill = drillEvent => {
+    public onDrill = (drillEvent: IDrillEvent) => {
         // tslint:disable-next-line:no-console
         console.log(
             "onFiredDrillEvent",

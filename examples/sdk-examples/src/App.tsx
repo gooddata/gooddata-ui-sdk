@@ -9,7 +9,6 @@ import { Header } from "./components/Header";
 import { Menu } from "./components/Menu";
 import { useAuth, AuthStatus } from "./context/auth";
 import { routes, sideNavigationRoutes, topNavigationRoutes, userRoutes } from "./constants/routes";
-import { BASEPATH } from "./constants/env";
 import { workspace } from "./constants/fixtures";
 import { history } from "./history";
 
@@ -23,7 +22,7 @@ export const App: React.FC = () => {
     return (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspace}>
-                <Router basepath={BASEPATH} history={history}>
+                <Router history={history}>
                     <div className="mainWrapper">
                         <style jsx>{`
                             :global(html),
@@ -121,6 +120,7 @@ export const App: React.FC = () => {
                         />
                         <div className="pageWrapper">
                             {(authStatus === AuthStatus.AUTHORIZED) === true && (
+                                // @ts-ignore
                                 <Menu sideNavigationRoutes={sideNavigationRoutes} routes={routes} />
                             )}
                             {authError ? <CustomError message={authError} /> : null}
@@ -128,14 +128,14 @@ export const App: React.FC = () => {
                                 {authStatus === AuthStatus.AUTHORIZING && (
                                     <div className="flexWrapper flexWrapper--center">
                                         <CustomLoading
-                                            height={null}
+                                            height={undefined}
                                             label="Checking if user is already logged in&hellip;"
                                         />
                                     </div>
                                 )}
                                 {authStatus === AuthStatus.LOGGING_OUT && (
                                     <div className="flexWrapper flexWrapper--center">
-                                        <CustomLoading height={null} label="Logging out&hellip;" />
+                                        <CustomLoading height={undefined} label="Logging out&hellip;" />
                                     </div>
                                 )}
                                 {authStatus !== AuthStatus.AUTHORIZING && (

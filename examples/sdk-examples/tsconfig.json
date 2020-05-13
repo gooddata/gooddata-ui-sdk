@@ -5,7 +5,14 @@
         "jsx": "react",
         "sourceMap": true,
         "esModuleInterop": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "strict": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "strictNullChecks": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "allowSyntheticDefaultImports": true
     },
     "include": ["src", "typings"],
     "exclude": ["node_modules", "dist"]

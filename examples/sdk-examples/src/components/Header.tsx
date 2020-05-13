@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { NavLink, Link, withRouter } from "react-router-dom";
+import { NavLink, Link, withRouter, RouteComponentProps } from "react-router-dom";
 import { CustomLoading } from "./CustomLoading";
 import { workspace, backendUrlForInfo } from "../constants/fixtures";
 import favicon from "../static/favicon.ico";
@@ -11,7 +11,7 @@ import { BASEPATH } from "../constants/env";
 
 const appName = "GoodData.UI Examples";
 
-interface IHeaderProps {
+interface IHeaderProps extends RouteComponentProps {
     location: any;
     topNavigationRoutes: any[];
     routes?: any[];

@@ -31,7 +31,7 @@ export const CustomLegendExample: React.FC = () => {
     const [{ legendItems }, setState] = useState<ICustomChartExampleState>({
         legendItems: [],
     });
-    const onLegendReady = ({ legendItems: _legendItems }) => {
+    const onLegendReady = ({ legendItems: _legendItems }: ICustomChartExampleState) => {
         setState({
             legendItems: _legendItems,
         });

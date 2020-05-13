@@ -30,7 +30,7 @@ export const HeadlineOnDrillExample: React.FC = () => {
                         onDrill={onDrill}
                         drillableItems={[
                             {
-                                identifier: measureIdentifier(LdmExt.FranchisedSales),
+                                identifier: measureIdentifier(LdmExt.FranchisedSales)!,
                             },
                         ]}
                     />

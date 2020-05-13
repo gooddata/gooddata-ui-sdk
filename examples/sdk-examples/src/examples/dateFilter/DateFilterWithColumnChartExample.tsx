@@ -103,7 +103,7 @@ const columnChartContainerStyle = { height: 300 };
 
 export const DateFilterWithColumnChartExample: React.FC = () => {
     const [state, setState] = useState<IDateFilterComponentExampleState>({
-        selectedFilterOption: defaultDateFilterOptions.allTime,
+        selectedFilterOption: defaultDateFilterOptions.allTime!,
         excludeCurrentPeriod: false,
     });
 

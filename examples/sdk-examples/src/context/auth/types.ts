@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export enum AuthStatus {
@@ -19,7 +19,12 @@ export interface IAuthContext {
     authStatus: IAuthState["authStatus"];
     authError?: IAuthState["authError"];
     backend: IAnalyticalBackend;
-    login: (username: string, password: string) => Promise<any>;
-    logout: () => Promise<void>;
-    register: (username: string, password: string, firstName: string, lastName: string) => Promise<any>;
+    login: (username: string, password: string) => Promise<any> | undefined;
+    logout: () => Promise<void> | undefined;
+    register: (
+        username: string,
+        password: string,
+        firstName: string,
+        lastName: string,
+    ) => Promise<any> | undefined;
 }

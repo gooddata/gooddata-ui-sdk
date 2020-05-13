@@ -219,6 +219,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/history",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@types/hoist-non-react-statics",
       "allowedCategories": [ "production" ]
     },
@@ -232,7 +236,7 @@
     },
     {
       "name": "@types/isomorphic-fetch",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@types/jest",
@@ -252,7 +256,7 @@
     },
     {
       "name": "@types/lodash",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@types/lru-cache",
@@ -276,7 +280,7 @@
     },
     {
       "name": "@types/prop-types",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@types/qs",
@@ -291,6 +295,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@types/react-datepicker",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@types/react-day-picker",
       "allowedCategories": [ "production" ]
     },
@@ -299,12 +307,20 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@types/react-google-recaptcha",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "@types/react-helmet",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@types/react-intl",
       "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@types/react-measure",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@types/react-portal",
@@ -313,6 +329,18 @@
     {
       "name": "@types/react-responsive",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/react-router-dom",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "@types/react-select",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "@types/react-syntax-highlighter",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "@types/react-window",
@@ -341,6 +369,10 @@
     {
       "name": "@types/uuid",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/yup",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "ag-grid-community",

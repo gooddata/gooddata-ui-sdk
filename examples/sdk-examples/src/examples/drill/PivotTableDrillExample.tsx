@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ITotal, attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 import { LdmExt } from "../../ldm";
@@ -52,19 +52,15 @@ const drillableItems = [
 const style = { height: 500 };
 
 export const PivotTableDrillExample: React.FC = () => {
-    const [{ drillEvent }, setState] = useState({
-        drillEvent: null,
-    });
+    const [drillEvent, setState] = useState<IDrillEvent>();
 
-    const onDrill = _drillEvent => {
-        setState({
-            drillEvent: _drillEvent,
-        });
+    const onDrill = (drillEvent: IDrillEvent) => {
+        setState(drillEvent);
     };
 
     let renderDrillValue;
     if (drillEvent) {
-        const drillColumn = drillEvent.drillContext.row[drillEvent.drillContext.columnIndex];
+        const drillColumn = drillEvent.drillContext.row![drillEvent.drillContext.columnIndex!];
         const drillValue = typeof drillColumn === "object" ? drillColumn.name : drillColumn;
         renderDrillValue = (
             <h3>

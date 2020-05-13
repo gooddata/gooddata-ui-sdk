@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { Link, Redirect } from "react-router-dom";
 
-export const WithSubRoutes = ({ subRoutes, match, location: { pathname } }) => {
+export const WithSubRoutes = ({ subRoutes, match, location: { pathname } }: any) => {
     if (match.isExact) {
         return <Redirect to={subRoutes[0].path} />;
     }
@@ -25,7 +25,7 @@ export const WithSubRoutes = ({ subRoutes, match, location: { pathname } }) => {
                 `}
             </style>
             <div className="gd-tabs">
-                {subRoutes.map(({ path, title }) => (
+                {subRoutes.map(({ path, title }: any) => (
                     <Link key={path} to={path} className={`gd-tab${path === pathname ? " is-active" : ""}`}>
                         {title}
                     </Link>

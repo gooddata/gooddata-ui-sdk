@@ -11,6 +11,7 @@ import { Ldm, LdmExt } from "../../../ldm";
 import { Layout } from "../../../components/Layout";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
+import { IItem } from "../../attributeFilter/AttributeElementsExample";
 
 interface IEmployeeProfileProps {
     validElements: IElementQueryResult;
@@ -41,7 +42,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
             selectedEmployeeUri: uri,
         });
 
-    const buildSidebarItem = (item, selectedEmployeeUri) => {
+    const buildSidebarItem = (item: IItem, selectedEmployeeUri: string) => {
         const { title, uri } = item;
 
         return (
@@ -78,7 +79,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
     const employeeFilter = newPositiveAttributeFilter(Ldm.EmployeeName.Default, selectedEmployeesUris);
     const selectedEmployee = validElements.items.find(item => item.uri === selectedEmployeeUri);
 
-    const employeeName = selectedEmployee.title;
+    const employeeName = selectedEmployee!.title;
 
     return (
         <div className="layout-wrapper">

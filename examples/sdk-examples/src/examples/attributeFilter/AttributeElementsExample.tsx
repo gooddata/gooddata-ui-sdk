@@ -4,15 +4,15 @@ import { AttributeElements } from "@gooddata/sdk-ui-filters";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 import { Ldm } from "../../ldm";
 
-interface IAttributeFilterItemProps {
+export interface IItem {
     title: string;
     uri: string;
 }
 
-export class AttributeFilterItem extends Component<IAttributeFilterItemProps> {
-    public onChange(uri) {
+export class AttributeFilterItem extends Component<IItem> {
+    public onChange(uri: string) {
         // tslint:disable-next-line:no-console
-        return event => console.log("AttributeFilterItem onChange", uri, event.target.value === "on");
+        return (event: any) => console.log("AttributeFilterItem onChange", uri, event.target.value === "on");
     }
 
     public render() {
@@ -27,7 +27,7 @@ export class AttributeFilterItem extends Component<IAttributeFilterItemProps> {
 }
 
 export class AttributeElementsExample extends Component {
-    public buildAttributeFilterItem(item) {
+    public buildAttributeFilterItem(item: IItem) {
         const { title, uri } = item;
 
         return <AttributeFilterItem key={uri} uri={uri} title={title} />;
@@ -48,7 +48,7 @@ export class AttributeElementsExample extends Component {
                                 <button
                                     className="gd-button gd-button-secondary s-show-more-filters-button"
                                     onClick={loadMore}
-                                    disabled={isLoading || offset + count === totalCount}
+                                    disabled={isLoading || offset! + count! === totalCount}
                                 >
                                     More
                                 </button>
@@ -62,7 +62,7 @@ export class AttributeElementsExample extends Component {
                                     <br />
                                     total: {totalCount}
                                     <br />
-                                    nextOffset: {offset + count}
+                                    nextOffset: {offset! + count!}
                                 </pre>
                                 <div>
                                     {validElements

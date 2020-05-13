@@ -40,13 +40,13 @@ export const Login: React.FC = () => {
         if (demoProjectAuthStatus === DemoProjectAuthStatus.ASSIGNING_DEMO_PROJECT_TO_USER) {
             return (
                 <div style={verticalCenterStyle}>
-                    <CustomLoading height={null} label="Assigning demo project&hellip;" />
+                    <CustomLoading height={undefined} label="Assigning demo project&hellip;" />
                 </div>
             );
         }
         return (
             <div style={verticalCenterStyle} className="s-checkingDemoAvailability">
-                <CustomLoading height={null} label="Checking demo availability&hellip;" />
+                <CustomLoading height={undefined} label="Checking demo availability&hellip;" />
             </div>
         );
     }

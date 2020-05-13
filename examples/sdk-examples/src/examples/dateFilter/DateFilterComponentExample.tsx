@@ -175,7 +175,7 @@ interface IDateFilterComponentExampleState {
 
 export const DateFilterComponentExample: React.FC = () => {
     const [state, setState] = useState<IDateFilterComponentExampleState>({
-        selectedFilterOption: defaultDateFilterOptions.allTime,
+        selectedFilterOption: defaultDateFilterOptions.allTime!,
         excludeCurrentPeriod: false,
     });
 

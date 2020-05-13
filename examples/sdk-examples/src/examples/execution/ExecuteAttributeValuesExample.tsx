@@ -8,10 +8,10 @@ import { workspace } from "../../constants/fixtures";
 import { Ldm } from "../../ldm";
 import { useBackend } from "../../context/auth";
 
-const getAttributeHeaderItemName = x => x.attributeHeaderItem.name;
-const withIndex = fn => {
+const getAttributeHeaderItemName = (x: any) => x.attributeHeaderItem.name;
+const withIndex = (fn: any) => {
     let index = 0;
-    return (...args) => fn(index++, ...args);
+    return (...args: any) => fn(index++, ...args);
 };
 
 const resultStyle = {
@@ -49,7 +49,7 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
                     const locations = locationNameHeaders.map(getAttributeHeaderItemName);
                     const locationsByState = groupBy(
                         locations,
-                        withIndex(index => locationStates[index]),
+                        withIndex((index: number) => locationStates[index]),
                     );
                     const locationStateLocationsPairs = toPairs(locationsByState);
 

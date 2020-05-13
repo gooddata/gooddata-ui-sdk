@@ -6,12 +6,12 @@ import { newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-m
 import { LdmExt } from "../../ldm";
 
 export class PreviousPeriodHeadlineExample extends Component {
-    public onLoadingChanged(...params) {
+    public onLoadingChanged(...params: any) {
         // tslint:disable-next-line:no-console
         return console.log("PreviousPeriodHeadlineExample onLoadingChanged", ...params);
     }
 
-    public onError(...params) {
+    public onError(...params: any) {
         // tslint:disable-next-line:no-console
         return console.log("PreviousPeriodHeadlineExample onError", ...params);
     }

@@ -9,22 +9,29 @@ import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 const dateFormat = "YYYY-MM-DD";
 const measures = [LdmExt.TotalSales1];
+
+export interface IDatePickerState {
+    from: moment.Moment;
+    to: moment.Moment;
+    error: string | undefined;
+}
+
 export const DatePickerExample: React.FC = () => {
-    const [state, setState] = useState({
-        from: moment("2017-01-01", dateFormat),
-        to: moment("2017-12-31", dateFormat),
-        error: null,
+    const [state, setState] = useState<IDatePickerState>({
+        from: moment("2017-01-01"),
+        to: moment("2017-12-31"),
+        error: undefined,
     });
 
-    const onDateChange = (prop, value) =>
+    const onDateChange = (prop: any, value: Date) => {
         setState(oldState => {
             const { from, to } = oldState;
-            const newState = {
+            const newState: any = {
                 from,
                 to,
-                error: null,
+                error: undefined,
             };
-            newState[prop] = value;
+            newState[prop] = moment(value);
 
             return newState.to.isSameOrAfter(newState.from)
                 ? newState
@@ -33,12 +40,13 @@ export const DatePickerExample: React.FC = () => {
                       error: '"From" date must come before "To" date.',
                   };
         });
+    };
 
-    const onFromChange = value => {
+    const onFromChange = (value: Date) => {
         onDateChange("from", value);
     };
 
-    const onToChange = value => {
+    const onToChange = (value: Date) => {
         onDateChange("to", value);
     };
 
@@ -65,11 +73,11 @@ export const DatePickerExample: React.FC = () => {
             `}</style>
             <label className="s-date-picker-from">
                 <h4>From</h4>
-                <DatePicker className="gd-input-field" selected={from} onChange={onFromChange} />
+                <DatePicker className="gd-input-field" selected={from.toDate()} onChange={onFromChange} />
             </label>
             <label className="s-date-picker-to">
                 <h4>To</h4>
-                <DatePicker className="gd-input-field" selected={to} onChange={onToChange} />
+                <DatePicker className="gd-input-field" selected={to.toDate()} onChange={onToChange} />
             </label>
             <hr className="separator" />
             <div style={{ height: 300 }} className="s-date-picker-chart">

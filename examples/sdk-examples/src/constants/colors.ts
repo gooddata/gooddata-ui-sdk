@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 export const DEFAULT_COLOR_PALETTE = [
     "rgb(20,178,226)",
     "rgb(0,193,141)",
@@ -26,7 +26,7 @@ export const DEFAULT_COLOR_PALETTE = [
 ].map(
     color =>
         `#${/rgb\(([\d]*),([\d]*),([\d]*)\)/
-            .exec(color)
+            .exec(color)!
             .slice(1)
             .map(val => `0${parseInt(val, 10).toString(16)}`.slice(-2))
             .join("")}`,

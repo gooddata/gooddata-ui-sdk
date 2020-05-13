@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import { BACKEND_URL } from "./env";
 
-const demoProject = {
+const demoProject: { [domain: string]: string } = {
     "https://secure.gooddata.com": "k26dtejorcqlqf11crn6imbeevp2q4kg",
     "https://staging3.intgdc.com": "kytra720hke4d84e8ozohoz7uycn53mi",
     "https://staging2.intgdc.com": "ws7pxsamkx8o0t1s7kfvkj5o41uwcmqg",

@@ -15,8 +15,8 @@ interface ILoginProps {
     email?: string;
     password?: string;
     isLoading: boolean;
-    apiError: string | null;
-    logIn: (email: string, password: string) => Promise<any>;
+    apiError: string | undefined;
+    logIn: (email: string, password: string) => Promise<any> | any;
 }
 
 const enhance = withFormik<ILoginProps, IFormValues>({
@@ -31,13 +31,15 @@ const enhance = withFormik<ILoginProps, IFormValues>({
         password: Yup.string().required("Password is required"),
     }),
     handleSubmit: ({ email, password }, { props: { logIn }, setSubmitting }) => {
-        logIn(email, password)
-            .then(() => {
-                setSubmitting(false);
-            })
-            .catch(() => {
-                setSubmitting(false);
-            });
+        email && password
+            ? logIn(email, password)
+                  .then(() => {
+                      setSubmitting(false);
+                  })
+                  .catch(() => {
+                      setSubmitting(false);
+                  })
+            : setSubmitting(false);
     },
     displayName: "LoginForm", // helps with React DevTools
 });
@@ -52,7 +54,7 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = props =>
         handleBlur,
         handleSubmit,
         isLoading,
-        apiError = null,
+        apiError,
     } = props;
 
     return (
@@ -142,8 +144,8 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = props =>
                         <div className="gd-message error">{errors.password}</div>
                     )}
                 </div>
-                {apiError && !isLoading && <CustomError height={null} message={apiError} />}
-                {isLoading && <CustomLoading height={null} label="Logging in&hellip;" />}
+                {apiError && !isLoading && <CustomError height={undefined} message={apiError} />}
+                {isLoading && <CustomLoading height={undefined} label="Logging in&hellip;" />}
                 <div className="gd-input buttons">
                     <button
                         type="submit"
