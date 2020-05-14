@@ -47,25 +47,88 @@ export type WithLoadingResult = {
 };
 
 /**
- * TODO: SDK8: add docs
  * @public
  */
 export interface IWithLoadingEvents<TProps> {
+    /**
+     * If specified, this function will be called in case loading runs into an error.
+     *
+     * @param error - an instance of error. see also GoodDataSdkError
+     * @param props - props effective at the time of load
+     */
     onError?: (error: Error, props: TProps) => void;
+
+    /**
+     * Called when loading starts.
+     *
+     * @param props - props effective at the time of load
+     */
     onLoadingStart?: (props: TProps) => void;
-    onLoadingChanged?: (isLoading: boolean, props: TProps) => void;
+
+    /**
+     * Called when loading finishes.
+     *
+     * @param result - result wrapped in data view facade
+     * @param props - props effective at the time of load
+     */
     onLoadingFinish?: (result: DataViewFacade, props: TProps) => void;
+
+    /**
+     * Called when loading starts and finishes, indicating the current state using the `isLoading` parameter.
+     *
+     * @param isLoading - true if loading, false if no longer loading
+     * @param props - props effective at the time of load
+     */
+    onLoadingChanged?: (isLoading: boolean, props: TProps) => void;
 }
 
 /**
- * TODO: SDK8: add docs
+ * Configuration for the withLoading HOC. All configuration parameters can be either actual parameter values
+ * or functions to obtain them from the wrapped component props.
+ *
+ * If functions are specified, the HOC will call them with the wrapped component props as parameter and then use
+ * the resulting values as if they were passed directly.
+ *
  * @public
  */
 export interface IWithLoading<TProps> {
+    /**
+     * Specify a factory function to create data promises, based on props and optionally the data window size.
+     *
+     * This is where the data is actually being loaded. And the HOC hides the promise from the wrapped component
+     * which just receives the data.
+     *
+     * @param props - wrapped component props
+     * @param window - data view window to retrieve, not specified in case all data should be retrieved
+     */
     promiseFactory: (props: TProps, window?: DataViewWindow) => Promise<DataViewFacade>;
+
+    /**
+     * Optionally specify data view window to retrieve from backend. If specified as function, the function
+     * can return undefined in case all data must be retrieved.
+     */
     window?: DataViewWindow | ((props: TProps) => DataViewWindow | undefined);
+
+    /**
+     * Optionally specify event callbacks which the HOC will trigger in different situations.
+     */
     events?: IWithLoadingEvents<TProps> | ((props: TProps) => IWithLoadingEvents<TProps>);
+
+    /**
+     * Optionally customize, whether execution & data loading should start as soon as component is mounted.
+     *
+     * Default is true. When not loading on mount, the wrapped component can trigger the load by calling the
+     * reload() function which the HOC injects into its props.
+     */
     loadOnMount?: boolean | ((props: TProps) => boolean);
+
+    /**
+     * Optionally specify function that will be called during component prop updates and will be used to
+     * determine whether execution should be re-run and data reloaded.
+     *
+     * @param prevProps - previous props
+     * @param nextProps - next props
+     */
     shouldRefetch?: (prevProps: TProps, nextProps: TProps) => boolean;
 }
 
@@ -76,7 +139,11 @@ type WithLoadingState = {
 };
 
 /**
- * TODO: SDK8: add docs
+ * A React HOC responsible for orchestrating resolution of a data promise (e.g. data to load).
+ *
+ * This component offers more flexibility in regards to how to obtain the data - all that is encapsulated
+ * into a promise of data. For most use cases, the withExecution HOC is a better fit.
+ *
  * @public
  */
 export function withLoading<TProps>(params: IWithLoading<TProps>) {
