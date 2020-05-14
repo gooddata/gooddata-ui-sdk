@@ -16,7 +16,7 @@ export interface IErrorProps {
  * [ErrorComponent](http://sdk.gooddata.com/gooddata-ui/docs/error_component.html)
  * is a component that renders a default error message
  */
-export class ErrorComponent extends React.Component<IErrorProps, null> {
+export class ErrorComponent extends React.Component<IErrorProps> {
     public static defaultProps: Partial<IErrorProps> = {
         icon: "icon-warning",
         className: "Error s-error",
