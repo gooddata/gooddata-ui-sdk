@@ -178,6 +178,13 @@ export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataP
      * @remarks if you need to work with fully annotated and formatted data, use the DataPoint iterator.
      */
     rawData(): DataValue[];
+
+    /**
+     * @returns - all data points in this series
+     * @remarks the series is iterable over data points; if you want to iterate using for-of loop then it is not
+     *  necessary to call this method - just use `for (const dataPoint of series) {...}`
+     */
+    dataPoints(): DataPoint[];
 }
 
 /**
@@ -341,7 +348,14 @@ export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoi
      * @returns raw, unformatted data for this slice.
      * @remarks if you need to work with fully annotated and formatted data, use the DataPoint iterator
      */
-    readonly rawData: () => DataValue[];
+    rawData(): DataValue[];
+
+    /**
+     * @returns - all data points in this slice
+     * @remarks the slice is iterable over data points; if you want to iterate using for-of loop then it is not
+     *  necessary to call this method - just use `for (const dataPoint of slice) {...}`
+     */
+    dataPoints(): DataPoint[];
 }
 
 /**

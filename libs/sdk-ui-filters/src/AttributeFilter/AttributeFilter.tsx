@@ -4,8 +4,6 @@ import { injectIntl } from "react-intl";
 import MediaQuery from "react-responsive";
 import {
     IAttributeElement,
-    IPositiveAttributeFilter,
-    INegativeAttributeFilter,
     filterObjRef,
     isPositiveAttributeFilter,
     filterAttributeElements,
@@ -31,22 +29,72 @@ import {
 } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants";
 
+/**
+ * @public
+ */
 interface IAttributeFilterProps {
+    /**
+     * Optionally specify an instance of analytical backend instance to work with.
+     *
+     * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
+     */
     backend?: IAnalyticalBackend;
+
+    /**
+     * Optionally specify workspace to work with.
+     *
+     * Note: if you do not have a WorkspaceProvider above in the component tree, then you MUST specify the workspace.
+     */
     workspace?: string;
 
+    /**
+     * Specify identifier of attribute, for which you want to construct the filter.
+     *
+     * Note: this is optional and deprecated. If you do not specify this, then you MUST specify the filter prop.
+     *
+     * @deprecated - use the filter prop instead
+     */
     identifier?: string;
-    filter?: IPositiveAttributeFilter | INegativeAttributeFilter;
+
+    /**
+     * Specify an attribute filter that will be customized using this filter. The component will use content of the
+     * filter and select the items that are already specified on the filter.
+     */
+    filter?: IAttributeFilter;
+
+    /**
+     * Specify function which will be called when user clicks 'Apply' button. The function will receive the current
+     * specification of the filter, as it was updated by the user.
+     *
+     * @param filter - new value of the filter.
+     */
+    onApply: (filter: IAttributeFilter) => void;
+
+    /**
+     * Optionally specify title for the attribute filter. By default, the attribute name will be used.
+     */
     title?: string;
 
-    onApply: (filter: IAttributeFilter) => void;
-    fullscreenOnMobile?: boolean;
+    /**
+     * Optionally customize whether selected items should be summarized in the title of the filter - so that
+     * they are visible even if the filter is closed.
+     */
     titleWithSelection?: boolean;
+
+    /**
+     * Optionally customize, whether the filter should take the entire screen on mobile devices.
+     */
+    fullscreenOnMobile?: boolean;
+
+    /**
+     * Optionally customize locale to use for the different strings that appear on the filter component.
+     */
     locale?: string;
-    FilterLoading?: React.ComponentType;
-    FilterError?: any;
 
     onError?: OnError;
+
+    FilterLoading?: React.ComponentType;
+    FilterError?: any;
 }
 
 interface IAttributeFilterState {
@@ -231,7 +279,7 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
 /**
  * AttributeFilter is a component that renders a dropdown populated with attribute values
  * for specified attribute display form.
- * TODO: SDK8: add docs
+ *
  * @public
  */
 

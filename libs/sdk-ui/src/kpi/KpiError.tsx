@@ -3,10 +3,7 @@ import * as React from "react";
 import { IErrorProps } from "../base";
 
 /**
- * TODO: SDK8: add docs
- * @param props
- * @constructor
- * @public
+ * @internal
  */
 export const KpiError: React.StatelessComponent<IErrorProps> = props => {
     const message: string = props.message;

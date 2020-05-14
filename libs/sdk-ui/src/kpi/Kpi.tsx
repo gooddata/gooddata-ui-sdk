@@ -124,23 +124,62 @@ const RenderKpi: React.FC<IKpiProps> = props => {
 //
 
 /**
- * TODO: SDK8: add docs
- *
  * @public
  */
 export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
+    /**
+     * Optionally specify an instance of analytical backend instance to work with.
+     *
+     * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
+     */
     backend?: IAnalyticalBackend;
+
+    /**
+     * Optionally specify workspace to work with.
+     *
+     * Note: if you do not have a WorkspaceProvider above in the component tree, then you MUST specify the workspace.
+     */
     workspace?: string;
+
+    /**
+     * Specify measure whose value should be calculated and rendered.
+     */
     measure: IMeasure;
+
+    /**
+     * Optionally specify filters to apply during calculation
+     */
     filters?: IFilter[];
+
+    /**
+     * Optionally specify number separators to use when rendering (segment delimiters, decimal point character)
+     */
     separators?: ISeparators;
+
+    /**
+     * Optionally specify locale to use for strings that the Kpi component may render (for instance when encountering
+     * errors).
+     */
     locale?: string;
+
+    /**
+     * Optionally specify react component to render while the data is loading.
+     */
     LoadingComponent?: React.ComponentType<ILoadingProps>;
+
+    /**
+     * Optionally specify react component to render if execution fails.
+     */
     ErrorComponent?: React.ComponentType<IErrorProps>;
 }
 
 /**
- * TODO: SDK8: add docs
+ * Kpi is a simple component which calculates and renders a single formatted measure value. The the value
+ * is rendered inside a <span> element.
+ *
+ * Kpi component is useful for instance for embedding data values into text paragraphs.
+ *
+ * See also the Headline component for a more 'chart-like' variant.
  *
  * @public
  */

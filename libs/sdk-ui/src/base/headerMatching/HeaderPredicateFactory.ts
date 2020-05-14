@@ -164,6 +164,12 @@ function matchDerivedMeasureByMasterIdentifier(
     return matchMeasureIdentifier(identifier, masterMeasure);
 }
 
+/**
+ * Creates a new predicate that returns true for any header that belongs to either attribute or measure with the
+ * provided URI.
+ *
+ * @public
+ */
 export function uriMatch(uri: string): IHeaderPredicate {
     if (!uri) {
         return alwaysFalsePredicate;
@@ -194,7 +200,8 @@ export function uriMatch(uri: string): IHeaderPredicate {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Creates a new predicate that returns true for any header that belongs to either attribute or measure with the
+ * provided identifier.
  *
  * @public
  */
@@ -232,7 +239,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Creates a predicate that return true for any attribute result header with the provided name.
  *
  * @public
  */
@@ -249,7 +256,8 @@ export function attributeItemNameMatch(name: string): IHeaderPredicate {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Creates a new predicate that returns true for any header that belongs to either attribute or measure with the
+ * provided local identifier.
  *
  * @public
  */
@@ -272,7 +280,8 @@ export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHead
 }
 
 /**
- * TODO: SDK8: add docs
+ * Creates a new predicate that returns true of any arithmetic measure where measure with the provided URI
+ * is used as an operand.
  *
  * @public
  */
@@ -285,7 +294,8 @@ export function composedFromUri(uri: string): IHeaderPredicate {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Creates a new predicate that returns true of any arithmetic measure where measure with the provided identifier
+ * is used as an operand.
  *
  * @public
  */

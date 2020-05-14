@@ -19,7 +19,7 @@ import { WrappedComponentProps } from 'react-intl';
 
 // Warning: (ae-internal-missing-underscore) The name "CorePivotTable" should be prefixed with an underscore because the declaration is marked as @internal
 //
-// @internal
+// @internal (undocumented)
 export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
 
 // Warning: (ae-internal-missing-underscore) The name "ICorePivotTableProps" should be prefixed with an underscore because the declaration is marked as @internal
@@ -30,11 +30,9 @@ export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedCompo
     execution: IPreparedExecution;
 }
 
-// @public
+// @public (undocumented)
 export interface IMenu {
-    // (undocumented)
     aggregations?: boolean;
-    // (undocumented)
     aggregationsSubMenu?: boolean;
 }
 
@@ -50,37 +48,26 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
     pageSize?: number;
 }
 
-// @public
+// @public (undocumented)
 export interface IPivotTableBucketProps {
-    // (undocumented)
     columns?: IAttribute[];
-    // (undocumented)
     filters?: IFilter[];
-    // (undocumented)
     measures?: IAttributeOrMeasure[];
-    // (undocumented)
     rows?: IAttribute[];
-    // (undocumented)
     sortBy?: ISortItem[];
-    // (undocumented)
     totals?: ITotal[];
 }
 
-// @public
+// @public (undocumented)
 export interface IPivotTableConfig {
-    // (undocumented)
     maxHeight?: number;
-    // (undocumented)
     menu?: IMenu;
-    // (undocumented)
     separators?: ISeparators;
 }
 
-// @public
+// @public (undocumented)
 export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucketProps {
-    // (undocumented)
     backend?: IAnalyticalBackend;
-    // (undocumented)
     workspace?: string;
 }
 
