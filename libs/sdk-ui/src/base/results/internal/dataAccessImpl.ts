@@ -139,6 +139,7 @@ class DataSeries implements IDataSeries {
     public readonly id: string;
     public readonly descriptor: DataSeriesDescriptor;
     private rawDataValues: DataValue[] | undefined;
+    private dataPointsArray: DataPoint[] | undefined;
 
     constructor(
         private readonly seriesIdx: number,
@@ -170,6 +171,14 @@ class DataSeries implements IDataSeries {
         return this.rawDataValues;
     };
 
+    public dataPoints = (): DataPoint[] => {
+        if (!this.dataPointsArray) {
+            this.dataPointsArray = Array.from(this);
+        }
+
+        return this.dataPointsArray;
+    };
+
     public [Symbol.iterator] = (): Iterator<DataPoint> => {
         const { slices } = this.digest;
 
@@ -194,6 +203,7 @@ class DataSlice implements IDataSlice {
     public readonly descriptor: DataSliceDescriptor;
 
     private rawDataValues: DataValue[] | undefined;
+    private dataPointsArray: DataPoint[] | undefined;
 
     constructor(
         private readonly sliceIdx: number,
@@ -215,6 +225,14 @@ class DataSlice implements IDataSlice {
         }
 
         return this.rawDataValues;
+    };
+
+    public dataPoints = (): DataPoint[] => {
+        if (!this.dataPointsArray) {
+            this.dataPointsArray = Array.from(this);
+        }
+
+        return this.dataPointsArray;
     };
 
     public [Symbol.iterator] = (): Iterator<DataPoint> => {
