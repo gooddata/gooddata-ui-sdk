@@ -52,7 +52,7 @@ interface IAttributeFilterProps {
      *
      * Note: this is optional and deprecated. If you do not specify this, then you MUST specify the filter prop.
      *
-     * @deprecated
+     * @deprecated - use the filter prop instead
      */
     identifier?: string;
 

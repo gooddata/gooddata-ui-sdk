@@ -8,16 +8,52 @@ import { defaultErrorHandler, OnError, withContexts } from "@gooddata/sdk-ui";
 import { AttributeElementsDefaultChildren } from "./AttributeElementsDefaultChildren";
 import { IAttributeElementsChildren } from "./types";
 
+/**
+ * @public
+ */
 export interface IAttributeElementsProps {
+    /**
+     * Optionally specify an instance of analytical backend instance to work with.
+     *
+     * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
+     */
     backend?: IAnalyticalBackend;
+
+    /**
+     * Optionally specify workspace to work with.
+     *
+     * Note: if you do not have a WorkspaceProvider above in the component tree, then you MUST specify the workspace.
+     */
     workspace?: string;
+
+    /**
+     * Specify reference to a display form, whose elements should be listed.
+     */
     displayForm: ObjRef;
 
+    /**
+     * Optionally customize maximum number of elements to load in a single page. New elements will be loaded
+     * as your code calls loadMore function passed down to your child function.
+     */
     limit?: number;
+
+    /**
+     * Optionally customize offset to start loading elements from.
+     */
     offset?: number;
+
+    /**
+     * Optionally specify options that will be passed to the element query, which is responsible for loading the data (
+     * this can be used to add server-side filtering)
+     */
     options?: IElementQueryOptions;
-    children?(props: IAttributeElementsChildren): React.ReactNode;
+
+    /**
+     * Optionally specify error callback.
+     */
     onError?: OnError;
+
+    children?(props: IAttributeElementsChildren): React.ReactNode;
 }
 
 interface IAttributeElementsState {
@@ -117,10 +153,8 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
 }
 
 /**
- * AttributeElements
- * is a component that lists attribute values using a children function
- * TODO: SDK8: add docs
+ * AttributeElements is a component that lists attribute values using a children function
+ *
  * @public
  */
-
 export const AttributeElements = withContexts(AttributeElementsCore);
