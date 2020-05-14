@@ -200,7 +200,7 @@
     },
     {
       "name": "@types/classnames",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@types/enzyme",

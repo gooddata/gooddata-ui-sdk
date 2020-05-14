@@ -27,6 +27,7 @@ export const franchiseFeesSumLocalId = "franchiseFeesSum";
 export const franchiseFeesDifferenceLocalId = "franchiseFeesDifference";
 export const franchiseFeesLocalId = "franchiseFees";
 export const franchiseSalesLocalId = "franchiseSales";
+export const franchiseSalesAsPercentageLocalId = "franchiseSalesFormattedAsPercentage";
 export const franchiseFeesInitialFranchiseFeeLocalId = "franchiseFeesInitialFranchiseFee";
 export const monthDateLocalId = "monthDate";
 export const averageDailyTotalSalesLocalId = "averageDailyTotalSales";
@@ -37,6 +38,7 @@ export const MenuCategoryLocalId = "menu";
 export const LocationStateLocalId = "locationState";
 export const LocationCityLocalId = "locationCity";
 export const quaterDateLocalId = "quarter";
+export const franchiseSalesComputeRatioLocalId = "franchiseSalesComputeRatio";
 
 // ===============================================================================================
 
@@ -49,14 +51,20 @@ export const totalSalesLocalIdentifier = "c11c27a0b0314a83bfe5b64ab9de7b89";
 
 // ===============================================================================================
 
-export const numberOfChecks = modifyMeasure(Ldm.NrChecks, m => m.format("#,##0").alias("# Checks"));
+export const numberOfChecks = modifyMeasure(Ldm.NrChecks, m =>
+    m
+        .localId("numOfChecks")
+        .format("#,##0")
+        .alias("# Checks")
+        .title("Number of Checks"),
+);
 export const FranchiseFees = modifyMeasure(Ldm.$FranchiseFees, m =>
     m
         .format("#,##0")
         .localId(franchiseFeesLocalId)
         .title("Franchise Fees"),
 );
-export const franchiseFeesAsPercents = newMeasure(FranchiseFees.measure.localIdentifier, m =>
+export const franchiseFeesAsPercents = modifySimpleMeasure(FranchiseFees, m =>
     m.title("Franchise Fees shown in %").ratio(),
 );
 export const FranchisedSales = modifyMeasure(Ldm.$FranchisedSales, m =>
@@ -64,6 +72,19 @@ export const FranchisedSales = modifyMeasure(Ldm.$FranchisedSales, m =>
         .format("#,##0")
         .title("Franchise Sales")
         .localId(franchiseSalesLocalId),
+);
+export const FranchisedSalesAsPercent = modifyMeasure(Ldm.$FranchisedSales, m =>
+    m
+        .format("#,##0")
+        .title("Franchise Sales")
+        .localId(franchiseSalesAsPercentageLocalId),
+);
+export const FranchisedSalesWithRatio = modifySimpleMeasure(FranchisedSales, m =>
+    m
+        .format("#,##0.00%")
+        .localId(franchiseSalesComputeRatioLocalId)
+        .title("Franchise Sales shown in %")
+        .ratio(),
 );
 export const FranchiseFeesAdRoyalty = modifyMeasure(Ldm.$FranchiseFeesAdRoyalty, m =>
     m.format("#,##0").localId(franchiseFeesAdRoyaltyLocalId),
@@ -88,6 +109,7 @@ export const TotalSales2 = modifyMeasure(Ldm.$TotalSales, m =>
     m
         .format("#,##0")
         .alias("$ Total Sales")
+        .title("Total Sales")
         .localId(totalSalesLocalId),
 );
 export const TotalSales3 = modifySimpleMeasure(Ldm.$TotalSales, m =>

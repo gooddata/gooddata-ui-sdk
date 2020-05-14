@@ -20,8 +20,11 @@ import { Responsive } from "../examples/advanced/responsive";
 import { Export } from "../examples/export";
 import { AttributeFilter } from "../examples/attributeFilter";
 
-import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
-import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
+import { MeasureValueFilter } from "../examples/measureValueFilter/measureValueFilterByValue";
+import { MeasureValueFilterComponent } from "../examples/measureValueFilter/measureValueFilterComponent";
+
+// import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
+// import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
 import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
 import { PivotTableDynamic } from "../examples/hidden/pivotTableDynamic";
 
@@ -66,10 +69,25 @@ export const drillingUseCasesRoutes = [
     { path: "/drilling/pivot-table-drilling", title: "Pivot table drilling", Component: PivotTableDrilling },
 ];
 
+export const measureValueFilterUseCasesRoutes = [
+    {
+        path: "/measure-value-filter/filter-by-measure-value",
+        title: "Filter by Measure Value",
+        Component: MeasureValueFilter,
+    },
+    {
+        path: "/measure-value-filter/component",
+        title: "Measure Value Filter Component",
+        Component: MeasureValueFilterComponent,
+    },
+];
+
 const InsightViewUseCasesRoutes = (props: any) =>
     WithSubRoutes({ ...props, subRoutes: insightViewUseCasesRoutes });
 const AdvancedUseCasesRoutes = (props: any) => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
 const DrillingUseCasesRoutes = (props: any) => WithSubRoutes({ ...props, subRoutes: drillingUseCasesRoutes });
+const MeasureValueFilterUseCasesRoutes = (props: any) =>
+    WithSubRoutes({ ...props, subRoutes: measureValueFilterUseCasesRoutes });
 
 export const sideNavigationRoutes = [
     { path: "/", title: "Basic Components", Component: BasicComponents, exact: true },
@@ -91,6 +109,13 @@ export const sideNavigationRoutes = [
         path: "/attribute-filter-components",
         title: "Attribute Filter Components",
         Component: AttributeFilter,
+    },
+    {
+        path: "/measure-value-filter",
+        pathMatch: "full",
+        redirectTo: measureValueFilterUseCasesRoutes[0].path,
+        title: "Measure Value Filter",
+        Component: MeasureValueFilterUseCasesRoutes,
     },
     {
         path: "/date-filter-component",
@@ -121,12 +146,12 @@ export const hiddenPaths = [
     // { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
     { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
     // TODO BB-1694 - Add Measure Value Filter example to the menu
-    { path: "/hidden/measure-value-filter", title: "Measure Value Filter", Component: MeasureValueFilter },
-    {
-        path: "/hidden/measure-value-filter-component",
-        title: "Measure Value Filter Component",
-        Component: MeasureValueFilterComponent,
-    },
+    // { path: "/hidden/measure-value-filter", title: "Measure Value Filter", Component: MeasureValueFilter },
+    // {
+    //     path: "/hidden/measure-value-filter-component",
+    //     title: "Measure Value Filter Component",
+    //     Component: MeasureValueFilterComponent,
+    // },
     { path: "/hidden/on-drill-drilling", title: "New drill handling by onDrill", Component: OnDrillHandling },
 ];
 
@@ -146,6 +171,7 @@ export const routes = [
     ...insightViewUseCasesRoutes,
     ...advancedUseCasesRoutes,
     ...drillingUseCasesRoutes,
+    ...measureValueFilterUseCasesRoutes,
     ...hiddenPaths,
     ...backendInfoRoutes,
 ];
