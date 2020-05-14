@@ -6,23 +6,38 @@ import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
 
 /**
- * TODO: SDK8 - add docs
- *
  * @public
  */
 export interface IMenu {
+    /**
+     * If true, grand totals can be added to the table using table menu.
+     */
     aggregations?: boolean;
+
+    /**
+     * If true, subtotals can be added to the table using table menu.
+     */
     aggregationsSubMenu?: boolean;
 }
 
 /**
- * TODO: SDK8 - add docs
- *
  * @public
  */
 export interface IPivotTableConfig {
+    /**
+     * Optionally customize number segment separators (thousands, decimals)
+     */
     separators?: ISeparators;
+
+    /**
+     * Optionally customize whether the column-level burger menu should be visible and if so,
+     * what aggregations should be allowed.
+     */
     menu?: IMenu;
+
+    /**
+     * Optionally customize maximum height of the table.
+     */
     maxHeight?: number;
 }
 
@@ -64,26 +79,64 @@ export function isAttributeCell(cell: TableCell): cell is IAttributeCell {
 }
 
 /**
- * TODO: SDK8 - add docs
- *
  * @public
  */
 export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucketProps {
+    /**
+     * Optionally specify an instance of analytical backend instance to work with.
+     *
+     * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
+     */
     backend?: IAnalyticalBackend;
+
+    /**
+     * Optionally specify workspace to work with.
+     *
+     * Note: if you do not have a WorkspaceProvider above in the component tree, then you MUST specify the workspace.
+     */
     workspace?: string;
 }
 
 /**
- * TODO: SDK8 - add docs
- *
  * @public
  */
 export interface IPivotTableBucketProps {
+    /**
+     * Optionally specify measures to create table columns from.
+     */
     measures?: IAttributeOrMeasure[];
-    rows?: IAttribute[];
+
+    /**
+     * Optionally specify one or more attributes to create table columns from. There will be a column for each
+     * combination of the specified attribute's values.
+     *
+     * Note: you can specify column attributes in conjunction with one or more measures. In that case the table
+     * will contain column for each combination of attribute values & measures.
+     */
     columns?: IAttribute[];
+
+    /**
+     * Optionally specify attributes, whose value's will be used as rows in the table.
+     */
+    rows?: IAttribute[];
+
+    /**
+     * Optionally specify what totals should be calculated and included in the table.
+     *
+     * Note: table can only render column subtotal and/or grand-totals. It is not possible to calculate row totals.
+     * Also note: the table will only include subtotals when in grouping mode and the grouping is effective = table
+     * is sorted by the first row attribute.
+     */
     totals?: ITotal[];
+
+    /**
+     * Optionally specify filters to apply on the data to chart.
+     */
     filters?: IFilter[];
+
+    /**
+     * Optionally specify how to sort the data to chart.
+     */
     sortBy?: ISortItem[];
 }
 

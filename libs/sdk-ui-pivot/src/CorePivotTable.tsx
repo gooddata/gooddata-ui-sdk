@@ -1016,8 +1016,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 const CorePivotTableWithIntl = injectIntl(CorePivotTablePure);
 
 /**
- * TODO: SDK8: add docs
- *
  * @internal
  */
 export const CorePivotTable: React.FC<ICorePivotTableProps> = props => (
