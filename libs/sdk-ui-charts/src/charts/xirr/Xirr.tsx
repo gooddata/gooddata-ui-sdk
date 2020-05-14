@@ -21,28 +21,35 @@ import omit = require("lodash/omit");
 //
 
 /**
- * TODO: SDK8: add docs
- *
- * @public
+ * @beta
  */
 export interface IXirrBucketProps {
+    /**
+     * The measure to calculate the Internal Rate of Return for.
+     * For the result to make sense, the measure should start with a negative value at some point in time (the investment) followed by other values (the returns).
+     */
     measure: IMeasure;
+    /**
+     * The date dimension to use for the computation. This allows you to set the granularity (day, month, etc.) for the IRR calculation.
+     */
     attribute?: IAttribute;
+    /**
+     * Optionally specify filters to apply on the data to compute with.
+     */
     filters?: IFilter[];
 }
 
 /**
- * TODO: SDK8: add docs
- *
- * @public
+ * @beta
  */
 export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {}
 
 /**
- * Xirr
- * is a component with bucket props measure, attribute, filters
+ * Xirr computes the [Internal Rate of Return](https://en.wikipedia.org/wiki/Internal_rate_of_return) from the given measure and date dimension.
+ * The "X" in the name means that the returns do not have to happen periodically (as in the standard IRR), but they can [happen at any day](https://en.wikipedia.org/wiki/Internal_rate_of_return#Exact_dates_of_cash_flows).
+ * You must specify both the measure and date dimension.
  *
- * @public
+ * @beta
  */
 export const Xirr = withContexts(RenderXirr);
 
