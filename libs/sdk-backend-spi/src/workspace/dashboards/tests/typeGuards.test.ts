@@ -14,6 +14,7 @@ const testWidget: IWidget = {
     description: "",
     alerts: [],
     drills: [],
+    ignoreDashboardFilters: [],
 };
 
 describe("dashboard type guards", () => {

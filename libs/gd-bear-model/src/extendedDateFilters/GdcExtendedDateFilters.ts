@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { GdcMetadata } from "../meta/GdcMetadata";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * @public
@@ -206,9 +207,15 @@ export namespace GdcExtendedDateFilters {
         };
     }
 
+    export const isDateFilterReference = (obj: any): obj is IDateFilterReference =>
+        !isEmpty(obj) && !!(obj as IDateFilterReference).dateFilterReference;
+
     export interface IAttributeFilterReference {
         attributeFilterReference: {
             displayForm: string;
         };
     }
+
+    export const isAttributeFilterReference = (obj: any): obj is IAttributeFilterReference =>
+        !isEmpty(obj) && !!(obj as IAttributeFilterReference).attributeFilterReference;
 }

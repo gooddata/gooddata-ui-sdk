@@ -134,6 +134,15 @@ export {
     RelativeType,
     ITempFilterContext,
     ITempFilterContextDefinition,
+    isFilterContext,
+    isTempFilterContext,
+    isDashboardAttributeFilter,
+    isDashboardDateFilter,
+    IDashboardFilterReference,
+    IDashboardAttributeFilterReference,
+    IDashboardDateFilterReference,
+    isDashboardAttributeFilterReference,
+    isDashboardDateFilterReference,
 } from "./workspace/dashboards/filterContext";
 export {
     Layout,
@@ -148,6 +157,9 @@ export {
     ISectionHeader,
     SectionHeader,
     Widget,
+    isLayoutWidget,
+    isFluidLayout,
+    layoutWidgets,
 } from "./workspace/dashboards/layout";
 export { IWidget, IWidgetDefinition, WidgetType, isWidget } from "./workspace/dashboards/widget";
 export { IWidgetAlert, IWidgetAlertDefinition } from "./workspace/dashboards/alert";
