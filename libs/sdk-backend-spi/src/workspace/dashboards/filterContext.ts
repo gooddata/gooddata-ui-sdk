@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { DateString, DateFilterGranularity } from "./extendedDateFilters";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Date filter type - relative
@@ -44,6 +45,14 @@ export interface IDashboardAttributeFilter {
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardAttributeFilter}.
+ * @alpha
+ */
+export function isDashboardAttributeFilter(obj: any): obj is IDashboardAttributeFilter {
+    return !isEmpty(obj) && !!(obj as IDashboardAttributeFilter).attributeFilter;
+}
+
+/**
  * Date filter of the filter context
  * @alpha
  */
@@ -79,6 +88,14 @@ export interface IDashboardDateFilter {
          */
         attribute?: ObjRef;
     };
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilter}.
+ * @alpha
+ */
+export function isDashboardDateFilter(obj: any): obj is IDashboardDateFilter {
+    return !isEmpty(obj) && !!(obj as IDashboardDateFilter).dateFilter;
 }
 
 /**
@@ -123,6 +140,15 @@ export interface IFilterContext extends IFilterContextDefinition {
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link IFilterContext}.
+ * @alpha
+ */
+export function isFilterContext(obj: any): obj is IFilterContext {
+    // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
+    return !isEmpty(obj) && !!(obj as IFilterContext).filters && !(obj as IFilterContext).description;
+}
+
+/**
  * Temporary filter context serves to override original dashboard filter context during the dashboard export
  *
  * @alpha
@@ -149,3 +175,75 @@ export interface ITempFilterContext extends ITempFilterContextDefinition {
 
     readonly uri: string;
 }
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link ITempFilterContext}.
+ * @alpha
+ */
+export function isTempFilterContext(obj: any): obj is ITempFilterContext {
+    // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
+    return !isEmpty(obj) && !!(obj as ITempFilterContext).filters && !!(obj as ITempFilterContext).created;
+}
+
+/**
+ * Reference to a particular dashboard date filter
+ * This is commonly used to define filters to ignore
+ * for the particular dashboard widget
+ *
+ * @alpha
+ */
+export interface IDashboardDateFilterReference {
+    /**
+     * Dashboard filter reference type
+     */
+    type: "dateFilterReference";
+
+    /**
+     * DataSet reference of the target date filter
+     */
+    dataSet: ObjRef;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilterReference}.
+ * @alpha
+ */
+export function isDashboardDateFilterReference(obj: any): obj is IDashboardDateFilterReference {
+    return !isEmpty(obj) && (obj as IDashboardDateFilterReference).type === "dateFilterReference";
+}
+
+/**
+ * Reference to a particular dashboard attribute filter
+ * This is commonly used to define filters to ignore
+ * for the particular dashboard widget
+ *
+ * @alpha
+ */
+export interface IDashboardAttributeFilterReference {
+    /**
+     * Dashboard filter reference type
+     */
+    type: "attributeFilterReference";
+
+    /**
+     * Attribute display form reference of the target attribute filter
+     */
+    displayForm: ObjRef;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardAttributeFilterReference}.
+ * @alpha
+ */
+export function isDashboardAttributeFilterReference(obj: any): obj is IDashboardAttributeFilterReference {
+    return !isEmpty(obj) && (obj as IDashboardAttributeFilterReference).type === "attributeFilterReference";
+}
+
+/**
+ * Reference to a particular dashboard filter
+ * This is commonly used to define filters to ignore
+ * for the particular dashboard widget
+ *
+ * @alpha
+ */
+export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;

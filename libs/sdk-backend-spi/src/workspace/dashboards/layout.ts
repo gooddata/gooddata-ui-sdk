@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { IWidget } from "./widget";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Dashboard layout
@@ -31,6 +32,14 @@ export interface ILayoutWidget {
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link ILayoutWidget}.
+ * @alpha
+ */
+export function isLayoutWidget(obj: any): obj is ILayoutWidget {
+    return !isEmpty(obj) && !!(obj as ILayoutWidget).widget;
+}
+
+/**
  * Fluid layout definition
  * @alpha
  */
@@ -51,6 +60,14 @@ export interface IFluidLayout {
          */
         style?: string;
     };
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IFluidLayout}.
+ * @alpha
+ */
+export function isFluidLayout(obj: any): obj is IFluidLayout {
+    return !isEmpty(obj) && !!(obj as IFluidLayout).fluidLayout;
 }
 
 /**
@@ -174,3 +191,26 @@ export interface ISectionDescription {
      */
     description: string;
 }
+
+/**
+ * Get all dashboard widgets
+ * (layout does not only specify rendering, but also all used widgets)
+ *
+ * @alpha
+ * @param layout - dashboard layout
+ * @param collectedWidgets - bag for collecting widgets recursively from the layout
+ */
+export const layoutWidgets = (layout: Layout, collectedWidgets: IWidget[] = []): IWidget[] => {
+    layout.fluidLayout.rows.forEach(row => {
+        row.columns.forEach(column => {
+            if (isLayoutWidget(column.content)) {
+                collectedWidgets.push(column.content.widget);
+            } else if (isFluidLayout(column.content)) {
+                // is another layout
+                layoutWidgets(column.content);
+            }
+        });
+    });
+
+    return collectedWidgets;
+};

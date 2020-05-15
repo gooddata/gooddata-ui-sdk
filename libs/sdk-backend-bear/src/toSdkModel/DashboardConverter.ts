@@ -26,6 +26,10 @@ import {
     IDashboardAddedPresets,
     ITempFilterContext,
     isWidget,
+    isDashboardDateFilter,
+    IDashboardFilterReference,
+    IDashboardDateFilterReference,
+    IDashboardAttributeFilterReference,
 } from "@gooddata/sdk-backend-spi";
 
 type DashboardDependency = IWidget | IFilterContext | ITempFilterContext;
@@ -122,9 +126,30 @@ const convertDateFilterConfig = (
     };
 };
 
+function isNotTemporaryAllTimeDateFilter(filter: FilterContextItem): boolean {
+    if (isDashboardDateFilter(filter)) {
+        const isNotTemporaryAllTimeDateFilter =
+            filter.dateFilter.from !== undefined || filter.dateFilter.to !== undefined;
+        return isNotTemporaryAllTimeDateFilter;
+    }
+
+    return true;
+}
+
+// Remove the temporary "All Time" date filter from filter context when exporting the dashboard
+export const sanitizeExportFilterContext = (
+    exportFilterContext: IFilterContext | ITempFilterContext,
+): IFilterContext | ITempFilterContext => {
+    return {
+        ...exportFilterContext,
+        filters: exportFilterContext.filters.filter(isNotTemporaryAllTimeDateFilter),
+    };
+};
+
 export const convertDashboard = (
     dashboard: GdcDashboard.IWrappedAnalyticalDashboard,
     dependencies: BearDashboardDependency[],
+    exportFilterContextUri?: string,
 ): IDashboard => {
     const sdkDependencies = dependencies.map(convertDashboardDependency);
     const widgets = sdkDependencies.filter(isWidget);
@@ -133,6 +158,10 @@ export const convertDashboard = (
         meta: { summary, created, updated, identifier, uri, title },
         content: { layout, filterContext, dateFilterConfig },
     } = dashboard.analyticalDashboard;
+
+    const filterContextOrExportFilterContext = sdkDependencies.find(dep => dep.uri === filterContext) as
+        | IFilterContext
+        | ITempFilterContext;
 
     const convertedDashboard: IDashboard = {
         title,
@@ -149,17 +178,40 @@ export const convertDashboard = (
 
         dateFilterConfig: dateFilterConfig && convertDateFilterConfig(dateFilterConfig),
 
-        filterContext: sdkDependencies.find(dep => dep.uri === filterContext) as IFilterContext,
+        filterContext: exportFilterContextUri
+            ? sanitizeExportFilterContext(filterContextOrExportFilterContext)
+            : filterContextOrExportFilterContext,
         layout: layout && convertLayout(layout, widgets),
     };
 
     return convertedDashboard;
 };
 
+const convertFilterReference = (
+    filterReference:
+        | GdcExtendedDateFilters.IDateFilterReference
+        | GdcExtendedDateFilters.IAttributeFilterReference,
+): IDashboardFilterReference => {
+    if (GdcExtendedDateFilters.isDateFilterReference(filterReference)) {
+        const convertedDateFilterReference: IDashboardDateFilterReference = {
+            type: "dateFilterReference",
+            dataSet: uriRef(filterReference.dateFilterReference.dataSet),
+        };
+        return convertedDateFilterReference;
+    }
+
+    const convertedAttributeFilterReference: IDashboardAttributeFilterReference = {
+        type: "attributeFilterReference",
+        displayForm: uriRef(filterReference.attributeFilterReference.displayForm),
+    };
+
+    return convertedAttributeFilterReference;
+};
+
 const convertVisualizationWidget = (widget: GdcVisualizationWidget.IWrappedVisualizationWidget): IWidget => {
     const {
         visualizationWidget: {
-            content: { visualization },
+            content: { visualization, ignoreDashboardFilters, dateDataSet },
             meta: { identifier, uri, title, summary },
         },
     } = widget;
@@ -172,6 +224,10 @@ const convertVisualizationWidget = (widget: GdcVisualizationWidget.IWrappedVisua
         title,
         description: summary,
         insight: uriRef(visualization),
+        dateDataSet: dateDataSet ? uriRef(dateDataSet) : undefined,
+        ignoreDashboardFilters: ignoreDashboardFilters
+            ? ignoreDashboardFilters.map(convertFilterReference)
+            : [],
         drills: [], // (drill to dashboard, or insight) TODO: https://jira.intgdc.com/browse/RAIL-2199
         alerts: [], // not yet supported for insight widgets
     };
@@ -182,7 +238,7 @@ const convertVisualizationWidget = (widget: GdcVisualizationWidget.IWrappedVisua
 const convertKpi = (widget: GdcKpi.IWrappedKPI): IWidget => {
     const {
         kpi: {
-            content: { metric },
+            content: { dateDataSet, ignoreDashboardFilters },
             meta: { identifier, uri, title, summary },
         },
     } = widget;
@@ -194,7 +250,10 @@ const convertKpi = (widget: GdcKpi.IWrappedKPI): IWidget => {
         uri,
         title,
         description: summary,
-        insight: uriRef(metric),
+        dateDataSet: dateDataSet ? uriRef(dateDataSet) : undefined,
+        ignoreDashboardFilters: ignoreDashboardFilters
+            ? ignoreDashboardFilters.map(convertFilterReference)
+            : [],
         drills: [], // (drills to old dashboards) - TODO: https://jira.intgdc.com/browse/RAIL-2199
         alerts: [], // TODO: https://jira.intgdc.com/browse/RAIL-2218
     };

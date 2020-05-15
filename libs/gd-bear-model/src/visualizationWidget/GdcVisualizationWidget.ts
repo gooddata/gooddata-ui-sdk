@@ -16,7 +16,7 @@ export namespace GdcVisualizationWidget {
             ignoreDashboardFilters: Array<
                 GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference
             >;
-            drills?: IDrillDefinition;
+            drills?: IDrillDefinition[];
         };
     }
 

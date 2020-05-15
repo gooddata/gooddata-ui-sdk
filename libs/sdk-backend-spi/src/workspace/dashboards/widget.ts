@@ -2,6 +2,7 @@
 import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { IWidgetAlert } from "./alert";
+import { IDashboardFilterReference } from "./filterContext";
 
 /**
  * Widget drill definition
@@ -154,6 +155,16 @@ export interface IWidgetDefinition {
      * Widget description
      */
     readonly description: string;
+
+    /**
+     * Ignore particular dashboard filters in the current widget
+     */
+    readonly ignoreDashboardFilters: IDashboardFilterReference[];
+
+    /**
+     * Date data set widget is connected to
+     */
+    readonly dateDataSet?: ObjRef;
 
     /**
      * Widget type - kpi or insight

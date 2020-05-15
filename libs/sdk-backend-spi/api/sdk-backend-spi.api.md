@@ -263,6 +263,12 @@ export interface IDashboardAttributeFilter {
 }
 
 // @alpha
+export interface IDashboardAttributeFilterReference {
+    displayForm: ObjRef;
+    type: "attributeFilterReference";
+}
+
+// @alpha
 export interface IDashboardDateFilter {
     // (undocumented)
     dateFilter: {
@@ -276,16 +282,25 @@ export interface IDashboardDateFilter {
 }
 
 // @alpha
+export interface IDashboardDateFilterReference {
+    dataSet: ObjRef;
+    type: "dateFilterReference";
+}
+
+// @alpha
 export interface IDashboardDefinition {
     readonly created: string;
     readonly dateFilterConfig?: IDateFilterConfig;
     readonly description: string;
-    readonly filterContext: IFilterContext | ITempFilterContext;
+    readonly filterContext: IFilterContext | ITempFilterContext | undefined;
     readonly layout?: Layout;
     readonly scheduledMails: IScheduledMail[];
     readonly title: string;
     readonly updated: string;
 }
+
+// @alpha
+export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 
 // @public
 export interface IDataView {
@@ -658,6 +673,18 @@ export interface IScheduledMailDefinition {
     };
 }
 
+// @alpha
+export function isDashboardAttributeFilter(obj: any): obj is IDashboardAttributeFilter;
+
+// @alpha
+export function isDashboardAttributeFilterReference(obj: any): obj is IDashboardAttributeFilterReference;
+
+// @alpha
+export function isDashboardDateFilter(obj: any): obj is IDashboardDateFilter;
+
+// @alpha
+export function isDashboardDateFilterReference(obj: any): obj is IDashboardDateFilterReference;
+
 // @public
 export function isDataTooLargeError(obj: any): obj is DataTooLargeError;
 
@@ -677,6 +704,15 @@ export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string;
 }
+
+// @alpha
+export function isFilterContext(obj: any): obj is IFilterContext;
+
+// @alpha
+export function isFluidLayout(obj: any): obj is IFluidLayout;
+
+// @alpha
+export function isLayoutWidget(obj: any): obj is ILayoutWidget;
 
 // @public
 export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor;
@@ -716,6 +752,9 @@ export function isResultMeasureHeader(obj: any): obj is IResultMeasureHeader;
 
 // @public
 export function isResultTotalHeader(obj: any): obj is IResultTotalHeader;
+
+// @alpha
+export function isTempFilterContext(obj: any): obj is ITempFilterContext;
 
 // @public
 export function isTotalDescriptor(obj: any): obj is ITotalDescriptor;
@@ -795,9 +834,11 @@ export interface IWidgetAlertDefinition {
 // @alpha
 export interface IWidgetDefinition {
     readonly alerts: IWidgetAlert[];
+    readonly dateDataSet?: ObjRef;
     readonly description: string;
     // Warning: (ae-forgotten-export) The symbol "DrillDefinition" needs to be exported by the entry point index.d.ts
     readonly drills: DrillDefinition[];
+    readonly ignoreDashboardFilters: IDashboardFilterReference[];
     readonly insight?: ObjRef;
     readonly title: string;
     readonly type: WidgetType;
@@ -953,6 +994,9 @@ export type Layout = IFluidLayout;
 
 // @alpha
 export type LayoutContent = Widget | Layout;
+
+// @alpha
+export const layoutWidgets: (layout: IFluidLayout, collectedWidgets?: IWidget[]) => IWidget[];
 
 // @public
 export class NoDataError extends AnalyticalBackendError {

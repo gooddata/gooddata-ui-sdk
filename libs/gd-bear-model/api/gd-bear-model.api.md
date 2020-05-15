@@ -1096,8 +1096,12 @@ export namespace GdcExtendedDateFilters {
     export type RelativeFormType = "relativeForm";
     // (undocumented)
     export type RelativeGranularityOffset = number;
+    const // (undocumented)
+    isDateFilterReference: (obj: any) => obj is IDateFilterReference;
     // (undocumented)
     export type RelativePresetType = "relativePreset";
+    const // (undocumented)
+    isAttributeFilterReference: (obj: any) => obj is IAttributeFilterReference;
 }
 
 // @public (undocumented)
@@ -2487,7 +2491,7 @@ export namespace GdcVisualizationWidget {
             visualization: string;
             dateDataSet?: string;
             ignoreDashboardFilters: Array<GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference>;
-            drills?: IDrillDefinition;
+            drills?: IDrillDefinition[];
         };
         // (undocumented)
         meta: GdcMetadata.IObjectMeta;
