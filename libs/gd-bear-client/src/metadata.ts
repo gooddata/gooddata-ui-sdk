@@ -687,6 +687,8 @@ export class MetadataModule {
                 return obj.dimension.content.attributes.content.displayForms[0].meta.identifier;
             } else if (obj.metric) {
                 return obj.metric.meta.identifier;
+            } else if (obj.dataSet) {
+                return obj.dataSet.meta.identifier;
             }
 
             throw Error("Unknown object!");
