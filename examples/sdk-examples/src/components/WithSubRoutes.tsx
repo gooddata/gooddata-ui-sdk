@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import PropTypes from "prop-types";
 
 import { Link, Redirect } from "react-router-dom";
 
@@ -33,15 +32,4 @@ export const WithSubRoutes = ({ subRoutes, match, location: { pathname } }: any)
             </div>
         </div>
     );
-};
-
-WithSubRoutes.propTypes = {
-    subRoutes: PropTypes.array.isRequired,
-    match: PropTypes.shape({
-        isExact: PropTypes.bool.isRequired,
-        path: PropTypes.string.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-        pathname: PropTypes.string.isRequired,
-    }).isRequired,
 };

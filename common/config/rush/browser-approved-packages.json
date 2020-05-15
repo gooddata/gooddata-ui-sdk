@@ -232,7 +232,7 @@
     },
     {
       "name": "@types/invariant",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@types/isomorphic-fetch",
@@ -436,7 +436,7 @@
     },
     {
       "name": "classnames",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "clean-webpack-plugin",
@@ -444,7 +444,7 @@
     },
     {
       "name": "commander",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "compression-webpack-plugin",
