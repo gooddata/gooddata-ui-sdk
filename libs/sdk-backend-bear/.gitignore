@@ -1,0 +1,5 @@
+.wiremock_containerid
+tests/wiremock/recordings/mappings/*login*
+tests/wiremock/recordings/mappings/*token*
+tests/wiremock/recordings/__files/*login*
+tests/wiremock/recordings/__files/*token*
