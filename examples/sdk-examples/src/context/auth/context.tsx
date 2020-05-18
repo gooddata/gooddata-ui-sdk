@@ -79,7 +79,11 @@ export const AuthProvider: React.FC = ({ children }) => {
     useEffect(() => {
         const auth = async () => {
             try {
-                await backend.authenticate();
+                /**
+                 * Authenticate force prop is needed to set to true in order
+                 * for the login to be persisted after refreshing the page
+                 */
+                await backend.authenticate(true);
                 onLoginSuccess();
             } catch (err) {
                 onLoginError(err);
