@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { RawExecute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
-import get from "lodash/get";
 
 import { workspace } from "../../constants/fixtures";
 import { LdmExt } from "../../ldm";
@@ -83,7 +82,6 @@ export const ExecuteExample: React.FC = () => {
                         );
                     }
 
-                    const data = get(result.data(), [0, 0]);
                     return (
                         <div>
                             <style jsx>
@@ -100,7 +98,7 @@ export const ExecuteExample: React.FC = () => {
                                 `}
                             </style>
                             {retryButton}
-                            <p className="kpi s-execute-kpi">{data}</p>
+                            <p className="kpi s-execute-kpi">{result.dataView.data[0]}</p>
                             <p>Full execution response and result as JSON:</p>
                             <pre style={resultStyle}>
                                 {JSON.stringify({ result, isLoading, error }, null, 2)}
