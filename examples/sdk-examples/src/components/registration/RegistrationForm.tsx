@@ -7,12 +7,12 @@ import { withFormik, FormikProps } from "formik";
 import Yup from "yup";
 import { CustomLoading } from "../CustomLoading";
 
-export const errorMap = {
+export const errorMap: any = {
     gdc1051: "password",
     gdc1052: "email",
 };
 
-export const transformApiError = ({ errorCode, message }) =>
+export const transformApiError = ({ errorCode, message }: any) =>
     has(errorMap, errorCode) ? { [errorMap[errorCode]]: message } : null;
 
 interface IRegistrationFormValues {
@@ -28,7 +28,12 @@ interface IRegistrationFormValues {
 interface IRegistrationFormProps {
     redirectUri?: string;
     isLoggedIn: boolean;
-    register: (username: string, password: string, firstName: string, lastName: string) => Promise<any>;
+    register: (
+        username: string,
+        password: string,
+        firstName: string,
+        lastName: string,
+    ) => Promise<any> | undefined;
 }
 
 const enhance = withFormik<IRegistrationFormProps, IRegistrationFormValues>({
@@ -62,7 +67,7 @@ const enhance = withFormik<IRegistrationFormProps, IRegistrationFormValues>({
             error: null,
             isLoading: true,
         });
-        register(email, password, firstName, lastName)
+        register(email, password, firstName, lastName)!
             .then(response => {
                 setSubmitting(false);
                 setStatus({ response });

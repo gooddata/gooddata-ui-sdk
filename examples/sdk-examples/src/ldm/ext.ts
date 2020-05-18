@@ -97,7 +97,7 @@ export const TotalCosts = modifyMeasure(Ldm.$TotalCosts, m =>
     m
         .format("#,##0")
         .alias("$ Total Costs")
-        .localId(TotalCosts),
+        .localId(totalCostsLocalId),
 );
 
 export const EmployeeName = modifyAttribute(Ldm.EmployeeName.Default, a => a.localId(EmployeeNameLocalId));

@@ -11,8 +11,8 @@ interface IElementWithParamProps {
 
 export class ElementWithParam extends React.Component<IElementWithParamProps> {
     public static defaultProps = {
-        component: props => <button {...props} />,
-        onClick: f => f,
+        component: (props: any) => <button {...props} />,
+        onClick: (f: any) => f,
     };
 
     public onClick = () => {

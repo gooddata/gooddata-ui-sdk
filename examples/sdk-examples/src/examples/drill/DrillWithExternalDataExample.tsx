@@ -8,8 +8,24 @@ import { newPositiveAttributeFilter, attributeLocalId } from "@gooddata/sdk-mode
 import { Ldm, LdmExt } from "../../ldm";
 import { EmployeeProfile } from "./EmployeeProfile";
 
+interface IDrillWithExternalDataExampleState {
+    state: any;
+    location: ILocation | null;
+    employee: any;
+    employee3rdPartyData: {
+        error: any;
+        isLoading: boolean;
+        data: any;
+    };
+}
+
+interface ILocation {
+    name: string;
+    uri: string;
+}
+
 export const DrillWithExternalDataExample: React.FC = () => {
-    const [componentState, setState] = useState({
+    const [componentState, setState] = useState<IDrillWithExternalDataExampleState>({
         state: null,
         location: null,
         employee: null,
@@ -20,7 +36,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         },
     });
 
-    const onLocationDrill = drillTarget => {
+    const onLocationDrill = (drillTarget: any) => {
         const { title: name, id } =
             drillTarget.drillContext.element === "bar"
                 ? drillTarget.drillContext.intersection[1]
@@ -36,7 +52,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         }));
     };
 
-    const onStateDrill = drillTarget => {
+    const onStateDrill = (drillTarget: any) => {
         const { name, id } = drillTarget.drillContext.row[0];
         const state = {
             name,
@@ -61,7 +77,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
             location: null,
         }));
 
-    const onEmployeeDrill = drillTarget => {
+    const onEmployeeDrill = (drillTarget: any) => {
         const employee = drillTarget.drillContext.row[0];
         setState(oldState => ({
             ...oldState,
@@ -111,7 +127,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
             });
     };
 
-    const getFilters = (state, location) => {
+    const getFilters = (state: any, location: ILocation) => {
         const filters = [];
         if (state) {
             filters.push(
@@ -130,7 +146,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         return filters;
     };
 
-    const renderEmployeeDetails = employeeData => {
+    const renderEmployeeDetails = (employeeData: any) => {
         if (employeeData.isError) {
             return <ErrorComponent height={150} message="There was an error getting employee details" />;
         } else if (employeeData.isLoading) {
@@ -154,7 +170,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         </div>
     );
 
-    const employeeTableFilters = getFilters(state, location);
+    const employeeTableFilters = getFilters(state, location!);
     const employeeTable = (
         <div style={{ height: 300 }} className="s-employee-table">
             <PivotTable
@@ -167,7 +183,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         </div>
     );
 
-    const salesTableFilters = getFilters(state, location);
+    const salesTableFilters = getFilters(state, location!);
     const totalSalesChart = (
         <div style={{ height: 300 }} className="s-sales-chart">
             <ColumnChart

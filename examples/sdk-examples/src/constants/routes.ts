@@ -66,9 +66,10 @@ export const drillingUseCasesRoutes = [
     { path: "/drilling/pivot-table-drilling", title: "Pivot table drilling", Component: PivotTableDrilling },
 ];
 
-const InsightViewUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: insightViewUseCasesRoutes });
-const AdvancedUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
-const DrillingUseCasesRoutes = props => WithSubRoutes({ ...props, subRoutes: drillingUseCasesRoutes });
+const InsightViewUseCasesRoutes = (props: any) =>
+    WithSubRoutes({ ...props, subRoutes: insightViewUseCasesRoutes });
+const AdvancedUseCasesRoutes = (props: any) => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
+const DrillingUseCasesRoutes = (props: any) => WithSubRoutes({ ...props, subRoutes: drillingUseCasesRoutes });
 
 export const sideNavigationRoutes = [
     { path: "/", title: "Basic Components", Component: BasicComponents, exact: true },

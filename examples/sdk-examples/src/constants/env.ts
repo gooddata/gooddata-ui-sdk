@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-const backendShortcuts = {
+// (C) 2019-2020 GoodData Corporation
+const backendShortcuts: any = {
     sec: "https://secure.gooddata.com",
     secure: "https://secure.gooddata.com",
     stg: "https://staging.intgdc.com",

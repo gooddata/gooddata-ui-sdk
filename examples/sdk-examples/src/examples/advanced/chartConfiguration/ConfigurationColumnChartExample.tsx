@@ -12,7 +12,7 @@ interface IConfigurationColumnChartExampleState {
 }
 
 export class ConfigurationColumnChartExample extends Component<{}, IConfigurationColumnChartExampleState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {

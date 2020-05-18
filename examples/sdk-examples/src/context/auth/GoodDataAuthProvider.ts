@@ -34,10 +34,11 @@ export class GoodDataAuthProvider implements IAuthenticationProvider {
     }
 
     public async deauthenticate() {
-        return null;
+        // TODO: SDK8 Decide whether to implement this or remove it
     }
 
     public async getCurrentPrincipal() {
+        // TODO: SDK8 Decide whether to implement this or remove it
         return null;
     }
 }

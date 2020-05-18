@@ -6,6 +6,7 @@ import {
     newPositiveAttributeFilter,
     attributeIdentifier,
     attributeDisplayFormRef,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import Select from "react-select";
 import { Ldm, LdmExt } from "../../../ldm";
@@ -22,23 +23,25 @@ interface IParentFilterExampleState {
 
 interface ICityOptions {
     limit: number;
-    afm: {
-        attributes: Array<{
-            displayForm: {
-                identifier: string;
-            };
-            localIdentifier: string;
-        }>;
-        filters: Array<{
-            expression: {
-                value: string;
-            };
-        }>;
-    };
+    afm:
+        | {
+              attributes: Array<{
+                  displayForm: {
+                      identifier: string | undefined;
+                  };
+                  localIdentifier: string;
+              }>;
+              filters: Array<{
+                  expression: {
+                      value: string;
+                  };
+              }>;
+          }
+        | undefined;
 }
 
 export class ParentFilterExample extends Component<{}, IParentFilterExampleState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.renderFilter = this.renderFilter.bind(this);
@@ -48,13 +51,13 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
         };
     }
 
-    public onStateChange = stateFilterValues => {
+    public onStateChange = (stateFilterValues: IFilterValue[]) => {
         this.setState({
             stateFilterValues,
         });
     };
 
-    public onCityChange = cityFilterValues => {
+    public onCityChange = (cityFilterValues: IFilterValue[]) => {
         this.setState({
             cityFilterValues,
         });
@@ -90,7 +93,14 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
         );
     }
 
-    public renderFilter(key, displayForm, filterValues, placeholder, options, onChange) {
+    public renderFilter(
+        key: string,
+        displayForm: ObjRef,
+        filterValues: IFilterValue[],
+        placeholder: string,
+        options: any,
+        onChange: any,
+    ) {
         return (
             <AttributeElements key={key} displayForm={displayForm} options={options}>
                 {({ validElements, isLoading, error }) => {

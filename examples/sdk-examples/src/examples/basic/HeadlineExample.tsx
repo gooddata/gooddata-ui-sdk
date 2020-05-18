@@ -4,12 +4,12 @@ import { Headline } from "@gooddata/sdk-ui-charts";
 import { LdmExt } from "../../ldm";
 
 export class HeadlineExample extends Component {
-    public onLoadingChanged(...params) {
+    public onLoadingChanged(...params: any) {
         // tslint:disable-next-line:no-console
         return console.log("ColumnChartExample onLoadingChanged", ...params);
     }
 
-    public onError(...params) {
+    public onError(...params: any) {
         // tslint:disable-next-line:no-console
         return console.log("ColumnChartExample onError", ...params);
     }

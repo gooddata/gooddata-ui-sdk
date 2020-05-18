@@ -5,45 +5,47 @@ import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { LineChart } from "@gooddata/sdk-ui-charts";
 import {
     attributeIdentifier,
+    IAttributeFilter,
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
     isAttributeElementsByRef,
+    isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 
 interface IAttributeFilterExampleState {
-    filters: Array<IPositiveAttributeFilter | INegativeAttributeFilter>;
-    error: string;
+    filters: Array<IPositiveAttributeFilter | INegativeAttributeFilter> | undefined;
+    error: string | undefined;
 }
 
 export class AttributeFilterExample extends Component<{}, IAttributeFilterExampleState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.onApply = this.onApply.bind(this);
         this.state = {
             filters: [],
-            error: null,
+            error: undefined,
         };
     }
 
-    public onLoadingChanged(...params) {
+    public onLoadingChanged(...params: any) {
         // tslint:disable-next-line:no-console
         console.info("AttributeFilterExample onLoadingChanged", ...params);
     }
 
-    public onApply(filter) {
+    public onApply(filter: IAttributeFilter) {
         // tslint:disable-next-line:no-console
         console.log("AttributeFilterExample onApply", filter);
-        this.setState({ filters: [], error: null });
-        if (filter.in) {
+        this.setState({ filters: [], error: undefined });
+        if (isPositiveAttributeFilter(filter)) {
             this.filterPositiveAttribute(filter);
         } else {
             this.filterNegativeAttribute(filter);
         }
     }
 
-    public onError(...params) {
+    public onError(...params: any) {
         // tslint:disable-next-line:no-console
         console.info("AttributeFilterExample onLoadingChanged", ...params);
     }
@@ -54,6 +56,7 @@ export class AttributeFilterExample extends Component<{}, IAttributeFilterExampl
             positiveAttributeFilter,
             positiveAttributeFilter: { displayForm },
         } = filter;
+        const inElements = filter.positiveAttributeFilter.in;
         const checkLengthOfFilter = isAttributeElementsByRef(positiveAttributeFilter.in)
             ? positiveAttributeFilter.in.uris.length !== 0
             : positiveAttributeFilter.in.values.length !== 0;
@@ -62,11 +65,7 @@ export class AttributeFilterExample extends Component<{}, IAttributeFilterExampl
                 {
                     positiveAttributeFilter: {
                         displayForm,
-                        in: isAttributeElementsByRef(positiveAttributeFilter.in)
-                            ? positiveAttributeFilter.in.uris
-                            : positiveAttributeFilter.in.values.map(
-                                  element => `${LdmExt.locationResortUri}/elements?id=${element}`,
-                              ),
+                        in: inElements,
                     },
                 },
             ];
@@ -91,11 +90,7 @@ export class AttributeFilterExample extends Component<{}, IAttributeFilterExampl
                 {
                     negativeAttributeFilter: {
                         displayForm,
-                        notIn: isAttributeElementsByRef(notIn)
-                            ? notIn.uris
-                            : notIn.values.map(
-                                  element => `${LdmExt.locationResortUri}/elements?id=${element}`,
-                              ),
+                        notIn,
                     },
                 },
             ];

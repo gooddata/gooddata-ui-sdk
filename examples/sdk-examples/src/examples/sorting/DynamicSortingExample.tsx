@@ -62,7 +62,7 @@ export const DynamicSortingExample: React.FC = () => {
             label: "State",
             description: dir =>
                 `The column stacks (states) are sorted alphabetically by the label of the state attribute in ${getOrderLabel(
-                    dir,
+                    dir!,
                 )} order.`,
             sortBy: dir => [newAttributeSort(LdmExt.LocationState, dir)],
         },
@@ -71,7 +71,7 @@ export const DynamicSortingExample: React.FC = () => {
             label: "Date attribute",
             description: dir =>
                 `The columns (date) are sorted by the value of the date attribute in ${getOrderLabel(
-                    dir,
+                    dir!,
                 )} order.`,
             sortBy: dir => [newAttributeSort(LdmExt.monthDate, dir)],
         },
@@ -80,7 +80,7 @@ export const DynamicSortingExample: React.FC = () => {
             label: "Date attribute by sum of the column",
             description: dir =>
                 `The columns (date) are sorted by the sum of the Total Sales stacks in each column in ${getOrderLabel(
-                    dir,
+                    dir!,
                 )} order.`,
             sortBy: dir => [newAttributeSort(LdmExt.monthDate, dir, true)],
         },
@@ -89,7 +89,7 @@ export const DynamicSortingExample: React.FC = () => {
             label: "State attribute by sum of individual stacks",
             description: dir =>
                 `The stacks (state) are sorted by the sum of the Total Sales stacks across all columns in ${getOrderLabel(
-                    dir,
+                    dir!,
                 )} order.`,
             sortBy: dir => [newAttributeSort(LdmExt.LocationState, dir, true)],
         },
@@ -98,7 +98,7 @@ export const DynamicSortingExample: React.FC = () => {
             label: "Measure of California",
             description: dir =>
                 `The columns (date) are sorted by the value of the Total Sales of California stack in ${getOrderLabel(
-                    dir,
+                    dir!,
                 )} order.`,
             sortBy: dir => [
                 newMeasureSort(LdmExt.TotalSales1, dir, [
@@ -111,7 +111,7 @@ export const DynamicSortingExample: React.FC = () => {
             label: "Measure of January",
             description: dir =>
                 `The column stacks (states) are sorted by the value of Total Sales in the January column in ${getOrderLabel(
-                    dir,
+                    dir!,
                 )} order.`,
             sortBy: dir => [
                 newMeasureSort(LdmExt.TotalSales1, dir, [

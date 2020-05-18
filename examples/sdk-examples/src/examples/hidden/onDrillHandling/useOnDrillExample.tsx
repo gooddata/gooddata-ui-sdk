@@ -1,14 +1,13 @@
 // (C) 2019 GoodData Corporation
 import React, { useState } from "react";
+import { IDrillEvent } from "@gooddata/sdk-ui";
 
 export const useOnDrillExample = () => {
-    const [state, setState] = useState({
-        drillEvent: null,
-    });
+    const [drillEvent, setDrillEvent] = useState<IDrillEvent>();
 
-    const onDrill = drillEvent => setState({ drillEvent });
+    const onDrill = (drillEvent: IDrillEvent) => setDrillEvent(drillEvent);
 
-    const renderDrillEvent = <pre className="s-output">{JSON.stringify(state.drillEvent, null, 4)}</pre>;
+    const renderDrillEvent = <pre className="s-output">{JSON.stringify(drillEvent, null, 4)}</pre>;
 
     return {
         onDrill,

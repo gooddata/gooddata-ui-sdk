@@ -1,6 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { CoreComponents } from "@gooddata/sdk-ui";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { ResponsiveContainer, BarChart, Bar, Legend, CartesianGrid, XAxis, YAxis } from "recharts";
@@ -12,11 +11,6 @@ import { DEFAULT_COLOR_PALETTE } from "../../constants/colors";
 const { BaseChart } = CoreComponents;
 
 export class CustominsightView extends Component {
-    static propTypes = {
-        height: PropTypes.number,
-        executionResult: PropTypes.object.isRequired,
-    };
-
     static defaultProps = {
         height: 300,
     };

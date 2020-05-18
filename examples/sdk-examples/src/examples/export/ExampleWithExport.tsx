@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from "react";
 import get from "lodash/get";
 import ExportDialog, { IExportDialogData } from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
-import { IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { IExtendedExportConfig, IExportFunction } from "@gooddata/sdk-ui";
 import { IFilter } from "@gooddata/sdk-model";
 
 interface IExampleWithExportProps {
-    children: (onExportReady: (exportFunction) => void) => React.ReactNode;
+    children: (onExportReady: (exportFunction: any) => void) => React.ReactNode;
     filters?: IFilter[];
 }
 
@@ -46,14 +46,15 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
         setState,
     ] = useState<IExampleWithExportState>({
         showExportDialog: false,
-        errorMessage: null,
-        exportFunction: undefined,
+        errorMessage: undefined,
+        exportFunction: () => undefined,
         downloadUri: undefined,
         exportConfig: undefined,
         exporting: false,
     });
 
-    const onExportReady = exportFunction => setState(oldState => ({ ...oldState, exportFunction }));
+    const onExportReady = (exportFunction: IExportFunction) =>
+        setState(oldState => ({ ...oldState, exportFunction }));
 
     const exportToCSV = () => setState(oldState => ({ ...oldState, exportConfig: {} }));
     const exportToXLSX = () => setState(oldState => ({ ...oldState, exportConfig: { format: "xlsx" } }));
@@ -78,7 +79,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
     useEffect(() => {
         const getExportUri = async () => {
             try {
-                const { uri } = await exportFunction(exportConfig);
+                const uri = (await exportFunction(exportConfig!))?.uri;
                 return uri;
             } catch (error) {
                 let errorMessage = error.message;

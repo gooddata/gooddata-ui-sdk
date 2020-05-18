@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PieChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { LdmExt } from "../../../ldm";
+import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { modifyMeasure } from "@gooddata/sdk-model";
 
 const measures = [
@@ -18,25 +18,14 @@ const measures = [
 const chartConfig: IChartConfig = {
     colorMapping: [
         {
-            predicate: (headerItem: IMeasureDescriptor) => {
-                return headerItem.measureHeaderItem
-                    ? headerItem.measureHeaderItem &&
-                          headerItem.measureHeaderItem.localIdentifier === "franchiseFeesAdRoyaltyIdentifier"
-                    : false;
-            },
+            predicate: HeaderPredicates.localIdentifierMatch("franchiseFeesAdRoyaltyIdentifier"),
             color: {
                 type: "guid",
                 value: "5",
             },
         },
         {
-            predicate: (headerItem: IMeasureDescriptor) => {
-                return headerItem.measureHeaderItem
-                    ? headerItem.measureHeaderItem &&
-                          headerItem.measureHeaderItem.localIdentifier ===
-                              "franchiseFeesIdentifierOngoingRoyalty"
-                    : false;
-            },
+            predicate: HeaderPredicates.localIdentifierMatch("franchiseFeesIdentifierOngoingRoyalty"),
             color: {
                 type: "rgb",
                 value: {

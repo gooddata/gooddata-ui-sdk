@@ -29,7 +29,7 @@ const measures = [measureFranchiseFees, measureAdRoyalty];
 const columns = [attributeQuarter, attributeMonth];
 const rows = [attributeLocationState, attributeLocationName, attributeMenuCategory];
 
-const bucketPresets = {
+const bucketPresets: any = {
     measures: {
         label: "Measures",
         key: "measures",
@@ -117,31 +117,31 @@ const bucketPresets = {
     },
 };
 
-const drillingPresets = {
+const drillingPresets: any = {
     measure: {
         label: "Measure Franchise Fees",
         key: "measure",
-        drillableItem: HeaderPredicates.identifierMatch(measureIdentifier(LdmExt.FranchiseFees)),
+        drillableItem: HeaderPredicates.identifierMatch(measureIdentifier(LdmExt.FranchiseFees)!),
     },
     attributeMonth: {
         label: "Attribute Month",
         key: "attributeMonth",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.monthDate)),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.monthDate)!),
     },
     attributeQuarter: {
         label: "Attribute Quarter",
         key: "attributeQuarter",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.quaterDate)),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.quaterDate)!),
     },
     attributeLocationState: {
         label: "Attribute Location state",
         key: "attributeLocationState",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationState)),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationState)!),
     },
     attributeMenuCategory: {
         label: "Attribute Menu category",
         key: "attributeMenuCategory",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.MenuCategory)),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.MenuCategory)!),
     },
     attributeValueCalifornia: {
         label: "Attribute value California",
@@ -154,7 +154,7 @@ const drillingPresets = {
         drillableItem: HeaderPredicates.uriMatch(LdmExt.monthDateIdentifierJanuary),
     },
 };
-const totalPresets = {
+const totalPresets: any = {
     franchiseFeesSum: {
         label: "Franchise Fees Sum",
         key: "franchiseFeesSum",
@@ -199,11 +199,11 @@ const totalPresets = {
         ),
     },
 };
-const filterPresets = {
+const filterPresets: any = {
     attributeCalifornia: {
         label: "Attribute (California)",
         key: "attributeCalifornia",
-        filterItem: newPositiveAttributeFilter(attributeIdentifier(LdmExt.LocationState), [
+        filterItem: newPositiveAttributeFilter(attributeIdentifier(LdmExt.LocationState)!, [
             LdmExt.locationStateAttributeCaliforniaUri,
         ]),
     },
@@ -225,7 +225,7 @@ const filterPresets = {
 };
 
 const franchiseFeesCalifornia = Ldm.$FranchiseFees;
-const sortingPresets = {
+const sortingPresets: any = {
     noSort: {
         label: "No sort",
         key: "noSort",
@@ -276,7 +276,7 @@ const sortingPresets = {
     },
 };
 
-const menuPresets = {
+const menuPresets: any = {
     noMenu: {
         label: "No menu",
         key: "noMenu",
@@ -297,7 +297,7 @@ const menuPresets = {
     },
 };
 
-const pivotTableSizePresets = {
+const pivotTableSizePresets: any = {
     default: {
         label: "Default",
         key: "default",
@@ -310,7 +310,7 @@ const pivotTableSizePresets = {
     },
 };
 
-const maxHeightPresets = {
+const maxHeightPresets: any = {
     none: {
         key: "none",
         label: "None",
@@ -328,7 +328,7 @@ const maxHeightPresets = {
     },
 };
 
-const groupRowsPresets = {
+const groupRowsPresets: any = {
     disabledGrouping: {
         label: "Disabled",
         key: "disabledGrouping",
@@ -341,7 +341,7 @@ const groupRowsPresets = {
     },
 };
 
-const drillHandlingPresets = {
+const drillHandlingPresets: any = {
     onFiredDrillEvent: {
         label: "Old onFiredDrillEvent",
         key: "onFiredDrillEvent",
@@ -354,24 +354,24 @@ const drillHandlingPresets = {
     },
 };
 
-export const getDrillableItems = drillableKeys => {
+export const getDrillableItems = (drillableKeys: any) => {
     return Object.keys(drillableKeys)
         .filter(itemKey => drillableKeys[itemKey])
         .map(itemKey => drillingPresets[itemKey].drillableItem);
 };
 
-export const getTotalItems = totalKeys => {
+export const getTotalItems = (totalKeys: any) => {
     return Object.keys(totalKeys)
         .filter(itemKey => totalKeys[itemKey])
         .map(itemKey => totalPresets[itemKey].totalItem);
 };
 
-export const getGroupRows = groupRowsKey => {
+export const getGroupRows = (groupRowsKey: any) => {
     return groupRowsPresets[groupRowsKey].value;
 };
 interface IPivotTableDrillingExampleState {
     bucketPresetKey: string;
-    drillEvent: Event;
+    drillEvent: Event | undefined;
     drillingPresetKeys: any;
     filterPresetKeys: any;
     drillableItems: any;
@@ -385,7 +385,7 @@ interface IPivotTableDrillingExampleState {
 }
 
 export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDrillingExampleState> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         const drillingPresetKeys = {
@@ -397,7 +397,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
 
         this.state = {
             bucketPresetKey: "measuresColumnAndRowAttributes",
-            drillEvent: null,
+            drillEvent: undefined,
             drillingPresetKeys,
             filterPresetKeys: {},
             drillableItems: getDrillableItems(drillingPresetKeys),
@@ -411,7 +411,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
         };
     }
 
-    public onDrillingPresetChange = drillingPresetKey => {
+    public onDrillingPresetChange = (drillingPresetKey: any) => {
         const drillingPresetKeys = {
             ...this.state.drillingPresetKeys,
             [drillingPresetKey]: !this.state.drillingPresetKeys[drillingPresetKey],
@@ -421,7 +421,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
             drillableItems: getDrillableItems(drillingPresetKeys),
         });
     };
-    public onTotalPresetChange = totalPresetKey => {
+    public onTotalPresetChange = (totalPresetKey: any) => {
         const totalPresetKeys = {
             ...this.state.totalPresetKeys,
             [totalPresetKey]: !this.state.totalPresetKeys[totalPresetKey],
@@ -430,7 +430,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
             totalPresetKeys,
         });
     };
-    public onFilterPresetChange = filterPresetKey => {
+    public onFilterPresetChange = (filterPresetKey: any) => {
         const filterPresetKeys = {
             ...this.state.filterPresetKeys,
             [filterPresetKey]: !this.state.filterPresetKeys[filterPresetKey],
@@ -439,45 +439,45 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
             filterPresetKeys,
         });
     };
-    public onBucketPresetChange = bucketPresetKey => {
+    public onBucketPresetChange = (bucketPresetKey: any) => {
         this.setState({
             bucketPresetKey,
         });
     };
-    public onSortingPresetChange = sortingPresetKey => {
+    public onSortingPresetChange = (sortingPresetKey: any) => {
         this.setState({
             sortingPresetKey,
         });
     };
-    public onMenuPresetChange = menuPresetKey => {
+    public onMenuPresetChange = (menuPresetKey: any) => {
         this.setState({
             menuPresetKey,
         });
     };
-    public onPivotTableSizeChange = pivotTableSizeKey => {
+    public onPivotTableSizeChange = (pivotTableSizeKey: any) => {
         this.setState({
             pivotTableSizeKey,
         });
     };
-    public onMaxHeightPresetChange = maxHeightPresetKey => {
+    public onMaxHeightPresetChange = (maxHeightPresetKey: any) => {
         this.setState({
             maxHeightPresetKey,
         });
     };
 
-    public onGroupRowsPresetChange = groupRowsKey => {
+    public onGroupRowsPresetChange = (groupRowsKey: any) => {
         this.setState({
             groupRowsKey,
         });
     };
 
-    public onDrillHandlingChange = drillHandlingKey => {
+    public onDrillHandlingChange = (drillHandlingKey: any) => {
         this.setState({
             drillHandlingKey,
         });
     };
 
-    public onFiredDrillEvent = drillEvent => {
+    public onFiredDrillEvent = (drillEvent: any) => {
         // tslint:disable-next-line:no-console
         console.log(
             "onFiredDrillEvent",
@@ -490,7 +490,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
         return true;
     };
 
-    public onDrill = drillEvent => {
+    public onDrill = (drillEvent: any) => {
         // tslint:disable-next-line:no-console
         console.log("onDrill", drillEvent, JSON.stringify(drillEvent.drillContext.intersection, null, 2));
         this.setState({
@@ -548,6 +548,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
 
         const groupRows = getGroupRows(groupRowsKey);
         const drillHandlerProp = {
+            // @ts-ignore
             [drillHandlingKey]: this[drillHandlingKey],
         };
 

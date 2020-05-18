@@ -2,16 +2,13 @@
 import React from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { measureIdentifier } from "@gooddata/sdk-model";
+import { IDrillableItemIdentifier } from "@gooddata/sdk-ui";
 import { LdmExt } from "../../../ldm";
 import { useOnDrillExample } from "./useOnDrillExample";
 
 const measures = [LdmExt.TotalSales2];
 
-const drillableItems = [
-    {
-        identifier: measureIdentifier(LdmExt.TotalSales2),
-    },
-];
+const drillableItems: IDrillableItemIdentifier = { identifier: measureIdentifier(LdmExt.TotalSales2)! };
 
 const style = { height: 300 };
 
@@ -25,7 +22,7 @@ export const BarChartOnDrillExample: React.FC = () => {
                     measures={measures}
                     viewBy={LdmExt.LocationResort}
                     onDrill={onDrill}
-                    drillableItems={drillableItems}
+                    drillableItems={[drillableItems]}
                 />
             </div>
             {renderDrillEvent}

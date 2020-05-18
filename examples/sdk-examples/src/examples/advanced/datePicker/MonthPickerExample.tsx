@@ -6,11 +6,11 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import { ErrorComponent } from "@gooddata/sdk-ui";
 import { Ldm, LdmExt } from "../../../ldm";
-
-const dateFormat = "YYYY-MM-DD";
+import { IDatePickerState } from "./DatePickerExample";
+const dateFormat = "yyyy-MM-DD";
 
 // sync with backend timezone
-const withGTM0 = time => time.utcOffset("+00:00", true);
+const withGTM0 = (time: moment.Moment) => time.utcOffset("+00:00", true);
 
 const currentDate = withGTM0(moment().startOf("months"));
 
@@ -19,21 +19,21 @@ const measures = [LdmExt.TotalSales1];
 const style = { height: 300 };
 
 export const MonthPickerExample: React.FC = () => {
-    const [state, setState] = useState({
+    const [state, setState] = useState<IDatePickerState>({
         from: withGTM0(moment("2016-01-01", dateFormat)),
         to: withGTM0(moment("2017-01-01", dateFormat)),
-        error: null,
+        error: undefined,
     });
 
-    const onDateChange = (prop, value) =>
+    const onDateChange = (prop: any, value: Date) => {
         setState(oldState => {
             const { from, to } = oldState;
-            const newState = {
+            const newState: any = {
                 from,
                 to,
                 error: null,
             };
-            newState[prop] = value;
+            newState[prop] = moment(value);
 
             return newState.to.isSameOrAfter(newState.from)
                 ? newState
@@ -42,12 +42,13 @@ export const MonthPickerExample: React.FC = () => {
                       error: '"From" date must come before "To" date.',
                   };
         });
+    };
 
-    const onFromChange = value => {
+    const onFromChange = (value: Date) => {
         onDateChange("from", value);
     };
 
-    const onToChange = value => {
+    const onToChange = (value: Date) => {
         onDateChange("to", value);
     };
 
@@ -81,22 +82,22 @@ export const MonthPickerExample: React.FC = () => {
                 <h4>From</h4>
                 <DatePicker
                     className="gd-input-field"
-                    selected={from}
+                    selected={from.toDate()}
                     onChange={onFromChange}
                     minDate={new Date("2015-01-01")}
                     maxDate={new Date("2017-12-31")}
-                    dateFormat="MM/YYYY"
+                    dateFormat="MM/yyyy"
                 />
             </label>
             <label className="s-month-picker-to">
                 <h4>To</h4>
                 <DatePicker
                     className="gd-input-field"
-                    selected={to}
+                    selected={to.toDate()}
                     onChange={onToChange}
                     minDate={new Date("2015-01-01")}
                     maxDate={new Date("2017-12-31")}
-                    dateFormat="MM/YYYY"
+                    dateFormat="MM/yyyy"
                 />
             </label>
             <hr className="separator" />

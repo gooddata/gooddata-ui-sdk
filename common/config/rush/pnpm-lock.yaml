@@ -56,6 +56,7 @@ dependencies:
   '@types/enzyme-adapter-react-16': 1.0.6
   '@types/fast-levenshtein': 0.0.1
   '@types/fetch-mock': 5.12.2
+  '@types/history': 4.7.5
   '@types/hoist-non-react-statics': 3.3.1
   '@types/inquirer': 6.5.0
   '@types/invariant': 2.2.32
@@ -72,14 +73,21 @@ dependencies:
   '@types/qs': 6.9.2
   '@types/raf': 3.4.0
   '@types/react': 16.9.34
+  '@types/react-datepicker': 2.11.0
   '@types/react-dom': 16.9.7
+  '@types/react-google-recaptcha': 1.1.1
+  '@types/react-helmet': 5.0.16
   '@types/react-measure': 2.0.5
   '@types/react-responsive': 8.0.2
+  '@types/react-router-dom': 5.1.5
+  '@types/react-select': 3.0.12
+  '@types/react-syntax-highlighter': 11.0.4
   '@types/react-window': 1.8.2
   '@types/rimraf': 2.0.4
   '@types/spark-md5': 3.0.2
   '@types/stringify-object': 3.2.0
   '@types/uuid': 3.4.9
+  '@types/yup': 0.28.3
   async: 2.6.3
   axios: 0.19.2
   babel-loader: 8.1.0_@babel+core@7.9.6+webpack@4.43.0
@@ -3125,12 +3133,32 @@ packages:
     dev: false
     resolution:
       integrity: sha512-h0NbqXN/tJuBY/xggZSej1SKQEstbHO7J/omt1tYoFGmj3YXOodZKbbqD4mNDh7zvEGYd7YFrac1LTtAr3xsYQ==
+  /@types/react-datepicker/2.11.0:
+    dependencies:
+      '@types/react': 16.9.34
+      date-fns: 2.13.0
+      popper.js: 1.16.1
+    dev: false
+    resolution:
+      integrity: sha512-eagG8BE3TFgPYyZb2/hG4+2delLH9z/4OWzT7wuTCKLHDDXIXgvkb2O2cW8q4/wuqnTnMxo+vl3vgPTENkofzw==
   /@types/react-dom/16.9.7:
     dependencies:
       '@types/react': 16.9.34
     dev: false
     resolution:
       integrity: sha512-GHTYhM8/OwUCf254WO5xqR/aqD3gC9kSTLpopWGpQLpnw23jk44RvMHsyUSEplvRJZdHxhJGMMLF0kCPYHPhQA==
+  /@types/react-google-recaptcha/1.1.1:
+    dependencies:
+      '@types/react': 16.9.34
+    dev: false
+    resolution:
+      integrity: sha512-p/6804HmHCPTXmja0MgXb/K16Hc1rFw9F+gVhlsI9sN/Ax3Hag5pcoZ69F9MBdtonjh4FnDA+9nhDaLhxIrpnw==
+  /@types/react-helmet/5.0.16:
+    dependencies:
+      '@types/react': 16.9.34
+    dev: false
+    resolution:
+      integrity: sha512-++KMqwodVBg75hT2ZT4jobvDPi6iPUl/Lhrn0nP1XTcmFLtccaDb4FTAxzrj3egL7WQYTDnpHuPj52FSFkJqzA==
   /@types/react-measure/2.0.5:
     dependencies:
       '@types/react': 16.9.34
@@ -3143,6 +3171,29 @@ packages:
     dev: false
     resolution:
       integrity: sha512-DTvm3Hb77v0hme7L4GYzRjLQqlZP+zNImFBzdKbSH7CsQ5c7QebGnSQX2Xf3BaA0rm/TQE57eFMhMGLcMe/A9w==
+  /@types/react-router-dom/5.1.5:
+    dependencies:
+      '@types/history': 4.7.5
+      '@types/react': 16.9.34
+      '@types/react-router': 5.1.7
+    dev: false
+    resolution:
+      integrity: sha512-ArBM4B1g3BWLGbaGvwBGO75GNFbLDUthrDojV2vHLih/Tq8M+tgvY1DSwkuNrPSwdp/GUL93WSEpTZs8nVyJLw==
+  /@types/react-router/5.1.7:
+    dependencies:
+      '@types/history': 4.7.5
+      '@types/react': 16.9.34
+    dev: false
+    resolution:
+      integrity: sha512-2ouP76VQafKjtuc0ShpwUebhHwJo0G6rhahW9Pb8au3tQTjYXd2jta4wv6U2tGLR/I42yuG00+UXjNYY0dTzbg==
+  /@types/react-select/3.0.12:
+    dependencies:
+      '@types/react': 16.9.34
+      '@types/react-dom': 16.9.7
+      '@types/react-transition-group': 4.2.4
+    dev: false
+    resolution:
+      integrity: sha512-3NVEc1sbaNtI1b06smzr9dlNKTkYWttL27CdEsorMvd2EgTOM/PJmrzkClaVQmBDg52MzQO05xVwNZruEUKpHw==
   /@types/react-syntax-highlighter/11.0.4:
     dependencies:
       '@types/react': 16.9.34
@@ -3155,6 +3206,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PiDL83kPMTolyZAWW3lyzO6ktooTb9tFTntVy7CA83/qFLWKLJ5bLeRboy6J6j3b1e8h2Eec6gBTEOOJRjV14A==
+  /@types/react-transition-group/4.2.4:
+    dependencies:
+      '@types/react': 16.9.34
+    dev: false
+    resolution:
+      integrity: sha512-8DMUaDqh0S70TjkqU0DxOu80tFUiiaS9rxkWip/nb7gtvAsbqOXm02UCmR8zdcjWujgeYPiPNTVpVpKzUDotwA==
   /@types/react-window/1.8.2:
     dependencies:
       '@types/react': 16.9.34
@@ -3260,6 +3317,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9T1auFmbPZoxHz0enUFlUuKRy3it01R+hlggyVUMtnCTQRunsQYifnSGb8hET4Xo8yiC0o0r1paW3ud5+rbURg==
+  /@types/yup/0.28.3:
+    dev: false
+    resolution:
+      integrity: sha512-0Sir2LxOmupF8HBUvpJoZghLmOqKfZsBk1GYlMwSIccLDDUoN04LHvo0KzDp9qxt1IKf9Fudpj35SrJ8VqetkQ==
   /@webassemblyjs/ast/1.9.0:
     dependencies:
       '@webassemblyjs/helper-module-context': 1.9.0
@@ -18222,9 +18283,21 @@ packages:
       '@gooddata/goodstrap': 68.6.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/mock-js': 2.13.1
       '@gooddata/tslint-config': 1.0.0_typescript@3.8.3
+      '@types/history': 4.7.5
+      '@types/isomorphic-fetch': 0.0.34
+      '@types/lodash': 4.14.150
       '@types/node': 12.12.38
+      '@types/prop-types': 15.7.3
       '@types/react': 16.9.34
+      '@types/react-datepicker': 2.11.0
       '@types/react-dom': 16.9.7
+      '@types/react-google-recaptcha': 1.1.1
+      '@types/react-helmet': 5.0.16
+      '@types/react-measure': 2.0.5
+      '@types/react-router-dom': 5.1.5
+      '@types/react-select': 3.0.12
+      '@types/react-syntax-highlighter': 11.0.4
+      '@types/yup': 0.28.3
       babel-loader: 8.1.0_@babel+core@7.9.6+webpack@4.43.0
       babel-plugin-lodash: 3.3.4
       babel-polyfill: 6.26.0
@@ -18280,7 +18353,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-examples'
     resolution:
-      integrity: sha512-lkF66vpJBg2S0XJW0FmIxu8oycsPLPcvMZk4BPWkqW13ddiodvFoNXewF0MxdcyePK1NSVc10PAysRTuqBYkRg==
+      integrity: sha512-lbxIKPp/whNhn1NfY+NAjkr/MqUrFXQAnEA2LXRa1LkblmWYoR/fguB+F2hMlwjo71LnAhbFU19S4MRVIo9CzA==
       tarball: 'file:projects/sdk-examples.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -18754,6 +18827,7 @@ specifiers:
   '@types/enzyme-adapter-react-16': ^1.0.5
   '@types/fast-levenshtein': 0.0.1
   '@types/fetch-mock': ^5.*
+  '@types/history': ^4.7.5
   '@types/hoist-non-react-statics': ^3.3.1
   '@types/inquirer': ^6.5.0
   '@types/invariant': ^2.2.29
@@ -18770,14 +18844,21 @@ specifiers:
   '@types/qs': ^6.5.1
   '@types/raf': ^3.4.0
   '@types/react': ^16.9.11
+  '@types/react-datepicker': ^2.11.0
   '@types/react-dom': ^16.9.3
+  '@types/react-google-recaptcha': ^1.1.1
+  '@types/react-helmet': ^5.0.15
   '@types/react-measure': 2.0.5
   '@types/react-responsive': ^8.0.2
+  '@types/react-router-dom': ^5.1.5
+  '@types/react-select': ^3.0.12
+  '@types/react-syntax-highlighter': ^11.0.4
   '@types/react-window': ^1.8.1
   '@types/rimraf': ^2.0.2
   '@types/spark-md5': ^3.0.1
   '@types/stringify-object': ^3.2.0
   '@types/uuid': ^3.4.5
+  '@types/yup': ^0.28.3
   async: ^2.1.5
   axios: ^0.19.0
   babel-loader: ^8.0.5

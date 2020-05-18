@@ -5,7 +5,7 @@ import { attributeIdentifier, newPositiveAttributeFilter } from "@gooddata/sdk-m
 import { Ldm } from "../../ldm";
 
 export class AttributeFilterComponentExample extends Component {
-    public onApply(...params) {
+    public onApply(...params: any[]) {
         // tslint:disable-next-line:no-console
         console.log("AttributeFilterComponentExample onApply", ...params);
     }

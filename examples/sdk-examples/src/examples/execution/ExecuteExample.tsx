@@ -47,7 +47,7 @@ export const ExecuteExample: React.FC = () => {
         </p>
     );
 
-    const measure = newMeasure(willFail ? null : LdmExt.totalSalesIdentifier);
+    const measure = newMeasure(willFail ? "thisDoesNotExits" : LdmExt.totalSalesIdentifier);
 
     const execution = backend
         .workspace(workspace)

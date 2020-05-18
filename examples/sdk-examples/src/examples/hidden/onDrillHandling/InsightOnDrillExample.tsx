@@ -2,15 +2,13 @@
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { measureIdentifier } from "@gooddata/sdk-model";
-
+import { IDrillableItemIdentifier } from "@gooddata/sdk-ui";
 import { useOnDrillExample } from "./useOnDrillExample";
 import { Ldm } from "../../../ldm";
 
-const drillableItems = [
-    {
-        identifier: measureIdentifier(Ldm.$TotalSales),
-    },
-];
+const drillableItems: IDrillableItemIdentifier = {
+    identifier: measureIdentifier(Ldm.$TotalSales)!,
+};
 
 const style = { height: 300 };
 
@@ -23,7 +21,7 @@ export const InsightOnDrillExample: React.FC = () => {
                 <InsightView
                     insight={Ldm.Insights.SalesOverTime}
                     onDrill={onDrill}
-                    drillableItems={drillableItems}
+                    drillableItems={[drillableItems]}
                 />
             </div>
             {renderDrillEvent}
