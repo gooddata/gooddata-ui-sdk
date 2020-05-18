@@ -2,5 +2,6 @@
 const base = require("../../common/config/jest/jest.config.base.js");
 module.exports = {
     ...base,
-    testRegex: "(/src).*\\.test\\.tsx?$",
+    testRegex: "/tests/(integrated).*\\.test\\.tsx?$",
+    setupFiles: ["<rootDir>/integrated-test.setup.js"],
 };
