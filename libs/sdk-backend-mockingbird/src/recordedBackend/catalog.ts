@@ -38,7 +38,6 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
-            production: true,
         },
     ) {}
 
@@ -133,7 +132,6 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
-            production: true,
         },
     ) {}
 

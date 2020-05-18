@@ -877,7 +877,7 @@ export interface IWorkspaceCatalogFactoryOptions {
     dataset?: ObjRef;
     excludeTags: ObjRef[];
     includeTags: ObjRef[];
-    production: boolean;
+    production?: boolean;
     types: CatalogItemType[];
 }
 
