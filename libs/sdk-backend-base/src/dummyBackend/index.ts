@@ -299,7 +299,6 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
-            production: true,
         },
     ) {}
 

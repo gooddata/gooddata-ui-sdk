@@ -42,10 +42,12 @@ export interface IWorkspaceCatalogFactoryOptions {
     excludeTags: ObjRef[];
 
     /**
-     * Get only production ready catalog items.
-     * Default: true
+     * When true, get only production ready catalog items.
+     * When false, get only non-production ready catalog items.
+     * Otherwise, return both.
+     * Default: undefined
      */
-    production: boolean;
+    production?: boolean;
 }
 
 /**

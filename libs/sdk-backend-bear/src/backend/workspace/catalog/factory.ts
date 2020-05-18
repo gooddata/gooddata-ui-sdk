@@ -96,6 +96,10 @@ const getProductionFlag = ({
     production,
     dataset,
 }: IWorkspaceCatalogFactoryOptions): GdcCatalog.ILoadCatalogItemsParams["production"] => {
+    // if production is undefined, leave it as is - it has meaning
+    if (production === undefined) {
+        return production;
+    }
     // if a dataset is specified, production must be false
     const sanitizedProduction = !dataset && production;
     return sanitizedProduction ? 1 : 0;
@@ -117,7 +121,6 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
-            production: true,
         },
     ) {}
 

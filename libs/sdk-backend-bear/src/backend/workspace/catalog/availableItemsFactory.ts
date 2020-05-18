@@ -49,7 +49,6 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
-            production: true,
         },
         private readonly mappings: IUriMappings,
     ) {}

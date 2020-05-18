@@ -65,7 +65,6 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
-            production: true,
         },
     ) {}
 
