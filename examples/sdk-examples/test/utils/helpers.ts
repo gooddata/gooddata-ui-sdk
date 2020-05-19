@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { t as testController, Selector } from "testcafe";
+import { t as testController, Selector, Role } from "testcafe";
 import { config } from "./config";
 
 async function getCell(t, selector, cellSelector) {
@@ -65,7 +65,7 @@ const retry = async (check = async () => true, timeout = 1000, interval = 100, s
 
 // returns a promise that is resolved with true when selector exists and rejected when it does not
 // or the other way around if expectExist is false
-export const selectorExists = (query, expectExist = true) =>
+export const selectorExists = (query, expectExist = true): Promise<boolean> =>
     new Promise(async (resolve, reject) => {
         const exists = await Selector(query).exists;
         if (exists === expectExist) {
@@ -81,14 +81,14 @@ export const loginUsingLoginForm = (redirectUri = "/", retryCount = 2) => async 
     // wait till s-isWaitingForLoggedInStatus disappears
     // allow long timeout because of page load
     await retry(() => selectorExists(".s-isWaitingForLoggedInStatus", false), 15000).catch(error => {
-        // eslint-disable-next-line no-console
+        // tslint:disable-next-line:no-console
         console.error("ERROR: s-isWaitingForLoggedInStatus forever. Probably a JS issue", error);
         // no reason to retry, something is most likely broken
     });
 
     // if already logged in, redirect immediately
     if (await Selector(isLoggedInQuery).exists) {
-        // eslint-disable-next-line no-console
+        // tslint:disable-next-line:no-console
         console.warn("already logged in");
         return tc.navigateTo(redirectUri);
     }
@@ -106,14 +106,14 @@ export const loginUsingLoginForm = (redirectUri = "/", retryCount = 2) => async 
             return tc.navigateTo(redirectUri);
         },
         error => {
-            // eslint-disable-next-line no-console
+            // tslint:disable-next-line:no-console
             console.warn("failed to log in", error);
             if (retryCount > 0) {
-                // eslint-disable-next-line no-console
+                // tslint:disable-next-line:no-console
                 console.warn("retrying", retryCount, "times");
                 return loginUsingLoginForm(redirectUri, retryCount - 1)(tc);
             }
-            // eslint-disable-next-line no-console
+            // tslint:disable-next-line:no-console
             console.warn("no more retries, sorry");
             return error;
         },
@@ -143,4 +143,23 @@ export const checkDrill = async (t, output, selector = ".s-output") => {
     if (outputElement) {
         await t.expect(outputElement.textContent).eql(output);
     }
+};
+
+export const regularUser = Role(`${config.url}`, async (tc = testController) => {
+    // wait till s-isWaitingForLoggedInStatus disappears
+    // allow long timeout because of page load
+    await retry(() => selectorExists(".s-isWaitingForLoggedInStatus", false), 15000).catch(error => {
+        // tslint:disable-next-line:no-console
+        console.error("ERROR: s-isWaitingForLoggedInStatus forever. Probably a JS issue", error);
+        // no reason to retry, something is most likely broken
+    });
+
+    await tc
+        .typeText(".s-login-input-email", config.username, { paste: true, replace: true })
+        .typeText(".s-login-input-password", config.password, { paste: true, replace: true })
+        .click(".s-login-submit");
+});
+
+export const loginUserAndNavigate = (redirectUri = "/") => async (tc = testController) => {
+    await tc.useRole(regularUser).navigateTo(redirectUri);
 };

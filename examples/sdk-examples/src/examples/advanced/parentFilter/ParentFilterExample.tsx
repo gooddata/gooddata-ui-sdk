@@ -51,15 +51,15 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
         };
     }
 
-    public onStateChange = (stateFilterValues: IFilterValue[]) => {
+    public onStateChange = (stateFilterValue: IFilterValue) => {
         this.setState({
-            stateFilterValues,
+            stateFilterValues: [stateFilterValue],
         });
     };
 
-    public onCityChange = (cityFilterValues: IFilterValue[]) => {
+    public onCityChange = (cityFilterValue: IFilterValue) => {
         this.setState({
-            cityFilterValues,
+            cityFilterValues: [cityFilterValue],
         });
     };
 

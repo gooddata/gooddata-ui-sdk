@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import { existsSync, readFileSync } from "fs";
 import * as path from "path";
-import program from "commander";
-import invariant from "invariant";
+import program = require("commander");
+import invariant = require("invariant");
 
 const DEFAULT_CONFIG_FILE_NAME = ".testcaferc.json";
 const DEFAULT_URL = "https://localhost:8999";
@@ -51,22 +51,26 @@ const configDefaults = definedOptions
             ...defaults,
             [defaultOption.key]: defaultOption.defaultValue,
         }),
-        {},
+        // tslint:disable-next-line: no-object-literal-type-assertion
+        {} as IConfig,
     );
 
 // get options from local confif if it exists
 const configPath = path.join(process.cwd(), program.config || DEFAULT_CONFIG_FILE_NAME);
-let localConfig = {};
+// tslint:disable-next-line: no-object-literal-type-assertion
+let localConfig = {} as IConfig;
 const configExists = existsSync(configPath);
 
 if (configExists) {
     try {
-        localConfig = JSON.parse(readFileSync(configPath));
+        localConfig = JSON.parse(readFileSync(configPath).toString());
     } catch (error) {
-        console.log("JSON parse error", error); // eslint-disable-line no-console
+        // tslint:disable-next-line:no-console
+        console.log("JSON parse error", error);
     }
 } else {
-    console.log(`No config file found at ${configPath}`); // eslint-disable-line no-console
+    // tslint:disable-next-line:no-console
+    console.log(`No config file found at ${configPath}`);
 }
 
 // get options from params
@@ -78,11 +82,18 @@ const paramOptions = definedOptionKeys.reduce(
                   [key]: program[key],
               }
             : setOptions,
-    {},
+    // tslint:disable-next-line: no-object-literal-type-assertion
+    {} as IConfig,
 );
 
+interface IConfig {
+    username?: string;
+    password?: string;
+    url?: string;
+}
+
 // asseble final config
-export const config = {
+export const config: IConfig = {
     ...configDefaults,
     ...localConfig,
     ...paramOptions,
