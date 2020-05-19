@@ -98,15 +98,14 @@ export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValu
         value: IMeasureValueFilterValue,
         treatNullValuesAsZero: boolean,
     ) => {
-        const { measureIdentifier, onApply } = this.props;
-
+        const { filter, measureIdentifier, onApply } = this.props;
         if (operator === null || operator === "ALL") {
             onApply(null);
         } else {
             if (isRangeConditionOperator(operator)) {
                 onApply(
                     newMeasureValueFilter(
-                        { localIdentifier: measureIdentifier },
+                        { localIdentifier: measureIdentifier } || filter.measureValueFilter.measure,
                         operator,
                         value.from ?? 0,
                         value.to ?? 0,
@@ -116,7 +115,7 @@ export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValu
             } else {
                 onApply(
                     newMeasureValueFilter(
-                        { localIdentifier: measureIdentifier },
+                        { localIdentifier: measureIdentifier } || filter.measureValueFilter.measure,
                         operator,
                         value.value ?? 0,
                         treatNullValuesAsZero ? 0 : undefined,
