@@ -3,15 +3,12 @@ import React from "react";
 import classNames from "classnames";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
-import { IMeasureValueFilter } from "@gooddata/sdk-model";
+import { IMeasureValueFilter, measureLocalId } from "@gooddata/sdk-model";
 import { LdmExt } from "../../../ldm";
 
 const measures = [LdmExt.FranchisedSales];
 
 const attributes = [LdmExt.LocationName];
-
-// TODO: SDK8 Add this to filters after RAIL-2311 has been resolved, and change to "ALL"
-// const defaultFilter = newMeasureValueFilter(LdmExt.FranchisedSales, "GREATER_THAN", 5000000);
 
 interface IMeasureValueFilterDropdownButton {
     isActive: boolean;
@@ -84,6 +81,7 @@ export class MeasureValueFilterComponentExample extends React.PureComponent<
                         onCancel={this.onCancel}
                         filter={filters[0]}
                         anchorEl={ref.current!}
+                        measureIdentifier={measureLocalId(LdmExt.FranchisedSales)}
                     />
                 ) : null}
                 <hr className="separator" />
