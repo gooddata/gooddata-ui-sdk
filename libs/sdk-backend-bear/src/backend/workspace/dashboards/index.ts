@@ -7,8 +7,7 @@ import {
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
-import { GdcDashboard, GdcMetadata, GdcFilterContext } from "@gooddata/gd-bear-model";
-
+import { GdcDashboard, GdcMetadata, GdcFilterContext, GdcVisualizationClass } from "@gooddata/gd-bear-model";
 import { BearAuthenticatedCallGuard } from "../../../types";
 import {
     convertListedDashboard,
@@ -19,12 +18,13 @@ import { objRefToUri } from "../../../fromObjRef/api";
 
 type DashboardDependencyCategory = Extract<
     GdcMetadata.ObjectCategory,
-    "kpi" | "visualizationWidget" | "filterContext"
+    "kpi" | "visualizationWidget" | "visualizationObject" | "filterContext"
 >;
 
 const DASHBOARD_DEPENDENCIES_TYPES: DashboardDependencyCategory[] = [
     "kpi",
     "visualizationWidget",
+    "visualizationObject",
     "filterContext",
 ];
 
@@ -50,12 +50,23 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
                 : undefined,
         ]);
 
-        const [bearDashboard, bearDependencies, bearExportFilterContext] = await Promise.all([
+        const [
+            bearDashboard,
+            bearDependencies,
+            bearExportFilterContext,
+            bearVisualizationClasses,
+        ] = await Promise.all([
             this.authCall(sdk =>
                 sdk.md.getObjectDetails<GdcDashboard.IWrappedAnalyticalDashboard>(dashboardUri),
             ),
             this.loadDashboardDependencies(dashboardUri),
             exportFilterContextUri ? this.loadExportFilterContext(exportFilterContextUri) : undefined,
+            this.authCall(
+                (sdk): Promise<GdcVisualizationClass.IVisualizationClassWrapped[]> =>
+                    sdk.md.getObjectsByQuery(this.workspace, {
+                        category: "visualizationClass",
+                    }),
+            ),
         ] as const);
 
         if (bearExportFilterContext) {
@@ -63,7 +74,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
             bearDependencies.push(bearExportFilterContext);
         }
 
-        const sdkDashboard = convertDashboard(bearDashboard, bearDependencies, exportFilterContextUri);
+        const sdkDashboard = convertDashboard(
+            bearDashboard,
+            bearDependencies,
+            bearVisualizationClasses,
+            exportFilterContextUri,
+        );
 
         return sdkDashboard;
     };

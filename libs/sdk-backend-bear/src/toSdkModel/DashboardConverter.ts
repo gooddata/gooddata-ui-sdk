@@ -9,8 +9,9 @@ import {
     GdcDashboardLayout,
     GdcVisualizationObject,
     GdcExtendedDateFilters,
+    GdcVisualizationClass,
 } from "@gooddata/gd-bear-model";
-import { uriRef } from "@gooddata/sdk-model";
+import { uriRef, UriRef } from "@gooddata/sdk-model";
 import {
     IListedDashboard,
     IDashboard,
@@ -30,6 +31,7 @@ import {
     IDashboardFilterReference,
     IDashboardDateFilterReference,
     IDashboardAttributeFilterReference,
+    IFluidLayout,
 } from "@gooddata/sdk-backend-spi";
 
 type DashboardDependency = IWidget | IFilterContext | ITempFilterContext;
@@ -38,7 +40,8 @@ export type BearDashboardDependency =
     | GdcVisualizationWidget.IWrappedVisualizationWidget
     | GdcKpi.IWrappedKPI
     | GdcFilterContext.IWrappedFilterContext
-    | GdcFilterContext.IWrappedTempFilterContext;
+    | GdcFilterContext.IWrappedTempFilterContext
+    | GdcVisualizationObject.IVisualization;
 
 export const convertListedDashboard = (dashboardLink: GdcMetadata.IObjectLink): IListedDashboard => ({
     ref: uriRef(dashboardLink.link),
@@ -73,7 +76,7 @@ const convertLayoutColumn = (
     }
     return {
         ...column,
-        content: convertLayout(content!, widgetDependencies),
+        content: content && convertLayout(content, widgetDependencies),
     };
 };
 
@@ -149,15 +152,28 @@ export const sanitizeExportFilterContext = (
 export const convertDashboard = (
     dashboard: GdcDashboard.IWrappedAnalyticalDashboard,
     dependencies: BearDashboardDependency[],
+    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
     exportFilterContextUri?: string,
 ): IDashboard => {
-    const sdkDependencies = dependencies.map(convertDashboardDependency);
-    const widgets = sdkDependencies.filter(isWidget);
-
     const {
         meta: { summary, created, updated, identifier, uri, title },
-        content: { layout, filterContext, dateFilterConfig },
+        content: { layout, filterContext, dateFilterConfig, widgets: widgetsUris },
     } = dashboard.analyticalDashboard;
+
+    const sdkDependencies = dependencies
+        // Filter out visualization objects - we only need them to create implicit layout
+        .filter(d => !GdcVisualizationObject.isVisualization(d))
+        .map(convertDashboardDependency);
+    const unsortedWidgets = sdkDependencies.filter(isWidget);
+    const widgetByUri = unsortedWidgets.reduce((acc: { [uri: string]: IWidget }, el) => {
+        return {
+            ...acc,
+            [el.uri]: el,
+        };
+    }, {});
+
+    // To preserve the logic of createImplicitDashboardLayout, we must preserve the order of the widgets
+    const widgets = widgetsUris.map(widgetUri => widgetByUri[widgetUri]);
 
     const filterContextOrExportFilterContext = sdkDependencies.find(dep => dep.uri === filterContext) as
         | IFilterContext
@@ -181,7 +197,9 @@ export const convertDashboard = (
         filterContext: exportFilterContextUri
             ? sanitizeExportFilterContext(filterContextOrExportFilterContext)
             : filterContextOrExportFilterContext,
-        layout: layout && convertLayout(layout, widgets),
+        layout: layout
+            ? convertLayout(layout, widgets)
+            : createImplicitDashboardLayout(widgets, dependencies, visualizationClasses),
     };
 
     return convertedDashboard;
@@ -350,3 +368,83 @@ export const convertDashboardDependency = (dependency: BearDashboardDependency):
 
     throw new Error(`No converter for the dashboard dependency!`);
 };
+
+const KPI_SIZE = 2;
+const VISUALIZATION_SIZE = 12;
+
+/**
+ * Create {@link IFluidLayout} from {@link IWidget} items. As widgets do not contain any layout information,
+ * implicit layout with a single row will be generated.
+ *
+ * @returns fluid layout created from the widgets
+ */
+export function createImplicitDashboardLayout(
+    widgets: IWidget[],
+    dependencies: BearDashboardDependency[],
+    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+): IFluidLayout | undefined {
+    if (widgets.length < 1) {
+        return undefined;
+    }
+    const rows = createRows(widgets, dependencies, visualizationClasses);
+
+    return {
+        fluidLayout: {
+            rows,
+        },
+    };
+}
+
+function createRows(
+    widgets: IWidget[],
+    dependencies: BearDashboardDependency[],
+    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+): IFluidLayoutRow[] {
+    return [{ columns: createColumns(widgets, dependencies, visualizationClasses) }];
+}
+
+function createColumns(
+    widgets: IWidget[],
+    dependencies: BearDashboardDependency[],
+    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+): IFluidLayoutColumn[] {
+    return widgets.map(widget => createColumn(widget, dependencies, visualizationClasses));
+}
+
+function createColumn(
+    widget: IWidget,
+    dependencies: BearDashboardDependency[],
+    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+): IFluidLayoutColumn {
+    return {
+        content: {
+            widget,
+        },
+        size: { xl: { width: findImplicitWidgetWidth(widget, dependencies, visualizationClasses) } },
+    };
+}
+
+function findImplicitWidgetWidth(
+    widget: IWidget,
+    dependencies: BearDashboardDependency[],
+    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+) {
+    if (widget.type === "kpi") {
+        return KPI_SIZE;
+    }
+
+    const visualizationUri = (widget.insight as UriRef).uri;
+    const vis = dependencies.find(
+        v => GdcVisualizationObject.isVisualization(v) && v.visualizationObject.meta.uri === visualizationUri,
+    ) as GdcVisualizationObject.IVisualization;
+    const visualizationClassUri = vis.visualizationObject.content.visualizationClass.uri;
+    const visualizationClass = visualizationClasses.find(
+        visClass => visClass.visualizationClass.meta.uri === visualizationClassUri,
+    );
+    return getVisualizationLegacyWidth(visualizationClass!);
+}
+
+function getVisualizationLegacyWidth(visualizationClass: GdcVisualizationClass.IVisualizationClassWrapped) {
+    const visualizationType = visualizationClass.visualizationClass.content.url.split(":")[1];
+    return visualizationType === "headline" ? KPI_SIZE : VISUALIZATION_SIZE;
+}
