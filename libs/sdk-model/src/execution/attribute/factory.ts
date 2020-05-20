@@ -65,6 +65,17 @@ export class AttributeBuilder {
     };
 
     /**
+     * Sets display form reference.
+     *
+     * @param ref - new ref to use
+     */
+    public displayForm = (ref: ObjRef) => {
+        this.attribute.displayForm = ref;
+
+        return this;
+    };
+
+    /**
      * Sets local identifier (localId) for the attribute. LocalId can be used to reference the attribute
      * within the execution definition.
      *
