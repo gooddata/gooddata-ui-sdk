@@ -14,6 +14,22 @@ import {
     isCatalogAttribute,
     isCatalogMeasure,
     isCatalogFact,
+    insightItems,
+    isAttribute,
+    isArithmeticMeasure,
+    isSimpleMeasure,
+    attributeDisplayFormRef,
+    isIdentifierRef,
+    modifyAttribute,
+    uriRef,
+    modifySimpleMeasure,
+    measureItem,
+    attributeLocalId,
+    measureLocalId,
+    measureMasterIdentifier,
+    isPoPMeasure,
+    isPreviousPeriodMeasure,
+    isMeasure,
 } from "@gooddata/sdk-model";
 import {
     convertItemType,
@@ -26,6 +42,7 @@ import { IUriMappings } from "./types";
 import { BearWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
 import { BearAuthenticatedCallGuard } from "../../../types";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../fromObjRef/api";
+import { InvariantError } from "ts-invariant";
 
 const catalogItemUri = (catalogItem: CatalogItem): string => {
     if (isCatalogAttribute(catalogItem)) {
@@ -95,93 +112,11 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
     }
 
     public async load() {
-        const { items = [], insight } = this.options;
-        if (items.length === 0 && !insight) {
-            throw new Error("No items or insight was specified!");
-        }
-
-        const itemsInsight: IInsightDefinition = {
-            insight: {
-                title: "",
-                filters: [],
-                properties: {},
-                sorts: [],
-                visualizationUrl: "",
-                buckets: [
-                    {
-                        items,
-                    },
-                ],
-            },
-        };
-        const visualizationObject = convertInsightDefinition(insight || itemsInsight);
-
-        // loadItemDescriptionObjects + loadDateDataSets consumes only visualizationObject with specified uris
-        // so map identifiers to uris
-        const visualizationObjectBucketsWithUris = visualizationObject.content.buckets.map(bucket => {
-            const sanitizedItems = bucket.items.map(bucketItem => {
-                if (
-                    GdcVisualizationObject.isAttribute(bucketItem) &&
-                    !GdcVisualizationObject.isObjUriQualifier(bucketItem.visualizationAttribute.displayForm)
-                ) {
-                    const attributeWithUri: GdcVisualizationObject.IAttribute = {
-                        visualizationAttribute: {
-                            ...bucketItem.visualizationAttribute,
-                            displayForm: {
-                                uri: this.mappings.displayFormById[
-                                    bucketItem.visualizationAttribute.displayForm.identifier
-                                ].meta.uri,
-                            },
-                        },
-                    };
-                    return attributeWithUri;
-                } else if (
-                    GdcVisualizationObject.isMeasure(bucketItem) &&
-                    GdcVisualizationObject.isMeasureDefinition(bucketItem.measure.definition) &&
-                    !GdcVisualizationObject.isObjUriQualifier(
-                        bucketItem.measure.definition.measureDefinition.item,
-                    )
-                ) {
-                    const measureWithUri: GdcVisualizationObject.IMeasure = {
-                        measure: {
-                            ...bucketItem.measure,
-                            definition: {
-                                measureDefinition: {
-                                    ...bucketItem.measure.definition.measureDefinition,
-                                    item: {
-                                        uri: this.mappings.measureById[
-                                            bucketItem.measure.definition.measureDefinition.item.identifier
-                                        ].uri,
-                                    },
-                                },
-                            },
-                        },
-                    };
-                    return measureWithUri;
-                }
-
-                return bucketItem;
-            });
-
-            const updatedBucket: GdcVisualizationObject.IBucket = {
-                ...bucket,
-                items: sanitizedItems,
-            };
-
-            return updatedBucket;
-        });
-
-        const sanitizedVisualizationObject: GdcVisualizationObject.IVisualizationObject = {
-            ...visualizationObject,
-            content: {
-                ...visualizationObject.content,
-                buckets: visualizationObjectBucketsWithUris,
-            },
-        };
+        const tempVisualizationObj = createVisObjectForAvailability(this.options, this.mappings);
 
         const [availableCatalogItems, availableDateDatasets] = await Promise.all([
-            this.loadAvailableCatalogItems(sanitizedVisualizationObject),
-            this.loadAvailableDateDatasets(sanitizedVisualizationObject),
+            this.loadAvailableCatalogItems(tempVisualizationObj),
+            this.loadAvailableDateDatasets(tempVisualizationObj),
         ]);
 
         const allAvailableCatalogItems = [...availableCatalogItems, ...availableDateDatasets];
@@ -245,4 +180,108 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
         );
         return result.dateDataSets.map(convertDateDataset);
     };
+}
+
+/**
+ * Creates temporary visualization object, whose bucket items can then be used to construct the bucket items
+ * used by the catalog resource. The construction of bucket items happens using some serious mojo in bear's api
+ * client and requires these types of objects.
+ *
+ * This function will take all the items, strip arithmetic measures and measures derived from them,
+ * transform all identifiers to URIs.
+ */
+function createVisObjectForAvailability(
+    options: IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    mappings: IUriMappings,
+) {
+    const { items = [], insight } = options;
+
+    if (items.length === 0 && !insight) {
+        throw new Error("No items or insight was specified.");
+    }
+
+    const itemsToUse = insight ? insightItems(insight) : items;
+    const validItems = filterItemsForAvailabilityQuery(itemsToUse);
+    const itemsWithUris = validItems.map(item => translateIdentifiersToUris(item, mappings));
+
+    const tempInsight: IInsightDefinition = {
+        insight: {
+            title: "",
+            filters: [],
+            properties: {},
+            sorts: [],
+            visualizationUrl: "",
+            buckets: [
+                {
+                    items: itemsWithUris,
+                },
+            ],
+        },
+    };
+
+    return convertInsightDefinition(tempInsight);
+}
+
+/*
+ * Availability query must not contain arithmetic measures and measures derived from them.
+ */
+function filterItemsForAvailabilityQuery(items: IAttributeOrMeasure[]): IAttributeOrMeasure[] {
+    const arithmeticMeasuresIds: Set<string> = new Set<string>();
+    const otherMeasureIds: Set<string> = new Set<string>();
+
+    items.forEach(measure => {
+        if (isArithmeticMeasure(measure)) {
+            arithmeticMeasuresIds.add(measureLocalId(measure));
+        } else if (isMeasure(measure)) {
+            otherMeasureIds.add(measureLocalId(measure));
+        }
+    });
+
+    return items.filter((item: IAttributeOrMeasure) => {
+        if (isAttribute(item) || isSimpleMeasure(item)) {
+            return true;
+        } else if (isArithmeticMeasure(item)) {
+            return false;
+        } else if (isPoPMeasure(item) || isPreviousPeriodMeasure(item)) {
+            const masterMeasure = measureMasterIdentifier(item);
+
+            // remove derived measures which are either derived from arithmetic measure or which do
+            // not have their master among the items to query
+            return !arithmeticMeasuresIds.has(masterMeasure) && otherMeasureIds.has(masterMeasure);
+        }
+
+        throw new InvariantError(
+            "unexpected type of item encountered while constructing items for availability query",
+        );
+    });
+}
+
+function translateIdentifiersToUris(item: IAttributeOrMeasure, mappings: IUriMappings): IAttributeOrMeasure {
+    if (isAttribute(item)) {
+        const ref = attributeDisplayFormRef(item);
+
+        if (isIdentifierRef(ref)) {
+            const displayForm = mappings.displayFormById[ref.identifier];
+
+            return modifyAttribute(item, m =>
+                m.displayForm(uriRef(displayForm.meta.uri)).localId(attributeLocalId(item)),
+            );
+        }
+
+        return item;
+    } else if (isSimpleMeasure(item)) {
+        const ref = measureItem(item);
+
+        if (isIdentifierRef(ref)) {
+            const metric = mappings.measureById[ref.identifier];
+            const fact = mappings.factById[ref.identifier];
+            const uri = metric?.uri ?? fact.uri;
+
+            return modifySimpleMeasure(item, m => m.measureItem(uriRef(uri)).localId(measureLocalId(item)));
+        }
+
+        return item;
+    }
+
+    return item;
 }

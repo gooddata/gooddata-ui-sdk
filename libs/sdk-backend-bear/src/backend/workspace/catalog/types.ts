@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { GdcMetadata } from "@gooddata/gd-bear-model";
-import { IMeasureMetadataObject } from "@gooddata/sdk-model";
+import { IFactMetadataObject, IMeasureMetadataObject } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -26,9 +26,17 @@ export interface IMeasureByKey {
 /**
  * @internal
  */
+export interface IFactByKey {
+    [key: string]: IFactMetadataObject;
+}
+
+/**
+ * @internal
+ */
 export interface IUriMappings {
     attributeByDisplayFormUri: IAttributeByKey;
 
     displayFormById: IDisplayFormByKey;
     measureById: IMeasureByKey;
+    factById: IFactByKey;
 }

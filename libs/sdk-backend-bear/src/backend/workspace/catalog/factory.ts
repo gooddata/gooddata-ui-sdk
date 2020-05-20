@@ -10,6 +10,7 @@ import {
     CatalogItem,
     ObjRef,
     Identifier,
+    isCatalogFact,
 } from "@gooddata/sdk-model";
 import { GdcMetadata, GdcCatalog } from "@gooddata/gd-bear-model";
 import {
@@ -22,7 +23,7 @@ import {
     isCompatibleCatalogItemType,
 } from "../../../toSdkModel/CatalogConverter";
 import { BearAuthenticatedCallGuard } from "../../../types";
-import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey } from "./types";
+import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "./types";
 import { BearWorkspaceCatalog } from "./catalog";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../fromObjRef/api";
 
@@ -193,12 +194,21 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             {},
         );
 
+        const factById = catalogItems.filter(isCatalogFact).reduce(
+            (acc: IFactByKey, el) => ({
+                ...acc,
+                [el.fact.id]: el.fact,
+            }),
+            {},
+        );
+
         return {
             allCatalogItems,
             mappings: {
                 attributeByDisplayFormUri,
                 displayFormById,
                 measureById,
+                factById,
             },
         };
     };
