@@ -61,7 +61,15 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
     } catch (err) {
         logInSpinner.fail();
         clearLine();
-        logError(`Unable to log in to platform\n${err}`);
+        logError(`Unable to log in to platform. The error was: ${err}`);
+
+        if (err.message && err.message.search(/.*(certificate|self-signed).*/) > -1) {
+            logError(
+                "It seems that this error is due to invalid certificates used on the server. " +
+                    "If you trust the server, you can use the --accept-untrusted-ssl option " +
+                    "to turn off certificate validation.",
+            );
+        }
 
         throw new DataRecorderError("Authentication failed", 1);
     }
