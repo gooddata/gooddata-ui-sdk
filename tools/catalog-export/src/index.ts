@@ -62,9 +62,18 @@ async function run() {
         logInSpinner.stop();
         clearLine();
     } catch (err) {
-        logInSpinner.stop();
+        logInSpinner.fail();
         clearLine();
-        logError("Unable to log in to platform");
+        logError(`Unable to log in to platform. The error was: ${err}`);
+
+        if (err.message && err.message.search(/.*(certificate|self-signed).*/) > -1) {
+            logError(
+                "It seems that this error is due to invalid certificates used on the server. " +
+                    "If you trust the server, you can use the --accept-untrusted-ssl option " +
+                    "to turn off certificate validation.",
+            );
+        }
+
         process.exit(1);
         return;
     }

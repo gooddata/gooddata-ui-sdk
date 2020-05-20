@@ -21,6 +21,11 @@ names of command line arguments.
 
 If the tool does not receive mandatory argument via either CLI or from config, then it will prompt interactively.
 
+> Note: by default, the tool will fail when connecting to non-production deployment of GoodData platform where
+> the X.509 certificates are not setup correctly (self-signed, internal authority): node.js will reject the
+> connection due to invalid certificates. You can use the `--accept-untrusted-ssl` option to disable this
+> check (under the covers this sets the node.js documented ENV var `NODE_TLS_REJECT_UNAUTHORIZED` to `0`)
+
 ### Recording dir conventions
 
 The recording directory passed to the tooling is expected to follow this layout:
