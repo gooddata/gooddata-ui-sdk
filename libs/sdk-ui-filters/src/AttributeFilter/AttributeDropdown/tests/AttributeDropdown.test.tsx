@@ -188,6 +188,12 @@ describe("AttributeDropdown", () => {
         wrapper.update();
         expect(wrapper.find("InvertableList").prop("searchString")).toBe("CompuSci");
 
+        /**
+         * Debounce is needed here because we need to slow down the cancelation;
+         * otherwise, the state of the searchString will persist for some reason.
+         */
+        await waitForDebounce();
+
         wrapper.find("button.s-cancel").simulate("click");
         wrapper.update();
         wrapper.find(DropdownButton).simulate("click");
