@@ -43,6 +43,11 @@ The program is able to run in interactive or silent modes:
 > You can either put the password into .gdcatalogrc or enter it interactively.
 > **DO NOT save .gdcatalogrc into version control system**.
 
+> Note: by default, the tool will fail when connecting to non-production deployment of GoodData platform where
+> the X.509 certificates are not setup correctly (self-signed, internal authority): node.js will reject the
+> connection due to invalid certificates. You can use the `--accept-untrusted-ssl` option to disable this
+> check (under the covers this sets the node.js documented ENV var `NODE_TLS_REJECT_UNAUTHORIZED` to `0`)
+
 ## Recommendations
 
 Working with the catalog-export and its outputs on daily basis, we found a few good practices that we suggest for
