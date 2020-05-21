@@ -16,6 +16,8 @@ import {
     newTotal,
     ISortItem,
     VisualizationProperties,
+    IAttributeOrMeasure,
+    insightItems,
 } from "../..";
 import { newInsight } from "../../../__mocks__/insights";
 import { Account, Activity, Velocity, Won } from "../../../__mocks__/model";
@@ -87,6 +89,26 @@ describe("insightBuckets", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightBuckets(input)).toThrow();
+    });
+});
+
+describe("insightItems", () => {
+    const Scenarios: Array<[string, any, IAttributeOrMeasure[]]> = [
+        ["nothing for empty insight", EmptyInsight, []],
+        ["items from single bucket insight", InsightWithSingleBucket, [Account.Name, Won]],
+        [
+            "items from multiple buckets, in correct order",
+            InsightWithThreeBuckets,
+            [Velocity.Sum, Velocity.Min, Activity.Subject, Account.Name, Won],
+        ],
+    ];
+
+    it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
+        expect(insightItems(insightArg)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightMeasures(input)).toThrow();
     });
 });
 

@@ -348,6 +348,18 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
         return this;
     };
 
+    /**
+     * Sets reference to measure item that will be used for calculation. This can be either reference to
+     * a MAQL metric or a fact to calculate from.
+     *
+     * @param ref - new reference to use
+     */
+    public measureItem = (ref: ObjRef) => {
+        this.measureDefinition.item = ref;
+
+        return this;
+    };
+
     protected generateLocalId(): string {
         const aggString = this.measureDefinition.aggregation ? `_${this.measureDefinition.aggregation}` : "";
         const ratioString = this.measureDefinition.computeRatio ? `_ratio` : "";
@@ -505,6 +517,8 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
         this.popMeasureDefinition.popAttribute = isObjRef(popAttrIdOrRef)
             ? popAttrIdOrRef
             : idRef(popAttrIdOrRef, "attribute");
+
+        return this;
     };
 
     protected buildDefinition(): IPoPMeasureDefinition {
@@ -671,6 +685,27 @@ export function modifySimpleMeasure(
     invariant(measure, "measure must be specified");
 
     const builder = new MeasureBuilder(measure);
+
+    return modifications(builder).build();
+}
+
+/**
+ * Creates a new PoP measure by applying modifications on top of an existing measure.
+ *
+ * This operation is immutable and will not alter the input measure.
+ *
+ * @param measure - measure to use as template for the new measure
+ * @param modifications - modifications to apply
+ * @returns new instance
+ * @public
+ */
+export function modifyPopMeasure(
+    measure: IMeasure<IPoPMeasureDefinition>,
+    modifications: MeasureModifications<PoPMeasureBuilder>,
+): IMeasure<IPoPMeasureDefinition> {
+    invariant(measure, "measure must be specified");
+
+    const builder = new PoPMeasureBuilder(measure);
 
     return modifications(builder).build();
 }

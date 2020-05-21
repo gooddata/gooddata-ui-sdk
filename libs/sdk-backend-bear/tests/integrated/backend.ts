@@ -61,3 +61,7 @@ export function testBackend(): IAnalyticalBackend {
 
     return GlobalBackend;
 }
+
+export function testWorkspace(): string {
+    return "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf";
+}

@@ -58,6 +58,7 @@ export class AttributeBuilder {
         };
     };
     defaultLocalId: () => this;
+    displayForm: (ref: ObjRef) => this;
     localId: (localId?: string | undefined) => this;
     noAlias: () => this;
 }
@@ -859,6 +860,9 @@ export function insightId(insight: IInsight): string;
 export function insightIsLocked(insight: IInsightDefinition): boolean;
 
 // @public
+export function insightItems(insight: IInsightDefinition): IAttributeOrMeasure[];
+
+// @public
 export function insightMeasures(insight: IInsightDefinition): IMeasure[];
 
 // Warning: (ae-internal-missing-underscore) The name "InsightModifications" should be prefixed with an underscore because the declaration is marked as @internal
@@ -1218,6 +1222,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     filters: (...filters: (import("../filter").IPositiveAttributeFilter | import("../filter").INegativeAttributeFilter | import("../filter").IAbsoluteDateFilter | import("../filter").IRelativeDateFilter)[]) => this;
     // (undocumented)
     protected generateLocalId(): string;
+    measureItem: (ref: ObjRef) => this;
     noFilters: () => this;
     noRatio: () => this;
     ratio: (value?: boolean) => this;
@@ -1355,6 +1360,9 @@ export function modifyAttribute(attribute: IAttribute, modifications?: Attribute
 export function modifyMeasure<T extends IMeasureDefinitionType>(measure: IMeasure<T>, modifications?: MeasureModifications<MeasureBuilderBase<IMeasureDefinitionType>>): IMeasure<T>;
 
 // @public
+export function modifyPopMeasure(measure: IMeasure<IPoPMeasureDefinition>, modifications: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
+
+// @public
 export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @public
@@ -1486,7 +1494,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     // (undocumented)
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
-    popAttribute: (popAttrIdOrRef: string | import("../../objRef").UriRef | import("../../objRef").IdentifierRef) => void;
+    popAttribute: (popAttrIdOrRef: string | import("../../objRef").UriRef | import("../../objRef").IdentifierRef) => this;
     }
 
 // @public

@@ -2,7 +2,7 @@
 import isEmpty = require("lodash/isEmpty");
 import intersection = require("lodash/intersection");
 import { SortEntityIds, sortEntityIds, ISortItem } from "../execution/base/sort";
-import { anyBucket, BucketPredicate, IBucket } from "../execution/buckets";
+import { anyBucket, BucketPredicate, IAttributeOrMeasure, IBucket } from "../execution/buckets";
 import { IFilter } from "../execution/filter";
 import { IMeasure, measureLocalId } from "../execution/measure";
 import { attributeLocalId, IAttribute } from "../execution/attribute";
@@ -11,6 +11,7 @@ import {
     bucketsAttributes,
     bucketsById,
     bucketsFind,
+    bucketsItems,
     bucketsMeasures,
     bucketsTotals,
 } from "../execution/buckets/bucketArray";
@@ -242,10 +243,23 @@ export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): I
 }
 
 /**
+ * Gets all attributes and measures used in the provided insight.
+ *
+ * @param insight - insight to work with
+ * @returns empty if none
+ * @public
+ */
+export function insightItems(insight: IInsightDefinition): IAttributeOrMeasure[] {
+    invariant(insight, "insight must be specified");
+
+    return bucketsItems(insight.insight.buckets);
+}
+
+/**
  * Gets all measures used in the provided insight.
  *
  * @param insight - insight to work with
- * @returns empty if one
+ * @returns empty if none
  * @public
  */
 export function insightMeasures(insight: IInsightDefinition): IMeasure[] {
