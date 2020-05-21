@@ -14,7 +14,7 @@
     "requestBodyPattern": {
         "matcher": "equalToJson",
         "ignoreArrayOrder": false,
-        "ignoreExtraElements": true
+        "ignoreExtraElements": false
     },
     "extractBodyCriteria": {
         "textSizeThreshold": "2048",

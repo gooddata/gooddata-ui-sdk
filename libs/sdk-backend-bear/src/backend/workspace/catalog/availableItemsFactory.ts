@@ -30,6 +30,8 @@ import {
     isPoPMeasure,
     isPreviousPeriodMeasure,
     isMeasure,
+    measurePopAttribute,
+    modifyPopMeasure,
 } from "@gooddata/sdk-model";
 import {
     convertItemType,
@@ -281,6 +283,16 @@ function translateIdentifiersToUris(item: IAttributeOrMeasure, mappings: IUriMap
         }
 
         return item;
+    } else if (isPoPMeasure(item)) {
+        const ref = measurePopAttribute(item);
+
+        if (isIdentifierRef(ref)) {
+            const attribute = mappings.attributeById[ref.identifier];
+            const dateAttribute = mappings.dateAttributeById[ref.identifier];
+            const uri = attribute?.attribute.meta.uri ?? dateAttribute.attribute.uri;
+
+            return modifyPopMeasure(item, m => m.popAttribute(uriRef(uri)).localId(measureLocalId(item)));
+        }
     }
 
     return item;

@@ -26,6 +26,8 @@ import { BearAuthenticatedCallGuard } from "../../../types";
 import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "./types";
 import { BearWorkspaceCatalog } from "./catalog";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../fromObjRef/api";
+import keyBy = require("lodash/keyBy");
+import flatMap = require("lodash/flatMap");
 
 type BearDisplayFormOrAttribute = GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute;
 
@@ -43,35 +45,18 @@ const bearCatalogItemToCatalogItem = (displayForms: IDisplayFormByKey) => (
 const createLookups = (
     displayFormsAndAttributes: BearDisplayFormOrAttribute[],
 ): {
+    attributeById: IAttributeByKey;
     displayFormById: IDisplayFormByKey;
     displayFormByUri: IDisplayFormByKey;
     attributeByDisplayFormUri: IAttributeByKey;
 } => {
     const [attributes, displayForms] = partition(displayFormsAndAttributes, GdcMetadata.isWrappedAttribute);
+    const unwrappedDisplayForms = displayForms.map(df => df.attributeDisplayForm);
 
-    const attributeByUri = attributes.reduce(
-        (acc: IAttributeByKey, el) => ({
-            ...acc,
-            [el.attribute.meta.uri]: el,
-        }),
-        {},
-    );
-
-    const displayFormByUri = displayForms.reduce(
-        (acc: IDisplayFormByKey, el) => ({
-            ...acc,
-            [el.attributeDisplayForm.meta.uri]: el.attributeDisplayForm,
-        }),
-        {},
-    );
-
-    const displayFormById = displayForms.reduce(
-        (acc: IDisplayFormByKey, el) => ({
-            ...acc,
-            [el.attributeDisplayForm.meta.identifier]: el.attributeDisplayForm,
-        }),
-        {},
-    );
+    const attributeByUri: IAttributeByKey = keyBy(attributes, item => item.attribute.meta.uri);
+    const attributeById: IAttributeByKey = keyBy(attributes, item => item.attribute.meta.identifier);
+    const displayFormByUri: IDisplayFormByKey = keyBy(unwrappedDisplayForms, item => item.meta.uri);
+    const displayFormById: IDisplayFormByKey = keyBy(unwrappedDisplayForms, item => item.meta.identifier);
 
     const attributeByDisplayFormUri = Object.keys(displayFormByUri).reduce(
         (acc: IAttributeByKey, displayFormUri) => {
@@ -87,6 +72,7 @@ const createLookups = (
     );
 
     return {
+        attributeById,
         attributeByDisplayFormUri,
         displayFormById,
         displayFormByUri,
@@ -178,7 +164,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const bearDisplayFormsAndAttributes = await this.loadBearDisplayFormsAndAttributes(bearCatalogItems);
 
-        const { attributeByDisplayFormUri, displayFormById, displayFormByUri } = createLookups(
+        const { attributeByDisplayFormUri, displayFormById, displayFormByUri, attributeById } = createLookups(
             bearDisplayFormsAndAttributes,
         );
 
@@ -186,29 +172,29 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const dateDatasets = await this.loadDateDatasets(attributeByDisplayFormUri);
         const allCatalogItems = [...catalogItems, ...dateDatasets];
 
-        const measureById = catalogItems.filter(isCatalogMeasure).reduce(
-            (acc: IMeasureByKey, el) => ({
-                ...acc,
-                [el.measure.id]: el.measure,
-            }),
-            {},
+        const measureById: IMeasureByKey = keyBy(
+            catalogItems.filter(isCatalogMeasure).map(el => el.measure),
+            el => el.id,
+        );
+        const factById: IFactByKey = keyBy(
+            catalogItems.filter(isCatalogFact).map(el => el.fact),
+            el => el.id,
         );
 
-        const factById = catalogItems.filter(isCatalogFact).reduce(
-            (acc: IFactByKey, el) => ({
-                ...acc,
-                [el.fact.id]: el.fact,
-            }),
-            {},
+        const dateAttributeById = keyBy(
+            flatMap(dateDatasets, dd => dd.dateAttributes),
+            attr => attr.attribute.id,
         );
 
         return {
             allCatalogItems,
             mappings: {
+                attributeById,
                 attributeByDisplayFormUri,
                 displayFormById,
                 measureById,
                 factById,
+                dateAttributeById,
             },
         };
     };
