@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
-import { IDashboard, IDashboardDefinition, IListedDashboard } from "./dashboard";
+import { IListedDashboard, IDashboard, IDashboardDefinition } from "./dashboard";
 
 /**
  * Service to list, create and update analytical dashboards
@@ -44,7 +44,7 @@ export interface IWorkspaceDashboards {
      * @param updatedDashboard - modified dashboard
      * @returns promise of the updated dashboard
      */
-    updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboard): Promise<IDashboard>;
+    updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
 
     /**
      * Delete dashboard

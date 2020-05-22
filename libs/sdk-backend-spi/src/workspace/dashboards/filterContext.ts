@@ -2,6 +2,7 @@
 import { ObjRef } from "@gooddata/sdk-model";
 import { DateString, DateFilterGranularity } from "./extendedDateFilters";
 import isEmpty from "lodash/isEmpty";
+import { IDashboardObjectIdentity } from "./common";
 
 /**
  * Date filter type - relative
@@ -105,12 +106,11 @@ export function isDashboardDateFilter(obj: any): obj is IDashboardDateFilter {
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
 /**
- * Filter context consists of configured attribute and date filters
- * (which could be applyied to the dashboard, widget alert, or scheduled email)
+ * Common filter context properties
  *
  * @alpha
  */
-export interface IFilterContextDefinition {
+export interface IFilterContextBase {
     /**
      * Filter context title
      */
@@ -128,16 +128,28 @@ export interface IFilterContextDefinition {
 }
 
 /**
- * See {@link IFilterContextDefinition}
+ * Filter context definition represents modifier or created filter context
+ *
  * @alpha
  */
-export interface IFilterContext extends IFilterContextDefinition {
-    readonly ref: ObjRef;
+export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {}
 
-    readonly uri: string;
-
-    readonly identifier: string;
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IFilterContextDefinition}.
+ * @alpha
+ */
+export function isFilterContextDefinition(obj: any): obj is IFilterContextDefinition {
+    // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
+    return !isEmpty(obj) && !!(obj as IFilterContextDefinition).filters && !(obj as IFilterContext).ref;
 }
+
+/**
+ * Filter context consists of configured attribute and date filters
+ * (which could be applyied to the dashboard, widget alert, or scheduled email)
+ *
+ * @alpha
+ */
+export interface IFilterContext extends IFilterContextBase, IDashboardObjectIdentity {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IFilterContext}.
@@ -145,7 +157,7 @@ export interface IFilterContext extends IFilterContextDefinition {
  */
 export function isFilterContext(obj: any): obj is IFilterContext {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
-    return !isEmpty(obj) && !!(obj as IFilterContext).filters && !(obj as IFilterContext).description;
+    return !isEmpty(obj) && !!(obj as IFilterContext).filters && !!(obj as IFilterContext).ref;
 }
 
 /**
@@ -153,7 +165,7 @@ export function isFilterContext(obj: any): obj is IFilterContext {
  *
  * @alpha
  */
-export interface ITempFilterContextDefinition {
+export interface ITempFilterContext {
     /**
      * Filter context created time
      * YYYY-MM-DD HH:mm:ss
@@ -164,15 +176,15 @@ export interface ITempFilterContextDefinition {
      * Attribute or date filters
      */
     readonly filters: FilterContextItem[];
-}
 
-/**
- * See {@link ITempFilterContextDefinition}
- * @alpha
- */
-export interface ITempFilterContext extends ITempFilterContextDefinition {
+    /**
+     * Temp filter context ref
+     */
     readonly ref: ObjRef;
 
+    /**
+     * Temp filter context uri
+     */
     readonly uri: string;
 }
 
@@ -182,7 +194,12 @@ export interface ITempFilterContext extends ITempFilterContextDefinition {
  */
 export function isTempFilterContext(obj: any): obj is ITempFilterContext {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
-    return !isEmpty(obj) && !!(obj as ITempFilterContext).filters && !!(obj as ITempFilterContext).created;
+    return (
+        !isEmpty(obj) &&
+        !!(obj as ITempFilterContext).filters &&
+        !(obj as IFilterContext).identifier &&
+        !(obj as IFilterContext).title
+    );
 }
 
 /**

@@ -35,6 +35,10 @@ export namespace GdcKpi {
         comparisonType: IKpiComparisonTypeNoComparison;
     }
 
+    export function isKpiContentWithoutComparison(obj: any): obj is IKpiContentWithoutComparison {
+        return !isEmpty(obj) && (obj as IKpiContentWithoutComparison).comparisonType === "none";
+    }
+
     export interface IKpiProjectDashboardLink {
         projectDashboard: string;
         projectDashboardTab: string;

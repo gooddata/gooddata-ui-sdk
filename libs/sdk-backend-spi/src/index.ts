@@ -117,11 +117,29 @@ export {
 export { IWorkspacePermissionsFactory, IWorkspaceUserPermissions } from "./workspace/permissions";
 
 export { IWorkspaceDashboards } from "./workspace/dashboards";
+export { IDashboardObjectIdentity } from "./workspace/dashboards/common";
+export {
+    DrillDefinition,
+    DrillOrigin,
+    DrillOriginType,
+    DrillTransition,
+    DrillType,
+    IDrill,
+    IDrillFromMeasure,
+    IDrillOrigin,
+    IDrillToDashboard,
+    IDrillToInsight,
+    IDrillToLegacyDashboard,
+    isDrillToDashboard,
+    isDrillToInsight,
+    isDrillToLegacyDashboard,
+} from "./workspace/dashboards/drills";
 export {
     IDashboard,
     IDashboardDefinition,
     IDateFilterConfig,
     IListedDashboard,
+    IDashboardBase,
 } from "./workspace/dashboards/dashboard";
 export {
     IFilterContext,
@@ -133,8 +151,8 @@ export {
     IFilterContextDefinition,
     RelativeType,
     ITempFilterContext,
-    ITempFilterContextDefinition,
     isFilterContext,
+    isFilterContextDefinition,
     isTempFilterContext,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
@@ -160,8 +178,40 @@ export {
     isLayoutWidget,
     isFluidLayout,
     layoutWidgets,
+    isFluidLayoutDefinition,
+    IFluidLayoutColumnDefinition,
+    IFluidLayoutDefinition,
+    IFluidLayoutRowDefinition,
+    ILayoutWidgetDefinition,
+    LayoutDefinition,
+    LayoutDefinitionContent,
+    LayoutWidgetDefinition,
+    isLayoutWidgetDefinition,
+    walkLayout,
+    layoutWidgetsWithPaths,
+    IWidgetDefinitionWithLayoutPath,
+    IWidgetOrDefinitionWithLayoutPath,
+    IWidgetWithLayoutPath,
+    LayoutPath,
 } from "./workspace/dashboards/layout";
-export { IWidget, IWidgetDefinition, WidgetType, isWidget } from "./workspace/dashboards/widget";
+export {
+    IWidget,
+    IWidgetDefinition,
+    WidgetType,
+    isWidget,
+    isWidgetDefinition,
+} from "./workspace/dashboards/widget";
+export {
+    ILegacyKpi,
+    ILegacyKpiBase,
+    ILegacyKpiComparisonDirection,
+    ILegacyKpiComparisonTypeComparison,
+    ILegacyKpiComparisonTypeNoComparison,
+    ILegacyKpiWithComparison,
+    ILegacyKpiWithoutComparison,
+    isLegacyKpiWithComparison,
+    isLegacyKpiWithoutComparison,
+} from "./workspace/dashboards/kpi";
 export { IWidgetAlert, IWidgetAlertDefinition } from "./workspace/dashboards/alert";
 export {
     AbsoluteDateFilterOption,

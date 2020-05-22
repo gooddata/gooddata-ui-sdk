@@ -1,16 +1,12 @@
 // (C) 2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
+import { IDashboardObjectIdentity } from "./common";
 
 /**
- * A scheduled email is used to notify a user with an exported dashboard according to a specified time interval
+ * A scheduled email common properties
  * @alpha
  */
-export interface IScheduledMailDefinition {
-    /**
-     * Scheduled email object reference
-     */
-    ref: ObjRef;
-
+export interface IScheduledMailBase {
     /**
      * Scheduled email job interval
      */
@@ -77,6 +73,12 @@ export interface IScheduledMailDefinition {
 }
 
 /**
+ * A scheduled email is used to notify a user with an exported dashboard according to a specified time interval
+ * @alpha
+ */
+export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<IDashboardObjectIdentity> {}
+
+/**
  * Supported email attachments
  * @alpha
  */
@@ -108,9 +110,4 @@ export interface IDashboardAttachment {
  * A scheduled email is used to notify a user with an exported dashboard according to a specified time interval
  * @alpha
  */
-export type IScheduledMail = IScheduledMailDefinition & {
-    /**
-     * Scheduled email object reference
-     */
-    ref: ObjRef;
-};
+export interface IScheduledMail extends IScheduledMailBase, IDashboardObjectIdentity {}

@@ -32,6 +32,7 @@ import { IWorkspace } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
+import { ObjRefInScope } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { WorkspacePermission } from '@gooddata/sdk-model';
 
@@ -139,6 +140,21 @@ export type DateFilterType = RelativeType | AbsoluteType;
 // @public
 export type DateString = string;
 
+// @alpha
+export type DrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToLegacyDashboard;
+
+// @alpha
+export type DrillOrigin = IDrillFromMeasure;
+
+// @alpha
+export type DrillOriginType = "drillFromMeasure";
+
+// @alpha
+export type DrillTransition = "pop-up" | "in-place";
+
+// @alpha
+export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard";
+
 // @public
 export type ErrorConverter = (e: any) => AnalyticalBackendError;
 
@@ -231,10 +247,13 @@ export interface IAuthenticationProvider {
 }
 
 // @alpha
-export interface IDashboard extends IDashboardDefinition {
-    readonly identifier: string;
-    readonly ref: ObjRef;
-    readonly uri: string;
+export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
+    readonly created: string;
+    readonly dateFilterConfig?: IDateFilterConfig;
+    readonly filterContext: IFilterContext | ITempFilterContext | undefined;
+    readonly layout?: Layout;
+    readonly scheduledMails: IScheduledMail[];
+    readonly updated: string;
 }
 
 // @public
@@ -269,6 +288,12 @@ export interface IDashboardAttributeFilterReference {
 }
 
 // @alpha
+export interface IDashboardBase {
+    readonly description: string;
+    readonly title: string;
+}
+
+// @alpha
 export interface IDashboardDateFilter {
     // (undocumented)
     dateFilter: {
@@ -288,19 +313,22 @@ export interface IDashboardDateFilterReference {
 }
 
 // @alpha
-export interface IDashboardDefinition {
-    readonly created: string;
+export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboardObjectIdentity> {
     readonly dateFilterConfig?: IDateFilterConfig;
-    readonly description: string;
-    readonly filterContext: IFilterContext | ITempFilterContext | undefined;
-    readonly layout?: Layout;
-    readonly scheduledMails: IScheduledMail[];
-    readonly title: string;
-    readonly updated: string;
+    readonly filterContext?: IFilterContext | ITempFilterContext | IFilterContextDefinition;
+    readonly layout?: Layout | LayoutDefinition;
+    readonly scheduledMails: Array<IScheduledMail | IScheduledMailDefinition>;
 }
 
 // @alpha
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
+
+// @alpha
+export interface IDashboardObjectIdentity {
+    readonly identifier: string;
+    readonly ref: ObjRef;
+    readonly uri: string;
+}
 
 // @public
 export interface IDataView {
@@ -359,6 +387,44 @@ export interface IDimensionDescriptor {
 
 // @public
 export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
+
+// @alpha
+export interface IDrill {
+    origin: DrillOrigin;
+    target: ObjRef;
+    transition: DrillTransition;
+    type: DrillType;
+}
+
+// @alpha
+export interface IDrillFromMeasure extends IDrillOrigin {
+    measure: ObjRefInScope;
+    type: "drillFromMeasure";
+}
+
+// @alpha
+export interface IDrillOrigin {
+    type: DrillOriginType;
+}
+
+// @alpha
+export interface IDrillToDashboard extends IDrill {
+    transition: "in-place";
+    type: "drillToDashboard";
+}
+
+// @alpha
+export interface IDrillToInsight extends IDrill {
+    transition: "pop-up";
+    type: "drillToInsight";
+}
+
+// @alpha
+export interface IDrillToLegacyDashboard extends IDrill {
+    tab: string;
+    transition: "in-place";
+    type: "drillToLegacyDashboard";
+}
 
 // @public
 export interface IElementQuery {
@@ -438,21 +504,14 @@ export interface IExtendedDateFilterErrors {
     };
 }
 
+// Warning: (ae-forgotten-export) The symbol "IFilterContextBase" needs to be exported by the entry point index.d.ts
+//
 // @alpha
-export interface IFilterContext extends IFilterContextDefinition {
-    // (undocumented)
-    readonly identifier: string;
-    // (undocumented)
-    readonly ref: ObjRef;
-    // (undocumented)
-    readonly uri: string;
+export interface IFilterContext extends IFilterContextBase, IDashboardObjectIdentity {
 }
 
 // @alpha
-export interface IFilterContextDefinition {
-    readonly description: string;
-    readonly filters: FilterContextItem[];
-    readonly title: string;
+export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
 }
 
 // @alpha
@@ -482,8 +541,32 @@ export interface IFluidLayoutColumn {
 }
 
 // @alpha
+export interface IFluidLayoutColumnDefinition {
+    content?: LayoutDefinitionContent;
+    size: IFluidLayoutColSize;
+    style?: string;
+}
+
+// @alpha
+export interface IFluidLayoutDefinition {
+    // (undocumented)
+    fluidLayout: {
+        rows: IFluidLayoutRowDefinition[];
+        size?: IFluidLayoutSize;
+        style?: string;
+    };
+}
+
+// @alpha
 export interface IFluidLayoutRow {
     columns: IFluidLayoutColumn[];
+    header?: SectionHeader;
+    style?: string;
+}
+
+// @alpha
+export interface IFluidLayoutRowDefinition {
+    columns: IFluidLayoutColumnDefinition[];
     header?: SectionHeader;
     style?: string;
 }
@@ -510,6 +593,43 @@ export interface IInsightQueryResult extends IPagedResource<IInsight> {
 // @alpha
 export interface ILayoutWidget {
     widget: IWidget;
+}
+
+// @alpha
+export interface ILayoutWidgetDefinition {
+    widget: IWidget | IWidgetDefinition;
+}
+
+// @alpha
+export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
+
+// @alpha
+export interface ILegacyKpiBase {
+    // (undocumented)
+    metric: ObjRef;
+}
+
+// @alpha
+export type ILegacyKpiComparisonDirection = "growIsGood" | "growIsBad";
+
+// @alpha
+export type ILegacyKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
+
+// @alpha
+export type ILegacyKpiComparisonTypeNoComparison = "none";
+
+// @alpha
+export interface ILegacyKpiWithComparison extends ILegacyKpiBase {
+    // (undocumented)
+    comparisonDirection: ILegacyKpiComparisonDirection;
+    // (undocumented)
+    comparisonType: ILegacyKpiComparisonTypeComparison;
+}
+
+// @alpha
+export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
+    // (undocumented)
+    comparisonType: ILegacyKpiComparisonTypeNoComparison;
 }
 
 // @alpha
@@ -632,17 +752,17 @@ export interface IResultTotalHeader {
     };
 }
 
-// @public
-export const isAbsoluteDateFilterForm: (option: DateFilterOption) => option is IAbsoluteDateFilterForm;
+// @alpha
+export const isAbsoluteDateFilterForm: (obj: any) => obj is IAbsoluteDateFilterForm;
 
-// @public
-export const isAbsoluteDateFilterOption: (option: DateFilterOption) => option is AbsoluteDateFilterOption;
+// @alpha
+export const isAbsoluteDateFilterOption: (obj: any) => obj is AbsoluteDateFilterOption;
 
-// @public
-export const isAbsoluteDateFilterPreset: (option: DateFilterOption) => option is IAbsoluteDateFilterPreset;
+// @alpha
+export const isAbsoluteDateFilterPreset: (obj: any) => obj is IAbsoluteDateFilterPreset;
 
-// @public
-export const isAllTimeDateFilter: (option: DateFilterOption) => option is IAllTimeDateFilter;
+// @alpha
+export const isAllTimeDateFilter: (obj: any) => obj is IAllTimeDateFilter;
 
 // @public
 export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendError;
@@ -650,27 +770,14 @@ export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendErro
 // @public
 export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor;
 
+// Warning: (ae-forgotten-export) The symbol "IScheduledMailBase" needs to be exported by the entry point index.d.ts
+//
 // @alpha
-export type IScheduledMail = IScheduledMailDefinition & {
-    ref: ObjRef;
-};
+export interface IScheduledMail extends IScheduledMailBase, IDashboardObjectIdentity {
+}
 
 // @alpha
-export interface IScheduledMailDefinition {
-    attachments: ScheduledMailAttachment;
-    bcc?: string[];
-    body: string;
-    lastSuccessfull?: string;
-    ref: ObjRef;
-    subject: string;
-    to: string[];
-    unsubscribed?: string[];
-    when: {
-        startDate: string;
-        endDate?: string;
-        recurrency: string;
-        timeZone: string;
-    };
+export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<IDashboardObjectIdentity> {
 }
 
 // @alpha
@@ -687,6 +794,15 @@ export function isDashboardDateFilterReference(obj: any): obj is IDashboardDateF
 
 // @public
 export function isDataTooLargeError(obj: any): obj is DataTooLargeError;
+
+// @alpha
+export function isDrillToDashboard(obj: any): obj is IDrillToDashboard;
+
+// @alpha
+export function isDrillToInsight(obj: any): obj is IDrillToInsight;
+
+// @alpha
+export function isDrillToLegacyDashboard(obj: any): obj is IDrillToLegacyDashboard;
 
 // @alpha
 export interface ISectionDescription {
@@ -709,10 +825,25 @@ export interface ISettings {
 export function isFilterContext(obj: any): obj is IFilterContext;
 
 // @alpha
+export function isFilterContextDefinition(obj: any): obj is IFilterContextDefinition;
+
+// @alpha
 export function isFluidLayout(obj: any): obj is IFluidLayout;
 
 // @alpha
+export function isFluidLayoutDefinition(obj: any): obj is IFluidLayoutDefinition;
+
+// @alpha
 export function isLayoutWidget(obj: any): obj is ILayoutWidget;
+
+// @alpha
+export function isLayoutWidgetDefinition(obj: any): obj is ILayoutWidgetDefinition;
+
+// @alpha
+export function isLegacyKpiWithComparison(obj: any): obj is ILegacyKpiWithComparison;
+
+// @alpha
+export function isLegacyKpiWithoutComparison(obj: any): obj is ILegacyKpiWithoutComparison;
 
 // @public
 export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor;
@@ -735,14 +866,14 @@ export function isNotSupported(obj: any): obj is NotSupported;
 // @public
 export function isProtectedDataError(obj: any): obj is ProtectedDataError;
 
-// @public
-export const isRelativeDateFilterForm: (option: DateFilterOption) => option is IRelativeDateFilterForm;
+// @alpha
+export const isRelativeDateFilterForm: (obj: any) => obj is IRelativeDateFilterForm;
 
-// @public
-export const isRelativeDateFilterOption: (option: DateFilterOption) => option is RelativeDateFilterOption;
+// @alpha
+export const isRelativeDateFilterOption: (obj: any) => obj is RelativeDateFilterOption;
 
-// @public
-export const isRelativeDateFilterPreset: (option: DateFilterOption) => option is IRelativeDateFilterPreset;
+// @alpha
+export const isRelativeDateFilterPreset: (obj: any) => obj is IRelativeDateFilterPreset;
 
 // @public
 export function isResultAttributeHeader(obj: any): obj is IResultAttributeHeader;
@@ -769,17 +900,14 @@ export function isUnexpectedResponseError(obj: any): obj is UnexpectedResponseEr
 export function isWidget(obj: any): obj is IWidget;
 
 // @alpha
-export interface ITempFilterContext extends ITempFilterContextDefinition {
-    // (undocumented)
-    readonly ref: ObjRef;
-    // (undocumented)
-    readonly uri: string;
-}
+export function isWidgetDefinition(obj: any): obj is IWidgetDefinition;
 
 // @alpha
-export interface ITempFilterContextDefinition {
+export interface ITempFilterContext {
     readonly created: string;
     readonly filters: FilterContextItem[];
+    readonly ref: ObjRef;
+    readonly uri: string;
 }
 
 // @public
@@ -809,39 +937,45 @@ export interface IUserSettingsService {
 export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {
 }
 
-// @alpha
-export interface IWidget extends IWidgetDefinition {
-    readonly identifier: string;
-    readonly ref: ObjRef;
-    readonly uri: string;
+// Warning: (ae-forgotten-export) The symbol "IWidgetBase" needs to be exported by the entry point index.d.ts
+//
+// @alpha (undocumented)
+export interface IWidget extends IWidgetBase, IDashboardObjectIdentity {
 }
 
+// Warning: (ae-forgotten-export) The symbol "IWidgetAlertBase" needs to be exported by the entry point index.d.ts
+//
 // @alpha
-export type IWidgetAlert = IWidgetAlertDefinition & {
-    readonly ref: ObjRef;
-};
-
-// @alpha
-export interface IWidgetAlertDefinition {
-    readonly dashboard: ObjRef;
+export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
     readonly filterContext?: IFilterContext;
-    readonly insight: ObjRef;
-    readonly isTriggered: boolean;
-    readonly threshold: number;
-    readonly whenTriggered: "underThreshold" | "aboveThreshold";
 }
 
 // @alpha
-export interface IWidgetDefinition {
-    readonly alerts: IWidgetAlert[];
-    readonly dateDataSet?: ObjRef;
-    readonly description: string;
-    // Warning: (ae-forgotten-export) The symbol "DrillDefinition" needs to be exported by the entry point index.d.ts
-    readonly drills: DrillDefinition[];
-    readonly ignoreDashboardFilters: IDashboardFilterReference[];
-    readonly insight?: ObjRef;
-    readonly title: string;
-    readonly type: WidgetType;
+export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
+    readonly filterContext?: IFilterContext | IFilterContextDefinition;
+}
+
+// @alpha
+export interface IWidgetDefinition extends IWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @alpha
+export interface IWidgetDefinitionWithLayoutPath {
+    // (undocumented)
+    path: LayoutPath;
+    // (undocumented)
+    widget: IWidgetDefinition;
+}
+
+// @alpha
+export type IWidgetOrDefinitionWithLayoutPath = IWidgetWithLayoutPath | IWidgetDefinitionWithLayoutPath;
+
+// @alpha
+export interface IWidgetWithLayoutPath {
+    // (undocumented)
+    path: LayoutPath;
+    // (undocumented)
+    widget: IWidget;
 }
 
 // @public
@@ -912,7 +1046,7 @@ export interface IWorkspaceDashboards {
     deleteDashboard(ref: ObjRef): Promise<void>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
     getDashboards(): Promise<IListedDashboard[]>;
-    updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboard): Promise<IDashboard>;
+    updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     // (undocumented)
     readonly workspace: string;
 }
@@ -996,7 +1130,28 @@ export type Layout = IFluidLayout;
 export type LayoutContent = Widget | Layout;
 
 // @alpha
-export const layoutWidgets: (layout: IFluidLayout, collectedWidgets?: IWidget[]) => IWidget[];
+export type LayoutDefinition = IFluidLayoutDefinition;
+
+// @alpha
+export type LayoutDefinitionContent = Widget | Layout | LayoutDefinition | LayoutWidgetDefinition;
+
+// @alpha
+export type LayoutPath = Array<string | number>;
+
+// @alpha
+export type LayoutWidgetDefinition = ILayoutWidgetDefinition;
+
+// @alpha (undocumented)
+export function layoutWidgets(layout: Layout): IWidget[];
+
+// @alpha (undocumented)
+export function layoutWidgets(layout: LayoutDefinition): Array<IWidgetDefinition | IWidget>;
+
+// @alpha (undocumented)
+export function layoutWidgetsWithPaths(layout: Layout): IWidgetWithLayoutPath[];
+
+// @alpha (undocumented)
+export function layoutWidgetsWithPaths(layout: LayoutDefinition): IWidgetOrDefinitionWithLayoutPath[];
 
 // @public
 export class NoDataError extends AnalyticalBackendError {
@@ -1073,6 +1228,13 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
     // (undocumented)
     readonly responseBody: number;
 }
+
+// @alpha
+export function walkLayout(layout: Layout | LayoutDefinition, { rowCallback, columnCallback, widgetCallback, }: {
+    rowCallback?: (row: IFluidLayoutRow | IFluidLayoutRowDefinition, rowPath: LayoutPath) => void;
+    columnCallback?: (column: IFluidLayoutColumn | IFluidLayoutColumnDefinition, columnPath: LayoutPath) => void;
+    widgetCallback?: (widget: IWidget | IWidgetDefinition, widgetPath: LayoutPath) => void;
+}, path?: LayoutPath): void;
 
 // @alpha
 export type Widget = ILayoutWidget;

@@ -1226,6 +1226,8 @@ export namespace GdcKpi {
     // (undocumented)
     export function isKpi(obj: any): obj is IKPI;
     // (undocumented)
+    export function isKpiContentWithoutComparison(obj: any): obj is IKpiContentWithoutComparison;
+    // (undocumented)
     export function isWrappedKpi(obj: any): obj is IWrappedKPI;
     // (undocumented)
     export interface IWrappedKPI {
@@ -2470,16 +2472,33 @@ export namespace GdcVisualizationObject {
 // @public (undocumented)
 export namespace GdcVisualizationWidget {
     // (undocumented)
-    export type IDrillDefinition = IDrillToVisualization;
+    export type IDrillDefinition = IDrillToVisualization | IDrillToDashboard;
+    // (undocumented)
+    export interface IDrillToDashboard {
+        // (undocumented)
+        drillToDashboard: {
+            target: "in-place";
+            from: {
+                drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
+            };
+            toDashboard: Identifier;
+        };
+    }
     // (undocumented)
     export interface IDrillToVisualization {
         // (undocumented)
-        from: GdcVisualizationObject.ILocalIdentifierQualifier;
-        // (undocumented)
-        target: "pop-up";
-        // (undocumented)
-        toVisualization: GdcVisualizationObject.IObjUriQualifier;
+        drillToVisualization: {
+            target: "pop-up";
+            from: {
+                drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
+            };
+            toVisualization: GdcVisualizationObject.IObjUriQualifier;
+        };
     }
+    // (undocumented)
+    export function isDrillToDashboard(obj: any): obj is IDrillToDashboard;
+    // (undocumented)
+    export function isDrillToVisualization(obj: any): obj is IDrillToVisualization;
     // (undocumented)
     export function isVisualizationWidget(obj: any): obj is IVisualizationWidget;
     // (undocumented)
@@ -2526,6 +2545,7 @@ export type Uri = string;
 //
 // dist/scheduledMail/GdcScheduledMail.d.ts:12:17 - (ae-forgotten-export) The symbol "DateString" needs to be exported by the entry point index.d.ts
 // dist/scheduledMail/GdcScheduledMail.d.ts:16:13 - (ae-forgotten-export) The symbol "Email" needs to be exported by the entry point index.d.ts
+// dist/visualizationWidget/GdcVisualizationWidget.d.ts:37:13 - (ae-forgotten-export) The symbol "Identifier" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

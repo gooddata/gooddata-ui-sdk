@@ -11,7 +11,8 @@ import {
     GdcExtendedDateFilters,
     GdcVisualizationClass,
 } from "@gooddata/gd-bear-model";
-import { uriRef, UriRef } from "@gooddata/sdk-model";
+import { uriRef, idRef, UriRef, areObjRefsEqual, localIdRef } from "@gooddata/sdk-model";
+import keyBy from "lodash/keyBy";
 import {
     IListedDashboard,
     IDashboard,
@@ -32,6 +33,10 @@ import {
     IDashboardDateFilterReference,
     IDashboardAttributeFilterReference,
     IFluidLayout,
+    IDrillToLegacyDashboard,
+    DrillDefinition,
+    IDrillToDashboard,
+    IDrillToInsight,
 } from "@gooddata/sdk-backend-spi";
 
 type DashboardDependency = IWidget | IFilterContext | ITempFilterContext;
@@ -62,9 +67,10 @@ const convertLayoutColumn = (
         const widget = widgetDependencies.find(dep => {
             const { qualifier } = content.widget;
             if (GdcVisualizationObject.isObjUriQualifier(qualifier)) {
-                return qualifier.uri === dep.uri;
+                return areObjRefsEqual(uriRef(qualifier.uri), dep.ref);
             }
-            return qualifier.identifier === dep.identifier;
+
+            return areObjRefsEqual(idRef(qualifier.identifier), dep.ref);
         }) as IWidget;
 
         return {
@@ -115,7 +121,7 @@ const convertDateFilterConfigAddedPresets = (
     return convertedPresets;
 };
 
-const convertDateFilterConfig = (
+export const convertDateFilterConfig = (
     dateFilterConfig: GdcExtendedDateFilters.IDashboardDateFilterConfig,
 ): IDateFilterConfig => {
     const { filterName, mode, addPresets, hideGranularities, hideOptions } = dateFilterConfig;
@@ -140,7 +146,7 @@ function isNotTemporaryAllTimeDateFilter(filter: FilterContextItem): boolean {
 }
 
 // Remove the temporary "All Time" date filter from filter context when exporting the dashboard
-export const sanitizeExportFilterContext = (
+const sanitizeExportFilterContext = (
     exportFilterContext: IFilterContext | ITempFilterContext,
 ): IFilterContext | ITempFilterContext => {
     return {
@@ -152,7 +158,7 @@ export const sanitizeExportFilterContext = (
 export const convertDashboard = (
     dashboard: GdcDashboard.IWrappedAnalyticalDashboard,
     dependencies: BearDashboardDependency[],
-    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
+    visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[] = [],
     exportFilterContextUri?: string,
 ): IDashboard => {
     const {
@@ -165,19 +171,14 @@ export const convertDashboard = (
         .filter(d => !GdcVisualizationObject.isVisualization(d))
         .map(convertDashboardDependency);
     const unsortedWidgets = sdkDependencies.filter(isWidget);
-    const widgetByUri = unsortedWidgets.reduce((acc: { [uri: string]: IWidget }, el) => {
-        return {
-            ...acc,
-            [el.uri]: el,
-        };
-    }, {});
 
     // To preserve the logic of createImplicitDashboardLayout, we must preserve the order of the widgets
+    const widgetByUri = keyBy(unsortedWidgets, "uri");
     const widgets = widgetsUris.map(widgetUri => widgetByUri[widgetUri]);
 
-    const filterContextOrExportFilterContext = sdkDependencies.find(dep => dep.uri === filterContext) as
-        | IFilterContext
-        | ITempFilterContext;
+    const filterContextOrExportFilterContext = sdkDependencies.find(dep =>
+        exportFilterContextUri ? dep.uri === exportFilterContextUri : dep.uri === filterContext,
+    ) as IFilterContext | ITempFilterContext | undefined;
 
     const convertedDashboard: IDashboard = {
         title,
@@ -194,7 +195,7 @@ export const convertDashboard = (
 
         dateFilterConfig: dateFilterConfig && convertDateFilterConfig(dateFilterConfig),
 
-        filterContext: exportFilterContextUri
+        filterContext: filterContextOrExportFilterContext
             ? sanitizeExportFilterContext(filterContextOrExportFilterContext)
             : filterContextOrExportFilterContext,
         layout: layout
@@ -205,7 +206,7 @@ export const convertDashboard = (
     return convertedDashboard;
 };
 
-const convertFilterReference = (
+export const convertFilterReference = (
     filterReference:
         | GdcExtendedDateFilters.IDateFilterReference
         | GdcExtendedDateFilters.IAttributeFilterReference,
@@ -226,13 +227,74 @@ const convertFilterReference = (
     return convertedAttributeFilterReference;
 };
 
-const convertVisualizationWidget = (widget: GdcVisualizationWidget.IWrappedVisualizationWidget): IWidget => {
+export const convertKpiDrill = (kpi: GdcKpi.IWrappedKPI): IDrillToLegacyDashboard => {
+    const { drillTo: { projectDashboard, projectDashboardTab } = {}, metric } = kpi.kpi.content;
+
+    const drillDefinition: IDrillToLegacyDashboard = {
+        type: "drillToLegacyDashboard",
+        origin: {
+            type: "drillFromMeasure",
+            measure: uriRef(metric),
+        },
+        target: uriRef(projectDashboard!),
+        tab: projectDashboardTab!,
+        transition: "in-place",
+    };
+
+    return drillDefinition;
+};
+
+export const convertVisualizationWidgetDrill = (
+    drill: GdcVisualizationWidget.IDrillDefinition,
+): DrillDefinition => {
+    if (GdcVisualizationWidget.isDrillToDashboard(drill)) {
+        const {
+            drillToDashboard: {
+                toDashboard,
+                target,
+                from: {
+                    drillFromMeasure: { localIdentifier },
+                },
+            },
+        } = drill;
+
+        const drillDefinition: IDrillToDashboard = {
+            type: "drillToDashboard",
+            origin: { type: "drillFromMeasure", measure: localIdRef(localIdentifier) },
+            target: idRef(toDashboard),
+            transition: target,
+        };
+        return drillDefinition;
+    }
+
+    const {
+        drillToVisualization: {
+            toVisualization,
+            target,
+            from: {
+                drillFromMeasure: { localIdentifier },
+            },
+        },
+    } = drill;
+    const drillDefinition: IDrillToInsight = {
+        type: "drillToInsight",
+        origin: { type: "drillFromMeasure", measure: localIdRef(localIdentifier) },
+        target: toVisualization,
+        transition: target,
+    };
+
+    return drillDefinition;
+};
+
+const convertVisualizationWidget = (
+    visualizationWidget: GdcVisualizationWidget.IWrappedVisualizationWidget,
+): IWidget => {
     const {
         visualizationWidget: {
-            content: { visualization, ignoreDashboardFilters, dateDataSet },
+            content: { visualization, ignoreDashboardFilters, dateDataSet, drills },
             meta: { identifier, uri, title, summary },
         },
-    } = widget;
+    } = visualizationWidget;
 
     const convertedWidget: IWidget = {
         type: "insight",
@@ -246,20 +308,20 @@ const convertVisualizationWidget = (widget: GdcVisualizationWidget.IWrappedVisua
         ignoreDashboardFilters: ignoreDashboardFilters
             ? ignoreDashboardFilters.map(convertFilterReference)
             : [],
-        drills: [], // (drill to dashboard, or insight) TODO: https://jira.intgdc.com/browse/RAIL-2199
+        drills: drills ? drills.map(convertVisualizationWidgetDrill) : [],
         alerts: [], // not yet supported for insight widgets
     };
 
     return convertedWidget;
 };
 
-const convertKpi = (widget: GdcKpi.IWrappedKPI): IWidget => {
+const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
     const {
         kpi: {
-            content: { dateDataSet, ignoreDashboardFilters },
+            content: { dateDataSet, ignoreDashboardFilters, drillTo },
             meta: { identifier, uri, title, summary },
         },
-    } = widget;
+    } = kpi;
 
     const convertedWidget: IWidget = {
         type: "kpi",
@@ -272,14 +334,23 @@ const convertKpi = (widget: GdcKpi.IWrappedKPI): IWidget => {
         ignoreDashboardFilters: ignoreDashboardFilters
             ? ignoreDashboardFilters.map(convertFilterReference)
             : [],
-        drills: [], // (drills to old dashboards) - TODO: https://jira.intgdc.com/browse/RAIL-2199
+        drills: drillTo ? [convertKpiDrill(kpi)] : [],
         alerts: [], // TODO: https://jira.intgdc.com/browse/RAIL-2218
     };
 
     return convertedWidget;
 };
 
-const convertFilterContextItem = (
+export const convertWidget = (
+    widget: GdcKpi.IWrappedKPI | GdcVisualizationWidget.IWrappedVisualizationWidget,
+): IWidget => {
+    if (GdcKpi.isWrappedKpi(widget)) {
+        return convertKpi(widget);
+    }
+    return convertVisualizationWidget(widget);
+};
+
+export const convertFilterContextItem = (
     filterContextItem: GdcFilterContext.FilterContextItem,
 ): FilterContextItem => {
     if (GdcFilterContext.isAttributeFilter(filterContextItem)) {
@@ -318,7 +389,9 @@ const convertFilterContextItem = (
     return convertedFilterContextItem;
 };
 
-const convertFilterContext = (filterContext: GdcFilterContext.IWrappedFilterContext): IFilterContext => {
+export const convertFilterContext = (
+    filterContext: GdcFilterContext.IWrappedFilterContext,
+): IFilterContext => {
     const {
         filterContext: {
             content: { filters },
@@ -338,7 +411,7 @@ const convertFilterContext = (filterContext: GdcFilterContext.IWrappedFilterCont
     return convertedFilterContext;
 };
 
-const convertTempFilterContext = (
+export const convertTempFilterContext = (
     filterContext: GdcFilterContext.IWrappedTempFilterContext,
 ): ITempFilterContext => {
     const {
@@ -355,7 +428,7 @@ const convertTempFilterContext = (
     return convertedTempFilterContext;
 };
 
-export const convertDashboardDependency = (dependency: BearDashboardDependency): DashboardDependency => {
+const convertDashboardDependency = (dependency: BearDashboardDependency): DashboardDependency => {
     if (GdcVisualizationWidget.isWrappedVisualizationWidget(dependency)) {
         return convertVisualizationWidget(dependency);
     } else if (GdcKpi.isWrappedKpi(dependency)) {
@@ -378,7 +451,7 @@ const VISUALIZATION_SIZE = 12;
  *
  * @returns fluid layout created from the widgets
  */
-export function createImplicitDashboardLayout(
+function createImplicitDashboardLayout(
     widgets: IWidget[],
     dependencies: BearDashboardDependency[],
     visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
