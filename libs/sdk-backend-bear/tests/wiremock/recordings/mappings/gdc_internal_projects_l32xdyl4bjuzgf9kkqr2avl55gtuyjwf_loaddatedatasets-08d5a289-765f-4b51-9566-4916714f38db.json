@@ -1,5 +1,5 @@
 {
-    "id": "d0b9074b-0957-4101-a6d2-c5160b99d651",
+    "id": "08d5a289-765f-4b51-9566-4916714f38db",
     "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets",
     "request": {
         "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/loadDateDataSets",
@@ -15,7 +15,7 @@
         },
         "bodyPatterns": [
             {
-                "equalToJson": "{\"dateDataSetsRequest\":{\"includeUnavailableDateDataSetsCount\":true,\"includeAvailableDateAttributes\":true,\"requiredDataSets\":{\"type\":\"ALL\"}}}",
+                "equalToJson": "{\"dateDataSetsRequest\":{\"includeUnavailableDateDataSetsCount\":true,\"includeAvailableDateAttributes\":true,\"bucketItems\":[\"SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])\",\"SELECT (SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])) FOR PREVIOUS ([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497])\"],\"requiredDataSets\":{\"type\":\"PRODUCTION\"}}}",
                 "ignoreArrayOrder": false,
                 "ignoreExtraElements": false
             }
@@ -23,21 +23,21 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets-d0b9074b-0957-4101-a6d2-c5160b99d651.json",
+        "bodyFileName": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_loaddatedatasets-08d5a289-765f-4b51-9566-4916714f38db.json",
         "headers": {
-            "Date": "Thu, 21 May 2020 13:12:21 GMT",
+            "Date": "Mon, 25 May 2020 09:35:30 GMT",
             "Server": "GoodData WebApp",
-            "Keep-Alive": "timeout=5, max=30",
+            "Keep-Alive": "timeout=5, max=77",
             "X-GDC-LOG-HEADER": "",
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Content-Type": "application/json;charset=UTF-8",
-            "X-GDC-REQUEST-TIME": "179",
-            "X-GDC-REQUEST": "F5kJMe7rZdr69xTy",
+            "X-GDC-REQUEST-TIME": "246",
+            "X-GDC-REQUEST": "qWGxhvX2A8OAvyi7",
             "vary": "Accept-Encoding,origin,X-GDC-VERSION",
             "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
         }
     },
-    "uuid": "d0b9074b-0957-4101-a6d2-c5160b99d651",
+    "uuid": "08d5a289-765f-4b51-9566-4916714f38db",
     "persistent": true,
-    "insertionIndex": 8
+    "insertionIndex": 11
 }

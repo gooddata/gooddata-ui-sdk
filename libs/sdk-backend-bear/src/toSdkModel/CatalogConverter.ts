@@ -54,7 +54,8 @@ const commonMetadataModifications = <T extends IMetadataObjectBuilder>(item: Gdc
         .id(item.identifier)
         .uri(item.uri)
         .title(item.title)
-        .description(item.summary);
+        .description(item.summary)
+        .unlisted(false);
 
 const commonCatalogItemModifications = <T extends IMetadataObjectBuilder>(item: GdcCatalog.CatalogItem) => (
     builder: T,
@@ -63,7 +64,8 @@ const commonCatalogItemModifications = <T extends IMetadataObjectBuilder>(item: 
         .id(item.identifier)
         .uri(item.links.self)
         .title(item.title)
-        .description(item.summary);
+        .description(item.summary)
+        .unlisted(false);
 
 export const convertAttribute = (
     attribute: GdcCatalog.ICatalogAttribute,
@@ -135,6 +137,24 @@ export const convertDateDataset = (dateDataset: GdcDateDataSets.IDateDataSet): I
             .dataSet(dateDatasetRef, ds => ds.modify(commonMetadataModifications(dateDataset.meta)))
             .dateAttributes(dateAttributes)
             .relevance(dateDataset.relevance),
+    );
+};
+
+export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasure => {
+    const { content, meta } = metric.metric;
+    const measureRef = uriRef(meta.uri);
+
+    return newCatalogMeasure(catalogMeasure =>
+        catalogMeasure.measure(measureRef, m =>
+            m
+                .expression(content.expression)
+                .format(content.format ?? "#,#.##")
+                .id(meta.identifier)
+                .uri(meta.uri)
+                .title(meta.title)
+                .description(meta.summary)
+                .unlisted(meta.unlisted === true),
+        ),
     );
 };
 

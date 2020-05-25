@@ -105,5 +105,6 @@ export const convertMetadataObjectXrefEntry = (
         title: entry.title,
         description: entry.summary,
         production: true,
+        unlisted: entry.unlisted === 1,
     };
 };
