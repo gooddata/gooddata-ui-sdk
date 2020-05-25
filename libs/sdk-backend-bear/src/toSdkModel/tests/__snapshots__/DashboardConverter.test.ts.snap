@@ -1,0 +1,456 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dashboard converter convert dashboard should convert dashboard with export temp filter context 1`] = `
+Object {
+  "created": "2020-05-05 00:00:00",
+  "dateFilterConfig": undefined,
+  "description": "",
+  "filterContext": Object {
+    "created": "2020-05-05 00:00:00",
+    "filters": Array [],
+    "ref": Object {
+      "uri": "/tempFilterContext",
+    },
+    "uri": "/tempFilterContext",
+  },
+  "identifier": "dashboardWithFilterContext",
+  "layout": undefined,
+  "ref": Object {
+    "uri": "/gdc/md/obj/dashboardWithFilterContext",
+  },
+  "scheduledMails": Array [],
+  "title": "dashboardWithFilterContext",
+  "updated": "2020-05-05 10:10:10",
+  "uri": "/gdc/md/obj/dashboardWithFilterContext",
+}
+`;
+
+exports[`dashboard converter convert dashboard should convert dashboard with extended date filters config 1`] = `
+Object {
+  "created": "2020-05-05 00:00:00",
+  "dateFilterConfig": Object {
+    "addPresets": undefined,
+    "filterName": "Filter",
+    "hideGranularities": Array [
+      "GDC.time.month",
+    ],
+    "hideOptions": undefined,
+    "mode": "active",
+  },
+  "description": "",
+  "filterContext": undefined,
+  "identifier": "dashboardWithExtendedDateFilterConfig",
+  "layout": undefined,
+  "ref": Object {
+    "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
+  },
+  "scheduledMails": Array [],
+  "title": "dashboardWithExtendedDateFilterConfig",
+  "updated": "2020-05-05 10:10:10",
+  "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
+}
+`;
+
+exports[`dashboard converter convert dashboard should convert dashboard with filter context 1`] = `
+Object {
+  "created": "2020-05-05 00:00:00",
+  "dateFilterConfig": undefined,
+  "description": "",
+  "filterContext": Object {
+    "description": "",
+    "filters": Array [
+      Object {
+        "attributeFilter": Object {
+          "attributeElements": Array [
+            Object {
+              "uri": "/test",
+            },
+            Object {
+              "uri": "/test2",
+            },
+          ],
+          "displayForm": Object {
+            "uri": "/displayForm",
+          },
+          "negativeSelection": false,
+        },
+      },
+      Object {
+        "dateFilter": Object {
+          "attribute": Object {
+            "uri": "testAttr",
+          },
+          "from": -10,
+          "granularity": "GDC.time.month",
+          "to": 0,
+          "type": "relative",
+        },
+      },
+    ],
+    "identifier": "filterContext",
+    "ref": Object {
+      "uri": "/gdc/md/obj/filterContext",
+    },
+    "title": "filterContext",
+    "uri": "/gdc/md/obj/filterContext",
+  },
+  "identifier": "dashboardWithFilterContext",
+  "layout": undefined,
+  "ref": Object {
+    "uri": "/gdc/md/obj/dashboardWithFilterContext",
+  },
+  "scheduledMails": Array [],
+  "title": "dashboardWithFilterContext",
+  "updated": "2020-05-05 10:10:10",
+  "uri": "/gdc/md/obj/dashboardWithFilterContext",
+}
+`;
+
+exports[`dashboard converter convert dashboard should convert dashboard with layout 1`] = `
+Object {
+  "created": "2020-05-05 00:00:00",
+  "dateFilterConfig": undefined,
+  "description": "",
+  "filterContext": undefined,
+  "identifier": "dashboardWithFilterContext",
+  "layout": Object {
+    "fluidLayout": Object {
+      "rows": Array [
+        Object {
+          "columns": Array [
+            Object {
+              "content": Object {
+                "widget": Object {
+                  "alerts": Array [],
+                  "dateDataSet": undefined,
+                  "description": "",
+                  "drills": Array [
+                    Object {
+                      "origin": Object {
+                        "measure": Object {
+                          "localIdentifier": "m1",
+                        },
+                        "type": "drillFromMeasure",
+                      },
+                      "target": Object {
+                        "identifier": "dashboardId",
+                      },
+                      "transition": "in-place",
+                      "type": "drillToDashboard",
+                    },
+                  ],
+                  "identifier": "visualizationWidgetHeadline",
+                  "ignoreDashboardFilters": Array [
+                    Object {
+                      "displayForm": Object {
+                        "uri": "/gdc/md/displayForm",
+                      },
+                      "type": "attributeFilterReference",
+                    },
+                  ],
+                  "insight": Object {
+                    "uri": "/gdc/md/obj/visualizationHeadline",
+                  },
+                  "ref": Object {
+                    "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+                  },
+                  "title": "visualizationWidgetHeadline",
+                  "type": "insight",
+                  "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+                },
+              },
+              "size": Object {
+                "xl": Object {
+                  "width": 12,
+                },
+              },
+            },
+            Object {
+              "content": Object {
+                "widget": Object {
+                  "alerts": Array [],
+                  "dateDataSet": undefined,
+                  "description": "",
+                  "drills": Array [
+                    Object {
+                      "origin": Object {
+                        "measure": Object {
+                          "localIdentifier": "m1",
+                        },
+                        "type": "drillFromMeasure",
+                      },
+                      "target": Object {
+                        "uri": "/targetVisualization",
+                      },
+                      "transition": "pop-up",
+                      "type": "drillToInsight",
+                    },
+                  ],
+                  "identifier": "visualizationWidgetBarChart",
+                  "ignoreDashboardFilters": Array [],
+                  "insight": Object {
+                    "uri": "/gdc/md/obj/visualizationBarChart",
+                  },
+                  "ref": Object {
+                    "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+                  },
+                  "title": "visualizationWidgetBarChart",
+                  "type": "insight",
+                  "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+                },
+              },
+              "size": Object {
+                "xl": Object {
+                  "width": 6,
+                },
+              },
+            },
+            Object {
+              "content": Object {
+                "widget": Object {
+                  "alerts": Array [],
+                  "dateDataSet": undefined,
+                  "description": "",
+                  "drills": Array [
+                    Object {
+                      "origin": Object {
+                        "measure": Object {
+                          "uri": "/measure",
+                        },
+                        "type": "drillFromMeasure",
+                      },
+                      "tab": "testTab",
+                      "target": Object {
+                        "uri": "test",
+                      },
+                      "transition": "in-place",
+                      "type": "drillToLegacyDashboard",
+                    },
+                  ],
+                  "identifier": "kpiWidget",
+                  "ignoreDashboardFilters": Array [],
+                  "ref": Object {
+                    "uri": "/gdc/md/obj/kpiWidget",
+                  },
+                  "title": "kpiWidget",
+                  "type": "kpi",
+                  "uri": "/gdc/md/obj/kpiWidget",
+                },
+              },
+              "size": Object {
+                "xl": Object {
+                  "width": 2,
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "ref": Object {
+    "uri": "/gdc/md/obj/dashboardWithFilterContext",
+  },
+  "scheduledMails": Array [],
+  "title": "dashboardWithFilterContext",
+  "updated": "2020-05-05 10:10:10",
+  "uri": "/gdc/md/obj/dashboardWithFilterContext",
+}
+`;
+
+exports[`dashboard converter convert dashboard should convert dashboard without layout, and create implicit layout 1`] = `
+Object {
+  "created": "2020-05-05 00:00:00",
+  "dateFilterConfig": undefined,
+  "description": "",
+  "filterContext": undefined,
+  "identifier": "dashboardWithFilterContext",
+  "layout": Object {
+    "fluidLayout": Object {
+      "rows": Array [
+        Object {
+          "columns": Array [
+            Object {
+              "content": Object {
+                "widget": Object {
+                  "alerts": Array [],
+                  "dateDataSet": undefined,
+                  "description": "",
+                  "drills": Array [
+                    Object {
+                      "origin": Object {
+                        "measure": Object {
+                          "localIdentifier": "m1",
+                        },
+                        "type": "drillFromMeasure",
+                      },
+                      "target": Object {
+                        "uri": "/targetVisualization",
+                      },
+                      "transition": "pop-up",
+                      "type": "drillToInsight",
+                    },
+                  ],
+                  "identifier": "visualizationWidgetBarChart",
+                  "ignoreDashboardFilters": Array [],
+                  "insight": Object {
+                    "uri": "/gdc/md/obj/visualizationBarChart",
+                  },
+                  "ref": Object {
+                    "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+                  },
+                  "title": "visualizationWidgetBarChart",
+                  "type": "insight",
+                  "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+                },
+              },
+              "size": Object {
+                "xl": Object {
+                  "width": 12,
+                },
+              },
+            },
+            Object {
+              "content": Object {
+                "widget": Object {
+                  "alerts": Array [],
+                  "dateDataSet": undefined,
+                  "description": "",
+                  "drills": Array [
+                    Object {
+                      "origin": Object {
+                        "measure": Object {
+                          "uri": "/measure",
+                        },
+                        "type": "drillFromMeasure",
+                      },
+                      "tab": "testTab",
+                      "target": Object {
+                        "uri": "test",
+                      },
+                      "transition": "in-place",
+                      "type": "drillToLegacyDashboard",
+                    },
+                  ],
+                  "identifier": "kpiWidget",
+                  "ignoreDashboardFilters": Array [],
+                  "ref": Object {
+                    "uri": "/gdc/md/obj/kpiWidget",
+                  },
+                  "title": "kpiWidget",
+                  "type": "kpi",
+                  "uri": "/gdc/md/obj/kpiWidget",
+                },
+              },
+              "size": Object {
+                "xl": Object {
+                  "width": 2,
+                },
+              },
+            },
+            Object {
+              "content": Object {
+                "widget": Object {
+                  "alerts": Array [],
+                  "dateDataSet": undefined,
+                  "description": "",
+                  "drills": Array [
+                    Object {
+                      "origin": Object {
+                        "measure": Object {
+                          "localIdentifier": "m1",
+                        },
+                        "type": "drillFromMeasure",
+                      },
+                      "target": Object {
+                        "identifier": "dashboardId",
+                      },
+                      "transition": "in-place",
+                      "type": "drillToDashboard",
+                    },
+                  ],
+                  "identifier": "visualizationWidgetHeadline",
+                  "ignoreDashboardFilters": Array [
+                    Object {
+                      "displayForm": Object {
+                        "uri": "/gdc/md/displayForm",
+                      },
+                      "type": "attributeFilterReference",
+                    },
+                  ],
+                  "insight": Object {
+                    "uri": "/gdc/md/obj/visualizationHeadline",
+                  },
+                  "ref": Object {
+                    "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+                  },
+                  "title": "visualizationWidgetHeadline",
+                  "type": "insight",
+                  "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+                },
+              },
+              "size": Object {
+                "xl": Object {
+                  "width": 2,
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "ref": Object {
+    "uri": "/gdc/md/obj/dashboardWithFilterContext",
+  },
+  "scheduledMails": Array [],
+  "title": "dashboardWithFilterContext",
+  "updated": "2020-05-05 10:10:10",
+  "uri": "/gdc/md/obj/dashboardWithFilterContext",
+}
+`;
+
+exports[`dashboard converter convert dashboard should convert empty dashboard 1`] = `
+Object {
+  "created": "2020-05-05 00:00:00",
+  "dateFilterConfig": undefined,
+  "description": "",
+  "filterContext": undefined,
+  "identifier": "emptyDashboard",
+  "layout": undefined,
+  "ref": Object {
+    "uri": "/gdc/md/obj/emptyDashboard",
+  },
+  "scheduledMails": Array [],
+  "title": "emptyDashboard",
+  "updated": "2020-05-05 10:10:10",
+  "uri": "/gdc/md/obj/emptyDashboard",
+}
+`;
+
+exports[`dashboard converter convert dashboard should override dashboard filter context with export filter context 1`] = `
+Object {
+  "created": "2020-05-05 00:00:00",
+  "dateFilterConfig": undefined,
+  "description": "",
+  "filterContext": Object {
+    "description": "",
+    "filters": Array [],
+    "identifier": "exportFilterContext",
+    "ref": Object {
+      "uri": "/gdc/md/obj/exportFilterContext",
+    },
+    "title": "exportFilterContext",
+    "uri": "/gdc/md/obj/exportFilterContext",
+  },
+  "identifier": "dashboardWithFilterContext",
+  "layout": undefined,
+  "ref": Object {
+    "uri": "/gdc/md/obj/dashboardWithFilterContext",
+  },
+  "scheduledMails": Array [],
+  "title": "dashboardWithFilterContext",
+  "updated": "2020-05-05 10:10:10",
+  "uri": "/gdc/md/obj/dashboardWithFilterContext",
+}
+`;

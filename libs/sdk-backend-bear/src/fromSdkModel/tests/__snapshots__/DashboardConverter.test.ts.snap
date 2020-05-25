@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dashboard converter convert dashboard should convert dashboard with export temp filter context 1`] = `
+Object {
+  "analyticalDashboard": Object {
+    "content": Object {
+      "dateFilterConfig": undefined,
+      "filterContext": "/tempFilterContext",
+      "layout": undefined,
+      "widgets": Array [],
+    },
+    "meta": Object {
+      "identifier": "dashboardWithTempFilterContext",
+      "summary": "",
+      "title": "dashboardWithTempFilterContext",
+      "uri": "/gdc/md/obj/dashboardWithTempFilterContext",
+    },
+  },
+}
+`;
+
+exports[`dashboard converter convert dashboard should convert dashboard with extended date filters config 1`] = `
+Object {
+  "analyticalDashboard": Object {
+    "content": Object {
+      "dateFilterConfig": Object {
+        "filterName": "Extended filter",
+        "hideGranularities": Array [
+          "GDC.time.quarter",
+        ],
+        "mode": "readonly",
+      },
+      "filterContext": undefined,
+      "layout": undefined,
+      "widgets": Array [],
+    },
+    "meta": Object {
+      "identifier": "emptyDashboard",
+      "summary": "",
+      "title": "emptyDashboard",
+      "uri": "/gdc/md/obj/emptyDashboard",
+    },
+  },
+}
+`;
+
+exports[`dashboard converter convert dashboard should convert dashboard with filter context 1`] = `
+Object {
+  "analyticalDashboard": Object {
+    "content": Object {
+      "dateFilterConfig": undefined,
+      "filterContext": "/gdc/md/obj/filterContext",
+      "layout": undefined,
+      "widgets": Array [],
+    },
+    "meta": Object {
+      "identifier": "dashboardWithFilterContext",
+      "summary": "",
+      "title": "dashboardWithFilterContext",
+      "uri": "/gdc/md/obj/dashboardWithFilterContext",
+    },
+  },
+}
+`;
+
+exports[`dashboard converter convert dashboard should convert dashboard with layout 1`] = `
+Object {
+  "analyticalDashboard": Object {
+    "content": Object {
+      "dateFilterConfig": undefined,
+      "filterContext": undefined,
+      "layout": Object {
+        "fluidLayout": Object {
+          "rows": Array [
+            Object {
+              "columns": Array [
+                Object {
+                  "content": Object {
+                    "widget": Object {
+                      "qualifier": Object {
+                        "uri": "/gdc/md/obj/widgetHeadline",
+                      },
+                    },
+                  },
+                  "size": Object {
+                    "xl": Object {
+                      "width": 12,
+                    },
+                  },
+                },
+                Object {
+                  "content": Object {
+                    "widget": Object {
+                      "qualifier": Object {
+                        "uri": "/gdc/md/obj/widgetKpi",
+                      },
+                    },
+                  },
+                  "size": Object {
+                    "xl": Object {
+                      "width": 6,
+                    },
+                  },
+                },
+                Object {
+                  "content": Object {
+                    "widget": Object {
+                      "qualifier": Object {
+                        "uri": "/gdc/md/obj/widgetBarChart",
+                      },
+                    },
+                  },
+                  "size": Object {
+                    "xl": Object {
+                      "width": 2,
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      },
+      "widgets": Array [
+        "/gdc/md/obj/widgetHeadline",
+        "/gdc/md/obj/widgetKpi",
+        "/gdc/md/obj/widgetBarChart",
+      ],
+    },
+    "meta": Object {
+      "identifier": "emptyDashboard",
+      "summary": "",
+      "title": "emptyDashboard",
+      "uri": "/gdc/md/obj/emptyDashboard",
+    },
+  },
+}
+`;
+
+exports[`dashboard converter convert dashboard should convert empty dashboard 1`] = `
+Object {
+  "analyticalDashboard": Object {
+    "content": Object {
+      "dateFilterConfig": undefined,
+      "filterContext": undefined,
+      "layout": undefined,
+      "widgets": Array [],
+    },
+    "meta": Object {
+      "identifier": "emptyDashboard",
+      "summary": "",
+      "title": "emptyDashboard",
+      "uri": "/gdc/md/obj/emptyDashboard",
+    },
+  },
+}
+`;
+
+exports[`dashboard converter convert filter context should convert filter context 1`] = `
+Object {
+  "filterContext": Object {
+    "content": Object {
+      "filters": Array [
+        Object {
+          "dateFilter": Object {
+            "attribute": "/attrId",
+            "dataSet": "/dataSet",
+            "from": -12,
+            "granularity": "GDC.time.month",
+            "to": -2,
+            "type": "relative",
+          },
+        },
+      ],
+    },
+    "meta": Object {
+      "identifier": "filterContext",
+      "summary": "",
+      "title": "filterContext",
+      "uri": "/gdc/md/obj/filterContext",
+    },
+  },
+}
+`;
+
+exports[`dashboard converter convert filter context should convert temp filter context 1`] = `
+Object {
+  "tempFilterContext": Object {
+    "created": "2020-05-05 00:00:00",
+    "filters": Array [
+      Object {
+        "dateFilter": Object {
+          "attribute": "/attrId",
+          "dataSet": "/dataSet",
+          "from": -12,
+          "granularity": "GDC.time.month",
+          "to": -2,
+          "type": "relative",
+        },
+      },
+    ],
+    "uri": "/tempFilterContext",
+  },
+}
+`;
+
+exports[`dashboard converter convert widget should convert kpi widget 1`] = `
+Object {
+  "kpi": Object {
+    "content": Object {
+      "comparisonDirection": "growIsGood",
+      "comparisonType": "lastYear",
+      "dateDataSet": undefined,
+      "drillTo": undefined,
+      "ignoreDashboardFilters": Array [],
+      "metric": "/measure",
+    },
+    "meta": Object {
+      "identifier": "widgetKpi",
+      "summary": "",
+      "title": "widgetKpi",
+      "uri": "/gdc/md/obj/widgetKpi",
+    },
+  },
+}
+`;
+
+exports[`dashboard converter convert widget should convert visualization widget 1`] = `
+Object {
+  "visualizationWidget": Object {
+    "content": Object {
+      "dateDataSet": undefined,
+      "drills": Array [],
+      "ignoreDashboardFilters": Array [],
+      "visualization": "/headline",
+    },
+    "meta": Object {
+      "identifier": "widgetHeadline",
+      "summary": "",
+      "title": "widgetHeadline",
+      "uri": "/gdc/md/obj/widgetHeadline",
+    },
+  },
+}
+`;

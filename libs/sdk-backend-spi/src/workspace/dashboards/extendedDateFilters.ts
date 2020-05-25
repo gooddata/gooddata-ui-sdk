@@ -1,4 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
 
 /**
  * TODO: remove ExtendedDateFilters from sdk-ui-filters and update imports in other files
@@ -152,32 +153,32 @@ export interface IAllTimeDateFilter extends IDateFilterOption {
 export type AbsoluteDateFilterOption = IAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
 
 /**
- * TODO: docs
- * @public
+ * Type-guard testing whether the provided object is an instance of {@link IAllTimeDateFilter}.
+ * @alpha
  */
-export const isAllTimeDateFilter = (option: DateFilterOption): option is IAllTimeDateFilter =>
-    option ? option.type === "allTime" : false;
+export const isAllTimeDateFilter = (obj: any): obj is IAllTimeDateFilter =>
+    !isEmpty(obj) && (obj as IAllTimeDateFilter).type === "allTime";
 
 /**
- * TODO: docs
- * @public
+ * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterForm}.
+ * @alpha
  */
-export const isAbsoluteDateFilterForm = (option: DateFilterOption): option is IAbsoluteDateFilterForm =>
-    option ? option.type === "absoluteForm" : false;
+export const isAbsoluteDateFilterForm = (obj: any): obj is IAbsoluteDateFilterForm =>
+    !isEmpty(obj) && (obj as IAbsoluteDateFilterForm).type === "absoluteForm";
 
 /**
- * TODO: docs
- * @public
+ * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterPreset}.
+ * @alpha
  */
-export const isAbsoluteDateFilterPreset = (option: DateFilterOption): option is IAbsoluteDateFilterPreset =>
-    option ? option.type === "absolutePreset" : false;
+export const isAbsoluteDateFilterPreset = (obj: any): obj is IAbsoluteDateFilterPreset =>
+    !isEmpty(obj) && (obj as IAbsoluteDateFilterPreset).type === "absolutePreset";
 
 /**
- * TODO: docs
- * @public
+ * Type-guard testing whether the provided object is an instance of {@link AbsoluteDateFilterOption}.
+ * @alpha
  */
-export const isAbsoluteDateFilterOption = (option: DateFilterOption): option is AbsoluteDateFilterOption =>
-    isAbsoluteDateFilterForm(option) || isAbsoluteDateFilterPreset(option);
+export const isAbsoluteDateFilterOption = (obj: any): obj is AbsoluteDateFilterOption =>
+    isAbsoluteDateFilterForm(obj) || isAbsoluteDateFilterPreset(obj);
 
 /**
  * TODO: docs
@@ -186,25 +187,25 @@ export const isAbsoluteDateFilterOption = (option: DateFilterOption): option is 
 export type RelativeDateFilterOption = IRelativeDateFilterForm | IRelativeDateFilterPreset;
 
 /**
- * TODO: docs
- * @public
+ * Type-guard testing whether the provided object is an instance of {@link IRelativeDateFilterForm}.
+ * @alpha
  */
-export const isRelativeDateFilterForm = (option: DateFilterOption): option is IRelativeDateFilterForm =>
-    option ? option.type === "relativeForm" : false;
+export const isRelativeDateFilterForm = (obj: any): obj is IRelativeDateFilterForm =>
+    !isEmpty(obj) && (obj as IRelativeDateFilterForm).type === "relativeForm";
 
 /**
- * TODO: docs
- * @public
+ * Type-guard testing whether the provided object is an instance of {@link IRelativeDateFilterPreset}.
+ * @alpha
  */
-export const isRelativeDateFilterPreset = (option: DateFilterOption): option is IRelativeDateFilterPreset =>
-    option ? option.type === "relativePreset" : false;
+export const isRelativeDateFilterPreset = (obj: any): obj is IRelativeDateFilterPreset =>
+    !isEmpty(obj) && (obj as IRelativeDateFilterPreset).type === "relativePreset";
 
 /**
- * TODO: docs
- * @public
+ * Type-guard testing whether the provided object is an instance of {@link RelativeDateFilterOption}.
+ * @alpha
  */
-export const isRelativeDateFilterOption = (option: DateFilterOption): option is RelativeDateFilterOption =>
-    isRelativeDateFilterForm(option) || isRelativeDateFilterPreset(option);
+export const isRelativeDateFilterOption = (obj: any): obj is RelativeDateFilterOption =>
+    isRelativeDateFilterForm(obj) || isRelativeDateFilterPreset(obj);
 
 /**
  * TODO: docs

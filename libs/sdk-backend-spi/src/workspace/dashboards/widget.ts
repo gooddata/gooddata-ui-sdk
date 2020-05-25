@@ -3,137 +3,9 @@ import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { IWidgetAlert } from "./alert";
 import { IDashboardFilterReference } from "./filterContext";
-
-/**
- * Widget drill definition
- * @alpha
- */
-export type DrillDefinition = IDrillToInsight | IDrillToDashboard;
-
-/**
- * Drill origin type
- * @alpha
- */
-export type DrillOriginType = "drillFromMeasure";
-
-/**
- * Drill origin
- * @alpha
- */
-export type DrillOrigin = IDrillFromMeasure;
-
-/**
- * Drill transition
- * @alpha
- */
-export type DrillTransition = "pop-up" | "in-place";
-
-/**
- * Drill type
- * @alpha
- */
-export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard";
-
-/**
- * Drill origin base type
- * @alpha
- */
-export interface IDrillOrigin {
-    /**
-     * Drill origin type
-     */
-    type: DrillOriginType;
-}
-
-/**
- * Drill from measure
- * @alpha
- */
-export interface IDrillFromMeasure extends IDrillOrigin {
-    /**
-     * Drill origin type
-     */
-    type: "drillFromMeasure";
-
-    /**
-     * Measure object ref
-     */
-    measure: ObjRef;
-}
-
-/**
- * Drill base type
- * @alpha
- */
-export interface IDrill {
-    /**
-     * Drill type
-     */
-    type: DrillType;
-
-    /**
-     * Drill transition
-     */
-    transition: DrillTransition;
-
-    /**
-     * Drill origin
-     */
-    origin: DrillOrigin;
-
-    /**
-     * Drill target object ref
-     */
-    target: ObjRef;
-}
-
-/**
- * Drill to PP dashboard
- * @alpha
- */
-export interface IDrillToLegacyDashboard extends IDrill {
-    /**
-     * Drill type
-     */
-    type: "drillToLegacyDashboard";
-
-    /**
-     * Drill transition
-     */
-    transition: "pop-up";
-}
-
-/**
- * Drill to dashboard
- * @alpha
- */
-export interface IDrillToDashboard extends IDrill {
-    /**
-     * Drill type
-     */
-    type: "drillToDashboard";
-
-    /**
-     * Drill transition
-     */
-    transition: "in-place";
-}
-
-/**
- * Drill to insight
- * @alpha
- */
-export interface IDrillToInsight extends IDrill {
-    /**
-     * Drill type
-     */
-    type: "drillToInsight";
-
-    /**
-     * Drill transition
-     */
-    transition: "pop-up";
-}
+import { DrillDefinition } from "./drills";
+import { ILegacyKpi } from "./kpi";
+import { IDashboardObjectIdentity } from "./common";
 
 /**
  * Temporary type to distinguish between kpi and insight
@@ -145,7 +17,7 @@ export type WidgetType = "kpi" | "insight";
  * Widgets are insights or kpis with additional settings - drilling and alerting
  * @alpha
  */
-export interface IWidgetDefinition {
+export interface IWidgetBase {
     /**
      * Widget title
      */
@@ -177,6 +49,11 @@ export interface IWidgetDefinition {
     readonly insight?: ObjRef;
 
     /**
+     * Temporary place for legacy kpi properties
+     */
+    readonly kpi?: ILegacyKpi;
+
+    /**
      * Widget drills
      */
     readonly drills: DrillDefinition[];
@@ -188,24 +65,26 @@ export interface IWidgetDefinition {
 }
 
 /**
- * See {@link IWidgetDefinition}]
+ * See {@link IWidget}]
  * @alpha
  */
-export interface IWidget extends IWidgetDefinition {
-    /**
-     * Visualization widget or kpi object ref
-     */
-    readonly ref: ObjRef;
+export interface IWidgetDefinition extends IWidgetBase, Partial<IDashboardObjectIdentity> {}
 
-    /**
-     * Visualization widget or kpi uri
-     */
-    readonly uri: string;
+/**
+ * @alpha
+ */
+export interface IWidget extends IWidgetBase, IDashboardObjectIdentity {}
 
-    /**
-     * Visualization widget or kpi identifier
-     */
-    readonly identifier: string;
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IWidgetDefinition}.
+ * @alpha
+ */
+export function isWidgetDefinition(obj: any): obj is IWidgetDefinition {
+    return (
+        !isEmpty(obj) &&
+        ((obj as IWidgetDefinition).type === "kpi" || (obj as IWidgetDefinition).type === "insight") &&
+        !(obj as IWidget).ref
+    );
 }
 
 /**
@@ -213,5 +92,9 @@ export interface IWidget extends IWidgetDefinition {
  * @alpha
  */
 export function isWidget(obj: any): obj is IWidget {
-    return !isEmpty(obj) && ((obj as IWidget).type === "kpi" || (obj as IWidget).type === "insight");
+    return (
+        !isEmpty(obj) &&
+        ((obj as IWidget).type === "kpi" || (obj as IWidget).type === "insight") &&
+        !!(obj as IWidget).ref
+    );
 }

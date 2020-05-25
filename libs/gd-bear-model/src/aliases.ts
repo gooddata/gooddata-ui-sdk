@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 // Type aliases, because string is too vague to represent some values
 
 /**
@@ -30,6 +30,11 @@ export type NumberAsString = string; // Number, but returned as a string
  * @public
  */
 export type Uri = string; // Metadata uri (f.e. /gdc/md/...)
+
+/**
+ * @public
+ */
+export type Identifier = string;
 
 /**
  * @public

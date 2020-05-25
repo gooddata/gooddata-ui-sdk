@@ -1,14 +1,15 @@
 // (C) 2019-2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
-import { Layout } from "./layout";
-import { IFilterContext, ITempFilterContext } from "./filterContext";
+import { Layout, LayoutDefinition } from "./layout";
+import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
 import {
     GUID,
     DateFilterConfigMode,
     DateFilterGranularity,
     IDashboardAddedPresets,
 } from "./extendedDateFilters";
-import { IScheduledMail } from "./scheduledMail";
+import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
+import { IDashboardObjectIdentity } from "./common";
 
 /**
  * Extended date filter config
@@ -42,16 +43,10 @@ export interface IDateFilterConfig {
 }
 
 /**
- * Analytical dashboard consists of widgets
- * (widgets are kpis or insights with additional settings - drilling and alerting),
- * layout (which defines rendering and ordering of these widgets),
- * and filter context (configured attribute and date filters).
- * It's also possible to setup scheduled emails for the dashboard
- * (user will receive an email with the exported dashboard attached at the specified time interval),
- * and optionally extended date filter config.
+ * Dashboard common properties
  * @alpha
  */
-export interface IDashboardDefinition {
+export interface IDashboardBase {
     /**
      * Dashboard title
      */
@@ -61,7 +56,19 @@ export interface IDashboardDefinition {
      * Dashboard description
      */
     readonly description: string;
+}
 
+/**
+ * Analytical dashboard consists of widgets
+ * (widgets are kpis or insights with additional settings - drilling and alerting),
+ * layout (which defines rendering and ordering of these widgets),
+ * and filter context (configured attribute and date filters).
+ * It's also possible to setup scheduled emails for the dashboard
+ * (user will receive an email with the exported dashboard attached at the specified time interval),
+ * and optionally extended date filter config.
+ * @alpha
+ */
+export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
     /**
      * Created date
      */
@@ -87,6 +94,34 @@ export interface IDashboardDefinition {
      * (temporary filter context is used to override original filter context during the export)
      */
     readonly filterContext: IFilterContext | ITempFilterContext | undefined;
+
+    /**
+     * Dashboard extended date filter config
+     */
+    readonly dateFilterConfig?: IDateFilterConfig;
+}
+
+/**
+ * Dashboard definition represents modified or created dashboard
+ *
+ * @alpha
+ */
+export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboardObjectIdentity> {
+    /**
+     * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
+     */
+    readonly layout?: Layout | LayoutDefinition;
+
+    /**
+     * Dashboard scheduled emails
+     */
+    readonly scheduledMails: Array<IScheduledMail | IScheduledMailDefinition>;
+
+    /**
+     * Dashboard filter context, or temporary filter context
+     * (temporary filter context is used to override original filter context during the export)
+     */
+    readonly filterContext?: IFilterContext | ITempFilterContext | IFilterContextDefinition;
 
     /**
      * Dashboard extended date filter config
@@ -135,25 +170,4 @@ export interface IListedDashboard {
      * Updated date
      */
     readonly updated: string;
-}
-
-/**
- * See {@link IDashboardDefinition}
- * @alpha
- */
-export interface IDashboard extends IDashboardDefinition {
-    /**
-     * Dashboard object ref
-     */
-    readonly ref: ObjRef;
-
-    /**
-     * Dashboard uri
-     */
-    readonly uri: string;
-
-    /**
-     * Dashboard identifier
-     */
-    readonly identifier: string;
 }

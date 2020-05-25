@@ -3,6 +3,7 @@ import isEmpty from "lodash/fp/isEmpty";
 import { GdcMetadata } from "../meta/GdcMetadata";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
 import { GdcVisualizationObject } from "../visualizationObject/GdcVisualizationObject";
+import { Identifier } from "../aliases";
 
 /**
  * @public
@@ -24,12 +25,34 @@ export namespace GdcVisualizationWidget {
         visualizationWidget: IVisualizationWidget;
     }
 
-    export type IDrillDefinition = IDrillToVisualization;
+    export type IDrillDefinition = IDrillToVisualization | IDrillToDashboard;
 
     export interface IDrillToVisualization {
-        target: "pop-up";
-        from: GdcVisualizationObject.ILocalIdentifierQualifier;
-        toVisualization: GdcVisualizationObject.IObjUriQualifier;
+        drillToVisualization: {
+            target: "pop-up";
+            from: {
+                drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
+            };
+            toVisualization: GdcVisualizationObject.IObjUriQualifier;
+        };
+    }
+
+    export interface IDrillToDashboard {
+        drillToDashboard: {
+            target: "in-place";
+            from: {
+                drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
+            };
+            toDashboard: Identifier;
+        };
+    }
+
+    export function isDrillToVisualization(obj: any): obj is IDrillToVisualization {
+        return !isEmpty(obj) && !!(obj as IDrillToVisualization).drillToVisualization;
+    }
+
+    export function isDrillToDashboard(obj: any): obj is IDrillToDashboard {
+        return !isEmpty(obj) && !!(obj as IDrillToDashboard).drillToDashboard;
     }
 
     export function isVisualizationWidget(obj: any): obj is IVisualizationWidget {
