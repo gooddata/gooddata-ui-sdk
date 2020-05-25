@@ -41,9 +41,17 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
     uri(uri: string): this;
 
     /**
+     * Sets metadata object 'unlisted' flag
+     *
+     * @param value - true if unlisted
+     * @returns this
+     */
+    unlisted(value: boolean): this;
+
+    /**
      * Set metadata object isProduction flag
      *
-     * @param description - metadata object description
+     * @param isProduction - true if production
      * @returns this
      */
     production(isProduction: boolean): this;
@@ -74,6 +82,12 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> 
 
     public uri(uri: string): this {
         this.item.uri = uri;
+        return this;
+    }
+
+    public unlisted(value: boolean): this {
+        this.item.unlisted = value;
+
         return this;
     }
 

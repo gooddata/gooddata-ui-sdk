@@ -44,4 +44,10 @@ export interface IMetadataObject {
      * Is production
      */
     production: boolean;
+
+    /**
+     * Indicates whether the item is unlisted. Depending on the context, unlisted items may
+     * not be shown to the users at all or may be shown with a special indicator.
+     */
+    unlisted: boolean;
 }

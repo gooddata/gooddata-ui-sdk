@@ -792,6 +792,7 @@ export interface IMetadataObject {
     ref: ObjRef;
     title: string;
     type: ObjectType;
+    unlisted: boolean;
     uri: string;
 }
 
@@ -801,6 +802,7 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
     id(id: string): this;
     production(isProduction: boolean): this;
     title(title: string): this;
+    unlisted(value: boolean): this;
     uri(uri: string): this;
 }
 
@@ -1346,6 +1348,8 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> 
     production(isProduction: boolean): this;
     // (undocumented)
     title(title: string): this;
+    // (undocumented)
+    unlisted(value: boolean): this;
     // (undocumented)
     uri(uri: string): this;
 }

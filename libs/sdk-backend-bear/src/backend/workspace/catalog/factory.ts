@@ -11,6 +11,7 @@ import {
     ObjRef,
     Identifier,
     isCatalogFact,
+    ICatalogMeasure,
 } from "@gooddata/sdk-model";
 import { GdcMetadata, GdcCatalog } from "@gooddata/gd-bear-model";
 import {
@@ -21,6 +22,7 @@ import {
     convertFact,
     convertGroup,
     isCompatibleCatalogItemType,
+    convertMetric,
 } from "../../../toSdkModel/CatalogConverter";
 import { BearAuthenticatedCallGuard } from "../../../types";
 import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "./types";
@@ -28,6 +30,8 @@ import { BearWorkspaceCatalog } from "./catalog";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../fromObjRef/api";
 import keyBy = require("lodash/keyBy");
 import flatMap = require("lodash/flatMap");
+import { IGetObjectsByQueryOptions } from "@gooddata/gd-bear-client";
+import { isApiResponseError } from "../../../errors/errorHandling";
 
 type BearDisplayFormOrAttribute = GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute;
 
@@ -160,7 +164,10 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     }
 
     private loadAllCatalogItemsAndMappings = async () => {
-        const bearCatalogItems = await this.loadBearCatalogItems();
+        const [bearCatalogItems, bearUnlistedMetrics] = await Promise.all([
+            this.loadBearCatalogItems(),
+            this.loadBearUnlistedMetrics(),
+        ]);
 
         const bearDisplayFormsAndAttributes = await this.loadBearDisplayFormsAndAttributes(bearCatalogItems);
 
@@ -169,11 +176,12 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         );
 
         const catalogItems = bearCatalogItems.map(bearCatalogItemToCatalogItem(displayFormByUri));
+        const catalogWithUnlisted = catalogItems.concat(bearUnlistedMetrics);
         const dateDatasets = await this.loadDateDatasets(attributeByDisplayFormUri);
-        const allCatalogItems = [...catalogItems, ...dateDatasets];
+        const allCatalogItems = catalogWithUnlisted.concat(dateDatasets);
 
         const measureById: IMeasureByKey = keyBy(
-            catalogItems.filter(isCatalogMeasure).map(el => el.measure),
+            catalogWithUnlisted.filter(isCatalogMeasure).map(el => el.measure),
             el => el.id,
         );
         const factById: IFactByKey = keyBy(
@@ -240,6 +248,50 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 production: getProductionFlag(this.options),
                 csvDataSets: dataset ? [dataSetId] : [],
             }),
+        );
+    };
+
+    /**
+     * Loads unlisted metrics using /query resource. This is a shortcoming of the current
+     * catalog items implementation. The unlisted items do not come back in /items resource - however,
+     * they are needed to augment existing insights with metadata measures that MAY be unlisted.
+     *
+     * Previously, AD used to ignore catalog items when augmenting insights with bucket item metadata - instead
+     * it was fetching the items as it found them. Now we try to position catalog as a single source of truth
+     * and use just the catalog items for everything.
+     */
+    private loadBearUnlistedMetrics = async (): Promise<ICatalogMeasure[]> => {
+        const { types } = this.options;
+
+        const compatibleBearItemTypes = types.filter(item => item === "measure");
+        if (compatibleBearItemTypes.length === 0) {
+            return [];
+        }
+
+        const queryOptions: IGetObjectsByQueryOptions = {
+            category: "metric",
+            limit: 50,
+        };
+
+        return this.authCall(sdk =>
+            sdk.md
+                .getObjectsByQuery(this.workspace, queryOptions)
+                .then((metrics: GdcMetadata.IWrappedMetric[]) => {
+                    return metrics.filter(metric => metric.metric.meta.unlisted).map(convertMetric);
+                })
+                .catch(err => {
+                    if (isApiResponseError(err) && err.response.status === 404) {
+                        /*
+                         * Mock-server (mock-js) for GD platform does not support the md query resource.
+                         * Instead of enhancing the mock-js, code here opts to fallback to empty list
+                         * in case the query resource does not exist.
+                         */
+
+                        return [];
+                    }
+
+                    throw err;
+                }),
         );
     };
 
