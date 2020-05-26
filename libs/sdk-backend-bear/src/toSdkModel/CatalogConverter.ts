@@ -153,7 +153,7 @@ export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasu
                 .uri(meta.uri)
                 .title(meta.title)
                 .description(meta.summary)
-                .unlisted(meta.unlisted === true),
+                .unlisted(meta.unlisted === 1),
         ),
     );
 };
