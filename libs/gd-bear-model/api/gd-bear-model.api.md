@@ -1405,7 +1405,7 @@ export namespace GdcMetadata {
         // (undocumented)
         projectTemplate?: string;
         // (undocumented)
-        sharedWithSomeone?: boolean;
+        sharedWithSomeone?: 1 | 0;
         // (undocumented)
         summary: string;
         // (undocumented)
@@ -1413,7 +1413,7 @@ export namespace GdcMetadata {
         // (undocumented)
         title: string;
         // (undocumented)
-        unlisted?: boolean;
+        unlisted?: 1 | 0;
         // (undocumented)
         updated?: Timestamp;
         // (undocumented)

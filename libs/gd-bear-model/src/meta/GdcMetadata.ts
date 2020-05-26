@@ -55,8 +55,8 @@ export namespace GdcMetadata {
         flags?: string[];
         locked?: boolean;
         projectTemplate?: string;
-        sharedWithSomeone?: boolean;
-        unlisted?: boolean;
+        sharedWithSomeone?: 1 | 0;
+        unlisted?: 1 | 0;
     }
 
     export interface IMetadataObject {
