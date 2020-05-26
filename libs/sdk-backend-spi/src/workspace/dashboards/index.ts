@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IListedDashboard, IDashboard, IDashboardDefinition } from "./dashboard";
+import { IWidgetAlert, IWidgetAlertDefinition } from "./alert";
 
 /**
  * Service to list, create and update analytical dashboards
@@ -53,4 +54,43 @@ export interface IWorkspaceDashboards {
      * @returns promise
      */
     deleteDashboard(ref: ObjRef): Promise<void>;
+
+    /**
+     * Get all widget alerts for the current user
+     *
+     * @returns promise with all user widget alerts
+     */
+    getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
+
+    /**
+     * Create widget alert for the provided widget alert definition
+     *
+     * @param alert - widget alert definition
+     * @returns promise with the created alert
+     */
+    createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
+
+    /**
+     * Update widget alert
+     *
+     * @param alert - updated widget alert
+     * @returns promise with the updated alert
+     */
+    updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
+
+    /**
+     * Delete widget alert with the given reference
+     *
+     * @param ref - widget alert reference
+     * @returns promise
+     */
+    deleteWidgetAlert(ref: ObjRef): Promise<void>;
+
+    /**
+     * Widget alerts bulk delete
+     *
+     * @param refs - widget alerts references
+     * @returns promise
+     */
+    bulkDeleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
 }

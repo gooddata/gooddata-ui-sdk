@@ -135,6 +135,7 @@ export namespace GdcMetadata {
             whenTriggered: "underThreshold" | "aboveThreshold";
             filterContext?: Uri;
         };
+        meta: IObjectMeta;
     }
 
     export interface IDataSet extends IMetadataObject {

@@ -250,7 +250,7 @@ export interface IAuthenticationProvider {
 export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
     readonly created: string;
     readonly dateFilterConfig?: IDateFilterConfig;
-    readonly filterContext: IFilterContext | ITempFilterContext | undefined;
+    readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: Layout;
     readonly scheduledMails: IScheduledMail[];
     readonly updated: string;
@@ -315,7 +315,7 @@ export interface IDashboardDateFilterReference {
 // @alpha
 export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboardObjectIdentity> {
     readonly dateFilterConfig?: IDateFilterConfig;
-    readonly filterContext?: IFilterContext | ITempFilterContext | IFilterContextDefinition;
+    readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: Layout | LayoutDefinition;
     readonly scheduledMails: Array<IScheduledMail | IScheduledMailDefinition>;
 }
@@ -909,6 +909,12 @@ export function isUnexpectedResponseError(obj: any): obj is UnexpectedResponseEr
 export function isWidget(obj: any): obj is IWidget;
 
 // @alpha
+export function isWidgetAlert(obj: any): obj is IWidgetAlert;
+
+// @alpha
+export function isWidgetAlertDefinition(obj: any): obj is IWidgetAlertDefinition;
+
+// @alpha
 export function isWidgetDefinition(obj: any): obj is IWidgetDefinition;
 
 // @alpha
@@ -952,11 +958,20 @@ export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSetting
 export interface IWidget extends IWidgetBase, IDashboardObjectIdentity {
 }
 
-// Warning: (ae-forgotten-export) The symbol "IWidgetAlertBase" needs to be exported by the entry point index.d.ts
-//
 // @alpha
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
     readonly filterContext?: IFilterContext;
+}
+
+// @alpha
+export interface IWidgetAlertBase {
+    readonly dashboard: ObjRef;
+    readonly description: string;
+    readonly isTriggered: boolean;
+    readonly threshold: number;
+    readonly title: string;
+    readonly whenTriggered: "underThreshold" | "aboveThreshold";
+    readonly widget: ObjRef;
 }
 
 // @alpha
@@ -1051,11 +1066,16 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
 
 // @alpha
 export interface IWorkspaceDashboards {
+    bulkDeleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
     deleteDashboard(ref: ObjRef): Promise<void>;
+    deleteWidgetAlert(ref: ObjRef): Promise<void>;
+    getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
     getDashboards(): Promise<IListedDashboard[]>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
+    updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
     // (undocumented)
     readonly workspace: string;
 }

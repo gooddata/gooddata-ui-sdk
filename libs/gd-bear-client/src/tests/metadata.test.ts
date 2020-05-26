@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
+import { GdcMetadata } from "@gooddata/gd-bear-model";
 import fetchMock from "fetch-mock";
 
 import range from "lodash/range";
@@ -20,13 +21,16 @@ describe("metadata", () => {
 
         describe("getObjectsByQuery", () => {
             it("should reject with 400 from backend and not use default limit", () => {
-                fetchMock.mock("/gdc/md/myFakeProjectId/objects/query?limit=5", 400);
+                fetchMock.mock(
+                    "/gdc/md/myFakeProjectId/objects/query?category=analyticalDashboard&limit=5",
+                    400,
+                );
 
                 const okCallback = jest.fn();
                 const errorCallback = jest.fn();
 
                 return createMd()
-                    .getObjectsByQuery("myFakeProjectId", { limit: 5 })
+                    .getObjectsByQuery("myFakeProjectId", { category: "analyticalDashboard", limit: 5 })
                     .then(okCallback, errorCallback)
                     .then(() => {
                         expect(okCallback).not.toHaveBeenCalled();
@@ -83,13 +87,19 @@ describe("metadata", () => {
                     },
                 });
 
-                fetchMock.mock("/gdc/md/myFakeProjectId/objects/query?limit=50&deprecated=1", {
-                    status: 200,
-                    body,
-                });
+                fetchMock.mock(
+                    "/gdc/md/myFakeProjectId/objects/query?category=analyticalDashboard&limit=50&deprecated=1",
+                    {
+                        status: 200,
+                        body,
+                    },
+                );
 
                 return createMd()
-                    .getObjectsByQuery("myFakeProjectId", { deprecated: true })
+                    .getObjectsByQuery("myFakeProjectId", {
+                        category: "analyticalDashboard",
+                        deprecated: true,
+                    })
                     .then((result: any) => {
                         expect(result.length).toBe(0);
                     });
@@ -160,10 +170,13 @@ describe("metadata", () => {
 
         describe("createObject", () => {
             it("should return created object", () => {
-                const newObj = {
+                const newObj: GdcMetadata.IWrappedMetric = {
                     metric: {
-                        content: {},
-                        meta: {},
+                        content: {
+                            expression: "SELECT 1",
+                        },
+                        // tslint:disable-next-line: no-object-literal-type-assertion
+                        meta: {} as GdcMetadata.IObjectMeta,
                     },
                 };
 

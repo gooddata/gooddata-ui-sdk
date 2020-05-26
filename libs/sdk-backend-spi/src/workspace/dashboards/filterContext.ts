@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, isObjRef } from "@gooddata/sdk-model";
 import { DateString, DateFilterGranularity } from "./extendedDateFilters";
 import isEmpty from "lodash/isEmpty";
 import { IDashboardObjectIdentity } from "./common";
@@ -140,7 +140,7 @@ export interface IFilterContextDefinition extends IFilterContextBase, Partial<ID
  */
 export function isFilterContextDefinition(obj: any): obj is IFilterContextDefinition {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
-    return !isEmpty(obj) && !!(obj as IFilterContextDefinition).filters && !(obj as IFilterContext).ref;
+    return hasFilterContextBaseProps(obj) && !isObjRef(obj.ref);
 }
 
 /**
@@ -157,7 +157,7 @@ export interface IFilterContext extends IFilterContextBase, IDashboardObjectIden
  */
 export function isFilterContext(obj: any): obj is IFilterContext {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
-    return !isEmpty(obj) && !!(obj as IFilterContext).filters && !!(obj as IFilterContext).ref;
+    return hasFilterContextBaseProps(obj) && isObjRef(obj.ref);
 }
 
 /**
@@ -195,8 +195,8 @@ export interface ITempFilterContext {
 export function isTempFilterContext(obj: any): obj is ITempFilterContext {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
     return (
-        !isEmpty(obj) &&
-        !!(obj as ITempFilterContext).filters &&
+        hasFilterContextBaseProps(obj) &&
+        isObjRef(obj.ref) &&
         !(obj as IFilterContext).identifier &&
         !(obj as IFilterContext).title
     );
@@ -264,3 +264,10 @@ export function isDashboardAttributeFilterReference(obj: any): obj is IDashboard
  * @alpha
  */
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
+
+/**
+ * @internal
+ */
+function hasFilterContextBaseProps(obj: any): boolean {
+    return !isEmpty(obj) && !!(obj as IFilterContextBase).filters;
+}

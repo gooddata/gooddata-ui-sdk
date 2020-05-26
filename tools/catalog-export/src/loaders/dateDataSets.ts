@@ -1,5 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import gooddata from "@gooddata/gd-bear-client";
+import { GdcDataSets } from "@gooddata/gd-bear-model";
 import { get } from "lodash";
 import { Attribute, DateDataSet, DisplayForm } from "../base/types";
 
@@ -14,7 +15,9 @@ export async function loadDateDataSets(projectId: string): Promise<DateDataSet[]
     const dateDataSets: DateDataSet[] = [];
     const attributeUriToDs: { [uri: string]: DateDataSet } = {};
 
-    const dataSets = await gooddata.md.getObjectsByQuery(projectId, { category: "dataSet" });
+    const dataSets = await gooddata.md.getObjectsByQuery<GdcDataSets.IWrappedDataSet>(projectId, {
+        category: "dataSet",
+    });
 
     dataSets
         .filter(ds => get(ds, "dataSet.content.urn", "").endsWith(":date"))
@@ -23,7 +26,7 @@ export async function loadDateDataSets(projectId: string): Promise<DateDataSet[]
                 dateDataSet: {
                     meta: {
                         identifier: ds.dataSet.meta.identifier,
-                        tags: ds.dataSet.meta.tags,
+                        tags: ds.dataSet.meta.tags!,
                         title: ds.dataSet.meta.title,
                     },
                     content: {

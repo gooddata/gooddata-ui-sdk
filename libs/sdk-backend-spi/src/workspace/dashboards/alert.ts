@@ -1,7 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
-import { IFilterContext, IFilterContextDefinition } from "./filterContext";
+import { ObjRef, isObjRef } from "@gooddata/sdk-model";
+import { IFilterContext, IFilterContextDefinition, isFilterContextDefinition } from "./filterContext";
 import { IDashboardObjectIdentity } from "./common";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Common widget alert properties
@@ -9,9 +10,19 @@ import { IDashboardObjectIdentity } from "./common";
  */
 export interface IWidgetAlertBase {
     /**
+     * Kpi alert title
+     */
+    readonly title: string;
+
+    /**
+     * Kpi alert description
+     */
+    readonly description: string;
+
+    /**
      * Kpi ref (currently only kpi widget alerts are supported)
      */
-    readonly insight: ObjRef;
+    readonly widget: ObjRef;
 
     /**
      * KPI can be on more dashboards - we need to distinguish
@@ -48,6 +59,17 @@ export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashb
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link IWidgetAlertDefinition}.
+ * @alpha
+ */
+export function isWidgetAlertDefinition(obj: any): obj is IWidgetAlertDefinition {
+    return (
+        hasWidgetAlertBaseProps(obj) &&
+        (!isObjRef(obj.ref) || isFilterContextDefinition((obj as IWidgetAlertDefinition).filterContext))
+    );
+}
+
+/**
  * See {@link IWidgetAlertDefinition}
  * @alpha
  */
@@ -56,4 +78,23 @@ export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity
      * Alert filter context
      */
     readonly filterContext?: IFilterContext;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IWidgetAlert}.
+ * @alpha
+ */
+export function isWidgetAlert(obj: any): obj is IWidgetAlert {
+    return hasWidgetAlertBaseProps(obj) && !isWidgetAlertDefinition(obj);
+}
+
+/**
+ * @internal
+ */
+function hasWidgetAlertBaseProps(obj: any): boolean {
+    return (
+        !isEmpty(obj) &&
+        ((obj as IWidgetAlertBase).whenTriggered === "underThreshold" ||
+            (obj as IWidgetAlertBase).whenTriggered === "aboveThreshold")
+    );
 }

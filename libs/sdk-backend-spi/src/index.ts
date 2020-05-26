@@ -215,7 +215,13 @@ export {
     isLegacyKpiWithComparison,
     isLegacyKpiWithoutComparison,
 } from "./workspace/dashboards/kpi";
-export { IWidgetAlert, IWidgetAlertDefinition } from "./workspace/dashboards/alert";
+export {
+    IWidgetAlertBase,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+    isWidgetAlert,
+    isWidgetAlertDefinition,
+} from "./workspace/dashboards/alert";
 export {
     AbsoluteDateFilterOption,
     AbsoluteFormType,

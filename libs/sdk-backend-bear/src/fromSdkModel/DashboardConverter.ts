@@ -34,6 +34,8 @@ import {
     isDrillToInsight,
     isDrillToLegacyDashboard,
     isDrillToDashboard,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -151,6 +153,12 @@ const convertFilterContextItem = (
     return convertedAttributeFilter;
 };
 
+export function convertFilterContext(
+    filterContext: ITempFilterContext,
+): GdcFilterContext.IWrappedTempFilterContext;
+export function convertFilterContext(
+    filterContext: IFilterContext | IFilterContextDefinition,
+): GdcFilterContext.IWrappedFilterContext;
 export function convertFilterContext(
     filterContext: ITempFilterContext | IFilterContext | IFilterContextDefinition,
 ): GdcFilterContext.IWrappedTempFilterContext | GdcFilterContext.IWrappedFilterContext {
@@ -336,23 +344,25 @@ export const convertWidget = (
 export const convertDashboard = (
     dashboard: IDashboard | IDashboardDefinition,
 ): GdcDashboard.IWrappedAnalyticalDashboard => {
-    const { filterContext, layout, uri, identifier, title, description, dateFilterConfig } = dashboard;
+    const { filterContext, layout, ref, identifier, title, description, dateFilterConfig } = dashboard;
     const convertedLayout = layout && convertLayout(layout);
     const widgets = layout && layoutWidgets(layout);
+    const dashboardUri = ref && refToUri(ref);
+    const filterContextUri = filterContext?.ref && refToUri(filterContext.ref);
 
     const legacyDashboard: GdcDashboard.IWrappedAnalyticalDashboard = {
         analyticalDashboard: {
             content: {
                 dateFilterConfig,
-                filterContext: filterContext?.uri,
+                filterContext: filterContextUri,
                 widgets: widgets ? widgets.filter(isWidget).map(widget => refToUri(widget.ref)) : [],
                 layout: convertedLayout,
             },
             // tslint:disable-next-line: no-object-literal-type-assertion
             meta: {
-                ...(uri
+                ...(dashboardUri
                     ? {
-                          uri,
+                          uri: dashboardUri,
                           identifier,
                       }
                     : {}),
@@ -363,4 +373,49 @@ export const convertDashboard = (
     };
 
     return legacyDashboard;
+};
+
+export const convertWidgetAlert = (
+    alert: IWidgetAlert | IWidgetAlertDefinition,
+): GdcMetadata.IWrappedKpiAlert => {
+    const {
+        dashboard,
+        widget,
+        description,
+        isTriggered,
+        threshold,
+        title,
+        whenTriggered,
+        ref,
+        identifier,
+        filterContext,
+    } = alert;
+
+    const alertUri = ref && refToUri(ref);
+
+    const convertedKpiAlert: GdcMetadata.IWrappedKpiAlert = {
+        kpiAlert: {
+            content: {
+                filterContext: filterContext?.ref && refToUri(filterContext.ref),
+                dashboard: refToUri(dashboard),
+                kpi: refToUri(widget),
+                isTriggered,
+                threshold,
+                whenTriggered,
+            },
+            // tslint:disable-next-line: no-object-literal-type-assertion
+            meta: {
+                ...(alertUri
+                    ? {
+                          uri: alertUri,
+                          identifier,
+                      }
+                    : {}),
+                title,
+                summary: description,
+            } as GdcMetadata.IObjectMeta,
+        },
+    };
+
+    return convertedKpiAlert;
 };

@@ -279,8 +279,8 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         return this.authCall(sdk =>
             sdk.md
-                .getObjectsByQuery(this.workspace, queryOptions)
-                .then((metrics: GdcMetadata.IWrappedMetric[]) => {
+                .getObjectsByQuery<GdcMetadata.IWrappedMetric>(this.workspace, queryOptions)
+                .then(metrics => {
                     return metrics.filter(metric => metric.metric.meta.unlisted).map(convertMetric);
                 })
                 .catch(err => {
