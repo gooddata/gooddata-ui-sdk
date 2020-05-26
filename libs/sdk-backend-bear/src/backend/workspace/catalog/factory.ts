@@ -176,7 +176,11 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         );
 
         const catalogItems = bearCatalogItems.map(bearCatalogItemToCatalogItem(displayFormByUri));
-        const catalogWithUnlisted = catalogItems.concat(bearUnlistedMetrics);
+
+        // the catalog API does not return the unlisted flag value so we need to ask another API for it
+        // and update the catalog response appropriately
+        const catalogWithUnlisted = this.withUpdatedUnlistedFlag(catalogItems, bearUnlistedMetrics);
+
         const dateDatasets = await this.loadDateDatasets(attributeByDisplayFormUri);
         const allCatalogItems = catalogWithUnlisted.concat(dateDatasets);
 
@@ -343,5 +347,24 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         }
 
         return this.tagsAndDatasetIdsPromise;
+    };
+
+    private withUpdatedUnlistedFlag = (
+        catalogItems: CatalogItem[],
+        bearUnlistedMetrics: ICatalogMeasure[],
+    ): CatalogItem[] => {
+        const catalogWithUnlisted = [...catalogItems];
+
+        bearUnlistedMetrics.forEach(metric => {
+            const existingMeasure = catalogItems.find(
+                item => isCatalogMeasure(item) && item.measure.uri === metric.measure.uri,
+            ) as ICatalogMeasure;
+
+            if (existingMeasure) {
+                existingMeasure.measure.unlisted = true;
+            }
+        });
+
+        return catalogWithUnlisted;
     };
 }

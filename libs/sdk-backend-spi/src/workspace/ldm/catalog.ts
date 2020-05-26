@@ -87,7 +87,8 @@ export interface IWorkspaceCatalogFactory
     readonly options: IWorkspaceCatalogFactoryOptions;
 
     /**
-     * Get catalog items for the current configuration
+     * Get catalog items for the current configuration.
+     * Returns items that are either not "unlisted" or that are created by the current user.
      *
      * @returns promise of catalog with loaded items
      */
