@@ -21,8 +21,12 @@ CONTAINER_ID_FILE="${WIREMOCK_DIR}/.wiremock_containerid"
 
 mode=${1:-interactive}
 
+# macOS has no timeout available by default
+# https://stackoverflow.com/a/35512328/2546338
+function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
+
 wait-for-url() {
-    timeout -s TERM 15 bash -c \
+    timeout 15 bash -c \
     'while [[ "$(curl -s -o /dev/null -L -w ''%{http_code}'' --insecure ${0})" != "200" ]];\
     do echo "Waiting for ${0}" && sleep 2;\
     done' ${1}
