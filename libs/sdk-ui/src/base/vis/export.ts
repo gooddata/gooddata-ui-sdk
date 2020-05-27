@@ -2,6 +2,7 @@
 
 import { IExecutionResult, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import { IExportFunction, IExtendedExportConfig } from "./Events";
+import { GoodDataSdkError } from "..";
 
 const escapeFileName = (str: string) => str && str.replace(/[\/\?<>\\:\*\|":]/g, "");
 
@@ -30,5 +31,18 @@ export function createExportFunction(result: IExecutionResult, exportTitle?: str
         }
 
         return result.export(exportRequestConfig);
+    };
+}
+
+/**
+ * Creates function that should be passed to onExportReady in the event that the backend execution
+ * fails and export is not possible.
+ *
+ * @param error - the execution error
+ * @internal
+ */
+export function createExportErrorFunction(error: GoodDataSdkError): IExportFunction {
+    return (_exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
+        return Promise.reject(error);
     };
 }

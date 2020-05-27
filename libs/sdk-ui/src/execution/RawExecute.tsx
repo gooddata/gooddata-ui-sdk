@@ -68,13 +68,14 @@ const CoreExecutor: React.FC<Props> = (props: Props) => {
 export const RawExecute = withExecution<IRawExecuteProps>({
     execution: (props: IRawExecuteProps) => props.execution,
     events: (props: IRawExecuteProps) => {
-        const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart } = props;
+        const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart, onExportReady } = props;
 
         return {
             onError,
             onLoadingChanged,
             onLoadingFinish,
             onLoadingStart,
+            onExportReady,
         };
     },
     shouldRefetch: (prevProps: IRawExecuteProps, nextProps: IRawExecuteProps) => {

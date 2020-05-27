@@ -187,13 +187,14 @@ export const Execute = withContexts(
     withExecution<IExecuteProps>({
         execution: createExecution,
         events: (props: IExecuteProps) => {
-            const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart } = props;
+            const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart, onExportReady } = props;
 
             return {
                 onError,
                 onLoadingChanged,
                 onLoadingFinish,
                 onLoadingStart,
+                onExportReady,
             };
         },
         shouldRefetch: (prevProps: IExecuteProps, nextProps: IExecuteProps) => {

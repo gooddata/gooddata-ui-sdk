@@ -124,7 +124,7 @@ export {
     getDrillIntersection,
     fireDrillEvent,
 } from "./vis/drilling";
-export { createExportFunction } from "./vis/export";
+export { createExportFunction, createExportErrorFunction } from "./vis/export";
 export {
     VisualizationTypes,
     VisualizationEnvironment,
