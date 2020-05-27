@@ -92,7 +92,7 @@ export class PivotTableDrillExample extends Component<{}, { drillEvent: any }> {
         return (
             <div>
                 {this.renderDrillValue()}
-                <div style={{ height: 500 }} className="s-pivot-table-drill">
+                <div style={{ height: 600 }} className="s-pivot-table-drill">
                     <PivotTable
                         measures={measures}
                         rows={attributes}
