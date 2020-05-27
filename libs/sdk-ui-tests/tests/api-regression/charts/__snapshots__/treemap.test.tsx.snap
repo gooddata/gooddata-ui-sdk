@@ -136,7 +136,11 @@ Object {
 }
 `;
 
-exports[`Treemap with arithmetic measures and segment should create expected props for core chart 1`] = `Object {}`;
+exports[`Treemap with arithmetic measures and segment should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+}
+`;
 
 exports[`Treemap with assign color to attributes should create expected execution definition 1`] = `
 Object {
@@ -329,6 +333,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -464,6 +469,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -641,6 +647,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -811,6 +818,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -938,6 +946,7 @@ Object {
 exports[`Treemap with coloring - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -1069,6 +1078,7 @@ Object {
       "visible": "auto",
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -1196,6 +1206,7 @@ Object {
 exports[`Treemap with data labels - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -1327,6 +1338,7 @@ Object {
       "visible": false,
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -1462,6 +1474,7 @@ Object {
       "thousand": ".",
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -1593,6 +1606,7 @@ Object {
       "visible": true,
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -1724,6 +1738,7 @@ Object {
       "position": "auto",
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -1855,6 +1870,7 @@ Object {
       "enabled": false,
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -1986,6 +2002,7 @@ Object {
       "position": "bottom",
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -2117,6 +2134,7 @@ Object {
       "position": "left",
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -2248,6 +2266,7 @@ Object {
       "position": "right",
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -2379,6 +2398,7 @@ Object {
       "position": "top",
     },
   },
+  "exportTitle": "Treemap",
 }
 `;
 
@@ -2464,7 +2484,11 @@ Object {
 }
 `;
 
-exports[`Treemap with single measure and segment should create expected props for core chart 1`] = `Object {}`;
+exports[`Treemap with single measure and segment should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+}
+`;
 
 exports[`Treemap with single measure and viewBy filtered to one element should create expected execution definition 1`] = `
 Object {
@@ -2562,7 +2586,11 @@ Object {
 }
 `;
 
-exports[`Treemap with single measure and viewBy filtered to one element should create expected props for core chart 1`] = `Object {}`;
+exports[`Treemap with single measure and viewBy filtered to one element should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+}
+`;
 
 exports[`Treemap with single measure and viewBy should create expected execution definition 1`] = `
 Object {
@@ -2646,7 +2674,11 @@ Object {
 }
 `;
 
-exports[`Treemap with single measure and viewBy should create expected props for core chart 1`] = `Object {}`;
+exports[`Treemap with single measure and viewBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+}
+`;
 
 exports[`Treemap with single measure should create expected execution definition 1`] = `
 Object {
@@ -2708,7 +2740,11 @@ Object {
 }
 `;
 
-exports[`Treemap with single measure should create expected props for core chart 1`] = `Object {}`;
+exports[`Treemap with single measure should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+}
+`;
 
 exports[`Treemap with single measure, viewBy and segment should create expected execution definition 1`] = `
 Object {
@@ -2831,7 +2867,11 @@ Object {
 }
 `;
 
-exports[`Treemap with single measure, viewBy and segment should create expected props for core chart 1`] = `Object {}`;
+exports[`Treemap with single measure, viewBy and segment should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+}
+`;
 
 exports[`Treemap with two measures and segmentBy should create expected execution definition 1`] = `
 Object {
@@ -2939,7 +2979,11 @@ Object {
 }
 `;
 
-exports[`Treemap with two measures and segmentBy should create expected props for core chart 1`] = `Object {}`;
+exports[`Treemap with two measures and segmentBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+}
+`;
 
 exports[`Treemap with two measures and viewBy should create expected execution definition 1`] = `
 Object {
@@ -3047,7 +3091,11 @@ Object {
 }
 `;
 
-exports[`Treemap with two measures and viewBy should create expected props for core chart 1`] = `Object {}`;
+exports[`Treemap with two measures and viewBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+}
+`;
 
 exports[`Treemap with two measures should create expected execution definition 1`] = `
 Object {
@@ -3133,4 +3181,8 @@ Object {
 }
 `;
 
-exports[`Treemap with two measures should create expected props for core chart 1`] = `Object {}`;
+exports[`Treemap with two measures should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Treemap",
+}
+`;

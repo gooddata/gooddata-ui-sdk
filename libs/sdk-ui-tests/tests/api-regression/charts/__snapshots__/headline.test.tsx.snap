@@ -54,6 +54,7 @@ Object {
   "drillableItems": Array [
     [Function],
   ],
+  "exportTitle": "Headline",
   "workspace": "testWorkspace",
 }
 `;
@@ -115,6 +116,7 @@ Object {
   "drillableItems": Array [
     [Function],
   ],
+  "exportTitle": "Headline",
   "workspace": "testWorkspace",
 }
 `;
@@ -198,6 +200,7 @@ Object {
     [Function],
     [Function],
   ],
+  "exportTitle": "Headline",
   "workspace": "testWorkspace",
 }
 `;
@@ -284,6 +287,7 @@ Object {
     [Function],
     [Function],
   ],
+  "exportTitle": "Headline",
   "workspace": "testWorkspace",
 }
 `;
@@ -339,6 +343,7 @@ Object {
 
 exports[`Headline with single measure should create expected props for core chart 1`] = `
 Object {
+  "exportTitle": "Headline",
   "workspace": "testWorkspace",
 }
 `;
@@ -424,6 +429,7 @@ Object {
 
 exports[`Headline with two measures one PoP should create expected props for core chart 1`] = `
 Object {
+  "exportTitle": "Headline",
   "workspace": "testWorkspace",
 }
 `;
@@ -503,6 +509,7 @@ Object {
 
 exports[`Headline with two measures should create expected props for core chart 1`] = `
 Object {
+  "exportTitle": "Headline",
   "workspace": "testWorkspace",
 }
 `;
@@ -588,6 +595,7 @@ Object {
       "thousand": ".",
     },
   },
+  "exportTitle": "Headline",
   "workspace": "testWorkspace",
 }
 `;

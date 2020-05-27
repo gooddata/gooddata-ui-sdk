@@ -116,6 +116,7 @@ Object {
       "min": "5000000",
     },
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -291,6 +292,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -413,6 +415,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -577,6 +580,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -734,6 +738,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -849,6 +854,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -967,6 +973,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -1082,6 +1089,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -1200,6 +1208,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -1322,6 +1331,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -1440,6 +1450,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -1558,6 +1569,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -1676,6 +1688,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -1794,6 +1807,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -1912,6 +1926,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2030,6 +2045,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2148,6 +2164,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2217,6 +2234,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2329,6 +2347,7 @@ Object {
     "stackMeasuresToPercent": false,
     "stacking": false,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2421,6 +2440,7 @@ Object {
     "stackMeasuresToPercent": true,
     "stacking": true,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2533,6 +2553,7 @@ Object {
     "stackMeasuresToPercent": undefined,
     "stacking": false,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2645,6 +2666,7 @@ Object {
     "stackMeasuresToPercent": true,
     "stacking": true,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2760,6 +2782,7 @@ Object {
     "stackMeasuresToPercent": true,
     "stacking": true,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2871,6 +2894,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -2962,6 +2986,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -3077,6 +3102,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -3193,6 +3219,7 @@ Object {
     "stackMeasuresToPercent": undefined,
     "stacking": false,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -3309,6 +3336,7 @@ Object {
     "stackMeasuresToPercent": undefined,
     "stacking": false,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -3425,6 +3453,7 @@ Object {
     "stackMeasuresToPercent": undefined,
     "stacking": true,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -3541,6 +3570,7 @@ Object {
     "stackMeasuresToPercent": undefined,
     "stacking": true,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -3657,6 +3687,7 @@ Object {
     "stackMeasuresToPercent": true,
     "stacking": true,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -3772,6 +3803,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -3894,6 +3926,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -4022,6 +4055,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "AreaChart",
 }
 `;
 
@@ -4138,5 +4172,6 @@ Object {
     "stackMeasuresToPercent": undefined,
     "stacking": false,
   },
+  "exportTitle": "AreaChart",
 }
 `;

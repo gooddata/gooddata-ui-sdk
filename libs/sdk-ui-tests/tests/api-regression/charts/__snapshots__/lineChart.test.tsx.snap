@@ -114,6 +114,7 @@ Object {
       "min": "5000000",
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -233,6 +234,7 @@ Object {
       ],
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -402,7 +404,11 @@ Object {
 }
 `;
 
-exports[`LineChart with arithmetic measures should create expected props for core chart 1`] = `Object {}`;
+exports[`LineChart with arithmetic measures should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+}
+`;
 
 exports[`LineChart with assign color to measures should create expected execution definition 1`] = `
 Object {
@@ -569,6 +575,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -689,6 +696,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -851,6 +859,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -1006,6 +1015,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -1118,6 +1128,7 @@ Object {
 exports[`LineChart with coloring - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -1234,6 +1245,7 @@ Object {
       "visible": "auto",
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -1346,6 +1358,7 @@ Object {
 exports[`LineChart with data labels - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -1462,6 +1475,7 @@ Object {
       "visible": false,
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -1582,6 +1596,7 @@ Object {
       "thousand": ".",
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -1698,6 +1713,7 @@ Object {
       "visible": true,
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -1876,6 +1892,7 @@ Object {
       ],
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -2016,6 +2033,7 @@ Object {
       },
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -2156,6 +2174,7 @@ Object {
       },
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -2296,6 +2315,7 @@ Object {
       },
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -2436,6 +2456,7 @@ Object {
       },
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -2552,6 +2573,7 @@ Object {
       "position": "auto",
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -2668,6 +2690,7 @@ Object {
       "enabled": false,
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -2784,6 +2807,7 @@ Object {
       "position": "bottom",
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -2900,6 +2924,7 @@ Object {
       "position": "left",
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -3016,6 +3041,7 @@ Object {
       "position": "right",
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -3132,6 +3158,7 @@ Object {
       "position": "top",
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -3269,6 +3296,7 @@ Object {
       },
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -3406,6 +3434,7 @@ Object {
       },
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -3543,6 +3572,7 @@ Object {
       },
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -3680,6 +3710,7 @@ Object {
       },
     },
   },
+  "exportTitle": "LineChart",
 }
 `;
 
@@ -3743,7 +3774,11 @@ Object {
 }
 `;
 
-exports[`LineChart with single measure should create expected props for core chart 1`] = `Object {}`;
+exports[`LineChart with single measure should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+}
+`;
 
 exports[`LineChart with single measure with % and trendBy should create expected execution definition 1`] = `
 Object {
@@ -3827,7 +3862,11 @@ Object {
 }
 `;
 
-exports[`LineChart with single measure with % and trendBy should create expected props for core chart 1`] = `Object {}`;
+exports[`LineChart with single measure with % and trendBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+}
+`;
 
 exports[`LineChart with single measure with trendBy and segmentBy should create expected execution definition 1`] = `
 Object {
@@ -3931,7 +3970,11 @@ Object {
 }
 `;
 
-exports[`LineChart with single measure with trendBy and segmentBy should create expected props for core chart 1`] = `Object {}`;
+exports[`LineChart with single measure with trendBy and segmentBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+}
+`;
 
 exports[`LineChart with single measure with trendBy should create expected execution definition 1`] = `
 Object {
@@ -4015,7 +4058,11 @@ Object {
 }
 `;
 
-exports[`LineChart with single measure with trendBy should create expected props for core chart 1`] = `Object {}`;
+exports[`LineChart with single measure with trendBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+}
+`;
 
 exports[`LineChart with two measures with trendBy and sort by attribute should create expected execution definition 1`] = `
 Object {
@@ -4130,7 +4177,11 @@ Object {
 }
 `;
 
-exports[`LineChart with two measures with trendBy and sort by attribute should create expected props for core chart 1`] = `Object {}`;
+exports[`LineChart with two measures with trendBy and sort by attribute should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+}
+`;
 
 exports[`LineChart with two measures with trendBy and sort by measure should create expected execution definition 1`] = `
 Object {
@@ -4251,7 +4302,11 @@ Object {
 }
 `;
 
-exports[`LineChart with two measures with trendBy and sort by measure should create expected props for core chart 1`] = `Object {}`;
+exports[`LineChart with two measures with trendBy and sort by measure should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+}
+`;
 
 exports[`LineChart with two measures with trendBy should create expected execution definition 1`] = `
 Object {
@@ -4359,4 +4414,8 @@ Object {
 }
 `;
 
-exports[`LineChart with two measures with trendBy should create expected props for core chart 1`] = `Object {}`;
+exports[`LineChart with two measures with trendBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "LineChart",
+}
+`;
