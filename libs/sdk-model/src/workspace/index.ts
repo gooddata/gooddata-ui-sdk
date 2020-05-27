@@ -15,7 +15,7 @@ export interface IWorkspace {
 }
 
 /**
- * Workpsace permission types
+ * Workspace permission types
  *
  * @public
  */
@@ -31,7 +31,9 @@ export type WorkspacePermission =
     | "canManageMetric"
     | "canManageReport"
     | "canManageAnalyticalDashboard"
-    | "canManageProject";
+    | "canManageProject"
+    | "canCreateScheduledMail"
+    | "canListUsersInProject";
 
 /**
  * Dictionary of workspace permissions

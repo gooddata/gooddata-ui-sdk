@@ -21,6 +21,8 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsFa
                 canInitData: true,
                 canManageMetric: true,
                 canManageReport: true,
+                canCreateScheduledMail: true,
+                canListUsersInProject: true,
             };
             return result;
         });
