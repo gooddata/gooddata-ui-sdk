@@ -33,6 +33,12 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("table with resizing", () 
                 measures={PivotTableWithSingleMeasureAndTwoRowsAndCols.measures}
                 rows={PivotTableWithSingleMeasureAndTwoRowsAndCols.rows}
                 columns={PivotTableWithSingleMeasureAndTwoRowsAndCols.columns}
+                config={{
+                    menu: {
+                        aggregations: true,
+                        aggregationsSubMenu: true,
+                    },
+                }}
             />
         </div>,
     ),

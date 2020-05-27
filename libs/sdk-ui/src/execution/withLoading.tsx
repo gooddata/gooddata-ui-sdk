@@ -5,7 +5,7 @@ import hoistNonReactStatics = require("hoist-non-react-statics");
 import { DataViewFacade, makeCancelable, ICancelablePromise, convertError, GoodDataSdkError } from "../base";
 
 /**
- * @public
+ * @internal
  */
 export type DataViewWindow = {
     /**
@@ -20,7 +20,7 @@ export type DataViewWindow = {
 };
 
 /**
- * @public
+ * @internal
  */
 export type WithLoadingResult = {
     /**
@@ -47,7 +47,7 @@ export type WithLoadingResult = {
 };
 
 /**
- * @public
+ * @internal
  */
 export interface IWithLoadingEvents<TProps> {
     /**
@@ -89,7 +89,7 @@ export interface IWithLoadingEvents<TProps> {
  * If functions are specified, the HOC will call them with the wrapped component props as parameter and then use
  * the resulting values as if they were passed directly.
  *
- * @public
+ * @internal
  */
 export interface IWithLoading<TProps> {
     /**
@@ -144,7 +144,7 @@ type WithLoadingState = {
  * This component offers more flexibility in regards to how to obtain the data - all that is encapsulated
  * into a promise of data. For most use cases, the withExecution HOC is a better fit.
  *
- * @public
+ * @internal
  */
 export function withLoading<TProps>(params: IWithLoading<TProps>) {
     const { promiseFactory, loadOnMount = true, events = {}, shouldRefetch = () => false, window } = params;
@@ -154,6 +154,7 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
     ): React.ComponentClass<TProps> => {
         class WithLoading extends React.Component<TProps, WithLoadingState> {
             private cancelablePromise: ICancelablePromise<DataViewFacade> | undefined;
+            private effectiveProps: TProps | undefined;
 
             public state: WithLoadingState = {
                 error: undefined,
@@ -194,10 +195,12 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
                 onLoadingStart(this.props);
                 onLoadingChanged(true, this.props);
 
+                this.effectiveProps = undefined;
                 this.setState(state => ({
                     ...state,
                     isLoading: true,
                     error: undefined,
+                    result: undefined,
                 }));
             }
 
@@ -220,6 +223,7 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
                 onLoadingFinish(result, this.props);
                 onLoadingChanged(false, this.props);
 
+                this.effectiveProps = this.props;
                 this.setState(state => ({
                     ...state,
                     isLoading: false,
@@ -249,6 +253,10 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
                 }
             }
 
+            private isStaleResult(): boolean {
+                return this.effectiveProps !== undefined && shouldRefetch(this.props, this.effectiveProps);
+            }
+
             public componentDidMount() {
                 const _loadOnMount =
                     typeof loadOnMount === "function" ? loadOnMount(this.props) : loadOnMount;
@@ -272,6 +280,28 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
 
             public render() {
                 const { result, isLoading, error } = this.state;
+
+                if (this.isStaleResult()) {
+                    /*
+                     * When props update, this render will be called first and state will still contain
+                     * data calculated thus far. After the render, the componentDidUpdate will test whether
+                     * data reload is needed and if so trigger it.
+                     *
+                     * The problem with this is, that the child function would be called once with stale
+                     * data. This can lead to problems in expectations - the child function may work with
+                     * assumptions that the result is always up to date and try access data that is just not
+                     * there yet.
+                     */
+                    const executionResult = {
+                        result: undefined,
+                        isLoading: true,
+                        error: undefined,
+                        reload: this.fetch,
+                    };
+
+                    return <WrappedComponent {...this.props} {...executionResult} />;
+                }
+
                 const executionResult = {
                     result,
                     isLoading,
