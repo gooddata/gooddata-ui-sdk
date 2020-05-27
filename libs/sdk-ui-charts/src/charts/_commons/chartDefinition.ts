@@ -18,6 +18,7 @@ export interface IChartDefinition<
     TBucketProps extends object,
     TProps extends TBucketProps & IBucketChartProps
 > {
+    chartName: string;
     /**
      * Function that may do initial transformation of the props. The returned props will then be used in
      * all following steps. If this function is not specified, then the props will be passed as-is.
@@ -61,10 +62,12 @@ export const getCoreChartProps = <
     const execution = chart.executionFactory(propsToUse, buckets);
     const nonBucketProps = omit(propsToUse, chart.bucketPropsKeys);
     const propOverrides = chart.propOverridesFactory ? chart.propOverridesFactory(propsToUse, buckets) : {};
+    const exportTitle = propsToUse.exportTitle || chart.chartName;
     const coreChartProps = {
         ...nonBucketProps,
         ...propOverrides,
         execution,
+        exportTitle,
     };
 
     return omit(coreChartProps, NON_CORE_PROPS);

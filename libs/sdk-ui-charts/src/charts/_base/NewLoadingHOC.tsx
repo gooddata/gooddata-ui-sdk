@@ -20,6 +20,7 @@ import {
     ErrorCodes,
     GoodDataSdkError,
     IntlWrapper,
+    createExportFunction,
 } from "@gooddata/sdk-ui";
 import { ICoreChartProps } from "../../interfaces";
 import noop = require("lodash/noop");
@@ -189,7 +190,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
         }
 
         private async initDataLoading(execution: IPreparedExecution) {
-            const { onExportReady, pushData } = this.props;
+            const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
 
@@ -210,7 +211,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
                 this.onLoadingChanged({ isLoading: false });
 
                 if (onExportReady) {
-                    onExportReady(dataView.result.export.bind(dataView.result));
+                    onExportReady(createExportFunction(dataView.result, exportTitle));
                 }
 
                 if (pushData) {

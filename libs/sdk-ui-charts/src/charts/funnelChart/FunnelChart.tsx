@@ -12,6 +12,7 @@ import { withChart } from "../_base/withChart";
 //
 
 const funnelChartDefinition: IChartDefinition<IFunnelChartBucketProps, IFunnelChartProps> = {
+    chartName: "FunnelChart",
     bucketPropsKeys: ["measures", "viewBy", "filters", "sortBy"],
     bucketsFactory: props => {
         return [

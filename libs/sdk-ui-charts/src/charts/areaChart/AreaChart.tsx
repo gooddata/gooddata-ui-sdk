@@ -22,6 +22,7 @@ import { sanitizeConfig } from "../_commons/sanitizeStacking";
 //
 
 const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartProps> = {
+    chartName: "AreaChart",
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: props => {
         const { measures, viewBy, stackBy } = getBucketsProps(props);

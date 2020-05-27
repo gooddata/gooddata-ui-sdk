@@ -23,6 +23,7 @@ import { sanitizeConfig } from "../_commons/sanitizeStacking";
 //
 
 const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChartProps> = {
+    chartName: "ComboChart",
     bucketPropsKeys: ["primaryMeasures", "secondaryMeasures", "viewBy", "filters", "sortBy"],
     propTransformation: props => {
         const { primaryMeasures = [], secondaryMeasures = [] } = props;

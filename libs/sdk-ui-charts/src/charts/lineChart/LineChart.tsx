@@ -24,6 +24,7 @@ function lineChartDimensions(def: IExecutionDefinition) {
 }
 
 const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartProps> = {
+    chartName: "LineChart",
     bucketPropsKeys: ["measures", "trendBy", "segmentBy", "filters", "sortBy"],
     bucketsFactory: props => {
         return [
