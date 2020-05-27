@@ -16,11 +16,12 @@ export const Execute: React.FC = () => (
         <h1>Execute</h1>
 
         <p>
-            The Execute component allows you to execute input data and send it to the function that you have
-            chosen to use and have implemented. You can use the Execute component, for example, to create a
-            report using an arbitrary chart library.
+            The Execute component allows you to trigger execution and send its result to the function that you
+            have chosen to use and have implemented. The Execute component provides a curated API through
+            which you specify data series that you would like to calculate and optionally sliced by some
+            attribute values. The result passed to to your function provides convenience functions to access
+            the computed data points.
         </p>
-        <p>Pass a custom children function to this component to render AFM execution data.</p>
 
         <hr className="separator" />
 
@@ -28,8 +29,12 @@ export const Execute: React.FC = () => (
 
         <hr className="separator" />
 
-        <h2>Execute attribute values only</h2>
-        <p>To get values of a single attribute, use the AttributeElements component instead.</p>
+        <h1>RawExecute</h1>
+        <p>
+            The RawExecute components allows you trigger execution and send its result to the function that
+            you have chosen to use and have implemented. The RawExecute provides no guidelines and allows you
+            to construct any execution you would like using the underlying backend APIs.
+        </p>
 
         <hr className="separator" />
 

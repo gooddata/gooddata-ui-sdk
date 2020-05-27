@@ -123,7 +123,7 @@ export const sideNavigationRoutes = [
         Component: DateFilter,
     },
     { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasures },
-    { path: "/execute", title: "Execute Component", Component: Execute },
+    { path: "/execute", title: "Execute Components", Component: Execute },
     {
         path: "/advanced",
         pathMatch: "full",
