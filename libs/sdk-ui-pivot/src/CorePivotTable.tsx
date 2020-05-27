@@ -49,6 +49,7 @@ import {
     VisualizationTypes,
     ILoadingState,
     IntlWrapper,
+    createExportFunction,
 } from "@gooddata/sdk-ui";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
@@ -250,7 +251,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
                         this.setGridDataSource(this.agGridDataSource);
                         this.onLoadingChanged({ isLoading: false });
-                        this.props.onExportReady(this.currentResult.export.bind(this.currentResult));
+                        this.props.onExportReady(
+                            createExportFunction(this.currentResult, this.props.exportTitle),
+                        );
                         this.setState({ tableReady: true });
 
                         const supportedDrillableItems = this.getSupportedDrillableItems(this.visibleData);
