@@ -23,6 +23,16 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     window?: DataViewWindow;
 
     /**
+     * Optional name to use for files exported from this component. If you do not specify this, then
+     * the 'RawExecute' will be used instead.
+     *
+     * Note: it is also possible to pass custom name to the export function that will be sent via the
+     * onExportReady callback. That approach is preferred if you need to assign the names in an ad-hoc
+     * fashion.
+     */
+    exportTitle?: string;
+
+    /**
      * Indicates whether the executor should trigger execution and loading right after it is
      * mounted. If not specified defaults to `true`.
      *
@@ -53,6 +63,10 @@ const CoreExecutor: React.FC<Props> = (props: Props) => {
     });
 };
 
+function exportTitle(props: IRawExecuteProps): string {
+    return props.exportTitle || "RawExecute";
+}
+
 /**
  * Raw executor is the most basic React component to drive custom executions to obtain
  * data from backends.
@@ -66,6 +80,7 @@ const CoreExecutor: React.FC<Props> = (props: Props) => {
  * @public
  */
 export const RawExecute = withExecution<IRawExecuteProps>({
+    exportTitle,
     execution: (props: IRawExecuteProps) => props.execution,
     events: (props: IRawExecuteProps) => {
         const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart, onExportReady } = props;

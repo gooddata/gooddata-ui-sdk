@@ -11,7 +11,7 @@ const EmptyDataViewFacade = DataViewFacade.for(dummyDataView(emptyDef("testWorks
 
 const renderEnhancedComponent = <T, E>(
     promiseConfig: IDummyPromise<DataViewFacade, E>,
-    hocConfig?: Omit<IWithLoading<T>, "promiseFactory">,
+    hocConfig?: Omit<IWithLoading<T>, "promiseFactory" | "exportTitle">,
 ) => {
     const promiseFactory = (_props?: T) => createDummyPromise(promiseConfig);
 
@@ -30,6 +30,7 @@ const renderEnhancedComponent = <T, E>(
     const Component: any = withLoading({
         ...hocConfig,
         promiseFactory,
+        exportTitle: "TestComponent",
     })(CoreComponent as any);
 
     return shallow(<Component />);
@@ -85,7 +86,7 @@ describe("withLoading", () => {
         const onLoadingFinish = jest.fn();
 
         renderEnhancedComponent(
-            { delay: 100 },
+            { delay: 100, result: EmptyDataViewFacade },
             {
                 events: {
                     onLoadingChanged,

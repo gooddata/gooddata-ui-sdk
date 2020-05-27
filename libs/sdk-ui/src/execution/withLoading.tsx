@@ -111,6 +111,13 @@ export interface IWithLoadingEvents<TProps> {
  */
 export interface IWithLoading<TProps> {
     /**
+     * Specify export title that will be used unless the export function caller sends their own custom title.
+     *
+     * @param props - props to retrieve export title from
+     */
+    exportTitle: string | ((props: TProps) => string);
+
+    /**
      * Specify a factory function to create data promises, based on props and optionally the data window size.
      *
      * This is where the data is actually being loaded. And the HOC hides the promise from the wrapped component
@@ -165,7 +172,14 @@ type WithLoadingState = {
  * @internal
  */
 export function withLoading<TProps>(params: IWithLoading<TProps>) {
-    const { promiseFactory, loadOnMount = true, events = {}, shouldRefetch = () => false, window } = params;
+    const {
+        promiseFactory,
+        loadOnMount = true,
+        events = {},
+        shouldRefetch = () => false,
+        window,
+        exportTitle,
+    } = params;
 
     return (
         WrappedComponent: React.ComponentType<TProps & WithLoadingResult>,
@@ -240,10 +254,11 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
 
             private setResult(result: DataViewFacade) {
                 const { onLoadingFinish, onLoadingChanged, onExportReady } = this.getEvents();
+                const title = typeof exportTitle === "function" ? exportTitle(this.props) : exportTitle;
 
                 onLoadingFinish(result, this.props);
                 onLoadingChanged(false, this.props);
-                onExportReady(createExportFunction(result.result()));
+                onExportReady(createExportFunction(result.result(), title));
 
                 this.effectiveProps = this.props;
                 this.setState(state => ({

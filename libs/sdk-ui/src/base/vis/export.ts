@@ -2,7 +2,7 @@
 
 import { IExecutionResult, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import { IExportFunction, IExtendedExportConfig } from "./Events";
-import { GoodDataSdkError } from "..";
+import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 
 const escapeFileName = (str: string) => str && str.replace(/[\/\?<>\\:\*\|":]/g, "");
 

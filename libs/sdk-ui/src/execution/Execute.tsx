@@ -69,6 +69,25 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     sortBy?: ISortItem[];
 
     /**
+     * Optional name to use for files exported from this component. If you do not specify this, then
+     * the componentName will be used instead.
+     *
+     * Note: it is also possible to pass custom name to the export function that will be sent via the
+     * onExportReady callback. That approach is preferred if you need to assign the names in an ad-hoc
+     * fashion.
+     */
+    exportTitle?: string;
+
+    /**
+     * Optional informative name of the component. This value is sent as telemetry information together
+     * with the actual execution request. We recommend to set this because it can be useful for diagnostic
+     * purposes.
+     *
+     * Defaults 'Execute'.
+     */
+    componentName?: string;
+
+    /**
      * Specifies whether `Execute` should trigger execution and loading right after it is
      * mounted. If not specified defaults to `true`.
      *
@@ -145,6 +164,14 @@ function seriesAndSlicesDim(
     );
 }
 
+function componentName(props: IExecuteProps): string {
+    return props.componentName || "Execute";
+}
+
+function exportTitle(props: IExecuteProps): string {
+    return props.exportTitle || componentName(props);
+}
+
 /**
  * Given execute props, this will prepare execution to send to backend.
  *
@@ -165,6 +192,7 @@ export function createExecution(props: IExecuteProps): IPreparedExecution {
         : seriesAndSlicesDim(seriesBy, slicesBy, totals);
 
     return backend
+        .withTelemetry(componentName(props), props)
         .workspace(workspace)
         .execution()
         .forItems(seriesBy.concat(slicesBy), filters)
@@ -185,6 +213,7 @@ export function createExecution(props: IExecuteProps): IPreparedExecution {
  */
 export const Execute = withContexts(
     withExecution<IExecuteProps>({
+        exportTitle,
         execution: createExecution,
         events: (props: IExecuteProps) => {
             const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart, onExportReady } = props;

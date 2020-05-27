@@ -20,7 +20,7 @@ interface IDummyComponentProps {
 const DummyBackendEmptyData = dummyBackendEmptyData();
 
 const renderEnhancedComponent = (
-    hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution">,
+    hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution" | "exportTitle">,
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
     const CoreComponent: React.FC<WithLoadingResult & IDummyComponentProps> = props => {
@@ -45,6 +45,7 @@ const renderEnhancedComponent = (
                 .execution()
                 .forItems([...attributes, ...measures], filters);
         },
+        exportTitle: "TestComponent",
     })(CoreComponent);
 
     return shallow(<Component attributes={[]} measures={[]} filters={[]} />);

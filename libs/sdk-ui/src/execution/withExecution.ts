@@ -19,6 +19,13 @@ export interface IWithExecution<T> {
     execution: IPreparedExecution | ((props: T) => IPreparedExecution);
 
     /**
+     * Specify export title that will be used unless the export function caller sends their own custom title.
+     *
+     * @param props - props to retrieve export title from
+     */
+    exportTitle: string | ((props: T) => string);
+
+    /**
      * Optionally customize data window to load.
      *
      * By default the HOC loads all the data available in the execution's result.
@@ -54,7 +61,7 @@ export interface IWithExecution<T> {
  * @internal
  */
 export function withExecution<T>(params: IWithExecution<T>) {
-    const { execution, events, loadOnMount, shouldRefetch, window } = params;
+    const { execution, events, loadOnMount, shouldRefetch, window, exportTitle } = params;
 
     return (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => {
         const withLoadingParams = {
@@ -67,6 +74,7 @@ export function withExecution<T>(params: IWithExecution<T>) {
 
                 return DataViewFacade.for(dataView);
             },
+            exportTitle,
             loadOnMount,
             events,
             shouldRefetch,
