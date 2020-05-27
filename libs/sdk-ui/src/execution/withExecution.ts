@@ -10,7 +10,7 @@ import { DataViewFacade } from "../base";
  * If functions are specified, the HOC will call them with the wrapped component props as parameter and then use
  * the resulting values as if they were passed directly.
  *
- * @public
+ * @internal
  */
 export interface IWithExecution<T> {
     /**
@@ -51,7 +51,7 @@ export interface IWithExecution<T> {
 /**
  * A React HOC that for driving an execution to get data view that can be visualized.
  *
- * @public
+ * @internal
  */
 export function withExecution<T>(params: IWithExecution<T>) {
     const { execution, events, loadOnMount, shouldRefetch, window } = params;

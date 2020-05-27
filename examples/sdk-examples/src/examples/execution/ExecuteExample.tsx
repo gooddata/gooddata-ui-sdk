@@ -1,11 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { RawExecute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
+import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
-
-import { workspace } from "../../constants/fixtures";
 import { LdmExt } from "../../ldm";
-import { useBackend } from "../../context/auth";
 
 interface IExecuteExampleState {
     executionNumber: number;
@@ -21,7 +18,6 @@ const resultStyle = {
 };
 
 export const ExecuteExample: React.FC = () => {
-    const backend = useBackend();
     const [{ willFail }, setState] = useState<IExecuteExampleState>({
         executionNumber: 0,
         willFail: false,
@@ -47,15 +43,11 @@ export const ExecuteExample: React.FC = () => {
     );
 
     const measure = newMeasure(willFail ? "thisDoesNotExits" : LdmExt.totalSalesIdentifier);
-
-    const execution = backend
-        .workspace(workspace)
-        .execution()
-        .forItems([measure]);
+    const measureArray = [measure];
 
     return (
         <div>
-            <RawExecute execution={execution}>
+            <Execute seriesBy={measureArray}>
                 {({ error, isLoading, result }) => {
                     if (error) {
                         return (
@@ -82,6 +74,11 @@ export const ExecuteExample: React.FC = () => {
                         );
                     }
 
+                    const measureSeries = result
+                        .data()
+                        .series()
+                        .firstForMeasure(measure);
+
                     return (
                         <div>
                             <style jsx>
@@ -98,7 +95,9 @@ export const ExecuteExample: React.FC = () => {
                                 `}
                             </style>
                             {retryButton}
-                            <p className="kpi s-execute-kpi">{result.dataView.data[0]}</p>
+                            <p className="kpi s-execute-kpi">
+                                {measureSeries.dataPoints()[0].formattedValue()}
+                            </p>
                             <p>Full execution response and result as JSON:</p>
                             <pre style={resultStyle}>
                                 {JSON.stringify({ result, isLoading, error }, null, 2)}
@@ -106,7 +105,7 @@ export const ExecuteExample: React.FC = () => {
                         </div>
                     );
                 }}
-            </RawExecute>
+            </Execute>
         </div>
     );
 };
