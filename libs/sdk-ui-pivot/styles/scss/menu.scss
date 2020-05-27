@@ -1,4 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
+$gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
+
+@import "~@gooddata/sdk-ui/styles/scss/settings";
+@import "~@gooddata/goodstrap/lib/List/styles/List";
+@import "~@gooddata/goodstrap/lib/core/styles/IndigoFont";
+
 .gd-menuOpenner {
     position: relative;
     z-index: 1;
