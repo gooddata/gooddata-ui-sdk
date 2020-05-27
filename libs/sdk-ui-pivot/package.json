@@ -22,6 +22,7 @@
         "build": "bash scripts/build.sh && npm run api-extractor",
         "build-dev": "bash scripts/build.sh --dev",
         "dev": "bash scripts/build.sh --dev-watch",
+        "styles": "bash scripts/build.sh --styles",
         "test": "jest --watch",
         "test-once": "jest",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",

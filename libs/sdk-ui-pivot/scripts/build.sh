@@ -36,6 +36,8 @@ if [ "$FLAG" = "--dev" ]; then
     build-dev
 elif [ "$FLAG" = "--dev-watch" ]; then
     build-dev-watch
+elif [ "$FLAG" = "--styles" ]; then
+    _build_styles
 else
     build
 fi
