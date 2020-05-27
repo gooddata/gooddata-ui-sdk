@@ -9,14 +9,6 @@ interface IExecuteExampleState {
     willFail: boolean;
 }
 
-const resultStyle = {
-    maxHeight: 200,
-    maxWidth: "100%",
-    overflow: "auto",
-    padding: "1rem",
-    backgroundColor: "#EEE",
-};
-
 export const ExecuteExample: React.FC = () => {
     const [{ willFail }, setState] = useState<IExecuteExampleState>({
         executionNumber: 0,
@@ -98,10 +90,6 @@ export const ExecuteExample: React.FC = () => {
                             <p className="kpi s-execute-kpi">
                                 {measureSeries.dataPoints()[0].formattedValue()}
                             </p>
-                            <p>Full execution response and result as JSON:</p>
-                            <pre style={resultStyle}>
-                                {JSON.stringify({ result, isLoading, error }, null, 2)}
-                            </pre>
                         </div>
                     );
                 }}

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { ITotal } from "@gooddata/sdk-model";
+import { ITotal, newTotal } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 
 const measures = [
@@ -15,28 +15,13 @@ const attributes = [LdmExt.LocationState, Ldm.LocationName.Default, Ldm.MenuCate
 
 const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
 const totals: ITotal[] = [
-    {
-        measureIdentifier: "franchiseFeesIdentifier",
-        type: "sum",
-        attributeIdentifier: "state",
-    },
-    {
-        measureIdentifier: "franchiseFeesIdentifier",
-        type: "avg",
-        attributeIdentifier: "state",
-    },
-    {
-        measureIdentifier: "franchiseFeesAdRoyaltyIdentifier",
-        type: "sum",
-        attributeIdentifier: "state",
-    },
-    {
-        measureIdentifier: "franchiseFeesIdentifier",
-        type: "max",
-        attributeIdentifier: "state",
-    },
+    newTotal("sum", LdmExt.FranchiseFees, LdmExt.LocationState),
+    newTotal("avg", LdmExt.FranchiseFees, LdmExt.LocationState),
+    newTotal("sum", LdmExt.FranchiseFeesAdRoyalty, LdmExt.LocationState),
+    newTotal("max", LdmExt.FranchiseFees, LdmExt.LocationState),
 ];
-const style = { height: 300 };
+
+const style = { height: 600 };
 const config = {
     menu: {
         aggregations: true,

@@ -14,13 +14,6 @@ const withIndex = (fn: any) => {
     return (...args: any) => fn(index++, ...args);
 };
 
-const resultStyle = {
-    maxHeight: 200,
-    overflow: "auto",
-    padding: "1rem",
-    backgroundColor: "#EEE",
-};
-
 export const ExecuteAttributeValuesExample: React.FC = () => {
     const backend = useBackend();
     const execution = backend
@@ -67,11 +60,6 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
                                     </li>
                                 ))}
                             </ul>
-
-                            <p>Full execution response and result as JSON:</p>
-                            <pre style={resultStyle}>
-                                {JSON.stringify({ result, isLoading, error }, null, 2)}
-                            </pre>
                         </div>
                     );
                 }}
