@@ -49,7 +49,6 @@ const downloadFile = (uri: string) => {
         document.body.appendChild(anchor);
     }
     (anchor as any).href = uri;
-    // (anchor as any).download = uri;
     anchor.click();
 };
 
