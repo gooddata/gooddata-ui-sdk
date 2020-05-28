@@ -151,6 +151,7 @@ Object {
       "visible": false,
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -305,6 +306,7 @@ Object {
       "max": "15000000",
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -460,6 +462,7 @@ Object {
       "min": "5000000",
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -614,6 +617,7 @@ Object {
       "rotation": "60",
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -768,6 +772,7 @@ Object {
       "visible": false,
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -922,6 +927,7 @@ Object {
       "rotation": "60",
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -1139,6 +1145,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -1314,6 +1321,7 @@ Object {
       },
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -1489,6 +1497,7 @@ Object {
       },
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -1664,6 +1673,7 @@ Object {
       },
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -1839,6 +1849,7 @@ Object {
       },
     },
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -1997,6 +2008,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -2197,6 +2209,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -2390,6 +2403,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -2541,6 +2555,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -2695,6 +2710,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -2846,6 +2862,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -3000,6 +3017,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -3158,6 +3176,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -3312,6 +3331,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -3467,6 +3487,7 @@ Object {
     [Function],
     [Function],
   ],
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -3621,6 +3642,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -3775,6 +3797,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -3929,6 +3952,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -4083,6 +4107,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -4237,6 +4262,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -4391,6 +4417,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -4489,6 +4516,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -4587,6 +4615,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -4707,6 +4736,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -4780,6 +4810,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -4909,6 +4940,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -5079,6 +5111,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -5237,6 +5270,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -5388,6 +5422,7 @@ Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -5561,6 +5596,7 @@ Object {
   "drillableItems": Array [
     [Function],
   ],
+  "exportTitle": "BulletChart",
 }
 `;
 
@@ -5734,5 +5770,6 @@ Object {
   "drillableItems": Array [
     [Function],
   ],
+  "exportTitle": "BulletChart",
 }
 `;

@@ -161,6 +161,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -294,6 +295,7 @@ Object {
       },
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -427,6 +429,7 @@ Object {
       },
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -560,6 +563,7 @@ Object {
       },
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -693,6 +697,7 @@ Object {
       },
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -809,6 +814,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -967,6 +973,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -1118,6 +1125,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -1226,6 +1234,7 @@ Object {
 exports[`Heatmap with coloring - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -1338,6 +1347,7 @@ Object {
       "visible": "auto",
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -1446,6 +1456,7 @@ Object {
 exports[`Heatmap with data labels - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -1558,6 +1569,7 @@ Object {
       "visible": false,
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -1674,6 +1686,7 @@ Object {
       "thousand": ".",
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -1786,6 +1799,7 @@ Object {
       "visible": true,
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -1898,6 +1912,7 @@ Object {
       "position": "auto",
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -2010,6 +2025,7 @@ Object {
       "enabled": false,
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -2122,6 +2138,7 @@ Object {
       "position": "bottom",
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -2234,6 +2251,7 @@ Object {
       "position": "left",
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -2346,6 +2364,7 @@ Object {
       "position": "right",
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -2458,6 +2477,7 @@ Object {
       "position": "top",
     },
   },
+  "exportTitle": "Heatmap",
 }
 `;
 
@@ -2542,7 +2562,11 @@ Object {
 }
 `;
 
-exports[`Heatmap with measure and columns should create expected props for core chart 1`] = `Object {}`;
+exports[`Heatmap with measure and columns should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Heatmap",
+}
+`;
 
 exports[`Heatmap with measure and rows should create expected execution definition 1`] = `
 Object {
@@ -2626,7 +2650,11 @@ Object {
 }
 `;
 
-exports[`Heatmap with measure and rows should create expected props for core chart 1`] = `Object {}`;
+exports[`Heatmap with measure and rows should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Heatmap",
+}
+`;
 
 exports[`Heatmap with measure only should create expected execution definition 1`] = `
 Object {
@@ -2688,7 +2716,11 @@ Object {
 }
 `;
 
-exports[`Heatmap with measure only should create expected props for core chart 1`] = `Object {}`;
+exports[`Heatmap with measure only should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Heatmap",
+}
+`;
 
 exports[`Heatmap with measure, rows and columns should create expected execution definition 1`] = `
 Object {
@@ -2792,7 +2824,11 @@ Object {
 }
 `;
 
-exports[`Heatmap with measure, rows and columns should create expected props for core chart 1`] = `Object {}`;
+exports[`Heatmap with measure, rows and columns should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Heatmap",
+}
+`;
 
 exports[`Heatmap with measure, rows and columns with null data points should create expected execution definition 1`] = `
 Object {
@@ -2896,4 +2932,8 @@ Object {
 }
 `;
 
-exports[`Heatmap with measure, rows and columns with null data points should create expected props for core chart 1`] = `Object {}`;
+exports[`Heatmap with measure, rows and columns with null data points should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "Heatmap",
+}
+`;

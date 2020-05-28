@@ -36,15 +36,10 @@ export interface IMenu {
     aggregationsSubMenu?: boolean;
 }
 
-// @public
+// @public (undocumented)
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
-    // (undocumented)
     config?: IPivotTableConfig;
-    // (undocumented)
-    exportTitle?: string;
-    // (undocumented)
     groupRows?: boolean;
-    // (undocumented)
     pageSize?: number;
 }
 

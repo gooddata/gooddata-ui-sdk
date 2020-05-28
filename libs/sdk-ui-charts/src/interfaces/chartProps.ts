@@ -1,19 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
-import {
-    IHeaderPredicate,
-    IErrorProps,
-    ILoadingProps,
-    IDrillableItem,
-    OnFiredDrillEvent,
-    IPushData,
-    OnError,
-    OnExportReady,
-    OnLoadingChanged,
-    IVisualizationCallbacks,
-    IVisualizationProps,
-} from "@gooddata/sdk-ui";
+import { IErrorProps, ILoadingProps, IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IChartConfig } from "./chartConfig";
 
 /**
@@ -22,18 +10,6 @@ import { IChartConfig } from "./chartConfig";
  * @public
  */
 export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks {
-    /**
-     * Set Locale for chart localization.
-     *
-     * Note: This locale will be used for everything EXCEPT the data being visualized.
-     */
-    locale?: string;
-
-    /**
-     * Configure chart drillability; e.g. which parts of the charts can be clicked.
-     */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-
     /**
      * Configure chart's behavior and appearance.
      */
@@ -75,39 +51,9 @@ export type OnLegendReady = (data: ILegendData) => void;
  */
 export interface IChartCallbacks extends IVisualizationCallbacks {
     /**
-     * Called when an error occurs while loading data for the chart.
-     */
-    onError?: OnError;
-
-    /**
-     * Called when the chart is ready to be exported.
-     */
-    onExportReady?: OnExportReady;
-
-    /**
-     * Called when loading status of the chart changes - chart starts loading or stops loading
-     */
-    onLoadingChanged?: OnLoadingChanged;
-
-    /**
      * Called when legend is rendered.
      */
     onLegendReady?: OnLegendReady;
-
-    /**
-     * Called when user triggers a drill on a chart.
-     */
-    onDrill?: OnFiredDrillEvent;
-
-    /**
-     * @internal
-     */
-    afterRender?: () => void;
-
-    /**
-     * @internal
-     */
-    pushData?: (data: IPushData) => void;
 }
 
 //

@@ -72,6 +72,7 @@ export function toCoreHeadlineProps(props: IHeadlineProps): ICoreChartProps {
     return {
         ...newProps,
         execution: createExecution(buckets, props),
+        exportTitle: props.exportTitle || "Headline",
     };
 }
 

@@ -80,6 +80,7 @@ export function toCoreXirrProps(props: IXirrProps): ICoreChartProps {
     return {
         ...newProps,
         execution: createExecution(buckets, props),
+        exportTitle: props.exportTitle || "Xirr",
     };
 }
 

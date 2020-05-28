@@ -40,6 +40,18 @@ const Button: React.FC<IButtonProps> = ({ children, onClick, disabled }) => (
     </button>
 );
 
+const DownloaderId = "downloader";
+const downloadFile = (uri: string) => {
+    let anchor = document.getElementById(DownloaderId);
+    if (!anchor) {
+        anchor = document.createElement("a");
+        anchor.id = DownloaderId;
+        document.body.appendChild(anchor);
+    }
+    (anchor as any).href = uri;
+    anchor.click();
+};
+
 export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children, filters }) => {
     const [
         { exportFunction, exportConfig, showExportDialog, errorMessage, downloadUri, exporting },
@@ -114,7 +126,12 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
 
     useEffect(() => {
         if (downloadUri) {
-            window.open(downloadUri);
+            downloadFile(downloadUri);
+
+            setState(oldState => ({
+                ...oldState,
+                downloadUri: undefined,
+            }));
         }
     }, [downloadUri]);
 

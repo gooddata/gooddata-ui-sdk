@@ -148,13 +148,26 @@ export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedCompo
 }
 
 /**
- * TODO: SDK8 - add docs
- *
  * @public
  */
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
+    /**
+     * Optionally customize size of page when fetching data from backend.
+     *
+     * Default is 100.
+     */
     pageSize?: number;
+
+    /**
+     * Optionally customize how pivot table capabilities and behavior.
+     */
     config?: IPivotTableConfig;
+
+    /**
+     * Optionally specify whether the table should group rows. If this is turned on and the table is sorted
+     * by the first row attribute, then the grouping will take effect.
+     *
+     * Default: true
+     */
     groupRows?: boolean;
-    exportTitle?: string;
 }

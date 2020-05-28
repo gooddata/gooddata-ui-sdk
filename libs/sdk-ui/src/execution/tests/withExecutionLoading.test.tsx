@@ -5,7 +5,7 @@ import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
 import * as React from "react";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
-import { DataViewWindow, WithLoadingResult } from "../withLoading";
+import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading";
 import { IWithExecution, withExecution } from "../withExecution";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { withEventing } from "../../../../sdk-backend-base/src/eventingBackend";
@@ -20,7 +20,7 @@ interface IDummyComponentProps {
 const DummyBackendEmptyData = dummyBackendEmptyData();
 
 const renderEnhancedComponent = (
-    hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution">,
+    hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution" | "exportTitle">,
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
     const CoreComponent: React.FC<WithLoadingResult & IDummyComponentProps> = props => {
@@ -45,6 +45,7 @@ const renderEnhancedComponent = (
                 .execution()
                 .forItems([...attributes, ...measures], filters);
         },
+        exportTitle: "TestComponent",
     })(CoreComponent);
 
     return shallow(<Component attributes={[]} measures={[]} filters={[]} />);

@@ -21,6 +21,7 @@ import { sanitizeConfig } from "../_commons/sanitizeStacking";
 //
 
 const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnChartProps> = {
+    chartName: "ColumnChart",
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: props => {
         const measures = applyRatioRule(props.measures);

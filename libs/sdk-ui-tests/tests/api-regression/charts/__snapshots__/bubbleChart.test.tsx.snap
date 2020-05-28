@@ -148,6 +148,7 @@ Object {
       "min": ".54",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -294,6 +295,7 @@ Object {
       "max": "15000000",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -441,6 +443,7 @@ Object {
       "min": "5000000",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -587,6 +590,7 @@ Object {
       "max": ".53",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -734,6 +738,7 @@ Object {
       "min": ".54",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -879,7 +884,11 @@ Object {
 }
 `;
 
-exports[`BubbleChart with arithmetic measure should create expected props for core chart 1`] = `Object {}`;
+exports[`BubbleChart with arithmetic measure should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "BubbleChart",
+}
+`;
 
 exports[`BubbleChart with assign color to attribute bubbles should create expected execution definition 1`] = `
 Object {
@@ -1087,6 +1096,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -1254,6 +1264,7 @@ Object {
       },
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -1421,6 +1432,7 @@ Object {
       },
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -1588,6 +1600,7 @@ Object {
       },
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -1755,6 +1768,7 @@ Object {
       },
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -1905,6 +1919,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -2097,6 +2112,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -2282,6 +2298,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -2424,6 +2441,7 @@ Object {
 exports[`BubbleChart with coloring - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -2570,6 +2588,7 @@ Object {
       "visible": "auto",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -2712,6 +2731,7 @@ Object {
 exports[`BubbleChart with data labels - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -2858,6 +2878,7 @@ Object {
       "visible": false,
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -3008,6 +3029,7 @@ Object {
       "thousand": ".",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -3154,6 +3176,7 @@ Object {
       "visible": true,
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -3300,6 +3323,7 @@ Object {
       "position": "auto",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -3446,6 +3470,7 @@ Object {
       "enabled": false,
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -3592,6 +3617,7 @@ Object {
       "position": "bottom",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -3738,6 +3764,7 @@ Object {
       "position": "left",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -3884,6 +3911,7 @@ Object {
       "position": "right",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -4030,6 +4058,7 @@ Object {
       "position": "top",
     },
   },
+  "exportTitle": "BubbleChart",
 }
 `;
 
@@ -4176,7 +4205,11 @@ Object {
 }
 `;
 
-exports[`BubbleChart with x and y axis and size measures with viewBy and sorted by attr should create expected props for core chart 1`] = `Object {}`;
+exports[`BubbleChart with x and y axis and size measures with viewBy and sorted by attr should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "BubbleChart",
+}
+`;
 
 exports[`BubbleChart with x and y axis and size measures with viewBy should create expected execution definition 1`] = `
 Object {
@@ -4314,7 +4347,11 @@ Object {
 }
 `;
 
-exports[`BubbleChart with x and y axis and size measures with viewBy should create expected props for core chart 1`] = `Object {}`;
+exports[`BubbleChart with x and y axis and size measures with viewBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "BubbleChart",
+}
+`;
 
 exports[`BubbleChart with x and y axis and size measures with viewBy with nulls in data should create expected execution definition 1`] = `
 Object {
@@ -4452,7 +4489,11 @@ Object {
 }
 `;
 
-exports[`BubbleChart with x and y axis and size measures with viewBy with nulls in data should create expected props for core chart 1`] = `Object {}`;
+exports[`BubbleChart with x and y axis and size measures with viewBy with nulls in data should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "BubbleChart",
+}
+`;
 
 exports[`BubbleChart with x and y axis measures with viewBy should create expected execution definition 1`] = `
 Object {
@@ -4565,7 +4606,11 @@ Object {
 }
 `;
 
-exports[`BubbleChart with x and y axis measures with viewBy should create expected props for core chart 1`] = `Object {}`;
+exports[`BubbleChart with x and y axis measures with viewBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "BubbleChart",
+}
+`;
 
 exports[`BubbleChart with x axis and size measures with viewBy should create expected execution definition 1`] = `
 Object {
@@ -4678,7 +4723,11 @@ Object {
 }
 `;
 
-exports[`BubbleChart with x axis and size measures with viewBy should create expected props for core chart 1`] = `Object {}`;
+exports[`BubbleChart with x axis and size measures with viewBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "BubbleChart",
+}
+`;
 
 exports[`BubbleChart with x axis measure should create expected execution definition 1`] = `
 Object {
@@ -4744,7 +4793,11 @@ Object {
 }
 `;
 
-exports[`BubbleChart with x axis measure should create expected props for core chart 1`] = `Object {}`;
+exports[`BubbleChart with x axis measure should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "BubbleChart",
+}
+`;
 
 exports[`BubbleChart with x axis measure with viewBy should create expected execution definition 1`] = `
 Object {
@@ -4832,7 +4885,11 @@ Object {
 }
 `;
 
-exports[`BubbleChart with x axis measure with viewBy should create expected props for core chart 1`] = `Object {}`;
+exports[`BubbleChart with x axis measure with viewBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "BubbleChart",
+}
+`;
 
 exports[`BubbleChart with y axis and size measures with viewBy should create expected execution definition 1`] = `
 Object {
@@ -4945,4 +5002,8 @@ Object {
 }
 `;
 
-exports[`BubbleChart with y axis and size measures with viewBy should create expected props for core chart 1`] = `Object {}`;
+exports[`BubbleChart with y axis and size measures with viewBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "BubbleChart",
+}
+`;

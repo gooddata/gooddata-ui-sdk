@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { IDrillableItem, OnFiredDrillEvent } from "./DrillEvents";
 import { IHeaderPredicate } from "../headerMatching/HeaderPredicate";
@@ -18,6 +18,15 @@ export interface IVisualizationProps {
      * Note: This locale will be used for everything EXCEPT the data being visualized.
      */
     locale?: string;
+
+    /**
+     * Set title to use for exported files.
+     *
+     * Note: you can also specify export file name as parameters to the export function which you
+     * receive in the onExportReady. If you do not specify title here and neither as input to export function,
+     * the the name will default to name of the visualization component.
+     */
+    exportTitle?: string;
 
     /**
      * Configure drillability; e.g. which parts of the visualization can be interacted with.

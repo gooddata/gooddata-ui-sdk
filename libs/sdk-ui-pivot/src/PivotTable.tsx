@@ -107,7 +107,7 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
                                 {...corePivotProps}
                                 intl={translationProps.intl}
                                 execution={execution}
-                                exportTitle={exportTitle}
+                                exportTitle={exportTitle || "PivotTable"}
                             />
                         );
                     }}

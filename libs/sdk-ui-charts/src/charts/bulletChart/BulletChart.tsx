@@ -21,6 +21,7 @@ import { sanitizeConfig } from "../_commons/sanitizeStacking";
 //
 
 const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletChartProps> = {
+    chartName: "BulletChart",
     bucketPropsKeys: ["primaryMeasure", "targetMeasure", "comparativeMeasure", "viewBy", "filters", "sortBy"],
     propTransformation: props => {
         /*

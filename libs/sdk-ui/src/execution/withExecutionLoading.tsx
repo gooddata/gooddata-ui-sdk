@@ -2,7 +2,16 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
-import { DataViewFacade, makeCancelable, ICancelablePromise, convertError, GoodDataSdkError } from "../base";
+import {
+    DataViewFacade,
+    makeCancelable,
+    ICancelablePromise,
+    convertError,
+    GoodDataSdkError,
+    IExportFunction,
+    createExportFunction,
+    createExportErrorFunction,
+} from "../base";
 
 /**
  * @internal
@@ -80,6 +89,15 @@ export interface IWithLoadingEvents<TProps> {
      * @param props - props effective at the time of load
      */
     onLoadingChanged?: (isLoading: boolean, props: TProps) => void;
+
+    /**
+     * Called when loading finishes and it is possible to export the underlying data. Function that does
+     * the export will be provided on the callback.
+     *
+     * @param exportFunction - function to call if export is desired
+     * @param props - props effective at the time export is ready
+     */
+    onExportReady?: (exportFunction: IExportFunction, props: TProps) => void;
 }
 
 /**
@@ -91,7 +109,14 @@ export interface IWithLoadingEvents<TProps> {
  *
  * @internal
  */
-export interface IWithLoading<TProps> {
+export interface IWithExecutionLoading<TProps> {
+    /**
+     * Specify export title that will be used unless the export function caller sends their own custom title.
+     *
+     * @param props - props to retrieve export title from
+     */
+    exportTitle: string | ((props: TProps) => string);
+
     /**
      * Specify a factory function to create data promises, based on props and optionally the data window size.
      *
@@ -146,8 +171,15 @@ type WithLoadingState = {
  *
  * @internal
  */
-export function withLoading<TProps>(params: IWithLoading<TProps>) {
-    const { promiseFactory, loadOnMount = true, events = {}, shouldRefetch = () => false, window } = params;
+export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>) {
+    const {
+        promiseFactory,
+        loadOnMount = true,
+        events = {},
+        shouldRefetch = () => false,
+        window,
+        exportTitle,
+    } = params;
 
     return (
         WrappedComponent: React.ComponentType<TProps & WithLoadingResult>,
@@ -179,6 +211,7 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
                     onLoadingChanged = noop,
                     onLoadingFinish = noop,
                     onLoadingStart = noop,
+                    onExportReady = noop,
                 } = _events;
 
                 return {
@@ -186,6 +219,7 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
                     onLoadingChanged,
                     onLoadingFinish,
                     onLoadingStart,
+                    onExportReady,
                 };
             }
 
@@ -205,10 +239,11 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
             }
 
             private setError(error: GoodDataSdkError) {
-                const { onError, onLoadingChanged } = this.getEvents();
+                const { onError, onLoadingChanged, onExportReady } = this.getEvents();
 
                 onError(error, this.props);
                 onLoadingChanged(false, this.props);
+                onExportReady(createExportErrorFunction(error));
 
                 this.setState(state => ({
                     ...state,
@@ -218,10 +253,12 @@ export function withLoading<TProps>(params: IWithLoading<TProps>) {
             }
 
             private setResult(result: DataViewFacade) {
-                const { onLoadingFinish, onLoadingChanged } = this.getEvents();
+                const { onLoadingFinish, onLoadingChanged, onExportReady } = this.getEvents();
+                const title = typeof exportTitle === "function" ? exportTitle(this.props) : exportTitle;
 
                 onLoadingFinish(result, this.props);
                 onLoadingChanged(false, this.props);
+                onExportReady(createExportFunction(result.result(), title));
 
                 this.effectiveProps = this.props;
                 this.setState(state => ({

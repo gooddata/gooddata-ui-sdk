@@ -1,6 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { withLoading, IWithLoadingEvents, WithLoadingResult, DataViewWindow } from "./withLoading";
+import {
+    withExecutionLoading,
+    IWithLoadingEvents,
+    WithLoadingResult,
+    DataViewWindow,
+} from "./withExecutionLoading";
 import { DataViewFacade } from "../base";
 
 /**
@@ -17,6 +22,13 @@ export interface IWithExecution<T> {
      * Specify execution that the HOC will drive.
      */
     execution: IPreparedExecution | ((props: T) => IPreparedExecution);
+
+    /**
+     * Specify export title that will be used unless the export function caller sends their own custom title.
+     *
+     * @param props - props to retrieve export title from
+     */
+    exportTitle: string | ((props: T) => string);
 
     /**
      * Optionally customize data window to load.
@@ -54,7 +66,7 @@ export interface IWithExecution<T> {
  * @internal
  */
 export function withExecution<T>(params: IWithExecution<T>) {
-    const { execution, events, loadOnMount, shouldRefetch, window } = params;
+    const { execution, events, loadOnMount, shouldRefetch, window, exportTitle } = params;
 
     return (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => {
         const withLoadingParams = {
@@ -67,12 +79,13 @@ export function withExecution<T>(params: IWithExecution<T>) {
 
                 return DataViewFacade.for(dataView);
             },
+            exportTitle,
             loadOnMount,
             events,
             shouldRefetch,
             window,
         };
 
-        return withLoading(withLoadingParams)(WrappedComponent);
+        return withExecutionLoading(withLoadingParams)(WrappedComponent);
     };
 }

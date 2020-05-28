@@ -3,7 +3,6 @@
 import {
     IDataView,
     IExecutionResult,
-    IExportResult,
     IMeasureDescriptor,
     IPreparedExecution,
     isNoDataError,
@@ -14,12 +13,13 @@ import {
     DataViewFacade,
     ILoadingState,
     IExportFunction,
-    IExtendedExportConfig,
     IDrillableItemPushData,
     convertError,
     ErrorCodes,
     GoodDataSdkError,
     IntlWrapper,
+    createExportFunction,
+    createExportErrorFunction,
 } from "@gooddata/sdk-ui";
 import { ICoreChartProps } from "../../interfaces";
 import noop = require("lodash/noop");
@@ -155,16 +155,10 @@ export function withEntireDataView<T extends ICoreChartProps>(
                 this.setState({ error: error.getMessage(), dataView: null });
                 this.onLoadingChanged({ isLoading: false });
                 if (onExportReady) {
-                    onExportReady(this.createExportErrorFunction(error));
+                    onExportReady(createExportErrorFunction(error));
                 }
                 this.props.onError(error);
             }
-        }
-
-        private createExportErrorFunction(error: GoodDataSdkError): IExportFunction {
-            return (_exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
-                return Promise.reject(error);
-            };
         }
 
         private onDataTooLarge() {
@@ -189,7 +183,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
         }
 
         private async initDataLoading(execution: IPreparedExecution) {
-            const { onExportReady, pushData } = this.props;
+            const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
 
@@ -210,7 +204,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
                 this.onLoadingChanged({ isLoading: false });
 
                 if (onExportReady) {
-                    onExportReady(dataView.result.export.bind(dataView.result));
+                    onExportReady(createExportFunction(dataView.result, exportTitle));
                 }
 
                 if (pushData) {

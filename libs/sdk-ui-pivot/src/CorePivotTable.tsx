@@ -2,7 +2,6 @@
 import {
     IAttributeDescriptor,
     IExecutionResult,
-    IExportResult,
     IMeasureDescriptor,
     IPreparedExecution,
     isAttributeDescriptor,
@@ -39,8 +38,6 @@ import {
     IDrillEventContextTable,
     IDrillEventIntersectionElement,
     IErrorDescriptors,
-    IExportFunction,
-    IExtendedExportConfig,
     IHeaderPredicate,
     IMappingHeader,
     isSomeHeaderPredicateMatched,
@@ -49,6 +46,8 @@ import {
     VisualizationTypes,
     ILoadingState,
     IntlWrapper,
+    createExportFunction,
+    createExportErrorFunction,
 } from "@gooddata/sdk-ui";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
@@ -250,7 +249,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
                         this.setGridDataSource(this.agGridDataSource);
                         this.onLoadingChanged({ isLoading: false });
-                        this.props.onExportReady(this.currentResult.export.bind(this.currentResult));
+                        this.props.onExportReady(
+                            createExportFunction(this.currentResult, this.props.exportTitle),
+                        );
                         this.setState({ tableReady: true });
 
                         const supportedDrillableItems = this.getSupportedDrillableItems(this.visibleData);
@@ -382,12 +383,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return !prepExecutionSame && !fingerprintSame;
     }
 
-    private createExportErrorFunction(error: GoodDataSdkError): IExportFunction {
-        return (_exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
-            return Promise.reject(error);
-        };
-    }
-
     private onError(error: GoodDataSdkError, execution = this.props.execution) {
         const { onExportReady } = this.props;
 
@@ -395,7 +390,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             this.setState({ error: error.getMessage() });
 
             if (onExportReady) {
-                onExportReady(this.createExportErrorFunction(error));
+                onExportReady(createExportErrorFunction(error));
             }
 
             this.props.onError(error);

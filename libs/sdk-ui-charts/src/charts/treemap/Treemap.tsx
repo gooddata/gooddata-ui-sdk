@@ -24,6 +24,7 @@ import { withChart } from "../_base/withChart";
 //
 
 const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = {
+    chartName: "Treemap",
     bucketPropsKeys: ["measures", "viewBy", "segmentBy", "filters"],
     bucketsFactory: props => {
         return [

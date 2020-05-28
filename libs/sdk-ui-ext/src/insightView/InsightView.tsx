@@ -5,8 +5,21 @@ import { render } from "react-dom";
 import noop = require("lodash/noop");
 import isEqual = require("lodash/isEqual");
 
-import { IAnalyticalBackend, IAnalyticalWorkspace, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IInsight, IFilter, insightProperties, IColorPalette, ObjRef, idRef } from "@gooddata/sdk-model";
+import {
+    IAnalyticalBackend,
+    IAnalyticalWorkspace,
+    IExportResult,
+    IWorkspaceSettings,
+} from "@gooddata/sdk-backend-spi";
+import {
+    IInsight,
+    IFilter,
+    insightProperties,
+    IColorPalette,
+    ObjRef,
+    idRef,
+    insightTitle,
+} from "@gooddata/sdk-model";
 
 import { IVisualization, IVisCallbacks, DefaultVisualizationCatalog, IVisProps } from "../internal";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
@@ -21,6 +34,8 @@ import {
     ErrorComponent,
     IErrorProps,
     IDrillableItem,
+    IExportFunction,
+    IExtendedExportConfig,
 } from "@gooddata/sdk-ui";
 
 /**
@@ -198,7 +213,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
                 },
                 pushData: this.props.pushData,
                 onDrill: this.props.onDrill,
-                onExportReady: this.props.onExportReady,
+                onExportReady: this.onExportReadyDecorator,
             },
             configPanelElement: ".gd-configuration-panel-content", // this is apparently a well-know constant (see BaseVisualization)
             element: `#${this.elementId}`,
@@ -209,6 +224,25 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             featureFlags: this.settings,
             renderFun: render,
         });
+    };
+
+    private onExportReadyDecorator = (exportFunction: IExportFunction): void => {
+        if (!this.props.onExportReady) {
+            return;
+        }
+
+        const decorator = (exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
+            if (exportConfig.title || !this.insight) {
+                return exportFunction(exportConfig);
+            }
+
+            return exportFunction({
+                ...exportConfig,
+                title: insightTitle(this.insight),
+            });
+        };
+
+        this.props.onExportReady(decorator);
     };
 
     private getRemoteResource = async <T extends {}>(

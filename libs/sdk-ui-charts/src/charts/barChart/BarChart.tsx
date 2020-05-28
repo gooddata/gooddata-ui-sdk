@@ -21,6 +21,7 @@ import { sanitizeConfig } from "../_commons/sanitizeStacking";
 //
 
 const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps> = {
+    chartName: "BarChart",
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: props => {
         const measures = applyRatioRule(props.measures);

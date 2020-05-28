@@ -110,7 +110,11 @@ Object {
 }
 `;
 
-exports[`FunnelChart with arithmetic measures should create expected props for core chart 1`] = `Object {}`;
+exports[`FunnelChart with arithmetic measures should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "FunnelChart",
+}
+`;
 
 exports[`FunnelChart with assign color to attributes should create expected execution definition 1`] = `
 Object {
@@ -260,6 +264,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "FunnelChart",
 }
 `;
 
@@ -439,6 +444,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "FunnelChart",
 }
 `;
 
@@ -531,6 +537,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "FunnelChart",
 }
 `;
 
@@ -665,6 +672,7 @@ Object {
       "rgb(131, 131, 131)",
     ],
   },
+  "exportTitle": "FunnelChart",
 }
 `;
 
@@ -792,6 +800,7 @@ Object {
       },
     ],
   },
+  "exportTitle": "FunnelChart",
 }
 `;
 
@@ -876,6 +885,7 @@ Object {
 exports[`FunnelChart with coloring - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
+  "exportTitle": "FunnelChart",
 }
 `;
 
@@ -935,7 +945,11 @@ Object {
 }
 `;
 
-exports[`FunnelChart with single measure should create expected props for core chart 1`] = `Object {}`;
+exports[`FunnelChart with single measure should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "FunnelChart",
+}
+`;
 
 exports[`FunnelChart with single measure with viewBy should create expected execution definition 1`] = `
 Object {
@@ -1015,7 +1029,11 @@ Object {
 }
 `;
 
-exports[`FunnelChart with single measure with viewBy should create expected props for core chart 1`] = `Object {}`;
+exports[`FunnelChart with single measure with viewBy should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "FunnelChart",
+}
+`;
 
 exports[`FunnelChart with single measure with viewBy sorted by attribute should create expected execution definition 1`] = `
 Object {
@@ -1095,7 +1113,11 @@ Object {
 }
 `;
 
-exports[`FunnelChart with single measure with viewBy sorted by attribute should create expected props for core chart 1`] = `Object {}`;
+exports[`FunnelChart with single measure with viewBy sorted by attribute should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "FunnelChart",
+}
+`;
 
 exports[`FunnelChart with two measures should create expected execution definition 1`] = `
 Object {
@@ -1177,4 +1199,8 @@ Object {
 }
 `;
 
-exports[`FunnelChart with two measures should create expected props for core chart 1`] = `Object {}`;
+exports[`FunnelChart with two measures should create expected props for core chart 1`] = `
+Object {
+  "exportTitle": "FunnelChart",
+}
+`;
