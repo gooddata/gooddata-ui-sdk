@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`modifyAttribute should generate new localId if one not provided during modification 1`] = `
+exports[`modifyAttribute should keep localId if one not provided during modification 1`] = `
 Object {
   "attribute": Object {
     "alias": "My Account Name",
@@ -8,7 +8,7 @@ Object {
       "identifier": "label.account.id.name",
       "type": "displayForm",
     },
-    "localIdentifier": "a_84711f30_label.account.id.name",
+    "localIdentifier": "a_label.account.id.name",
   },
 }
 `;

@@ -26,7 +26,7 @@ export class AttributeBuilder {
     constructor(input: AttributeBuilderInput) {
         if (isAttribute(input)) {
             this.attribute = cloneDeep(input.attribute);
-            this.customLocalId = false;
+            this.customLocalId = true;
         } else {
             const displayForm: ObjRef = isObjRef(input) ? input : idRef(input, "displayForm");
 

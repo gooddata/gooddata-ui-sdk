@@ -1245,8 +1245,6 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     format: (format?: string | undefined) => this;
     protected abstract generateLocalId(): string;
     // Warning: (ae-forgotten-export) The symbol "MeasureEnvelope" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
     protected initializeFromExisting(measure: MeasureEnvelope): void;
     localId: (localId?: string | undefined) => this;
     noAlias: () => this;

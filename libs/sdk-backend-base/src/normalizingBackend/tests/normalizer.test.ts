@@ -79,7 +79,9 @@ describe("Normalizer", () => {
             newDefForItems("test", [
                 ReferenceLdm.Won,
                 modifySimpleMeasure(ReferenceLdm.Won, m =>
-                    m.filters(newNegativeAttributeFilter(ReferenceLdm.Region, ["East Coast"])),
+                    m
+                        .filters(newNegativeAttributeFilter(ReferenceLdm.Region, ["East Coast"]))
+                        .defaultLocalId(),
                 ),
             ]),
         ],

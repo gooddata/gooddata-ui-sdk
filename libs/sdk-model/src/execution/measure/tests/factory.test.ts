@@ -51,10 +51,10 @@ describe("measure factories", () => {
             expect(measureLocalId(ExistingMeasure)).toEqual("measure1");
         });
 
-        it("should generate new local id when not explicitly specified", () => {
+        it("should keep local id from the existing measure if new localid not provided", () => {
             const newMeasure = modifyMeasure(ExistingMeasure);
 
-            expect(measureLocalId(ExistingMeasure)).not.toEqual(measureLocalId(newMeasure));
+            expect(measureLocalId(ExistingMeasure)).toEqual(measureLocalId(newMeasure));
         });
 
         it("should create new measure with modified local id", () => {
@@ -72,7 +72,7 @@ describe("measure factories", () => {
                 .title("title"),
         );
 
-        it("should create new measure with modified aggregation and generated local id", () => {
+        it("should create new measure with modified aggregation and same localId", () => {
             expect(modifySimpleMeasure(ExistingMeasure, m => m.aggregation("min"))).toMatchSnapshot();
         });
 
@@ -82,7 +82,7 @@ describe("measure factories", () => {
             ).toMatchSnapshot();
         });
 
-        it("should create new measure with cleaned up customizations", () => {
+        it("should create new measure with cleaned up customizations and same localId", () => {
             const result = modifySimpleMeasure(ExistingMeasureWithCustomizations, m =>
                 m
                     .defaultFormat()

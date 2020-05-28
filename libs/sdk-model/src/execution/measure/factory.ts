@@ -181,10 +181,17 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
         };
     };
 
+    /**
+     * The measure builder subclasses must call this when they are used to modify
+     * an existing measure. Existing measure modification returns a new object that
+     * reflects the mods however it keeps the localId set as-is.
+     *
+     * @param measure - envelope of measure being modified
+     */
     protected initializeFromExisting(measure: MeasureEnvelope): void {
         this.measure = cloneDeep(measure);
-        this.measure.localIdentifier = "";
-        this.customLocalId = false;
+        this.measure.localIdentifier = measure.localIdentifier;
+        this.customLocalId = true;
     }
 
     /**
