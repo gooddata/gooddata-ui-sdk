@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withLoading";
+import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withExecutionLoading";
 import {
     attributeLocalId,
     IAttributeOrMeasure,

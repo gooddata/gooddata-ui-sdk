@@ -2,7 +2,7 @@
 import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withLoading";
+import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withExecutionLoading";
 import isEqual = require("lodash/isEqual");
 
 /**

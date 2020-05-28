@@ -1,6 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { withLoading, IWithLoadingEvents, WithLoadingResult, DataViewWindow } from "./withLoading";
+import {
+    withExecutionLoading,
+    IWithLoadingEvents,
+    WithLoadingResult,
+    DataViewWindow,
+} from "./withExecutionLoading";
 import { DataViewFacade } from "../base";
 
 /**
@@ -81,6 +86,6 @@ export function withExecution<T>(params: IWithExecution<T>) {
             window,
         };
 
-        return withLoading(withLoadingParams)(WrappedComponent);
+        return withExecutionLoading(withLoadingParams)(WrappedComponent);
     };
 }

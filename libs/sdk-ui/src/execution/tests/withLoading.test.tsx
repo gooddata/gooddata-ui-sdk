@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { withLoading, IWithLoading, WithLoadingResult } from "../withLoading";
+import { withExecutionLoading, IWithExecutionLoading, WithLoadingResult } from "../withExecutionLoading";
 import { shallow } from "enzyme";
 import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base";
@@ -11,7 +11,7 @@ const EmptyDataViewFacade = DataViewFacade.for(dummyDataView(emptyDef("testWorks
 
 const renderEnhancedComponent = <T, E>(
     promiseConfig: IDummyPromise<DataViewFacade, E>,
-    hocConfig?: Omit<IWithLoading<T>, "promiseFactory" | "exportTitle">,
+    hocConfig?: Omit<IWithExecutionLoading<T>, "promiseFactory" | "exportTitle">,
 ) => {
     const promiseFactory = (_props?: T) => createDummyPromise(promiseConfig);
 
@@ -27,7 +27,7 @@ const renderEnhancedComponent = <T, E>(
         );
     };
 
-    const Component: any = withLoading({
+    const Component: any = withExecutionLoading({
         ...hocConfig,
         promiseFactory,
         exportTitle: "TestComponent",

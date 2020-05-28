@@ -2,11 +2,11 @@
 
 export { withExecution, IWithExecution } from "./withExecution";
 export {
-    withLoading,
-    IWithLoading,
+    withExecutionLoading,
+    IWithExecutionLoading,
     IWithLoadingEvents,
     WithLoadingResult,
     DataViewWindow,
-} from "./withLoading";
+} from "./withExecutionLoading";
 export { RawExecute, IRawExecuteProps } from "./RawExecute";
 export { Execute, IExecuteProps } from "./Execute";

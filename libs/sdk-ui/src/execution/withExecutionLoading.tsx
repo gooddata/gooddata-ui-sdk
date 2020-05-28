@@ -109,7 +109,7 @@ export interface IWithLoadingEvents<TProps> {
  *
  * @internal
  */
-export interface IWithLoading<TProps> {
+export interface IWithExecutionLoading<TProps> {
     /**
      * Specify export title that will be used unless the export function caller sends their own custom title.
      *
@@ -171,7 +171,7 @@ type WithLoadingState = {
  *
  * @internal
  */
-export function withLoading<TProps>(params: IWithLoading<TProps>) {
+export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>) {
     const {
         promiseFactory,
         loadOnMount = true,

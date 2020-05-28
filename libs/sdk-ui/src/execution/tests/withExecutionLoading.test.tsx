@@ -5,7 +5,7 @@ import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
 import * as React from "react";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
-import { DataViewWindow, WithLoadingResult } from "../withLoading";
+import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading";
 import { IWithExecution, withExecution } from "../withExecution";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { withEventing } from "../../../../sdk-backend-base/src/eventingBackend";
