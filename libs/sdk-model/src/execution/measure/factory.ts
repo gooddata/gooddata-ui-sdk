@@ -181,10 +181,17 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
         };
     };
 
+    /**
+     * The measure builder subclasses must call this when they are used to modify
+     * an existing measure. Existing measure modification returns a new object that
+     * reflects the mods however it keeps the localId set as-is.
+     *
+     * @param measure - envelope of measure being modified
+     */
     protected initializeFromExisting(measure: MeasureEnvelope): void {
         this.measure = cloneDeep(measure);
-        this.measure.localIdentifier = "";
-        this.customLocalId = false;
+        this.measure.localIdentifier = measure.localIdentifier;
+        this.customLocalId = true;
     }
 
     /**
@@ -638,6 +645,10 @@ export function newMeasure(
  *
  * This operation is immutable and will not alter the input measure.
  *
+ * The returned measure will have the same localIdentifier as the original measure. If you would like to assign
+ * new/different local identifier to the measure, you can do that using the modifications where you can provide
+ * either new custom localId or indicate that the measure should fall back to the auto-generated localId.
+ *
  * @param measure - measure to use as template for the new measure
  * @param modifications - modifications to apply
  * @returns new instance
@@ -673,6 +684,10 @@ function createBuilder(measure: IMeasure): MeasureBuilderBase<IMeasureDefinition
  *
  * This operation is immutable and will not alter the input measure.
  *
+ * The returned measure will have the same localIdentifier as the original measure. If you would like to assign
+ * new/different local identifier to the measure, you can do that using the modifications where you can provide
+ * either new custom localId or indicate that the measure should fall back to the auto-generated localId.
+ *
  * @param measure - measure to use as template for the new measure
  * @param modifications - modifications to apply
  * @returns new instance
@@ -693,6 +708,10 @@ export function modifySimpleMeasure(
  * Creates a new PoP measure by applying modifications on top of an existing measure.
  *
  * This operation is immutable and will not alter the input measure.
+ *
+ * The returned measure will have the same localIdentifier as the original measure. If you would like to assign
+ * new/different local identifier to the measure, you can do that using the modifications where you can provide
+ * either new custom localId or indicate that the measure should fall back to the auto-generated localId.
  *
  * @param measure - measure to use as template for the new measure
  * @param modifications - modifications to apply

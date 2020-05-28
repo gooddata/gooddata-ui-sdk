@@ -15,7 +15,7 @@ Object {
 }
 `;
 
-exports[`measure factories modifySimpleMeasure should create new measure with cleaned up customizations 1`] = `
+exports[`measure factories modifySimpleMeasure should create new measure with cleaned up customizations and same localId 1`] = `
 Object {
   "measure": Object {
     "definition": Object {
@@ -25,7 +25,7 @@ Object {
         },
       },
     },
-    "localIdentifier": "m_measure1",
+    "localIdentifier": "measure1",
   },
 }
 `;
@@ -46,7 +46,7 @@ Object {
 }
 `;
 
-exports[`measure factories modifySimpleMeasure should create new measure with modified aggregation and generated local id 1`] = `
+exports[`measure factories modifySimpleMeasure should create new measure with modified aggregation and same localId 1`] = `
 Object {
   "measure": Object {
     "definition": Object {
@@ -57,7 +57,7 @@ Object {
         },
       },
     },
-    "localIdentifier": "m_measure1_min",
+    "localIdentifier": "measure1",
   },
 }
 `;

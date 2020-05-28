@@ -9,7 +9,7 @@ import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { PivotTableWithTwoMeasuresAndTotals } from "./totals";
 
 const MeasureWithCustomFormat = modifyMeasure(ReferenceLdm.Amount, m =>
-    m.format("[backgroundColor=ffff00][green]#,##0.00 €"),
+    m.format("[backgroundColor=ffff00][green]#,##0.00 €").defaultLocalId(),
 );
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)

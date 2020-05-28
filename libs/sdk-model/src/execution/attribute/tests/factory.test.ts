@@ -17,7 +17,7 @@ describe("newAttribute", () => {
 });
 
 describe("modifyAttribute", () => {
-    it("should generate new localId if one not provided during modification", () => {
+    it("should keep localId if one not provided during modification", () => {
         expect(modifyAttribute(Account.Name, m => m.alias("My Account Name"))).toMatchSnapshot();
     });
 

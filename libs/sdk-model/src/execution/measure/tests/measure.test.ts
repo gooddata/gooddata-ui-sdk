@@ -30,6 +30,7 @@ import { ObjRef } from "../../../objRef";
 import { newPositiveAttributeFilter } from "../../filter/factory";
 import { IFilter } from "../../filter";
 import { idRef, uriRef } from "../../../objRef/factory";
+import { applyRatioRule, ComputeRatioRule } from "../../buckets";
 
 const SimpleMeasureWithIdentifier = Won;
 const SimpleMeasureWithRatio = modifySimpleMeasure(Won, m => m.ratio());
@@ -297,5 +298,17 @@ describe("measurePreviousPeriodDateDataSets", () => {
 
     it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
         expect(() => measurePreviousPeriodDateDataSets(input)).toThrow();
+    });
+});
+
+describe("bugfixes", () => {
+    it("should not cause RAIL-2352", () => {
+        const measureWithCustomLocalId = modifySimpleMeasure(Won, m => m.localId("customLocalId"));
+        const derivedMeasure = newPreviousPeriodMeasure(measureWithCustomLocalId, [
+            { dataSet: "dataSet", periodsAgo: 1 },
+        ]);
+
+        const result = applyRatioRule([measureWithCustomLocalId, derivedMeasure], ComputeRatioRule.NEVER);
+        expect(measureMasterIdentifier(result[1])).toEqual(measureLocalId(result[0]));
     });
 });
