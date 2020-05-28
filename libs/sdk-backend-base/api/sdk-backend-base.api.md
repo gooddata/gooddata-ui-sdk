@@ -283,8 +283,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 //
 // @internal
 export interface IAuthenticatedAsyncCallContext {
-    // (undocumented)
-    principal: AuthenticatedPrincipal;
+    getPrincipal(): Promise<AuthenticatedPrincipal>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "IAuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal

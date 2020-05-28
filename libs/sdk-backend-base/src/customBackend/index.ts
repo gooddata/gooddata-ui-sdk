@@ -23,7 +23,6 @@ import {
 } from "../toolkit/auth";
 import { CustomWorkspace } from "./workspace";
 import { CustomBackendConfig } from "./config";
-import defaultTo = require("lodash/defaultTo");
 
 //
 //
@@ -160,18 +159,21 @@ export class CustomBackend implements IAnalyticalBackend {
     };
 
     private getAsyncCallContext = async (client: any): Promise<IAuthenticatedAsyncCallContext> => {
-        // use a default value that will not fail at runtime (e.g. null references) in case we are not authenticated yet
-        // that way first call to authApiCall will proceed as if the principal was there and fail expectedly
-        // thus triggering the auth process
-        const principal = defaultTo(
-            this.authProvider && (await this.authProvider.getCurrentPrincipal({ client })),
-            {
-                userId: "__invalid__",
-            },
-        );
+        const getPrincipal = async (): Promise<AuthenticatedPrincipal> => {
+            if (!this.authProvider) {
+                throw new NotAuthenticated("Cannot obtain principal without an authProvider.");
+            }
+
+            const principal = await this.authProvider.getCurrentPrincipal({ client });
+            if (principal) {
+                return principal;
+            }
+
+            return this.authProvider.authenticate(this.getAuthenticationContext(client));
+        };
 
         return {
-            principal,
+            getPrincipal,
         };
     };
 }

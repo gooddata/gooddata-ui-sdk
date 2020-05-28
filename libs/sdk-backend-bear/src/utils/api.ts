@@ -8,8 +8,11 @@ import last from "lodash/last";
  *
  * @internal
  */
-export const userLoginMd5FromAuthenticatedPrincipal = (principal: AuthenticatedPrincipal): string => {
-    const selfLink: string = principal.userMeta?.links?.self;
+export const userLoginMd5FromAuthenticatedPrincipal = async (
+    getPrincipal: () => Promise<AuthenticatedPrincipal>,
+): Promise<string> => {
+    const principal = await getPrincipal();
+    const selfLink: string = principal.userMeta?.links?.self ?? "";
     const userLoginMd5 = last(selfLink.split("/"));
 
     if (!userLoginMd5) {

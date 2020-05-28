@@ -12,10 +12,10 @@ import {
     IUserService,
     ErrorConverter,
     NotAuthenticated,
+    AuthenticationContext,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/gd-tiger-client";
 import isEmpty = require("lodash/isEmpty");
-import defaultTo = require("lodash/defaultTo");
 import isString = require("lodash/isString");
 
 import { convertApiError } from "../errors/errorHandling";
@@ -167,19 +167,24 @@ export class TigerBackend implements IAnalyticalBackend {
         });
     };
 
+    private getAuthenticationContext = (): AuthenticationContext => ({ client: this.sdk });
+
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
-        // use a default value that will not fail at runtime (e.g. null references) in case we are not authenticated yet
-        // that way first call to authApiCall will proceed as if the principal was there and fail expectedly
-        // thus triggering the auth process
-        const principal = defaultTo(
-            this.authProvider && (await this.authProvider.getCurrentPrincipal({ client: this.sdk })),
-            {
-                userId: "__invalid__",
-            },
-        );
+        const getPrincipal = async (): Promise<AuthenticatedPrincipal> => {
+            if (!this.authProvider) {
+                throw new NotAuthenticated("Cannot obtain principal without an authProvider.");
+            }
+
+            const principal = await this.authProvider.getCurrentPrincipal({ client: this.sdk });
+            if (principal) {
+                return principal;
+            }
+
+            return this.authProvider.authenticate(this.getAuthenticationContext());
+        };
 
         return {
-            principal,
+            getPrincipal,
         };
     };
 
