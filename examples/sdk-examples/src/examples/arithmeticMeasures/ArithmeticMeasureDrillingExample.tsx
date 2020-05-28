@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { measureLocalId } from "@gooddata/sdk-model";
+import { measureIdentifier } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 
 const measures = [LdmExt.NrRestaurants, LdmExt.TotalSales2, LdmExt.arithmeticMeasure1];
 
 const rows = [Ldm.LocationState];
 
-const drillableItems = [HeaderPredicates.composedFromIdentifier(measureLocalId(LdmExt.TotalSales2))];
+const drillableItems = [HeaderPredicates.composedFromIdentifier(measureIdentifier(LdmExt.TotalSales2)!)];
 
 const style = { height: 200 };
 

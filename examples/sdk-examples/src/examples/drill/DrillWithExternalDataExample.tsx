@@ -4,7 +4,7 @@ import fetch from "isomorphic-fetch";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { LoadingComponent, ErrorComponent, HeaderPredicates } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { newPositiveAttributeFilter, attributeLocalId } from "@gooddata/sdk-model";
+import { newPositiveAttributeFilter, attributeIdentifier } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 import { EmployeeProfile } from "./EmployeeProfile";
 
@@ -37,13 +37,14 @@ export const DrillWithExternalDataExample: React.FC = () => {
     });
 
     const onLocationDrill = (drillTarget: any) => {
-        const { title: name, id } =
+        const { title: name, uri } =
             drillTarget.drillContext.element === "bar"
-                ? drillTarget.drillContext.intersection[1]
-                : drillTarget.drillContext.points[0].intersection[1];
+                ? drillTarget.drillContext.intersection[1].header.attributeHeaderItem
+                : drillTarget.drillContext.points[0].intersection[1].header.attributeHeaderItem;
+
         const location = {
             name,
-            uri: `${LdmExt.locationNameAttributeUri}/elements?id=${id}`,
+            uri,
         };
         setState(oldState => ({
             ...oldState,
@@ -164,7 +165,9 @@ export const DrillWithExternalDataExample: React.FC = () => {
             <PivotTable
                 measures={[LdmExt.AvgDailyTotalSales]}
                 rows={[LdmExt.LocationState]}
-                drillableItems={[HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.LocationState))]}
+                drillableItems={[
+                    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationState)!),
+                ]}
                 onDrill={onStateDrill}
             />
         </div>
@@ -176,7 +179,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
             <PivotTable
                 measures={[LdmExt.AvgDailyTotalSales]}
                 rows={[LdmExt.EmployeeName]}
-                drillableItems={[HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.EmployeeName))]}
+                drillableItems={[HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.EmployeeName)!)]}
                 filters={employeeTableFilters}
                 onDrill={onEmployeeDrill}
             />
@@ -190,7 +193,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                 measures={[LdmExt.TotalSales2]}
                 viewBy={LdmExt.LocationName}
                 filters={salesTableFilters}
-                drillableItems={[HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.LocationName))]}
+                drillableItems={[HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationName)!)]}
                 onDrill={onLocationDrill}
             />
         </div>
