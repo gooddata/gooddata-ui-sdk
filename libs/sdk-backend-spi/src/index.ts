@@ -54,6 +54,9 @@ export {
     InsightOrdering,
     IInsightQueryOptions,
     IInsightQueryResult,
+    IInsightReferences,
+    InsightReferenceTypes,
+    SupportedInsightReferenceTypes,
 } from "./workspace/insights";
 
 export { IWorkspaceMetadata } from "./workspace/metadata";

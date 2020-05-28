@@ -3,9 +3,11 @@
 import {
     IInsightQueryOptions,
     IInsightQueryResult,
+    IInsightReferences,
     InsightOrdering,
-    UnexpectedResponseError,
     IWorkspaceInsights,
+    SupportedInsightReferenceTypes,
+    UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -13,13 +15,11 @@ import {
     insightId,
     insightTitle,
     isIdentifierRef,
-    ObjRef,
-    IVisualizationClass,
     isUriRef,
+    IVisualizationClass,
+    ObjRef,
     visClassId,
     visClassUri,
-    ObjectType,
-    IMetadataObject,
 } from "@gooddata/sdk-model";
 import { InsightRecording, RecordingIndex } from "./types";
 import { identifierToRecording, RecordingPager } from "./utils";
@@ -129,10 +129,9 @@ export class RecordedInsights implements IWorkspaceInsights {
 
     public getReferencedObjects = async (
         _insight: IInsight,
-        _types?: Array<Exclude<ObjectType, "insight" | "tag">>,
-    ): Promise<IMetadataObject[]> => {
-        // return empty array for now
-        return [];
+        _types?: SupportedInsightReferenceTypes[],
+    ): Promise<IInsightReferences> => {
+        return {};
     };
 
     private async getVisualizationClassByUri(uri: string): Promise<IVisualizationClass> {

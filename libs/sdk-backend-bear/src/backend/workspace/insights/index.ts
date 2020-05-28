@@ -1,56 +1,30 @@
 // (C) 2019-2020 GoodData Corporation
-import flatMap from "lodash/fp/flatMap";
 import flow from "lodash/flow";
 import filter from "lodash/fp/filter";
 import map from "lodash/fp/map";
 import sortBy from "lodash/fp/sortBy";
-import union from "lodash/union";
-import uniqBy from "lodash/fp/uniqBy";
-import { IInsightQueryOptions, IInsightQueryResult, IWorkspaceInsights } from "@gooddata/sdk-backend-spi";
 import {
-    GdcVisualizationClass,
-    GdcVisualizationObject,
-    GdcMetadata,
-    GdcMetadataObject,
-} from "@gooddata/gd-bear-model";
+    IInsightQueryOptions,
+    IInsightQueryResult,
+    IInsightReferences,
+    IWorkspaceInsights,
+    SupportedInsightReferenceTypes,
+} from "@gooddata/sdk-backend-spi";
+import { GdcVisualizationClass, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import {
-    IVisualizationClass,
+    IInsight,
     IInsightDefinition,
     insightId,
-    ObjRef,
     insightVisualizationUrl,
-    IInsight,
-    ObjectType,
-    IMetadataObject,
-    insightUri,
+    IVisualizationClass,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { convertVisualizationClass } from "../../../toSdkModel/VisualizationClassConverter";
 import { convertVisualization } from "../../../toSdkModel/VisualizationConverter";
-import { convertInsightDefinition, convertInsight } from "../../../fromSdkModel/InsightConverter";
+import { convertInsight, convertInsightDefinition } from "../../../fromSdkModel/InsightConverter";
 import { objRefToUri } from "../../../fromObjRef/api";
 import { BearAuthenticatedCallGuard } from "../../../types";
-import { getObjectIdFromUri } from "../../../utils/api";
-import { convertMetadataObject } from "../../../toSdkModel/MetaConverter";
-
-const objectTypeToObjectCategory = (
-    type: Exclude<ObjectType, "insight" | "tag">,
-): GdcMetadata.ObjectCategory => {
-    switch (type) {
-        case "displayForm":
-            return "attributeDisplayForm";
-        case "measure":
-            return "metric";
-        case "variable":
-            return "prompt";
-        default:
-            return type;
-    }
-};
-
-const objectTypesWithLinkToDataset: Array<Exclude<ObjectType, "insight" | "tag">> = ["fact", "attribute"];
-const objectCategoriesWithLinkToDataset: GdcMetadata.ObjectCategory[] = objectTypesWithLinkToDataset.map(
-    objectTypeToObjectCategory,
-);
+import { InsightReferencesQuery } from "./insightReferences";
 
 export class BearWorkspaceInsights implements IWorkspaceInsights {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -197,66 +171,9 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
 
     public getReferencedObjects = async (
         insight: IInsight,
-        types: Array<Exclude<ObjectType, "insight" | "tag">> = [
-            "attribute",
-            "dataSet",
-            "displayForm",
-            "fact",
-            "measure",
-        ],
-    ): Promise<IMetadataObject[]> => {
-        const uri = insightUri(insight);
-        const objectId = getObjectIdFromUri(uri);
-
-        // if the user wants dataSets we have to objects with links to dataSets as well to be able to reach the dataSets
-        const relevantTypes =
-            types && types.includes("dataSet")
-                ? union<Exclude<ObjectType, "insight" | "tag">>(types, objectTypesWithLinkToDataset)
-                : types;
-
-        const { entries: allDirectObjects } = await this.authCall(sdk =>
-            sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
-                `/gdc/md/${this.workspace}/using2/${objectId}?types=${relevantTypes
-                    .map(objectTypeToObjectCategory)
-                    .join(",")}`,
-            ),
-        );
-
-        // get datasets from everything if needed
-        const datasetMetas = types.includes("dataSet") ? await this.getDatasets(allDirectObjects) : [];
-
-        // we have to actually get the full objects because of the isProduction which is not available on the meta objects
-        const objectUrisToObtain = [...allDirectObjects, ...datasetMetas].map(meta => meta.link);
-        const objects = await this.authCall(sdk => sdk.md.getObjects(this.workspace, objectUrisToObtain));
-
-        return objects
-            .map(obj => convertMetadataObject(GdcMetadataObject.unwrapMetadataObject(obj)))
-            .filter(obj => types.includes(obj.type)); // filter out items we might have needed to load but the type of which the user did not request
-    };
-
-    // gets all datasets referenced by the given objects
-    private getDatasets = async (
-        objects: GdcMetadata.IObjectXrefEntry[],
-    ): Promise<GdcMetadata.IObjectXrefEntry[]> => {
-        // only some object types will have a reference to a dataSet, so no need to load other object types
-        const itemsWithDataset = objects.filter(i =>
-            objectCategoriesWithLinkToDataset.includes(i.category as GdcMetadata.ObjectCategory),
-        );
-
-        const datasetResponses = await Promise.all(
-            itemsWithDataset.map(item =>
-                this.authCall(sdk =>
-                    sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
-                        `/gdc/md/${this.workspace}/usedby2/${getObjectIdFromUri(item.link)}?types=dataSet`,
-                    ),
-                ),
-            ),
-        );
-
-        return flow(
-            flatMap((response: { entries: GdcMetadata.IObjectXrefEntry[] }) => response.entries),
-            uniqBy((dataSet: GdcMetadata.IObjectXrefEntry) => dataSet.identifier),
-        )(datasetResponses);
+        types: SupportedInsightReferenceTypes[] = ["dataSet", "measure"],
+    ): Promise<IInsightReferences> => {
+        return new InsightReferencesQuery(this.authCall, this.workspace, insight, types).run();
     };
 
     private getVisualizationClassByUrl = async (url: string): Promise<IVisualizationClass | undefined> => {

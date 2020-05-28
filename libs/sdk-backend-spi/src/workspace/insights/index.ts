@@ -7,6 +7,7 @@ import {
     ObjRef,
     IMetadataObject,
     ObjectType,
+    CatalogItem,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
@@ -76,12 +77,47 @@ export interface IWorkspaceInsights {
      * Get all metadata objects referenced by a given insight.
      *
      * @param insight - insight to get referenced objects for
-     * @param types - optional array of object types to include
+     * @param types - optional array of object types to include, when not specified, all supported references will
+     *  be retrieved
      */
     getReferencedObjects(
         insight: IInsight,
-        types?: Array<Exclude<ObjectType, "insight" | "tag">>,
-    ): Promise<IMetadataObject[]>;
+        types?: SupportedInsightReferenceTypes[],
+    ): Promise<IInsightReferences>;
+}
+
+/**
+ * @public
+ */
+export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
+
+/**
+ * List of currently supported types of references that can be retrieved using getReferencedObjects()
+ * @public
+ */
+export type SupportedInsightReferenceTypes = Exclude<
+    InsightReferenceTypes,
+    "attribute" | "fact" | "displayForm" | "variable"
+>;
+
+/**
+ * Contains information about objects that may be referenced by an insight. The contents of this object
+ * depend on the insight and the types requested at the time of call to getReferencedObjects.
+ *
+ * @public
+ */
+export interface IInsightReferences {
+    /**
+     * If requested, measures, attributes, display forms, facts and dateDataSets referenced by the insight will be
+     * returned here. If none of them were requested, the catalogItems will be undefined. If some were
+     * requested but insight is not referencing those types, then the array will be empty.
+     */
+    catalogItems?: CatalogItem[];
+
+    /**
+     * If requested, metadata about data sets from which this insight queries data will be returned here.
+     */
+    dataSetMeta?: IMetadataObject[];
 }
 
 /**
