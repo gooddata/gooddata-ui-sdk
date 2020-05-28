@@ -179,6 +179,8 @@ function recordedPermissionsFactory(): IWorkspacePermissionsFactory {
                 canManageProject: true,
                 canManageReport: true,
                 canUploadNonProductionCSV: true,
+                canCreateScheduledMail: true,
+                canListUsersInProject: true,
             }),
             hasPermission: _ => true,
         }),
