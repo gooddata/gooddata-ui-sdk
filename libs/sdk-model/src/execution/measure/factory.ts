@@ -645,6 +645,10 @@ export function newMeasure(
  *
  * This operation is immutable and will not alter the input measure.
  *
+ * The returned measure will have the same localIdentifier as the original measure. If you would like to assign
+ * new/different local identifier to the measure, you can do that using the modifications where you can provide
+ * either new custom localId or indicate that the measure should fall back to the auto-generated localId.
+ *
  * @param measure - measure to use as template for the new measure
  * @param modifications - modifications to apply
  * @returns new instance
@@ -680,6 +684,10 @@ function createBuilder(measure: IMeasure): MeasureBuilderBase<IMeasureDefinition
  *
  * This operation is immutable and will not alter the input measure.
  *
+ * The returned measure will have the same localIdentifier as the original measure. If you would like to assign
+ * new/different local identifier to the measure, you can do that using the modifications where you can provide
+ * either new custom localId or indicate that the measure should fall back to the auto-generated localId.
+ *
  * @param measure - measure to use as template for the new measure
  * @param modifications - modifications to apply
  * @returns new instance
@@ -700,6 +708,10 @@ export function modifySimpleMeasure(
  * Creates a new PoP measure by applying modifications on top of an existing measure.
  *
  * This operation is immutable and will not alter the input measure.
+ *
+ * The returned measure will have the same localIdentifier as the original measure. If you would like to assign
+ * new/different local identifier to the measure, you can do that using the modifications where you can provide
+ * either new custom localId or indicate that the measure should fall back to the auto-generated localId.
  *
  * @param measure - measure to use as template for the new measure
  * @param modifications - modifications to apply

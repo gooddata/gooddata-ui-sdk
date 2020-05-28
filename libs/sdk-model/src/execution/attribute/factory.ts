@@ -171,6 +171,10 @@ export function newAttribute(
 /**
  * Allows modification of an existing attribute instance.
  *
+ * The returned attribute will have the same localId as the original attribute. If you would like to assign
+ * new/different local identifier to the attribute, you can do that using the modifications where you can provide
+ * either new custom localId or indicate that the attribute should fall back to the auto-generated localId.
+ *
  * @param attribute - attribute to modify
  * @param modifications - modification function
  * @public
