@@ -200,4 +200,33 @@ Object {
 }
 `;
 
+exports[`converts execution definition to AFM Execution should remove empty attribute filters and not cause RAIL-2083 1`] = `
+Array [
+  Object {
+    "positiveAttributeFilter": Object {
+      "displayForm": Object {
+        "identifier": "label.product.id.name",
+      },
+      "in": Object {
+        "values": Array [
+          "value 1",
+        ],
+      },
+    },
+  },
+  Object {
+    "negativeAttributeFilter": Object {
+      "displayForm": Object {
+        "identifier": "label.product.id.name",
+      },
+      "notIn": Object {
+        "values": Array [
+          "value 2",
+        ],
+      },
+    },
+  },
+]
+`;
+
 exports[`converts execution definition to AFM Execution throw error with dimensions with native totals but no attribute in bucket 1`] = `"Native total references attribute that is not in any dimension: a_label.account.id.name"`;

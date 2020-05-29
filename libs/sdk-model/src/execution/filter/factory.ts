@@ -21,7 +21,7 @@ import { idRef } from "../../objRef/factory";
  *
  * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param inValues - values to filter for; these can be either specified as AttributeElements object or as an array
- *  of attribute element _values_
+ *  of attribute element _values_; if you specify empty array, then the filter will be noop and will be ignored
  * @public
  */
 export function newPositiveAttributeFilter(
@@ -49,7 +49,7 @@ export function newPositiveAttributeFilter(
  *
  * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param notInValues - values to filter out; these can be either specified as AttributeElements object or as an array
- *  of attribute element _values_
+ *  of attribute element _values_; if you specify empty array, then the filter will be noop and will be ignored
  * @public
  */
 export function newNegativeAttributeFilter(

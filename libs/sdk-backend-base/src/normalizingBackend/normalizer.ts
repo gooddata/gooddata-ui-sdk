@@ -28,6 +28,7 @@ import {
     modifyAttribute,
     modifyMeasure,
     IMeasureDefinition,
+    isAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
     IDimensionDescriptor,
@@ -228,7 +229,7 @@ export class Normalizer {
 
         // throw away noop filters
         const filters = copy.filters.filter(f => {
-            if (isNegativeAttributeFilter(f)) {
+            if (isAttributeFilter(f)) {
                 return !filterIsEmpty(f);
             } else if (isMeasureValueFilter(f)) {
                 return measureValueFilterCondition(f) !== undefined;

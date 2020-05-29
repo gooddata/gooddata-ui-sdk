@@ -19,11 +19,16 @@ import isNil from "lodash/isNil";
 import { toBearRef, toScopedBearRef } from "../fromObjRef/ObjRefConverter";
 
 function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
-    if (!isPositiveAttributeFilter(filter)) {
-        if (filterIsEmpty(filter)) {
-            return null;
-        }
+    /*
+     * When sending either positive or negative filter and the in/notIn is empty, backend will bomb
+     * with "Cannot parse MAQL expression(s): %s". Previously code was only throwing away empty negative
+     * filters.
+     */
+    if (filterIsEmpty(filter)) {
+        return null;
+    }
 
+    if (!isPositiveAttributeFilter(filter)) {
         return {
             negativeAttributeFilter: {
                 displayForm: toBearRef(filter.negativeAttributeFilter.displayForm),

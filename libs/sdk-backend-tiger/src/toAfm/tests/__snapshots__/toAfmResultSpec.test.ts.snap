@@ -1,5 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`converts execution definition to AFM Execution should remove empty attribute filters and not cause RAIL-2083 1`] = `
+Array [
+  Object {
+    "positiveAttributeFilter": Object {
+      "displayForm": Object {
+        "identifier": Object {
+          "id": "label.product.id.name",
+          "type": "label",
+        },
+      },
+      "in": Object {
+        "values": Array [
+          "value 1",
+        ],
+      },
+    },
+  },
+  Object {
+    "negativeAttributeFilter": Object {
+      "displayForm": Object {
+        "identifier": Object {
+          "id": "label.product.id.name",
+          "type": "label",
+        },
+      },
+      "notIn": Object {
+        "values": Array [
+          "value 2",
+        ],
+      },
+    },
+  },
+]
+`;
+
 exports[`converts execution definition to AFM Execution should return AFM Execution with definition that has filters 1`] = `
 Object {
   "execution": Object {

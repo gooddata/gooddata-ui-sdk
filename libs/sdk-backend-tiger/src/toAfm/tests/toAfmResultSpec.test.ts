@@ -13,6 +13,8 @@ import {
     newTotal,
     newTwoDimensional,
     MeasureGroupIdentifier,
+    newNegativeAttributeFilter,
+    defWithFilters,
 } from "@gooddata/sdk-model";
 
 const workspace = "test workspace";
@@ -53,5 +55,22 @@ describe("converts execution definition to AFM Execution", () => {
         expect(() =>
             toAfmExecution(defSetDimensions(emptyDef(workspace), Dimensions)),
         ).toThrowErrorMatchingSnapshot();
+    });
+
+    it("should remove empty attribute filters and not cause RAIL-2083", () => {
+        const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, []);
+        const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
+        const positiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value 1"]);
+        const negativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["value 2"]);
+
+        const def = defWithFilters(emptyDef("test"), [
+            emptyPositiveFilter,
+            emptyNegativeFilter,
+            positiveFilter,
+            negativeFilter,
+        ]);
+        const result = toAfmExecution(def);
+
+        expect(result.execution.filters).toMatchSnapshot();
     });
 });
