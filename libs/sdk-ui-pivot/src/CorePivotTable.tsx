@@ -371,7 +371,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
      * @param prevProps
      */
     private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
-        const drillingIsSame = prevProps.drillableItems === this.props.drillableItems;
+        const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
 
         if (!drillingIsSame) {
             return true;
