@@ -96,5 +96,13 @@ describe("tiger filter converter from model to AFM", () => {
                 convertVisualizationObjectFilter(visualizationObjectFilter.measureValueFilter),
             ).toThrowErrorMatchingSnapshot();
         });
+
+        it("should filter out empty attribute filters and not cause RAIL-2083", () => {
+            const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, []);
+            const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
+
+            expect(convertVisualizationObjectFilter(emptyPositiveFilter)).toBeNull();
+            expect(convertVisualizationObjectFilter(emptyNegativeFilter)).toBeNull();
+        });
     });
 });

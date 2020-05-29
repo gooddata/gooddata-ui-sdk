@@ -132,6 +132,14 @@ describe("bear filter converter from model to AFM", () => {
         it.each(Scenarios)("returns AFM measure %s", (_desc, input) => {
             expect(convertFilter(input)).toMatchSnapshot();
         });
+
+        it("should filter out empty attribute filters and not cause RAIL-2083", () => {
+            const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, []);
+            const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
+
+            expect(convertFilter(emptyPositiveFilter)).toBeNull();
+            expect(convertFilter(emptyNegativeFilter)).toBeNull();
+        });
     });
 
     describe("convert measure filter", () => {

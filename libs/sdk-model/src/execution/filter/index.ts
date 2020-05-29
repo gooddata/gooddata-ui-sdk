@@ -43,6 +43,7 @@ export type IAttributeElements = IAttributeElementsByRef | IAttributeElementsByV
  * MAY influence the results of the execution indirectly: if the execution definition specifies MAQL measures that
  * use the filtered attribute.
  *
+ * If the attribute elements in the `in` property are empty, then the filter is NOOP.
  * @public
  */
 export interface IPositiveAttributeFilter {
@@ -64,6 +65,8 @@ export interface IPositiveAttributeFilter {
  * The filter can be specified even for attributes that are not included in the execution - such a filter then
  * MAY influence the results of the execution indirectly: if the execution definition specifies MAQL measures that
  * use the filtered attribute.
+ *
+ * If the attribute elements in the `notIn` property are empty, then the filter is NOOP.
  *
  * @public
  */

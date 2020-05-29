@@ -34,10 +34,6 @@ function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPo
 }
 
 function convertNegativeFilter(filter: INegativeAttributeFilter): ExecuteAFM.INegativeAttributeFilter | null {
-    if (filterIsEmpty(filter)) {
-        return null;
-    }
-
     const displayFormRef = filter.negativeAttributeFilter.displayForm;
     const attributeElements = filter.negativeAttributeFilter.notIn;
 
@@ -54,6 +50,10 @@ function convertNegativeFilter(filter: INegativeAttributeFilter): ExecuteAFM.INe
 }
 
 function convertAttributeFilter(filter: IAttributeFilter): ExecuteAFM.FilterItem | null {
+    if (filterIsEmpty(filter)) {
+        return null;
+    }
+
     if (isPositiveAttributeFilter(filter)) {
         return convertPositiveFilter(filter);
     }
