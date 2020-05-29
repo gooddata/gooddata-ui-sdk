@@ -75,7 +75,7 @@ export const FranchisedSales = modifyMeasure(Ldm.$FranchisedSales, m =>
 );
 export const FranchisedSalesAsPercent = modifyMeasure(Ldm.$FranchisedSales, m =>
     m
-        .format("#,##0")
+        .format("#,##0%")
         .title("Franchise Sales")
         .localId(franchiseSalesAsPercentageLocalId),
 );
