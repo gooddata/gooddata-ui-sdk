@@ -2,22 +2,22 @@
 import {
     IInsightQueryOptions,
     IInsightQueryResult,
-    UnexpectedError,
+    IInsightReferences,
     IWorkspaceInsights,
+    SupportedInsightReferenceTypes,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IVisualizationClass,
     IInsight,
     IInsightDefinition,
+    IVisualizationClass,
     ObjRef,
     objRefToString,
-    ObjectType,
-    IMetadataObject,
 } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToUri } from "../../../fromObjRef";
 
-import { insights as insightsMocks, appendIdAndUri } from "./mocks/insights";
+import { appendIdAndUri, insights as insightsMocks } from "./mocks/insights";
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsights {
@@ -82,18 +82,14 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
         return this.authCall(async () => insight);
     };
 
-    public deleteInsight = async (
-        // @ts-ignore
-        ref: ObjRef,
-    ): Promise<void> => {
-        return this.authCall(async () => undefined);
+    public deleteInsight = async (_ref: ObjRef): Promise<void> => {
+        return Promise.resolve();
     };
 
     public getReferencedObjects = async (
         _insight: IInsight,
-        _types?: Array<Exclude<ObjectType, "insight" | "tag">>,
-    ): Promise<IMetadataObject[]> => {
-        // return empty array for now
-        return this.authCall(async () => []);
+        _types?: SupportedInsightReferenceTypes[],
+    ): Promise<IInsightReferences> => {
+        return Promise.resolve({});
     };
 }

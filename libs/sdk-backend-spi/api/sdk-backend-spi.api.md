@@ -590,6 +590,12 @@ export interface IInsightQueryOptions {
 export interface IInsightQueryResult extends IPagedResource<IInsight> {
 }
 
+// @public
+export interface IInsightReferences {
+    catalogItems?: CatalogItem[];
+    dataSetMeta?: IMetadataObject[];
+}
+
 // @alpha
 export interface ILayoutWidget {
     widget: IWidget;
@@ -666,6 +672,9 @@ export interface IMeasureGroupDescriptor {
 
 // @public
 export type InsightOrdering = "id" | "title" | "updated";
+
+// @public (undocumented)
+export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
 
 // @public
 export interface IPagedResource<TItem> {
@@ -1062,7 +1071,7 @@ export interface IWorkspaceInsights {
     deleteInsight(ref: ObjRef): Promise<void>;
     getInsight(ref: ObjRef): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
-    getReferencedObjects(insight: IInsight, types?: Array<Exclude<ObjectType, "insight" | "tag">>): Promise<IMetadataObject[]>;
+    getReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
     updateInsight(insight: IInsight): Promise<IInsight>;
@@ -1214,6 +1223,9 @@ export enum SettingCatalog {
     disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline",
     enableAxisNameConfiguration = "enableAxisNameConfiguration"
 }
+
+// @public
+export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "attribute" | "fact" | "displayForm" | "variable">;
 
 // @public
 export class UnexpectedError extends AnalyticalBackendError {
