@@ -876,6 +876,9 @@ export type InsightModifications = (builder: InsightDefinitionBuilder) => Insigh
 export function insightProperties(insight: IInsightDefinition): VisualizationProperties;
 
 // @public
+export function insightSetFilters<T extends IInsightDefinition>(insight: T, filters?: IFilter[]): T;
+
+// @public
 export function insightSetProperties<T extends IInsightDefinition>(insight: T, properties?: VisualizationProperties): T;
 
 // @public

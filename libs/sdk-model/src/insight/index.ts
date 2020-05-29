@@ -517,6 +517,27 @@ export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts:
     } as T;
 }
 
+/**
+ * Gets a new insight that 'inherits' all data from the provided insight but has different filters. New
+ * filters will be used in the new insight as-is, no merging with existing filters.
+ *
+ * @param insight - insight to work with
+ * @param filters - new filters to apply
+ * @returns always new instance
+ * @public
+ */
+export function insightSetFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[] = []): T {
+    invariant(insight, "insight must be specified");
+
+    // tslint:disable-next-line: no-object-literal-type-assertion
+    return {
+        insight: {
+            ...insight.insight,
+            filters,
+        },
+    } as T;
+}
+
 //
 // Visualization class functions
 //

@@ -285,6 +285,7 @@ export {
     insightTotals,
     insightFilters,
     insightVisualizationUrl,
+    insightSetFilters,
     insightSetProperties,
     insightSetSorts,
     visClassUrl,

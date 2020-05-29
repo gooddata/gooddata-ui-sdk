@@ -2,12 +2,6 @@
 
 import {
     IFilter,
-    insightFilters,
-    insightProperties,
-    insightSetProperties,
-    insightSetSorts,
-    insightSorts,
-    insightTotals,
     ITotal,
     newAttributeLocator,
     newAttributeSort,
@@ -15,9 +9,7 @@ import {
     newPositiveAttributeFilter,
     newTotal,
     ISortItem,
-    VisualizationProperties,
     IAttributeOrMeasure,
-    insightItems,
 } from "../..";
 import { newInsight } from "../../../__mocks__/insights";
 import { Account, Activity, Velocity, Won } from "../../../__mocks__/model";
@@ -36,6 +28,15 @@ import {
     insightUri,
     insightIsLocked,
     insightUpdated,
+    insightFilters,
+    insightProperties,
+    insightSetFilters,
+    insightSetProperties,
+    insightSetSorts,
+    insightSorts,
+    insightTotals,
+    insightItems,
+    VisualizationProperties,
 } from "../index";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);
@@ -362,6 +363,33 @@ describe("insightUpdated", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightUpdated(input)).toThrow();
+    });
+});
+
+describe("insightSetFilters", () => {
+    const AccountFilter = newPositiveAttributeFilter(Account.Name, { values: ["foo"] });
+    const ActivityFilter = newPositiveAttributeFilter(Activity.Subject, { values: ["bar"] });
+
+    it("should set new filters in insight without them", () => {
+        expect(insightSetFilters(EmptyInsight, [AccountFilter]).insight.filters).toEqual([AccountFilter]);
+    });
+
+    it("should overwrite filters in insight that has them", () => {
+        const InsightWithSomeFilters = insightSetFilters(EmptyInsight, [AccountFilter]);
+
+        expect(insightSetFilters(InsightWithSomeFilters, [ActivityFilter]).insight.filters).toEqual([
+            ActivityFilter,
+        ]);
+    });
+
+    it("should clear filters if called without parameter", () => {
+        const InsightWithSomeFilters = insightSetFilters(EmptyInsight, [AccountFilter]);
+
+        expect(insightSetFilters(InsightWithSomeFilters).insight.filters).toEqual([]);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightSetFilters(input)).toThrow();
     });
 });
 
