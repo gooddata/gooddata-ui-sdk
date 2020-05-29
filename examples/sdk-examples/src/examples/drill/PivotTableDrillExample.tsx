@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { ITotal, attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
+import { ITotal, attributeIdentifier, measureIdentifier } from "@gooddata/sdk-model";
 import { LdmExt } from "../../ldm";
 
 const measures = [
@@ -45,8 +45,8 @@ const totals: ITotal[] = [
 ];
 
 const drillableItems = [
-    HeaderPredicates.identifierMatch(attributeLocalId(LdmExt.MenuCategory)),
-    HeaderPredicates.identifierMatch(measureLocalId(LdmExt.FranchiseFees)),
+    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.MenuCategory)!),
+    HeaderPredicates.identifierMatch(measureIdentifier(LdmExt.FranchiseFees)!),
 ];
 
 const style = { height: 500 };
