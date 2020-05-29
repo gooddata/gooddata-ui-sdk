@@ -51,15 +51,15 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
         };
     }
 
-    public onStateChange = (stateFilterValue: IFilterValue) => {
+    public onStateChange = (stateFilterValues: IFilterValue[]) => {
         this.setState({
-            stateFilterValues: [stateFilterValue],
+            stateFilterValues,
         });
     };
 
-    public onCityChange = (cityFilterValue: IFilterValue) => {
+    public onCityChange = (cityFilterValues: IFilterValue[]) => {
         this.setState({
-            cityFilterValues: [cityFilterValue],
+            cityFilterValues,
         });
     };
 
@@ -125,7 +125,7 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
                                 onChange={onChange}
                                 className={`s-select-${key}`}
                                 options={selectOptions}
-                                multi
+                                isMulti
                                 isLoading={isLoading}
                                 placeholder={placeholder}
                                 value={filterValues}
