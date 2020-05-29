@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import { GdcVisualizationObject, GdcExecuteAFM } from "@gooddata/gd-bear-model";
+// (C) 2007-2020 GoodData Corporation
+import { GdcVisualizationObject, GdcExecuteAFM, GdcMetadata, Uri } from "@gooddata/gd-bear-model";
 
 export type SortDirection = "asc" | "desc";
 
@@ -43,12 +43,56 @@ export interface IValidElementsResponse {
 }
 
 export interface IGetObjectsByQueryOptions {
-    category?: string;
-    mode?: string;
-    author?: string;
+    /**
+     * Metadata object category to query (e.g. scheduledMail)
+     */
+    category: GdcMetadata.ObjectCategory;
+
+    /**
+     * Limits the number of items to return per page (50 is maximum)
+     * Default: 50
+     */
     limit?: number;
+
+    /**
+     * Number of items to skip
+     * Default: 0
+     */
+    offset?: number;
+
+    /**
+     * Receive metadata objects for particular user only
+     */
+    author?: Uri;
+
+    /**
+     * Filter metadata objects by title
+     * (case insensitive title substring)
+     */
+    title?: string;
+
+    /**
+     * Order results by id, title or updated date
+     * Default: "id"
+     */
+    orderby?: "id" | "title" | "updated";
+
+    /**
+     * Return the "raw" format of metadata objects?
+     * Default: undefined
+     */
+    mode?: "raw";
+
+    /**
+     * Include deprecated metadata objects in the response
+     * Default: false
+     */
     deprecated?: boolean;
-    orderBy?: "id" | "title" | "updated";
+
+    /**
+     * Include total items count in the response
+     * Default: false
+     */
     getTotalCount?: boolean;
 }
 

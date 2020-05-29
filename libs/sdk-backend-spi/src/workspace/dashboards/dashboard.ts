@@ -93,7 +93,7 @@ export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
      * Dashboard filter context, or temporary filter context
      * (temporary filter context is used to override original filter context during the export)
      */
-    readonly filterContext: IFilterContext | ITempFilterContext | undefined;
+    readonly filterContext?: IFilterContext | ITempFilterContext;
 
     /**
      * Dashboard extended date filter config
@@ -121,7 +121,7 @@ export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboard
      * Dashboard filter context, or temporary filter context
      * (temporary filter context is used to override original filter context during the export)
      */
-    readonly filterContext?: IFilterContext | ITempFilterContext | IFilterContextDefinition;
+    readonly filterContext?: IFilterContext | IFilterContextDefinition;
 
     /**
      * Dashboard extended date filter config

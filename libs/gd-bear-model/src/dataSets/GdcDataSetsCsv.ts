@@ -3,7 +3,7 @@
 /**
  * @public
  */
-export namespace GdcDatasets {
+export namespace GdcDataSetsCsv {
     /**
      * Represents the current status of CSV source.
      *

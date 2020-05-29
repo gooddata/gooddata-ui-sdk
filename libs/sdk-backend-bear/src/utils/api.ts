@@ -3,6 +3,25 @@ import { AuthenticatedPrincipal, UnexpectedError } from "@gooddata/sdk-backend-s
 import last from "lodash/last";
 
 /**
+ * Returns a user uri. This is used in some bear client calls
+ * @param principal - principal to get the data from
+ *
+ * @internal
+ */
+export const userUriFromAuthenticatedPrincipal = async (
+    getPrincipal: () => Promise<AuthenticatedPrincipal>,
+): Promise<string> => {
+    const principal = await getPrincipal();
+    const selfLink: string = principal.userMeta?.links?.self;
+
+    if (!selfLink) {
+        throw new UnexpectedError("Cannot obtain the current user uri");
+    }
+
+    return selfLink;
+};
+
+/**
  * Returns a user login md5. This is used in some bear client calls as a userId.
  * @param principal - principal to get the data from
  *

@@ -1,7 +1,6 @@
 // (C) 2020 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, isObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
-import { IWidgetAlert } from "./alert";
 import { IDashboardFilterReference } from "./filterContext";
 import { DrillDefinition } from "./drills";
 import { ILegacyKpi } from "./kpi";
@@ -57,11 +56,6 @@ export interface IWidgetBase {
      * Widget drills
      */
     readonly drills: DrillDefinition[];
-
-    /**
-     * Widget alerts (currently, only kpi supports alerting)
-     */
-    readonly alerts: IWidgetAlert[];
 }
 
 /**
@@ -80,11 +74,7 @@ export interface IWidget extends IWidgetBase, IDashboardObjectIdentity {}
  * @alpha
  */
 export function isWidgetDefinition(obj: any): obj is IWidgetDefinition {
-    return (
-        !isEmpty(obj) &&
-        ((obj as IWidgetDefinition).type === "kpi" || (obj as IWidgetDefinition).type === "insight") &&
-        !(obj as IWidget).ref
-    );
+    return hasWidgetProps(obj) && !isObjRef(obj.ref);
 }
 
 /**
@@ -92,9 +82,12 @@ export function isWidgetDefinition(obj: any): obj is IWidgetDefinition {
  * @alpha
  */
 export function isWidget(obj: any): obj is IWidget {
-    return (
-        !isEmpty(obj) &&
-        ((obj as IWidget).type === "kpi" || (obj as IWidget).type === "insight") &&
-        !!(obj as IWidget).ref
-    );
+    return hasWidgetProps(obj) && isObjRef(obj.ref);
+}
+
+/**
+ * @internal
+ */
+function hasWidgetProps(obj: any): boolean {
+    return !isEmpty(obj) && ((obj as IWidgetBase).type === "kpi" || (obj as IWidgetBase).type === "insight");
 }

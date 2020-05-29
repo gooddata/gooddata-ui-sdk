@@ -8,20 +8,12 @@ export const widgetDefinition: IWidgetDefinition = {
     type: "insight",
     title: "",
     description: "",
-    alerts: [],
     drills: [],
     ignoreDashboardFilters: [],
 };
-
-export const createWidget = (id: string): IWidget => {
-    const widget: IWidget = {
-        ...widgetDefinition,
-        ref: uriRef(`/gdc/md/${id}`),
-        uri: `/gdc/md/${id}`,
-        identifier: id,
-    };
-
-    return widget;
+export const widget: IWidget = {
+    ...widgetDefinition,
+    uri: "/widget",
+    ref: uriRef("/widget"),
+    identifier: "widgetId",
 };
-
-export const widget = createWidget("widget");

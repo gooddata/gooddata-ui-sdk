@@ -119,8 +119,7 @@ export class MetadataModuleExt {
             const translator = createTranslator(kpiMap, visWidgetMap);
             const updatedContent = updateContent(analyticalDashboard, translator, filterContext);
             const dashboardTitle = this.getDashboardName(analyticalDashboard.meta.title, options.name);
-            const duplicateDashboard: GdcDashboard.IAnalyticalDashboard = {
-                ...dashboardDetails,
+            const duplicateDashboard: GdcDashboard.IWrappedAnalyticalDashboard = {
                 analyticalDashboard: {
                     ...dashboardDetails.analyticalDashboard,
                     content: {

@@ -164,7 +164,10 @@ export class MetadataModule {
      *        - deprecated {boolean} show also deprecated objects
      * @return {Promise<Array>} array of returned objects
      */
-    public getObjectsByQuery(projectId: string, options: IGetObjectsByQueryOptions): Promise<any[]> {
+    public getObjectsByQuery<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
+        projectId: string,
+        options: IGetObjectsByQueryOptions,
+    ): Promise<T[]> {
         const getOnePage = (uri: string, items: any[] = []): Promise<any> => {
             return this.xhr
                 .get(uri)
@@ -939,6 +942,25 @@ export class MetadataModule {
     }
 
     /**
+     * Bulk delete objects
+     */
+    public async bulkDeleteObjects(
+        projectId: string,
+        uris: string[],
+        mode: "cascade" | "multi" = "cascade",
+    ): Promise<void> {
+        const uri = `/gdc/md/${projectId}/objects/delete`;
+        const data = {
+            delete: {
+                items: uris,
+                mode,
+            },
+        };
+
+        await this.xhr.post(uri, { data });
+    }
+
+    /**
      * Create object
      *
      * @experimental
@@ -946,12 +968,13 @@ export class MetadataModule {
      * @param {String} projectId
      * @param {String} obj object definition
      */
-    public createObject(projectId: string, obj: any) {
-        return this.xhr
-            .post(`/gdc/md/${projectId}/obj?createAndGet=true`, {
-                body: obj,
-            })
-            .then((r: ApiResponse) => r.getData());
+    public createObject<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
+        projectId: string,
+        obj: T,
+    ) {
+        return this.xhr.postParsed<T>(`/gdc/md/${projectId}/obj?createAndGet=true`, {
+            body: obj,
+        });
     }
 
     /**

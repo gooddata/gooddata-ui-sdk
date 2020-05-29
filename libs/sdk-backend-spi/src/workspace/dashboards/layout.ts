@@ -37,7 +37,7 @@ export interface ILayoutWidget {
  * @alpha
  */
 export function isLayoutWidget(obj: any): obj is ILayoutWidget {
-    return !isEmpty(obj) && !!(obj as ILayoutWidget).widget && isWidget(obj.widget);
+    return !isEmpty(obj) && isWidget(obj.widget);
 }
 
 /**
@@ -68,7 +68,7 @@ export interface IFluidLayout {
  * @alpha
  */
 export function isFluidLayout(obj: any): obj is IFluidLayout {
-    return !isEmpty(obj) && !!(obj as IFluidLayout).fluidLayout;
+    return hasFluidLayoutProps(obj) && layoutWidgets(obj).every(isWidget);
 }
 
 /**
@@ -76,7 +76,14 @@ export function isFluidLayout(obj: any): obj is IFluidLayout {
  * @alpha
  */
 export function isFluidLayoutDefinition(obj: any): obj is IFluidLayoutDefinition {
-    return !isEmpty(obj) && !!(obj as IFluidLayoutDefinition).fluidLayout;
+    return hasFluidLayoutProps(obj) && layoutWidgets(obj).some(isWidgetDefinition);
+}
+
+/**
+ * @internal
+ */
+function hasFluidLayoutProps(obj: any): boolean {
+    return !isEmpty(obj) && !!(obj as IFluidLayoutDefinition | IFluidLayout)?.fluidLayout?.rows;
 }
 
 /**
@@ -300,7 +307,7 @@ export interface ILayoutWidgetDefinition {
  * @alpha
  */
 export function isLayoutWidgetDefinition(obj: any): obj is ILayoutWidgetDefinition {
-    return !isEmpty(obj) && !!(obj as ILayoutWidgetDefinition).widget && isWidgetDefinition(obj.widget);
+    return !isEmpty(obj) && isWidgetDefinition(obj.widget);
 }
 
 /**

@@ -100,7 +100,6 @@ export const widgetHeadline: IWidget = {
     },
     type: "insight",
     drills: [],
-    alerts: [],
 };
 
 export const widgetBarChart: IWidget = {
@@ -111,7 +110,6 @@ export const widgetBarChart: IWidget = {
     },
     type: "insight",
     drills: [],
-    alerts: [],
 };
 
 export const widgetKpi: IWidget = {
@@ -126,7 +124,6 @@ export const widgetKpi: IWidget = {
     },
     type: "kpi",
     drills: [],
-    alerts: [],
 };
 
 export const dashboardWithLayout: IDashboard = {

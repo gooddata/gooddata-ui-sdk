@@ -12,12 +12,48 @@ export const layoutWidgetDefinition: ILayoutWidgetDefinition = {
 
 export const fluidLayout: IFluidLayout = {
     fluidLayout: {
-        rows: [],
+        rows: [
+            {
+                columns: [
+                    {
+                        content: layoutWidget,
+                        size: {
+                            xl: {
+                                width: 12,
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
     },
 };
 
 export const fluidLayoutDefinition: IFluidLayoutDefinition = {
     fluidLayout: {
-        rows: [],
+        rows: [
+            {
+                columns: [
+                    {
+                        content: {
+                            widget,
+                        },
+                        size: {
+                            xl: {
+                                width: 12,
+                            },
+                        },
+                    },
+                    {
+                        content: layoutWidgetDefinition,
+                        size: {
+                            xl: {
+                                width: 12,
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
     },
 };

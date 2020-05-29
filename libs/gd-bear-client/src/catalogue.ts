@@ -8,7 +8,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { XhrModule } from "./xhr";
 import { ExecutionModule } from "./execution";
 import { IAdHocItemDescription, IStoredItemDescription, ItemDescription } from "./interfaces";
-import { GdcCatalog, GdcDatasets, GdcDateDataSets, GdcVisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcCatalog, GdcDataSetsCsv, GdcDateDataSets, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { omitEmpty } from "./util";
 
 const REQUEST_DEFAULTS = {
@@ -300,9 +300,9 @@ export class CatalogueModule {
      * Loads all available data sets.
      * @param projectId
      */
-    public async loadDataSets(projectId: string): Promise<GdcDatasets.IDataset[]> {
+    public async loadDataSets(projectId: string): Promise<GdcDataSetsCsv.IDataset[]> {
         const uri = `/gdc/dataload/internal/projects/${projectId}/csv/datasets`;
-        const response = await this.xhr.getParsed<GdcDatasets.IDatasetsResponse>(uri);
+        const response = await this.xhr.getParsed<GdcDataSetsCsv.IDatasetsResponse>(uri);
         return response.datasets.items;
     }
 

@@ -277,7 +277,57 @@ export namespace GdcDashboardLayout {
 }
 
 // @public (undocumented)
-export namespace GdcDatasets {
+export namespace GdcDataSets {
+    // (undocumented)
+    export interface IDataSet {
+        // (undocumented)
+        content: IDataSetContent;
+        // (undocumented)
+        links?: {
+            dataUploads: Uri | null;
+            uploadConfiguration?: Uri;
+        };
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IDataSetContent {
+        // (undocumented)
+        attributes: Uri[];
+        // (undocumented)
+        customUploadIdentifier?: string;
+        // (undocumented)
+        customUploadState?: string;
+        // (undocumented)
+        customUploadTimestamp?: number;
+        // (undocumented)
+        dataLoadingColumns: Uri[];
+        // (undocumented)
+        facts: Uri[];
+        // Warning: (ae-forgotten-export) The symbol "BooleanAsString" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        hasUploadConfiguration?: BooleanAsString;
+        // (undocumented)
+        identifierPrefix?: string;
+        // (undocumented)
+        mode: "SLI" | "DLI" | "";
+        // (undocumented)
+        ties: Uri[];
+        // (undocumented)
+        titleSuffix?: string;
+        // (undocumented)
+        urn?: string;
+    }
+    // (undocumented)
+    export interface IWrappedDataSet {
+        // (undocumented)
+        dataSet: IDataSet;
+    }
+}
+
+// @public (undocumented)
+export namespace GdcDataSetsCsv {
     export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
     export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
     export interface IDataColumn {
@@ -1309,6 +1359,8 @@ export namespace GdcMetadata {
             whenTriggered: "underThreshold" | "aboveThreshold";
             filterContext?: Uri;
         };
+        // (undocumented)
+        meta: IObjectMeta;
     }
     // (undocumented)
     export interface IMaqlAstPosition {
@@ -1353,8 +1405,6 @@ export namespace GdcMetadata {
         contributor?: Uri;
         // (undocumented)
         created?: Timestamp;
-        // Warning: (ae-forgotten-export) The symbol "BooleanAsString" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         deprecated?: BooleanAsString;
         // (undocumented)
@@ -1587,11 +1637,11 @@ export namespace GdcMetadata {
 // @public (undocumented)
 export namespace GdcMetadataObject {
     // (undocumented)
-    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject;
+    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet;
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)
-    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization;
+    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet;
 }
 
 // @public
@@ -1683,31 +1733,30 @@ export namespace GdcScheduledMail {
     // (undocumented)
     export interface IDashboardAttachment {
         // (undocumented)
-        allTabs?: boolean;
-        // (undocumented)
-        executionContext?: Uri;
-        // (undocumented)
-        tabs: string[];
-        // (undocumented)
-        uri: Uri;
+        dashboardAttachment: {
+            uri: Uri;
+            allTabs?: boolean;
+            tabs: string[];
+            executionContext?: Uri;
+        };
     }
     // (undocumented)
     export interface IKpiDashboardAttachment {
         // (undocumented)
-        filterContext?: Uri;
-        // (undocumented)
-        format: "pdf";
-        // (undocumented)
-        uri: Uri;
+        kpiDashboardAttachment: {
+            uri: Uri;
+            format: "pdf";
+            filterContext?: Uri;
+        };
     }
     // (undocumented)
     export interface IReportAttachment {
         // (undocumented)
-        exportOptions?: IReportExportOptions;
-        // (undocumented)
-        formats: ExportFormat[];
-        // (undocumented)
-        uri?: Uri;
+        reportAttachment: {
+            uri?: Uri;
+            formats: ExportFormat[];
+            exportOptions?: IReportExportOptions;
+        };
     }
     // (undocumented)
     export interface IReportExportOptions {
@@ -1735,23 +1784,43 @@ export namespace GdcScheduledMail {
     // (undocumented)
     export interface IScheduledMail {
         // (undocumented)
-        content: {
-            when: {
-                recurrency: string;
-                startDate: DateString;
-                timeZone: string;
-                endDate?: DateString;
-            };
-            to: Email[];
-            bcc?: Email[];
-            unsubscribed?: Email[];
-            subject: string;
-            body: string;
-            attachments: ScheduledMailAttachment;
-            lastSuccessfull?: Timestamp;
-        };
+        content: IScheduledMailContent;
         // (undocumented)
         meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IScheduledMailContent {
+        // (undocumented)
+        attachments: ScheduledMailAttachment;
+        // (undocumented)
+        bcc?: Email[];
+        // (undocumented)
+        body: string;
+        // (undocumented)
+        lastSuccessfull?: Timestamp;
+        // (undocumented)
+        subject: string;
+        // Warning: (ae-forgotten-export) The symbol "Email" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        to: Email[];
+        // (undocumented)
+        unsubscribed?: Email[];
+        // (undocumented)
+        when: IScheduledMailWhen;
+    }
+    // (undocumented)
+    export interface IScheduledMailWhen {
+        // (undocumented)
+        endDate?: DateString;
+        // (undocumented)
+        recurrency: string;
+        // Warning: (ae-forgotten-export) The symbol "DateString" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        startDate: DateString;
+        // (undocumented)
+        timeZone: string;
     }
     // (undocumented)
     export interface IWrappedScheduledMail {
@@ -2543,8 +2612,6 @@ export type Uri = string;
 
 // Warnings were encountered during analysis:
 //
-// dist/scheduledMail/GdcScheduledMail.d.ts:12:17 - (ae-forgotten-export) The symbol "DateString" needs to be exported by the entry point index.d.ts
-// dist/scheduledMail/GdcScheduledMail.d.ts:16:13 - (ae-forgotten-export) The symbol "Email" needs to be exported by the entry point index.d.ts
 // dist/visualizationWidget/GdcVisualizationWidget.d.ts:37:13 - (ae-forgotten-export) The symbol "Identifier" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
