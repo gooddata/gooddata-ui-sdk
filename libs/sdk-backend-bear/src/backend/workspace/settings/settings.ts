@@ -22,8 +22,8 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
     }
 
     public queryForCurrentUser(): Promise<IUserWorkspaceSettings> {
-        return this.authCall(async (sdk, context) => {
-            const userLoginMd5 = userLoginMd5FromAuthenticatedPrincipal(context.principal);
+        return this.authCall(async (sdk, { getPrincipal }) => {
+            const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
 
             const [workspaceFeatureFlags, userFeatureFlags] = await Promise.all([
                 sdk.project.getProjectFeatureFlags(this.workspace),

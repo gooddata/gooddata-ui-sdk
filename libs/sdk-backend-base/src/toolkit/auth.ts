@@ -13,7 +13,13 @@ import {
  * @internal
  */
 export interface IAuthenticatedAsyncCallContext {
-    principal: AuthenticatedPrincipal;
+    /**
+     * Returns the currently authenticated principal.
+     * Calling this function MAY trigger the authentication flow in case the current session
+     * is not yet authenticated and the principal is unknown.
+     * If the authentication flow fails, the NotAuthenticated error is thrown.
+     */
+    getPrincipal(): Promise<AuthenticatedPrincipal>;
 }
 
 /**

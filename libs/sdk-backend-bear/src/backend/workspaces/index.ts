@@ -2,6 +2,7 @@
 import { IWorkspaceQueryFactory, IWorkspaceQuery, IWorkspaceQueryResult } from "@gooddata/sdk-backend-spi";
 import { convertUserProject } from "../../fromSdkModel/WorkspaceConverter";
 import { BearAuthenticatedCallGuard } from "../../types";
+import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api";
 
 export class BearWorkspaceQueryFactory implements IWorkspaceQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard) {}
@@ -48,8 +49,8 @@ class BearWorkspaceQuery implements IWorkspaceQuery {
     ): Promise<IWorkspaceQueryResult> {
         const {
             userProjects: { paging, items },
-        } = await this.authCall(async (sdk, { principal }) => {
-            const userId = this.userId || principal.userId;
+        } = await this.authCall(async (sdk, { getPrincipal }) => {
+            const userId = this.userId || (await userLoginMd5FromAuthenticatedPrincipal(getPrincipal));
             return sdk.project.getProjectsWithPaging(userId, offset, limit, search);
         });
 

@@ -15,7 +15,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IInsight, IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import defaultTo = require("lodash/defaultTo");
 import isEmpty = require("lodash/isEmpty");
 import { convertApiError, isApiResponseError } from "../errors/errorHandling";
 import { BearWorkspace } from "./workspace";
@@ -299,18 +298,21 @@ export class BearBackend implements IAnalyticalBackend {
     };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
-        // use a default value that will not fail at runtime (e.g. null references) in case we are not authenticated yet
-        // that way first call to authApiCall will proceed as if the principal was there and fail expectedly
-        // thus triggering the auth process
-        const principal = defaultTo(
-            this.authProvider && (await this.authProvider.getCurrentPrincipal({ client: this.sdk })),
-            {
-                userId: "__invalid__",
-            },
-        );
+        const getPrincipal = async (): Promise<AuthenticatedPrincipal> => {
+            if (!this.authProvider) {
+                throw new NotAuthenticated("Cannot obtain principal without an authProvider.");
+            }
+
+            const principal = await this.authProvider.getCurrentPrincipal({ client: this.sdk });
+            if (principal) {
+                return principal;
+            }
+
+            return this.authProvider.authenticate(this.getAuthenticationContext());
+        };
 
         return {
-            principal,
+            getPrincipal,
         };
     };
 }
