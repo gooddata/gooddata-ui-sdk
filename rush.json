@@ -301,6 +301,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-geo",
+            "projectFolder": "libs/sdk-ui-geo",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk"
+        },
+        {
             "packageName": "@gooddata/sdk-ui-all",
             "projectFolder": "libs/sdk-ui-all",
             "reviewCategory": "production",
