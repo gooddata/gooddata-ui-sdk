@@ -6,6 +6,7 @@ import * as React from "react";
 import { IErrorProps } from "../react/ErrorComponent";
 import { ILoadingProps } from "../react/LoadingComponent";
 import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events";
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /**
  * Super-interface for all visualization props; charts, tables or anything else - all should have these
@@ -81,4 +82,18 @@ export interface IVisualizationCallbacks {
      * @internal
      */
     pushData?: (data: IPushData) => void;
+}
+
+/**
+ * Common props for visualization of data computed by the analytical backend.
+ *
+ * Data visualization contains prepared execution which will return data that needs to be visualized.
+ *
+ * @public
+ */
+export interface IDataVisualizationProps extends IVisualizationProps, IVisualizationCallbacks {
+    /**
+     * Prepared execution - running this will compute data to visualize.
+     */
+    execution: IPreparedExecution;
 }

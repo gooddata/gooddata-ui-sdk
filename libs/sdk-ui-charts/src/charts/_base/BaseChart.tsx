@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces";
 import { Visualization, getValidColorPalette } from "../../highcharts";
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
@@ -16,6 +15,8 @@ import {
     IntlWrapper,
     IntlTranslationsProvider,
     ITranslationsComponentProps,
+    ILoadingInjectedProps,
+    withEntireDataView,
 } from "@gooddata/sdk-ui";
 import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking";
 

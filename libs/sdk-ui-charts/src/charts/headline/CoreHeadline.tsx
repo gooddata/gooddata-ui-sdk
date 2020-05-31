@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { fixEmptyHeaderItems } from "../_base/fixEmptyHeaderItems";
-import { ILoadingInjectedProps, withEntireDataView } from "../_base/NewLoadingHOC";
 import {
     newErrorMapping,
     IErrorDescriptors,
@@ -9,6 +8,8 @@ import {
     ITranslationsComponentProps,
     IntlWrapper,
     ErrorCodes,
+    ILoadingInjectedProps,
+    withEntireDataView,
 } from "@gooddata/sdk-ui";
 import { ICommonChartProps, ICoreChartProps } from "../../interfaces";
 import HeadlineTransformation from "./internal/HeadlineTransformation";

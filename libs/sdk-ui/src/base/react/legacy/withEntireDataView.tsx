@@ -9,27 +9,21 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { injectIntl, IntlShape } from "react-intl";
-import {
-    DataViewFacade,
-    ILoadingState,
-    IExportFunction,
-    IDrillableItemPushData,
-    convertError,
-    ErrorCodes,
-    GoodDataSdkError,
-    IntlWrapper,
-    createExportFunction,
-    createExportErrorFunction,
-} from "@gooddata/sdk-ui";
-import { ICoreChartProps } from "../../interfaces";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
+import { IExportFunction, ILoadingState, IDrillableItemPushData } from "../../vis/Events";
+import { GoodDataSdkError, ErrorCodes } from "../../errors/GoodDataSdkError";
+import { createExportErrorFunction, createExportFunction } from "../../vis/export";
+import { DataViewFacade } from "../../results/facade";
+import { convertError } from "../../errors/errorHandling";
+import { IntlWrapper } from "../../localization/IntlWrapper";
+import { IDataVisualizationProps } from "../../vis/VisualizationProps";
 
 interface IDataViewLoadState {
     isLoading: boolean;
-    error?: string;
-    executionResult?: IExecutionResult;
-    dataView?: IDataView;
+    error?: string | null;
+    executionResult?: IExecutionResult | null;
+    dataView?: IDataView | null;
 }
 
 /**
@@ -74,11 +68,21 @@ export interface ILoadingInjectedProps {
     onNegativeValues(): void;
 }
 
-export function withEntireDataView<T extends ICoreChartProps>(
+/**
+ * A HOC to wrap data visualization components with loading / error handling.
+ *
+ * Note: this is a legacy HOC with a long history. In v7 we had VisualizationLoadingHOC - that one was used for
+ * all components and was linked to AFM and the paging and everything. We took this and gutted it out, changed to
+ * work with executions and to only support reading all the data.
+ *
+ * @param InnerComponent
+ * @internal
+ */
+export function withEntireDataView<T extends IDataVisualizationProps>(
     InnerComponent: React.ComponentClass<T & ILoadingInjectedProps>,
 ): React.ComponentClass<T> {
     class LoadingHOCWrapped extends React.Component<T & ILoadingInjectedProps, IDataViewLoadState> {
-        public static defaultProps: Partial<T & ILoadingInjectedProps> = InnerComponent.defaultProps;
+        public static defaultProps: Partial<T & ILoadingInjectedProps> = InnerComponent.defaultProps || {};
 
         private hasUnmounted: boolean = false;
 
@@ -110,7 +114,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
 
             return (
                 <InnerComponent
-                    {...props}
+                    {...(props as any)}
                     dataView={dataView}
                     onDataTooLarge={this.onDataTooLarge}
                     onNegativeValues={this.onNegativeValues}
@@ -136,7 +140,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
         private onLoadingChanged(loadingState: ILoadingState) {
             const { onLoadingChanged } = this.props;
 
-            onLoadingChanged(loadingState);
+            onLoadingChanged?.(loadingState);
 
             const { isLoading } = loadingState;
 
@@ -151,13 +155,16 @@ export function withEntireDataView<T extends ICoreChartProps>(
 
         private onError(error: GoodDataSdkError, execution = this.props.execution) {
             const { onExportReady } = this.props;
+
             if (this.props.execution.equals(execution)) {
                 this.setState({ error: error.getMessage(), dataView: null });
                 this.onLoadingChanged({ isLoading: false });
+
                 if (onExportReady) {
                     onExportReady(createExportErrorFunction(error));
                 }
-                this.props.onError(error);
+
+                this.props.onError?.(error);
             }
         }
 
@@ -242,11 +249,11 @@ export function withEntireDataView<T extends ICoreChartProps>(
 
     const IntlLoadingHOC = injectIntl<"intl", T & ILoadingInjectedProps>(LoadingHOCWrapped);
 
-    return class LoadingHOC extends React.Component<T & ILoadingInjectedProps, null> {
+    return class LoadingHOC extends React.Component<T> {
         public render() {
             return (
                 <IntlWrapper locale={this.props.locale}>
-                    <IntlLoadingHOC {...this.props} />
+                    <IntlLoadingHOC {...(this.props as any)} />
                 </IntlWrapper>
             );
         }
