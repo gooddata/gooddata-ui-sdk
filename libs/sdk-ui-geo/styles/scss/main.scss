@@ -1,0 +1,187 @@
+// (C) 2007-2020 GoodData Corporation
+$gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
+
+@import "~@gooddata/goodstrap/lib/Bubble/styles/mixins";
+@import "~@gooddata/goodstrap/lib/core/styles/variables";
+@import "~@gooddata/goodstrap/lib/core/styles/mixins";
+
+@import "~mapbox-gl/dist/mapbox-gl";
+
+$boder-color-circle-legend: #acaeae;
+
+$insight-small-only: "only screen and (max-width: 480px)";
+$responsive-legend: "only screen and (max-width: 767px)";
+$footer-border: #e2e8ed;
+$footer-border-top: $gd-color-disabled;
+$font-stack-roman: "Avenir", "Helvetica Neue", arial, sans-serif;
+$legend-paging-background: #eee;
+$legend-right-width: 190px;
+$paging-button-small-size: 22px;
+
+//
+//
+//
+
+.gd-geo-component {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    .mapboxgl-map {
+        width: 100%;
+        height: 100%;
+    }
+    &.flex-direction-column {
+        flex-direction: column;
+
+        .geo-legend {
+            flex: 1 0 auto;
+        }
+
+        .mapbox-container {
+            flex: 1 1 auto;
+            overflow: visible;
+
+            .mapboxgl-canvas {
+                outline: none;
+            }
+        }
+    }
+    &.flex-direction-row {
+        flex-direction: row;
+    }
+    .geo-legend {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        > div {
+            margin: 5px 0;
+        }
+        .viz-static-legend-wrap {
+            display: flex;
+            flex: 1 auto;
+            margin-right: 20px;
+            flex-flow: row wrap;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .pushpin-size-legend {
+            display: flex;
+            margin-left: 10px;
+            font-family: $gd-font-primary;
+            flex: 0 auto;
+            .metric-name {
+                overflow: hidden;
+                font-size: 14px;
+                line-height: 30px;
+                white-space: nowrap;
+                color: $gd-color-link;
+                margin-right: 6px;
+                text-overflow: ellipsis;
+                max-width: 250px;
+            }
+            .pushpin-size-legend-circle-list {
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                .pushpin-size-legend-circle {
+                    display: inline-block;
+                    // refactor?
+                    // stylelint-disable-next-line max-nesting-depth
+                    span:first-child {
+                        display: inline-block;
+                        border: 1px solid $boder-color-circle-legend;
+                        border-radius: 50%;
+                    }
+                    // refactor?
+                    // stylelint-disable-next-line max-nesting-depth
+                    span {
+                        font-size: 11px;
+                        vertical-align: middle;
+                        color: $gd-color-link;
+                    }
+                    // refactor?
+                    // stylelint-disable-next-line max-nesting-depth
+                    &::after {
+                        content: "...";
+                        display: inline-block;
+                        margin-left: 6px;
+                        margin-right: 6px;
+                        vertical-align: middle;
+                        color: $boder-color-circle-legend;
+                        margin-top: -6px;
+                    }
+                    // refactor?
+                    // stylelint-disable-next-line max-nesting-depth
+                    &:last-child {
+                        // refactor?
+                        // stylelint-disable-next-line max-nesting-depth
+                        &::after {
+                            content: "";
+                        }
+                    }
+                }
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                .circle-value {
+                    margin-left: 6px;
+                }
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                .circle-max-icon {
+                    width: 30px;
+                    height: 30px;
+                }
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                .circle-average-icon {
+                    width: 20px;
+                    height: 20px;
+                }
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
+                .circle-min-icon {
+                    width: 10px;
+                    height: 10px;
+                }
+            }
+            .labels {
+                margin-left: 4px;
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                justify-content: center;
+                color: $gd-color-link;
+                margin-top: -2px;
+            }
+        }
+
+        &.has-size-legend .color-legend {
+            margin-right: 10px;
+        }
+    }
+}
+
+/* Overwrite Mapbox CSS */
+.mapboxgl-popup-tip {
+    display: none;
+}
+
+.mapboxgl-popup-content {
+    padding: 0;
+    pointer-events: none;
+}
+
+// this will fix the scale problem of mapbox canvas when exporting
+.isExportMode .mapboxgl-canvas {
+    /* stylelint-disable declaration-no-important */
+    width: 100% !important;
+    height: 100% !important;
+    /* stylelint-enable declaration-no-important */
+}
+
+@import "legend";
+@import "tooltip";

@@ -62,7 +62,7 @@ export const ColorUtils: {
 // @internal (undocumented)
 export const DEFAULT_LEGEND_CONFIG: {
     enabled: boolean;
-    position: string;
+    position: PositionType;
 };
 
 // Warning: (ae-internal-missing-underscore) The name "FLUID_LEGEND_THRESHOLD" should be prefixed with an underscore because the declaration is marked as @internal
@@ -430,11 +430,7 @@ export type LegendOptionsItemType = IBaseLegendItem | IHeatmapLegendItem;
 //
 // @internal (undocumented)
 export const LegendPosition: {
-    LEFT: string;
-    RIGHT: string;
-    TOP: string;
-    BOTTOM: string;
-    AUTO: string;
+    [name: string]: PositionType;
 };
 
 // Warning: (ae-internal-missing-underscore) The name "normalizeColorToRGB" should be prefixed with an underscore because the declaration is marked as @internal

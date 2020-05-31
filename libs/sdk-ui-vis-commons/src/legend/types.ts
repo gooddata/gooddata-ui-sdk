@@ -3,7 +3,7 @@
 /**
  * @internal
  */
-export const LegendPosition = {
+export const LegendPosition: { [name: string]: PositionType } = {
     LEFT: "left",
     RIGHT: "right",
     TOP: "top",

@@ -4,4 +4,13 @@
  *
  */
 
-export { ISdkComponentProps, SdkComponent } from "./sdkComponent/SdkComponent";
+export {
+    IGeoConfig,
+    IGeoLngLat,
+    IGeoPushpinChartProps,
+    IGeoConfigViewport,
+    IGeoPointsConfig,
+    IGeoConfigViewportArea,
+    PushpinSizeOption,
+} from "./GeoChart";
+export { GeoPushpinChart } from "./GeoPushpinChart";

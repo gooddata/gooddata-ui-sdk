@@ -1,0 +1,150 @@
+// (C) 2007-2020 GoodData Corporation
+
+.gd-viz-tooltip {
+    position: relative;
+    border-radius: 3px;
+    font-family: $font-stack-roman;
+    color: $gd-color-dark;
+    background-color: transparentize($gd-color-white, 0.05);
+
+    .tt-name {
+        font-family: $font-stack-roman;
+        font-size: 12px;
+        word-wrap: break-word;
+        text-transform: uppercase;
+        color: #999;
+    }
+
+    .tt-tooltip {
+        margin-top: 2px;
+        margin-bottom: 14px;
+        font-size: 14px;
+    }
+}
+
+.gd-viz-tooltip-stroke {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 0;
+    border-top: 3px solid #848484;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.gd-viz-tooltip-content {
+    display: block;
+    padding: 10px 9px 9px;
+    border-radius: 3px;
+    border: 1px solid transparentize($bubble-light-border-base, 0.3);
+    box-shadow: 0 1px 3px 0 rgba(20, 56, 93, 0.1), 0 2px 9px 0 rgba(20, 56, 93, 0.15);
+    line-height: 1.3;
+    white-space: normal;
+
+    @media #{$insight-small-only} {
+        max-width: none;
+    }
+}
+
+.gd-viz-tooltip-item {
+    display: block;
+    margin-bottom: 10px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.gd-viz-tooltip-title {
+    display: block;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+    color: $gd-color-label;
+}
+
+.gd-viz-tooltip-value-wraper {
+    padding-right: 1em;
+}
+
+.gd-viz-tooltip-value {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 1.3em;
+    max-height: 2.6em;
+    text-align: justify;
+    margin-right: -1em;
+    padding-right: 1em;
+    word-wrap: break-word;
+
+    &:before {
+        content: "...";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: white;
+    }
+}
+
+.gd-viz-tooltip-value-max-content {
+    display: block;
+    overflow: hidden;
+    font-size: 14px;
+    height: 0;
+    font-weight: normal;
+    white-space: nowrap;
+    text-align: left;
+    visibility: hidden;
+}
+
+.multiline-supported {
+    .gd-viz-tooltip-value-wraper {
+        padding-right: 0;
+    }
+
+    .gd-viz-tooltip-value {
+        text-align: left;
+        line-height: 1.3em;
+        max-height: 2.6em;
+        margin: 0;
+        padding: 0;
+
+        &.clamp-two-line {
+            /*! autoprefixer: ignore next */
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+        }
+
+        &:before {
+            content: none;
+        }
+
+        &:after {
+            content: none;
+        }
+    }
+}
+
+// hide default highcharts svg tooltip when using html-based one
+.highcharts-tooltip-container {
+    g.highcharts-tooltip {
+        visibility: hidden;
+    }
+    z-index: 3005;
+}
