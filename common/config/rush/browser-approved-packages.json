@@ -263,6 +263,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/mapbox-gl",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/md5",
       "allowedCategories": [ "production" ]
     },
@@ -628,6 +632,10 @@
     },
     {
       "name": "madge",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "mapbox-gl",
       "allowedCategories": [ "production" ]
     },
     {
