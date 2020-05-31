@@ -61,11 +61,11 @@ export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({
                 {hidden ? (
                     ""
                 ) : viewJS ? (
-                    <button className={`gd-button gd-button-secondary icon-right`} onClick={toggleToTS}>
+                    <button className={`gd-button gd-button-secondary`} onClick={toggleToTS}>
                         TS
                     </button>
                 ) : (
-                    <button className={`gd-button gd-button-secondary icon-right`} onClick={toggleToJS}>
+                    <button className={`gd-button gd-button-secondary`} onClick={toggleToJS}>
                         JS
                     </button>
                 )}
