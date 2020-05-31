@@ -59,7 +59,7 @@ export class MeasureValueFilterComponentExample extends React.PureComponent<
     }
 
     public onApply = (filter: IMeasureValueFilter) => {
-        this.setState({ filters: [filter ? filter : defaultFilter], displayDropdown: false });
+        this.setState({ filters: [filter ?? defaultFilter], displayDropdown: false });
     };
 
     public onCancel = () => {
@@ -78,7 +78,7 @@ export class MeasureValueFilterComponentExample extends React.PureComponent<
                 <div ref={this.ref}>
                     <DropdownButton
                         onClick={this.toggleDropdown}
-                        isActive={this.state.displayDropdown}
+                        isActive={displayDropdown}
                         measureTitle="Custom button"
                     />
                 </div>

@@ -24,7 +24,7 @@ export class MeasureValueFilterComponentRatioExample extends React.PureComponent
     };
 
     public onApply = (filter: IMeasureValueFilter) => {
-        this.setState({ filters: [filter ? filter : defaultFilter] });
+        this.setState({ filters: [filter ?? defaultFilter] });
     };
 
     public render() {
