@@ -240,6 +240,12 @@ export class CatalogMeasureBuilder<T extends ICatalogMeasure = ICatalogMeasure> 
     toExecutionModel(modifications?: MeasureModifications<MeasureBuilder>): IMeasure;
 }
 
+// @public
+export function colorPaletteItemToRgb(item: IColorPaletteItem): string;
+
+// @public
+export function colorPaletteToColors(palette: IColorPalette): string[];
+
 // @public (undocumented)
 export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
 

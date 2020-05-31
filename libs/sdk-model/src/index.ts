@@ -258,6 +258,8 @@ export {
     IRgbColor,
     isColorFromPalette,
     isRgbColor,
+    colorPaletteItemToRgb,
+    colorPaletteToColors,
 } from "./colors";
 
 export {

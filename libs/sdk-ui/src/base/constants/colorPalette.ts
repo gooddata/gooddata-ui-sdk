@@ -1,9 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
+
+import { IColorPalette } from "@gooddata/sdk-model";
 
 /**
  * @public
  */
-export const DefaultColorPalette = [
+export const DefaultColorPalette: IColorPalette = [
     {
         guid: "1",
         fill: { r: 20, g: 178, b: 226 },

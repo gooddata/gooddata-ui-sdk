@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import isEmpty = require("lodash/isEmpty");
 
@@ -89,4 +89,29 @@ export function isColorFromPalette(obj: any): obj is IColorFromPalette {
  */
 export function isRgbColor(obj: any): obj is IRgbColor {
     return !isEmpty(obj) && (obj as IRgbColor).type === "rgb";
+}
+
+/**
+ * Returns RGB code representing the color in the provided color palette items.
+ *
+ * @param item - color palette item
+ * @returns an `rgb(red#,green#,blue#)` code
+ * @public
+ */
+export function colorPaletteItemToRgb(item: IColorPaletteItem): string {
+    const { r, g, b } = item.fill;
+
+    return `rgb(${r},${g},${b})`;
+}
+
+/**
+ * Returns a list of RGB color codes for all items in the provided color palette.
+ *
+ * @param palette - color palette
+ * @returns list with the same cardinality as the color palette. RGB colors appear in the same order in which
+ * they appear in the palette
+ * @public
+ */
+export function colorPaletteToColors(palette: IColorPalette): string[] {
+    return palette.map(colorPaletteItemToRgb);
 }
