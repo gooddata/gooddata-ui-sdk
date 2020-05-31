@@ -12,12 +12,23 @@ export interface ITranslationsComponentProps {
     intl: IntlShape;
 }
 
+export const getNumericSymbols = (intl: IntlShape): string[] => {
+    return [
+        "visualization.numericValues.k",
+        "visualization.numericValues.m",
+        "visualization.numericValues.g",
+        "visualization.numericValues.t",
+        "visualization.numericValues.p",
+        "visualization.numericValues.e",
+    ].map((id: string) => intl.formatMessage({ id }));
+};
+
 export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
 
 export class TranslationsProvider extends React.PureComponent<ITranslationsProviderProps> {
     public render() {
         const props: ITranslationsComponentProps = {
-            numericSymbols: this.getNumericSymbols(),
+            numericSymbols: getNumericSymbols(this.props.intl),
             emptyHeaderString: this.getEmptyHeaderString(),
             intl: this.props.intl,
         };
@@ -27,17 +38,6 @@ export class TranslationsProvider extends React.PureComponent<ITranslationsProvi
     private getEmptyHeaderString() {
         const emptyValueTranslation = this.props.intl.formatMessage({ id: "visualization.emptyValue" });
         return `(${emptyValueTranslation})`;
-    }
-
-    private getNumericSymbols() {
-        return [
-            "visualization.numericValues.k",
-            "visualization.numericValues.m",
-            "visualization.numericValues.g",
-            "visualization.numericValues.t",
-            "visualization.numericValues.p",
-            "visualization.numericValues.e",
-        ].map((id: string) => this.props.intl.formatMessage({ id }));
     }
 }
 
