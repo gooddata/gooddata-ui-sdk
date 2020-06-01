@@ -1,9 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 const bodyParser = require("body-parser");
 
 module.exports = (app, sdk, { domainAdmin, projectIdToAssign, userRole }) => {
     if (!domainAdmin.username || !domainAdmin.password || !projectIdToAssign) {
-        // eslint-disable-next-line no-console
+        // tslint:disable-next-line:no-console
         console.warn(
             "Set up DOMAIN_ADMIN_USERNAME/PASSWORD and PROJECT_ID_TO_ASSIGN for the /api/assign-project endpoint to work.",
         );
@@ -39,7 +39,7 @@ module.exports = (app, sdk, { domainAdmin, projectIdToAssign, userRole }) => {
                         }),
                     })
                     .then(result => {
-                        // eslint-disable-next-line no-console
+                        // tslint:disable-next-line:no-console
                         console.log("POST", result.response.url, ">>>", result.getData());
 
                         return res.status(200).json({
@@ -48,7 +48,7 @@ module.exports = (app, sdk, { domainAdmin, projectIdToAssign, userRole }) => {
                     });
             })
             .catch(err => {
-                // eslint-disable-next-line no-console
+                // tslint:disable-next-line:no-console
                 console.log(err); // Log all errors to console
 
                 if (err.responseBody) {

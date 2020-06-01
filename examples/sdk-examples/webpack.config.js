@@ -66,7 +66,7 @@ module.exports = async (env, argv) => {
                     // Only set content-length to zero if not already specified
                     req.setHeader("content-length", "0");
                 }
-                // eslint-disable-next-line no-console
+                // tslint:disable-next-line:no-console
                 console.log(`Proxy ${req.path} to http://localhost:3009 (use: yarn examples-server)`);
             },
         },

@@ -23,6 +23,8 @@ import { AttributeFilter } from "../examples/attributeFilter";
 import { MeasureValueFilter } from "../examples/measureValueFilter/measureValueFilterByValue";
 import { MeasureValueFilterComponent } from "../examples/measureValueFilter/measureValueFilterComponent";
 
+import { GeoPushpin } from "../examples/geoPushpin";
+
 // import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
 // import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
 import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
@@ -32,6 +34,7 @@ import { Login } from "../components/login";
 import { Registration } from "../components/registration";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisProject } from "../components/AboutThisProject";
+import GeoPushpinChartDrillExample from "../examples/drill/GeoPushpinChartDrillExample";
 
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
@@ -67,6 +70,11 @@ export const drillingUseCasesRoutes = [
         Component: DrillWithExternalData,
     },
     { path: "/drilling/pivot-table-drilling", title: "Pivot table drilling", Component: PivotTableDrilling },
+    {
+        path: "/drilling/geo-pushpin-drilling",
+        title: "Geo Pushpin Drilling",
+        Component: GeoPushpinChartDrillExample,
+    },
 ];
 
 export const measureValueFilterUseCasesRoutes = [
@@ -92,6 +100,7 @@ const MeasureValueFilterUseCasesRoutes = (props: any) =>
 export const sideNavigationRoutes = [
     { path: "/", title: "Basic Components", Component: BasicComponents, exact: true },
     { path: "/pivot-table", title: "Pivot Table", Component: PivotTable },
+    { path: "/geo-pushpin-chart", title: "Geo Pushpin Chart", Component: GeoPushpin },
     {
         path: "/insightView",
         pathMatch: "full",

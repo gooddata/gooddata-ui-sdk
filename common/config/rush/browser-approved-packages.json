@@ -155,6 +155,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-geo",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-pivot",
       "allowedCategories": [ "examples", "production" ]
     },
