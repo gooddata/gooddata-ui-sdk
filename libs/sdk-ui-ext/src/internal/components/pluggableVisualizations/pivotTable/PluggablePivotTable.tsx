@@ -411,7 +411,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                                     style={pivotWrapperStyle}
                                     className="gd-table-dashboard-wrapper"
                                 >
-                                    <CorePivotTable {...pivotTableProps} config={{ maxHeight: usedHeight }} />
+                                    <CorePivotTable
+                                        {...pivotTableProps}
+                                        config={{ ...config, maxHeight: usedHeight }}
+                                    />
                                 </div>
                             );
                         }}
