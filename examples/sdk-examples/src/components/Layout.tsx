@@ -11,7 +11,7 @@ interface ILayoutProps {
 
 export const Layout: React.FC<ILayoutProps> = ({
     sidebar,
-    sidebarWidth = 200,
+    sidebarWidth = "200px",
     contentWidth = "auto",
     children,
 }) => (

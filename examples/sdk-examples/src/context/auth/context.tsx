@@ -86,7 +86,9 @@ export const AuthProvider: React.FC = ({ children }) => {
                 await backend.authenticate(true);
                 onLoginSuccess();
             } catch (err) {
-                onLoginError(err);
+                // tslint:disable-next-line:no-console
+                console.log(err);
+                onLogoutSuccess();
             }
         };
 

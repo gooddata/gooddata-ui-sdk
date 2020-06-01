@@ -8,9 +8,15 @@ import { LdmExt } from "../../../ldm";
 
 const measureTitle = "Franchised Sales Ratio";
 
-const measures = [LdmExt.FranchisedSales];
+const measures = [LdmExt.FranchisedSalesAsPercent];
 
 const attributes = [LdmExt.LocationName];
+
+const defaultFilter = {
+    measureValueFilter: {
+        measure: measures,
+    },
+};
 
 export class MeasureValueFilterComponentPercentageExample extends React.PureComponent {
     public state = {
@@ -18,7 +24,7 @@ export class MeasureValueFilterComponentPercentageExample extends React.PureComp
     };
 
     public onApply = (filter: IMeasureValueFilter) => {
-        this.setState({ filters: [filter] });
+        this.setState({ filters: [filter ?? defaultFilter] });
     };
 
     public render() {
@@ -31,7 +37,7 @@ export class MeasureValueFilterComponentPercentageExample extends React.PureComp
                     filter={filters[0]}
                     buttonTitle={measureTitle}
                     usePercentage
-                    measureIdentifier={measureLocalId(LdmExt.FranchisedSales)}
+                    measureIdentifier={measureLocalId(LdmExt.FranchisedSalesAsPercent)}
                 />
                 <hr className="separator" />
                 <div style={{ height: 300 }} className="s-pivot-table">

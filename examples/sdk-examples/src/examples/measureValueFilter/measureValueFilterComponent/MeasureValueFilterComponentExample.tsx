@@ -11,13 +11,19 @@ const measures = [LdmExt.FranchisedSales];
 
 const attributes = [LdmExt.LocationName];
 
+const defaultFilter = {
+    measureValueFilter: {
+        measure: measures,
+    },
+};
+
 export class MeasureValueFilterComponentExample extends React.PureComponent {
     public state = {
         filters: [],
     };
 
     public onApply = (filter: IMeasureValueFilter) => {
-        this.setState({ filters: [filter] });
+        this.setState({ filters: [filter ?? defaultFilter] });
     };
 
     public render() {

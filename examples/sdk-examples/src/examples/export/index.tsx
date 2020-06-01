@@ -24,7 +24,7 @@ export const Export: React.FC = () => (
     <div>
         <h1>Export</h1>
         <p>
-            These examples show how to export data for components like
+            These examples show how to export data for components like{" "}
             <code>ColumnChart, Table/Pivot Table or insightView</code>.
         </p>
 
