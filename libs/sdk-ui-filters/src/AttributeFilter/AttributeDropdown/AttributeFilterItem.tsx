@@ -54,6 +54,7 @@ export class AttributeFilterItem extends React.PureComponent<IAttributeFilterIte
 
     private handleSelect = () => {
         const { item } = this.props;
+
         item.onSelect(item.source);
     };
 }

@@ -15,11 +15,10 @@ export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({
     source,
     sourceJS,
 }) => {
-    const [{ hidden }, setState] = useState({ hidden: true });
-    const [{ viewJS }, setViewJS] = useState({ viewJS: false });
-    const toggle = () => setState(({ hidden: _hidden }) => ({ hidden: !_hidden }));
-    const toggleToJS = () => setViewJS({ viewJS: true });
-    const toggleToTS = () => setViewJS({ viewJS: false });
+    const [hidden, setState] = useState<boolean>(true);
+    const [viewJS, setViewJS] = useState<boolean>(false);
+    const toggle = () => setState(!hidden);
+    const toggleToJSTS = () => setViewJS(!viewJS);
     const iconClassName = hidden ? "icon-navigatedown" : "icon-navigateup";
 
     return (
@@ -60,24 +59,16 @@ export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({
                 </button>
                 {hidden ? (
                     ""
-                ) : viewJS ? (
-                    <button className={`gd-button gd-button-secondary`} onClick={toggleToTS}>
-                        TS
-                    </button>
                 ) : (
-                    <button className={`gd-button gd-button-secondary`} onClick={toggleToJS}>
-                        JS
+                    <button className={`gd-button gd-button-secondary`} onClick={toggleToJSTS}>
+                        {viewJS ? "TS" : "JS"}
                     </button>
                 )}
                 {hidden ? (
                     ""
-                ) : viewJS ? (
-                    <SyntaxHighlighter language="jsx" style={okaidia}>
-                        {sourceJS}
-                    </SyntaxHighlighter>
                 ) : (
                     <SyntaxHighlighter language="jsx" style={okaidia}>
-                        {source}
+                        {viewJS ? sourceJS : source}
                     </SyntaxHighlighter>
                 )}
             </div>

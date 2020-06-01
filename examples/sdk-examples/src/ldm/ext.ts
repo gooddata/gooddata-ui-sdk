@@ -43,6 +43,7 @@ export const franchiseSalesComputeRatioLocalId = "franchiseSalesComputeRatio";
 // ===============================================================================================
 
 export const averageRestaurantDailyCostsIdentifier = "aaQJzQzoeKwZ";
+export const EmployeeNameIdentifier = "label.employee.employeename";
 export const totalSalesIdentifier = "aa7ulGyKhIE5";
 export const dateDatasetIdentifier = "date.dataset.dt";
 export const franchiseFeesTag = "franchise_fees";
@@ -206,6 +207,7 @@ export const dateDataSetUri = `/gdc/md/${workspace}/obj/2180`;
 export const locationNameAttributeUri = `/gdc/md/${workspace}/obj/2204`;
 export const locationResortUri = `/gdc/md/${workspace}/obj/2206`;
 export const tableInsightViewUri = `/gdc/md/${workspace}/obj/8702`;
+export const employeeNameDisplayFormUri = `/gdc/md/${workspace}/obj/2201`;
 
 // ===============================================================================================
 

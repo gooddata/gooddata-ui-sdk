@@ -1,6 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
+import SourceDropdown from "../../components/SourceDropdown";
+
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 import { BarChartExportExample } from "./BarChartExportExample";
 import { PivotTableExportExample } from "./PivotTableExportExample";
@@ -13,16 +15,26 @@ import PivotTableExportExampleSRC from "!raw-loader!./PivotTableExportExample";
 import insightViewColumnChartExportExampleSRC from "!raw-loader!./InsightViewColumnChartExportExample";
 import HeadlineExportExampleSRC from "!raw-loader!./HeadlineExportExample";
 import ExecuteExportExampleSRC from "!raw-loader!./ExecuteExportExample";
+import ExampleWithExportSRC from "!raw-loader!./ExampleWithExport";
 
 import BarChartExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/BarChartExportExample";
 import PivotTableExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/PivotTableExportExample";
 import insightViewColumnChartExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/InsightViewColumnChartExportExample";
 import HeadlineExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/HeadlineExportExample";
 import ExecuteExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/ExecuteExportExample";
+import ExampleWithExportSRCJS from "!raw-loader!../../../examplesJS/export/ExampleWithExport";
 
 export const Export: React.FC = () => (
     <div>
         <h1>Export</h1>
+        <p>
+            Each visualization lets you specify <code>onExportReady</code> callback, which the visualization
+            will call once it is rendered and its underlying data is ready for export. The value passed
+            through the callback is a function that can be used to trigger the exports. This allows for
+            integration with wrapper components that can trigger exports for any visualization. For examples,
+            see the attached source code below.
+        </p>
+        <SourceDropdown source={ExampleWithExportSRC} sourceJS={ExampleWithExportSRCJS} />
         <p>
             These examples show how to export data for components like{" "}
             <code>ColumnChart, Table/Pivot Table or insightView</code>.
