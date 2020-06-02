@@ -32,6 +32,10 @@ export const AttributeFilter = () => (
             Pass a custom onApply function to this component to handle what happens when the user clicks the
             Apply button.
         </p>
+        <p>
+            NOTE: Accessing Attribute Filter through filter prop is preferred since identifier prop is
+            deprecated.
+        </p>
         <ExampleWithSource
             for={AttributeFilterComponentExample}
             source={AttributeFilterComponentExampleSRC}

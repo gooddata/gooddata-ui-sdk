@@ -4,6 +4,7 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { BarChartExample } from "./BarChartExample";
+import { BulletChartExample } from "./BulletChartExample";
 import { ColumnChartExample } from "./ColumnChartExample";
 import { LineChartExample } from "./LineChartExample";
 import { AreaChartExample } from "./AreaChartExample";
@@ -15,11 +16,11 @@ import { ScatterPlotExample } from "./ScatterPlotExample";
 import { BubbleChartExample } from "./BubbleChartExample";
 import { TreemapExample } from "./TreemapExample";
 import { HeatmapExample } from "./HeatmapExample";
-import { TableExample } from "./TableExample";
 import { HeadlineExample } from "./HeadlineExample";
 import { KpiExample } from "./KpiExample";
 
 import BarChartExampleSRC from "!raw-loader!./BarChartExample";
+import BulletChartExampleSRC from "!raw-loader!./BulletChartExample";
 import ColumnChartExampleSRC from "!raw-loader!./ColumnChartExample";
 import LineChartExampleSRC from "!raw-loader!./LineChartExample";
 import AreaChartExampleSRC from "!raw-loader!./AreaChartExample";
@@ -31,11 +32,11 @@ import ScatterPlotExampleSRC from "!raw-loader!./ScatterPlotExample";
 import BubbleChartExampleSRC from "!raw-loader!./BubbleChartExample";
 import TreemapExampleSRC from "!raw-loader!./TreemapExample";
 import HeatmapExampleSRC from "!raw-loader!./HeatmapExample";
-import TableExampleSRC from "!raw-loader!./TableExample";
 import HeadlineExampleSRC from "!raw-loader!./HeadlineExample";
 import KpiExampleSRC from "!raw-loader!./KpiExample";
 
 import BarChartExampleSRCJS from "!raw-loader!../../../examplesJS/basic/BarChartExample";
+import BulletChartExampleSRCJS from "!raw-loader!../../../examplesJS/basic/BulletChartExample";
 import ColumnChartExampleSRCJS from "!raw-loader!../../../examplesJS/basic/ColumnChartExample";
 import LineChartExampleSRCJS from "!raw-loader!../../../examplesJS/basic/LineChartExample";
 import AreaChartExampleSRCJS from "!raw-loader!../../../examplesJS/basic/AreaChartExample";
@@ -47,7 +48,6 @@ import ScatterPlotExampleSRCJS from "!raw-loader!../../../examplesJS/basic/Scatt
 import BubbleChartExampleSRCJS from "!raw-loader!../../../examplesJS/basic/BubbleChartExample";
 import TreemapExampleSRCJS from "!raw-loader!../../../examplesJS/basic/TreemapExample";
 import HeatmapExampleSRCJS from "!raw-loader!../../../examplesJS/basic//HeatmapExample";
-import TableExampleSRCJS from "!raw-loader!../../../examplesJS/basic/TableExample";
 import HeadlineExampleSRCJS from "!raw-loader!../../../examplesJS/basic/HeadlineExample";
 import KpiExampleSRCJS from "!raw-loader!../../../examplesJS/basic/KpiExample";
 
@@ -138,6 +138,13 @@ export const BasicComponents: React.FC = () => (
             sourceJS={BubbleChartExampleSRCJS}
         />
 
+        <h2 id="bullet-chart">Bullet chart</h2>
+        <ExampleWithSource
+            for={BulletChartExample}
+            source={BulletChartExampleSRC}
+            sourceJS={BulletChartExampleSRCJS}
+        />
+
         <h2 id="treemap">Treemap</h2>
         <ExampleWithSource for={TreemapExample} source={TreemapExampleSRC} sourceJS={TreemapExampleSRCJS} />
 
@@ -145,9 +152,6 @@ export const BasicComponents: React.FC = () => (
         <ExampleWithSource for={HeatmapExample} source={HeatmapExampleSRC} sourceJS={HeatmapExampleSRCJS} />
 
         <hr className="separator" />
-
-        <h2 id="table">Table</h2>
-        <ExampleWithSource for={TableExample} source={TableExampleSRC} sourceJS={TableExampleSRCJS} />
 
         <h2 id="table">Headline</h2>
         <ExampleWithSource

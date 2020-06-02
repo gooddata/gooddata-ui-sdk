@@ -17,6 +17,9 @@ import PivotTableSubtotalsExampleSRCJS from "!raw-loader!../../../examplesJS/piv
 import { PivotTableDrillExample } from "./PivotTableDrillExample";
 import PivotTableDrillExampleSRC from "!raw-loader!./PivotTableDrillExample";
 import PivotTableDrillExampleSRCJS from "!raw-loader!../../../examplesJS/pivotTable/PivotTableDrillExample";
+import { PivotTableSortingAggregationExample } from "./PivotTableSortingAggregationExample";
+import PivotTableSortingAggregationExampleSRC from "!raw-loader!./PivotTableSortingAggregationExample";
+import PivotTableSortingAggregationExampleSRCJS from "!raw-loader!../../../examplesJS/pivotTable/PivotTableSortingAggregationExample";
 // import { PivotTableExample } from "./PivotTableExample";
 // import PivotTableExampleSRC from "!raw-loader!./PivotTableExample";
 // import PivotTableExampleSRCJS from "!raw-loader!../../../examplesJS/pivotTable/PivotTableExample";
@@ -67,6 +70,15 @@ export const PivotTable: React.FC = () => (
             for={PivotTableSubtotalsExample}
             source={PivotTableSubtotalsExampleSRC}
             sourceJS={PivotTableSubtotalsExampleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2 id="measures-row-attributes-and-column-attributes">Example of sort with aggregation</h2>
+        <ExampleWithSource
+            for={PivotTableSortingAggregationExample}
+            source={PivotTableSortingAggregationExampleSRC}
+            sourceJS={PivotTableSortingAggregationExampleSRCJS}
         />
     </div>
 );
