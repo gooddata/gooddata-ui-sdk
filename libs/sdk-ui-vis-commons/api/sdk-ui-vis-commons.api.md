@@ -12,6 +12,8 @@ import { IColorPaletteItem } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IRgbColorValue } from '@gooddata/sdk-model';
+import * as React_2 from 'react';
+import { Rect } from 'react-measure';
 
 // Warning: (ae-internal-missing-underscore) The name "AttributeColorStrategy" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -20,6 +22,11 @@ export class AttributeColorStrategy extends ColorStrategy {
     // (undocumented)
     protected createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade): ICreateColorAssignmentReturnValue;
 }
+
+// Warning: (ae-internal-missing-underscore) The name "ColorLegend" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export function ColorLegend(colorLegendProps: IColorLegendProps): JSX.Element | null;
 
 // Warning: (ae-internal-missing-underscore) The name "ColorStrategy" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -49,6 +56,41 @@ export const ColorUtils: {
     getColorByGuid: typeof getColorByGuid;
     getColorMappingPredicate: typeof getColorMappingPredicate;
 };
+
+// Warning: (ae-internal-missing-underscore) The name "DEFAULT_LEGEND_CONFIG" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const DEFAULT_LEGEND_CONFIG: {
+    enabled: boolean;
+    position: string;
+};
+
+// Warning: (ae-internal-missing-underscore) The name "FLUID_LEGEND_THRESHOLD" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const FLUID_LEGEND_THRESHOLD = 768;
+
+// Warning: (ae-internal-missing-underscore) The name "FluidLegend" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export class FluidLegend extends React_2.PureComponent<IFluidLegendProps, any> {
+    constructor(props: any);
+    // (undocumented)
+    static defaultProps: any;
+    // (undocumented)
+    render(): JSX.Element;
+    // (undocumented)
+    renderPaging(): JSX.Element;
+    // (undocumented)
+    renderSeries(itemWidth: any, visibleItemsCount: any): JSX.Element;
+    // (undocumented)
+    toggleShowAll(): void;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "formatLegendLabel" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export function formatLegendLabel(value: number, format: string | undefined, diff: number, numericSymbols: string[]): string;
 
 // Warning: (ae-internal-missing-underscore) The name "getAtributeColorAssignment" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -104,6 +146,54 @@ export function getRgbStringFromRGB(color: IRgbColorValue): string;
 // @internal
 export function getValidColorPalette(colors?: string[], colorPalette?: IColorPalette): IColorPalette;
 
+// Warning: (ae-internal-missing-underscore) The name "HeatmapLegend" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export class HeatmapLegend extends React_2.PureComponent<IHeatmapLegendProps> {
+    // (undocumented)
+    render(): JSX.Element;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IBaseLegendItem" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IBaseLegendItem {
+    // (undocumented)
+    color: string;
+    // (undocumented)
+    legendIndex: number;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    yAxis: number;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IColorLegendItem" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IColorLegendItem {
+    // (undocumented)
+    color: string;
+    // (undocumented)
+    range: IRange;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IColorLegendProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IColorLegendProps {
+    // (undocumented)
+    data: IColorLegendItem[];
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    isSmall?: boolean;
+    // (undocumented)
+    numericSymbols: string[];
+    // (undocumented)
+    position: string;
+}
+
 // @public (undocumented)
 export interface IColorMapping {
     color: IColor;
@@ -132,20 +222,230 @@ export interface ICreateColorAssignmentReturnValue {
     outputColorAssignment?: IColorAssignment[];
 }
 
+// Warning: (ae-internal-missing-underscore) The name "IFluidLegendProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IFluidLegendProps {
+    // (undocumented)
+    containerWidth: number;
+    // (undocumented)
+    enableBorderRadius?: boolean;
+    // (undocumented)
+    onItemClick?(item: IPushpinCategoryLegendItem): void;
+    // (undocumented)
+    series: IPushpinCategoryLegendItem[];
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IGeoChartLegendData" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IGeoChartLegendData {
+    // (undocumented)
+    colorData?: IColorLegendItem[];
+    // (undocumented)
+    sizeData?: number[];
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IHeatmapLegendItem" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IHeatmapLegendItem {
+    // (undocumented)
+    color: string;
+    // (undocumented)
+    isVisible?: boolean;
+    // (undocumented)
+    legendIndex: number;
+    // (undocumented)
+    range: IRange;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IHeatmapLegendProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IHeatmapLegendProps {
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    isSmall: boolean;
+    // (undocumented)
+    numericSymbols: string[];
+    // (undocumented)
+    position: string;
+    // (undocumented)
+    series: IHeatmapLegendItem[];
+}
+
+// Warning: (ae-internal-missing-underscore) The name "ILegendOptions" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface ILegendOptions {
+    // (undocumented)
+    enabled: boolean;
+    // (undocumented)
+    format: string;
+    // (undocumented)
+    items: LegendOptionsItemType[];
+    // (undocumented)
+    position: PositionType;
+    // (undocumented)
+    responsive?: boolean;
+    // (undocumented)
+    toggleEnabled: boolean;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "ILegendProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface ILegendProps {
+    // (undocumented)
+    enableBorderRadius?: boolean;
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    heatmapLegend?: boolean;
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    legendItemsEnabled?: any[];
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    onItemClick(item: any): void;
+    // (undocumented)
+    position: string;
+    // (undocumented)
+    responsive?: boolean;
+    // (undocumented)
+    series: any;
+    // (undocumented)
+    seriesMapper?: (visibleSeries: any) => any;
+    // (undocumented)
+    showFluidLegend?: boolean;
+    // (undocumented)
+    validateOverHeight(legendClient: Rect): void;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IPagingProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IPagingProps {
+    // (undocumented)
+    page: number;
+    // (undocumented)
+    pagesCount: number;
+    // (undocumented)
+    showNextPage(): void;
+    // (undocumented)
+    showPrevPage(): void;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IPushpinCategoryLegendItem" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IPushpinCategoryLegendItem {
+    // (undocumented)
+    color?: string;
+    // (undocumented)
+    isVisible?: boolean;
+    // (undocumented)
+    legendIndex: number;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    uri: string;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IRange" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IRange {
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    to: number;
+}
+
 // Warning: (ae-internal-missing-underscore) The name "isCustomPalette" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
 export function isCustomPalette(palette: IColorPalette): boolean;
+
+// Warning: (ae-internal-missing-underscore) The name "IStaticLegendProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IStaticLegendProps {
+    // (undocumented)
+    containerHeight: number;
+    // (undocumented)
+    enableBorderRadius?: boolean;
+    // (undocumented)
+    onItemClick?(item: IPushpinCategoryLegendItem): void;
+    // (undocumented)
+    position: string;
+    // (undocumented)
+    series: IPushpinCategoryLegendItem[];
+    // (undocumented)
+    shouldFillAvailableSpace?: boolean;
+}
 
 // Warning: (ae-internal-missing-underscore) The name "isValidMappedColor" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
 export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalette): boolean;
 
+// Warning: (ae-forgotten-export) The symbol "ILegendState" needs to be exported by the entry point index.d.ts
+// Warning: (ae-internal-missing-underscore) The name "Legend" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export class Legend extends React_2.PureComponent<ILegendProps, ILegendState> {
+    constructor(props: ILegendProps);
+    // (undocumented)
+    static defaultProps: {
+        responsive: boolean;
+        legendItemsEnabled: any;
+        height: number;
+        showFluidLegend: boolean;
+        isLegendOverHeight: boolean;
+        enableBorderRadius: boolean;
+    };
+    // (undocumented)
+    getSeries(): any;
+    // (undocumented)
+    onItemClick(item: any): void;
+    // (undocumented)
+    render(): JSX.Element;
+    // (undocumented)
+    renderFluid(): JSX.Element;
+    // (undocumented)
+    renderStatic(): JSX.Element;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "LegendOptionsItemType" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type LegendOptionsItemType = IBaseLegendItem | IHeatmapLegendItem;
+
+// Warning: (ae-internal-missing-underscore) The name "LegendPosition" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const LegendPosition: {
+    LEFT: string;
+    RIGHT: string;
+    TOP: string;
+    BOTTOM: string;
+    AUTO: string;
+};
+
 // Warning: (ae-internal-missing-underscore) The name "normalizeColorToRGB" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
 export function normalizeColorToRGB(color: string): string;
+
+// Warning: (ae-internal-missing-underscore) The name "Paging" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const Paging: (props: IPagingProps) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
 
 // Warning: (ae-internal-missing-underscore) The name "parseRGBColorCode" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -155,6 +455,37 @@ export function parseRGBColorCode(color: string): {
     G: number;
     B: number;
 };
+
+// Warning: (ae-internal-missing-underscore) The name "PositionType" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
+
+// Warning: (ae-internal-missing-underscore) The name "shouldShowFluid" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export function shouldShowFluid(documentObj: Document): boolean;
+
+// Warning: (ae-forgotten-export) The symbol "IStaticLegendState" needs to be exported by the entry point index.d.ts
+// Warning: (ae-internal-missing-underscore) The name "StaticLegend" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export class StaticLegend extends React_2.PureComponent<IStaticLegendProps, IStaticLegendState> {
+    constructor(props: any);
+    // (undocumented)
+    render(): JSX.Element;
+    // (undocumented)
+    renderPaging(visibleItemsCount: number): JSX.Element;
+    // (undocumented)
+    showNextPage(): void;
+    // (undocumented)
+    showPrevPage(): void;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "SupportedLegendPositions" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const SupportedLegendPositions: PositionType[];
 
 
 // Warnings were encountered during analysis:

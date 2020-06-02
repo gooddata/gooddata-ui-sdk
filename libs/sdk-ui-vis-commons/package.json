@@ -36,12 +36,15 @@
     "typings": "dist/index.d.ts",
     "dependencies": {
         "@gooddata/goodstrap": "^68.4.0",
+        "@gooddata/numberjs": "^3.2.4",
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.79",
         "@gooddata/sdk-model": "^8.0.0-alpha.79",
         "@gooddata/sdk-ui": "^8.0.0-alpha.79",
+        "classnames": "^2.2.6",
         "lodash": "^4.17.15",
         "prop-types": "^15.6.0",
-        "react-intl": "^3.6.0"
+        "react-intl": "^3.6.0",
+        "react-measure": "^2.3.0"
     },
     "peerDependencies": {
         "react": "^16.5.2",
@@ -52,6 +55,7 @@
         "@gooddata/reference-workspace": "^8.0.0-alpha.79",
         "@gooddata/tslint-config": "1.0.0",
         "@microsoft/api-extractor": "^7.3.8",
+        "@types/classnames": "2.2.3",
         "@types/enzyme": "^3.10.3",
         "@types/enzyme-adapter-react-16": "^1.0.5",
         "@types/jest": "^25.1.2",
@@ -73,6 +77,7 @@
         "raf": "^3.4.1",
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
+        "@types/react-measure": "2.0.5",
         "ts-jest": "^25.2.0",
         "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",
