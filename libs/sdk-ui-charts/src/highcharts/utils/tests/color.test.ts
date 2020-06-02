@@ -4,12 +4,12 @@ import {
     getColorMappingPredicate,
     getColorPaletteFromColors,
     getLighterColor,
-    getValidColorPalette,
     normalizeColorToRGB,
-} from "../color";
+} from "@gooddata/sdk-ui-vis-commons";
 import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { emptyDef } from "@gooddata/sdk-model";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
+import { getValidColorPalette } from "../color";
 
 describe("Transformation", () => {
     describe("Lighten color", () => {

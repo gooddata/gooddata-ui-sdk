@@ -29,10 +29,8 @@ export {
     isBulletChart,
 } from "./utils/common";
 
-export { getValidColorPalette } from "./utils/color";
-
-import ColorUtils from "./utils/color";
-
-export { ColorUtils };
-
 export { BOTTOM, MIDDLE, TOP } from "./constants/alignments";
+
+// re-exports to maintain api-compatibility
+export { ColorUtils } from "@gooddata/sdk-ui-vis-commons";
+export { getValidColorPalette } from "./utils/color";

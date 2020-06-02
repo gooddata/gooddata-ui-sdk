@@ -7,7 +7,7 @@ import get = require("lodash/get");
 import ChartTransformation from "../ChartTransformation";
 import HighChartsRenderer from "../HighChartsRenderer";
 import { IChartConfig } from "../../../interfaces";
-import { getRgbString } from "../../utils/color";
+import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
 import Chart from "../Chart";
 import { VisualizationTypes, IntlWrapper } from "@gooddata/sdk-ui";

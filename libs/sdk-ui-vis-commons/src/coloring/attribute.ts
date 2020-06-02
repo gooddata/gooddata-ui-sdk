@@ -1,9 +1,12 @@
 // (C) 2020 GoodData Corporation
-import { ColorStrategy, getAtributeColorAssignment, ICreateColorAssignmentReturnValue } from "./base";
 import { IColorPalette } from "@gooddata/sdk-model";
-import { IColorMapping } from "../../../interfaces";
 import { DataViewFacade } from "@gooddata/sdk-ui";
+import { ColorStrategy, ICreateColorAssignmentReturnValue, getAtributeColorAssignment } from "./base";
+import { IColorMapping } from "./types";
 
+/**
+ * @internal
+ */
 export class AttributeColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,

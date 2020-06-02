@@ -20,7 +20,7 @@ import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
-import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
+import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 import {
     isAreaChart,
     isBarChart,
@@ -52,6 +52,7 @@ import { getChartAlignmentConfiguration } from "./getChartAlignmentConfiguration
 import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart";
 import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartCapabilities";
 import { IAxis, IChartOptions, IPointData, ISeriesItem } from "../../typings/unsafe";
+import { AXIS_LINE_COLOR } from "../../utils/color";
 
 const { stripColors, numberFormat }: any = numberJS;
 

@@ -1,11 +1,11 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import flatMap = require("lodash/flatMap");
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { getChartType, getVisibleSeries, isStacked, getShapeAttributes } from "../helpers";
 
 import { getDataLabelAttributes } from "../dataLabelsHelpers";
 
-import { parseRGBColorCode } from "../../../utils/color";
+import { parseRGBColorCode } from "@gooddata/sdk-ui-vis-commons";
 import { isOneOfTypes } from "../../../utils/common";
 
 const setWhiteColor = (point: any) => {

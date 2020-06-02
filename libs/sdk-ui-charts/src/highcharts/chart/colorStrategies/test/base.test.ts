@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
-import { isValidMappedColor } from "../base";
+import { isValidMappedColor } from "@gooddata/sdk-ui-vis-commons";
 
 describe("isValidMappedColor", () => {
     const colorPalette: IColorPalette = [

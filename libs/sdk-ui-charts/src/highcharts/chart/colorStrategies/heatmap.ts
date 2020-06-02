@@ -1,19 +1,19 @@
 // (C) 2020 GoodData Corporation
-import { ColorStrategy, ICreateColorAssignmentReturnValue } from "./base";
+import {
+    ColorStrategy,
+    ICreateColorAssignmentReturnValue,
+    getColorByGuid,
+    getColorFromMapping,
+    getRgbStringFromRGB,
+    isCustomPalette,
+} from "@gooddata/sdk-ui-vis-commons";
 import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
 import { IColorAssignment, IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
-import {
-    DEFAULT_HEATMAP_BLUE_COLOR,
-    getColorByGuid,
-    getColorFromMapping,
-    getRgbStringFromRGB,
-    HEATMAP_BLUE_COLOR_PALETTE,
-    isCustomPalette,
-} from "../../utils/color";
 import isEqual = require("lodash/isEqual");
 import range = require("lodash/range");
+import { DEFAULT_HEATMAP_BLUE_COLOR, HEATMAP_BLUE_COLOR_PALETTE } from "../../utils/color";
 
 type HighChartColorPalette = string[];
 

@@ -26,7 +26,12 @@ import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { PIE_CHART_LIMIT } from "../../constants/limits";
-import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
+import {
+    getLighterColor,
+    getRgbString,
+    IColorStrategy,
+    AttributeColorStrategy,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { IChartConfig } from "../../../interfaces";
 import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
@@ -34,11 +39,10 @@ import { customEscape } from "../../utils/common";
 import { NORMAL_STACK, PERCENT_STACK } from "../../constants/stacking";
 import { IChartOptions, IPointData } from "../../typings/unsafe";
 import { MeasureColorStrategy } from "../colorStrategies/measure";
-import { AttributeColorStrategy } from "../colorStrategies/attribute";
 import { HeatmapColorStrategy } from "../colorStrategies/heatmap";
 import { TreemapColorStrategy } from "../colorStrategies/treemap";
-import { IColorStrategy } from "../colorStrategies/base";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
+import { GRAY, TRANSPARENT } from "../../utils/color";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);

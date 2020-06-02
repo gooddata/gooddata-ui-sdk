@@ -159,6 +159,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-vis-commons",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/test-storybook",
       "allowedCategories": [ "production", "tools" ]
     },

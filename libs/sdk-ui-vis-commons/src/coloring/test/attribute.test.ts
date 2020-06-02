@@ -1,34 +1,70 @@
 // (C) 2020 GoodData Corporation
 
-import { getMVS } from "../../test/helper";
-import { IColorPalette, IColorPaletteItem, RgbType } from "@gooddata/sdk-model";
-import { ColorFactory } from "../../colorFactory";
+import { IColorPaletteItem, RgbType } from "@gooddata/sdk-model";
+import { DataViewFacade, DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import { AttributeColorStrategy } from "../attribute";
-import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
-import { getRgbString } from "../../../utils/color";
-import { IColorMapping } from "../../../../interfaces";
-import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { getRgbString } from "../color";
 import { ReferenceData, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { getColorsFromStrategy } from "./helper";
-import { RgbPalette } from "./color.fixture";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { recordedDataFacade } from "../../../__mocks__/recordings";
+import { getColorsFromStrategy } from "../../../../sdk-ui-charts/src/highcharts/chart/colorStrategies/test/helper";
+import { IColorMapping } from "../types";
+
+export const RgbPalette = [
+    {
+        guid: "red",
+        fill: {
+            r: 255,
+            g: 0,
+            b: 0,
+        },
+    },
+    {
+        guid: "green",
+        fill: {
+            r: 0,
+            g: 255,
+            b: 0,
+        },
+    },
+    {
+        guid: "blue",
+        fill: {
+            r: 0,
+            g: 0,
+            b: 255,
+        },
+    },
+];
+
+function getAttributeDescriptors(dv: DataViewFacade) {
+    const descriptors = dv.meta().attributeDescriptors();
+    const headers = dv.meta().attributeHeaders();
+
+    return {
+        viewByAttribute: {
+            ...descriptors[1].attributeHeader,
+            items: headers[1][0],
+        },
+        stackByAttribute: {
+            ...descriptors[0].attributeHeader,
+            items: headers[0][0],
+        },
+    };
+}
 
 describe("AttributeColorStrategy", () => {
     it("should return AttributeColorStrategy with two colors from default color palette", () => {
         const dv = recordedDataFacade(
             ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
         );
-        const { viewByAttribute, stackByAttribute } = getMVS(dv);
-        const type = "bar";
-        const colorPalette: IColorPalette = undefined;
+        const { viewByAttribute, stackByAttribute } = getAttributeDescriptors(dv);
 
-        const colorStrategy = ColorFactory.getColorStrategy(
-            colorPalette,
-            undefined,
+        const colorStrategy = new AttributeColorStrategy(
+            DefaultColorPalette,
+            undefined as any,
             viewByAttribute,
             stackByAttribute,
             dv,
-            type,
         );
 
         const updatedPalette = getColorsFromStrategy(colorStrategy);
@@ -45,16 +81,14 @@ describe("AttributeColorStrategy", () => {
         const dv = recordedDataFacade(
             ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
         );
-        const { viewByAttribute, stackByAttribute } = getMVS(dv);
-        const type = "bar";
+        const { viewByAttribute, stackByAttribute } = getAttributeDescriptors(dv);
 
-        const colorStrategy = ColorFactory.getColorStrategy(
+        const colorStrategy = new AttributeColorStrategy(
             RgbPalette,
-            undefined,
+            undefined as any,
             viewByAttribute,
             stackByAttribute,
             dv,
-            type,
         );
 
         const updatedPalette = getColorsFromStrategy(colorStrategy);
@@ -71,8 +105,7 @@ describe("AttributeColorStrategy", () => {
         const dv = recordedDataFacade(
             ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
         );
-        const { viewByAttribute, stackByAttribute } = getMVS(dv);
-        const type = "bar";
+        const { viewByAttribute, stackByAttribute } = getAttributeDescriptors(dv);
         const colorMapping: IColorMapping[] = [
             {
                 predicate: HeaderPredicates.attributeItemNameMatch(ReferenceData.Region.EastCoast.title),
@@ -82,8 +115,7 @@ describe("AttributeColorStrategy", () => {
                 },
             },
             {
-                predicate: (headerItem: IResultAttributeHeader) =>
-                    headerItem.attributeHeaderItem && headerItem.attributeHeaderItem.uri === "invalid",
+                predicate: HeaderPredicates.attributeItemNameMatch("invalid"),
                 color: {
                     type: "rgb" as RgbType,
                     value: {
@@ -106,13 +138,12 @@ describe("AttributeColorStrategy", () => {
             },
         ];
 
-        const colorStrategy = ColorFactory.getColorStrategy(
+        const colorStrategy = new AttributeColorStrategy(
             RgbPalette,
             colorMapping,
             viewByAttribute,
             stackByAttribute,
             dv,
-            type,
         );
 
         const updatedPalette = getColorsFromStrategy(colorStrategy);

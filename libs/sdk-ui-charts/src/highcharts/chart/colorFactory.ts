@@ -12,12 +12,11 @@ import {
 } from "../utils/common";
 import BulletChartColorStrategy from "./colorStrategies/bulletChart";
 import { MeasureColorStrategy } from "./colorStrategies/measure";
-import { AttributeColorStrategy } from "./colorStrategies/attribute";
+import { AttributeColorStrategy, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { HeatmapColorStrategy } from "./colorStrategies/heatmap";
 import { TreemapColorStrategy } from "./colorStrategies/treemap";
 import { BubbleChartColorStrategy } from "./colorStrategies/bubbleChart";
 import { ScatterPlotColorStrategy } from "./colorStrategies/scatterPlot";
-import { IColorStrategy } from "./colorStrategies/base";
 
 const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,

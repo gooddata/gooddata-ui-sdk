@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import { isWhiteNotContrastEnough } from "../dataLabelsColors";
 
-import { getRgbString } from "../../../../utils/color";
+import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IColorPaletteItem } from "@gooddata/sdk-model";
 

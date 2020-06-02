@@ -14,7 +14,13 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "suppressImplicitAnyIndexErrors": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "..",
+        "paths": {
+            "@gooddata/sdk-ui": ["sdk-ui/src"],
+            "@gooddata/sdk-model": ["sdk-model/src"],
+            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"]
+        }
     },
     "exclude": ["node_modules", "dist", "**/__mocks__/*"]
 }

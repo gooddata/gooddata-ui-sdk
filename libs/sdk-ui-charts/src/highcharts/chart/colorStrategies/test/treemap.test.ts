@@ -5,7 +5,7 @@ import { IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import { ColorFactory } from "../../colorFactory";
 import { TreemapColorStrategy } from "../treemap";
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
-import { getRgbString } from "../../../utils/color";
+import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorMapping } from "../../../../interfaces";
 import { getColorsFromStrategy } from "./helper";
 import { TwoColorPalette } from "./color.fixture";

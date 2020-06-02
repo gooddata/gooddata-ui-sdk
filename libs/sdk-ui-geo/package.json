@@ -38,6 +38,7 @@
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.79",
         "@gooddata/sdk-model": "^8.0.0-alpha.79",
         "@gooddata/sdk-ui": "^8.0.0-alpha.79",
+        "@gooddata/sdk-ui-vis-commons": "^8.0.0-alpha.79",
         "classnames": "^2.2.6",
         "lodash": "^4.17.15",
         "mapbox-gl": "^1.6.1",

@@ -1,13 +1,6 @@
 // (C) 2020 GoodData Corporation
 
 import {
-    DEFAULT_BULLET_GRAY_COLOR,
-    getColorByGuid,
-    getColorFromMapping,
-    getLighterColorFromRGB,
-    getRgbStringFromRGB,
-} from "../../utils/color";
-import {
     getOccupiedMeasureBucketsLocalIdentifiers,
     isComparativeSeries,
     isPrimarySeries,
@@ -18,7 +11,16 @@ import { IColorMapping } from "../../../interfaces";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
-import { ColorStrategy, ICreateColorAssignmentReturnValue, isValidMappedColor } from "./base";
+import {
+    ColorStrategy,
+    ICreateColorAssignmentReturnValue,
+    isValidMappedColor,
+    getColorByGuid,
+    getColorFromMapping,
+    getLighterColorFromRGB,
+    getRgbStringFromRGB,
+} from "@gooddata/sdk-ui-vis-commons";
+import { DEFAULT_BULLET_GRAY_COLOR } from "../../utils/color";
 
 class BulletChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

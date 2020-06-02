@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { IColorStrategy } from "../base";
 
 export function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];

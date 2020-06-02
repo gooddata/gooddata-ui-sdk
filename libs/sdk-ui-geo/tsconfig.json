@@ -18,6 +18,7 @@
         "baseUrl": "..",
         "paths": {
             "@gooddata/sdk-ui": ["sdk-ui/src"],
+            "@gooddata/sdk-ui-vis-commons": ["sdk-ui-vis-commons/src"],
             "@gooddata/sdk-model": ["sdk-model/src"],
             "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"]
         }
