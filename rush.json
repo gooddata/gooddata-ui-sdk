@@ -301,6 +301,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-vis-commons",
+            "projectFolder": "libs/sdk-ui-vis-commons",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk"
+        },
+        {
             "packageName": "@gooddata/sdk-ui-geo",
             "projectFolder": "libs/sdk-ui-geo",
             "reviewCategory": "production",
