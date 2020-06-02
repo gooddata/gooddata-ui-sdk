@@ -67,7 +67,12 @@ describe("AttributeDropdown", () => {
 
     it("should fire onApply with the proper selection", async () => {
         const onApply = jest.fn();
-        const wrapper = renderComponent({ title: "Foo", displayForm: testAttributeRef, onApply });
+        const wrapper = renderComponent({
+            title: "Foo",
+            displayForm: testAttributeRef,
+            isInverted: true,
+            onApply,
+        });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -96,10 +101,16 @@ describe("AttributeDropdown", () => {
 
     it("should keep selection after Apply", async () => {
         const onApply = jest.fn();
-        const wrapper = renderComponent({ title: "Foo", displayForm: testAttributeRef, onApply });
+        const wrapper = renderComponent({
+            title: "Foo",
+            displayForm: testAttributeRef,
+            isInverted: true,
+            onApply,
+        });
 
         wrapper.find(DropdownButton).simulate("click");
 
+        await waitForAsync();
         await waitForAsync();
         await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
@@ -122,7 +133,12 @@ describe("AttributeDropdown", () => {
 
     it("should reset selection on Cancel", async () => {
         const onApply = jest.fn();
-        const wrapper = renderComponent({ title: "Foo", displayForm: testAttributeRef, onApply });
+        const wrapper = renderComponent({
+            title: "Foo",
+            displayForm: testAttributeRef,
+            isInverted: true,
+            onApply,
+        });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -219,6 +235,7 @@ describe("AttributeDropdown", () => {
             displayForm: testAttributeRef,
             titleWithSelection: true,
             title: "Foo",
+            isInverted: true,
             onApply,
         });
 
