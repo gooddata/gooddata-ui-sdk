@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "8.0.0-alpha.79",
+    "version": "8.0.0-alpha.82",
     "description": "GoodData.UI SDK - Geo Charts",
     "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-geo",
@@ -38,10 +38,10 @@
     "dependencies": {
         "@gooddata/goodstrap": "^68.4.0",
         "@gooddata/numberjs": "^3.2.4",
-        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.79",
-        "@gooddata/sdk-model": "^8.0.0-alpha.79",
-        "@gooddata/sdk-ui": "^8.0.0-alpha.79",
-        "@gooddata/sdk-ui-vis-commons": "^8.0.0-alpha.79",
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.82",
+        "@gooddata/sdk-model": "^8.0.0-alpha.82",
+        "@gooddata/sdk-ui": "^8.0.0-alpha.82",
+        "@gooddata/sdk-ui-vis-commons": "^8.0.0-alpha.82",
         "classnames": "^2.2.6",
         "lodash": "^4.17.15",
         "mapbox-gl": "^1.6.1",
