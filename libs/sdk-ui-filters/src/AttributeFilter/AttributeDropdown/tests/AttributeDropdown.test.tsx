@@ -14,7 +14,14 @@ import { AttributeFilterItem } from "../AttributeFilterItem";
 /*
  * TODO: find a common place for this; possibly test support lib?
  */
-const waitForAsync = () => new Promise((resolve: (...args: any[]) => void) => setImmediate(resolve));
+const waitForAsync = () =>
+    new Promise((resolve: (...args: any[]) => void) =>
+        setTimeout(() => {
+            setTimeout(() => {
+                resolve();
+            }, 300);
+        }),
+    );
 
 /*
  * NOTE: I suspect these tests may be flaky; I happened on a test run where one of them failed -> no change -> rerun
@@ -59,7 +66,6 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
         expect(wrapper.find(AttributeFilterItem).length).toBeGreaterThan(0);
@@ -77,7 +83,6 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
         wrapper
@@ -111,8 +116,6 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
         wrapper
@@ -125,7 +128,6 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
         expect(wrapper.find(".s-attribute-filter-list-item-selected").length).toEqual(6);
@@ -143,7 +145,6 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
         wrapper
@@ -156,7 +157,6 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
         expect(wrapper.find(".s-attribute-filter-list-item-selected").length).toEqual(7);
@@ -168,7 +168,6 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
         wrapper
@@ -178,7 +177,6 @@ describe("AttributeDropdown", () => {
 
         await waitForDebounce();
         await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
         const dropdownItems = document.querySelectorAll(".s-attribute-filter-list-item");
@@ -190,8 +188,6 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync();
-        await waitForAsync(); // There have to be three of those for some reason :-/
         wrapper.update();
 
         wrapper
@@ -215,18 +211,8 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
         expect(wrapper.find("InvertableList").prop("searchString")).toBe("");
-    });
-
-    it("should be in loading state until items are loaded", () => {
-        const wrapper = renderComponent({
-            displayForm: testAttributeRef,
-            titleWithSelection: true,
-        });
-
-        expect(wrapper.exists(".s-button-loading")).toEqual(true);
     });
 
     it("should render dropdown button customized title with selected items and count", async () => {
@@ -262,5 +248,15 @@ describe("AttributeDropdown", () => {
         expect(wrapper.find(".gd-attribute-filter .gd-button-text").text()).toBe(
             "Foo: All except CompuSci (1)",
         );
+    });
+
+    it("should be in loading state until items are loaded", () => {
+        const wrapper = renderComponent({
+            displayForm: testAttributeRef,
+            titleWithSelection: true,
+            isLoading: true,
+        });
+
+        expect(wrapper.exists(".s-button-loading")).toEqual(true);
     });
 });
