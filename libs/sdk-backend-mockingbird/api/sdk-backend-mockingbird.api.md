@@ -28,6 +28,19 @@ export type CatalogRecording = {
     groups: ICatalogGroup[];
 };
 
+// Warning: (ae-internal-missing-underscore) The name "compositeBackend" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function compositeBackend(...components: CompositeBackendPart[]): IAnalyticalBackend;
+
+// Warning: (ae-internal-missing-underscore) The name "CompositeBackendPart" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type CompositeBackendPart = {
+    workspace: string;
+    backend: IAnalyticalBackend;
+};
+
 // Warning: (ae-internal-missing-underscore) The name "DataViewAll" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)

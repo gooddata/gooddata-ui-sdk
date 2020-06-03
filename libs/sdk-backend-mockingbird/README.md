@@ -38,6 +38,12 @@ existing tests green. However, it should not be used in any new tests and should
 Instead, our efforts need to be focused on enhancing the non-legacy recorded backend and having all
 tests (eventually also old tests) run against the reference workspace.
 
+## Composite Backend
+
+This implementation of Analytical Backend SPI allows merging multiple analytical backend instances into one. Each
+component declares what for what workspace it has the data and the composite delegates all requests for that
+workspace into the respective component.
+
 ## License
 
 Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
