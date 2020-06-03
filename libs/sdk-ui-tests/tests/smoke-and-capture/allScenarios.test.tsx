@@ -274,7 +274,7 @@ describe("all scenarios", () => {
     });
 
     it.each(Scenarios)("%s %s should lead to execution", async (vis, scenarioName, scenario) => {
-        const interactions = await mountChartAndCaptureNormalized(scenario.component, scenario.propsFactory);
+        const interactions = await mountChartAndCaptureNormalized(scenario);
 
         expect(interactions.triggeredExecution).toBeDefined();
         expect(interactions.normalizationState).toBeDefined();
@@ -306,7 +306,7 @@ describe("all scenarios", () => {
              * note: to allow PV executions and react component executions to hit the same fingerprints, this function
              * must also use the normalizing backend.
              */
-            const plugVizInteractions = await mountInsight(insight, true);
+            const plugVizInteractions = await mountInsight(scenario, insight, true);
 
             storeScenarioDefinition(scenario, interactions, plugVizInteractions);
             storeInsight(scenario, insight);

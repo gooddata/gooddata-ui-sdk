@@ -8,9 +8,7 @@ import { CustomStories } from "../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
-import { StorybookBackend } from "../../_infra/backend";
-
-const DefaultWorkspace = "testWorkspace";
+import { StorybookBackend, ReferenceWorkspaceId } from "../../_infra/backend";
 
 const backend = StorybookBackend();
 
@@ -29,7 +27,7 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("table with resizing", () 
         >
             <PivotTable
                 backend={backend}
-                workspace={DefaultWorkspace}
+                workspace={ReferenceWorkspaceId}
                 measures={PivotTableWithSingleMeasureAndTwoRowsAndCols.measures}
                 rows={PivotTableWithSingleMeasureAndTwoRowsAndCols.rows}
                 columns={PivotTableWithSingleMeasureAndTwoRowsAndCols.columns}

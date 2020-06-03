@@ -38,6 +38,8 @@ export type TestTypes = "api" | "visual";
 export type SignificantTags = "vis-config-only" | "mock-no-scenario-meta" | "mock-no-insight";
 export type ScenarioTag = SignificantTags | string;
 
+export type WorkspaceType = "reference-workspace" | "examples-workspace";
+
 /**
  * Fully describes a test scenario for particular visualization.
  */
@@ -73,6 +75,11 @@ export interface IScenario<T extends VisProps> {
     readonly component: React.ComponentType<T>;
 
     /**
+     * Type of test workspace that supplies test data for this scenario.
+     */
+    readonly workspaceType: WorkspaceType;
+
+    /**
      * Props factory which transforms unbound props + backend + workspace => real component props
      */
     readonly propsFactory: PropsFactory<T>;
@@ -99,6 +106,7 @@ export class ScenarioBuilder<T extends VisProps> {
     private tags: ScenarioTag[] = [];
     private tests: TestTypes[] = ["api", "visual"];
     private insightConverter: InsightConverter = identity;
+    private workspaceType: WorkspaceType = "reference-workspace";
 
     constructor(
         private readonly vis: string,
@@ -131,9 +139,15 @@ export class ScenarioBuilder<T extends VisProps> {
         return this;
     }
 
+    public withWorkspaceType(type: WorkspaceType): ScenarioBuilder<T> {
+        this.workspaceType = type;
+
+        return this;
+    }
+
     public build = (): IScenario<T> => {
         const props = this.props;
-        const { vis, name, component, tags, tests, insightConverter } = this;
+        const { vis, name, component, tags, tests, insightConverter, workspaceType } = this;
         const hasher = new SparkMD5();
         const insightId = `${this.vis}.${hasher.append(name).end()}`;
         const propsFactory: PropsFactory<T> = (backend, workspace) => {
@@ -154,6 +168,7 @@ export class ScenarioBuilder<T extends VisProps> {
             tags,
             tests,
             component,
+            workspaceType,
             propsFactory,
             insightId,
             insightConverter,
@@ -197,3 +212,8 @@ export enum ScenarioTestMembers {
     Tags = 3,
     InsightId = 4,
 }
+
+/**
+ * Tuple of scenario description and scenario. Useful when passing to parameterized tests.
+ */
+export type ScenarioAndDescription<T extends VisProps> = [string, IScenario<T>];

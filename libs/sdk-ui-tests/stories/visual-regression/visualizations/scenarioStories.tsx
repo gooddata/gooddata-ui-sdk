@@ -13,7 +13,6 @@ import { StorybookBackend } from "../_infra/backend";
 import groupBy = require("lodash/groupBy");
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
-const DefaultWorkspace = "testWorkspace";
 
 const backend = StorybookBackend();
 const ScenarioGroupsByVis = Object.entries(groupBy<ScenarioGroup<any>>(chartGroups, g => g.vis));
@@ -29,13 +28,14 @@ function simpleStory(Component: React.ComponentType, props: any, wrapperStyle: a
 }
 
 function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
-    const scenarios = group.asTestInput();
+    const scenarios = group.asScenarioDescAndScenario();
 
     return () => {
         return withScreenshot(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(scenarios.length)}>
-                {scenarios.map(([name, Component, propsFactory], idx) => {
-                    const props = propsFactory(backend, DefaultWorkspace);
+                {scenarios.map(([name, scenario], idx) => {
+                    const { propsFactory, workspaceType, component: Component } = scenario;
+                    const props = propsFactory(backend, workspaceType);
 
                     return (
                         <div key={idx}>
@@ -71,10 +71,11 @@ ScenarioGroupsByVis.forEach(([vis, groups]) => {
             storiesForChart.add(group.testConfig.visual.groupUnder, groupedStory(visualOnly, wrapperStyle));
         } else {
             // otherwise there will be story-per-scenario
-            const scenarios = visualOnly.asTestInput();
+            const scenarios = visualOnly.asScenarioDescAndScenario();
 
-            scenarios.forEach(([name, Component, propsFactory]) => {
-                const props = propsFactory(backend, DefaultWorkspace);
+            scenarios.forEach(([name, scenario]) => {
+                const { propsFactory, workspaceType, component: Component } = scenario;
+                const props = propsFactory(backend, workspaceType);
 
                 storiesForChart.add(name, simpleStory(Component, props, wrapperStyle));
             });

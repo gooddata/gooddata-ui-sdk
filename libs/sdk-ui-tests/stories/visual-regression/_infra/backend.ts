@@ -5,6 +5,9 @@ import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mo
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { withNormalization } from "@gooddata/sdk-backend-base";
 
+export const ReferenceWorkspaceId = "reference-workspace";
+export const ExampleWorkspaceId = "example-workspace";
+
 export function StorybookBackend(config: RecordedBackendConfig = {}): IAnalyticalBackend {
     return withNormalization(recordedBackend(ReferenceRecordings.Recordings, config));
 }

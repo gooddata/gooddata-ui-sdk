@@ -3,7 +3,7 @@
 import { defSetSorts } from "@gooddata/sdk-model";
 import { IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 import funnelChartScenarios from "../../../scenarios/charts/funnelChart";
-import { ScenarioTestInput } from "../../../src";
+import { ScenarioAndDescription } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { mountChartAndCapture } from "../../_infra/render";
 import { mountInsight } from "../../_infra/renderPlugVis";
@@ -13,12 +13,12 @@ import flatMap = require("lodash/flatMap");
 const Chart = "FunnelChart";
 
 describe(Chart, () => {
-    const Scenarios: Array<ScenarioTestInput<IFunnelChartProps>> = flatMap(funnelChartScenarios, group =>
-        group.forTestTypes("api").asTestInput(),
+    const Scenarios: Array<ScenarioAndDescription<IFunnelChartProps>> = flatMap(funnelChartScenarios, group =>
+        group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
-    describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
-        const promisedInteractions = mountChartAndCapture(Component, propsFactory, wrapper =>
+    describe.each(Scenarios)("with %s", (_desc, scenario) => {
+        const promisedInteractions = mountChartAndCapture(scenario, wrapper =>
             wrapper.find("CoreFunnelChart").props(),
         );
 
@@ -41,7 +41,7 @@ describe(Chart, () => {
 
             const insight = createInsightDefinitionForChart(Chart, _desc, interactions);
 
-            const plugVizInteractions = await mountInsight(insight);
+            const plugVizInteractions = await mountInsight(scenario, insight);
 
             // remove sorts from both original and plug viz exec - simply because plug vis will automatically
             // create sorts

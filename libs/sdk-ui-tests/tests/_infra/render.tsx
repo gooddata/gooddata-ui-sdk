@@ -4,7 +4,7 @@ import { isNoDataError } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { mount, ReactWrapper } from "enzyme";
 import React from "react";
-import { PropsFactory, VisProps } from "../../src";
+import { IScenario, VisProps } from "../../src";
 import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
 import omit = require("lodash/omit");
 
@@ -27,14 +27,14 @@ const immediateChildPropsExtractor: EffectivePropsExtractor = (wrapper: ReactWra
 };
 
 async function _mountChartAndCapture<T extends VisProps>(
-    Component: React.ComponentType<T>,
-    propsFactory: PropsFactory<T>,
+    scenario: IScenario<T>,
     effectivePropsExtractor: EffectivePropsExtractor,
     normalize: boolean,
 ): Promise<ChartInteractions> {
     const [backend, promisedInteractions] = backendWithCapturing(normalize);
+    const { propsFactory, component: Component, workspaceType } = scenario;
 
-    const props = propsFactory(backend, "testWorkspace");
+    const props = propsFactory(backend, workspaceType);
     const customErrorHandler = props.onError;
 
     if (!customErrorHandler) {
@@ -59,20 +59,18 @@ async function _mountChartAndCapture<T extends VisProps>(
 }
 
 /**
- * Mounts chart component and captures significant chart interactions with the rest of the world. Because the
+ * Mounts component tested by the scenario and captures significant chart interactions with the rest of the world. Because the
  * chart rendering communicates with backend asynchronously, this function is also async. The returned
  * promise will be resolved as soon as the chart does first request to obtain a data view to visualize.
  *
- * @param Component - chart component to render
- * @param propsFactory - will be called to obtain props for the chart to render
+ * @param scenario - test scenario for a component
  * @param effectivePropsExtractor - function to extract effective props that can be later user for assertions
  */
 export async function mountChartAndCapture<T extends VisProps>(
-    Component: React.ComponentType<T>,
-    propsFactory: PropsFactory<T>,
+    scenario: IScenario<T>,
     effectivePropsExtractor: EffectivePropsExtractor = immediateChildPropsExtractor,
 ): Promise<ChartInteractions> {
-    return _mountChartAndCapture(Component, propsFactory, effectivePropsExtractor, false);
+    return _mountChartAndCapture(scenario, effectivePropsExtractor, false);
 }
 
 /**
@@ -81,8 +79,7 @@ export async function mountChartAndCapture<T extends VisProps>(
  * Meaning whatever execution definitions are captured represent state _after_ normalization.
  */
 export async function mountChartAndCaptureNormalized<T extends VisProps>(
-    Component: React.ComponentType<T>,
-    propsFactory: PropsFactory<T>,
+    scenario: IScenario<T>,
 ): Promise<ChartInteractions> {
-    return _mountChartAndCapture(Component, propsFactory, immediateChildPropsExtractor, true);
+    return _mountChartAndCapture(scenario, immediateChildPropsExtractor, true);
 }
