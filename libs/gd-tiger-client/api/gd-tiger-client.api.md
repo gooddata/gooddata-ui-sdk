@@ -6828,6 +6828,11 @@ export namespace Execution {
         };
     }
     // (undocumented)
+    export interface IDimensionHeader {
+        // (undocumented)
+        headerGroups: IHeaderGroup[];
+    }
+    // (undocumented)
     export interface IError extends Error {
         // (undocumented)
         response: Response;
@@ -6853,10 +6858,15 @@ export namespace Execution {
         // (undocumented)
         data: DataValue[][] | DataValue[];
         // (undocumented)
-        headerItems?: IResultHeaderItem[][][];
+        dimensionHeaders?: IDimensionHeader[];
     }
     // (undocumented)
     export type IHeader = IMeasureGroupHeader | IAttributeHeader;
+    // (undocumented)
+    export interface IHeaderGroup {
+        // (undocumented)
+        headers: IResultHeader[];
+    }
     // (undocumented)
     export interface IMeasureGroupHeader {
         // (undocumented)
@@ -6875,10 +6885,10 @@ export namespace Execution {
         };
     }
     // (undocumented)
-    export interface IResultAttributeHeaderItem {
+    export interface IResultAttributeHeader {
         // (undocumented)
-        attributeHeaderItem: {
-            name: string;
+        attributeHeader: {
+            labelValue: string;
         };
     }
     // (undocumented)
@@ -6887,19 +6897,19 @@ export namespace Execution {
         headers: IHeader[];
     }
     // (undocumented)
-    export type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
+    export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
     // (undocumented)
-    export interface IResultMeasureHeaderItem {
+    export interface IResultMeasureHeader {
         // (undocumented)
-        measureHeaderItem: {
+        measureHeader: {
             name: string;
             order: number;
         };
     }
     // (undocumented)
-    export interface IResultTotalHeaderItem {
+    export interface IResultTotalHeader {
         // (undocumented)
-        totalHeaderItem: {
+        totalHeader: {
             name: string;
             type: string;
         };
@@ -6907,13 +6917,13 @@ export namespace Execution {
     // (undocumented)
     export function isAttributeHeader(header: IHeader): header is IAttributeHeader;
     // (undocumented)
-    export function isAttributeHeaderItem(header: IResultHeaderItem): header is IResultAttributeHeaderItem;
-    // (undocumented)
     export function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader;
     // (undocumented)
-    export function isMeasureHeaderItem(header: IResultHeaderItem): header is IResultMeasureHeaderItem;
+    export function isResultAttributeHeader(header: IResultHeader): header is IResultAttributeHeader;
     // (undocumented)
-    export function isTotalHeaderItem(header: IResultHeaderItem): header is IResultTotalHeaderItem;
+    export function isResultMeasureHeader(header: IResultHeader): header is IResultMeasureHeader;
+    // (undocumented)
+    export function isResultTotalHeader(header: IResultHeader): header is IResultTotalHeader;
     // (undocumented)
     export interface ITotalHeaderItem {
         // (undocumented)

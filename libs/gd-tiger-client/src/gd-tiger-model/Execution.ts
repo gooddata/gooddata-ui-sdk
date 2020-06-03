@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 export namespace Execution {
     export interface IMeasureHeaderItem {
         measureHeaderItem: {
@@ -39,30 +39,35 @@ export namespace Execution {
 
     export type IHeader = IMeasureGroupHeader | IAttributeHeader;
 
-    export interface IResultAttributeHeaderItem {
-        attributeHeaderItem: {
-            name: string;
+    export interface IResultAttributeHeader {
+        attributeHeader: {
+            labelValue: string;
         };
     }
 
-    export interface IResultMeasureHeaderItem {
-        measureHeaderItem: {
+    export interface IResultMeasureHeader {
+        measureHeader: {
             name: string;
             order: number;
         };
     }
 
-    export interface IResultTotalHeaderItem {
-        totalHeaderItem: {
+    export interface IResultTotalHeader {
+        totalHeader: {
             name: string;
             type: string;
         };
     }
 
-    export type IResultHeaderItem =
-        | IResultAttributeHeaderItem
-        | IResultMeasureHeaderItem
-        | IResultTotalHeaderItem;
+    export interface IDimensionHeader {
+        headerGroups: IHeaderGroup[];
+    }
+
+    export interface IHeaderGroup {
+        headers: IResultHeader[];
+    }
+
+    export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
 
     export interface IResultDimension {
         headers: IHeader[];
@@ -87,7 +92,7 @@ export namespace Execution {
     }
 
     export interface IExecutionResult {
-        headerItems?: IResultHeaderItem[][][];
+        dimensionHeaders?: IDimensionHeader[];
         data: DataValue[][] | DataValue[];
         /* not yet returned by API
         totals?: DataValue[][][];
@@ -113,16 +118,16 @@ export namespace Execution {
         executionResult: IExecutionResult | null;
     }
 
-    export function isAttributeHeaderItem(header: IResultHeaderItem): header is IResultAttributeHeaderItem {
-        return (header as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
+    export function isResultAttributeHeader(header: IResultHeader): header is IResultAttributeHeader {
+        return (header as IResultAttributeHeader).attributeHeader !== undefined;
     }
 
-    export function isMeasureHeaderItem(header: IResultHeaderItem): header is IResultMeasureHeaderItem {
-        return (header as IResultMeasureHeaderItem).measureHeaderItem !== undefined;
+    export function isResultMeasureHeader(header: IResultHeader): header is IResultMeasureHeader {
+        return (header as IResultMeasureHeader).measureHeader !== undefined;
     }
 
-    export function isTotalHeaderItem(header: IResultHeaderItem): header is IResultTotalHeaderItem {
-        return (header as IResultTotalHeaderItem).totalHeaderItem !== undefined;
+    export function isResultTotalHeader(header: IResultHeader): header is IResultTotalHeader {
+        return (header as IResultTotalHeader).totalHeader !== undefined;
     }
 
     export function isAttributeHeader(header: IHeader): header is IAttributeHeader {

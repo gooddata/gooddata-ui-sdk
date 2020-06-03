@@ -15,7 +15,8 @@
         "paths": {
             "@gooddata/sdk-model": ["sdk-model/src"],
             "@gooddata/sdk-backend-base": ["sdk-backend-base/src"],
-            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"]
+            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
+            "@gooddata/gd-tiger-client": ["gd-tiger-client/src"]
         }
     },
     "exclude": ["node_modules", "dist"]
