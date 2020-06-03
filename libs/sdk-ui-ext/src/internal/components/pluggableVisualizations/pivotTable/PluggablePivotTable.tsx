@@ -350,7 +350,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
 
         const { locale, custom, dimensions, config } = options;
-        const { height } = dimensions;
+        const height = dimensions?.height;
         const { drillableItems } = custom;
 
         const execution = executionFactory
