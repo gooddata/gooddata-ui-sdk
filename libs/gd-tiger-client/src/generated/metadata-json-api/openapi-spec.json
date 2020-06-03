@@ -146,7 +146,7 @@
                 "in": "query",
                 "name": "fields",
                 "schema": {
-                    "default": "title,description,maql,ast,facts,attributes,labels,metrics,id",
+                    "default": "title,description,maql,format,ast,tags,facts,attributes,labels,metrics,id",
                     "type": "string"
                 }
             },
@@ -155,7 +155,7 @@
                 "in": "query",
                 "name": "include",
                 "schema": {
-                    "default": "Fact,Attribute,Label,Metric",
+                    "default": "Tag,Fact,Attribute,Label,Metric",
                     "type": "string"
                 }
             },
@@ -172,7 +172,7 @@
                 "in": "query",
                 "name": "sort",
                 "schema": {
-                    "example": "title,description,maql,ast,facts,attributes,labels,metrics,id",
+                    "example": "title,description,maql,format,ast,tags,facts,attributes,labels,metrics,id",
                     "type": "string"
                 }
             },
@@ -298,7 +298,7 @@
                 "in": "query",
                 "name": "fields",
                 "schema": {
-                    "default": "title,labels,attributes,facts,datasets,id",
+                    "default": "title,labels,attributes,facts,datasets,metrics,visualizationObjects,id",
                     "type": "string"
                 }
             },
@@ -307,7 +307,7 @@
                 "in": "query",
                 "name": "include",
                 "schema": {
-                    "default": "Label,Attribute,Fact,Dataset",
+                    "default": "Label,Attribute,Fact,Dataset,Metric,VisualizationObject",
                     "type": "string"
                 }
             },
@@ -324,7 +324,7 @@
                 "in": "query",
                 "name": "sort",
                 "schema": {
-                    "example": "title,labels,attributes,facts,datasets,id",
+                    "example": "title,labels,attributes,facts,datasets,metrics,visualizationObjects,id",
                     "type": "string"
                 }
             },
@@ -333,7 +333,7 @@
                 "in": "query",
                 "name": "fields",
                 "schema": {
-                    "default": "title,description,content,facts,attributes,labels,metrics,id",
+                    "default": "title,description,content,tags,facts,attributes,labels,metrics,id",
                     "type": "string"
                 }
             },
@@ -342,7 +342,7 @@
                 "in": "query",
                 "name": "include",
                 "schema": {
-                    "default": "Fact,Attribute,Label,Metric",
+                    "default": "Tag,Fact,Attribute,Label,Metric",
                     "type": "string"
                 }
             },
@@ -359,7 +359,7 @@
                 "in": "query",
                 "name": "sort",
                 "schema": {
-                    "example": "title,description,facts,attributes,labels,metrics,id",
+                    "example": "title,description,tags,facts,attributes,labels,metrics,id",
                     "type": "string"
                 }
             }
@@ -1246,6 +1246,7 @@
                                     "type": "string"
                                 },
                                 "type": {
+                                    "enum": ["DATASET"],
                                     "type": "string"
                                 }
                             },
@@ -1255,7 +1256,11 @@
                             "type": "boolean"
                         },
                         "sourceColumns": {
-                            "type": "string"
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array",
+                            "uniqueItems": false
                         }
                     },
                     "type": "object"
@@ -1975,6 +1980,10 @@
                 "type": "array",
                 "uniqueItems": true
             },
+            "MetricFormatResourceAttribute": {
+                "nullable": true,
+                "type": "string"
+            },
             "MetricIdResourceAttribute": {
                 "description": "The JSON:API resource ID",
                 "nullable": false,
@@ -2056,6 +2065,9 @@
                             "facts": {
                                 "$ref": "#/components/schemas/MetricFactsResourceAttribute"
                             },
+                            "format": {
+                                "$ref": "#/components/schemas/MetricFormatResourceAttribute"
+                            },
                             "labels": {
                                 "$ref": "#/components/schemas/MetricLabelsResourceAttribute"
                             },
@@ -2064,6 +2076,9 @@
                             },
                             "metrics": {
                                 "$ref": "#/components/schemas/MetricMetricsResourceAttribute"
+                            },
+                            "tags": {
+                                "$ref": "#/components/schemas/MetricTagsResourceAttribute"
                             },
                             "title": {
                                 "$ref": "#/components/schemas/MetricTitleResourceAttribute"
@@ -2087,6 +2102,9 @@
                             "facts": {
                                 "$ref": "#/components/schemas/MetricFactsResourceAttribute"
                             },
+                            "format": {
+                                "$ref": "#/components/schemas/MetricFormatResourceAttribute"
+                            },
                             "labels": {
                                 "$ref": "#/components/schemas/MetricLabelsResourceAttribute"
                             },
@@ -2095,6 +2113,9 @@
                             },
                             "metrics": {
                                 "$ref": "#/components/schemas/MetricMetricsResourceAttribute"
+                            },
+                            "tags": {
+                                "$ref": "#/components/schemas/MetricTagsResourceAttribute"
                             },
                             "title": {
                                 "$ref": "#/components/schemas/MetricTitleResourceAttribute"
@@ -2118,6 +2139,9 @@
                             "facts": {
                                 "$ref": "#/components/schemas/MetricFactsResourceAttribute"
                             },
+                            "format": {
+                                "$ref": "#/components/schemas/MetricFormatResourceAttribute"
+                            },
                             "labels": {
                                 "$ref": "#/components/schemas/MetricLabelsResourceAttribute"
                             },
@@ -2126,6 +2150,9 @@
                             },
                             "metrics": {
                                 "$ref": "#/components/schemas/MetricMetricsResourceAttribute"
+                            },
+                            "tags": {
+                                "$ref": "#/components/schemas/MetricTagsResourceAttribute"
                             },
                             "title": {
                                 "$ref": "#/components/schemas/MetricTitleResourceAttribute"
@@ -2223,6 +2250,14 @@
                         "required": ["data"]
                     }
                 ]
+            },
+            "MetricTagsResourceAttribute": {
+                "items": {
+                    "$ref": "#/components/schemas/TagResourceReference"
+                },
+                "nullable": true,
+                "type": "array",
+                "uniqueItems": true
             },
             "MetricTitleResourceAttribute": {
                 "nullable": true,
@@ -2692,6 +2727,14 @@
                 "type": "array",
                 "uniqueItems": true
             },
+            "TagMetricsResourceAttribute": {
+                "items": {
+                    "$ref": "#/components/schemas/MetricResourceReference"
+                },
+                "nullable": true,
+                "type": "array",
+                "uniqueItems": true
+            },
             "TagPatchResource": {
                 "allOf": [
                     {
@@ -2748,8 +2791,14 @@
                             "labels": {
                                 "$ref": "#/components/schemas/TagLabelsResourceAttribute"
                             },
+                            "metrics": {
+                                "$ref": "#/components/schemas/TagMetricsResourceAttribute"
+                            },
                             "title": {
                                 "$ref": "#/components/schemas/TagTitleResourceAttribute"
+                            },
+                            "visualizationObjects": {
+                                "$ref": "#/components/schemas/TagVisualizationObjectsResourceAttribute"
                             }
                         },
                         "type": "object"
@@ -2773,8 +2822,14 @@
                             "labels": {
                                 "$ref": "#/components/schemas/TagLabelsResourceAttribute"
                             },
+                            "metrics": {
+                                "$ref": "#/components/schemas/TagMetricsResourceAttribute"
+                            },
                             "title": {
                                 "$ref": "#/components/schemas/TagTitleResourceAttribute"
+                            },
+                            "visualizationObjects": {
+                                "$ref": "#/components/schemas/TagVisualizationObjectsResourceAttribute"
                             }
                         },
                         "type": "object"
@@ -2798,8 +2853,14 @@
                             "labels": {
                                 "$ref": "#/components/schemas/TagLabelsResourceAttribute"
                             },
+                            "metrics": {
+                                "$ref": "#/components/schemas/TagMetricsResourceAttribute"
+                            },
                             "title": {
                                 "$ref": "#/components/schemas/TagTitleResourceAttribute"
+                            },
+                            "visualizationObjects": {
+                                "$ref": "#/components/schemas/TagVisualizationObjectsResourceAttribute"
                             }
                         },
                         "type": "object"
@@ -2898,6 +2959,14 @@
             "TagTitleResourceAttribute": {
                 "nullable": true,
                 "type": "string"
+            },
+            "TagVisualizationObjectsResourceAttribute": {
+                "items": {
+                    "$ref": "#/components/schemas/VisualizationObjectResourceReference"
+                },
+                "nullable": true,
+                "type": "array",
+                "uniqueItems": true
             },
             "VisualizationObjectAttributesResourceAttribute": {
                 "items": {
@@ -3006,6 +3075,9 @@
                             "metrics": {
                                 "$ref": "#/components/schemas/VisualizationObjectMetricsResourceAttribute"
                             },
+                            "tags": {
+                                "$ref": "#/components/schemas/VisualizationObjectTagsResourceAttribute"
+                            },
                             "title": {
                                 "$ref": "#/components/schemas/VisualizationObjectTitleResourceAttribute"
                             }
@@ -3025,6 +3097,9 @@
                             "description": {
                                 "$ref": "#/components/schemas/VisualizationObjectDescriptionResourceAttribute"
                             },
+                            "tags": {
+                                "$ref": "#/components/schemas/VisualizationObjectTagsResourceAttribute"
+                            },
                             "title": {
                                 "$ref": "#/components/schemas/VisualizationObjectTitleResourceAttribute"
                             }
@@ -3043,6 +3118,9 @@
                             },
                             "description": {
                                 "$ref": "#/components/schemas/VisualizationObjectDescriptionResourceAttribute"
+                            },
+                            "tags": {
+                                "$ref": "#/components/schemas/VisualizationObjectTagsResourceAttribute"
                             },
                             "title": {
                                 "$ref": "#/components/schemas/VisualizationObjectTitleResourceAttribute"
@@ -3140,6 +3218,14 @@
                         "required": ["data"]
                     }
                 ]
+            },
+            "VisualizationObjectTagsResourceAttribute": {
+                "items": {
+                    "$ref": "#/components/schemas/TagResourceReference"
+                },
+                "nullable": true,
+                "type": "array",
+                "uniqueItems": true
             },
             "VisualizationObjectTitleResourceAttribute": {
                 "nullable": true,
@@ -3890,6 +3976,22 @@
                         }
                     },
                     {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by id (csv)",
                         "in": "query",
                         "name": "filter[id]",
@@ -4018,6 +4120,22 @@
                         "description": "Filter by datasets (csv)",
                         "in": "query",
                         "name": "filter[datasets]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
                         "schema": {
                             "type": "string"
                         }
@@ -5359,6 +5477,22 @@
                         }
                     },
                     {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by id (csv)",
                         "in": "query",
                         "name": "filter[id]",
@@ -5487,6 +5621,22 @@
                         "description": "Filter by datasets (csv)",
                         "in": "query",
                         "name": "filter[datasets]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
                         "schema": {
                             "type": "string"
                         }
@@ -6010,6 +6160,22 @@
                         }
                     },
                     {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by id (csv)",
                         "in": "query",
                         "name": "filter[id]",
@@ -6138,6 +6304,22 @@
                         "description": "Filter by datasets (csv)",
                         "in": "query",
                         "name": "filter[datasets]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
                         "schema": {
                             "type": "string"
                         }
@@ -6669,6 +6851,22 @@
                         }
                     },
                     {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by id (csv)",
                         "in": "query",
                         "name": "filter[id]",
@@ -6802,6 +7000,22 @@
                         }
                     },
                     {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by id (csv)",
                         "in": "query",
                         "name": "filter[id]",
@@ -6916,9 +7130,25 @@
                         }
                     },
                     {
+                        "description": "Filter by format (csv)",
+                        "in": "query",
+                        "name": "filter[format]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by ast (csv)",
                         "in": "query",
                         "name": "filter[ast]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
                         "schema": {
                             "type": "string"
                         }
@@ -8624,9 +8854,25 @@
                         }
                     },
                     {
+                        "description": "Filter by format (csv)",
+                        "in": "query",
+                        "name": "filter[format]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by ast (csv)",
                         "in": "query",
                         "name": "filter[ast]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
                         "schema": {
                             "type": "string"
                         }
@@ -10156,9 +10402,25 @@
                         }
                     },
                     {
+                        "description": "Filter by format (csv)",
+                        "in": "query",
+                        "name": "filter[format]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by ast (csv)",
                         "in": "query",
                         "name": "filter[ast]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
                         "schema": {
                             "type": "string"
                         }
@@ -10382,6 +10644,784 @@
                     },
                     "202": {
                         "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
+        "/metrics/{id}/relationships/tags": {
+            "delete": {
+                "description": "Delete metric relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricPrimaryKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "get": {
+                "description": "Retrieve tag references related to a metric resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by labels (csv)",
+                        "in": "query",
+                        "name": "filter[labels]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by attributes (csv)",
+                        "in": "query",
+                        "name": "filter[attributes]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by facts (csv)",
+                        "in": "query",
+                        "name": "filter[facts]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by datasets (csv)",
+                        "in": "query",
+                        "name": "filter[datasets]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update metric relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create metric relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
+        "/metrics/{id}/tags": {
+            "delete": {
+                "description": "Delete metric relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricPrimaryKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "get": {
+                "description": "Retrieve tag related to a metric resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by labels (csv)",
+                        "in": "query",
+                        "name": "filter[labels]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by attributes (csv)",
+                        "in": "query",
+                        "name": "filter[attributes]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by facts (csv)",
+                        "in": "query",
+                        "name": "filter[facts]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by datasets (csv)",
+                        "in": "query",
+                        "name": "filter[datasets]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourcesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update metric relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create metric relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
                     },
                     "204": {
                         "$ref": "#/components/responses/NoContent"
@@ -11255,6 +12295,22 @@
                         "description": "Filter by datasets (csv)",
                         "in": "query",
                         "name": "filter[datasets]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
                         "schema": {
                             "type": "string"
                         }
@@ -13238,6 +14294,419 @@
                 }
             }
         },
+        "/tags/{id}/metrics": {
+            "delete": {
+                "description": "Delete tag relationship to a metric resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "get": {
+                "description": "Retrieve metric related to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by description (csv)",
+                        "in": "query",
+                        "name": "filter[description]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by maql (csv)",
+                        "in": "query",
+                        "name": "filter[maql]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by format (csv)",
+                        "in": "query",
+                        "name": "filter[format]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by ast (csv)",
+                        "in": "query",
+                        "name": "filter[ast]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by facts (csv)",
+                        "in": "query",
+                        "name": "filter[facts]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by attributes (csv)",
+                        "in": "query",
+                        "name": "filter[attributes]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by labels (csv)",
+                        "in": "query",
+                        "name": "filter[labels]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MetricResourcesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update tag relationship to a metric resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MetricResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create tag relationship to a metric resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MetricResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
         "/tags/{id}/relationships/attributes": {
             "delete": {
                 "description": "Delete tag relationship to a attribute resource",
@@ -14802,6 +16271,1197 @@
                 }
             }
         },
+        "/tags/{id}/relationships/metrics": {
+            "delete": {
+                "description": "Delete tag relationship to a metric resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "get": {
+                "description": "Retrieve metric references related to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by description (csv)",
+                        "in": "query",
+                        "name": "filter[description]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by maql (csv)",
+                        "in": "query",
+                        "name": "filter[maql]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by format (csv)",
+                        "in": "query",
+                        "name": "filter[format]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by ast (csv)",
+                        "in": "query",
+                        "name": "filter[ast]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by facts (csv)",
+                        "in": "query",
+                        "name": "filter[facts]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by attributes (csv)",
+                        "in": "query",
+                        "name": "filter[attributes]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by labels (csv)",
+                        "in": "query",
+                        "name": "filter[labels]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/MetricInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update tag relationship to a metric resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MetricResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create tag relationship to a metric resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MetricResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
+        "/tags/{id}/relationships/visualizationObjects": {
+            "delete": {
+                "description": "Delete tag relationship to a visualizationObject resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "get": {
+                "description": "Retrieve visualizationObject references related to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by description (csv)",
+                        "in": "query",
+                        "name": "filter[description]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by facts (csv)",
+                        "in": "query",
+                        "name": "filter[facts]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by attributes (csv)",
+                        "in": "query",
+                        "name": "filter[attributes]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by labels (csv)",
+                        "in": "query",
+                        "name": "filter[labels]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update tag relationship to a visualizationObject resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VisualizationObjectResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create tag relationship to a visualizationObject resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VisualizationObjectResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
+        "/tags/{id}/visualizationObjects": {
+            "delete": {
+                "description": "Delete tag relationship to a visualizationObject resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "get": {
+                "description": "Retrieve visualizationObject related to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by description (csv)",
+                        "in": "query",
+                        "name": "filter[description]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by facts (csv)",
+                        "in": "query",
+                        "name": "filter[facts]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by attributes (csv)",
+                        "in": "query",
+                        "name": "filter[attributes]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by labels (csv)",
+                        "in": "query",
+                        "name": "filter[labels]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/VisualizationObjectResourcesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update tag relationship to a visualizationObject resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VisualizationObjectResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create tag relationship to a visualizationObject resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VisualizationObjectResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/VisualizationObjectResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
         "/visualizationObjects": {
             "get": {
                 "description": "Retrieve a List of visualizationObject resources",
@@ -14831,6 +17491,14 @@
                         "description": "Filter by description (csv)",
                         "in": "query",
                         "name": "filter[description]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
                         "schema": {
                             "type": "string"
                         }
@@ -15742,9 +18410,25 @@
                         }
                     },
                     {
+                        "description": "Filter by format (csv)",
+                        "in": "query",
+                        "name": "filter[format]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by ast (csv)",
                         "in": "query",
                         "name": "filter[ast]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
                         "schema": {
                             "type": "string"
                         }
@@ -16314,9 +18998,25 @@
                         }
                     },
                     {
+                        "description": "Filter by format (csv)",
+                        "in": "query",
+                        "name": "filter[format]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "description": "Filter by ast (csv)",
                         "in": "query",
                         "name": "filter[ast]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by tags (csv)",
+                        "in": "query",
+                        "name": "filter[tags]",
                         "schema": {
                             "type": "string"
                         }
@@ -16374,6 +19074,784 @@
                     },
                     "202": {
                         "$ref": "#/components/responses/MetricResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
+        "/visualizationObjects/{id}/relationships/tags": {
+            "delete": {
+                "description": "Delete visualizationObject relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectPrimaryKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "get": {
+                "description": "Retrieve tag references related to a visualizationObject resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by labels (csv)",
+                        "in": "query",
+                        "name": "filter[labels]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by attributes (csv)",
+                        "in": "query",
+                        "name": "filter[attributes]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by facts (csv)",
+                        "in": "query",
+                        "name": "filter[facts]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by datasets (csv)",
+                        "in": "query",
+                        "name": "filter[datasets]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update visualizationObject relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create visualizationObject relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            }
+        },
+        "/visualizationObjects/{id}/tags": {
+            "delete": {
+                "description": "Delete visualizationObject relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectPrimaryKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "get": {
+                "description": "Retrieve tag related to a visualizationObject resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectPrimaryKey"
+                    },
+                    {
+                        "$ref": "#/components/parameters/NestedFilter"
+                    },
+                    {
+                        "description": "Filter by title (csv)",
+                        "in": "query",
+                        "name": "filter[title]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by labels (csv)",
+                        "in": "query",
+                        "name": "filter[labels]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by attributes (csv)",
+                        "in": "query",
+                        "name": "filter[attributes]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by facts (csv)",
+                        "in": "query",
+                        "name": "filter[facts]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by datasets (csv)",
+                        "in": "query",
+                        "name": "filter[datasets]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by metrics (csv)",
+                        "in": "query",
+                        "name": "filter[metrics]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by visualizationObjects (csv)",
+                        "in": "query",
+                        "name": "filter[visualizationObjects]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Filter by id (csv)",
+                        "in": "query",
+                        "name": "filter[id]",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagFields"
+                    },
+                    {
+                        "$ref": "#/components/parameters/TagInclude"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourcesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update visualizationObject relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "405": {
+                        "$ref": "#/components/responses/405"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/409"
+                    },
+                    "412": {
+                        "$ref": "#/components/responses/412"
+                    },
+                    "415": {
+                        "$ref": "#/components/responses/415"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "501": {
+                        "$ref": "#/components/responses/501"
+                    },
+                    "502": {
+                        "$ref": "#/components/responses/502"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/503"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "505": {
+                        "$ref": "#/components/responses/505"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create visualizationObject relationship to a tag resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Content-Type",
+                        "required": true,
+                        "schema": {
+                            "default": "application/vnd.api+json",
+                            "enum": ["application/vnd.api+json", "application/json"],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/VisualizationObjectPrimaryKey"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagResourceReferencesResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
+                    },
+                    "202": {
+                        "$ref": "#/components/responses/TagResourceReferencesResponse"
                     },
                     "204": {
                         "$ref": "#/components/responses/NoContent"

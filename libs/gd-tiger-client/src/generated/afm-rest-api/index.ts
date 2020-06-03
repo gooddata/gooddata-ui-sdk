@@ -1,3 +1,4 @@
+// (C) 2020 GoodData Corporation
 // tslint:disable
 /**
  * OpenAPI definition

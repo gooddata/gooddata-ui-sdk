@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "https://staging.nas.gooddata.com",
+            "url": "https://staging.anywhere.gooddata.com",
             "description": "Generated server url"
         }
     ],
@@ -21,7 +21,16 @@
                         "in": "header",
                         "required": false,
                         "schema": {
-                            "type": "boolean"
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "timestamp",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
@@ -37,7 +46,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "default response",
+                        "description": "OK",
                         "content": {
                             "*/*": {
                                 "schema": {
@@ -65,7 +74,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "default response",
+                        "description": "OK",
                         "content": {
                             "*/*": {
                                 "schema": {
@@ -173,7 +182,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "default response",
+                        "description": "OK",
                         "content": {
                             "*/*": {
                                 "schema": {

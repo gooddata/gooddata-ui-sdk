@@ -1,3 +1,4 @@
+// (C) 2020 GoodData Corporation
 // tslint:disable
 /**
  * OpenAPI definition
@@ -16,7 +17,7 @@ import { Configuration } from "./configuration";
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
 
-export const BASE_PATH = "https://staging.nas.gooddata.com".replace(/\/+$/, "");
+export const BASE_PATH = "https://staging.anywhere.gooddata.com".replace(/\/+$/, "");
 
 /**
  *

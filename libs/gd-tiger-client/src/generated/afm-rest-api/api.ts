@@ -1,4 +1,3 @@
-// (C) 2020 GoodData Corporation
 // tslint:disable
 /**
  * OpenAPI definition
@@ -346,6 +345,7 @@ export const AfmControllerApiAxiosParamCreator = function(configuration?: Config
          *
          * @param {AfmExecution} afmExecution
          * @param {boolean} [skipCache]
+         * @param {string} [timestamp]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -353,10 +353,11 @@ export const AfmControllerApiAxiosParamCreator = function(configuration?: Config
             params: {
                 afmExecution: AfmExecution;
                 skipCache?: boolean;
+                timestamp?: string;
             },
             options: any = {},
         ): RequestArgs {
-            const { afmExecution, skipCache } = params;
+            const { afmExecution, skipCache, timestamp } = params;
             // verify required parameter 'afmExecution' is not null or undefined
             if (afmExecution === null || afmExecution === undefined) {
                 throw new RequiredError(
@@ -376,6 +377,10 @@ export const AfmControllerApiAxiosParamCreator = function(configuration?: Config
 
             if (skipCache !== undefined && skipCache !== null) {
                 localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            if (timestamp !== undefined && timestamp !== null) {
+                localVarHeaderParameter["timestamp"] = String(timestamp);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/json";
@@ -457,6 +462,7 @@ export const AfmControllerApiFp = function(configuration?: Configuration) {
          *
          * @param {AfmExecution} afmExecution
          * @param {boolean} [skipCache]
+         * @param {string} [timestamp]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -464,6 +470,7 @@ export const AfmControllerApiFp = function(configuration?: Configuration) {
             params: {
                 afmExecution: AfmExecution;
                 skipCache?: boolean;
+                timestamp?: string;
             },
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmExecutionResponse> {
@@ -519,6 +526,7 @@ export const AfmControllerApiFactory = function(
          *
          * @param {AfmExecution} afmExecution
          * @param {boolean} [skipCache]
+         * @param {string} [timestamp]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -526,6 +534,7 @@ export const AfmControllerApiFactory = function(
             params: {
                 afmExecution: AfmExecution;
                 skipCache?: boolean;
+                timestamp?: string;
             },
             options?: any,
         ): AxiosPromise<AfmExecutionResponse> {
@@ -561,6 +570,7 @@ export interface AfmControllerApiInterface {
      *
      * @param {AfmExecution} afmExecution
      * @param {boolean} [skipCache]
+     * @param {string} [timestamp]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AfmControllerApiInterface
@@ -569,6 +579,7 @@ export interface AfmControllerApiInterface {
         params: {
             afmExecution: AfmExecution;
             skipCache?: boolean;
+            timestamp?: string;
         },
         options?: any,
     ): AxiosPromise<AfmExecutionResponse>;
@@ -599,6 +610,7 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
      *
      * @param {AfmExecution} afmExecution
      * @param {boolean} [skipCache]
+     * @param {string} [timestamp]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AfmControllerApi
@@ -607,6 +619,7 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
         params: {
             afmExecution: AfmExecution;
             skipCache?: boolean;
+            timestamp?: string;
         },
         options?: any,
     ) {
