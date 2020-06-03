@@ -1,0 +1,759 @@
+[
+    {
+        "vis": "AreaChart",
+        "scenario": "two measures with viewBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "stack",
+                    "items": []
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
+        }
+    },
+    {
+        "vis": "BarChart",
+        "scenario": "two measures with viewBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "stack",
+                    "items": []
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
+        }
+    },
+    {
+        "vis": "ColumnChart",
+        "scenario": "two measures with viewBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "stack",
+                    "items": []
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
+        }
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "two secondary measure with viewBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "secondary_measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
+        }
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "one primary and secondary measure with viewBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "secondary_measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
+        }
+    },
+    {
+        "vis": "Treemap",
+        "scenario": "two measures and viewBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "segment",
+                    "items": []
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
+        }
+    },
+    {
+        "vis": "Treemap",
+        "scenario": "two measures and segmentBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "segment",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy"
+        }
+    }
+]

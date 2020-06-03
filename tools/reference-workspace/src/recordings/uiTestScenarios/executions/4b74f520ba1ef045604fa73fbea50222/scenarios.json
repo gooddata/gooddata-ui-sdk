@@ -1,0 +1,85 @@
+[
+    {
+        "vis": "LineChart",
+        "scenario": "single measure with % and trendBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_abZgFKGPaGYM",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "abZgFKGPaGYM"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "trend",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "created.aci81lMifn6q",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_created.aci81lMifn6q"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "segment",
+                    "items": []
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "created.aci81lMifn6q",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_created.aci81lMifn6q"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_abZgFKGPaGYM",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "abZgFKGPaGYM"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_created.aci81lMifn6q"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_created.aci81lMifn6q": "a_created.aci81lMifn6q",
+            "m_abZgFKGPaGYM": "m_abZgFKGPaGYM"
+        }
+    }
+]

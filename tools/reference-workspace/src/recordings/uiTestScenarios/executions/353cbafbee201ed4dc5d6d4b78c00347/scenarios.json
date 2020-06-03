@@ -1,0 +1,141 @@
+[
+    {
+        "vis": "BubbleChart",
+        "scenario": "x and y axis and size measures with viewBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "secondary_measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_abZgFKGPaGYM",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "abZgFKGPaGYM"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "tertiary_measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_abEgMnq5hyJQ",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "abEgMnq5hyJQ"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_abZgFKGPaGYM",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "abZgFKGPaGYM"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_abEgMnq5hyJQ",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "abEgMnq5hyJQ"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                },
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_abZgFKGPaGYM": "m_abZgFKGPaGYM",
+            "m_abEgMnq5hyJQ": "m_abEgMnq5hyJQ"
+        }
+    }
+]

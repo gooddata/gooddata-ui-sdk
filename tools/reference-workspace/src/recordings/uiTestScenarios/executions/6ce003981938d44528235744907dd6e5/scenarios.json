@@ -1,0 +1,89 @@
+[
+    {
+        "vis": "ColumnChart",
+        "scenario": "single ratio measure with viewBy",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "Amount with Ratio",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        },
+                                        "computeRatio": true
+                                    }
+                                },
+                                "alias": "Amount with Ratio"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "stack",
+                    "items": []
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "Amount with Ratio",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                },
+                                "computeRatio": true
+                            }
+                        },
+                        "alias": "Amount with Ratio"
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu_ratio": "Amount with Ratio"
+        }
+    }
+]

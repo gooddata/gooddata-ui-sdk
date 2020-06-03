@@ -1,0 +1,87 @@
+{
+    "workspace": "reference-workspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "closed.aag81lMifn6q",
+                    "type": "displayForm"
+                },
+                "localIdentifier": "a_closed.aag81lMifn6q"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "m_aangOxLSeztu",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m_acugFHNJgsBy",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "acugFHNJgsBy"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "popAttribute": {
+                            "identifier": "closed.year",
+                            "type": "attribute"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                        "operator": "difference"
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_f72796b0fbc7c0dc4d17a1e68c1a9933", "m_acugFHNJgsBy"],
+                        "operator": "ratio"
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["a_closed.aag81lMifn6q"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

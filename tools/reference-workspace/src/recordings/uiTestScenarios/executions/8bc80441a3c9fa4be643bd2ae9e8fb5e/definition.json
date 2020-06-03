@@ -1,0 +1,40 @@
+{
+    "workspace": "reference-workspace",
+    "buckets": [],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "m_acugFHNJgsBy",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "acugFHNJgsBy"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "popAttribute": {
+                            "identifier": "closed.year",
+                            "type": "attribute"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}
