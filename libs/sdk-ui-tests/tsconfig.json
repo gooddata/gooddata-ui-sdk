@@ -21,6 +21,7 @@
         "paths": {
             "@gooddata/sdk-ui": ["libs/sdk-ui/src"],
             "@gooddata/sdk-ui-ext": ["libs/sdk-ui-ext/src"],
+            "@gooddata/sdk-ui-geo": ["libs/sdk-ui-geo/src"],
             "@gooddata/sdk-ui-pivot": ["libs/sdk-ui-pivot/src"],
             "@gooddata/sdk-model": ["libs/sdk-model/src"],
             "@gooddata/sdk-backend-base": ["libs/sdk-backend-base/src"],

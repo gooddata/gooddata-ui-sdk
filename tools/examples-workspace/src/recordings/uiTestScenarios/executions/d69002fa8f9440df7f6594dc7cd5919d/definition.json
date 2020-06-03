@@ -1,0 +1,32 @@
+{
+    "workspace": "examples-workspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.uscities.city.location",
+                    "type": "displayForm"
+                },
+                "localIdentifier": "a_label.uscities.city.location"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.uscities.state_name",
+                    "type": "displayForm"
+                },
+                "localIdentifier": "a_label.uscities.state_name"
+            }
+        }
+    ],
+    "measures": [],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["a_label.uscities.city.location", "a_label.uscities.state_name"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

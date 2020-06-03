@@ -8,8 +8,9 @@ import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight } from "@gooddata/sdk-model";
 import { IExecuteProps } from "@gooddata/sdk-ui";
+import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 
-export type VisProps = IPivotTableProps | IBucketChartProps | IExecuteProps;
+export type VisProps = IPivotTableProps | IBucketChartProps | IExecuteProps | IGeoPushpinChartProps;
 export type UnboundVisProps<T extends VisProps> = Omit<T, "backend" | "workspace">;
 export type PropsFactory<T extends VisProps> = (backend: IAnalyticalBackend, workspace: string) => T;
 export type InsightConverter = (defaultInsight: IInsight) => IInsight;

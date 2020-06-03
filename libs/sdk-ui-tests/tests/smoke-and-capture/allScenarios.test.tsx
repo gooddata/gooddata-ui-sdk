@@ -220,7 +220,7 @@ function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
     return;
 }
 
-const PlugVisUnsupported: string[] = [];
+const PlugVisUnsupported: string[] = ["GeoPushpinChart"];
 
 describe("all scenarios", () => {
     const Scenarios: AllScenariosType[] = flatMap(allScenarios, (s): AllScenariosType[] => {
