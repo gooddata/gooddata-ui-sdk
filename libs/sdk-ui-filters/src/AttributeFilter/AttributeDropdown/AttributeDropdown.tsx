@@ -70,7 +70,7 @@ export interface IAttributeDropdownState {
     // paging
     offset: number;
     limit: number;
-    totalCount?: string;
+    totalCount: number;
 
     items: AttributeListItem[];
 }
@@ -103,7 +103,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         super(props);
 
         const selectedItems = props.selectedItems || [];
-        const isInverted = props.isInverted !== undefined ? props.isInverted : true;
+        const isInverted = props.isInverted ?? false;
 
         this.state = {
             validElements: null,
@@ -118,6 +118,7 @@ export class AttributeDropdownCore extends React.PureComponent<
             limit: LIMIT,
             offset: 0,
             searchString: "",
+            totalCount: LIMIT,
 
             items: [],
         };
@@ -128,6 +129,7 @@ export class AttributeDropdownCore extends React.PureComponent<
     public componentDidMount(): void {
         if (this.props.displayForm && this.props.titleWithSelection) {
             this.getElements();
+            this.getElementTotalCount();
         }
     }
 
@@ -151,6 +153,19 @@ export class AttributeDropdownCore extends React.PureComponent<
             );
         }
     }
+
+    public getElementTotalCount = async () => {
+        const { workspace, displayForm } = this.props;
+        const elements = await this.getBackend()
+            .workspace(workspace)
+            .elements()
+            .forDisplayForm(displayForm)
+            .withOptions({
+                ...(this.state.searchString ? { filter: this.state.searchString } : {}),
+            })
+            .query();
+        this.setState({ totalCount: elements.totalCount });
+    };
 
     public getElements = async () => {
         const { offset, limit, validElements } = this.state;
@@ -383,7 +398,15 @@ export class AttributeDropdownCore extends React.PureComponent<
     }
 
     private renderDropdownBody() {
-        const { selectedItems, isInverted, error, isLoading, validElements, searchString } = this.state;
+        const {
+            selectedItems,
+            isInverted,
+            error,
+            isLoading,
+            validElements,
+            searchString,
+            totalCount,
+        } = this.state;
         const { isMobile, fullscreenOnMobile } = this.props;
 
         const shouldDisableApplyButton = error || isLoading || (validElements && !validElements.items.length);
@@ -398,7 +421,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                 isFullWidth={fullscreenOnMobile && isMobile}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}
-                totalCount={validElements ? validElements.totalCount : LIMIT}
+                totalCount={totalCount ?? LIMIT}
                 applyDisabled={shouldDisableApplyButton}
                 onSearch={this.onSearch}
                 searchString={searchString}
