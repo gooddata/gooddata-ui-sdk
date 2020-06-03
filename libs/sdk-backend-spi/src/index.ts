@@ -219,6 +219,7 @@ export {
     IWidgetAlertBase,
     IWidgetAlert,
     IWidgetAlertDefinition,
+    IWidgetAlertCount,
     isWidgetAlert,
     isWidgetAlertDefinition,
 } from "./workspace/dashboards/alert";

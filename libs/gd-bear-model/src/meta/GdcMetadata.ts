@@ -357,6 +357,11 @@ export namespace GdcMetadata {
         entries: IObjectLink[];
     }
 
+    export interface IGetObjectsUsedByManyEntry {
+        uri: Uri;
+        entries: IObjectLink[];
+    }
+
     export function isAttribute(obj: any): obj is IAttribute {
         return !isEmpty(obj) && (obj as IAttribute).meta.category === "attribute";
     }

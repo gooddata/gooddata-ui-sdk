@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IListedDashboard, IDashboard, IDashboardDefinition } from "./dashboard";
-import { IWidgetAlert, IWidgetAlertDefinition } from "./alert";
+import { IWidgetAlert, IWidgetAlertDefinition, IWidgetAlertCount } from "./alert";
 
 /**
  * Service to list, create and update analytical dashboards
@@ -61,6 +61,14 @@ export interface IWorkspaceDashboards {
      * @returns promise with all user widget alerts
      */
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
+
+    /**
+     * Get the number of widget alerts (created by any user) for particular widgets
+     *
+     * @param refs - widget refs
+     * @returns promise with array of pairs of widget ref and alert count
+     */
+    getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
 
     /**
      * Create widget alert for the provided widget alert definition

@@ -1337,6 +1337,13 @@ export namespace GdcMetadata {
         content: any;
     }
     // (undocumented)
+    export interface IGetObjectsUsedByManyEntry {
+        // (undocumented)
+        entries: IObjectLink[];
+        // (undocumented)
+        uri: Uri;
+    }
+    // (undocumented)
     export interface IGetObjectUsing {
         // (undocumented)
         entries: IObjectLink[];
