@@ -11,7 +11,7 @@ import { parseGeoProperties } from "./helpers/geoChart/data";
 import { formatValueForTooltip, getTooltipContentWidth } from "./helpers/geoChart/format";
 
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
-const TOOLTIP_MAX_WIDTH = 320;
+export const TOOLTIP_MAX_WIDTH = 320;
 
 function isTooltipItemValid(item: IGeoTooltipItem): boolean {
     if (!item) {
@@ -51,7 +51,7 @@ function isTooltipShownInFullScreen() {
     return document.documentElement.clientWidth <= TOOLTIP_FULLSCREEN_THRESHOLD;
 }
 
-export function shouldShowTooltip(geoProperties: GeoJSON.GeoJsonProperties): boolean {
+export function shouldShowTooltip(geoProperties: GeoJSON.GeoJsonProperties | undefined): boolean {
     if (isEmpty(geoProperties)) {
         return false;
     }

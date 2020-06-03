@@ -1,5 +1,339 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`GeoPushpin with legend on the left should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city.location",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.city.location",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.state_name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.state_name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.city",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Population",
+            "definition": Object {
+              "measureDefinition": Object {
+                "aggregation": "sum",
+                "item": Object {
+                  "identifier": "fact.uscities.population",
+                },
+              },
+            },
+            "format": "#,##0.00",
+            "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+          },
+        },
+      ],
+      "localIdentifier": "size",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Density",
+            "definition": Object {
+              "measureDefinition": Object {
+                "aggregation": "sum",
+                "item": Object {
+                  "identifier": "fact.uscities.density",
+                },
+              },
+            },
+            "format": "#,##0.00",
+            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+          },
+        },
+      ],
+      "localIdentifier": "color",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.uscities.city.location",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.city.location",
+          },
+        },
+      ],
+      "localIdentifier": "location",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.uscities.state_name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.state_name",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.uscities.city",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.city",
+          },
+        },
+      ],
+      "localIdentifier": "tooltipText",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.uscities.city.location",
+        "a_label.uscities.state_name",
+        "a_label.uscities.city",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "alias": "Population",
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.uscities.population",
+            },
+          },
+        },
+        "format": "#,##0.00",
+        "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Density",
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.uscities.density",
+            },
+          },
+        },
+        "format": "#,##0.00",
+        "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "examples-workspace",
+}
+`;
+
+exports[`GeoPushpin with legend on the right should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city.location",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.city.location",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.state_name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.state_name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.city",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Population",
+            "definition": Object {
+              "measureDefinition": Object {
+                "aggregation": "sum",
+                "item": Object {
+                  "identifier": "fact.uscities.population",
+                },
+              },
+            },
+            "format": "#,##0.00",
+            "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+          },
+        },
+      ],
+      "localIdentifier": "size",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Density",
+            "definition": Object {
+              "measureDefinition": Object {
+                "aggregation": "sum",
+                "item": Object {
+                  "identifier": "fact.uscities.density",
+                },
+              },
+            },
+            "format": "#,##0.00",
+            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+          },
+        },
+      ],
+      "localIdentifier": "color",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.uscities.city.location",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.city.location",
+          },
+        },
+      ],
+      "localIdentifier": "location",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.uscities.state_name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.state_name",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.uscities.city",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.city",
+          },
+        },
+      ],
+      "localIdentifier": "tooltipText",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.uscities.city.location",
+        "a_label.uscities.state_name",
+        "a_label.uscities.city",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "alias": "Population",
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.uscities.population",
+            },
+          },
+        },
+        "format": "#,##0.00",
+        "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Density",
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.uscities.density",
+            },
+          },
+        },
+        "format": "#,##0.00",
+        "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "examples-workspace",
+}
+`;
+
 exports[`GeoPushpin with location and color should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -1190,6 +1524,189 @@ Object {
     },
   ],
   "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "alias": "Population",
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.uscities.population",
+            },
+          },
+        },
+        "format": "#,##0.00",
+        "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Density",
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.uscities.density",
+            },
+          },
+        },
+        "format": "#,##0.00",
+        "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "examples-workspace",
+}
+`;
+
+exports[`GeoPushpin with location, segment, size and color with tooltip and filter should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city.location",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.city.location",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.state_name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.state_name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.uscities.city",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Population",
+            "definition": Object {
+              "measureDefinition": Object {
+                "aggregation": "sum",
+                "item": Object {
+                  "identifier": "fact.uscities.population",
+                },
+              },
+            },
+            "format": "#,##0.00",
+            "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+          },
+        },
+      ],
+      "localIdentifier": "size",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Density",
+            "definition": Object {
+              "measureDefinition": Object {
+                "aggregation": "sum",
+                "item": Object {
+                  "identifier": "fact.uscities.density",
+                },
+              },
+            },
+            "format": "#,##0.00",
+            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+          },
+        },
+      ],
+      "localIdentifier": "color",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.uscities.city.location",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.city.location",
+          },
+        },
+      ],
+      "localIdentifier": "location",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.uscities.state_name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.state_name",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.uscities.city",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.uscities.city",
+          },
+        },
+      ],
+      "localIdentifier": "tooltipText",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.uscities.city.location",
+        "a_label.uscities.state_name",
+        "a_label.uscities.city",
+      ],
+    },
+  ],
+  "filters": Array [
+    Object {
+      "positiveAttributeFilter": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.state_name",
+          "type": "displayForm",
+        },
+        "in": Object {
+          "values": Array [
+            "California",
+            "Florida",
+            "Texas",
+          ],
+        },
+      },
+    },
+  ],
   "measures": Array [
     Object {
       "measure": Object {

@@ -2,12 +2,24 @@
 import { ExamplesLdm, ExamplesLdmExt } from "@gooddata/examples-workspace";
 import { GeoPushpinChart, IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 import { scenariosFor } from "../../src";
+import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
 const MapboxTokenEnvVariable = "STORYBOOK_MAPBOX_ACCESS_TOKEN";
 const MapboxToken = process.env[MapboxTokenEnvVariable] ?? "this-is-not-real-token";
 
 const DefaultConfig: IGeoConfig = {
     mapboxToken: MapboxToken,
+};
+
+export const LocationSegmentSizeAndColorWithTooltip: IGeoPushpinChartProps = {
+    location: ExamplesLdm.City.Location,
+    segmentBy: ExamplesLdm.StateName,
+    size: ExamplesLdmExt.sizeMeasure,
+    color: ExamplesLdmExt.colorMeasure,
+    config: {
+        ...DefaultConfig,
+        tooltipText: ExamplesLdm.City.Default,
+    },
 };
 
 export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpinChart)
@@ -133,13 +145,8 @@ export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpin
             tooltipText: ExamplesLdm.City.Default,
         },
     })
-    .addScenario("location, segment, size and color with tooltip", {
-        location: ExamplesLdm.City.Location,
-        segmentBy: ExamplesLdm.StateName,
-        size: ExamplesLdmExt.sizeMeasure,
-        color: ExamplesLdmExt.colorMeasure,
-        config: {
-            ...DefaultConfig,
-            tooltipText: ExamplesLdm.City.Default,
-        },
+    .addScenario("location, segment, size and color with tooltip", LocationSegmentSizeAndColorWithTooltip)
+    .addScenario("location, segment, size and color with tooltip and filter", {
+        ...LocationSegmentSizeAndColorWithTooltip,
+        filters: [newPositiveAttributeFilter(ExamplesLdm.StateName, ["California", "Florida", "Texas"])],
     });

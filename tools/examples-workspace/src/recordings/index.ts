@@ -2,7 +2,7 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-06-03T20:32:38.226Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-06-03T22:26:48.799Z; */
 
 const fp_05ed87392757f44e7d3f21f2fc90e1be = {
     definition: require("./uiTestScenarios/executions/05ed87392757f44e7d3f21f2fc90e1be/definition.json"),
@@ -100,6 +100,12 @@ const fp_ea51d51e15f8605dabf1627df4b7b695 = {
     dataView_all: require("./uiTestScenarios/executions/ea51d51e15f8605dabf1627df4b7b695/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/ea51d51e15f8605dabf1627df4b7b695/scenarios.json"),
 };
+const fp_e848214c63dd8fa52a584ca45f05ab86 = {
+    definition: require("./uiTestScenarios/executions/e848214c63dd8fa52a584ca45f05ab86/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/e848214c63dd8fa52a584ca45f05ab86/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/e848214c63dd8fa52a584ca45f05ab86/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/e848214c63dd8fa52a584ca45f05ab86/scenarios.json"),
+};
 export const Scenarios = {
     GeoPushpinChart: {
         LocationSegmentColorWithTooltip: { scenarioIndex: 0, execution: fp_05ed87392757f44e7d3f21f2fc90e1be },
@@ -121,6 +127,10 @@ export const Scenarios = {
         LocationAndColor: { scenarioIndex: 0, execution: fp_de5acbb2fa2a9f9f6460dcd668dc9281 },
         LocationOnly: { scenarioIndex: 0, execution: fp_e5a694e6c3aa480b508c5b79506adb79 },
         LocationAndColorWithTooltip: { scenarioIndex: 0, execution: fp_ea51d51e15f8605dabf1627df4b7b695 },
+        LocationSegmentSizeAndColorWithTooltipAndFilter: {
+            scenarioIndex: 0,
+            execution: fp_e848214c63dd8fa52a584ca45f05ab86,
+        },
     },
 };
 export const Insights = {};
@@ -142,6 +152,7 @@ export const Recordings = {
         fp_de5acbb2fa2a9f9f6460dcd668dc9281,
         fp_e5a694e6c3aa480b508c5b79506adb79,
         fp_ea51d51e15f8605dabf1627df4b7b695,
+        fp_e848214c63dd8fa52a584ca45f05ab86,
     },
     metadata: {
         displayForms: {},

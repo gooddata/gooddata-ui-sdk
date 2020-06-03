@@ -45,7 +45,7 @@ describe("PushpinSizeLegend", () => {
         ).toEqual("20");
     });
     it("should not render component when Size contains all null values", () => {
-        const sizes: number[] = [null, null, null];
+        const sizes: Array<number | null> = [null, null, null];
         const props = {
             sizes,
             format: "#,##0.00",

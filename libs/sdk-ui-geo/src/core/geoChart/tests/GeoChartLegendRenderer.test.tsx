@@ -1,28 +1,21 @@
 // (C) 2020 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import { withIntl } from "../../../visualizations/utils/intlUtils";
 import GeoChartLegendRenderer, { IGeoChartLegendRendererProps } from "../GeoChartLegendRenderer";
-import { IGeoData } from "../../../../interfaces/GeoChart";
 
 import PushpinCategoryLegend from "../legends/PushpinCategoryLegend";
 import PushpinSizeLegend from "../legends/PushpinSizeLegend";
-import Paging from "../../../visualizations/chart/legend/Paging";
-import { TOP, LEFT } from "../../../visualizations/chart/legend/PositionTypes";
-import { PositionType } from "../../../visualizations/typings/legend";
-import { getGeoData } from "../../../../helpers/geoChart/data";
+import { LegendPosition, Paging, PositionType } from "@gooddata/sdk-ui-vis-commons";
 import {
-    LOCATION_LNGLATS,
-    SIZE_NUMBERS,
-    COLOR_NUMBERS,
-    getExecutionResponse,
-    getGeoConfig,
-    getExecutionResult,
-} from "../../../../../stories/data/geoChart";
-import { DEFAULT_COLORS } from "../../../visualizations/utils/color";
-import { IntlWrapper } from "../../base/IntlWrapper";
-import { IntlTranslationsProvider, ITranslationsComponentProps } from "../../base/TranslationsProvider";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+    DefaultLocale,
+    withIntl,
+    IntlWrapper,
+    IntlTranslationsProvider,
+    ITranslationsComponentProps,
+} from "@gooddata/sdk-ui";
+import { IGeoData } from "../../../GeoChart";
+import { DEFAULT_COLORS } from "../constants/geoChart";
+import { RecShortcuts } from "../../../../__mocks__/recordings";
 
 interface ILegendFlags {
     hasSizeLegend?: boolean;
@@ -36,7 +29,7 @@ function createComponent(customProps: IGeoChartLegendRendererProps, customStyles
         ...customProps,
     };
     const Wrapped = withIntl((props: IGeoChartLegendRendererProps) => (
-        <IntlWrapper locale={DEFAULT_LOCALE}>
+        <IntlWrapper locale={DefaultLocale}>
             <IntlTranslationsProvider>
                 {(transplationProps: ITranslationsComponentProps) => (
                     <GeoChartLegendRenderer {...props} numericSymbols={transplationProps.numericSymbols} />
@@ -45,7 +38,7 @@ function createComponent(customProps: IGeoChartLegendRendererProps, customStyles
         </IntlWrapper>
     ));
     return mount(
-        <div {...customStyles}>
+        <div {...(customStyles as any)}>
             <Wrapped {...legendProps} />
         </div>,
     );
@@ -58,7 +51,7 @@ function getLegendProps(legendFlags: ILegendFlags): IGeoChartLegendRendererProps
             ? {
                   index: 0,
                   name: "size",
-                  data: SIZE_NUMBERS,
+                  data: [1, 2, 3],
                   format: "#,##0",
               }
             : undefined,
@@ -66,14 +59,18 @@ function getLegendProps(legendFlags: ILegendFlags): IGeoChartLegendRendererProps
             ? {
                   index: hasSizeLegend ? 1 : 0,
                   name: "color",
-                  data: COLOR_NUMBERS,
+                  data: [1, 2, 3],
                   format: "#,##0",
               }
             : undefined,
         location: {
             index: 0,
             name: "location",
-            data: LOCATION_LNGLATS,
+            data: [
+                { lat: 1, lng: 1 },
+                { lat: 2, lng: 2 },
+                { lat: 3, lng: 3 },
+            ],
         },
     };
     return {
@@ -115,20 +112,18 @@ describe("GeoChartLegendRenderer", () => {
 
     it("should render Paging for Size and Color legend", async () => {
         const wrapper = createComponent(
-            getLegendProps({ hasColorLegend: true, hasSizeLegend: true, height: 300, position: LEFT }),
+            getLegendProps({
+                hasColorLegend: true,
+                hasSizeLegend: true,
+                height: 300,
+                position: LegendPosition.LEFT,
+            }),
         );
         expect(await wrapper.find(Paging)).toHaveLength(1);
     });
 
     it("should render Size and Category legend ", () => {
-        const execution = {
-            executionResponse: getExecutionResponse(true, true, false, true),
-            executionResult: getExecutionResult(true, true, false, true),
-        };
-        const config = getGeoConfig({ isWithLocation: true, isWithSize: true, isWithSegment: true });
-        const { mdObject: { buckets = [] } = {} } = config;
-        const geoData = getGeoData(buckets, execution);
-
+        const { geoData } = RecShortcuts.LocationSegmentAndSize;
         const props: IGeoChartLegendRendererProps = {
             geoData,
             colorLegendValue: DEFAULT_COLORS[0],
@@ -141,7 +136,7 @@ describe("GeoChartLegendRenderer", () => {
                     isVisible: true,
                 },
             ],
-            position: TOP,
+            position: LegendPosition.TOP,
         };
         const wrapper = createComponent(props);
         const sizeLegend = wrapper.find(PushpinSizeLegend);
