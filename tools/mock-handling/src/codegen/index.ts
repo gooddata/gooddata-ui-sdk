@@ -72,8 +72,8 @@ function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableSt
 
     const metadataInit = `
         metadata: {
-            catalog,
-            visClasses,
+            ${input.catalog() !== null ? "catalog," : ""}
+            ${input.visClasses() !== null ? "visClasses," : ""}
             displayForms: { ${recNameList(input.displayForms())} },
             insights: { ${recNameList(input.insights())} }
         }
@@ -137,8 +137,14 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
         insights: () => {
             return (categorized[RecordingType.Insights] as InsightRecording[]) || [];
         },
-        catalog: () => (categorized[RecordingType.Catalog][0] as CatalogRecording) || null,
-        visClasses: () => (categorized[RecordingType.VisClasses][0] as VisClassesRecording) || null,
+        catalog: () =>
+            (categorized[RecordingType.Catalog] &&
+                (categorized[RecordingType.Catalog][0] as CatalogRecording)) ||
+            null,
+        visClasses: () =>
+            (categorized[RecordingType.VisClasses] &&
+                (categorized[RecordingType.VisClasses][0] as VisClassesRecording)) ||
+            null,
     };
 }
 
