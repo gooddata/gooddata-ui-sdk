@@ -26,6 +26,7 @@ import {
     IWidgetAlertDefinition,
     UnexpectedError,
     isTempFilterContext,
+    IWidgetAlertCount,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual, uriRef, objRefToString } from "@gooddata/sdk-model";
 import {
@@ -168,7 +169,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         throw new NotSupported("not supported");
     }
 
-    public getAllWidgetAlertsForCurrentUser = async () => {
+    public getAllWidgetAlertsForCurrentUser = async (): Promise<IWidgetAlert[]> => {
         const alerts = await this.getAllBearKpiAlertsForCurrentUser();
         const filterContexts = await this.getBearKpiAlertsFilterContexts(alerts);
         const filterContextByUri = keyBy(
@@ -181,6 +182,27 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         });
 
         return convertedAlerts;
+    };
+
+    public getWidgetAlertsCountForWidgets = async (refs: ObjRef[]): Promise<IWidgetAlertCount[]> => {
+        const widgetUris = await Promise.all(
+            refs.map(ref => objRefToUri(ref, this.workspace, this.authCall)),
+        );
+        const result = await this.authCall(sdk =>
+            sdk.md.getObjectsUsedByMany(this.workspace, widgetUris, {
+                types: ["kpiAlert"],
+                nearest: true,
+            }),
+        );
+        const convertedResult = result.map(
+            (entry): IWidgetAlertCount => {
+                return {
+                    ref: uriRef(entry.uri),
+                    alertCount: entry.entries.length,
+                };
+            },
+        );
+        return convertedResult;
     };
 
     public createWidgetAlert = async (alert: IWidgetAlertDefinition) => {

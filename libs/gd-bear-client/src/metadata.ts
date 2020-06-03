@@ -228,7 +228,7 @@ export class MetadataModule {
      * @param {Object} options objects with options:
      *        - types {Array} array of strings with object types to be included
      *        - nearest {Boolean} whether to include only nearest dependencies
-     * @return {jQuery promise} promise promise once resolved returns an array of
+     * @return {Promise} promise promise once resolved returns an array of
      *         entries returned by using2 resource
      */
     public getObjectUsing(
@@ -269,7 +269,7 @@ export class MetadataModule {
      * @param {Object} options objects with options:
      *        - types {Array} array of strings with object types to be included
      *        - nearest {Boolean} whether to include only nearest dependencies
-     * @return {jQuery promise} promise promise once resolved returns an array of
+     * @return {Promise} promise promise once resolved returns an array of
      *         entries returned by using2 resource
      */
     public getObjectUsingMany(
@@ -298,6 +298,44 @@ export class MetadataModule {
                 return r.getData();
             })
             .then((result: any) => result.useMany);
+    }
+
+    /**
+     * Get MD objects from usedby2 resource. Include only objects of given types
+     * and take care about fetching only nearest objects if requested.
+     *
+     * @method getObjectsUsedBy
+     * @param {String} projectId id of the project
+     * @param {Array} uris uris of objects for which dependencies are to be found
+     * @param {Object} options objects with options:
+     *        - types {Array} array of strings with object types to be included
+     *        - nearest {Boolean} whether to include only nearest dependencies (default is false)
+     * @return {Promise} promise promise once resolved returns an array of
+     *         entries returned by usedby2 resource
+     */
+    public getObjectsUsedByMany(
+        projectId: string,
+        uris: string[],
+        options: {
+            types: GdcMetadata.ObjectCategory[];
+            nearest: boolean;
+        },
+    ): Promise<GdcMetadata.IGetObjectsUsedByManyEntry[]> {
+        const uri = `/gdc/md/${projectId}/usedby2`;
+        const { nearest = false, types = [] } = options;
+        const body = {
+            inUseMany: {
+                nearest: nearest ? 1 : 0,
+                uris,
+                types,
+            },
+        };
+
+        return this.xhr
+            .postParsed<{
+                useMany: GdcMetadata.IGetObjectsUsedByManyEntry[];
+            }>(uri, { body })
+            .then(result => result.useMany);
     }
 
     /**

@@ -975,6 +975,12 @@ export interface IWidgetAlertBase {
 }
 
 // @alpha
+export interface IWidgetAlertCount {
+    readonly alertCount: number;
+    readonly ref: ObjRef;
+}
+
+// @alpha
 export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
 }
@@ -1074,6 +1080,7 @@ export interface IWorkspaceDashboards {
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
     getDashboards(): Promise<IListedDashboard[]>;
+    getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
     // (undocumented)

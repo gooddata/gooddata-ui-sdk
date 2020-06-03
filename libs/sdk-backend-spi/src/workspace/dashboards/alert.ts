@@ -81,6 +81,22 @@ export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity
 }
 
 /**
+ * Pair of the widget and it's alert count
+ * @alpha
+ */
+export interface IWidgetAlertCount {
+    /**
+     * Widget reference
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Number of alerts for the referenced widget
+     */
+    readonly alertCount: number;
+}
+
+/**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetAlert}.
  * @alpha
  */
