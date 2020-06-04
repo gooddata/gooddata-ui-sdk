@@ -91,7 +91,7 @@ export function getPushpinColors(
         ];
     }
 
-    const segmentNames: string[] = segmentValues.map((value: string): string => value);
+    const segmentNames: string[] = [...segmentValues];
     const colorPaletteMapping: ColorPaletteMapping = getColorPaletteMapping(colorStrategy);
     if (!colorValues.length) {
         return segmentNames.map(

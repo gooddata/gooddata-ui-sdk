@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-import get = require("lodash/get");
 import mapboxgl = require("mapbox-gl");
 
 import { DEFAULT_CENTER, DEFAULT_ZOOM, VIEWPORTS, DEFAULT_WORLD_BOUNDS } from "../../constants/geoChart";
@@ -12,9 +11,9 @@ interface IGeoViewport {
 }
 
 export function getViewportOptions(data: IGeoLngLat[], config: IGeoConfig): IGeoViewport {
-    const center: IGeoLngLat | undefined = get<IGeoConfig, "center">(config, "center");
-    const zoom: number = get<IGeoConfig, "zoom", number>(config, "zoom", DEFAULT_ZOOM);
-    const { area }: IGeoConfigViewport = get<IGeoConfig, "viewport", {}>(config, "viewport", {});
+    const center: IGeoLngLat | undefined = config?.center;
+    const zoom: number = config?.zoom ?? DEFAULT_ZOOM;
+    const { area }: IGeoConfigViewport = config?.viewport ?? {};
 
     // use `center` config if it exists
     if (!center) {
