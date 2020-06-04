@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import ReactGA from "react-ga";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { CustomError } from "./components/CustomError";
 import { CustomLoading } from "./components/CustomLoading";
 import { Header } from "./components/Header";
 import { Menu } from "./components/Menu";
@@ -13,7 +12,7 @@ import { workspace } from "./constants/fixtures";
 import { history } from "./history";
 
 export const App: React.FC = () => {
-    const { authError, authStatus, logout, backend } = useAuth();
+    const { authStatus, logout, backend } = useAuth();
 
     useEffect(() => {
         ReactGA.pageview(window.location.pathname + window.location.search);
@@ -123,7 +122,6 @@ export const App: React.FC = () => {
                                 // @ts-ignore
                                 <Menu sideNavigationRoutes={sideNavigationRoutes} routes={routes} />
                             )}
-                            {authError ? <CustomError message={authError} /> : null}
                             <main>
                                 {authStatus === AuthStatus.AUTHORIZING && (
                                     <div className="flexWrapper flexWrapper--center">

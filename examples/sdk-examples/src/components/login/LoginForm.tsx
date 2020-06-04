@@ -5,6 +5,7 @@ import { withFormik, FormikProps } from "formik";
 import Yup from "yup";
 import { CustomLoading } from "../CustomLoading";
 import { CustomError } from "../CustomError";
+import { AuthStatus } from "../../context/auth";
 
 interface IFormValues {
     email?: string;
@@ -56,6 +57,12 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = props =>
         isLoading,
         apiError,
     } = props;
+
+    const errorMessage = `Error: ${
+        apiError?.toUpperCase() === AuthStatus.UNAUTHORIZED
+            ? `${apiError} Wrong email or password.`
+            : apiError
+    }`;
 
     return (
         <div className="Login">
@@ -144,7 +151,7 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = props =>
                         <div className="gd-message error">{errors.password}</div>
                     )}
                 </div>
-                {apiError && !isLoading && <CustomError height={undefined} message={apiError} />}
+                {apiError && !isLoading && <CustomError height={undefined} message={errorMessage} />}
                 {isLoading && <CustomLoading height={undefined} label="Logging in&hellip;" />}
                 <div className="gd-input buttons">
                     <button
