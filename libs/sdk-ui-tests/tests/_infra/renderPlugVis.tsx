@@ -6,11 +6,12 @@ import {
     insightVisualizationUrl,
     IVisualizationClass,
 } from "@gooddata/sdk-model";
-import { FullVisualizationCatalog, BaseVisualization } from "@gooddata/sdk-ui-ext/dist/internal";
+import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/dist/internal";
 import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
 import { mount, ReactWrapper } from "enzyme";
-import noop = require("lodash/noop");
 import React from "react";
+import { IScenario } from "../../src";
+import noop = require("lodash/noop");
 
 function createVisualizationClass(insight: IInsightDefinition): IVisualizationClass {
     const visClassUri = insightVisualizationUrl(insight);
@@ -36,7 +37,15 @@ class PlugVisRendererUsingEnzyme {
     }
 }
 
+/**
+ * Mount insight representing a particular test scenario.
+ *
+ * @param scenario - test scenario which the insight represents
+ * @param insight - insight definition
+ * @param normalize - indicates whether execution normalization should take place
+ */
 export async function mountInsight(
+    scenario: IScenario<any>,
     insight: IInsightDefinition,
     normalize: boolean = false,
 ): Promise<ChartInteractions> {
@@ -54,7 +63,7 @@ export async function mountInsight(
     mount(
         <BaseVisualization
             backend={backend}
-            projectId="testWorkspace"
+            projectId={scenario.workspaceType}
             insight={persistedInsight}
             visualizationClass={visualizationClass}
             visualizationCatalog={FullVisualizationCatalog}

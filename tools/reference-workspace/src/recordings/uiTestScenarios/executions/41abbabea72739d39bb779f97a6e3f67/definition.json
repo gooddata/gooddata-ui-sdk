@@ -1,0 +1,52 @@
+{
+    "workspace": "reference-workspace",
+    "buckets": [],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "m_aangOxLSeztu",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                        "operator": "difference"
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m_acugFHNJgsBy",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "acugFHNJgsBy"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": []
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

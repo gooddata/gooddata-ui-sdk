@@ -301,6 +301,26 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/examples-workspace",
+            "projectFolder": "tools/examples-workspace",
+            "reviewCategory": "tools",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-vis-commons",
+            "projectFolder": "libs/sdk-ui-vis-commons",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-geo",
+            "projectFolder": "libs/sdk-ui-geo",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-all",
             "projectFolder": "libs/sdk-ui-all",
             "reviewCategory": "production",

@@ -25,6 +25,8 @@ export {
     NamedDataView,
 } from "./recordedBackend/execution";
 
+export { CompositeBackendPart, compositeBackend } from "./compositeBackend/index";
+
 export {
     LegacyExecutionRecording,
     legacyRecordedBackend,

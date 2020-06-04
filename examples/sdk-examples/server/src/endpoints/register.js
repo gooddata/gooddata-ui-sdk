@@ -1,10 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 const { pick } = require("lodash");
 const bodyParser = require("body-parser");
 
 module.exports = (app, sdk, { domainAdmin }) => {
     if (!domainAdmin.username || !domainAdmin.password) {
-        // eslint-disable-next-line no-console
+        // tslint:disable-next-line:no-console
         console.warn("Set up DOMAIN_ADMIN_USERNAME/PASSWORD for the /api/register endpoint to work.");
     }
 
@@ -32,7 +32,7 @@ module.exports = (app, sdk, { domainAdmin }) => {
                         body: JSON.stringify(params),
                     })
                     .then(result => {
-                        // eslint-disable-next-line no-console
+                        // tslint:disable-next-line:no-console
                         console.log("POST", result.response.url, ">>>", result.getData());
 
                         res.status(201).json({

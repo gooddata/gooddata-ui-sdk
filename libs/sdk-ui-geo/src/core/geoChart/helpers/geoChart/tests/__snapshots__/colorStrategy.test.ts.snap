@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getColorStrategy should return GeoChartColorStrategy 1`] = `
+Array [
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "1",
+    },
+    "headerItem": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.uscities.city",
+          "name": "City",
+          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458",
+        },
+        "identifier": "label.uscities.city.location",
+        "localIdentifier": "a_label.uscities.city.location",
+        "name": "location",
+        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9459",
+      },
+    },
+  },
+]
+`;
+
+exports[`getColorStrategy should return GeoChartColorStrategy 2`] = `
+Array [
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "1",
+    },
+    "headerItem": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.uscities.city",
+          "name": "City",
+          "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458",
+        },
+        "identifier": "label.uscities.city.location",
+        "localIdentifier": "a_label.uscities.city.location",
+        "name": "location",
+        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9459",
+      },
+    },
+  },
+]
+`;

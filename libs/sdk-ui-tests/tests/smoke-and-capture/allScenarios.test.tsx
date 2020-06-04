@@ -7,67 +7,22 @@ import isObject = require("lodash/isObject");
 import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
-import * as process from "process";
 import allScenarios from "../../scenarios";
 import { IScenario } from "../../src";
 import { ChartInteractions, DataViewRequests } from "../_infra/backendWithCapturing";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory";
 import { mountChartAndCaptureNormalized } from "../_infra/render";
 import { mountInsight } from "../_infra/renderPlugVis";
+import { storeDirectoryFor } from "./store";
+import { readJsonSync, writeAsJsonSync } from "./utils";
 
 type AllScenariosType = [string, string, IScenario<any>];
 
-const StoreEnvVar = "GDC_STORE_DEFS";
-const ExecutionsDir = initializeStore(process.env[StoreEnvVar], "executions");
-const InsightsDir = initializeStore(process.env[StoreEnvVar], "insights");
 const DefinitionFileName = "definition.json";
 const RequestsFileName = "requests.json";
 const ScenariosFileName = "scenarios.json";
 const InsightIndexFileName = "insights.json";
 const InsightFileName = "obj.json";
-
-function toJsonString(obj: any): string {
-    return JSON.stringify(obj, null, 4);
-}
-
-function writeAsJsonSync(file: string, obj: any) {
-    return fs.writeFileSync(file, toJsonString(obj), { encoding: "utf-8" });
-}
-
-function readJsonSync(file: string): any {
-    return JSON.parse(fs.readFileSync(file, { encoding: "utf-8" }));
-}
-
-function initializeStore(rootDir: string | undefined, subdir: string): string | undefined {
-    if (!rootDir) {
-        // tslint:disable-next-line:no-console
-        console.warn(
-            `The smoke-and-capture suite is not configured with store root. The suite will run but will not produce any results for ${subdir}`,
-        );
-
-        // no store dir => no problem, definitions will not be stored
-        return;
-    }
-
-    const dir = path.join(rootDir, subdir);
-
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-
-        return dir;
-    }
-
-    if (!fs.statSync(dir).isDirectory()) {
-        // tslint:disable-next-line:no-console
-        console.error(
-            `Path ${dir} already exists but is not a directory. Not going to store any definitions.`,
-        );
-
-        return;
-    }
-
-    return dir;
-}
 
 function storeRequests(interactions: ChartInteractions, recordingDir: string): void {
     const requestsFile = path.join(recordingDir, RequestsFileName);
@@ -109,10 +64,10 @@ function storeRequests(interactions: ChartInteractions, recordingDir: string): v
     writeAsJsonSync(requestsFile, requests);
 }
 
-function storeDefinition(interactions: ChartInteractions): string {
+function storeDefinition(dir: string, interactions: ChartInteractions): string {
     const { triggeredExecution } = interactions;
     const fp = defFingerprint(triggeredExecution!);
-    const recordingDir = path.join(ExecutionsDir!, fp);
+    const recordingDir = path.join(dir, fp);
 
     if (!fs.existsSync(recordingDir)) {
         fs.mkdirSync(recordingDir);
@@ -201,13 +156,14 @@ function storeScenarioDefinition(
     interactions: ChartInteractions,
     plugVizInteractions?: ChartInteractions,
 ) {
-    if (!ExecutionsDir) {
+    const storeDir = storeDirectoryFor(scenario, "executions");
+    if (!storeDir) {
         return;
     }
 
     const { triggeredExecution: componentExecution } = interactions;
     const { triggeredExecution: plugVizExecution } = plugVizInteractions ?? {};
-    const recordingDir = storeDefinition(interactions);
+    const recordingDir = storeDefinition(storeDir, interactions);
 
     if (plugVizExecution && defFingerprint(componentExecution!) !== defFingerprint(plugVizExecution!)) {
         /*
@@ -216,7 +172,7 @@ function storeScenarioDefinition(
          * execution. if that happens, make sure the exec definition for the plug viz variant of the
          * scenario is also stored.
          */
-        storeDefinition(plugVizInteractions!);
+        storeDefinition(storeDir, plugVizInteractions!);
     }
 
     if (!scenario.tags.includes("mock-no-scenario-meta")) {
@@ -225,7 +181,9 @@ function storeScenarioDefinition(
 }
 
 function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
-    if (!InsightsDir) {
+    const storeDir = storeDirectoryFor(scenario, "insights");
+
+    if (!storeDir) {
         return;
     }
 
@@ -233,7 +191,7 @@ function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
     const persistentInsight: IInsight = scenario.insightConverter({
         insight: { identifier: id, uri: id, ...def.insight },
     });
-    const insightDir = path.join(InsightsDir!, id);
+    const insightDir = path.join(storeDir, id);
 
     if (!fs.existsSync(insightDir)) {
         fs.mkdirSync(insightDir);
@@ -241,7 +199,7 @@ function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
 
     writeAsJsonSync(path.join(insightDir, InsightFileName), persistentInsight);
 
-    const insightIndexFile = path.join(InsightsDir!, InsightIndexFileName);
+    const insightIndexFile = path.join(storeDir, InsightIndexFileName);
     const insightIndex = fs.existsSync(insightIndexFile) ? readJsonSync(insightIndexFile) : {};
 
     /*
@@ -262,7 +220,7 @@ function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
     return;
 }
 
-const PlugVisUnsupported: string[] = [];
+const PlugVisUnsupported: string[] = ["GeoPushpinChart"];
 
 describe("all scenarios", () => {
     const Scenarios: AllScenariosType[] = flatMap(allScenarios, (s): AllScenariosType[] => {
@@ -274,7 +232,7 @@ describe("all scenarios", () => {
     });
 
     it.each(Scenarios)("%s %s should lead to execution", async (vis, scenarioName, scenario) => {
-        const interactions = await mountChartAndCaptureNormalized(scenario.component, scenario.propsFactory);
+        const interactions = await mountChartAndCaptureNormalized(scenario);
 
         expect(interactions.triggeredExecution).toBeDefined();
         expect(interactions.normalizationState).toBeDefined();
@@ -306,7 +264,7 @@ describe("all scenarios", () => {
              * note: to allow PV executions and react component executions to hit the same fingerprints, this function
              * must also use the normalizing backend.
              */
-            const plugVizInteractions = await mountInsight(insight, true);
+            const plugVizInteractions = await mountInsight(scenario, insight, true);
 
             storeScenarioDefinition(scenario, interactions, plugVizInteractions);
             storeInsight(scenario, insight);

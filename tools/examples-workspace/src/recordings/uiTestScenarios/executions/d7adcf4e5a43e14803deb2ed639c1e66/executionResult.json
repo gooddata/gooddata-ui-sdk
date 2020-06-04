@@ -1,0 +1,34 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "name": "location",
+                        "localIdentifier": "a_label.uscities.city.location",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9459",
+                        "identifier": "label.uscities.city.location",
+                        "formOf": {
+                            "name": "City",
+                            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458",
+                            "identifier": "attr.uscities.city"
+                        }
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "name": "city",
+                        "localIdentifier": "a_label.uscities.city",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9460",
+                        "identifier": "label.uscities.city",
+                        "formOf": {
+                            "name": "City",
+                            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458",
+                            "identifier": "attr.uscities.city"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

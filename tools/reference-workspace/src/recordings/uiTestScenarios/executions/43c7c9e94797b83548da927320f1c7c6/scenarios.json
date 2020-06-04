@@ -1,0 +1,85 @@
+[
+    {
+        "vis": "PivotTable",
+        "scenario": "single measure with column attribute",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "attribute",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "columns",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.owner.region",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.owner.region"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.owner.region",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.owner.region"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": []
+                },
+                {
+                    "itemIdentifiers": ["a_label.owner.region", "measureGroup"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.owner.region": "a_label.owner.region",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        }
+    }
+]

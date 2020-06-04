@@ -11,6 +11,8 @@ import {
     UnboundVisProps,
     VisProps,
     ScenarioTestInput,
+    WorkspaceType,
+    ScenarioAndDescription,
 } from "./scenario";
 import intersection = require("lodash/intersection");
 import identity = require("lodash/identity");
@@ -45,6 +47,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     private scenarioIndex: ScenarioSet<T> = {};
     private defaultTags: ScenarioTag[] = [];
     private defaultTestTypes: TestTypes[] = ["api", "visual"];
+    private defaultWorkspaceType: WorkspaceType = "reference-workspace";
 
     constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
 
@@ -72,6 +75,12 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         return this;
     }
 
+    public withDefaultWorkspaceType(workspaceType: WorkspaceType): ScenarioGroup<T> {
+        this.defaultWorkspaceType = workspaceType;
+
+        return this;
+    }
+
     /**
      * Adds a new test scenarios for a component. The scenario specifies name and visualization props (sans backend
      * and workspace .. these will be injected by framework).
@@ -92,6 +101,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         const builder = new ScenarioBuilder<T>(this.vis, this.component, name, props);
         builder.withTags(...this.defaultTags);
         builder.withTests(...this.defaultTestTypes);
+        builder.withWorkspaceType(this.defaultWorkspaceType);
         this.insertScenario(m(builder).build());
 
         return this;
@@ -177,6 +187,14 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      */
     public asTestInput = (): Array<ScenarioTestInput<T>> => {
         return this.scenarioList.map(scenario => scenario.asTestInput());
+    };
+
+    /**
+     * Transform scenarios in this group into a list of tuples where first member is scenario name and
+     * the second is the entire scenario.
+     */
+    public asScenarioDescAndScenario = (): Array<ScenarioAndDescription<T>> => {
+        return this.scenarioList.map(scenario => [scenario.name, scenario]);
     };
 
     /**

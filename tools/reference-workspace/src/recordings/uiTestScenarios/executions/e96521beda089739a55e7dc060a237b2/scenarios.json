@@ -1,0 +1,57 @@
+[
+    {
+        "vis": "Xirr",
+        "scenario": "only measure",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aadpHDMBecIy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aadpHDMBecIy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "attribute",
+                    "items": []
+                }
+            ],
+            "attributes": [],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aadpHDMBecIy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aadpHDMBecIy"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "m_aadpHDMBecIy": "m_aadpHDMBecIy"
+        }
+    }
+]

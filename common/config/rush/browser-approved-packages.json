@@ -43,6 +43,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "@babel/plugin-transform-flow-strip-types",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@babel/plugin-transform-typescript",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -53,6 +57,10 @@
     {
       "name": "@babel/preset-env",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@babel/preset-flow",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@babel/preset-react",
@@ -73,6 +81,14 @@
     {
       "name": "@gooddata/catalog-export",
       "allowedCategories": [ "examples", "tools" ]
+    },
+    {
+      "name": "@gooddata/example-workspace",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/examples-workspace",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/gd-bear-client",
@@ -155,8 +171,16 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-geo",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-pivot",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui-vis-commons",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/test-storybook",
@@ -260,6 +284,10 @@
     },
     {
       "name": "@types/lru-cache",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/mapbox-gl",
       "allowedCategories": [ "production" ]
     },
     {
@@ -628,6 +656,14 @@
     },
     {
       "name": "madge",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "mapbox-gl",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "mapbox-gl-js-mock",
       "allowedCategories": [ "production" ]
     },
     {

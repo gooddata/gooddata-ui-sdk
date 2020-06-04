@@ -45,7 +45,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -55,7 +55,7 @@ Object {
     [Function],
   ],
   "exportTitle": "Headline",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -104,7 +104,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -117,7 +117,7 @@ Object {
     [Function],
   ],
   "exportTitle": "Headline",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -190,7 +190,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -201,7 +201,7 @@ Object {
     [Function],
   ],
   "exportTitle": "Headline",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -274,7 +274,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -288,7 +288,7 @@ Object {
     [Function],
   ],
   "exportTitle": "Headline",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -337,14 +337,14 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
 exports[`Headline with single measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Headline",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -423,14 +423,14 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
 exports[`Headline with two measures one PoP should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Headline",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -503,14 +503,14 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
 exports[`Headline with two measures should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Headline",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -583,7 +583,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -596,6 +596,6 @@ Object {
     },
   },
   "exportTitle": "Headline",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;

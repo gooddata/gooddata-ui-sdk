@@ -3,7 +3,7 @@ import { PointsChartColorStrategy } from "./pointsChart";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
-import { ICreateColorAssignmentReturnValue } from "./base";
+import { ICreateColorAssignmentReturnValue } from "@gooddata/sdk-ui-vis-commons";
 
 export class ScatterPlotColorStrategy extends PointsChartColorStrategy {
     protected createColorAssignment(

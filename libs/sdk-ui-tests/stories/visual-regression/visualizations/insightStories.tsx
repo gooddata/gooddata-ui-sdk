@@ -22,7 +22,7 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { PlugVizStories } from "../_infra/storyGroups";
 import "./insightStories.css";
-import { ScenarioTestInput, ScenarioTestMembers } from "../../../src";
+import { IScenario } from "../../../src";
 import AllTestScenarioGroups from "../../../scenarios";
 import {
     andResolver,
@@ -31,10 +31,10 @@ import {
 } from "../_infra/ScreenshotReadyWrapper";
 import { withScreenshot } from "../_infra/backstopWrapper";
 import { ConfigurationPanelWrapper } from "../_infra/ConfigurationPanelWrapper";
+import { StorybookBackend } from "../_infra/backend";
 import groupBy = require("lodash/groupBy");
 import keyBy = require("lodash/keyBy");
 import flatten = require("lodash/flatten");
-import { StorybookBackend } from "../_infra/backend";
 
 /*
  * Code in this file generates stories that render test scenarios using pluggable visualizations.
@@ -72,7 +72,6 @@ import { StorybookBackend } from "../_infra/backend";
  * already present in the Insight. And so the code just auto-generates a fitting visualization class.
  */
 
-const DefaultWorkspace = "testWorkspace";
 const DefaultSettings: ISettings = {
     enableAxisNameConfiguration: true,
 };
@@ -102,10 +101,10 @@ const InsightsByVisUrl = Object.entries(groupBy(Insights, insightVisualizationUr
 // Inspect test scenarios and key them by their corresponding insight ID
 //
 
-const AllTestScenarios: Array<ScenarioTestInput<any>> = flatten<ScenarioTestInput<any>>(
-    AllTestScenarioGroups.map(g => g.forTestTypes("visual").asTestInput()),
+const AllTestScenarios: Array<IScenario<any>> = flatten<IScenario<any>>(
+    AllTestScenarioGroups.map(g => g.forTestTypes("visual").scenarioList),
 );
-const TestScenariosByInsightId = keyBy(AllTestScenarios, scenario => scenario[ScenarioTestMembers.InsightId]);
+const TestScenariosByInsightId = keyBy(AllTestScenarios, scenario => scenario.insightId);
 
 //
 // Story creation
@@ -128,8 +127,8 @@ function createVisualizationClass(insight: IInsightDefinition): IVisualizationCl
     };
 }
 
-function createGdcConfig(testScenario: ScenarioTestInput<any>): IGdcConfig {
-    const scenarioProps = testScenario[ScenarioTestMembers.PropsFactory](backend, DefaultWorkspace);
+function createGdcConfig(testScenario: IScenario<any>): IGdcConfig {
+    const scenarioProps = testScenario.propsFactory(backend, testScenario.workspaceType);
 
     return {
         colorPalette: scenarioProps.config?.colorPalette,
@@ -153,7 +152,7 @@ const ReportReadyResolver = andResolver(
     createElementCountResolver(1, [ConfigurationPanelWrapper.DefaultExpandAllClassName]),
 );
 
-function plugVizStory(insight: IInsight, testScenario: ScenarioTestInput<any>) {
+function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
     const visClass = createVisualizationClass(insight);
     const gdcConfig = createGdcConfig(testScenario);
 
@@ -169,7 +168,7 @@ function plugVizStory(insight: IInsight, testScenario: ScenarioTestInput<any>) {
                         AD
                         <BaseVisualization
                             backend={backend}
-                            projectId={DefaultWorkspace}
+                            projectId={testScenario.workspaceType}
                             insight={insight}
                             visualizationClass={visClass}
                             visualizationCatalog={FullVisualizationCatalog}
@@ -185,7 +184,7 @@ function plugVizStory(insight: IInsight, testScenario: ScenarioTestInput<any>) {
                         KD full size
                         <BaseVisualization
                             backend={backend}
-                            projectId={DefaultWorkspace}
+                            projectId={testScenario.workspaceType}
                             environment="dashboards"
                             insight={insight}
                             visualizationClass={visClass}
@@ -203,7 +202,7 @@ function plugVizStory(insight: IInsight, testScenario: ScenarioTestInput<any>) {
                         KD half size
                         <BaseVisualization
                             backend={backend}
-                            projectId={DefaultWorkspace}
+                            projectId={testScenario.workspaceType}
                             environment="dashboards"
                             insight={insight}
                             visualizationClass={visClass}

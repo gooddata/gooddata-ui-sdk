@@ -1,7 +1,8 @@
 // (C) 2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { IColor, IColorPalette, Identifier } from "@gooddata/sdk-model";
-import { IHeaderPredicate, VisType } from "@gooddata/sdk-ui";
+import { IColorPalette, Identifier } from "@gooddata/sdk-model";
+import { VisType } from "@gooddata/sdk-ui";
+import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 /**
  * Chart config is used to customize visual aspects of the different charts. At the moment, a single structure
@@ -251,22 +252,6 @@ export interface IChartLimits {
     series?: number;
     categories?: number;
     dataPoints?: number;
-}
-
-/**
- * @public
- */
-export interface IColorMapping {
-    /**
-     * Predicate function which will be called for each entity that will be charted. If matched, the `color` will assigned
-     * to that entity when it is rendered (be it as a bar, column, point, slice etc)
-     */
-    predicate: IHeaderPredicate;
-
-    /**
-     * Color to assign. It is possible to assign color from colorPalette or provide custom color as RGB code.
-     */
-    color: IColor;
 }
 
 /**

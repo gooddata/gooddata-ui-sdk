@@ -1,0 +1,177 @@
+// (C) 2007-2020 GoodData Corporation
+import * as React from "react";
+import Measure, { Rect } from "react-measure";
+import * as cx from "classnames";
+
+import isEmpty = require("lodash/isEmpty");
+
+import { FluidLegend } from "./FluidLegend";
+import { StaticLegend } from "./StaticLegend";
+import { HeatmapLegend } from "./HeatmapLegend";
+import { IntlWrapper, IntlTranslationsProvider, ITranslationsComponentProps } from "@gooddata/sdk-ui";
+
+/**
+ * @internal
+ */
+export interface ILegendProps {
+    responsive?: boolean;
+    legendItemsEnabled?: any[];
+    height?: number;
+    position: string;
+    heatmapLegend?: boolean;
+    series: any;
+    seriesMapper?: (visibleSeries: any) => any;
+    format?: string;
+    locale?: string;
+    showFluidLegend?: boolean;
+    enableBorderRadius?: boolean;
+    onItemClick(item: any): void;
+    validateOverHeight(legendClient: Rect): void;
+}
+
+export interface ILegendState {
+    showFluid: boolean;
+}
+
+/**
+ * @internal
+ */
+export class Legend extends React.PureComponent<ILegendProps, ILegendState> {
+    public static defaultProps = {
+        responsive: false,
+        legendItemsEnabled: [] as any,
+        height: 0,
+        showFluidLegend: false,
+        isLegendOverHeight: false,
+        enableBorderRadius: false,
+    };
+
+    constructor(props: ILegendProps) {
+        super(props);
+
+        this.onItemClick = this.onItemClick.bind(this);
+    }
+
+    public onItemClick(item: any) {
+        this.props.onItemClick(item);
+    }
+
+    public getSeries() {
+        const { series, legendItemsEnabled = [], seriesMapper } = this.props;
+
+        const seriesWithVisibility = series.map((seriesItem: any) => {
+            const isVisible = legendItemsEnabled[seriesItem.legendIndex];
+            return {
+                ...seriesItem,
+                isVisible,
+            };
+        });
+
+        if (seriesMapper) {
+            return seriesMapper(seriesWithVisibility);
+        }
+
+        return seriesWithVisibility;
+    }
+
+    public renderFluid() {
+        const { enableBorderRadius } = this.props;
+
+        return (
+            <Measure client={true}>
+                {({ measureRef, contentRect }: any) => {
+                    const usedWidth =
+                        contentRect.client && contentRect.client.width
+                            ? Math.floor(contentRect.client.width)
+                            : 0;
+                    return (
+                        <div className="viz-fluid-legend-wrap" ref={measureRef}>
+                            <FluidLegend
+                                series={this.getSeries()}
+                                enableBorderRadius={enableBorderRadius}
+                                onItemClick={this.onItemClick}
+                                containerWidth={usedWidth}
+                            />
+                        </div>
+                    );
+                }}
+            </Measure>
+        );
+    }
+
+    public renderStatic() {
+        const { position, height, format, locale, responsive } = this.props;
+
+        const classNames = cx("viz-static-legend-wrap", `position-${position}`);
+
+        const props = {
+            series: this.getSeries(),
+            onItemClick: this.onItemClick,
+            position,
+            format,
+            locale,
+            responsive,
+        };
+
+        return (
+            <Measure client={true}>
+                {({ measureRef, contentRect }: any) => {
+                    const measuredHeight =
+                        contentRect.client && contentRect.client.height
+                            ? Math.floor(contentRect.client.height)
+                            : 0;
+                    const usedHeight = height || measuredHeight;
+
+                    if (!isEmpty(contentRect.client)) {
+                        this.props.validateOverHeight(contentRect.client);
+                    }
+
+                    return (
+                        <div className={classNames} ref={measureRef}>
+                            <StaticLegend {...props} containerHeight={usedHeight} />
+                        </div>
+                    );
+                }}
+            </Measure>
+        );
+    }
+
+    public render() {
+        const { responsive, showFluidLegend, heatmapLegend } = this.props;
+
+        const isFluidLegend = Boolean(responsive && showFluidLegend);
+
+        if (heatmapLegend) {
+            return this.renderHeatmapLegend();
+        }
+
+        if (isFluidLegend) {
+            return this.renderFluid();
+        }
+
+        return this.renderStatic();
+    }
+
+    private renderHeatmapLegend() {
+        const { locale, format, responsive, position } = this.props;
+        const { showFluidLegend } = this.props;
+        const series = this.getSeries();
+        const isSmall = Boolean(responsive && showFluidLegend);
+
+        return (
+            <IntlWrapper locale={locale}>
+                <IntlTranslationsProvider>
+                    {(props: ITranslationsComponentProps) => (
+                        <HeatmapLegend
+                            series={series}
+                            format={format}
+                            isSmall={isSmall}
+                            numericSymbols={props.numericSymbols}
+                            position={position}
+                        />
+                    )}
+                </IntlTranslationsProvider>
+            </IntlWrapper>
+        );
+    }
+}

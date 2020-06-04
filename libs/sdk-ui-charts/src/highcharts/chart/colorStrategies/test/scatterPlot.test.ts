@@ -3,7 +3,7 @@
 import { getMVS } from "../../test/helper";
 import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
-import { IColorStrategy } from "../base";
+import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { ColorFactory } from "../../colorFactory";
 import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";
 import { ScatterPlotColorStrategy } from "../scatterPlot";

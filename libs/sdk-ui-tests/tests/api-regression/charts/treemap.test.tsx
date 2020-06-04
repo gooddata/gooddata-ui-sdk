@@ -3,22 +3,22 @@
 import { defSetSorts } from "@gooddata/sdk-model";
 import { ITreemapProps } from "@gooddata/sdk-ui-charts";
 import treemapScenarios from "../../../scenarios/charts/treemap";
-import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { mountChartAndCapture } from "../../_infra/render";
 import { mountInsight } from "../../_infra/renderPlugVis";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 import flatMap = require("lodash/flatMap");
+import { ScenarioAndDescription } from "../../../src";
 
 const Chart = "Treemap";
 
 describe(Chart, () => {
-    const Scenarios: Array<ScenarioTestInput<ITreemapProps>> = flatMap(treemapScenarios, group =>
-        group.forTestTypes("api").asTestInput(),
+    const Scenarios: Array<ScenarioAndDescription<ITreemapProps>> = flatMap(treemapScenarios, group =>
+        group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
-    describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
-        const promisedInteractions = mountChartAndCapture(Component, propsFactory, wrapper =>
+    describe.each(Scenarios)("with %s", (_desc, scenario) => {
+        const promisedInteractions = mountChartAndCapture(scenario, wrapper =>
             wrapper.find("CoreTreemap").props(),
         );
 
@@ -41,7 +41,7 @@ describe(Chart, () => {
 
             const insight = createInsightDefinitionForChart(Chart, _desc, interactions);
 
-            const plugVizInteractions = await mountInsight(insight);
+            const plugVizInteractions = await mountInsight(scenario, insight);
 
             // remove sorts from both original and plug viz exec - simply because plug vis will automatically
             // create sorts

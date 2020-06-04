@@ -1,12 +1,18 @@
 // (C) 2020 GoodData Corporation
 
-import { ColorStrategy, ICreateColorAssignmentReturnValue, isValidMappedColor } from "./base";
+import {
+    ColorStrategy,
+    ICreateColorAssignmentReturnValue,
+    isValidMappedColor,
+    getColorByGuid,
+    getColorFromMapping,
+    getLighterColorFromRGB,
+} from "@gooddata/sdk-ui-vis-commons";
 import { IColor, IColorFromPalette, IColorPalette, isColorFromPalette, RgbType } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
-import { getColorByGuid, getColorFromMapping, getLighterColorFromRGB } from "../../utils/color";
 
 const emptyColorPaletteItem: IColorFromPalette = { type: "guid", value: "none" };
 

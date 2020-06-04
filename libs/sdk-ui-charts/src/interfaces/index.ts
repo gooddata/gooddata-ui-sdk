@@ -9,7 +9,6 @@ export {
     IDataLabelsConfig,
     IAxisNameConfig,
     ChartAlignTypes,
-    IColorMapping,
     IDataLabelsVisible,
     AxisNamePosition,
 } from "./chartConfig";
@@ -25,3 +24,6 @@ export {
 } from "./chartProps";
 
 export { ViewByAttributesLimit } from "./limits";
+
+import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+export { IColorMapping };

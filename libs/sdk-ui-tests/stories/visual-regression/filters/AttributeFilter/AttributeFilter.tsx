@@ -9,11 +9,10 @@ import { FilterStories } from "../../_infra/storyGroups";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilter.css";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
-import { StorybookBackend } from "../../_infra/backend";
+import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
 
 const wrapperStyle = { width: 400, height: 600, padding: "1em 1em" };
 const backend = StorybookBackend();
-const workspace = "testWorkspace";
 
 /*
  * TODO: fix these scenarios, use postInteractionWait selector (string) instead of fixed timeout. this
@@ -28,7 +27,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             <div style={wrapperStyle} className="screenshot-target">
                 <AttributeFilter
                     backend={backend}
-                    workspace={workspace}
+                    workspace={ReferenceWorkspaceId}
                     filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
                     onApply={action("on-apply")}
                 />
@@ -48,7 +47,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             <div style={wrapperStyle} className="screenshot-target">
                 <AttributeFilter
                     backend={backend}
-                    workspace={workspace}
+                    workspace={ReferenceWorkspaceId}
                     locale="de-DE"
                     filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
                     onApply={action("on-apply")}
@@ -69,7 +68,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             <div style={wrapperStyle} className="screenshot-target">
                 <AttributeFilter
                     backend={backend}
-                    workspace={workspace}
+                    workspace={ReferenceWorkspaceId}
                     filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["WonderKid", "Explorer"])}
                     onApply={action("on-apply")}
                 />
@@ -93,7 +92,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             <div style={wrapperStyle} className="screenshot-target">
                 <AttributeFilter
                     backend={backend}
-                    workspace={workspace}
+                    workspace={ReferenceWorkspaceId}
                     filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [
                         "WonderKid",
                         "Explorer",
@@ -125,7 +124,7 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
             <div style={wrapperStyle} className="screenshot-target">
                 <AttributeFilter
                     backend={backend}
-                    workspace={workspace}
+                    workspace={ReferenceWorkspaceId}
                     filter={newNegativeAttributeFilter(ReferenceLdm.Product.Name, [
                         "WonderKid",
                         "Explorer",

@@ -42,6 +42,7 @@ export type ChartType =
     | "bubble"
     | "heatmap"
     | "geo"
+    | "pushpin"
     | "combo"
     | "combo2"
     | "histogram"
@@ -68,7 +69,7 @@ export type ChartElementType =
     | "comparative";
 export type HeadlineElementType = "primaryValue" | "secondaryValue";
 export type TableElementType = "cell";
-export type VisElementType = ChartElementType | HeadlineElementType | TableElementType;
+export type VisElementType = ChartElementType | HeadlineElementType | TableElementType | "pushpin";
 
 export type VisualizationEnvironment = "none" | "dashboards";
 

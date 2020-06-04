@@ -33,7 +33,7 @@ import { HEATMAP_DATA_POINTS_LIMIT, PIE_CHART_LIMIT } from "../constants/limits"
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../utils/executionResultHelper";
 import { IUnwrappedAttributeHeadersWithItems } from "../utils/types";
 
-import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
+import { IColorStrategy, getLighterColor } from "@gooddata/sdk-ui-vis-commons";
 
 import {
     customEscape,
@@ -97,7 +97,7 @@ import {
     ISeriesItemConfig,
 } from "../typings/unsafe";
 import { getBulletChartSeries } from "./chartOptions/bulletChartOptions";
-import { IColorStrategy } from "./colorStrategies/base";
+import { GRAY, WHITE, TRANSPARENT } from "../utils/color";
 
 const TOOLTIP_PADDING = 10;
 

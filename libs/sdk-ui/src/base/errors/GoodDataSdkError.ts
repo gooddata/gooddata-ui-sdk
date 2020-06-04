@@ -52,6 +52,16 @@ export const ErrorCodes = {
     UNAUTHORIZED: "UNAUTHORIZED",
 
     /**
+     * This error means that location bucket is missing
+     */
+    GEO_LOCATION_MISSING: "GEO_LOCATION_MISSING",
+
+    /**
+     * This error means that mapbox token of GeoChart is missing
+     */
+    GEO_MAPBOX_TOKEN_MISSING: "GEO_MAPBOX_TOKEN_MISSING",
+
+    /**
      * This error means that executed data were too large to be displayed by GoodData.UI.
      */
     DATA_TOO_LARGE_TO_DISPLAY: "DATA_TOO_LARGE_TO_DISPLAY",

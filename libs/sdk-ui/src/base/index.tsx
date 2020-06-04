@@ -30,6 +30,7 @@ export { usePagedResource } from "./react/usePagedResource";
 export { withContexts } from "./react/withContexts";
 export { wrapDisplayName } from "./react/wrapDisplayName";
 export { CancelError, ICancelablePromise, makeCancelable } from "./react/CancelablePromise";
+export { withEntireDataView, ILoadingInjectedProps } from "./react/legacy/withEntireDataView";
 
 /*
  * Localization exports
@@ -45,6 +46,7 @@ export {
     ITranslationsProviderOwnProps,
     ITranslationsProviderProps,
 } from "./localization/TranslationsProvider";
+export { useNumbericSymbols } from "./localization/TranslationsHook";
 export { createIntlMock, withIntl } from "./localization/intlUtils";
 
 /*
@@ -80,7 +82,11 @@ export { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./measureTitle
  *
  */
 
-export { IVisualizationProps, IVisualizationCallbacks } from "./vis/VisualizationProps";
+export {
+    IVisualizationProps,
+    IVisualizationCallbacks,
+    IDataVisualizationProps,
+} from "./vis/VisualizationProps";
 export {
     IPushData,
     OnError,

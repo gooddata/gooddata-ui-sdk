@@ -1,24 +1,24 @@
 // (C) 2007-2019 GoodData Corporation
 
 import bulletChartScenarios from "../../../scenarios/charts/bulletChart";
-import { ScenarioTestInput } from "../../../src";
+import { ScenarioAndDescription } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
-import flatMap = require("lodash/flatMap");
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { mountInsight } from "../../_infra/renderPlugVis";
 import { defSetSorts } from "@gooddata/sdk-model";
+import flatMap = require("lodash/flatMap");
 
 const Chart = "BulletChart";
 
 describe(Chart, () => {
-    const Scenarios: Array<ScenarioTestInput<IBulletChartProps>> = flatMap(bulletChartScenarios, group =>
-        group.forTestTypes("api").asTestInput(),
+    const Scenarios: Array<ScenarioAndDescription<IBulletChartProps>> = flatMap(bulletChartScenarios, group =>
+        group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
-    describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
-        const promisedInteractions = mountChartAndCapture(Component, propsFactory, wrapper =>
+    describe.each(Scenarios)("with %s", (_desc, scenario) => {
+        const promisedInteractions = mountChartAndCapture(scenario, wrapper =>
             wrapper.find("CoreBulletChart").props(),
         );
 
@@ -41,7 +41,7 @@ describe(Chart, () => {
 
             const insight = createInsightDefinitionForChart(Chart, _desc, interactions);
 
-            const plugVizInteractions = await mountInsight(insight);
+            const plugVizInteractions = await mountInsight(scenario, insight);
 
             // remove sorts from both original and plug viz exec - simply because plug vis will automatically
             // create sorts

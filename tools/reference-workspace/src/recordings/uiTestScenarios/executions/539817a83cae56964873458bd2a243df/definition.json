@@ -1,0 +1,51 @@
+{
+    "workspace": "reference-workspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "closed.aag81lMifn6q",
+                    "type": "displayForm"
+                },
+                "localIdentifier": "a_closed.aag81lMifn6q"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "m_aangOxLSeztu",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m_abZgFKGPaGYM",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "abZgFKGPaGYM"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["a_closed.aag81lMifn6q"]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

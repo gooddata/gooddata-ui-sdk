@@ -70,14 +70,14 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
 exports[`XIRR with correct config should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Xirr",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -151,7 +151,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -161,7 +161,7 @@ Object {
     [Function],
   ],
   "exportTitle": "Xirr",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -235,7 +235,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -248,7 +248,7 @@ Object {
     [Function],
   ],
   "exportTitle": "Xirr",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -301,14 +301,14 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
 exports[`XIRR with only measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Xirr",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
@@ -382,13 +382,13 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;
 
 exports[`XIRR with semantically wrong measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Xirr",
-  "workspace": "testWorkspace",
+  "workspace": "reference-workspace",
 }
 `;

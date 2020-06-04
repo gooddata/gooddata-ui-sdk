@@ -1,0 +1,58 @@
+[
+    {
+        "vis": "PivotTable",
+        "scenario": "single attribute",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "attribute",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "columns",
+                    "items": []
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "measures": [],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                },
+                {
+                    "itemIdentifiers": []
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name"
+        }
+    }
+]

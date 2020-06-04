@@ -6,7 +6,7 @@ import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";
 import { DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../../../interfaces";
 import { ReferenceLdm, ReferenceLdmExt, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IColorStrategy } from "../base";
+import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 const defaultColorMapping: IColorMapping[] = [

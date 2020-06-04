@@ -1,0 +1,35 @@
+[
+    {
+        "vis": "Execute",
+        "scenario": "single unscoped series",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [],
+            "attributes": [],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        }
+    }
+]

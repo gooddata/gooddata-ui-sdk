@@ -1,7 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import * as React from "react";
-import { IErrorProps, ILoadingProps, IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
+import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IChartConfig } from "./chartConfig";
 
 /**
@@ -19,17 +18,6 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
      * Set height of the chart (in pixels).
      */
     height?: number;
-
-    /**
-     * React component to display in the event when there is an error with either obtaining the data from
-     * backend or with the data itself.
-     */
-    ErrorComponent?: React.ComponentType<IErrorProps>;
-
-    /**
-     * React component to display while loading data from the backend.
-     */
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
 }
 
 export interface ILegendItem {

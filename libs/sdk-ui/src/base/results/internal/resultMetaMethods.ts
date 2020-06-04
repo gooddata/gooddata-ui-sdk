@@ -1,5 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
+import flatMap = require("lodash/flatMap");
 import {
+    IAttributeDescriptor,
     IDataView,
     IDimensionDescriptor,
     IDimensionItemDescriptor,
@@ -7,6 +9,7 @@ import {
     IMeasureGroupDescriptor,
     IResultAttributeHeader,
     IResultHeader,
+    isAttributeDescriptor,
     isMeasureGroupDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
@@ -29,6 +32,11 @@ export interface IResultMetaMethods {
      * @returns dimension item descriptors for desired dimension of the resulting data view
      */
     dimensionItemDescriptors(dimIdx: number): IDimensionItemDescriptor[];
+
+    /**
+     * @returns attribute descriptors from all dimensions
+     */
+    attributeDescriptors(): IAttributeDescriptor[];
 
     /**
      * @returns measure group descriptor, regardless of dimension in which it is located
@@ -127,6 +135,12 @@ class ResultMetaMethods implements IResultMetaMethods {
         const dim = this.dataView.result.dimensions[dimIdx];
 
         return dim && dim.headers ? dim.headers : [];
+    }
+
+    public attributeDescriptors(): IAttributeDescriptor[] {
+        return flatMap(this.dataView.result.dimensions, dim => {
+            return dim.headers.filter(isAttributeDescriptor);
+        });
     }
 
     public measureGroupDescriptor(): IMeasureGroupDescriptor | undefined {
