@@ -213,3 +213,13 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "legend",
     "colorMapping",
 ];
+
+export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
+    "tooltipText",
+    "legend",
+    "points.groupNearbyPoints",
+    "points.minSize",
+    "points.maxSize",
+    "viewport.area",
+    "colorMapping",
+];

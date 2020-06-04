@@ -194,6 +194,43 @@ describe("PluggableScatterPlot", () => {
         });
     });
 
+    it("should return reference point after switching from Geo Chart", async () => {
+        const scatterPlot = createComponent();
+
+        const {
+            simpleGeoPushpinReferencePoint: { buckets: mockedBuckets, filters: mockedFilters },
+        } = referencePointMocks;
+        const expectedBuckets: IBucketOfFun[] = [
+            {
+                localIdentifier: "measures",
+                items: mockedBuckets[1].items.slice(0, 1),
+            },
+            {
+                localIdentifier: "secondary_measures",
+                items: mockedBuckets[2].items.slice(0, 1),
+            },
+            {
+                localIdentifier: "attribute",
+                items: mockedBuckets[0].items.slice(0, 1),
+            },
+        ];
+        const expectedFilters: IFilters = {
+            localIdentifier: "filters",
+            items: mockedFilters.items.slice(0, 1),
+        };
+
+        const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
+            referencePointMocks.simpleGeoPushpinReferencePoint,
+        );
+
+        expect(extendedReferencePoint).toEqual({
+            buckets: expectedBuckets,
+            filters: expectedFilters,
+            uiConfig: uiConfigMocks.scatterPlotUiConfig,
+            properties: {},
+        });
+    });
+
     describe("Arithmetic measures", () => {
         it("should skip AM that does not fit into two measure bucket item slots", async () => {
             const scatterPlot = createComponent();

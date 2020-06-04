@@ -23,146 +23,207 @@ $paging-button-small-size: 22px;
 //
 
 .gd-geo-component {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    .mapboxgl-map {
-        width: 100%;
-        height: 100%;
-    }
+    // position: top & bottom
     &.flex-direction-column {
-        flex-direction: column;
-
         .geo-legend {
-            flex: 1 0 auto;
-        }
-
-        .mapbox-container {
-            flex: 1 1 auto;
-            overflow: visible;
-
-            .mapboxgl-canvas {
-                outline: none;
-            }
-        }
-    }
-    &.flex-direction-row {
-        flex-direction: row;
-    }
-    .geo-legend {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-        > div {
-            margin: 5px 0;
-        }
-        .viz-static-legend-wrap {
             display: flex;
-            flex: 1 auto;
-            margin-right: 20px;
+            flex: unset;
             flex-flow: row wrap;
             justify-content: flex-end;
             align-items: center;
         }
+
         .pushpin-size-legend {
             display: flex;
-            margin-left: 10px;
-            font-family: $gd-font-primary;
             flex: 0 auto;
-            .metric-name {
-                overflow: hidden;
-                font-size: 14px;
-                line-height: 30px;
-                white-space: nowrap;
-                color: $gd-color-link;
+            margin-left: 30px;
+        }
+
+        .pushpin-size-legend-circle {
+            display: inline-block;
+
+            &::after {
+                content: "...";
+                display: inline-block;
+                margin-left: 6px;
                 margin-right: 6px;
-                text-overflow: ellipsis;
-                max-width: 250px;
+                margin-top: -6px;
+                vertical-align: middle;
             }
-            .pushpin-size-legend-circle-list {
-                // refactor?
-                // stylelint-disable-next-line max-nesting-depth
-                .pushpin-size-legend-circle {
-                    display: inline-block;
-                    // refactor?
-                    // stylelint-disable-next-line max-nesting-depth
-                    span:first-child {
-                        display: inline-block;
-                        border: 1px solid $boder-color-circle-legend;
-                        border-radius: 50%;
-                    }
-                    // refactor?
-                    // stylelint-disable-next-line max-nesting-depth
-                    span {
-                        font-size: 11px;
-                        vertical-align: middle;
-                        color: $gd-color-link;
-                    }
-                    // refactor?
-                    // stylelint-disable-next-line max-nesting-depth
-                    &::after {
-                        content: "...";
-                        display: inline-block;
-                        margin-left: 6px;
-                        margin-right: 6px;
-                        vertical-align: middle;
-                        color: $boder-color-circle-legend;
-                        margin-top: -6px;
-                    }
-                    // refactor?
-                    // stylelint-disable-next-line max-nesting-depth
-                    &:last-child {
-                        // refactor?
-                        // stylelint-disable-next-line max-nesting-depth
-                        &::after {
-                            content: "";
-                        }
-                    }
-                }
-                // refactor?
-                // stylelint-disable-next-line max-nesting-depth
-                .circle-value {
-                    margin-left: 6px;
-                }
-                // refactor?
-                // stylelint-disable-next-line max-nesting-depth
-                .circle-max-icon {
-                    width: 30px;
-                    height: 30px;
-                }
-                // refactor?
-                // stylelint-disable-next-line max-nesting-depth
-                .circle-average-icon {
-                    width: 20px;
-                    height: 20px;
-                }
-                // refactor?
-                // stylelint-disable-next-line max-nesting-depth
-                .circle-min-icon {
-                    width: 10px;
-                    height: 10px;
-                }
-            }
-            .labels {
-                margin-left: 4px;
-                display: flex;
-                flex-direction: column;
-                text-align: left;
-                justify-content: center;
-                color: $gd-color-link;
-                margin-top: -2px;
+        }
+    }
+
+    // position: left & right
+    &.flex-direction-row {
+        .geo-legend {
+            .viz-legend.static + .pushpin-size-legend {
+                padding-top: 20px;
             }
         }
 
-        &.has-size-legend .color-legend {
-            margin-right: 10px;
+        .pushpin-size-legend {
+            line-height: 1.4;
+            margin-left: 20px;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .pushpin-size-legend-circle {
+            &::after {
+                content: "\2807";
+                display: block;
+                margin-left: 8px;
+                text-align: center;
+                width: 20px;
+            }
+
+            .circle-min-icon {
+                margin-left: 10px;
+            }
+
+            .circle-average-icon {
+                margin-left: 5px;
+            }
         }
     }
+
+    // Adjust the Mapbox logo to be smaller
+    .mapboxgl-ctrl-logo {
+        background-size: 65px 20px;
+        width: 65px;
+        height: 20px;
+    }
+}
+
+.geo-legend {
+    &.position-top,
+    &.position-bottom {
+        margin: 5px 0;
+    }
+
+    &.viz-legend.static {
+        margin-left: 0;
+
+        &.position-top,
+        &.position-bottom {
+            align-items: center;
+        }
+
+        &.position-left,
+        &.position-right {
+            max-width: 210px;
+        }
+    }
+
+    .viz-static-legend-wrap {
+        display: flex;
+        flex: 1 auto;
+        margin-right: 20px;
+        flex-flow: row wrap;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .viz-legend.position-right,
+    .viz-legend.position-left {
+        flex-basis: 0;
+    }
+
+    &.has-size-legend .color-legend {
+        margin-right: 10px;
+    }
+
+    > .paging {
+        margin-left: 20px;
+    }
+}
+
+.pushpin-size-legend {
+    font-family: $gd-font-primary;
+
+    .metric-name {
+        overflow: hidden;
+        font-size: 14px;
+        line-height: 30px;
+        white-space: nowrap;
+        color: $gd-color-link;
+        margin-right: 6px;
+        text-overflow: ellipsis;
+        max-width: 250px;
+    }
+
+    .pushpin-size-legend-circle {
+        span:first-child {
+            box-sizing: content-box;
+            display: inline-block;
+            border: 1px solid $boder-color-circle-legend;
+            border-radius: 50%;
+        }
+
+        span {
+            font-size: 11px;
+            vertical-align: middle;
+            color: $gd-color-link;
+        }
+
+        &::after {
+            color: $boder-color-circle-legend;
+            font-family: $gd-font-primary;
+        }
+
+        &:last-child {
+            &::after {
+                content: "";
+            }
+        }
+    }
+
+    .circle-value {
+        margin-left: 6px;
+    }
+
+    .circle-max-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .circle-average-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .circle-min-icon {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+.geo-legend-paging .pushpin-size-legend {
+    margin-bottom: 20px;
+}
+
+.mapboxgl-map {
+    flex: 1;
+    // If the outer container have scroll bar, the chart can be showed by scrolling.
+    // stylelint-disable-next-line declaration-no-important
+    overflow: visible !important;
+}
+
+.mapboxgl-canvas {
+    outline: none;
+}
+
+// always show Mapbox wordmark
+.mapboxgl-ctrl {
+    // stylelint-disable-next-line declaration-no-important
+    display: block !important;
+}
+
+// move AttributionControl to the left of NavigationControl
+.mapboxgl-ctrl-bottom-right {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row-reverse;
 }
 
 /* Overwrite Mapbox CSS */

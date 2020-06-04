@@ -43,6 +43,7 @@
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.85",
         "@gooddata/sdk-model": "^8.0.0-alpha.85",
         "@gooddata/sdk-ui": "^8.0.0-alpha.85",
+        "@gooddata/sdk-ui-geo": "^8.0.0-alpha.84",
         "@gooddata/sdk-ui-charts": "^8.0.0-alpha.85",
         "@gooddata/sdk-ui-pivot": "^8.0.0-alpha.85",
         "classnames": "^2.2.6",

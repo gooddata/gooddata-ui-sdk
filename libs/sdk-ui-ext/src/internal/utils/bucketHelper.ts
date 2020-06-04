@@ -272,6 +272,12 @@ function bucketSupportsSubtitle(visualizationType: string, bucketLocalIdentifier
         return bucketLocalIdentifier !== BucketNames.VIEW;
     }
 
+    if (visualizationType === VisualizationTypes.PUSHPIN) {
+        return (
+            bucketLocalIdentifier !== BucketNames.LOCATION && bucketLocalIdentifier !== BucketNames.SEGMENT
+        );
+    }
+
     return false;
 }
 
@@ -837,6 +843,10 @@ export function setMeasuresShowOnSecondaryAxis(items: IBucketItem[], value: bool
     }));
 }
 
+export function removeShowOnSecondaryAxis(items: IBucketItem[]): IBucketItem[] {
+    return setMeasuresShowOnSecondaryAxis(items, null);
+}
+
 export function getAllMeasuresShowOnSecondaryAxis(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAllItemsByType(buckets, [METRIC]).filter(isShowOnSecondaryAxis);
 }
@@ -844,3 +854,57 @@ export function getAllMeasuresShowOnSecondaryAxis(buckets: IBucketOfFun[]): IBuc
 export function getItemsLocalIdentifiers(items: IBucketItem[]): string[] {
     return items.map((item: IBucketItem) => get(item, "localIdentifier", ""));
 }
+
+export interface IMeasureBucketItemsLimit {
+    localIdentifier: string;
+    itemsLimit: number;
+}
+
+export const transformMeasureBuckets = (
+    measureBucketItemsLimits: IMeasureBucketItemsLimit[],
+    buckets: IBucketOfFun[],
+) => {
+    let unusedMeasures: IBucketItem[] = [];
+
+    const newBuckets: IBucketOfFun[] = measureBucketItemsLimits.map(({ localIdentifier, itemsLimit }) => {
+        const preferedBucketlocalIdentifiers: string[] =
+            localIdentifier === BucketNames.MEASURES
+                ? [BucketNames.MEASURES, BucketNames.SIZE]
+                : localIdentifier === BucketNames.SECONDARY_MEASURES
+                ? [BucketNames.SECONDARY_MEASURES, BucketNames.COLOR]
+                : [localIdentifier];
+
+        const preferredBucketItems = getPreferredBucketItems(buckets, preferedBucketlocalIdentifiers, [
+            METRIC,
+        ]);
+        const measuresToBePlaced = preferredBucketItems.splice(0, itemsLimit);
+
+        if (measuresToBePlaced.length === 0) {
+            return {
+                localIdentifier,
+                items: unusedMeasures.splice(0, itemsLimit),
+            };
+        }
+
+        unusedMeasures = [...unusedMeasures, ...preferredBucketItems];
+
+        return {
+            localIdentifier,
+            items: measuresToBePlaced,
+        };
+    });
+
+    return newBuckets.map((bucket: IBucketOfFun, bucketIndex: number) => {
+        const bucketItemsLimit = measureBucketItemsLimits[bucketIndex].itemsLimit;
+
+        const freeSlotsCount = bucketItemsLimit - bucket.items.length;
+        if (freeSlotsCount === 0) {
+            return bucket;
+        }
+
+        return {
+            ...bucket,
+            items: [...bucket.items, ...unusedMeasures.splice(0, freeSlotsCount)],
+        };
+    });
+};

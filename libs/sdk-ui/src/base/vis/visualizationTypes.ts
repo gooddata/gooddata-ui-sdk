@@ -16,6 +16,7 @@ export const VisualizationTypes = {
     BUBBLE: "bubble" as "bubble",
     HEATMAP: "heatmap" as "heatmap",
     GEO: "geo" as "geo",
+    PUSHPIN: "pushpin" as "pushpin",
     COMBO: "combo" as "combo",
     COMBO2: "combo2" as "combo2",
     HISTOGRAM: "histogram" as "histogram",

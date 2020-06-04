@@ -136,6 +136,8 @@ export interface IBucketItem {
     type?: string;
     aggregation?: boolean;
     attribute?: string;
+    dfUri?: string; // default displayFrom uri
+    locationDisplayFormUri?: string;
     filters?: IBucketFilter[];
     granularity?: string;
     showInPercent?: boolean;
@@ -198,6 +200,10 @@ export interface IExportUiConfig {
     supported?: boolean;
 }
 
+export interface INoMetricUiConfig {
+    supported?: boolean;
+}
+
 export interface IOpenAsReportUiConfig {
     supported?: boolean;
     warningMessage?: string;
@@ -216,16 +222,22 @@ export interface IOptionalStacking {
     canStackInPercent?: boolean;
 }
 
+export interface ISupportedLocationIcon {
+    supported?: boolean;
+}
+
 export interface IUiConfig {
     buckets: IBucketsUiConfig;
     recommendations?: IRecommendations;
     exportConfig?: IExportUiConfig;
+    noMetricAccepted?: INoMetricUiConfig;
     openAsReport?: IOpenAsReportUiConfig;
     customError?: ICustomError;
     supportedOverTimeComparisonTypes?: OverTimeComparisonType[];
     supportedChartTypes?: ChartType[];
     axis?: string;
     optionalStacking?: IOptionalStacking;
+    supportedLocationIcon?: ISupportedLocationIcon;
 }
 
 export interface IVisualizationProperties {
@@ -301,6 +313,8 @@ export interface IVisualization {
 export interface IGdcConfig {
     separators?: ISeparators;
     colorPalette?: IColorPalette;
+    isExportMode?: boolean;
+    isInEditMode?: boolean;
 }
 
 /**

@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IUiConfig } from "../interfaces/Visualization";
 
-import { METRIC, FACT, ATTRIBUTE, DATE } from "./bucket";
+import { METRIC, FACT, ATTRIBUTE, DATE, GEO_ATTRIBUTE } from "./bucket";
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const MAX_METRICS_COUNT = 20;
@@ -15,6 +15,8 @@ export const MAX_VIEW_COUNT = 2;
 export const DEFAULT_HEADLINE_METRICS_COUNT = 1;
 export const DEFAULT_XIRR_METRICS_COUNT = 1;
 export const DEFAULT_XIRR_ATTRIBUTES_COUNT = 1;
+export const DEFAULT_GEO_ATTRIBUTES_COUNT = 1;
+export const DEFAULT_PUSHPIN_METRICS_COUNT = 1;
 
 export const UICONFIG = "uiConfig";
 export const RECOMMENDATIONS = "recommendations";
@@ -68,6 +70,14 @@ export const disabledExportConfig = {
 
 export const enabledExportConfig = {
     exportConfig: { supported: true },
+};
+
+export const disabledNoMetricConfig = {
+    noMetricAccepted: { supported: false },
+};
+
+export const enabledNoMetricConfig = {
+    noMetricAccepted: { supported: true },
 };
 
 export const disabledOpenAsReportConfig = {
@@ -580,4 +590,41 @@ export const DEFAULT_BULLET_CHART_CONFIG: IUiConfig = {
         OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
         OverTimeComparisonTypes.PREVIOUS_PERIOD,
     ],
+};
+
+const geoMeasuresBase = {
+    ...measuresBase,
+    allowsReordering: false,
+    itemsLimit: DEFAULT_PUSHPIN_METRICS_COUNT,
+    isShowInPercentVisible: false,
+    canAddItems: true,
+};
+
+const geoAttributesBase = {
+    ...viewBase,
+    accepts: [ATTRIBUTE],
+    canAddItems: true,
+    itemsLimit: DEFAULT_GEO_ATTRIBUTES_COUNT,
+};
+
+export const GEO_PUSHPIN_CHART_UICONFIG: IUiConfig = {
+    buckets: {
+        location: {
+            ...geoAttributesBase,
+            accepts: [ATTRIBUTE, GEO_ATTRIBUTE],
+        },
+        size: {
+            ...geoMeasuresBase,
+        },
+        color: {
+            ...geoMeasuresBase,
+        },
+        segment: {
+            ...geoAttributesBase,
+        },
+        ...defaultFilters,
+    },
+    supportedLocationIcon: { supported: true },
+    ...defaultRootUiConfigProperties,
+    ...enabledNoMetricConfig,
 };

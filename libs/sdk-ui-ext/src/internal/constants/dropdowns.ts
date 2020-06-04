@@ -1,5 +1,27 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IDropdownItem } from "../interfaces/Dropdown";
+
+export const pushpinSizeDropdownItems: IDropdownItem[] = [
+    { title: "properties.auto_default", value: "default" },
+    { type: "separator" },
+    { title: "properties.points.size.extra_small", value: "0.5x" },
+    { title: "properties.points.size.small", value: "0.75x" },
+    { title: "properties.points.size.normal", value: "normal" },
+    { title: "properties.points.size.large", value: "1.25x" },
+    { title: "properties.points.size.extra_large", value: "1.5x" },
+];
+
+export const pushpinViewportDropdownItems: IDropdownItem[] = [
+    { title: "properties.viewport.area.auto_default", value: "auto" },
+    { title: "properties.viewport.area.world", value: "world" },
+    { type: "header", title: "properties.viewport.area.continents" },
+    { title: "properties.viewport.area.continent_af", value: "continent_af" },
+    { title: "properties.viewport.area.continent_na", value: "continent_na" },
+    { title: "properties.viewport.area.continent_sa", value: "continent_sa" },
+    { title: "properties.viewport.area.continent_as", value: "continent_as" },
+    { title: "properties.viewport.area.continent_au", value: "continent_au" },
+    { title: "properties.viewport.area.continent_eu", value: "continent_eu" },
+];
 
 export const rotationDropdownItems: IDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },

@@ -24,5 +24,6 @@ export const METRIC = "metric";
 export const FACT = "fact";
 export const DATE = "date";
 export const ATTRIBUTE = "attribute";
+export const GEO_ATTRIBUTE = "geo_attribute";
 
 export const DEFAULT_BUCKETS: IBucketOfFun[] = [];
