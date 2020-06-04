@@ -187,7 +187,11 @@ export function getValidColorPalette(colors?: string[], colorPalette?: IColorPal
 
 // For re-exporting in index.ts
 // Create object here since TSC can't reexport external types used by getColorMappingPredicate
-export default {
+
+/**
+ * @internal
+ */
+export const ColorUtils = {
     getColorByGuid,
     getColorMappingPredicate,
 };

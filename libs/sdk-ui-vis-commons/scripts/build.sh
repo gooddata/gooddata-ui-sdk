@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 _build_styles() {
-    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss
+  echo
+    # node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss/main.scss
 }
 
 _clean() {

@@ -25,12 +25,10 @@ export {
     normalizeColorToRGB,
     parseRGBColorCode,
     getValidColorPalette,
+    ColorUtils,
 } from "./coloring/color";
 
 export { IColorMapping } from "./coloring/types";
-
-import ColorUtils from "./coloring/color";
-export { ColorUtils };
 
 //
 //

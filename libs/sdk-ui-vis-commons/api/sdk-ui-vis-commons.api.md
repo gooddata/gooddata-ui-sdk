@@ -51,7 +51,9 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected palette: string[];
 }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "ColorUtils" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export const ColorUtils: {
     getColorByGuid: typeof getColorByGuid;
     getColorMappingPredicate: typeof getColorMappingPredicate;
@@ -483,11 +485,6 @@ export class StaticLegend extends React_2.PureComponent<IStaticLegendProps, ISta
 // @internal (undocumented)
 export const SupportedLegendPositions: PositionType[];
 
-
-// Warnings were encountered during analysis:
-//
-// dist/coloring/color.d.ts:74:5 - (ae-incompatible-release-tags) The symbol "getColorByGuid" is marked as @public, but its signature references "getColorByGuid" which is marked as @internal
-// dist/coloring/color.d.ts:75:5 - (ae-incompatible-release-tags) The symbol "getColorMappingPredicate" is marked as @public, but its signature references "getColorMappingPredicate" which is marked as @internal
 
 // (No @packageDocumentation comment for this package)
 
