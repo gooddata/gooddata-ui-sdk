@@ -62,6 +62,7 @@ export interface IAttributeDropdownState {
 
     prevSelectedItems: Array<Partial<IAttributeElement>>;
     prevIsInverted: boolean;
+    firstLoad: boolean;
 
     isLoading: boolean;
     error?: any;
@@ -113,6 +114,7 @@ export class AttributeDropdownCore extends React.PureComponent<
 
             prevSelectedItems: selectedItems,
             prevIsInverted: isInverted,
+            firstLoad: true,
 
             isLoading: false,
             limit: LIMIT,
@@ -124,13 +126,6 @@ export class AttributeDropdownCore extends React.PureComponent<
         };
 
         this.createMediaQuery(props.fullscreenOnMobile);
-    }
-
-    public componentDidMount(): void {
-        if (this.props.displayForm && this.props.titleWithSelection) {
-            this.getElements();
-            this.getElementTotalCount();
-        }
     }
 
     public componentDidUpdate(prevProps: IAttributeDropdownProps, prevState: IAttributeDropdownState): void {
@@ -146,7 +141,6 @@ export class AttributeDropdownCore extends React.PureComponent<
                     error: null,
                     isLoading: false,
                     offset: 0,
-                    totalCount: undefined,
                     limit: LIMIT,
                 },
                 () => this.getElements(),
@@ -248,6 +242,8 @@ export class AttributeDropdownCore extends React.PureComponent<
                 isLoading: false,
                 validElements: mergedValidElements,
                 items,
+                totalCount: state.firstLoad ? items.length : state.totalCount,
+                firstLoad: false,
             };
         });
     };
@@ -271,12 +267,12 @@ export class AttributeDropdownCore extends React.PureComponent<
     };
 
     private getTitle = () => {
-        const { items, isInverted, selectedItems } = this.state;
+        const { isInverted, selectedItems, totalCount } = this.state;
         const { title, displayForm, titleWithSelection } = this.props;
 
-        if (items && titleWithSelection && displayForm) {
+        if (totalCount && titleWithSelection && displayForm) {
             const empty = isEmpty(selectedItems);
-            const equal = isEqual(items.length, selectedItems.length);
+            const equal = isEqual(totalCount, selectedItems.length);
             const getAllPartIntl = this.getAllTitleIntl(isInverted, empty, equal);
 
             if (empty) {
@@ -298,16 +294,14 @@ export class AttributeDropdownCore extends React.PureComponent<
     };
 
     public render() {
-        const { FilterLoading, titleWithSelection } = this.props;
-        const { searchString } = this.state;
+        const { FilterLoading } = this.props;
         const customizedTitle = this.getTitle();
         const classes = classNames(
             "gd-attribute-filter",
             customizedTitle ? `gd-id-${stringUtils.simplifyText(customizedTitle)}` : "",
         );
 
-        return (titleWithSelection && this.state.isLoading && isEmpty(searchString)) ||
-            this.props.isLoading ? (
+        return this.props.isLoading ? (
             <FilterLoading />
         ) : (
             <Dropdown
