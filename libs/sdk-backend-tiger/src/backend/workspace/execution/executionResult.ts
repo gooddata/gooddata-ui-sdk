@@ -187,10 +187,10 @@ function hasEmptyData(result: Execution.IExecutionResult): boolean {
     return result.data.length === 0;
 }
 
-function hasMissingHeaderItems(result: Execution.IExecutionResult): boolean {
-    return !result.headerItems;
+function hasMissingDimensionHeaders(result: Execution.IExecutionResult): boolean {
+    return !result.dimensionHeaders;
 }
 
 function isEmptyDataResult(result: Execution.IExecutionResult): boolean {
-    return hasEmptyData(result) && hasMissingHeaderItems(result);
+    return hasEmptyData(result) && hasMissingDimensionHeaders(result);
 }

@@ -1,8 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
-import { DataValue, IResultAttributeHeader, IResultHeader } from "@gooddata/sdk-backend-spi";
+import { DataValue, IResultHeader } from "@gooddata/sdk-backend-spi";
 import { Execution } from "@gooddata/gd-tiger-client";
 import isArray = require("lodash/isArray");
-import isAttributeHeaderItem = Execution.isAttributeHeaderItem;
+import isResultAttributeHeader = Execution.isResultAttributeHeader;
+import isResultMeasureHeader = Execution.isResultMeasureHeader;
 
 export type TransformerResult = {
     readonly headerItems: IResultHeader[][][];
@@ -11,29 +12,39 @@ export type TransformerResult = {
     readonly count: number[];
 };
 
-function transformHeaderItems(headerItems?: Execution.IResultHeaderItem[][][]): IResultHeader[][][] {
-    if (!headerItems) {
+function transformHeaderItems(dimensionHeaders?: Execution.IDimensionHeader[]): IResultHeader[][][] {
+    if (!dimensionHeaders) {
         return [[[]]];
     }
 
-    return headerItems.map(dim => {
-        return dim.map(dimHeaders => {
-            return dimHeaders.map(
-                (headerItem): IResultHeader => {
-                    const item = headerItem;
-
-                    if (isAttributeHeaderItem(item)) {
-                        const newItem: IResultAttributeHeader = {
+    return dimensionHeaders.map(dimensionHeader => {
+        return dimensionHeader.headerGroups.map(headerGroup => {
+            return headerGroup.headers.map(
+                (header): IResultHeader => {
+                    if (isResultAttributeHeader(header)) {
+                        return {
                             attributeHeaderItem: {
-                                uri: `/fake/${item.attributeHeaderItem.name}`,
-                                name: item.attributeHeaderItem.name,
+                                uri: `/fake/${header.attributeHeader.labelValue}`,
+                                name: header.attributeHeader.labelValue,
                             },
                         };
-
-                        return newItem;
                     }
 
-                    return item;
+                    if (isResultMeasureHeader(header)) {
+                        return {
+                            measureHeaderItem: {
+                                name: header.measureHeader.name,
+                                order: header.measureHeader.order,
+                            },
+                        };
+                    }
+
+                    return {
+                        totalHeaderItem: {
+                            name: header.totalHeader.name,
+                            type: header.totalHeader.type,
+                        },
+                    };
                 },
             );
         });
@@ -58,7 +69,7 @@ function calculateCount(data: DataValue[][] | DataValue[]): number[] {
 export function transformExecutionResult(result: Execution.IExecutionResult): TransformerResult {
     return {
         data: result.data,
-        headerItems: transformHeaderItems(result.headerItems),
+        headerItems: transformHeaderItems(result.dimensionHeaders),
         offset: calculateOffset(result.data),
         count: calculateCount(result.data),
     };
