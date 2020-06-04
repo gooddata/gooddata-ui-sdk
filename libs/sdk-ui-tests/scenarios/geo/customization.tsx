@@ -18,6 +18,7 @@ function mergeConfig(props: IGeoPushpinChartProps, extraConfig: Partial<IGeoConf
 export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpinChart)
     .withDefaultWorkspaceType("examples-workspace")
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultTestTypes("api")
     .addScenario(
         "legend on the left",
         mergeConfig(LocationSegmentSizeAndColorWithTooltip, {

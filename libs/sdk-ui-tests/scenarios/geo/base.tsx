@@ -24,6 +24,7 @@ export const LocationSegmentSizeAndColorWithTooltip: IGeoPushpinChartProps = {
 
 export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpinChart)
     .withDefaultWorkspaceType("examples-workspace")
+    .withDefaultTestTypes("api")
 
     //
     //
