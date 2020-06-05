@@ -496,6 +496,30 @@ export const secondaryMeasuresAndAttributeReferencePoint: IReferencePoint = {
     },
 };
 
+export const secondaryMeasureReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [],
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "attribute",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        sortItems: [defaultSortItem],
+    },
+};
+
 export const measuresOnSecondaryAxisAndAttributeReferencePoint: IReferencePoint = {
     buckets: [
         {
@@ -1150,6 +1174,90 @@ export const oneMetricAndCategoryAndStackReferencePoint: IReferencePoint = {
         {
             localIdentifier: "stack",
             items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const oneMetricAndGeoCategoryAndStackReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: geoAttributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "stack",
+            items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const oneMetricAndLocationAndSegmentReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "location",
+            items: geoAttributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "segment",
+            items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const viewByWithDateAndGeoAttributeReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: [...geoAttributeItems.slice(0, 1), dateItem],
+        },
+        {
+            localIdentifier: "stack",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const viewByWithNonGeoAndGeoAttributeReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: [...attributeItems.slice(0, 1), ...geoAttributeItems.slice(0, 1)],
+        },
+        {
+            localIdentifier: "stack",
+            items: [],
         },
     ],
     filters: {
@@ -2052,6 +2160,34 @@ export const simpleGeoPushpinReferencePoint: IReferencePoint = {
         {
             localIdentifier: "segment",
             items: geoAttributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: geoAttributeFilters.slice(0, 1),
+    },
+    properties: {
+        sortItems: [defaultSortItem],
+    },
+};
+
+export const twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasuresWithPercentage.slice(2, 3),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasuresWithPercentage.slice(3, 4),
+        },
+        {
+            localIdentifier: "view",
+            items: [],
+        },
+        {
+            localIdentifier: "segment",
+            items: [],
         },
     ],
     filters: {

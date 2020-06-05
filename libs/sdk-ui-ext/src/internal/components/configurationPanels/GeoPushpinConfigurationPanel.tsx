@@ -166,23 +166,23 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
 function hasColorMeasure(insight: IInsightDefinition): boolean {
     const bucket = insightBucket(insight, BucketNames.COLOR);
 
-    return bucket && !bucketIsEmpty(bucket);
+    return bucket !== undefined && !bucketIsEmpty(bucket);
 }
 
 function hasSizeMeasure(insight: IInsightDefinition): boolean {
     const bucket = insightBucket(insight, BucketNames.SIZE);
 
-    return bucket && !bucketIsEmpty(bucket);
+    return bucket !== undefined && !bucketIsEmpty(bucket);
 }
 
 function hasLocationAttribute(insight: IInsightDefinition): boolean {
     const bucket = insightBucket(insight, BucketNames.LOCATION);
 
-    return bucket && !bucketIsEmpty(bucket);
+    return bucket !== undefined && !bucketIsEmpty(bucket);
 }
 
 function hasSegmentAttribute(insight: IInsightDefinition): boolean {
     const bucket = insightBucket(insight, BucketNames.SEGMENT);
 
-    return bucket && !bucketIsEmpty(bucket);
+    return bucket !== undefined && !bucketIsEmpty(bucket);
 }

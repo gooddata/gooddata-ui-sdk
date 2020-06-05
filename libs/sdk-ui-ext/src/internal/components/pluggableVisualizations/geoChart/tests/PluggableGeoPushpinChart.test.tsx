@@ -1,9 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 import noop = require("lodash/noop");
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart";
 import { IExtendedReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization";
+import { dummyBackend } from "../../../../../../../sdk-backend-base/src/dummyBackend";
 
 describe("PluggableGeoPushpinChart", () => {
     const defaultProps: IVisConstruct = {
@@ -14,6 +15,9 @@ describe("PluggableGeoPushpinChart", () => {
             afterRender: noop,
             pushData: noop,
         },
+        backend: dummyBackend(),
+        visualizationProperties: {},
+        renderFun: noop,
     };
 
     function createComponent(props: IVisConstruct = defaultProps) {

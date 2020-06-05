@@ -124,26 +124,20 @@ describe("PluggableScatterPlot", () => {
             },
             {
                 localIdentifier: "secondary_measures",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
+                items: referencePointMocks.secondaryMeasureReferencePoint.buckets[1].items.slice(0, 1),
             },
             {
                 localIdentifier: "attribute",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[2].items.slice(
-                    0,
-                    1,
-                ),
+                items: [],
             },
         ];
         const expectedFilters: IFilters = {
             localIdentifier: "filters",
-            items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.filters.items.slice(0, 1),
+            items: [],
         };
 
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
-            referencePointMocks.secondaryMeasuresAndAttributeReferencePoint,
+            referencePointMocks.secondaryMeasureReferencePoint,
         );
 
         expect(extendedReferencePoint).toEqual({
