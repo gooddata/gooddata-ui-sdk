@@ -23,7 +23,7 @@ const verticalCenterStyle: CSSProperties = {
 };
 
 export const Login: React.FC = () => {
-    const { login, authStatus } = useAuth();
+    const { login, authStatus, authError } = useAuth();
     const { authStatus: demoProjectAuthStatus, error } = useDemoProjectAuth();
 
     if (authStatus === AuthStatus.AUTHORIZED) {
@@ -55,7 +55,7 @@ export const Login: React.FC = () => {
         <LoginForm
             email={ENV_CREDENTIALS.username}
             password={ENV_CREDENTIALS.password}
-            apiError={error}
+            apiError={authError || error}
             logIn={login}
             isLoading={
                 authStatus !== AuthStatus.UNAUTHORIZED ||
