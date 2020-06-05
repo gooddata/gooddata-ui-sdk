@@ -304,6 +304,7 @@
             "packageName": "@gooddata/examples-workspace",
             "projectFolder": "tools/examples-workspace",
             "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
             "shouldPublish": true
         },
         {
