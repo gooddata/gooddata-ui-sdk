@@ -9,7 +9,7 @@ import { AttributeFilterItem } from "./AttributeFilterItem";
 import { AttributeListItem } from "./types";
 
 const ITEM_HEIGHT = 28;
-const LIST_WIDTH = 208;
+const LIST_WIDTH = 240;
 export const MAX_SELECTION_SIZE = 500;
 export const VISIBLE_ITEMS_COUNT = 10;
 
