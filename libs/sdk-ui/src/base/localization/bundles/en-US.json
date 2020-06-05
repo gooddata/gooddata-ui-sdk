@@ -194,6 +194,11 @@
         "comment": "",
         "limit": 0
     },
+    "visualization.ErrorDescriptionMissingMapboxToken": {
+        "value": "The Geochart configuration requires a valid API access token.",
+        "comment": "",
+        "limit": 0
+    },
     "gs.filter.loading": {
         "value": "Loading filter…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
@@ -604,13 +609,6 @@
         "comment": "",
         "limit": 0
     },
-
-    "filters.allTime.title": {
-        "value": "All time",
-        "comment": "",
-        "limit": 0
-    },
-
     "filters.from": {
         "value": "from",
         "comment": "Displayed as placeholder in static period inputs where user enters date",
@@ -715,6 +713,11 @@
     "filters.floatingRange.option.year.offset.future": {
         "value": "{n, plural, =1 {next year} other {# years ahead}}",
         "comment": "In '{n, plural, =1 {NEXT YEAR} other {# YEARS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
+    },
+    "filters.allTime.title": {
+        "value": "All time",
+        "comment": "",
         "limit": 0
     },
     "filters.allTime.excludeCurrentPeriod": {
@@ -852,6 +855,51 @@
     "mvf.treatNullValuesAsZeroTooltip": {
         "value": "If the filter condition includes 0, blank values will be treated as 0 and included in calculations.",
         "comment": "Checkbox label tooltip. 'blank values' are data rows without any value (empty), which can be considered to be 0 during calculations. If the filter is set to '< 1' for example, it includes values of 0 (less than one) and therefore all the blank (empty) values are going to be considered to be 0 in calculations.",
+        "limit": 0
+    },
+    "measureNumberFormat.custom.optionLabel": {
+        "value": "Custom",
+        "comment": "An item in list of presets. Denotes a custom preset",
+        "limit": 0
+    },
+    "measureNumberFormat.buttonLabel": {
+        "value": "Format: {selectedFormatPresetName}",
+        "comment": "A label informing the user about the currently selected format. The values of selectedFormatPresetName can be for instance 'Whole number', 'Decimal number', or 'Custom'",
+        "limit": 0
+    },
+    "measureNumberCustomFormatDialog.title": {
+        "value": "Custom format",
+        "comment": "Title of the dialog for setting a custom measure format.",
+        "limit": 0
+    },
+    "measureNumberCustomFormatDialog.template.preview.title": {
+        "value": "Format preview",
+        "comment": "The title of the help bubble for custom measure format template",
+        "limit": 0
+    },
+    "measureNumberCustomFormatDialog.template.title": {
+        "value": "Templates",
+        "comment": "Title of the list of templates",
+        "limit": 0
+    },
+    "measureNumberCustomFormatDialog.extendedPreview.button": {
+        "value": "Show more",
+        "comment": "The title of button which will display more examples",
+        "limit": 0
+    },
+    "measureNumberCustomFormatDialog.howToFormat": {
+        "value": "How to format?",
+        "comment": "Link to help",
+        "limit": 0
+    },
+    "measureNumberCustomFormatDialog.definition": {
+        "value": "Definition",
+        "comment": "Header of format definition field.",
+        "limit": 0
+    },
+    "measureNumberCustomFormatDialog.preview": {
+        "value": "Preview",
+        "comment": "Header of a preview section",
         "limit": 0
     },
     "attrf.all": {

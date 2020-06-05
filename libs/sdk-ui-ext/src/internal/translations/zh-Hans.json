@@ -45,6 +45,7 @@
     "dashboard.bucket.view_title.column": "查看条件",
     "dashboard.bucket.view_title.bar": "查看条件",
     "dashboard.bucket.view_title.area": "查看条件",
+    "dashboard.bucket.view_title.bullet": "查看条件",
     "dashboard.bucket.view_title.heatmap": "行",
     "dashboard.bucket.trend_title.line": "趋势条件",
     "dashboard.bucket.view_title.combo": "查看条件",
@@ -111,8 +112,8 @@
     "properties.rotation.30": "30°",
     "properties.rotation.60": "60°",
     "properties.rotation.90": "90°",
-    "properties.legend.position.up": "上",
-    "properties.legend.position.down": "下",
+    "properties.legend.position.up": "顶部",
+    "properties.legend.position.down": "底部",
     "properties.legend.position.right": "右 ",
     "properties.legend.position.left": "左",
     "properties.points.title": "点",
@@ -148,5 +149,11 @@
     "gs.noData.noMatchingData": "无匹配数据",
     "gs.noData.noDataAvailable": "无匹配数据",
     "properties.colors.unsupported": "洞察的此配置没有颜色",
-    "export_unsupported.colors": "此洞察与自定义颜色不兼容。要将此洞察打开为报告，请在\"配置\"中点击\"重置颜色\" ->\"颜色\"。"
+    "export_unsupported.colors": "此洞察与自定义颜色不兼容。要将此洞察打开为报告，请在\"配置\"中点击\"重置颜色\" ->\"颜色\"。",
+    "dashboard.bucket.measures_title.bullet": "度量",
+    "dashboard.bucket.secondary_measures_title.bullet": "度量",
+    "dashboard.bucket.tertiary_measures_title.bullet": "度量",
+    "dashboard.bucket.measures_subtitle.bullet": "主要",
+    "dashboard.bucket.secondary_measures_subtitle.bullet": "目标",
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "比较"
 }

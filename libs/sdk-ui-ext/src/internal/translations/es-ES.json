@@ -45,6 +45,7 @@
     "dashboard.bucket.view_title.column": "Ver por",
     "dashboard.bucket.view_title.bar": "Ver por",
     "dashboard.bucket.view_title.area": "Ver por",
+    "dashboard.bucket.view_title.bullet": "Ver por",
     "dashboard.bucket.view_title.heatmap": "Filas",
     "dashboard.bucket.trend_title.line": "Tendencia por",
     "dashboard.bucket.view_title.combo": "Ver por",
@@ -111,8 +112,8 @@
     "properties.rotation.30": "30°",
     "properties.rotation.60": "60°",
     "properties.rotation.90": "90°",
-    "properties.legend.position.up": "arriba",
-    "properties.legend.position.down": "abajo",
+    "properties.legend.position.up": "parte superior",
+    "properties.legend.position.down": "parte inferior",
     "properties.legend.position.right": "derecha",
     "properties.legend.position.left": "izquierda",
     "properties.points.title": "Puntos",
@@ -148,5 +149,11 @@
     "gs.noData.noMatchingData": "No hay datos que coincidan",
     "gs.noData.noDataAvailable": "No hay datos que coincidan",
     "properties.colors.unsupported": "No hay colores para esta configuración de la perspectiva",
-    "export_unsupported.colors": "La perspectiva no es compatible con los colores personalizados. Para abrir la perspectiva como informe, haga clic en Restablecer colores en Configuración —> Colores."
+    "export_unsupported.colors": "La perspectiva no es compatible con los colores personalizados. Para abrir la perspectiva como informe, haga clic en Restablecer colores en Configuración —> Colores.",
+    "dashboard.bucket.measures_title.bullet": "Medida",
+    "dashboard.bucket.secondary_measures_title.bullet": "Medida",
+    "dashboard.bucket.tertiary_measures_title.bullet": "Medida",
+    "dashboard.bucket.measures_subtitle.bullet": "Principal",
+    "dashboard.bucket.secondary_measures_subtitle.bullet": "Destino",
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparativas"
 }

@@ -45,6 +45,7 @@
     "dashboard.bucket.view_title.column": "Ver por",
     "dashboard.bucket.view_title.bar": "Ver por",
     "dashboard.bucket.view_title.area": "Ver por",
+    "dashboard.bucket.view_title.bullet": "Ver por",
     "dashboard.bucket.view_title.heatmap": "Linhas",
     "dashboard.bucket.trend_title.line": "Apresentar tendência por",
     "dashboard.bucket.view_title.combo": "Ver por",
@@ -111,8 +112,8 @@
     "properties.rotation.30": "30°",
     "properties.rotation.60": "60°",
     "properties.rotation.90": "90°",
-    "properties.legend.position.up": "para cima",
-    "properties.legend.position.down": "para baixo",
+    "properties.legend.position.up": "cima",
+    "properties.legend.position.down": "baixo",
     "properties.legend.position.right": "direita",
     "properties.legend.position.left": "esquerda",
     "properties.points.title": "Pontos",
@@ -148,5 +149,11 @@
     "gs.noData.noMatchingData": "Sem dados correspondentes",
     "gs.noData.noDataAvailable": "Sem dados correspondentes",
     "properties.colors.unsupported": "Não existem cores para esta configuração do insight",
-    "export_unsupported.colors": "O insight não é compatível com cores personalizadas. Para abrir o insight como relatório, clique em Repor Cores em Configuração —> Cores."
+    "export_unsupported.colors": "O insight não é compatível com cores personalizadas. Para abrir o insight como relatório, clique em Repor Cores em Configuração —> Cores.",
+    "dashboard.bucket.measures_title.bullet": "Medir",
+    "dashboard.bucket.secondary_measures_title.bullet": "Medir",
+    "dashboard.bucket.tertiary_measures_title.bullet": "Medir",
+    "dashboard.bucket.measures_subtitle.bullet": "Primário",
+    "dashboard.bucket.secondary_measures_subtitle.bullet": "Destino",
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparativo"
 }

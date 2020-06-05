@@ -45,6 +45,7 @@
     "dashboard.bucket.view_title.column": "表示",
     "dashboard.bucket.view_title.bar": "表示",
     "dashboard.bucket.view_title.area": "表示",
+    "dashboard.bucket.view_title.bullet": "表示",
     "dashboard.bucket.view_title.heatmap": "行",
     "dashboard.bucket.trend_title.line": "トレンド",
     "dashboard.bucket.view_title.combo": "表示",
@@ -148,5 +149,11 @@
     "gs.noData.noMatchingData": "一致するデータがありません",
     "gs.noData.noDataAvailable": "一致するデータがありません",
     "properties.colors.unsupported": "当インサイト環境設定用の色が指定されていません",
-    "export_unsupported.colors": "このインサイトはカスタムカラーに対応していません。インサイトをレポートとして開くには設定->色の色をリセットをクリックしてください。"
+    "export_unsupported.colors": "このインサイトはカスタムカラーに対応していません。インサイトをレポートとして開くには設定->色の色をリセットをクリックしてください。",
+    "dashboard.bucket.measures_title.bullet": "測定値",
+    "dashboard.bucket.secondary_measures_title.bullet": "測定値",
+    "dashboard.bucket.tertiary_measures_title.bullet": "測定値",
+    "dashboard.bucket.measures_subtitle.bullet": "プライマリ",
+    "dashboard.bucket.secondary_measures_subtitle.bullet": "ターゲット",
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "比較"
 }

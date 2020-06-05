@@ -45,6 +45,7 @@
     "dashboard.bucket.view_title.column": "Bekijken met",
     "dashboard.bucket.view_title.bar": "Bekijken met",
     "dashboard.bucket.view_title.area": "Bekijken met",
+    "dashboard.bucket.view_title.bullet": "Bekijken met",
     "dashboard.bucket.view_title.heatmap": "Rijen",
     "dashboard.bucket.trend_title.line": "Trend volgens",
     "dashboard.bucket.view_title.combo": "Bekijken met",
@@ -111,8 +112,8 @@
     "properties.rotation.30": "30°",
     "properties.rotation.60": "60°",
     "properties.rotation.90": "90°",
-    "properties.legend.position.up": "omhoog",
-    "properties.legend.position.down": "omlaag",
+    "properties.legend.position.up": "boven",
+    "properties.legend.position.down": "onder",
     "properties.legend.position.right": "rechts",
     "properties.legend.position.left": "links",
     "properties.points.title": "Punten",
@@ -148,5 +149,11 @@
     "gs.noData.noMatchingData": "Geen overeenkomstige gegevens",
     "gs.noData.noDataAvailable": "Geen overeenkomstige gegevens",
     "properties.colors.unsupported": "Er zijn geen kleuren voor deze configuratie van het inzicht",
-    "export_unsupported.colors": "Het inzicht is niet compatibel met aangepaste kleuren. Om het inzicht te openen als een rapport, klikt u op Kleuren herstellen in Configuratie —> Kleuren."
+    "export_unsupported.colors": "Het inzicht is niet compatibel met aangepaste kleuren. Om het inzicht te openen als een rapport, klikt u op Kleuren herstellen in Configuratie —> Kleuren.",
+    "dashboard.bucket.measures_title.bullet": "Maat",
+    "dashboard.bucket.secondary_measures_title.bullet": "Maat",
+    "dashboard.bucket.tertiary_measures_title.bullet": "Maat",
+    "dashboard.bucket.measures_subtitle.bullet": "Primair",
+    "dashboard.bucket.secondary_measures_subtitle.bullet": "Doel",
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Relatief"
 }
