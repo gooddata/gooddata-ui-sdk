@@ -5,6 +5,7 @@
         "target": "es5",
         "jsx": "react",
         "lib": ["es7", "dom"],
+        "resolveJsonModule": true,
         "module": "commonjs",
         "moduleResolution": "node",
         "noImplicitAny": true,

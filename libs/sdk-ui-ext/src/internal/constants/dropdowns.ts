@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import { IDropdownItem } from "../interfaces/Dropdown";
+import { ITranslatedDropdownItem } from "../interfaces/Dropdown";
 
-export const pushpinSizeDropdownItems: IDropdownItem[] = [
+export const pushpinSizeDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "default" },
     { type: "separator" },
     { title: "properties.points.size.extra_small", value: "0.5x" },
@@ -11,7 +11,7 @@ export const pushpinSizeDropdownItems: IDropdownItem[] = [
     { title: "properties.points.size.extra_large", value: "1.5x" },
 ];
 
-export const pushpinViewportDropdownItems: IDropdownItem[] = [
+export const pushpinViewportDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.viewport.area.auto_default", value: "auto" },
     { title: "properties.viewport.area.world", value: "world" },
     { type: "header", title: "properties.viewport.area.continents" },
@@ -23,7 +23,7 @@ export const pushpinViewportDropdownItems: IDropdownItem[] = [
     { title: "properties.viewport.area.continent_eu", value: "continent_eu" },
 ];
 
-export const rotationDropdownItems: IDropdownItem[] = [
+export const rotationDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },
     { title: "properties.rotation.0", value: "0" },
@@ -32,7 +32,7 @@ export const rotationDropdownItems: IDropdownItem[] = [
     { title: "properties.rotation.90", value: "90" },
 ];
 
-export const legendPositionDropdownItems: IDropdownItem[] = [
+export const legendPositionDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },
     { title: "properties.legend.position.up", value: "top", icon: "dropdown-icon-legend-top" },
@@ -41,14 +41,14 @@ export const legendPositionDropdownItems: IDropdownItem[] = [
     { title: "properties.legend.position.left", value: "left", icon: "dropdown-icon-legend-left" },
 ];
 
-export const dataLabelsDropdownItems: IDropdownItem[] = [
+export const dataLabelsDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.canvas.dataLabels.auto", value: "auto" },
     { type: "separator" },
     { title: "properties.canvas.dataLabels.show", value: true },
     { title: "properties.canvas.dataLabels.hide", value: false },
 ];
 
-export const xAxisPositionDropdownItems: IDropdownItem[] = [
+export const xAxisPositionDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },
     {
@@ -68,7 +68,7 @@ export const xAxisPositionDropdownItems: IDropdownItem[] = [
     },
 ];
 
-export const yAxisPositionDropdownItems: IDropdownItem[] = [
+export const yAxisPositionDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },
     {
