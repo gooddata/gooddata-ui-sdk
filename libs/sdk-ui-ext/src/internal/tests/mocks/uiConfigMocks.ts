@@ -15,7 +15,12 @@ import {
 
 import { METRIC, FACT, ATTRIBUTE, DATE } from "../../constants/bucket";
 
-import { IExportUiConfig, IOpenAsReportUiConfig, IUiConfig } from "../../interfaces/Visualization";
+import {
+    IExportUiConfig,
+    INoMetricUiConfig,
+    IOpenAsReportUiConfig,
+    IUiConfig,
+} from "../../interfaces/Visualization";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 const measuresBase = {
@@ -80,6 +85,10 @@ const disabledExportConfig: IExportUiConfig = {
 };
 
 const enabledExportConfig: IExportUiConfig = {
+    supported: true,
+};
+
+const enabledNoMetricConfig: INoMetricUiConfig = {
     supported: true,
 };
 
@@ -1204,4 +1213,72 @@ export const fullySpecifiedXirrUiConfig: IUiConfig = {
     exportConfig: disabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
     supportedOverTimeComparisonTypes: [],
+};
+
+export const defaultGeoPushpinUiConfig: IUiConfig = {
+    buckets: {
+        location: {
+            accepts: ["attribute", "geo_attribute"],
+            allowsReordering: false,
+            allowsSwapping: true,
+            enabled: true,
+            icon: "",
+            isShowInPercentEnabled: false,
+            canAddItems: true,
+            itemsLimit: 1,
+            title: "Location",
+        },
+        size: {
+            accepts: ["metric", "fact", "attribute"],
+            allowsDuplicateItems: true,
+            allowsReordering: false,
+            allowsSwapping: true,
+            enabled: true,
+            icon: "",
+            isShowInPercentEnabled: false,
+            isShowInPercentVisible: false,
+            itemsLimit: 1,
+            subtitle: "Size",
+            title: "Measure",
+            canAddItems: true,
+        },
+        color: {
+            accepts: ["metric", "fact", "attribute"],
+            allowsDuplicateItems: true,
+            allowsReordering: false,
+            allowsSwapping: true,
+            enabled: true,
+            icon: "",
+            isShowInPercentEnabled: false,
+            isShowInPercentVisible: false,
+            itemsLimit: 1,
+            subtitle: "Color",
+            title: "Measure",
+            canAddItems: true,
+        },
+        segment: {
+            accepts: ["attribute"],
+            allowsReordering: false,
+            allowsSwapping: true,
+            enabled: true,
+            icon: "",
+            isShowInPercentEnabled: false,
+            canAddItems: true,
+            itemsLimit: 1,
+            title: "Segment by",
+        },
+        filters: {
+            accepts: ["attribute", "date"],
+            allowsReordering: false,
+            enabled: true,
+            isShowInPercentEnabled: false,
+            itemsLimit: 20,
+        },
+    },
+    exportConfig: enabledExportConfig,
+    noMetricAccepted: enabledNoMetricConfig,
+    openAsReport: disabledOpenAsReportConfig,
+    recommendations: {},
+    supportedOverTimeComparisonTypes: noSupportedOverTimeComparisonTypes,
+    supportedLocationIcon: { supported: true },
 };

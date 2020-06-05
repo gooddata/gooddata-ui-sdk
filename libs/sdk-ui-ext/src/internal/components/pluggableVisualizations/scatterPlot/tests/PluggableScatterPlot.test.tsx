@@ -124,26 +124,20 @@ describe("PluggableScatterPlot", () => {
             },
             {
                 localIdentifier: "secondary_measures",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
+                items: referencePointMocks.secondaryMeasureReferencePoint.buckets[1].items.slice(0, 1),
             },
             {
                 localIdentifier: "attribute",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[2].items.slice(
-                    0,
-                    1,
-                ),
+                items: [],
             },
         ];
         const expectedFilters: IFilters = {
             localIdentifier: "filters",
-            items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.filters.items.slice(0, 1),
+            items: [],
         };
 
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
-            referencePointMocks.secondaryMeasuresAndAttributeReferencePoint,
+            referencePointMocks.secondaryMeasureReferencePoint,
         );
 
         expect(extendedReferencePoint).toEqual({
@@ -184,6 +178,43 @@ describe("PluggableScatterPlot", () => {
 
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
             referencePointMocks.oneMetricAndManyCategoriesReferencePoint,
+        );
+
+        expect(extendedReferencePoint).toEqual({
+            buckets: expectedBuckets,
+            filters: expectedFilters,
+            uiConfig: uiConfigMocks.scatterPlotUiConfig,
+            properties: {},
+        });
+    });
+
+    it("should return reference point after switching from Geo Chart", async () => {
+        const scatterPlot = createComponent();
+
+        const {
+            simpleGeoPushpinReferencePoint: { buckets: mockedBuckets, filters: mockedFilters },
+        } = referencePointMocks;
+        const expectedBuckets: IBucketOfFun[] = [
+            {
+                localIdentifier: "measures",
+                items: mockedBuckets[1].items.slice(0, 1),
+            },
+            {
+                localIdentifier: "secondary_measures",
+                items: mockedBuckets[2].items.slice(0, 1),
+            },
+            {
+                localIdentifier: "attribute",
+                items: mockedBuckets[0].items.slice(0, 1),
+            },
+        ];
+        const expectedFilters: IFilters = {
+            localIdentifier: "filters",
+            items: mockedFilters.items.slice(0, 1),
+        };
+
+        const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
+            referencePointMocks.simpleGeoPushpinReferencePoint,
         );
 
         expect(extendedReferencePoint).toEqual({

@@ -171,6 +171,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const masterMeasures = filterOutDerivedMeasures(measures);
 
         const allAttributes = getAllAttributeItemsWithPreference(buckets, [
+            BucketNames.LOCATION,
             BucketNames.VIEW,
             BucketNames.TREND,
             BucketNames.STACK,

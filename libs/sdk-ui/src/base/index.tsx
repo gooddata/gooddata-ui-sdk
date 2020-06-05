@@ -46,7 +46,6 @@ export {
     ITranslationsProviderOwnProps,
     ITranslationsProviderProps,
 } from "./localization/TranslationsProvider";
-export { useNumbericSymbols } from "./localization/TranslationsHook";
 export { createIntlMock, withIntl } from "./localization/intlUtils";
 
 /*

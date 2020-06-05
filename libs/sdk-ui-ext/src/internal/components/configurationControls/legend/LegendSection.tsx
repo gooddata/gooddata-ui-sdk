@@ -22,7 +22,7 @@ export class LegendSection extends React.PureComponent<ILegendSection, {}> {
 
         const toggleDisabled = controlsDisabled || legendToggleDisabledByVisualization;
         const legendPositionControlDisabled = !legendEnabled || toggleDisabled;
-        const showDisabledMessage = !controlsDisabled && legendToggleDisabledByVisualization;
+        const showDisabledMessage = !controlsDisabled || legendToggleDisabledByVisualization;
 
         return (
             <ConfigSection

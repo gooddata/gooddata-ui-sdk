@@ -24,7 +24,7 @@ import {
     newDimension,
 } from "@gooddata/sdk-model";
 
-export const getBuckets = (props: IGeoPushpinChartProps): IBucket[] => {
+const getBuckets = (props: IGeoPushpinChartProps): IBucket[] => {
     const { color, location, segmentBy, size, config } = props;
     const buckets: IBucket[] = [
         {
@@ -54,7 +54,10 @@ export const getBuckets = (props: IGeoPushpinChartProps): IBucket[] => {
     return buckets;
 };
 
-function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
+/**
+ * @internal
+ */
+export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
     const buckets = def.buckets;
     const measures = bucketsMeasures(buckets);
     const attributes = bucketsAttributes(buckets);

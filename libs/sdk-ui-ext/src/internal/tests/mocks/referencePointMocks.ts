@@ -324,6 +324,64 @@ export const attributeItems: IBucketItem[] = [
     },
 ];
 
+export const geoAttributeItems: IBucketItem[] = [
+    {
+        localIdentifier: "a1",
+        type: "attribute",
+        aggregation: null,
+        attribute: "attr.owner.country",
+        locationDisplayFormUri: "/geo/attribute/displayform/uri/1",
+        dfUri: "/geo/attribute/displayform/uri/2",
+    },
+    {
+        localIdentifier: "a2",
+        type: "attribute",
+        aggregation: null,
+        attribute: "attr.owner.city",
+    },
+];
+
+export const geoAttributeFilters: IFiltersBucketItem[] = [
+    {
+        localIdentifier: "a1",
+        type: "attribute",
+        aggregation: null,
+        attribute: "attr.owner.country",
+        filters: [
+            {
+                attribute: "attr.owner.country",
+                isInverted: false,
+                totalElementsCount: 10,
+                selectedElements: [
+                    {
+                        title: "string",
+                        uri: "string",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        localIdentifier: "a2",
+        type: "attribute",
+        aggregation: null,
+        attribute: "attr.owner.city",
+        filters: [
+            {
+                attribute: "attr.owner.city",
+                totalElementsCount: 10,
+                isInverted: true,
+                selectedElements: [
+                    {
+                        title: "string",
+                        uri: "string",
+                    },
+                ],
+            },
+        ],
+    },
+];
+
 export const attributeFilters: IFiltersBucketItem[] = [
     {
         localIdentifier: "a1",
@@ -432,6 +490,30 @@ export const secondaryMeasuresAndAttributeReferencePoint: IReferencePoint = {
     filters: {
         localIdentifier: "filters",
         items: attributeFilters.slice(0, 2),
+    },
+    properties: {
+        sortItems: [defaultSortItem],
+    },
+};
+
+export const secondaryMeasureReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [],
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "attribute",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
     },
     properties: {
         sortItems: [defaultSortItem],
@@ -1092,6 +1174,90 @@ export const oneMetricAndCategoryAndStackReferencePoint: IReferencePoint = {
         {
             localIdentifier: "stack",
             items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const oneMetricAndGeoCategoryAndStackReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: geoAttributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "stack",
+            items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const oneMetricAndLocationAndSegmentReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "location",
+            items: geoAttributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "segment",
+            items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const viewByWithDateAndGeoAttributeReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: [...geoAttributeItems.slice(0, 1), dateItem],
+        },
+        {
+            localIdentifier: "stack",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const viewByWithNonGeoAndGeoAttributeReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: [...attributeItems.slice(0, 1), ...geoAttributeItems.slice(0, 1)],
+        },
+        {
+            localIdentifier: "stack",
+            items: [],
         },
     ],
     filters: {
@@ -1974,5 +2140,61 @@ export const measureValueFilterReferencePoint: IReferencePoint = {
                 ],
             },
         ],
+    },
+};
+
+export const simpleGeoPushpinReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "location",
+            items: geoAttributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "size",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "color",
+            items: masterMeasureItems.slice(1, 2),
+        },
+        {
+            localIdentifier: "segment",
+            items: geoAttributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: geoAttributeFilters.slice(0, 1),
+    },
+    properties: {
+        sortItems: [defaultSortItem],
+    },
+};
+
+export const twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasuresWithPercentage.slice(2, 3),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasuresWithPercentage.slice(3, 4),
+        },
+        {
+            localIdentifier: "view",
+            items: [],
+        },
+        {
+            localIdentifier: "segment",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: geoAttributeFilters.slice(0, 1),
+    },
+    properties: {
+        sortItems: [defaultSortItem],
     },
 };

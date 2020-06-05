@@ -107,20 +107,20 @@ describe("bullet chart bucket helper", () => {
             ]);
         });
 
-        it("should put measures that doesn't fit in its original buckets to empty measure buckets", () => {
+        it("should put measure that doesn't fit into it's original bucket into next empty measure bucket", () => {
             const buckets = [
-                getBucket(BucketNames.TERTIARY_MEASURES, [
+                getBucket(BucketNames.MEASURES, []),
+                getBucket(BucketNames.SECONDARY_MEASURES, [
                     referencePointMocks.masterMeasureItems[0],
                     referencePointMocks.masterMeasureItems[1],
-                    referencePointMocks.masterMeasureItems[2],
                 ]),
             ];
             const actual = transformBuckets(buckets);
 
             expect(actual).toEqual([
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[1]]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[2]]),
-                getBucket(BucketNames.TERTIARY_MEASURES, [referencePointMocks.masterMeasureItems[0]]),
+                getBucket(BucketNames.MEASURES, []),
+                getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[0]]),
+                getBucket(BucketNames.TERTIARY_MEASURES, [referencePointMocks.masterMeasureItems[1]]),
                 getBucket(BucketNames.VIEW, []),
             ]);
         });
@@ -136,8 +136,23 @@ describe("bullet chart bucket helper", () => {
             const actual = transformBuckets(buckets);
 
             expect(actual).toEqual([
-                getBucket(BucketNames.MEASURES, [referencePointMocks.derivedMeasureItems[0]]),
+                getBucket(BucketNames.MEASURES, []),
                 getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[0]]),
+                getBucket(BucketNames.TERTIARY_MEASURES, [referencePointMocks.derivedMeasureItems[0]]),
+                getBucket(BucketNames.VIEW, []),
+            ]);
+        });
+
+        it("should distribute measures after switching from Geo Chart", () => {
+            const buckets = [
+                getBucket(BucketNames.SIZE, [referencePointMocks.masterMeasureItems[0]]),
+                getBucket(BucketNames.COLOR, [referencePointMocks.masterMeasureItems[1]]),
+            ];
+            const actual = transformBuckets(buckets);
+
+            expect(actual).toEqual([
+                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[0]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[1]]),
                 getBucket(BucketNames.TERTIARY_MEASURES, []),
                 getBucket(BucketNames.VIEW, []),
             ]);

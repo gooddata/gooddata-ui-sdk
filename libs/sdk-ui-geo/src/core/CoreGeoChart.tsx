@@ -3,4 +3,7 @@ import { geoValidatorHOC } from "./geoChart/GeoValidatorHOC";
 import { withEntireDataView } from "@gooddata/sdk-ui";
 import { GeoChartOptionsWrapper } from "./geoChart/GeoChartOptionsWrapper";
 
+/**
+ * @internal
+ */
 export const CoreGeoChart = geoValidatorHOC(withEntireDataView(GeoChartOptionsWrapper));

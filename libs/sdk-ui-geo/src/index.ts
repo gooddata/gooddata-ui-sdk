@@ -13,4 +13,6 @@ export {
     IGeoConfigViewportArea,
     PushpinSizeOption,
 } from "./GeoChart";
-export { GeoPushpinChart } from "./GeoPushpinChart";
+export { GeoPushpinChart, getGeoChartDimensions } from "./GeoPushpinChart";
+
+export { CoreGeoChart } from "./core/CoreGeoChart";

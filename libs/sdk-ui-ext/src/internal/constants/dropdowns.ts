@@ -1,7 +1,29 @@
-// (C) 2019 GoodData Corporation
-import { IDropdownItem } from "../interfaces/Dropdown";
+// (C) 2019-2020 GoodData Corporation
+import { ITranslatedDropdownItem } from "../interfaces/Dropdown";
 
-export const rotationDropdownItems: IDropdownItem[] = [
+export const pushpinSizeDropdownItems: ITranslatedDropdownItem[] = [
+    { title: "properties.auto_default", value: "default" },
+    { type: "separator" },
+    { title: "properties.points.size.extra_small", value: "0.5x" },
+    { title: "properties.points.size.small", value: "0.75x" },
+    { title: "properties.points.size.normal", value: "normal" },
+    { title: "properties.points.size.large", value: "1.25x" },
+    { title: "properties.points.size.extra_large", value: "1.5x" },
+];
+
+export const pushpinViewportDropdownItems: ITranslatedDropdownItem[] = [
+    { title: "properties.viewport.area.auto_default", value: "auto" },
+    { title: "properties.viewport.area.world", value: "world" },
+    { type: "header", title: "properties.viewport.area.continents" },
+    { title: "properties.viewport.area.continent_af", value: "continent_af" },
+    { title: "properties.viewport.area.continent_na", value: "continent_na" },
+    { title: "properties.viewport.area.continent_sa", value: "continent_sa" },
+    { title: "properties.viewport.area.continent_as", value: "continent_as" },
+    { title: "properties.viewport.area.continent_au", value: "continent_au" },
+    { title: "properties.viewport.area.continent_eu", value: "continent_eu" },
+];
+
+export const rotationDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },
     { title: "properties.rotation.0", value: "0" },
@@ -10,7 +32,7 @@ export const rotationDropdownItems: IDropdownItem[] = [
     { title: "properties.rotation.90", value: "90" },
 ];
 
-export const legendPositionDropdownItems: IDropdownItem[] = [
+export const legendPositionDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },
     { title: "properties.legend.position.up", value: "top", icon: "dropdown-icon-legend-top" },
@@ -19,14 +41,14 @@ export const legendPositionDropdownItems: IDropdownItem[] = [
     { title: "properties.legend.position.left", value: "left", icon: "dropdown-icon-legend-left" },
 ];
 
-export const dataLabelsDropdownItems: IDropdownItem[] = [
+export const dataLabelsDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.canvas.dataLabels.auto", value: "auto" },
     { type: "separator" },
     { title: "properties.canvas.dataLabels.show", value: true },
     { title: "properties.canvas.dataLabels.hide", value: false },
 ];
 
-export const xAxisPositionDropdownItems: IDropdownItem[] = [
+export const xAxisPositionDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },
     {
@@ -46,7 +68,7 @@ export const xAxisPositionDropdownItems: IDropdownItem[] = [
     },
 ];
 
-export const yAxisPositionDropdownItems: IDropdownItem[] = [
+export const yAxisPositionDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },
     {

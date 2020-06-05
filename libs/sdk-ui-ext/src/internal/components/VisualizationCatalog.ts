@@ -20,6 +20,7 @@ import { PluggablePivotTable } from "./pluggableVisualizations/pivotTable/Plugga
 import { PluggableScatterPlot } from "./pluggableVisualizations/scatterPlot/PluggableScatterPlot";
 import { PluggableTreemap } from "./pluggableVisualizations/treeMap/PluggableTreemap";
 import { PluggableXirr } from "./pluggableVisualizations/xirr/PluggableXirr";
+import { PluggableGeoPushpinChart } from "./pluggableVisualizations/geoChart/PluggableGeoPushpinChart";
 
 /**
  * Factories that create a new instance of pluggable visualization.
@@ -108,6 +109,7 @@ const DefaultVisualizations = {
     combo2: PluggableComboChart, // new combo chart
     treemap: PluggableTreemap,
     funnel: PluggableFunnelChart,
+    pushpin: PluggableGeoPushpinChart,
 };
 
 /**

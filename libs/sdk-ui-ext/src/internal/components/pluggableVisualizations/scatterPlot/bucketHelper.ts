@@ -1,13 +1,13 @@
-// (C) 2020 GoodData Corporation
-import { BucketNames } from "@gooddata/sdk-ui";
+// (C) 2019-2020 GoodData Corporation
 
-import { IBucketOfFun } from "../../../interfaces/Visualization";
+import { BucketNames } from "@gooddata/sdk-ui";
 import {
     getAllAttributeItems,
     IMeasureBucketItemsLimit,
     limitNumberOfMeasuresInBuckets,
     transformMeasureBuckets,
 } from "../../../utils/bucketHelper";
+import { IBucketOfFun } from "../../../interfaces/Visualization";
 
 const measureBucketItemsLimit: IMeasureBucketItemsLimit[] = [
     {
@@ -18,21 +18,17 @@ const measureBucketItemsLimit: IMeasureBucketItemsLimit[] = [
         localIdentifier: BucketNames.SECONDARY_MEASURES,
         itemsLimit: 1,
     },
-    {
-        localIdentifier: BucketNames.TERTIARY_MEASURES,
-        itemsLimit: 1,
-    },
 ];
 
 export const transformBuckets = (buckets: IBucketOfFun[]): IBucketOfFun[] => {
-    const bucketsWithLimitedMeasures = limitNumberOfMeasuresInBuckets(buckets, 3, true);
+    const bucketsWithLimitedMeasures = limitNumberOfMeasuresInBuckets(buckets, 2, true);
 
     const measureBuckets = transformMeasureBuckets(measureBucketItemsLimit, bucketsWithLimitedMeasures);
 
-    const viewByBucket = {
-        localIdentifier: BucketNames.VIEW,
-        items: getAllAttributeItems(buckets).slice(0, 2),
+    const attributeBucket = {
+        localIdentifier: BucketNames.ATTRIBUTE,
+        items: getAllAttributeItems(buckets).slice(0, 1),
     };
 
-    return [...measureBuckets, viewByBucket];
+    return [...measureBuckets, attributeBucket];
 };

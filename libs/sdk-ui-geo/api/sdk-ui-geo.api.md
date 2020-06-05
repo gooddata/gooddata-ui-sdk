@@ -9,6 +9,8 @@ import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDimension } from '@gooddata/sdk-model';
+import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -17,8 +19,18 @@ import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { PositionType } from '@gooddata/sdk-ui-vis-commons';
 import * as React_2 from 'react';
 
+// Warning: (ae-internal-missing-underscore) The name "CoreGeoChart" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const CoreGeoChart: import("react").ComponentClass<import("./geoChart/GeoChartInner").ICoreGeoChartProps & import("react-intl").WrappedComponentProps<"intl">, any>;
+
 // @public (undocumented)
 export const GeoPushpinChart: React_2.ComponentType<IGeoPushpinChartProps>;
+
+// Warning: (ae-internal-missing-underscore) The name "getGeoChartDimensions" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[];
 
 // @public (undocumented)
 export interface IGeoConfig {

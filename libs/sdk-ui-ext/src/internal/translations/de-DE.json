@@ -45,6 +45,7 @@
     "dashboard.bucket.view_title.column": "Anzeigen nach",
     "dashboard.bucket.view_title.bar": "Anzeigen nach",
     "dashboard.bucket.view_title.area": "Anzeigen nach",
+    "dashboard.bucket.view_title.bullet": "Anzeigen nach",
     "dashboard.bucket.view_title.heatmap": "Zeilen",
     "dashboard.bucket.trend_title.line": "Trend nach",
     "dashboard.bucket.view_title.combo": "Anzeigen nach",
@@ -111,8 +112,8 @@
     "properties.rotation.30": "30°",
     "properties.rotation.60": "60°",
     "properties.rotation.90": "90°",
-    "properties.legend.position.up": "hoch",
-    "properties.legend.position.down": "runter",
+    "properties.legend.position.up": "oben",
+    "properties.legend.position.down": "unten",
     "properties.legend.position.right": "rechts",
     "properties.legend.position.left": "links",
     "properties.points.title": "Punkte",
@@ -148,5 +149,11 @@
     "gs.noData.noMatchingData": "Keine übereinstimmenden Daten",
     "gs.noData.noDataAvailable": "Keine übereinstimmenden Daten",
     "properties.colors.unsupported": "Für diese Konfiguration der Betrachtung gibt es keine Farben",
-    "export_unsupported.colors": "Die Betrachtung ist nicht mit benutzerdefinierten Farben kompatibel. Um die Betrachtung als Bericht zu öffnen, klicken Sie auf Farben in Konfiguration zurücksetzen —> Farben."
+    "export_unsupported.colors": "Die Betrachtung ist nicht mit benutzerdefinierten Farben kompatibel. Um die Betrachtung als Bericht zu öffnen, klicken Sie auf Farben in Konfiguration zurücksetzen —> Farben.",
+    "dashboard.bucket.measures_title.bullet": "Messung",
+    "dashboard.bucket.secondary_measures_title.bullet": "Messung",
+    "dashboard.bucket.tertiary_measures_title.bullet": "Messung",
+    "dashboard.bucket.measures_subtitle.bullet": "Primär",
+    "dashboard.bucket.secondary_measures_subtitle.bullet": "Ziel",
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Komparativ"
 }
