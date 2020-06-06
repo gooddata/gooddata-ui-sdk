@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import invariant from "ts-invariant";
 import { ObjRef } from "../../../objRef";
-import { IMetadataObject } from "../types";
+import { IMetadataObject, isMetadataObject } from "../types";
 
 /**
  * Attribute display form metadata object
@@ -52,4 +52,14 @@ export function attributeDisplayFormAttributeRef(displayForm: IAttributeDisplayF
     invariant(displayForm, "displayForm must not be undefined");
 
     return displayForm.attribute;
+}
+
+/**
+ * Tests whether the provided object is of type {@link IAttributeDisplayFormMetadataObject}.
+ *
+ * @param obj - object to test
+ * @public
+ */
+export function isAttributeDisplayFormMetadataObject(obj: any): obj is IAttributeDisplayFormMetadataObject {
+    return isMetadataObject(obj) && obj.type === "displayForm";
 }

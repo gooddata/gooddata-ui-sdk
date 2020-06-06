@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IMetadataObject } from "../types";
+import { IMetadataObject, isMetadataObject } from "../types";
 
 /**
  * Measure metadata object
@@ -18,4 +18,14 @@ export interface IMeasureMetadataObject extends IMetadataObject {
      * Measure formatting
      */
     format: string;
+}
+
+/**
+ * Tests whether the provided object is of type {@link IMeasureMetadataObject}.
+ *
+ * @param obj - object to test
+ * @public
+ */
+export function isMeasureMetadataObject(obj: any): obj is IMeasureMetadataObject {
+    return isMetadataObject(obj) && obj.type === "measure";
 }

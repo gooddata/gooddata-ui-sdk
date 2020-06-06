@@ -47,6 +47,4 @@ export type MetadataObject =
  *
  * @public
  */
-export const metadataObjectId = (metadataObject: MetadataObject): string => {
-    return metadataObject.id;
-};
+export const metadataObjectId = (metadataObject: MetadataObject): string => metadataObject.id;
