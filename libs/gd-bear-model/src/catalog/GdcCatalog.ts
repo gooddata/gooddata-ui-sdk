@@ -31,6 +31,7 @@ export namespace GdcCatalog {
         readonly links: {
             readonly self: string;
             readonly defaultDisplayForm: string;
+            readonly geoPinDisplayForms?: string[];
         };
     }
 

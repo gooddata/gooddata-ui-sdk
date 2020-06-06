@@ -183,6 +183,8 @@ export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttri
     // (undocumented)
     defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
     // (undocumented)
+    geoPinDisplayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
+    // (undocumented)
     toExecutionModel(modifications?: AttributeModifications): IAttribute;
 }
 
@@ -481,6 +483,7 @@ export interface IBuilder<T> {
 export interface ICatalogAttribute extends IGroupableCatalogItemBase {
     attribute: IAttributeMetadataObject;
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
+    geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];
     type: "attribute";
 }
 

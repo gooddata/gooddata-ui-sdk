@@ -1,12 +1,15 @@
 // (C) 2019-2020 GoodData Corporation
 import identity = require("lodash/identity");
-import { BuilderModifications, builderFactory } from "../../../base/builder";
+import { builderFactory, BuilderModifications } from "../../../base/builder";
 import { ICatalogAttribute } from ".";
-import { IAttributeMetadataObject } from "../../metadata/attribute";
-import { IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm";
+import { IAttributeMetadataObject, isAttributeMetadataObject } from "../../metadata/attribute";
+import {
+    IAttributeDisplayFormMetadataObject,
+    isAttributeDisplayFormMetadataObject,
+} from "../../metadata/attributeDisplayForm";
 import { GroupableCatalogItemBuilder } from "../group/factory";
-import { newAttributeMetadataObject, AttributeMetadataObjectBuilder } from "../../metadata/attribute/factory";
-import { ObjRef, isObjRef } from "../../../objRef";
+import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../../metadata/attribute/factory";
+import { ObjRef } from "../../../objRef";
 import {
     AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
@@ -27,7 +30,7 @@ export class CatalogAttributeBuilder<
         attributeOrRef: IAttributeMetadataObject | ObjRef,
         modifications?: BuilderModifications<AttributeMetadataObjectBuilder>,
     ): this {
-        if (isObjRef(attributeOrRef)) {
+        if (!isAttributeMetadataObject(attributeOrRef)) {
             this.item.attribute = newAttributeMetadataObject(attributeOrRef, modifications);
         } else {
             this.item.attribute = attributeOrRef;
@@ -39,7 +42,7 @@ export class CatalogAttributeBuilder<
         displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef,
         modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>,
     ): this {
-        if (isObjRef(displayFormOrRef)) {
+        if (!isAttributeDisplayFormMetadataObject(displayFormOrRef)) {
             this.item.defaultDisplayForm = newAttributeDisplayFormMetadataObject(
                 displayFormOrRef,
                 modifications,
@@ -47,6 +50,12 @@ export class CatalogAttributeBuilder<
         } else {
             this.item.defaultDisplayForm = displayFormOrRef;
         }
+        return this;
+    }
+
+    public geoPinDisplayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this {
+        this.item.geoPinDisplayForms = displayForms;
+
         return this;
     }
 

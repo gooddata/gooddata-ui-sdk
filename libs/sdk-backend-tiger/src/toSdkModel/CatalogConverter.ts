@@ -65,6 +65,7 @@ export const convertAttribute = (
             .defaultDisplayForm(idRef(defaultDisplayForm.id, "displayForm"), df =>
                 df.modify(commonMetadataObjectModifications(defaultDisplayForm)),
             )
+            .geoPinDisplayForms([])
             .modify(commonGroupableCatalogItemModifications(attribute)),
     );
 };

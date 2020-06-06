@@ -17,8 +17,12 @@ import {
     newCatalogDateAttribute,
     newCatalogDateDataset,
     IMetadataObjectBuilder,
+    newAttributeDisplayFormMetadataObject,
+    IAttributeDisplayFormMetadataObject,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/gd-bear-model";
+import { IDisplayFormByKey } from "../backend/workspace/catalog/types";
 
 export type CompatibleCatalogItemType = Exclude<CatalogItemType, "dateDataset">;
 export type CompatibleCatalogItem = Exclude<CatalogItem, ICatalogDateDataset>;
@@ -67,20 +71,31 @@ const commonCatalogItemModifications = <T extends IMetadataObjectBuilder>(item: 
         .description(item.summary)
         .unlisted(false);
 
+const convertDisplayForm = (
+    df: GdcMetadata.IAttributeDisplayForm,
+    attrRef: ObjRef,
+): IAttributeDisplayFormMetadataObject => {
+    const ref = bearObjectMetaToBearRef(df.meta);
+
+    return newAttributeDisplayFormMetadataObject(ref, m => {
+        return m.modify(commonMetadataModifications(df.meta)).attribute(attrRef);
+    });
+};
+
 export const convertAttribute = (
     attribute: GdcCatalog.ICatalogAttribute,
-    defaultDisplayForm: GdcMetadata.IAttributeDisplayForm,
+    displayForms: IDisplayFormByKey,
 ): ICatalogAttribute => {
     const attrRef = bearCatalogItemToBearRef(attribute);
-    const displayFormRef = bearObjectMetaToBearRef(defaultDisplayForm.meta);
+    const defaultDisplayForm = displayForms[attribute.links.defaultDisplayForm];
+    const geoPinDisplayForms = (attribute.links.geoPinDisplayForms ?? []).map(uri => displayForms[uri]);
     const groups = bearGroupableCatalogItemToTagRefs(attribute);
 
     return newCatalogAttribute(catalogA =>
         catalogA
             .attribute(attrRef, a => a.modify(commonCatalogItemModifications(attribute)))
-            .defaultDisplayForm(displayFormRef, df =>
-                df.modify(commonMetadataModifications(defaultDisplayForm.meta)).attribute(attrRef),
-            )
+            .defaultDisplayForm(convertDisplayForm(defaultDisplayForm, attrRef))
+            .geoPinDisplayForms(geoPinDisplayForms.map(df => convertDisplayForm(df, attrRef)))
             .groups(groups),
     );
 };
