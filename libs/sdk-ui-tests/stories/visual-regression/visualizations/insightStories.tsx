@@ -22,7 +22,7 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { PlugVizStories } from "../_infra/storyGroups";
 import "./insightStories.css";
-import { IScenario } from "../../../src";
+import { IScenario, MapboxToken } from "../../../src";
 import AllTestScenarioGroups from "../../../scenarios";
 import {
     andResolver,
@@ -35,6 +35,7 @@ import { StorybookBackend } from "../_infra/backend";
 import groupBy = require("lodash/groupBy");
 import keyBy = require("lodash/keyBy");
 import flatten = require("lodash/flatten");
+import { ExamplesRecordings } from "@gooddata/examples-workspace";
 
 /*
  * Code in this file generates stories that render test scenarios using pluggable visualizations.
@@ -94,7 +95,10 @@ function getAvailableInsights(recordings: RecordingIndex): IInsight[] {
     return Object.values(recordings.metadata?.insights ?? {}).map(rec => rec.obj);
 }
 
-const Insights = getAvailableInsights(ReferenceRecordings.Recordings);
+const Insights = [
+    ...getAvailableInsights(ReferenceRecordings.Recordings),
+    ...getAvailableInsights(ExamplesRecordings.Recordings),
+];
 const InsightsByVisUrl = Object.entries(groupBy(Insights, insightVisualizationUrl));
 
 //
@@ -133,6 +137,7 @@ function createGdcConfig(testScenario: IScenario<any>): IGdcConfig {
     return {
         colorPalette: scenarioProps.config?.colorPalette,
         separators: scenarioProps.config?.separators,
+        mapboxToken: MapboxToken,
     };
 }
 

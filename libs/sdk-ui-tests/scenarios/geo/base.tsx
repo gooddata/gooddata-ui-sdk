@@ -1,11 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import { ExamplesLdm, ExamplesLdmExt } from "@gooddata/examples-workspace";
 import { GeoPushpinChart, IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
-import { scenariosFor } from "../../src";
+import { MapboxToken, scenariosFor } from "../../src";
 import { IAttribute, modifyAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
-
-const MapboxTokenEnvVariable = "STORYBOOK_MAPBOX_ACCESS_TOKEN";
-const MapboxToken = process.env[MapboxTokenEnvVariable] ?? "this-is-not-real-token";
 
 const DefaultConfig: IGeoConfig = {
     mapboxToken: MapboxToken,
