@@ -3,9 +3,11 @@
 import omit = require("lodash/omit");
 import { ICoreChartProps } from "@gooddata/sdk-ui-charts";
 import { ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { IGeoChartInnerProps } from "@gooddata/sdk-ui-geo";
 
 const InsignificantCoreChartProps: Array<keyof ICoreChartProps> = ["execution"];
 const InsignificantCorePivotProps: Array<keyof ICorePivotTableProps> = ["execution", "intl"];
+const InsignificantCoreGeoProps: Array<keyof IGeoChartInnerProps> = ["execution", "dataView", "intl"];
 
 /**
  * Cleans up core chart properties before taking their snapshot. The goal of this function is to remove any properties
@@ -33,4 +35,12 @@ export function cleanupCorePivotTableProps(props?: any): any {
     }
 
     return omit(props, InsignificantCorePivotProps);
+}
+
+export function cleanupGeoChartProps(props?: any): any {
+    if (!props) {
+        return;
+    }
+
+    return omit(props, InsignificantCoreGeoProps);
 }

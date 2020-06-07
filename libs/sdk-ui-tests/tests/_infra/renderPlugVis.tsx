@@ -60,8 +60,14 @@ export async function mountInsight(
     const visualizationClass = createVisualizationClass(insight);
     const enzymeRenderer = new PlugVisRendererUsingEnzyme();
 
+    /*
+     * Mapbox token flies in through IGdcConfig; some value is needed for mock-rendering of
+     * the Geo charts
+     */
+
     mount(
         <BaseVisualization
+            config={{ mapboxToken: "this-is-not-real-token" }}
             backend={backend}
             projectId={scenario.workspaceType}
             insight={persistedInsight}
