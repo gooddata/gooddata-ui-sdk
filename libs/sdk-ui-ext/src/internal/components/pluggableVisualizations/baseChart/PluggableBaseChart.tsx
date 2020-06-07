@@ -84,7 +84,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected axis: string;
     protected secondaryAxis: AxisType;
     protected environment: string;
-    private readonly renderFun: (component: any, target: Element) => void;
+    protected readonly renderFun: (component: any, target: Element) => void;
 
     constructor(props: IVisConstruct) {
         super(props);

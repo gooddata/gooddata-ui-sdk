@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
 import * as React from "react";
-import { render } from "react-dom";
 
 import {
     IBucketItem,
@@ -36,14 +35,17 @@ import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinCo
 import { BucketNames, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     bucketAttribute,
+    idRef,
     IInsightDefinition,
     insightBucket,
     insightBuckets,
+    insightFilters,
     insightHasDataDefined,
     ISortItem,
     newAttribute,
     newAttributeSort,
     newBucket,
+    ObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -153,7 +155,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
         // NOTE: using pushData directly; no handlePushData here as in other visualizations.
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <GeoPushpinConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}
@@ -205,20 +207,20 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
-        const { dimensions = { height: undefined }, custom = {}, locale, config } = options;
+        const { dimensions = { height: undefined }, custom = {}, locale, config = {} } = options;
         const { height } = dimensions;
         const { geoPushpinElement, intl } = this;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
         const { drillableItems } = custom;
-        const supportedControls: IVisualizationProperties = this.visualizationProperties.controls;
-        const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
-        const fullConfig = this.buildVisualizationConfig(config, configSupportedControls);
+        const supportedControls: IVisualizationProperties = this.visualizationProperties.controls || {};
+        const fullConfig = this.buildVisualizationConfig(config, supportedControls);
 
         const buckets = insightBuckets(insight);
 
-        if (configSupportedControls && configSupportedControls?.tooltipText) {
+        if (supportedControls && supportedControls?.tooltipText) {
+            const tooltipText: string = supportedControls?.tooltipText;
             /*
              * The display form to use for tooltip text is provided in properties :( This is unfortunate; the chart
              * props could very well contain an extra prop for the tooltip bucket.
@@ -235,17 +237,28 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
              * 2.  The executeVisualization endpoint is useless for GeoChart; cannot be used to render geo chart because
              *     the buckets stored in vis object are not complete. execVisualization takes buckets as is.
              */
-            // TODO fix this, won't work for tiger
+
+            /*
+             * This is ugly hack to get geo working on tiger, where URIs are not supported. It is accompanied by
+             * another ugly hack in AD which sets tooltipText to either locationDisplayFormIdentifier or URI. We
+             * cannot use `ref` here as it would mess up compatibility of the visualization properties :(
+             */
+            let ref: ObjRef = idRef(tooltipText, "displayForm");
+
+            if (tooltipText.startsWith("/gdc")) {
+                ref = uriRef(tooltipText);
+            }
+
             buckets.push(
                 newBucket(
                     BucketNames.TOOLTIP_TEXT,
-                    newAttribute(uriRef(configSupportedControls?.tooltipText)),
+                    newAttribute(ref, m => m.localId("tooltipText_df")),
                 ),
             );
         }
 
         const execution = executionFactory
-            .forBuckets(buckets)
+            .forBuckets(buckets, insightFilters(insight))
             .withDimensions(getGeoChartDimensions)
             .withSorting(...this.createSort(insight));
 
@@ -266,7 +279,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             ErrorComponent: null as any,
         };
 
-        render(<CoreGeoChart {...geoPushpinProps} />, document.querySelector(geoPushpinElement));
+        this.renderFun(<CoreGeoChart {...geoPushpinProps} />, document.querySelector(geoPushpinElement));
     }
 
     private sanitizeMeasures(extendedReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
