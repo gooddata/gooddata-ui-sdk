@@ -1,0 +1,93 @@
+{
+    "GeoPushpinChart.ec83c2c8655c98886d4cd486f404b450": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location only",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location only."
+    },
+    "GeoPushpinChart.942ca22518a29c7aea7aa05e0f717dbb": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location and size",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location and size."
+    },
+    "GeoPushpinChart.729cec5c851b43df7bbfc82007621010": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location and color",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location and color."
+    },
+    "GeoPushpinChart.a26d2c1232b0526dc5bfd6e745137f32": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location, size and color",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, size and color."
+    },
+    "GeoPushpinChart.9b14a4f5725745552c3197469ba39972": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location only with tooltip",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location only with tooltip."
+    },
+    "GeoPushpinChart.251fc93f85c60ba0ec9ba679188036d3": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location and size  with tooltip",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location and size  with tooltip."
+    },
+    "GeoPushpinChart.59b08fe8f7bba7a914423218e199d0b6": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location and color with tooltip",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location and color with tooltip."
+    },
+    "GeoPushpinChart.5dc4adaf25a7a42d67d2f0427f552aa7": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location, size and color with tooltip",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, size and color with tooltip."
+    },
+    "GeoPushpinChart.90f6fd416d55e6262549f5ec4d7297e5": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location and segment",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location and segment."
+    },
+    "GeoPushpinChart.b90f43349f8eb9ba4538f5b916a3cb54": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location, segment and size",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, segment and size."
+    },
+    "GeoPushpinChart.498efceb6d708ac8cb4635f5bfecdcfa": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location, segment and color",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, segment and color."
+    },
+    "GeoPushpinChart.37c84ce53e2ac7057f4446318b68ffe3": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location, segment, size and color ",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, segment, size and color ."
+    },
+    "GeoPushpinChart.ccf9234325310577f5c30e99385173f7": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location and segment with tooltip",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location and segment with tooltip."
+    },
+    "GeoPushpinChart.29cd4648b0309b009270d4ce526ae61f": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location, segment, size with tooltip",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, segment, size with tooltip."
+    },
+    "GeoPushpinChart.9989be7bd4b779e286f5c4fc2877c1af": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location, segment, color with tooltip",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, segment, color with tooltip."
+    },
+    "GeoPushpinChart.504eab0a8cad2926774a29e3077ca958": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location, segment, size and color with tooltip",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, segment, size and color with tooltip."
+    },
+    "GeoPushpinChart.0466332859a57217b6ea75b6b2ae4e51": {
+        "visName": "GeoPushpinChart",
+        "scenarioName": "location, segment, size and color with tooltip and filter",
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - location, segment, size and color with tooltip and filter."
+    },
+    "GeoPushpinChart.ec215de93f5b56c734a4ae1182dbc803": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend on the left."
+    },
+    "GeoPushpinChart.39e79ef17ff4993e70a4cda58e6522b8": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend on the right."
+    }
+}

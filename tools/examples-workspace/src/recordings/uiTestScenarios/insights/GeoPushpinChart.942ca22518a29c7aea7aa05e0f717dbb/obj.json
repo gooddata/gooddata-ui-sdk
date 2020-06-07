@@ -1,0 +1,59 @@
+{
+    "insight": {
+        "identifier": "GeoPushpinChart.942ca22518a29c7aea7aa05e0f717dbb",
+        "uri": "GeoPushpinChart.942ca22518a29c7aea7aa05e0f717dbb",
+        "visualizationUrl": "local:pushpin",
+        "title": "GeoPushpinChart - location and size",
+        "buckets": [
+            {
+                "localIdentifier": "size",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "fact.uscities.population"
+                                    },
+                                    "aggregation": "sum"
+                                }
+                            },
+                            "format": "#,##0.00",
+                            "alias": "Population"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "color",
+                "items": []
+            },
+            {
+                "localIdentifier": "location",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.city.location",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.uscities.city.location"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}
