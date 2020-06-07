@@ -315,6 +315,7 @@ export interface IGdcConfig {
     colorPalette?: IColorPalette;
     isExportMode?: boolean;
     isInEditMode?: boolean;
+    mapboxToken?: string;
 }
 
 /**
