@@ -15,7 +15,7 @@ import {
     IntlWrapper,
 } from "@gooddata/sdk-ui";
 import { IColor } from "@gooddata/sdk-model";
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 type IGeoValidatorProps = IGeoChartInnerProps;
@@ -47,16 +47,16 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
         }
 
         public shouldComponentUpdate(nextProps: IGeoValidatorProps): boolean {
-            const { config, dataView, drillableItems } = this.props;
+            const { config, execution, drillableItems } = this.props;
             const {
                 config: nextConfig,
-                dataView: nextDataView,
+                execution: nextExecution,
                 drillableItems: nextDrillableItems,
             } = nextProps;
 
             // check if buckets, filters and config are changed
             const isSameConfig = this.isSameConfig(config, nextConfig);
-            const isSameDataSource = this.isSameData(dataView, nextDataView);
+            const isSameDataSource = this.isSameData(execution, nextExecution);
             const isSameDrillableItems = isEqual(drillableItems, nextDrillableItems);
 
             return !isSameConfig || !isSameDataSource || !isSameDrillableItems;
@@ -112,14 +112,14 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
             return isEqual(configProps, nextConfigProps);
         }
 
-        private isSameData(data?: IDataView, nextData?: IDataView): boolean {
-            if (!data || !nextData) {
+        private isSameData(execution?: IPreparedExecution, nextExecution?: IPreparedExecution): boolean {
+            if (!execution || !nextExecution) {
                 // one of data views is undefined. just test if the other one is also undefined, otherwise
                 // data is definitelly different
-                return data === nextData;
+                return execution === nextExecution;
             }
 
-            return !data.equals(nextData);
+            return execution.equals(nextExecution);
         }
     }
 
