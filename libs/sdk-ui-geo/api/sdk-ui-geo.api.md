@@ -9,15 +9,23 @@ import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IColorStrategy } from '@gooddata/sdk-ui-vis-commons';
+import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDataVisualizationProps } from '@gooddata/sdk-ui';
 import { IDimension } from '@gooddata/sdk-model';
+import { IDrillConfig } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
+import { IHeaderPredicate } from '@gooddata/sdk-ui';
+import { ILoadingInjectedProps } from '@gooddata/sdk-ui';
+import { IPushpinCategoryLegendItem } from '@gooddata/sdk-ui-vis-commons';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { PositionType } from '@gooddata/sdk-ui-vis-commons';
 import * as React_2 from 'react';
+import { WrappedComponentProps } from 'react-intl';
 
 // Warning: (ae-internal-missing-underscore) The name "CoreGeoChart" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -31,6 +39,12 @@ export const GeoPushpinChart: React_2.ComponentType<IGeoPushpinChartProps>;
 //
 // @internal (undocumented)
 export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[];
+
+// Warning: (ae-forgotten-export) The symbol "ICoreGeoChartProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-internal-missing-underscore) The name "IGeoChartInnerProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type IGeoChartInnerProps = ICoreGeoChartProps & ILoadingInjectedProps & WrappedComponentProps;
 
 // @public (undocumented)
 export interface IGeoConfig {

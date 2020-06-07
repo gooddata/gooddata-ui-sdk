@@ -12,6 +12,9 @@ import { IPushpinCategoryLegendItem, PositionType, Paging, ColorLegend } from "@
 
 const HEIGHT_OF_COLOR_LEGEND = 210;
 
+/**
+ * @internal
+ */
 export interface IGeoChartLegendRendererProps {
     categoryItems?: IPushpinCategoryLegendItem[]; // used for Category legend
     format?: string;
