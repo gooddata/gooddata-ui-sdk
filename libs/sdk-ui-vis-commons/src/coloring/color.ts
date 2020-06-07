@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { IColor, IColorPalette, IColorPaletteItem, IRgbColorValue } from "@gooddata/sdk-model";
-import { isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import {
     DataViewFacade,
     DefaultColorPalette,
@@ -159,6 +159,10 @@ export function getColorMappingPredicate(testValue: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (isResultAttributeHeader(header)) {
             return testValue ? testValue === header.attributeHeaderItem.uri : false;
+        }
+
+        if (isAttributeDescriptor(header)) {
+            return testValue ? testValue === header.attributeHeader.uri : false;
         }
 
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);

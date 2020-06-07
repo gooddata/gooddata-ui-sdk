@@ -35,6 +35,25 @@ describe("color utils", () => {
         },
     ];
 
+    const attributeHeaderColorAssignments = [
+        {
+            headerItem: {
+                attributeHeader: {
+                    uri: "a1",
+                    identifier: "label.a1",
+                    localIdentifier: "a1",
+                    name: "attribute header",
+                    formOf: {
+                        uri: "a1",
+                        identifier: "label.a1",
+                        name: "attribute header",
+                    },
+                },
+            },
+            color: color1,
+        },
+    ];
+
     describe("getValidProperties", () => {
         function getProperties(colorMapping: any) {
             return {
@@ -88,6 +107,28 @@ describe("color utils", () => {
             const properties = getProperties(richColorMapping);
 
             const result = getValidProperties(properties, measureColorAssignments);
+            expect(result.controls.colorMapping).toEqual(colorMapping);
+        });
+
+        it("should keep attribute header color mapping for items which are in color assignment", () => {
+            const colorMapping = [
+                {
+                    id: "a1",
+                    color: color1,
+                },
+            ];
+
+            const richColorMapping = [
+                ...colorMapping,
+                {
+                    id: "a2",
+                    color: color1,
+                },
+            ];
+
+            const properties = getProperties(richColorMapping);
+
+            const result = getValidProperties(properties, attributeHeaderColorAssignments);
             expect(result.controls.colorMapping).toEqual(colorMapping);
         });
     });

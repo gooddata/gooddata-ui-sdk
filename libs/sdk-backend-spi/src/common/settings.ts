@@ -26,6 +26,11 @@ export enum SettingCatalog {
      * Indicates whether week filtering is available in AD
      */
     enableWeekFilters = "enableWeekFilters",
+
+    /**
+     * Indicates whether color picker config panel should allow users to select custom RGB colors.
+     */
+    enableCustomColorPicker = "enableCustomColorPicker",
 }
 
 /**

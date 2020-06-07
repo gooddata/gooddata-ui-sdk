@@ -5,8 +5,7 @@ import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem, IColoredItemDropdownItem } from "../../../../interfaces/Colors";
-import { isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { IMappingHeader } from "@gooddata/sdk-ui";
+import { getMappingHeaderName, IMappingHeader } from "@gooddata/sdk-ui";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;
@@ -57,16 +56,8 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedCompone
         }
     };
 
-    private getText(headerItem: IMappingHeader) {
-        let text;
-
-        if (isMeasureDescriptor(headerItem)) {
-            text = headerItem.measureHeaderItem.name;
-        } else if (isResultAttributeHeader(headerItem)) {
-            text = headerItem.attributeHeaderItem.name;
-        }
-
-        return text;
+    private getText(mappingHeader: IMappingHeader) {
+        return getMappingHeaderName(mappingHeader) || "";
     }
 }
 
