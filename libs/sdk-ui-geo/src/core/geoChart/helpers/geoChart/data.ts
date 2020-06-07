@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import get = require("lodash/get");
-import { IGeoData, IGeoLngLat, IAvailableLegends } from "../../../../GeoChart";
+import { IAvailableLegends, IGeoData, IGeoLngLat } from "../../../../GeoChart";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     dataValueAsFloat,
@@ -14,15 +14,11 @@ import {
     IAttributeOrMeasure,
     IBucket,
     Identifier,
-    IExecutionDefinition,
     isAttribute,
     isIdentifierRef,
-    measureLocalId,
-    newAttribute,
-    newBucket,
-    ObjRef,
-    uriRef,
     measureItem,
+    measureLocalId,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import {
     IAttributeDescriptor,
@@ -321,27 +317,3 @@ export function findGeoAttributesInDimension(
         tooltipTextAttribute,
     };
 }
-
-// TODO: SDK8 - these two are misplaced. vis properties and MD object must not matter at this point; I suspect
-//  this is due to some plug-viz / AD funny. stuff. remember to place code into pluggable geo chart
-
-// @ts-ignore
-function buildTooltipBucketItem(tooltipText: string): IBucket {
-    // TODO: SDK8: this is bad.. cannot auto-create URI ref; tiger does not understand them
-    //  need to figure out some way. meh; perhaps will have to do test whether tooltipText is uri
-    //  format or not. in the worst case, can done rewriting in tiger backend
-    return newBucket(BucketNames.TOOLTIP_TEXT, newAttribute(uriRef(tooltipText)));
-}
-
-export const getGeoBucketsFromMdObject = (def: IExecutionDefinition): IBucket[] => {
-    /*
-    const { buckets = [], properties } = def;
-    const propertiesObj = parseGeoPropertyItem(properties);
-    const tooltipText = get(propertiesObj, "controls.tooltipText");
-    if (tooltipText) {
-        return [...buckets, buildTooltipBucketItem(tooltipText)];
-    }
-     */
-
-    return def.buckets;
-};

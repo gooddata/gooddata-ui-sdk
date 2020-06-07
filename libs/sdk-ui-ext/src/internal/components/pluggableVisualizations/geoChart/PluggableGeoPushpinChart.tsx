@@ -12,6 +12,7 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    PluggableVisualizationErrorCodes,
 } from "../../../interfaces/Visualization";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket";
@@ -32,14 +33,18 @@ import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpin
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     bucketAttribute,
     IInsightDefinition,
     insightBucket,
-    insightProperties,
+    insightBuckets,
+    insightHasDataDefined,
     ISortItem,
+    newAttribute,
     newAttributeSort,
+    newBucket,
+    uriRef,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
@@ -62,6 +67,14 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         this.type = VisualizationTypes.PUSHPIN;
         this.geoPushpinElement = element;
         this.initializeProperties(visualizationProperties);
+    }
+
+    protected checkBeforeRender(insight: IInsightDefinition): boolean {
+        if (!insightHasDataDefined(insight)) {
+            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.EMPTY_AFM);
+        }
+
+        return true;
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
@@ -199,12 +212,40 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
         const { drillableItems } = custom;
-        const supportedControls: IVisualizationProperties = insightProperties(insight).controls;
+        const supportedControls: IVisualizationProperties = this.visualizationProperties.controls;
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
         const fullConfig = this.buildVisualizationConfig(config, configSupportedControls);
 
+        const buckets = insightBuckets(insight);
+
+        if (configSupportedControls && configSupportedControls?.tooltipText) {
+            /*
+             * The display form to use for tooltip text is provided in properties :( This is unfortunate; the chart
+             * props could very well contain an extra prop for the tooltip bucket.
+             *
+             * Current guess is that this is because AD creates insight buckets; in order to create the tooltip
+             * bucket, AD would have to actually show the tooltip bucket in the UI - which is not desired. Thus the
+             * displayForm to add as bucket is passed in visualization properties.
+             *
+             * This workaround is highly unfortunate for two reasons:
+             *
+             * 1.  It leaks all the way to the API of geo chart: bucket geo does not have the tooltip bucket. Instead
+             *     it duplicates then here logic in chart transform
+             *
+             * 2.  The executeVisualization endpoint is useless for GeoChart; cannot be used to render geo chart because
+             *     the buckets stored in vis object are not complete. execVisualization takes buckets as is.
+             */
+            // TODO fix this, won't work for tiger
+            buckets.push(
+                newBucket(
+                    BucketNames.TOOLTIP_TEXT,
+                    newAttribute(uriRef(configSupportedControls?.tooltipText)),
+                ),
+            );
+        }
+
         const execution = executionFactory
-            .forInsight(insight)
+            .forBuckets(buckets)
             .withDimensions(getGeoChartDimensions)
             .withSorting(...this.createSort(insight));
 
