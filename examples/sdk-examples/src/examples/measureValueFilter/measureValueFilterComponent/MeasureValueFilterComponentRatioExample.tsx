@@ -36,7 +36,7 @@ export class MeasureValueFilterComponentRatioExample extends React.PureComponent
                     filter={filters[0]}
                     buttonTitle={measureTitle}
                     warningMessage="The filter uses actual measure values, not percentage."
-                    measureIdentifier={measureLocalId(LdmExt.FranchisedSales)}
+                    measureIdentifier={measureLocalId(LdmExt.FranchisedSalesWithRatio)}
                 />
                 <hr className="separator" />
                 <div style={{ height: 300 }} className="s-pivot-table">

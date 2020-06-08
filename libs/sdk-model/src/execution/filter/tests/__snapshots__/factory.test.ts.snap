@@ -28,6 +28,22 @@ Object {
 }
 `;
 
+exports[`filter factory newMeasureValueFilter should generate comparison filter for measure local identifier 1`] = `
+Object {
+  "measureValueFilter": Object {
+    "condition": Object {
+      "comparison": Object {
+        "operator": "EQUAL_TO",
+        "value": 11,
+      },
+    },
+    "measure": Object {
+      "localIdentifier": "measureObjLocalId",
+    },
+  },
+}
+`;
+
 exports[`filter factory newMeasureValueFilter should generate comparison filter for measure object 1`] = `
 Object {
   "measureValueFilter": Object {
@@ -108,6 +124,23 @@ Object {
     },
     "measure": Object {
       "identifier": "measureObjIdentifier",
+    },
+  },
+}
+`;
+
+exports[`filter factory newMeasureValueFilter should generate ranger filter for measure local identifier 1`] = `
+Object {
+  "measureValueFilter": Object {
+    "condition": Object {
+      "range": Object {
+        "from": 0,
+        "operator": "BETWEEN",
+        "to": 100,
+      },
+    },
+    "measure": Object {
+      "localIdentifier": "measureObjLocalId",
     },
   },
 }

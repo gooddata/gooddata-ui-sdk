@@ -63,6 +63,9 @@ describe("filter factory", () => {
                 newMeasureValueFilter({ identifier: "measureObjIdentifier" }, "EQUAL_TO", 11),
             ).toMatchSnapshot();
         });
+        it("should generate comparison filter for measure local identifier", () => {
+            expect(newMeasureValueFilter("measureObjLocalId", "EQUAL_TO", 11)).toMatchSnapshot();
+        });
         it("should generate comparison filter for measure object with treatNullValuesAs", () => {
             expect(newMeasureValueFilter(Won, "EQUAL_TO", 11, 42)).toMatchSnapshot();
         });
@@ -73,6 +76,9 @@ describe("filter factory", () => {
             expect(
                 newMeasureValueFilter({ identifier: "measureObjIdentifier" }, "BETWEEN", 0, 100),
             ).toMatchSnapshot();
+        });
+        it("should generate ranger filter for measure local identifier", () => {
+            expect(newMeasureValueFilter("measureObjLocalId", "BETWEEN", 0, 100)).toMatchSnapshot();
         });
         it("should generate range filter for measure object with treatNullValuesAs", () => {
             expect(newMeasureValueFilter(Won, "BETWEEN", 0, 100, 42)).toMatchSnapshot();
