@@ -3,7 +3,7 @@ import { getIn, handlePolling, getAllPagesByOffsetLimit, parseSettingItemValue }
 import { ITimezone, IColor, IColorPalette, IFeatureFlags } from "./interfaces";
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from "./apiResponsesInterfaces";
 import { XhrModule, ApiResponse, ApiError } from "./xhr";
-import { GdcProject } from "@gooddata/gd-bear-model";
+import { GdcProject, GdcUser } from "@gooddata/gd-bear-model";
 import { stringify } from "./utils/queryString";
 
 export const DEFAULT_PALETTE = [
@@ -389,5 +389,55 @@ export class ProjectModule {
             });
             return featureFlags;
         });
+    }
+
+    /**
+     * Get paged user list
+     *
+     * @method getUserListWithPaging
+     * @param {String} projectId - project identifier
+     * @param {IGetUserListParams} options - filtering options for the user list
+     * @return {IGetUserListResponse} List of users with paging
+     */
+    public getUserListWithPaging(
+        projectId: string,
+        options: GdcUser.IGetUserListParams,
+    ): Promise<GdcUser.IGetUserListResponse> {
+        return this.xhr.getParsed<GdcUser.IGetUserListResponse>(`/gdc/projects/${projectId}/userlist`, {
+            data: options,
+        });
+    }
+
+    /**
+     * Get full user list
+     *
+     * @method getUserList
+     * @param {String} projectId - project identifier
+     * @param {Object} options - filtering options for the user list
+     * @return {IUserListItem[]} List of users
+     */
+    public getUserList(
+        projectId: string,
+        options: Omit<GdcUser.IGetUserListParams, "offset" | "limit">,
+    ): Promise<GdcUser.IUserListItem[]> {
+        const loadPage = async (
+            offset = 0,
+            limit = 1000,
+            items: GdcUser.IUserListItem[] = [],
+        ): Promise<GdcUser.IUserListItem[]> => {
+            return this.getUserListWithPaging(projectId, { ...options, limit, offset }).then(
+                ({
+                    userList: {
+                        items: userItems,
+                        paging: { count },
+                    },
+                }) => {
+                    const updatedItems = [...items, ...userItems];
+                    return count < limit ? updatedItems : loadPage(offset + limit, limit, updatedItems);
+                },
+            );
+        };
+
+        return loadPage();
     }
 }

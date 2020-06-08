@@ -13,6 +13,7 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
+    IWorkspaceUsersQuery,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution";
 import { CustomBackendConfig, CustomBackendState } from "./config";
@@ -75,5 +76,9 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public dashboards(): IWorkspaceDashboards {
         throw new NotSupported("dashboards are not supported");
+    }
+
+    public users(): IWorkspaceUsersQuery {
+        throw new NotSupported("users are not supported");
     }
 }

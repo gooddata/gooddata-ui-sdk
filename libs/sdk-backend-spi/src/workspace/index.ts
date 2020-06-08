@@ -11,6 +11,7 @@ import { IWorkspaceDatasetsService } from "./ldm/datasets";
 import { IWorkspacePermissionsFactory } from "./permissions";
 import { IWorkspaceMetadata } from "./metadata";
 import { IWorkspaceDashboards } from "./dashboards";
+import { IWorkspaceUsersQuery } from "./users";
 
 /**
  * Represents an analytical workspace hosted on a backend. It is an entry point to various services that can be
@@ -58,6 +59,11 @@ export interface IAnalyticalWorkspace {
      * names of all employees.
      */
     elements(): IElementQueryFactory;
+
+    /**
+     * Returns service that can be used to query workspace users.
+     */
+    users(): IWorkspaceUsersQuery;
 
     /**
      * Returns service that can be used to query workspace permissions

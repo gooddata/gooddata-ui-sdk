@@ -1938,6 +1938,27 @@ export namespace GdcUser {
         // (undocumented)
         [key: string]: number | boolean | string;
     }
+    export interface IGetUserListParams {
+        groupId?: string;
+        indicatePermission?: string;
+        limit?: number;
+        offset?: number;
+        prefixSearch?: string;
+        userState: UserListItemState;
+    }
+    export interface IGetUserListResponse {
+        // (undocumented)
+        userList: {
+            paging: {
+                offset?: number | null;
+                limit: number;
+                next?: Uri | null;
+                count: number;
+                totalCount: number;
+            };
+            items: IUserListItem[];
+        };
+    }
     // (undocumented)
     export interface IIntegration {
         // (undocumented)

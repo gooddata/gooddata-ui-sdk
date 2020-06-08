@@ -12,6 +12,7 @@ import {
     IWorkspacePermissionsFactory,
     IWorkspaceInsights,
     IWorkspaceDashboards,
+    IWorkspaceUsersQuery,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./execution/executionFactory";
 import { BearWorkspaceMetadata } from "./metadata";
@@ -24,6 +25,7 @@ import { BearWorkspaceInsights } from "./insights";
 import { BearWorkspaceDataSets } from "./datasets";
 import { BearWorkspaceDashboards } from "./dashboards";
 import { BearAuthenticatedCallGuard } from "../../types";
+import { BearWorkspaceUsersQuery } from "./users";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -66,5 +68,9 @@ export class BearWorkspace implements IAnalyticalWorkspace {
 
     public permissions(): IWorkspacePermissionsFactory {
         return new BearWorkspacePermissionsFactory(this.authCall, this.workspace);
+    }
+
+    public users(): IWorkspaceUsersQuery {
+        return new BearWorkspaceUsersQuery(this.authCall, this.workspace);
     }
 }

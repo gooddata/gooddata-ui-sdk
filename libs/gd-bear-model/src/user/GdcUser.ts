@@ -384,4 +384,57 @@ export namespace GdcUser {
         state?: UserListItemState;
         hasRequestedPermissions?: boolean;
     }
+
+    /**
+     * Request params for GET /gdc/project/\{projectId\}/userlist
+     */
+    export interface IGetUserListParams {
+        /**
+         * Sets starting point for the query. Backend WILL return no data if the offset is greater than
+         * total number of items
+         */
+        offset?: number;
+        /**
+         * Sets number of items to return per page
+         */
+        limit?: number;
+        /**
+         * Structured prefix filter
+         * - disjunctions are separated by colon (',')
+         * - conjunctions are separated by space (' ')
+         * - basic form match, if it matches as prefix to any of firstName, lastName and email
+         */
+        prefixSearch?: string;
+        /**
+         * Get only active / inactive / pending users
+         * Default: "ACTIVE"
+         */
+        userState: UserListItemState;
+        /**
+         * Get only users of particular group
+         * - empty string means to filter users not assigned to any group
+         */
+        groupId?: string;
+        /**
+         * When specified, each user list item will contain a flag that indicates
+         * whether the particular user has the permission specified here or not.
+         */
+        indicatePermission?: string;
+    }
+
+    /**
+     * Response for GET /gdc/project/\{projectId\}/userlist
+     */
+    export interface IGetUserListResponse {
+        userList: {
+            paging: {
+                offset?: number | null;
+                limit: number;
+                next?: Uri | null;
+                count: number;
+                totalCount: number;
+            };
+            items: IUserListItem[];
+        };
+    }
 }

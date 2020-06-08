@@ -22,6 +22,7 @@ import {
     IWorkspaceUserPermissions,
     IWorkspaceDashboards,
     IUserWorkspaceSettings,
+    IWorkspaceUsersQuery,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedElementQueryFactory } from "./elements";
@@ -144,6 +145,9 @@ function recordedWorkspace(
         },
         permissions(): IWorkspacePermissionsFactory {
             return recordedPermissionsFactory();
+        },
+        users(): IWorkspaceUsersQuery {
+            throw new NotSupported("not supported");
         },
     };
 }

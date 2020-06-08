@@ -24,6 +24,7 @@ import {
     IWorkspaceStylingService,
     NotSupported,
     IWorkspaceDashboards,
+    IWorkspaceUsersQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -179,6 +180,9 @@ function recordedWorkspace(
             throw new NotSupported("not supported");
         },
         permissions(): IWorkspacePermissionsFactory {
+            throw new NotSupported("not supported");
+        },
+        users(): IWorkspaceUsersQuery {
             throw new NotSupported("not supported");
         },
     };
