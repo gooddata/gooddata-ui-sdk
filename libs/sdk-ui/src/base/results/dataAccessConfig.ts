@@ -1,7 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 import { DataValue } from "@gooddata/sdk-backend-spi";
-import { ISeparators, numberFormat } from "@gooddata/numberjs";
+import { ISeparators, numberFormat, colors2Object, INumberObject } from "@gooddata/numberjs";
 import isEmpty = require("lodash/isEmpty");
+import escape = require("lodash/escape");
+import unescape = require("lodash/unescape");
+
+const customEscape = (str: string) => str && escape(unescape(str));
 
 /**
  * @alpha
@@ -15,7 +19,8 @@ export type HeaderTranslator = (value: string) => string;
 
 /**
  * Creates value formatter that uses @gooddata/numberjs to format raw measure values according
- * to the format string.
+ * to the format string. By default, the format will strip away all the coloring information and
+ * just return the value as string.
  *
  * @param separators - number separators to use. if not specified then numberjs defaults will be used
  * @alpha
@@ -24,7 +29,10 @@ export function createNumberJsFormatter(separators?: ISeparators): ValueFormatte
     return (value: DataValue, format: string) => {
         const valueToFormat = value === null && !isEmpty(format) ? "" : parseFloat(value as string);
 
-        return numberFormat(valueToFormat, format, undefined, separators);
+        const formattedValue = numberFormat(valueToFormat, format, undefined, separators);
+        const formattedObject: INumberObject = colors2Object(formattedValue);
+
+        return customEscape(formattedObject.label);
     };
 }
 
