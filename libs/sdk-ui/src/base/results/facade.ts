@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { DataAccessConfig } from "./dataAccessConfig";
 import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods";
 import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods";
 import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods";
@@ -74,9 +75,9 @@ export class DataViewFacade {
      * @returns methods to access data in a curated fashion using data slices and data series iterators
      * @alpha
      */
-    public data(): IDataAccessMethods {
+    public data(config?: DataAccessConfig): IDataAccessMethods {
         if (!this.dataAccessMethods) {
-            this.dataAccessMethods = newDataAccessMethods(this.dataView);
+            this.dataAccessMethods = newDataAccessMethods(this.dataView, config);
         }
 
         return this.dataAccessMethods;
