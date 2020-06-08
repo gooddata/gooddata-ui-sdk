@@ -110,12 +110,6 @@ export interface ApiErrorSource {
 /**
  *
  * @export
- * @interface AttributeDatasetResourceAttribute
- */
-export interface AttributeDatasetResourceAttribute {}
-/**
- *
- * @export
  * @enum {string}
  */
 export enum AttributeGranularityResourceAttribute {
@@ -368,11 +362,48 @@ export interface AttributeResourceReferencesResponseSchema {
  * @export
  * @interface AttributeResourceResponseSchema
  */
-export interface AttributeResourceResponseSchema extends Success {
+export interface AttributeResourceResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof AttributeResourceResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof AttributeResourceResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof AttributeResourceResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof AttributeResourceResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {AttributeResourceSchema}
      * @memberof AttributeResourceResponseSchema
+     */
+    data: AttributeResourceSchema;
+}
+/**
+ *
+ * @export
+ * @interface AttributeResourceResponseSchemaAllOf
+ */
+export interface AttributeResourceResponseSchemaAllOf {
+    /**
+     *
+     * @type {AttributeResourceSchema}
+     * @memberof AttributeResourceResponseSchemaAllOf
      */
     data: AttributeResourceSchema;
 }
@@ -446,11 +477,48 @@ export interface AttributeResourceSchemaAllOf {
  * @export
  * @interface AttributeResourcesResponseSchema
  */
-export interface AttributeResourcesResponseSchema extends Success {
+export interface AttributeResourcesResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof AttributeResourcesResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof AttributeResourcesResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof AttributeResourcesResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof AttributeResourcesResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {Array<AttributeResourceSchema>}
      * @memberof AttributeResourcesResponseSchema
+     */
+    data: Array<AttributeResourceSchema>;
+}
+/**
+ *
+ * @export
+ * @interface AttributeResourcesResponseSchemaAllOf
+ */
+export interface AttributeResourcesResponseSchemaAllOf {
+    /**
+     *
+     * @type {Array<AttributeResourceSchema>}
+     * @memberof AttributeResourcesResponseSchemaAllOf
      */
     data: Array<AttributeResourceSchema>;
 }
@@ -727,11 +795,48 @@ export interface DatasetResourceReferencesResponseSchema {
  * @export
  * @interface DatasetResourceResponseSchema
  */
-export interface DatasetResourceResponseSchema extends Success {
+export interface DatasetResourceResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof DatasetResourceResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof DatasetResourceResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof DatasetResourceResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof DatasetResourceResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {DatasetResourceSchema}
      * @memberof DatasetResourceResponseSchema
+     */
+    data: DatasetResourceSchema;
+}
+/**
+ *
+ * @export
+ * @interface DatasetResourceResponseSchemaAllOf
+ */
+export interface DatasetResourceResponseSchemaAllOf {
+    /**
+     *
+     * @type {DatasetResourceSchema}
+     * @memberof DatasetResourceResponseSchemaAllOf
      */
     data: DatasetResourceSchema;
 }
@@ -786,11 +891,48 @@ export enum DatasetResourceSchemaTypeEnum {
  * @export
  * @interface DatasetResourcesResponseSchema
  */
-export interface DatasetResourcesResponseSchema extends Success {
+export interface DatasetResourcesResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof DatasetResourcesResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof DatasetResourcesResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof DatasetResourcesResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof DatasetResourcesResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {Array<DatasetResourceSchema>}
      * @memberof DatasetResourcesResponseSchema
+     */
+    data: Array<DatasetResourceSchema>;
+}
+/**
+ *
+ * @export
+ * @interface DatasetResourcesResponseSchemaAllOf
+ */
+export interface DatasetResourcesResponseSchemaAllOf {
+    /**
+     *
+     * @type {Array<DatasetResourceSchema>}
+     * @memberof DatasetResourcesResponseSchemaAllOf
      */
     data: Array<DatasetResourceSchema>;
 }
@@ -803,12 +945,6 @@ export enum DatasetTypeResourceAttribute {
     NORMAL = "NORMAL",
     DATE = "DATE",
 }
-/**
- *
- * @export
- * @interface FactDatasetResourceAttribute
- */
-export interface FactDatasetResourceAttribute {}
 /**
  *
  * @export
@@ -1040,11 +1176,48 @@ export interface FactResourceReferencesResponseSchema {
  * @export
  * @interface FactResourceResponseSchema
  */
-export interface FactResourceResponseSchema extends Success {
+export interface FactResourceResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof FactResourceResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof FactResourceResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof FactResourceResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof FactResourceResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {FactResourceSchema}
      * @memberof FactResourceResponseSchema
+     */
+    data: FactResourceSchema;
+}
+/**
+ *
+ * @export
+ * @interface FactResourceResponseSchemaAllOf
+ */
+export interface FactResourceResponseSchemaAllOf {
+    /**
+     *
+     * @type {FactResourceSchema}
+     * @memberof FactResourceResponseSchemaAllOf
      */
     data: FactResourceSchema;
 }
@@ -1099,11 +1272,48 @@ export enum FactResourceSchemaTypeEnum {
  * @export
  * @interface FactResourcesResponseSchema
  */
-export interface FactResourcesResponseSchema extends Success {
+export interface FactResourcesResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof FactResourcesResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof FactResourcesResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof FactResourcesResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof FactResourcesResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {Array<FactResourceSchema>}
      * @memberof FactResourcesResponseSchema
+     */
+    data: Array<FactResourceSchema>;
+}
+/**
+ *
+ * @export
+ * @interface FactResourcesResponseSchemaAllOf
+ */
+export interface FactResourcesResponseSchemaAllOf {
+    /**
+     *
+     * @type {Array<FactResourceSchema>}
+     * @memberof FactResourcesResponseSchemaAllOf
      */
     data: Array<FactResourceSchema>;
 }
@@ -1176,12 +1386,6 @@ export interface JsonApi {
      */
     version?: string;
 }
-/**
- *
- * @export
- * @interface LabelAttributeResourceAttribute
- */
-export interface LabelAttributeResourceAttribute {}
 /**
  *
  * @export
@@ -1419,11 +1623,48 @@ export interface LabelResourceReferencesResponseSchema {
  * @export
  * @interface LabelResourceResponseSchema
  */
-export interface LabelResourceResponseSchema extends Success {
+export interface LabelResourceResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof LabelResourceResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof LabelResourceResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof LabelResourceResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof LabelResourceResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {LabelResourceSchema}
      * @memberof LabelResourceResponseSchema
+     */
+    data: LabelResourceSchema;
+}
+/**
+ *
+ * @export
+ * @interface LabelResourceResponseSchemaAllOf
+ */
+export interface LabelResourceResponseSchemaAllOf {
+    /**
+     *
+     * @type {LabelResourceSchema}
+     * @memberof LabelResourceResponseSchemaAllOf
      */
     data: LabelResourceSchema;
 }
@@ -1478,7 +1719,31 @@ export enum LabelResourceSchemaTypeEnum {
  * @export
  * @interface LabelResourcesResponseSchema
  */
-export interface LabelResourcesResponseSchema extends Success {
+export interface LabelResourcesResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof LabelResourcesResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof LabelResourcesResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof LabelResourcesResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof LabelResourcesResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {Array<LabelResourceSchema>}
@@ -1487,11 +1752,24 @@ export interface LabelResourcesResponseSchema extends Success {
     data: Array<LabelResourceSchema>;
 }
 /**
+ *
+ * @export
+ * @interface LabelResourcesResponseSchemaAllOf
+ */
+export interface LabelResourcesResponseSchemaAllOf {
+    /**
+     *
+     * @type {Array<LabelResourceSchema>}
+     * @memberof LabelResourcesResponseSchemaAllOf
+     */
+    data: Array<LabelResourceSchema>;
+}
+/**
  * @type Link
  * A link **MUST** be represented as either: a string containing the link\'s URL or a link object.
  * @export
  */
-export type Link = LinkOneOf;
+export type Link = LinkOneOf | string;
 /**
  *
  * @export
@@ -1658,6 +1936,12 @@ export interface MetricResourceAttributesAttributes {
     facts?: Array<FactResourceReference> | null;
     /**
      *
+     * @type {string}
+     * @memberof MetricResourceAttributesAttributes
+     */
+    format?: string | null;
+    /**
+     *
      * @type {Array<LabelResourceReference>}
      * @memberof MetricResourceAttributesAttributes
      */
@@ -1674,6 +1958,12 @@ export interface MetricResourceAttributesAttributes {
      * @memberof MetricResourceAttributesAttributes
      */
     metrics?: Array<MetricResourceReference> | null;
+    /**
+     *
+     * @type {Array<TagResourceReference>}
+     * @memberof MetricResourceAttributesAttributes
+     */
+    tags?: Array<TagResourceReference> | null;
     /**
      *
      * @type {string}
@@ -1720,6 +2010,12 @@ export interface MetricResourcePatchAttributesAttributes {
     facts?: Array<FactResourceReference> | null;
     /**
      *
+     * @type {string}
+     * @memberof MetricResourcePatchAttributesAttributes
+     */
+    format?: string | null;
+    /**
+     *
      * @type {Array<LabelResourceReference>}
      * @memberof MetricResourcePatchAttributesAttributes
      */
@@ -1736,6 +2032,12 @@ export interface MetricResourcePatchAttributesAttributes {
      * @memberof MetricResourcePatchAttributesAttributes
      */
     metrics?: Array<MetricResourceReference> | null;
+    /**
+     *
+     * @type {Array<TagResourceReference>}
+     * @memberof MetricResourcePatchAttributesAttributes
+     */
+    tags?: Array<TagResourceReference> | null;
     /**
      *
      * @type {string}
@@ -1815,11 +2117,48 @@ export interface MetricResourceReferencesResponseSchema {
  * @export
  * @interface MetricResourceResponseSchema
  */
-export interface MetricResourceResponseSchema extends Success {
+export interface MetricResourceResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof MetricResourceResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof MetricResourceResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof MetricResourceResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof MetricResourceResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {MetricResourceSchema}
      * @memberof MetricResourceResponseSchema
+     */
+    data: MetricResourceSchema;
+}
+/**
+ *
+ * @export
+ * @interface MetricResourceResponseSchemaAllOf
+ */
+export interface MetricResourceResponseSchemaAllOf {
+    /**
+     *
+     * @type {MetricResourceSchema}
+     * @memberof MetricResourceResponseSchemaAllOf
      */
     data: MetricResourceSchema;
 }
@@ -1874,11 +2213,48 @@ export enum MetricResourceSchemaTypeEnum {
  * @export
  * @interface MetricResourcesResponseSchema
  */
-export interface MetricResourcesResponseSchema extends Success {
+export interface MetricResourcesResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof MetricResourcesResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof MetricResourcesResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof MetricResourcesResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof MetricResourcesResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {Array<MetricResourceSchema>}
      * @memberof MetricResourcesResponseSchema
+     */
+    data: Array<MetricResourceSchema>;
+}
+/**
+ *
+ * @export
+ * @interface MetricResourcesResponseSchemaAllOf
+ */
+export interface MetricResourcesResponseSchemaAllOf {
+    /**
+     *
+     * @type {Array<MetricResourceSchema>}
+     * @memberof MetricResourcesResponseSchemaAllOf
      */
     data: Array<MetricResourceSchema>;
 }
@@ -2120,11 +2496,48 @@ export interface SourceResourceReferencesResponseSchema {
  * @export
  * @interface SourceResourceResponseSchema
  */
-export interface SourceResourceResponseSchema extends Success {
+export interface SourceResourceResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof SourceResourceResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof SourceResourceResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof SourceResourceResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof SourceResourceResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {SourceResourceSchema}
      * @memberof SourceResourceResponseSchema
+     */
+    data: SourceResourceSchema;
+}
+/**
+ *
+ * @export
+ * @interface SourceResourceResponseSchemaAllOf
+ */
+export interface SourceResourceResponseSchemaAllOf {
+    /**
+     *
+     * @type {SourceResourceSchema}
+     * @memberof SourceResourceResponseSchemaAllOf
      */
     data: SourceResourceSchema;
 }
@@ -2179,11 +2592,48 @@ export enum SourceResourceSchemaTypeEnum {
  * @export
  * @interface SourceResourcesResponseSchema
  */
-export interface SourceResourcesResponseSchema extends Success {
+export interface SourceResourcesResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof SourceResourcesResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof SourceResourcesResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof SourceResourcesResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof SourceResourcesResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {Array<SourceResourceSchema>}
      * @memberof SourceResourcesResponseSchema
+     */
+    data: Array<SourceResourceSchema>;
+}
+/**
+ *
+ * @export
+ * @interface SourceResourcesResponseSchemaAllOf
+ */
+export interface SourceResourcesResponseSchemaAllOf {
+    /**
+     *
+     * @type {Array<SourceResourceSchema>}
+     * @memberof SourceResourcesResponseSchemaAllOf
      */
     data: Array<SourceResourceSchema>;
 }
@@ -2456,11 +2906,48 @@ export interface TableResourceReferencesResponseSchema {
  * @export
  * @interface TableResourceResponseSchema
  */
-export interface TableResourceResponseSchema extends Success {
+export interface TableResourceResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof TableResourceResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof TableResourceResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof TableResourceResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof TableResourceResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {TableResourceSchema}
      * @memberof TableResourceResponseSchema
+     */
+    data: TableResourceSchema;
+}
+/**
+ *
+ * @export
+ * @interface TableResourceResponseSchemaAllOf
+ */
+export interface TableResourceResponseSchemaAllOf {
+    /**
+     *
+     * @type {TableResourceSchema}
+     * @memberof TableResourceResponseSchemaAllOf
      */
     data: TableResourceSchema;
 }
@@ -2515,7 +3002,31 @@ export enum TableResourceSchemaTypeEnum {
  * @export
  * @interface TableResourcesResponseSchema
  */
-export interface TableResourcesResponseSchema extends Success {
+export interface TableResourcesResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof TableResourcesResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof TableResourcesResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof TableResourcesResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof TableResourcesResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {Array<TableResourceSchema>}
@@ -2526,9 +3037,16 @@ export interface TableResourcesResponseSchema extends Success {
 /**
  *
  * @export
- * @interface TableSourceResourceAttribute
+ * @interface TableResourcesResponseSchemaAllOf
  */
-export interface TableSourceResourceAttribute {}
+export interface TableResourcesResponseSchemaAllOf {
+    /**
+     *
+     * @type {Array<TableResourceSchema>}
+     * @memberof TableResourcesResponseSchemaAllOf
+     */
+    data: Array<TableResourceSchema>;
+}
 /**
  *
  * @export
@@ -2670,10 +3188,22 @@ export interface TagResourceAttributesAttributes {
     labels?: Array<LabelResourceReference> | null;
     /**
      *
+     * @type {Array<MetricResourceReference>}
+     * @memberof TagResourceAttributesAttributes
+     */
+    metrics?: Array<MetricResourceReference> | null;
+    /**
+     *
      * @type {string}
      * @memberof TagResourceAttributesAttributes
      */
     title?: string | null;
+    /**
+     *
+     * @type {Array<VisualizationObjectResourceReference>}
+     * @memberof TagResourceAttributesAttributes
+     */
+    visualizationObjects?: Array<VisualizationObjectResourceReference> | null;
 }
 /**
  *
@@ -2760,11 +3290,48 @@ export interface TagResourceReferencesResponseSchema {
  * @export
  * @interface TagResourceResponseSchema
  */
-export interface TagResourceResponseSchema extends Success {
+export interface TagResourceResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof TagResourceResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof TagResourceResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof TagResourceResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof TagResourceResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {TagResourceSchema}
      * @memberof TagResourceResponseSchema
+     */
+    data: TagResourceSchema;
+}
+/**
+ *
+ * @export
+ * @interface TagResourceResponseSchemaAllOf
+ */
+export interface TagResourceResponseSchemaAllOf {
+    /**
+     *
+     * @type {TagResourceSchema}
+     * @memberof TagResourceResponseSchemaAllOf
      */
     data: TagResourceSchema;
 }
@@ -2819,11 +3386,48 @@ export enum TagResourceSchemaTypeEnum {
  * @export
  * @interface TagResourcesResponseSchema
  */
-export interface TagResourcesResponseSchema extends Success {
+export interface TagResourcesResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof TagResourcesResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof TagResourcesResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof TagResourcesResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof TagResourcesResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {Array<TagResourceSchema>}
      * @memberof TagResourcesResponseSchema
+     */
+    data: Array<TagResourceSchema>;
+}
+/**
+ *
+ * @export
+ * @interface TagResourcesResponseSchemaAllOf
+ */
+export interface TagResourcesResponseSchemaAllOf {
+    /**
+     *
+     * @type {Array<TagResourceSchema>}
+     * @memberof TagResourcesResponseSchemaAllOf
      */
     data: Array<TagResourceSchema>;
 }
@@ -2980,6 +3584,12 @@ export interface VisualizationObjectResourceAttributesAttributes {
     metrics?: Array<MetricResourceReference> | null;
     /**
      *
+     * @type {Array<TagResourceReference>}
+     * @memberof VisualizationObjectResourceAttributesAttributes
+     */
+    tags?: Array<TagResourceReference> | null;
+    /**
+     *
      * @type {string}
      * @memberof VisualizationObjectResourceAttributesAttributes
      */
@@ -3016,6 +3626,12 @@ export interface VisualizationObjectResourcePatchAttributesAttributes {
      * @memberof VisualizationObjectResourcePatchAttributesAttributes
      */
     description?: string | null;
+    /**
+     *
+     * @type {Array<TagResourceReference>}
+     * @memberof VisualizationObjectResourcePatchAttributesAttributes
+     */
+    tags?: Array<TagResourceReference> | null;
     /**
      *
      * @type {string}
@@ -3095,11 +3711,48 @@ export interface VisualizationObjectResourceReferencesResponseSchema {
  * @export
  * @interface VisualizationObjectResourceResponseSchema
  */
-export interface VisualizationObjectResourceResponseSchema extends Success {
+export interface VisualizationObjectResourceResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof VisualizationObjectResourceResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof VisualizationObjectResourceResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof VisualizationObjectResourceResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof VisualizationObjectResourceResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {VisualizationObjectResourceSchema}
      * @memberof VisualizationObjectResourceResponseSchema
+     */
+    data: VisualizationObjectResourceSchema;
+}
+/**
+ *
+ * @export
+ * @interface VisualizationObjectResourceResponseSchemaAllOf
+ */
+export interface VisualizationObjectResourceResponseSchemaAllOf {
+    /**
+     *
+     * @type {VisualizationObjectResourceSchema}
+     * @memberof VisualizationObjectResourceResponseSchemaAllOf
      */
     data: VisualizationObjectResourceSchema;
 }
@@ -3154,11 +3807,48 @@ export enum VisualizationObjectResourceSchemaTypeEnum {
  * @export
  * @interface VisualizationObjectResourcesResponseSchema
  */
-export interface VisualizationObjectResourcesResponseSchema extends Success {
+export interface VisualizationObjectResourcesResponseSchema {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof VisualizationObjectResourcesResponseSchema
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {JsonApi}
+     * @memberof VisualizationObjectResourcesResponseSchema
+     */
+    jsonapi?: JsonApi;
+    /**
+     *
+     * @type {Links}
+     * @memberof VisualizationObjectResourcesResponseSchema
+     */
+    links?: Links;
+    /**
+     * Non-standard meta-information that can not be represented as an attribute or relationship.
+     * @type {{ [key: string]: object; }}
+     * @memberof VisualizationObjectResourcesResponseSchema
+     */
+    meta?: { [key: string]: object };
     /**
      *
      * @type {Array<VisualizationObjectResourceSchema>}
      * @memberof VisualizationObjectResourcesResponseSchema
+     */
+    data: Array<VisualizationObjectResourceSchema>;
+}
+/**
+ *
+ * @export
+ * @interface VisualizationObjectResourcesResponseSchemaAllOf
+ */
+export interface VisualizationObjectResourcesResponseSchemaAllOf {
+    /**
+     *
+     * @type {Array<VisualizationObjectResourceSchema>}
+     * @memberof VisualizationObjectResourcesResponseSchemaAllOf
      */
     data: Array<VisualizationObjectResourceSchema>;
 }
@@ -3775,6 +4465,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -3791,6 +4483,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -3806,6 +4500,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes,
                 filterFacts,
                 filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
                 filterId,
                 fields,
                 include,
@@ -3861,6 +4557,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[datasets]"] = filterDatasets;
             }
 
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+            }
+
             if (filterId !== undefined) {
                 localVarQueryParameter["filter[id]"] = filterId;
             }
@@ -3897,6 +4601,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -3913,6 +4619,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -3928,6 +4636,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes,
                 filterFacts,
                 filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
                 filterId,
                 fields,
                 include,
@@ -3978,6 +4688,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterDatasets !== undefined) {
                 localVarQueryParameter["filter[datasets]"] = filterDatasets;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
             }
 
             if (filterId !== undefined) {
@@ -5101,6 +5819,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -5117,6 +5837,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -5132,6 +5854,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes,
                 filterFacts,
                 filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
                 filterId,
                 fields,
                 include,
@@ -5187,6 +5911,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[datasets]"] = filterDatasets;
             }
 
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+            }
+
             if (filterId !== undefined) {
                 localVarQueryParameter["filter[id]"] = filterId;
             }
@@ -5223,6 +5955,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -5239,6 +5973,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -5254,6 +5990,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes,
                 filterFacts,
                 filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
                 filterId,
                 fields,
                 include,
@@ -5304,6 +6042,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterDatasets !== undefined) {
                 localVarQueryParameter["filter[datasets]"] = filterDatasets;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
             }
 
             if (filterId !== undefined) {
@@ -5670,6 +6416,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -5686,6 +6434,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -5701,6 +6451,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes,
                 filterFacts,
                 filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
                 filterId,
                 fields,
                 include,
@@ -5756,6 +6508,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[datasets]"] = filterDatasets;
             }
 
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+            }
+
             if (filterId !== undefined) {
                 localVarQueryParameter["filter[id]"] = filterId;
             }
@@ -5792,6 +6552,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -5808,6 +6570,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -5823,6 +6587,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes,
                 filterFacts,
                 filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
                 filterId,
                 fields,
                 include,
@@ -5873,6 +6639,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterDatasets !== undefined) {
                 localVarQueryParameter["filter[datasets]"] = filterDatasets;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
             }
 
             if (filterId !== undefined) {
@@ -6249,6 +7023,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -6265,6 +7041,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -6280,6 +7058,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes,
                 filterFacts,
                 filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
                 filterId,
                 fields,
                 include,
@@ -6335,6 +7115,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[datasets]"] = filterDatasets;
             }
 
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+            }
+
             if (filterId !== undefined) {
                 localVarQueryParameter["filter[id]"] = filterId;
             }
@@ -6371,6 +7159,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -6387,6 +7177,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -6402,6 +7194,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes,
                 filterFacts,
                 filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
                 filterId,
                 fields,
                 include,
@@ -6454,6 +7248,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[datasets]"] = filterDatasets;
             }
 
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+            }
+
             if (filterId !== undefined) {
                 localVarQueryParameter["filter[id]"] = filterId;
             }
@@ -6487,7 +7289,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -6508,7 +7312,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -6528,7 +7334,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle,
                 filterDescription,
                 filterMaql,
+                filterFormat,
                 filterAst,
+                filterTags,
                 filterFacts,
                 filterAttributes,
                 filterLabels,
@@ -6573,8 +7381,16 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[maql]"] = filterMaql;
             }
 
+            if (filterFormat !== undefined) {
+                localVarQueryParameter["filter[format]"] = filterFormat;
+            }
+
             if (filterAst !== undefined) {
                 localVarQueryParameter["filter[ast]"] = filterAst;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
             }
 
             if (filterFacts !== undefined) {
@@ -7754,7 +8570,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -7773,7 +8591,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -7791,7 +8611,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle,
                 filterDescription,
                 filterMaql,
+                filterFormat,
                 filterAst,
+                filterTags,
                 filterFacts,
                 filterAttributes,
                 filterLabels,
@@ -7840,8 +8662,16 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[maql]"] = filterMaql;
             }
 
+            if (filterFormat !== undefined) {
+                localVarQueryParameter["filter[format]"] = filterFormat;
+            }
+
             if (filterAst !== undefined) {
                 localVarQueryParameter["filter[ast]"] = filterAst;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
             }
 
             if (filterFacts !== undefined) {
@@ -9115,7 +9945,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -9134,7 +9966,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -9152,7 +9986,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle,
                 filterDescription,
                 filterMaql,
+                filterFormat,
                 filterAst,
+                filterTags,
                 filterFacts,
                 filterAttributes,
                 filterLabels,
@@ -9204,8 +10040,16 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[maql]"] = filterMaql;
             }
 
+            if (filterFormat !== undefined) {
+                localVarQueryParameter["filter[format]"] = filterFormat;
+            }
+
             if (filterAst !== undefined) {
                 localVarQueryParameter["filter[ast]"] = filterAst;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
             }
 
             if (filterFacts !== undefined) {
@@ -9384,6 +10228,658 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                           : {},
                   )
                 : metricResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling metricsIdRelationshipsTagsDelete.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling metricsIdRelationshipsTagsDelete.",
+                );
+            }
+            const localVarPath = `/metrics/{id}/relationships/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve tag references related to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                contentType,
+                id,
+                filter,
+                filterTitle,
+                filterLabels,
+                filterAttributes,
+                filterFacts,
+                filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
+                filterId,
+                fields,
+                include,
+            } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling metricsIdRelationshipsTagsGet.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling metricsIdRelationshipsTagsGet.",
+                );
+            }
+            const localVarPath = `/metrics/{id}/relationships/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (filterTitle !== undefined) {
+                localVarQueryParameter["filter[title]"] = filterTitle;
+            }
+
+            if (filterLabels !== undefined) {
+                localVarQueryParameter["filter[labels]"] = filterLabels;
+            }
+
+            if (filterAttributes !== undefined) {
+                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+            }
+
+            if (filterFacts !== undefined) {
+                localVarQueryParameter["filter[facts]"] = filterFacts;
+            }
+
+            if (filterDatasets !== undefined) {
+                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+            }
+
+            if (filterId !== undefined) {
+                localVarQueryParameter["filter[id]"] = filterId;
+            }
+
+            if (fields !== undefined) {
+                localVarQueryParameter["fields"] = fields;
+            }
+
+            if (include !== undefined) {
+                localVarQueryParameter["include"] = include;
+            }
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, tagResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling metricsIdRelationshipsTagsPatch.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling metricsIdRelationshipsTagsPatch.",
+                );
+            }
+            const localVarPath = `/metrics/{id}/relationships/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof tagResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      tagResourceReferencesResponseSchema !== undefined
+                          ? tagResourceReferencesResponseSchema
+                          : {},
+                  )
+                : tagResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, tagResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling metricsIdRelationshipsTagsPost.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling metricsIdRelationshipsTagsPost.",
+                );
+            }
+            const localVarPath = `/metrics/{id}/relationships/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof tagResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      tagResourceReferencesResponseSchema !== undefined
+                          ? tagResourceReferencesResponseSchema
+                          : {},
+                  )
+                : tagResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling metricsIdTagsDelete.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling metricsIdTagsDelete.",
+                );
+            }
+            const localVarPath = `/metrics/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve tag related to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                contentType,
+                id,
+                filter,
+                filterTitle,
+                filterLabels,
+                filterAttributes,
+                filterFacts,
+                filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
+                filterId,
+                fields,
+                include,
+            } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling metricsIdTagsGet.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling metricsIdTagsGet.",
+                );
+            }
+            const localVarPath = `/metrics/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (filterTitle !== undefined) {
+                localVarQueryParameter["filter[title]"] = filterTitle;
+            }
+
+            if (filterLabels !== undefined) {
+                localVarQueryParameter["filter[labels]"] = filterLabels;
+            }
+
+            if (filterAttributes !== undefined) {
+                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+            }
+
+            if (filterFacts !== undefined) {
+                localVarQueryParameter["filter[facts]"] = filterFacts;
+            }
+
+            if (filterDatasets !== undefined) {
+                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+            }
+
+            if (filterId !== undefined) {
+                localVarQueryParameter["filter[id]"] = filterId;
+            }
+
+            if (fields !== undefined) {
+                localVarQueryParameter["fields"] = fields;
+            }
+
+            if (include !== undefined) {
+                localVarQueryParameter["include"] = include;
+            }
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, tagResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling metricsIdTagsPatch.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling metricsIdTagsPatch.",
+                );
+            }
+            const localVarPath = `/metrics/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof tagResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      tagResourceReferencesResponseSchema !== undefined
+                          ? tagResourceReferencesResponseSchema
+                          : {},
+                  )
+                : tagResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, tagResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling metricsIdTagsPost.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling metricsIdTagsPost.",
+                );
+            }
+            const localVarPath = `/metrics/{id}/tags`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof tagResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      tagResourceReferencesResponseSchema !== undefined
+                          ? tagResourceReferencesResponseSchema
+                          : {},
+                  )
+                : tagResourceReferencesResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -10126,6 +11622,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -10144,6 +11642,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -10161,6 +11661,8 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterAttributes,
                 filterFacts,
                 filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
                 filterId,
                 fields,
                 include,
@@ -10207,6 +11709,14 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterDatasets !== undefined) {
                 localVarQueryParameter["filter[datasets]"] = filterDatasets;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
             }
 
             if (filterId !== undefined) {
@@ -11653,6 +13163,347 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
+         * Delete tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdMetricsDelete.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdMetricsDelete.",
+                );
+            }
+            const localVarPath = `/tags/{id}/metrics`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve metric related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
+         * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] metric fields to include (csv)
+         * @param {string} [include] metric relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterMaql?: string;
+                filterFormat?: string;
+                filterAst?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                contentType,
+                id,
+                filter,
+                filterTitle,
+                filterDescription,
+                filterMaql,
+                filterFormat,
+                filterAst,
+                filterTags,
+                filterFacts,
+                filterAttributes,
+                filterLabels,
+                filterMetrics,
+                filterId,
+                fields,
+                include,
+            } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdMetricsGet.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdMetricsGet.",
+                );
+            }
+            const localVarPath = `/tags/{id}/metrics`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (filterTitle !== undefined) {
+                localVarQueryParameter["filter[title]"] = filterTitle;
+            }
+
+            if (filterDescription !== undefined) {
+                localVarQueryParameter["filter[description]"] = filterDescription;
+            }
+
+            if (filterMaql !== undefined) {
+                localVarQueryParameter["filter[maql]"] = filterMaql;
+            }
+
+            if (filterFormat !== undefined) {
+                localVarQueryParameter["filter[format]"] = filterFormat;
+            }
+
+            if (filterAst !== undefined) {
+                localVarQueryParameter["filter[ast]"] = filterAst;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
+            }
+
+            if (filterFacts !== undefined) {
+                localVarQueryParameter["filter[facts]"] = filterFacts;
+            }
+
+            if (filterAttributes !== undefined) {
+                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+            }
+
+            if (filterLabels !== undefined) {
+                localVarQueryParameter["filter[labels]"] = filterLabels;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterId !== undefined) {
+                localVarQueryParameter["filter[id]"] = filterId;
+            }
+
+            if (fields !== undefined) {
+                localVarQueryParameter["fields"] = fields;
+            }
+
+            if (include !== undefined) {
+                localVarQueryParameter["include"] = include;
+            }
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, metricResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdMetricsPatch.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdMetricsPatch.",
+                );
+            }
+            const localVarPath = `/tags/{id}/metrics`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof metricResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      metricResourceReferencesResponseSchema !== undefined
+                          ? metricResourceReferencesResponseSchema
+                          : {},
+                  )
+                : metricResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, metricResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdMetricsPost.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdMetricsPost.",
+                );
+            }
+            const localVarPath = `/tags/{id}/metrics`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof metricResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      metricResourceReferencesResponseSchema !== undefined
+                          ? metricResourceReferencesResponseSchema
+                          : {},
+                  )
+                : metricResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Update a Tag
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -13051,6 +14902,1023 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             };
         },
         /**
+         * Delete tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdRelationshipsMetricsDelete.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdRelationshipsMetricsDelete.",
+                );
+            }
+            const localVarPath = `/tags/{id}/relationships/metrics`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve metric references related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
+         * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] metric fields to include (csv)
+         * @param {string} [include] metric relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterMaql?: string;
+                filterFormat?: string;
+                filterAst?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                contentType,
+                id,
+                filter,
+                filterTitle,
+                filterDescription,
+                filterMaql,
+                filterFormat,
+                filterAst,
+                filterTags,
+                filterFacts,
+                filterAttributes,
+                filterLabels,
+                filterMetrics,
+                filterId,
+                fields,
+                include,
+            } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdRelationshipsMetricsGet.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdRelationshipsMetricsGet.",
+                );
+            }
+            const localVarPath = `/tags/{id}/relationships/metrics`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (filterTitle !== undefined) {
+                localVarQueryParameter["filter[title]"] = filterTitle;
+            }
+
+            if (filterDescription !== undefined) {
+                localVarQueryParameter["filter[description]"] = filterDescription;
+            }
+
+            if (filterMaql !== undefined) {
+                localVarQueryParameter["filter[maql]"] = filterMaql;
+            }
+
+            if (filterFormat !== undefined) {
+                localVarQueryParameter["filter[format]"] = filterFormat;
+            }
+
+            if (filterAst !== undefined) {
+                localVarQueryParameter["filter[ast]"] = filterAst;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
+            }
+
+            if (filterFacts !== undefined) {
+                localVarQueryParameter["filter[facts]"] = filterFacts;
+            }
+
+            if (filterAttributes !== undefined) {
+                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+            }
+
+            if (filterLabels !== undefined) {
+                localVarQueryParameter["filter[labels]"] = filterLabels;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterId !== undefined) {
+                localVarQueryParameter["filter[id]"] = filterId;
+            }
+
+            if (fields !== undefined) {
+                localVarQueryParameter["fields"] = fields;
+            }
+
+            if (include !== undefined) {
+                localVarQueryParameter["include"] = include;
+            }
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, metricResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdRelationshipsMetricsPatch.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdRelationshipsMetricsPatch.",
+                );
+            }
+            const localVarPath = `/tags/{id}/relationships/metrics`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof metricResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      metricResourceReferencesResponseSchema !== undefined
+                          ? metricResourceReferencesResponseSchema
+                          : {},
+                  )
+                : metricResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, metricResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdRelationshipsMetricsPost.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdRelationshipsMetricsPost.",
+                );
+            }
+            const localVarPath = `/tags/{id}/relationships/metrics`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof metricResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      metricResourceReferencesResponseSchema !== undefined
+                          ? metricResourceReferencesResponseSchema
+                          : {},
+                  )
+                : metricResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdRelationshipsVisualizationObjectsDelete.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdRelationshipsVisualizationObjectsDelete.",
+                );
+            }
+            const localVarPath = `/tags/{id}/relationships/visualizationObjects`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve visualizationObject references related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] visualizationObject fields to include (csv)
+         * @param {string} [include] visualizationObject relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                contentType,
+                id,
+                filter,
+                filterTitle,
+                filterDescription,
+                filterTags,
+                filterFacts,
+                filterAttributes,
+                filterLabels,
+                filterMetrics,
+                filterId,
+                fields,
+                include,
+            } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdRelationshipsVisualizationObjectsGet.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdRelationshipsVisualizationObjectsGet.",
+                );
+            }
+            const localVarPath = `/tags/{id}/relationships/visualizationObjects`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (filterTitle !== undefined) {
+                localVarQueryParameter["filter[title]"] = filterTitle;
+            }
+
+            if (filterDescription !== undefined) {
+                localVarQueryParameter["filter[description]"] = filterDescription;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
+            }
+
+            if (filterFacts !== undefined) {
+                localVarQueryParameter["filter[facts]"] = filterFacts;
+            }
+
+            if (filterAttributes !== undefined) {
+                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+            }
+
+            if (filterLabels !== undefined) {
+                localVarQueryParameter["filter[labels]"] = filterLabels;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterId !== undefined) {
+                localVarQueryParameter["filter[id]"] = filterId;
+            }
+
+            if (fields !== undefined) {
+                localVarQueryParameter["fields"] = fields;
+            }
+
+            if (include !== undefined) {
+                localVarQueryParameter["include"] = include;
+            }
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, visualizationObjectResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdRelationshipsVisualizationObjectsPatch.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdRelationshipsVisualizationObjectsPatch.",
+                );
+            }
+            const localVarPath = `/tags/{id}/relationships/visualizationObjects`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof visualizationObjectResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      visualizationObjectResourceReferencesResponseSchema !== undefined
+                          ? visualizationObjectResourceReferencesResponseSchema
+                          : {},
+                  )
+                : visualizationObjectResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, visualizationObjectResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdRelationshipsVisualizationObjectsPost.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdRelationshipsVisualizationObjectsPost.",
+                );
+            }
+            const localVarPath = `/tags/{id}/relationships/visualizationObjects`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof visualizationObjectResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      visualizationObjectResourceReferencesResponseSchema !== undefined
+                          ? visualizationObjectResourceReferencesResponseSchema
+                          : {},
+                  )
+                : visualizationObjectResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdVisualizationObjectsDelete.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdVisualizationObjectsDelete.",
+                );
+            }
+            const localVarPath = `/tags/{id}/visualizationObjects`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve visualizationObject related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] visualizationObject fields to include (csv)
+         * @param {string} [include] visualizationObject relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                contentType,
+                id,
+                filter,
+                filterTitle,
+                filterDescription,
+                filterTags,
+                filterFacts,
+                filterAttributes,
+                filterLabels,
+                filterMetrics,
+                filterId,
+                fields,
+                include,
+            } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdVisualizationObjectsGet.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdVisualizationObjectsGet.",
+                );
+            }
+            const localVarPath = `/tags/{id}/visualizationObjects`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (filterTitle !== undefined) {
+                localVarQueryParameter["filter[title]"] = filterTitle;
+            }
+
+            if (filterDescription !== undefined) {
+                localVarQueryParameter["filter[description]"] = filterDescription;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
+            }
+
+            if (filterFacts !== undefined) {
+                localVarQueryParameter["filter[facts]"] = filterFacts;
+            }
+
+            if (filterAttributes !== undefined) {
+                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+            }
+
+            if (filterLabels !== undefined) {
+                localVarQueryParameter["filter[labels]"] = filterLabels;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterId !== undefined) {
+                localVarQueryParameter["filter[id]"] = filterId;
+            }
+
+            if (fields !== undefined) {
+                localVarQueryParameter["fields"] = fields;
+            }
+
+            if (include !== undefined) {
+                localVarQueryParameter["include"] = include;
+            }
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, visualizationObjectResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdVisualizationObjectsPatch.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdVisualizationObjectsPatch.",
+                );
+            }
+            const localVarPath = `/tags/{id}/visualizationObjects`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof visualizationObjectResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      visualizationObjectResourceReferencesResponseSchema !== undefined
+                          ? visualizationObjectResourceReferencesResponseSchema
+                          : {},
+                  )
+                : visualizationObjectResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, visualizationObjectResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling tagsIdVisualizationObjectsPost.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling tagsIdVisualizationObjectsPost.",
+                );
+            }
+            const localVarPath = `/tags/{id}/visualizationObjects`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof visualizationObjectResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      visualizationObjectResourceReferencesResponseSchema !== undefined
+                          ? visualizationObjectResourceReferencesResponseSchema
+                          : {},
+                  )
+                : visualizationObjectResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Create a Tag
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {TagPostResource} [tagPostResource]
@@ -13110,6 +15978,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -13129,6 +15998,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -13147,6 +16017,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filter,
                 filterTitle,
                 filterDescription,
+                filterTags,
                 filterFacts,
                 filterAttributes,
                 filterLabels,
@@ -13185,6 +16056,10 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
 
             if (filterDescription !== undefined) {
                 localVarQueryParameter["filter[description]"] = filterDescription;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
             }
 
             if (filterFacts !== undefined) {
@@ -13753,7 +16628,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -13772,7 +16649,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -13790,7 +16669,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle,
                 filterDescription,
                 filterMaql,
+                filterFormat,
                 filterAst,
+                filterTags,
                 filterFacts,
                 filterAttributes,
                 filterLabels,
@@ -13842,8 +16723,16 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[maql]"] = filterMaql;
             }
 
+            if (filterFormat !== undefined) {
+                localVarQueryParameter["filter[format]"] = filterFormat;
+            }
+
             if (filterAst !== undefined) {
                 localVarQueryParameter["filter[ast]"] = filterAst;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
             }
 
             if (filterFacts !== undefined) {
@@ -14344,7 +17233,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -14363,7 +17254,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -14381,7 +17274,9 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 filterTitle,
                 filterDescription,
                 filterMaql,
+                filterFormat,
                 filterAst,
+                filterTags,
                 filterFacts,
                 filterAttributes,
                 filterLabels,
@@ -14433,8 +17328,16 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
                 localVarQueryParameter["filter[maql]"] = filterMaql;
             }
 
+            if (filterFormat !== undefined) {
+                localVarQueryParameter["filter[format]"] = filterFormat;
+            }
+
             if (filterAst !== undefined) {
                 localVarQueryParameter["filter[ast]"] = filterAst;
+            }
+
+            if (filterTags !== undefined) {
+                localVarQueryParameter["filter[tags]"] = filterTags;
             }
 
             if (filterFacts !== undefined) {
@@ -14473,6 +17376,670 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling visualizationObjectsIdRelationshipsTagsDelete.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling visualizationObjectsIdRelationshipsTagsDelete.",
+                );
+            }
+            const localVarPath = `/visualizationObjects/{id}/relationships/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve tag references related to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                contentType,
+                id,
+                filter,
+                filterTitle,
+                filterLabels,
+                filterAttributes,
+                filterFacts,
+                filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
+                filterId,
+                fields,
+                include,
+            } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling visualizationObjectsIdRelationshipsTagsGet.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling visualizationObjectsIdRelationshipsTagsGet.",
+                );
+            }
+            const localVarPath = `/visualizationObjects/{id}/relationships/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (filterTitle !== undefined) {
+                localVarQueryParameter["filter[title]"] = filterTitle;
+            }
+
+            if (filterLabels !== undefined) {
+                localVarQueryParameter["filter[labels]"] = filterLabels;
+            }
+
+            if (filterAttributes !== undefined) {
+                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+            }
+
+            if (filterFacts !== undefined) {
+                localVarQueryParameter["filter[facts]"] = filterFacts;
+            }
+
+            if (filterDatasets !== undefined) {
+                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+            }
+
+            if (filterId !== undefined) {
+                localVarQueryParameter["filter[id]"] = filterId;
+            }
+
+            if (fields !== undefined) {
+                localVarQueryParameter["fields"] = fields;
+            }
+
+            if (include !== undefined) {
+                localVarQueryParameter["include"] = include;
+            }
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, tagResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling visualizationObjectsIdRelationshipsTagsPatch.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling visualizationObjectsIdRelationshipsTagsPatch.",
+                );
+            }
+            const localVarPath = `/visualizationObjects/{id}/relationships/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof tagResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      tagResourceReferencesResponseSchema !== undefined
+                          ? tagResourceReferencesResponseSchema
+                          : {},
+                  )
+                : tagResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, tagResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling visualizationObjectsIdRelationshipsTagsPost.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling visualizationObjectsIdRelationshipsTagsPost.",
+                );
+            }
+            const localVarPath = `/visualizationObjects/{id}/relationships/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof tagResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      tagResourceReferencesResponseSchema !== undefined
+                          ? tagResourceReferencesResponseSchema
+                          : {},
+                  )
+                : tagResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling visualizationObjectsIdTagsDelete.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling visualizationObjectsIdTagsDelete.",
+                );
+            }
+            const localVarPath = `/visualizationObjects/{id}/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve tag related to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                contentType,
+                id,
+                filter,
+                filterTitle,
+                filterLabels,
+                filterAttributes,
+                filterFacts,
+                filterDatasets,
+                filterMetrics,
+                filterVisualizationObjects,
+                filterId,
+                fields,
+                include,
+            } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling visualizationObjectsIdTagsGet.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling visualizationObjectsIdTagsGet.",
+                );
+            }
+            const localVarPath = `/visualizationObjects/{id}/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (filterTitle !== undefined) {
+                localVarQueryParameter["filter[title]"] = filterTitle;
+            }
+
+            if (filterLabels !== undefined) {
+                localVarQueryParameter["filter[labels]"] = filterLabels;
+            }
+
+            if (filterAttributes !== undefined) {
+                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+            }
+
+            if (filterFacts !== undefined) {
+                localVarQueryParameter["filter[facts]"] = filterFacts;
+            }
+
+            if (filterDatasets !== undefined) {
+                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+            }
+
+            if (filterMetrics !== undefined) {
+                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+            }
+
+            if (filterVisualizationObjects !== undefined) {
+                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+            }
+
+            if (filterId !== undefined) {
+                localVarQueryParameter["filter[id]"] = filterId;
+            }
+
+            if (fields !== undefined) {
+                localVarQueryParameter["fields"] = fields;
+            }
+
+            if (include !== undefined) {
+                localVarQueryParameter["include"] = include;
+            }
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, tagResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling visualizationObjectsIdTagsPatch.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling visualizationObjectsIdTagsPatch.",
+                );
+            }
+            const localVarPath = `/visualizationObjects/{id}/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof tagResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      tagResourceReferencesResponseSchema !== undefined
+                          ? tagResourceReferencesResponseSchema
+                          : {},
+                  )
+                : tagResourceReferencesResponseSchema || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { contentType, id, tagResourceReferencesResponseSchema } = params;
+            // verify required parameter 'contentType' is not null or undefined
+            if (contentType === null || contentType === undefined) {
+                throw new RequiredError(
+                    "contentType",
+                    "Required parameter contentType was null or undefined when calling visualizationObjectsIdTagsPost.",
+                );
+            }
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling visualizationObjectsIdTagsPost.",
+                );
+            }
+            const localVarPath = `/visualizationObjects/{id}/tags`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter["Content-Type"] = String(contentType);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof tagResourceReferencesResponseSchema !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      tagResourceReferencesResponseSchema !== undefined
+                          ? tagResourceReferencesResponseSchema
+                          : {},
+                  )
+                : tagResourceReferencesResponseSchema || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -14787,6 +18354,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -14803,6 +18372,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -14830,6 +18401,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -14846,6 +18419,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -15262,6 +18837,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -15278,6 +18855,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -15305,6 +18884,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -15321,6 +18902,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -15483,6 +19066,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -15499,6 +19084,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -15527,6 +19114,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -15543,6 +19132,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -15707,6 +19298,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -15723,6 +19316,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -15751,6 +19346,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -15767,6 +19364,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -15792,7 +19391,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -15813,7 +19414,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -16320,7 +19923,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -16339,7 +19944,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -16870,7 +20477,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -16889,7 +20498,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -16966,6 +20577,262 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(
                 configuration,
             ).metricsIdRelationshipsMetricsPost(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Delete metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).metricsIdRelationshipsTagsDelete(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve tag references related to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).metricsIdRelationshipsTagsGet(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Update metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).metricsIdRelationshipsTagsPatch(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Create metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).metricsIdRelationshipsTagsPost(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Delete metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).metricsIdTagsDelete(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve tag related to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourcesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).metricsIdTagsGet(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Update metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).metricsIdTagsPatch(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Create metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).metricsIdTagsPost(
+                params,
+                options,
+            );
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -17273,6 +21140,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -17291,6 +21160,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -17903,6 +21774,151 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * Delete tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<MetricResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).tagsIdMetricsDelete(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve metric related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
+         * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] metric fields to include (csv)
+         * @param {string} [include] metric relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterMaql?: string;
+                filterFormat?: string;
+                filterAst?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricResourcesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).tagsIdMetricsGet(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Update tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<MetricResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).tagsIdMetricsPatch(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Create tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<MetricResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(configuration).tagsIdMetricsPost(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * Update a Tag
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {string} id
@@ -18461,6 +22477,426 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * Delete tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<MetricResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdRelationshipsMetricsDelete(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve metric references related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
+         * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] metric fields to include (csv)
+         * @param {string} [include] metric relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterMaql?: string;
+                filterFormat?: string;
+                filterAst?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<MetricResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdRelationshipsMetricsGet(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Update tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<MetricResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdRelationshipsMetricsPatch(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Create tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<MetricResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdRelationshipsMetricsPost(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Delete tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdRelationshipsVisualizationObjectsDelete(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve visualizationObject references related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] visualizationObject fields to include (csv)
+         * @param {string} [include] visualizationObject relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdRelationshipsVisualizationObjectsGet(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Update tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdRelationshipsVisualizationObjectsPatch(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Create tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdRelationshipsVisualizationObjectsPost(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Delete tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdVisualizationObjectsDelete(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve visualizationObject related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] visualizationObject fields to include (csv)
+         * @param {string} [include] visualizationObject relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<VisualizationObjectResourcesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdVisualizationObjectsGet(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Update tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdVisualizationObjectsPatch(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Create tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (
+            axios?: AxiosInstance,
+            basePath?: string,
+        ) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).tagsIdVisualizationObjectsPost(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * Create a Tag
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {TagPostResource} [tagPostResource]
@@ -18489,6 +22925,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -18508,6 +22945,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -18736,7 +23174,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -18755,7 +23195,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -18949,7 +23391,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -18968,7 +23412,9 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -18985,6 +23431,258 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = DefaultApiAxiosParamCreator(
                 configuration,
             ).visualizationObjectsIdRelationshipsMetricsGet(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Delete visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).visualizationObjectsIdRelationshipsTagsDelete(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve tag references related to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).visualizationObjectsIdRelationshipsTagsGet(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Update visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).visualizationObjectsIdRelationshipsTagsPatch(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Create visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).visualizationObjectsIdRelationshipsTagsPost(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Delete visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).visualizationObjectsIdTagsDelete(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Retrieve tag related to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourcesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).visualizationObjectsIdTagsGet(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Update visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).visualizationObjectsIdTagsPatch(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * Create visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagResourceReferencesResponseSchema> {
+            const localVarAxiosArgs = DefaultApiAxiosParamCreator(
+                configuration,
+            ).visualizationObjectsIdTagsPost(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -19223,6 +23921,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -19239,6 +23939,8 @@ export const DefaultApiFactory = function(
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -19260,6 +23962,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -19276,6 +23980,8 @@ export const DefaultApiFactory = function(
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -19611,6 +24317,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -19627,6 +24335,8 @@ export const DefaultApiFactory = function(
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -19648,6 +24358,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -19664,6 +24376,8 @@ export const DefaultApiFactory = function(
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -19783,6 +24497,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -19799,6 +24515,8 @@ export const DefaultApiFactory = function(
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -19817,6 +24535,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -19833,6 +24553,8 @@ export const DefaultApiFactory = function(
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -19954,6 +24676,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -19970,6 +24694,8 @@ export const DefaultApiFactory = function(
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -19988,6 +24714,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -20004,6 +24732,8 @@ export const DefaultApiFactory = function(
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -20019,7 +24749,9 @@ export const DefaultApiFactory = function(
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -20040,7 +24772,9 @@ export const DefaultApiFactory = function(
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -20378,7 +25112,9 @@ export const DefaultApiFactory = function(
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -20397,7 +25133,9 @@ export const DefaultApiFactory = function(
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -20789,7 +25527,9 @@ export const DefaultApiFactory = function(
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -20808,7 +25548,9 @@ export const DefaultApiFactory = function(
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -20865,6 +25607,198 @@ export const DefaultApiFactory = function(
                 axios,
                 basePath,
             );
+        },
+        /**
+         * Delete metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).metricsIdRelationshipsTagsDelete(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Retrieve tag references related to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).metricsIdRelationshipsTagsGet(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Update metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).metricsIdRelationshipsTagsPatch(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Create metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdRelationshipsTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).metricsIdRelationshipsTagsPost(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Delete metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).metricsIdTagsDelete(params, options)(axios, basePath);
+        },
+        /**
+         * Retrieve tag related to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourcesResponseSchema> {
+            return DefaultApiFp(configuration).metricsIdTagsGet(params, options)(axios, basePath);
+        },
+        /**
+         * Update metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).metricsIdTagsPatch(params, options)(axios, basePath);
+        },
+        /**
+         * Create metric relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        metricsIdTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).metricsIdTagsPost(params, options)(axios, basePath);
         },
         /**
          * Create a Metric
@@ -21095,6 +26029,8 @@ export const DefaultApiFactory = function(
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
          * @param {string} [filterId] Filter by id (csv)
          * @param {string} [fields] tag fields to include (csv)
          * @param {string} [include] tag relationships to include (csv)
@@ -21113,6 +26049,8 @@ export const DefaultApiFactory = function(
                 filterAttributes?: string;
                 filterFacts?: string;
                 filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
                 filterId?: string;
                 fields?: string;
                 include?: string;
@@ -21521,6 +26459,102 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<LabelResourceReferencesResponseSchema> {
             return DefaultApiFp(configuration).tagsIdLabelsPost(params, options)(axios, basePath);
+        },
+        /**
+         * Delete tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options?: any,
+        ): AxiosPromise<MetricResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdMetricsDelete(params, options)(axios, basePath);
+        },
+        /**
+         * Retrieve metric related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
+         * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] metric fields to include (csv)
+         * @param {string} [include] metric relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterMaql?: string;
+                filterFormat?: string;
+                filterAst?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options?: any,
+        ): AxiosPromise<MetricResourcesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdMetricsGet(params, options)(axios, basePath);
+        },
+        /**
+         * Update tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<MetricResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdMetricsPatch(params, options)(axios, basePath);
+        },
+        /**
+         * Create tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdMetricsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<MetricResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdMetricsPost(params, options)(axios, basePath);
         },
         /**
          * Update a Tag
@@ -21942,6 +26976,318 @@ export const DefaultApiFactory = function(
             );
         },
         /**
+         * Delete tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options?: any,
+        ): AxiosPromise<MetricResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdRelationshipsMetricsDelete(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Retrieve metric references related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
+         * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] metric fields to include (csv)
+         * @param {string} [include] metric relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterMaql?: string;
+                filterFormat?: string;
+                filterAst?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options?: any,
+        ): AxiosPromise<MetricResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdRelationshipsMetricsGet(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Update tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<MetricResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdRelationshipsMetricsPatch(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Create tag relationship to a metric resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsMetricsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<MetricResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdRelationshipsMetricsPost(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Delete tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options?: any,
+        ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdRelationshipsVisualizationObjectsDelete(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Retrieve visualizationObject references related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] visualizationObject fields to include (csv)
+         * @param {string} [include] visualizationObject relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options?: any,
+        ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdRelationshipsVisualizationObjectsGet(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Update tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdRelationshipsVisualizationObjectsPatch(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Create tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdRelationshipsVisualizationObjectsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdRelationshipsVisualizationObjectsPost(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Delete tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options?: any,
+        ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdVisualizationObjectsDelete(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Retrieve visualizationObject related to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] visualizationObject fields to include (csv)
+         * @param {string} [include] visualizationObject relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterDescription?: string;
+                filterTags?: string;
+                filterFacts?: string;
+                filterAttributes?: string;
+                filterLabels?: string;
+                filterMetrics?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options?: any,
+        ): AxiosPromise<VisualizationObjectResourcesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdVisualizationObjectsGet(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Update tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdVisualizationObjectsPatch(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Create tag relationship to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tagsIdVisualizationObjectsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).tagsIdVisualizationObjectsPost(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
          * Create a Tag
          * @param {'application/vnd.api+json' | 'application/json'} contentType
          * @param {TagPostResource} [tagPostResource]
@@ -21963,6 +27309,7 @@ export const DefaultApiFactory = function(
          * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -21982,6 +27329,7 @@ export const DefaultApiFactory = function(
                 filter?: { [key: string]: object };
                 filterTitle?: string;
                 filterDescription?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -22156,7 +27504,9 @@ export const DefaultApiFactory = function(
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -22175,7 +27525,9 @@ export const DefaultApiFactory = function(
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -22332,7 +27684,9 @@ export const DefaultApiFactory = function(
          * @param {string} [filterTitle] Filter by title (csv)
          * @param {string} [filterDescription] Filter by description (csv)
          * @param {string} [filterMaql] Filter by maql (csv)
+         * @param {string} [filterFormat] Filter by format (csv)
          * @param {string} [filterAst] Filter by ast (csv)
+         * @param {string} [filterTags] Filter by tags (csv)
          * @param {string} [filterFacts] Filter by facts (csv)
          * @param {string} [filterAttributes] Filter by attributes (csv)
          * @param {string} [filterLabels] Filter by labels (csv)
@@ -22351,7 +27705,9 @@ export const DefaultApiFactory = function(
                 filterTitle?: string;
                 filterDescription?: string;
                 filterMaql?: string;
+                filterFormat?: string;
                 filterAst?: string;
+                filterTags?: string;
                 filterFacts?: string;
                 filterAttributes?: string;
                 filterLabels?: string;
@@ -22363,6 +27719,210 @@ export const DefaultApiFactory = function(
             options?: any,
         ): AxiosPromise<MetricResourceReferencesResponseSchema> {
             return DefaultApiFp(configuration).visualizationObjectsIdRelationshipsMetricsGet(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Delete visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).visualizationObjectsIdRelationshipsTagsDelete(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Retrieve tag references related to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).visualizationObjectsIdRelationshipsTagsGet(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Update visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).visualizationObjectsIdRelationshipsTagsPatch(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Create visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdRelationshipsTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).visualizationObjectsIdRelationshipsTagsPost(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Delete visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsDelete(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).visualizationObjectsIdTagsDelete(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Retrieve tag related to a visualizationObject resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+         * @param {string} [filterTitle] Filter by title (csv)
+         * @param {string} [filterLabels] Filter by labels (csv)
+         * @param {string} [filterAttributes] Filter by attributes (csv)
+         * @param {string} [filterFacts] Filter by facts (csv)
+         * @param {string} [filterDatasets] Filter by datasets (csv)
+         * @param {string} [filterMetrics] Filter by metrics (csv)
+         * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+         * @param {string} [filterId] Filter by id (csv)
+         * @param {string} [fields] tag fields to include (csv)
+         * @param {string} [include] tag relationships to include (csv)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsGet(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                filter?: { [key: string]: object };
+                filterTitle?: string;
+                filterLabels?: string;
+                filterAttributes?: string;
+                filterFacts?: string;
+                filterDatasets?: string;
+                filterMetrics?: string;
+                filterVisualizationObjects?: string;
+                filterId?: string;
+                fields?: string;
+                include?: string;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourcesResponseSchema> {
+            return DefaultApiFp(configuration).visualizationObjectsIdTagsGet(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Update visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsPatch(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).visualizationObjectsIdTagsPatch(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         * Create visualizationObject relationship to a tag resource
+         * @param {'application/vnd.api+json' | 'application/json'} contentType
+         * @param {string} id
+         * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        visualizationObjectsIdTagsPost(
+            params: {
+                contentType: "application/vnd.api+json" | "application/json";
+                id: string;
+                tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+            },
+            options?: any,
+        ): AxiosPromise<TagResourceReferencesResponseSchema> {
+            return DefaultApiFp(configuration).visualizationObjectsIdTagsPost(params, options)(
                 axios,
                 basePath,
             );
@@ -22574,6 +28134,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -22591,6 +28153,8 @@ export interface DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -22608,6 +28172,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -22625,6 +28191,8 @@ export interface DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -22950,6 +28518,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -22967,6 +28537,8 @@ export interface DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -22984,6 +28556,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -23001,6 +28575,8 @@ export interface DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -23116,6 +28692,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -23133,6 +28711,8 @@ export interface DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -23150,6 +28730,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -23167,6 +28749,8 @@ export interface DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -23284,6 +28868,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -23301,6 +28887,8 @@ export interface DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -23318,6 +28906,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -23335,6 +28925,8 @@ export interface DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -23349,7 +28941,9 @@ export interface DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -23371,7 +28965,9 @@ export interface DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -23708,7 +29304,9 @@ export interface DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -23728,7 +29326,9 @@ export interface DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -24080,7 +29680,9 @@ export interface DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -24100,7 +29702,9 @@ export interface DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -24147,6 +29751,186 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<MetricResourceReferencesResponseSchema>;
+
+    /**
+     * Delete metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    metricsIdRelationshipsTagsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Retrieve tag references related to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] tag fields to include (csv)
+     * @param {string} [include] tag relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    metricsIdRelationshipsTagsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterLabels?: string;
+            filterAttributes?: string;
+            filterFacts?: string;
+            filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Update metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    metricsIdRelationshipsTagsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Create metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    metricsIdRelationshipsTagsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Delete metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    metricsIdTagsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Retrieve tag related to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] tag fields to include (csv)
+     * @param {string} [include] tag relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    metricsIdTagsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterLabels?: string;
+            filterAttributes?: string;
+            filterFacts?: string;
+            filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourcesResponseSchema>;
+
+    /**
+     * Update metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    metricsIdTagsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Create metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    metricsIdTagsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
 
     /**
      * Create a Metric
@@ -24371,6 +30155,8 @@ export interface DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -24390,6 +30176,8 @@ export interface DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -24799,6 +30587,102 @@ export interface DefaultApiInterface {
     ): AxiosPromise<LabelResourceReferencesResponseSchema>;
 
     /**
+     * Delete tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdMetricsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ): AxiosPromise<MetricResourceReferencesResponseSchema>;
+
+    /**
+     * Retrieve metric related to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
+     * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] metric fields to include (csv)
+     * @param {string} [include] metric relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdMetricsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterDescription?: string;
+            filterMaql?: string;
+            filterFormat?: string;
+            filterAst?: string;
+            filterTags?: string;
+            filterFacts?: string;
+            filterAttributes?: string;
+            filterLabels?: string;
+            filterMetrics?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ): AxiosPromise<MetricResourcesResponseSchema>;
+
+    /**
+     * Update tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdMetricsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<MetricResourceReferencesResponseSchema>;
+
+    /**
+     * Create tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdMetricsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<MetricResourceReferencesResponseSchema>;
+
+    /**
      * Update a Tag
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -25179,6 +31063,282 @@ export interface DefaultApiInterface {
     ): AxiosPromise<LabelResourceReferencesResponseSchema>;
 
     /**
+     * Delete tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdRelationshipsMetricsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ): AxiosPromise<MetricResourceReferencesResponseSchema>;
+
+    /**
+     * Retrieve metric references related to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
+     * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] metric fields to include (csv)
+     * @param {string} [include] metric relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdRelationshipsMetricsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterDescription?: string;
+            filterMaql?: string;
+            filterFormat?: string;
+            filterAst?: string;
+            filterTags?: string;
+            filterFacts?: string;
+            filterAttributes?: string;
+            filterLabels?: string;
+            filterMetrics?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ): AxiosPromise<MetricResourceReferencesResponseSchema>;
+
+    /**
+     * Update tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdRelationshipsMetricsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<MetricResourceReferencesResponseSchema>;
+
+    /**
+     * Create tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdRelationshipsMetricsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<MetricResourceReferencesResponseSchema>;
+
+    /**
+     * Delete tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdRelationshipsVisualizationObjectsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
+
+    /**
+     * Retrieve visualizationObject references related to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] visualizationObject fields to include (csv)
+     * @param {string} [include] visualizationObject relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdRelationshipsVisualizationObjectsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterDescription?: string;
+            filterTags?: string;
+            filterFacts?: string;
+            filterAttributes?: string;
+            filterLabels?: string;
+            filterMetrics?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
+
+    /**
+     * Update tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdRelationshipsVisualizationObjectsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
+
+    /**
+     * Create tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdRelationshipsVisualizationObjectsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
+
+    /**
+     * Delete tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdVisualizationObjectsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
+
+    /**
+     * Retrieve visualizationObject related to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] visualizationObject fields to include (csv)
+     * @param {string} [include] visualizationObject relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdVisualizationObjectsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterDescription?: string;
+            filterTags?: string;
+            filterFacts?: string;
+            filterAttributes?: string;
+            filterLabels?: string;
+            filterMetrics?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
+
+    /**
+     * Update tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdVisualizationObjectsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
+
+    /**
+     * Create tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    tagsIdVisualizationObjectsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
+
+    /**
      * Create a Tag
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {TagPostResource} [tagPostResource]
@@ -25200,6 +31360,7 @@ export interface DefaultApiInterface {
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -25220,6 +31381,7 @@ export interface DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -25384,7 +31546,9 @@ export interface DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -25404,7 +31568,9 @@ export interface DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -25548,7 +31714,9 @@ export interface DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -25568,7 +31736,9 @@ export interface DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -25579,6 +31749,186 @@ export interface DefaultApiInterface {
         },
         options?: any,
     ): AxiosPromise<MetricResourceReferencesResponseSchema>;
+
+    /**
+     * Delete visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    visualizationObjectsIdRelationshipsTagsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Retrieve tag references related to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] tag fields to include (csv)
+     * @param {string} [include] tag relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    visualizationObjectsIdRelationshipsTagsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterLabels?: string;
+            filterAttributes?: string;
+            filterFacts?: string;
+            filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Update visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    visualizationObjectsIdRelationshipsTagsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Create visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    visualizationObjectsIdRelationshipsTagsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Delete visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    visualizationObjectsIdTagsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Retrieve tag related to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] tag fields to include (csv)
+     * @param {string} [include] tag relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    visualizationObjectsIdTagsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterLabels?: string;
+            filterAttributes?: string;
+            filterFacts?: string;
+            filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourcesResponseSchema>;
+
+    /**
+     * Update visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    visualizationObjectsIdTagsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
+
+    /**
+     * Create visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApiInterface
+     */
+    visualizationObjectsIdTagsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ): AxiosPromise<TagResourceReferencesResponseSchema>;
 
     /**
      * Create a VisualizationObject
@@ -25810,6 +32160,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -25827,6 +32179,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -25849,6 +32203,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -25866,6 +32222,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -26230,6 +32588,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -26247,6 +32607,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -26269,6 +32631,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -26286,6 +32650,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -26414,6 +32780,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -26431,6 +32799,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -26453,6 +32823,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -26470,6 +32842,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -26603,6 +32977,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -26620,6 +32996,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -26642,6 +33020,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -26659,6 +33039,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -26675,7 +33057,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -26697,7 +33081,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -27102,7 +33488,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -27122,7 +33510,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -27556,7 +33946,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -27576,7 +33968,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -27637,6 +34031,220 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             this.axios,
             this.basePath,
         );
+    }
+
+    /**
+     * Delete metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public metricsIdRelationshipsTagsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).metricsIdRelationshipsTagsDelete(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Retrieve tag references related to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] tag fields to include (csv)
+     * @param {string} [include] tag relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public metricsIdRelationshipsTagsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterLabels?: string;
+            filterAttributes?: string;
+            filterFacts?: string;
+            filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).metricsIdRelationshipsTagsGet(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Update metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public metricsIdRelationshipsTagsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).metricsIdRelationshipsTagsPatch(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Create metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public metricsIdRelationshipsTagsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).metricsIdRelationshipsTagsPost(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Delete metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public metricsIdTagsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).metricsIdTagsDelete(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Retrieve tag related to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] tag fields to include (csv)
+     * @param {string} [include] tag relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public metricsIdTagsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterLabels?: string;
+            filterAttributes?: string;
+            filterFacts?: string;
+            filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).metricsIdTagsGet(params, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * Update metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public metricsIdTagsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).metricsIdTagsPatch(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Create metric relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public metricsIdTagsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).metricsIdTagsPost(params, options)(this.axios, this.basePath);
     }
 
     /**
@@ -27889,6 +34497,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
      * @param {string} [filterId] Filter by id (csv)
      * @param {string} [fields] tag fields to include (csv)
      * @param {string} [include] tag relationships to include (csv)
@@ -27908,6 +34518,8 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterAttributes?: string;
             filterFacts?: string;
             filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
             filterId?: string;
             fields?: string;
             include?: string;
@@ -28379,6 +34991,116 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Delete tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdMetricsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdMetricsDelete(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Retrieve metric related to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
+     * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] metric fields to include (csv)
+     * @param {string} [include] metric relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdMetricsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterDescription?: string;
+            filterMaql?: string;
+            filterFormat?: string;
+            filterAst?: string;
+            filterTags?: string;
+            filterFacts?: string;
+            filterAttributes?: string;
+            filterLabels?: string;
+            filterMetrics?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdMetricsGet(params, options)(this.axios, this.basePath);
+    }
+
+    /**
+     * Update tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdMetricsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdMetricsPatch(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Create tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdMetricsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdMetricsPost(params, options)(this.axios, this.basePath);
+    }
+
+    /**
      * Update a Tag
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {string} id
@@ -28841,6 +35563,342 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
     }
 
     /**
+     * Delete tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdRelationshipsMetricsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdRelationshipsMetricsDelete(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Retrieve metric references related to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
+     * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] metric fields to include (csv)
+     * @param {string} [include] metric relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdRelationshipsMetricsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterDescription?: string;
+            filterMaql?: string;
+            filterFormat?: string;
+            filterAst?: string;
+            filterTags?: string;
+            filterFacts?: string;
+            filterAttributes?: string;
+            filterLabels?: string;
+            filterMetrics?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdRelationshipsMetricsGet(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Update tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdRelationshipsMetricsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdRelationshipsMetricsPatch(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Create tag relationship to a metric resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {MetricResourceReferencesResponseSchema} [metricResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdRelationshipsMetricsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdRelationshipsMetricsPost(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Delete tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdRelationshipsVisualizationObjectsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdRelationshipsVisualizationObjectsDelete(
+            params,
+            options,
+        )(this.axios, this.basePath);
+    }
+
+    /**
+     * Retrieve visualizationObject references related to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] visualizationObject fields to include (csv)
+     * @param {string} [include] visualizationObject relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdRelationshipsVisualizationObjectsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterDescription?: string;
+            filterTags?: string;
+            filterFacts?: string;
+            filterAttributes?: string;
+            filterLabels?: string;
+            filterMetrics?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdRelationshipsVisualizationObjectsGet(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Update tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdRelationshipsVisualizationObjectsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdRelationshipsVisualizationObjectsPatch(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Create tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdRelationshipsVisualizationObjectsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdRelationshipsVisualizationObjectsPost(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Delete tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdVisualizationObjectsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdVisualizationObjectsDelete(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Retrieve visualizationObject related to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] visualizationObject fields to include (csv)
+     * @param {string} [include] visualizationObject relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdVisualizationObjectsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterDescription?: string;
+            filterTags?: string;
+            filterFacts?: string;
+            filterAttributes?: string;
+            filterLabels?: string;
+            filterMetrics?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdVisualizationObjectsGet(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Update tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdVisualizationObjectsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdVisualizationObjectsPatch(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Create tag relationship to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {VisualizationObjectResourceReferencesResponseSchema} [visualizationObjectResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public tagsIdVisualizationObjectsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).tagsIdVisualizationObjectsPost(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
      * Create a Tag
      * @param {'application/vnd.api+json' | 'application/json'} contentType
      * @param {TagPostResource} [tagPostResource]
@@ -28864,6 +35922,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -28884,6 +35943,7 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filter?: { [key: string]: object };
             filterTitle?: string;
             filterDescription?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -29078,7 +36138,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -29098,7 +36160,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -29267,7 +36331,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [filterTitle] Filter by title (csv)
      * @param {string} [filterDescription] Filter by description (csv)
      * @param {string} [filterMaql] Filter by maql (csv)
+     * @param {string} [filterFormat] Filter by format (csv)
      * @param {string} [filterAst] Filter by ast (csv)
+     * @param {string} [filterTags] Filter by tags (csv)
      * @param {string} [filterFacts] Filter by facts (csv)
      * @param {string} [filterAttributes] Filter by attributes (csv)
      * @param {string} [filterLabels] Filter by labels (csv)
@@ -29287,7 +36353,9 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             filterTitle?: string;
             filterDescription?: string;
             filterMaql?: string;
+            filterFormat?: string;
             filterAst?: string;
+            filterTags?: string;
             filterFacts?: string;
             filterAttributes?: string;
             filterLabels?: string;
@@ -29302,6 +36370,226 @@ export class DefaultApi extends BaseAPI implements DefaultApiInterface {
             params,
             options,
         )(this.axios, this.basePath);
+    }
+
+    /**
+     * Delete visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public visualizationObjectsIdRelationshipsTagsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).visualizationObjectsIdRelationshipsTagsDelete(
+            params,
+            options,
+        )(this.axios, this.basePath);
+    }
+
+    /**
+     * Retrieve tag references related to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] tag fields to include (csv)
+     * @param {string} [include] tag relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public visualizationObjectsIdRelationshipsTagsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterLabels?: string;
+            filterAttributes?: string;
+            filterFacts?: string;
+            filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).visualizationObjectsIdRelationshipsTagsGet(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Update visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public visualizationObjectsIdRelationshipsTagsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).visualizationObjectsIdRelationshipsTagsPatch(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Create visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public visualizationObjectsIdRelationshipsTagsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).visualizationObjectsIdRelationshipsTagsPost(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Delete visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public visualizationObjectsIdTagsDelete(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).visualizationObjectsIdTagsDelete(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Retrieve tag related to a visualizationObject resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [filter] Customizable query (experimental)
+     * @param {string} [filterTitle] Filter by title (csv)
+     * @param {string} [filterLabels] Filter by labels (csv)
+     * @param {string} [filterAttributes] Filter by attributes (csv)
+     * @param {string} [filterFacts] Filter by facts (csv)
+     * @param {string} [filterDatasets] Filter by datasets (csv)
+     * @param {string} [filterMetrics] Filter by metrics (csv)
+     * @param {string} [filterVisualizationObjects] Filter by visualizationObjects (csv)
+     * @param {string} [filterId] Filter by id (csv)
+     * @param {string} [fields] tag fields to include (csv)
+     * @param {string} [include] tag relationships to include (csv)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public visualizationObjectsIdTagsGet(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            filter?: { [key: string]: object };
+            filterTitle?: string;
+            filterLabels?: string;
+            filterAttributes?: string;
+            filterFacts?: string;
+            filterDatasets?: string;
+            filterMetrics?: string;
+            filterVisualizationObjects?: string;
+            filterId?: string;
+            fields?: string;
+            include?: string;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).visualizationObjectsIdTagsGet(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Update visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public visualizationObjectsIdTagsPatch(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).visualizationObjectsIdTagsPatch(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     * Create visualizationObject relationship to a tag resource
+     * @param {'application/vnd.api+json' | 'application/json'} contentType
+     * @param {string} id
+     * @param {TagResourceReferencesResponseSchema} [tagResourceReferencesResponseSchema]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public visualizationObjectsIdTagsPost(
+        params: {
+            contentType: "application/vnd.api+json" | "application/json";
+            id: string;
+            tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
+        },
+        options?: any,
+    ) {
+        return DefaultApiFp(this.configuration).visualizationObjectsIdTagsPost(params, options)(
+            this.axios,
+            this.basePath,
+        );
     }
 
     /**

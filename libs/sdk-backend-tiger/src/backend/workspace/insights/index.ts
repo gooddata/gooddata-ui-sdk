@@ -13,12 +13,25 @@ import {
     IVisualizationClass,
     ObjRef,
     objRefToString,
+    insightTitle,
+    insightId,
 } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../../types";
-import { objRefToUri } from "../../../fromObjRef";
+import uuid4 from "uuid/v4";
 
-import { appendIdAndUri, insights as insightsMocks } from "./mocks/insights";
+import { TigerAuthenticatedCallGuard } from "../../../types";
+import { objRefToUri, objRefToIdentifier } from "../../../fromObjRef";
+
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
+
+const insightFromInsightDefinition = (insight: IInsightDefinition, id: string, uri: string): IInsight => {
+    return {
+        insight: {
+            ...insight.insight,
+            identifier: id,
+            uri,
+        },
+    };
+};
 
 export class TigerWorkspaceInsights implements IWorkspaceInsights {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -39,51 +52,135 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
     };
 
     public getInsights = async (options?: IInsightQueryOptions): Promise<IInsightQueryResult> => {
-        const insights = this.authCall(async () => {
-            const emptyResult: IInsightQueryResult = {
-                items: [],
-                limit: options?.limit!,
-                offset: options?.offset!,
-                totalCount: insightsMocks.length,
-                next: () => Promise.resolve(emptyResult),
-            };
+        const {
+            data: { data: visualizationObjects, links, meta },
+        } = await this.authCall(sdk => {
+            const orderBy = options?.orderBy;
+            if (orderBy === "updated") {
+                // tslint:disable-next-line: no-console
+                console.warn('Tiger does not support sorting by "updated" in getInsights');
+            }
 
-            const result: IInsightQueryResult = {
-                items: insightsMocks,
-                limit: options?.limit!,
-                offset: options?.offset!,
-                // split by offset
-                totalCount: insightsMocks.length,
-                next: () => Promise.resolve(emptyResult),
-            };
+            const sanitizedOrderBy = orderBy !== "updated" ? orderBy : undefined;
 
-            return result;
+            return sdk.metadata.visualizationObjectsGet({
+                contentType: "application/json",
+                ...(options?.limit ? { pageLimit: options?.limit } : {}),
+                pageOffset: options?.offset ?? 0,
+                ...(options?.title ? { filterTitle: options?.title } : {}),
+                ...(sanitizedOrderBy ? { sort: sanitizedOrderBy } : {}),
+            });
         });
 
-        return insights;
+        const insights = visualizationObjects.map(value => {
+            return insightFromInsightDefinition(
+                value.attributes.content! as IInsightDefinition,
+                value.id,
+                (value.links as any)?.self,
+            );
+        });
+
+        const totalCount = (meta?.totalResourceCount as unknown) as number;
+        const hasNextPage = !!links?.next;
+
+        const emptyResult: IInsightQueryResult = {
+            items: [],
+            limit: options?.limit!,
+            offset: options?.offset!,
+            totalCount,
+            next: () => Promise.resolve(emptyResult),
+        };
+
+        const result: IInsightQueryResult = {
+            items: insights,
+            limit: options?.limit!,
+            offset: options?.offset!,
+            totalCount,
+            next: hasNextPage
+                ? () => this.getInsights({ ...options, offset: (options?.offset ?? 0) + insights.length })
+                : () => Promise.resolve(emptyResult),
+        };
+
+        return result;
     };
 
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
-        const uri = await objRefToUri(ref, this.workspace, this.authCall);
-        const insights = await this.getInsights();
+        const id = await objRefToIdentifier(ref, this.authCall);
 
-        const insight = insights.items.find(i => i.insight.uri === uri);
+        const response = await this.authCall(sdk =>
+            sdk.metadata.visualizationObjectsIdGet({
+                contentType: "application/json",
+                id,
+            }),
+        );
+
+        const insight = insightFromInsightDefinition(
+            response.data.data.attributes.content! as IInsightDefinition,
+            response.data.data.id,
+            (response.data.data.links as any)?.self,
+        );
+
         if (!insight) {
             throw new UnexpectedError(`Insight for ${objRefToString(ref)} not found!`);
         }
+
         return insight;
     };
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
-        return this.authCall(async () => appendIdAndUri(insight, "dummyId"));
+        const createResponse = await this.authCall(sdk => {
+            return sdk.metadata.visualizationObjectsPost({
+                contentType: "application/json",
+                visualizationObjectPostResource: {
+                    data: {
+                        id: uuid4(),
+                        type: "visualizationObject", // should be VisualizationObjectPostResourceTypeEnum.VisualizationObject,
+                        attributes: {
+                            content: insight,
+                            title: insightTitle(insight),
+                        },
+                    },
+                } as any, // The OpenAPI is wrong for now, waiting for a fix on backend 3rd party dependency fix release
+            });
+        });
+
+        return insightFromInsightDefinition(
+            insight,
+            createResponse.data.data.id,
+            (createResponse.data.data.links as any)?.self,
+        );
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
-        return this.authCall(async () => insight);
+        await this.authCall(sdk =>
+            sdk.metadata.visualizationObjectsIdPatch({
+                contentType: "application/json",
+                id: insightId(insight),
+                visualizationObjectPatchResource: {
+                    data: {
+                        id: insightId(insight),
+                        type: "visualizationObject", // should be VisualizationObjectPostResourceTypeEnum.VisualizationObject,
+                        attributes: {
+                            content: insight,
+                            title: insightTitle(insight),
+                        },
+                    },
+                } as any, // The OpenAPI is wrong for now, waiting for a fix on backend 3rd party dependency fix release
+            }),
+        );
+
+        return insight;
     };
 
-    public deleteInsight = async (_ref: ObjRef): Promise<void> => {
-        return Promise.resolve();
+    public deleteInsight = async (ref: ObjRef): Promise<void> => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+
+        await this.authCall(sdk =>
+            sdk.metadata.visualizationObjectsIdDelete({
+                contentType: "application/json",
+                id,
+            }),
+        );
     };
 
     public getReferencedObjects = async (
