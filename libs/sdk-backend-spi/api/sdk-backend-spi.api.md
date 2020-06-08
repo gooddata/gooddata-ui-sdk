@@ -253,7 +253,6 @@ export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
     readonly dateFilterConfig?: IDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: Layout;
-    readonly scheduledMails: IScheduledMail[];
     readonly updated: string;
 }
 
@@ -318,7 +317,6 @@ export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboard
     readonly dateFilterConfig?: IDateFilterConfig;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: Layout | LayoutDefinition;
-    readonly scheduledMails: Array<IScheduledMail | IScheduledMailDefinition>;
 }
 
 // @alpha
@@ -1075,12 +1073,14 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
 export interface IWorkspaceDashboards {
     bulkDeleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;
     createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
     deleteDashboard(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
     getDashboards(): Promise<IListedDashboard[]>;
+    getScheduledMailsCountForDashboard(dashboardRef: ObjRef): Promise<number>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;

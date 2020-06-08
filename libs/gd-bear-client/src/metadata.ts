@@ -304,7 +304,42 @@ export class MetadataModule {
      * Get MD objects from usedby2 resource. Include only objects of given types
      * and take care about fetching only nearest objects if requested.
      *
-     * @method getObjectsUsedBy
+     * @method getObjectUsedBy
+     * @param {String} projectId id of the project
+     * @param {String} uri uri of the object for which dependencies are to be found
+     * @param {Object} options objects with options:
+     *        - types {Array} array of strings with object types to be included
+     *        - nearest {Boolean} whether to include only nearest dependencies (default is false)
+     * @return {Promise} promise promise once resolved returns an array of
+     *         entries returned by usedby2 resource
+     */
+    public getObjectUsedBy(
+        projectId: string,
+        uri: string,
+        options: {
+            types: GdcMetadata.ObjectCategory[];
+            nearest: boolean;
+        },
+    ): Promise<GdcMetadata.IObjectLink[]> {
+        const { nearest = false, types = [] } = options;
+        const body = {
+            inUse: {
+                nearest: nearest ? 1 : 0,
+                uri,
+                types,
+            },
+        };
+
+        return this.xhr
+            .postParsed<GdcMetadata.IGetObjectUsedBy>(`/gdc/md/${projectId}/usedby2`, { body })
+            .then(result => result.entries);
+    }
+
+    /**
+     * Get MD objects from usedby2 resource. Include only objects of given types
+     * and take care about fetching only nearest objects if requested.
+     *
+     * @method getObjectsUsedByMany
      * @param {String} projectId id of the project
      * @param {Array} uris uris of objects for which dependencies are to be found
      * @param {Object} options objects with options:

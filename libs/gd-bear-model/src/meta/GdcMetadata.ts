@@ -352,6 +352,10 @@ export namespace GdcMetadata {
         entries: IObjectLink[];
     }
 
+    export interface IGetObjectUsedBy {
+        entries: IObjectLink[];
+    }
+
     export interface IGetObjectUsingManyEntry {
         uri: Uri;
         entries: IObjectLink[];

@@ -2,6 +2,8 @@
 import { ObjRef } from "@gooddata/sdk-model";
 import { IListedDashboard, IDashboard, IDashboardDefinition } from "./dashboard";
 import { IWidgetAlert, IWidgetAlertDefinition, IWidgetAlertCount } from "./alert";
+import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
+import { IFilterContextDefinition } from "./filterContext";
 
 /**
  * Service to list, create and update analytical dashboards
@@ -54,6 +56,26 @@ export interface IWorkspaceDashboards {
      * @returns promise
      */
     deleteDashboard(ref: ObjRef): Promise<void>;
+
+    /**
+     * Create scheduled mail for the dashboard
+     *
+     * @param scheduledMail - scheduled email definition
+     * @param exportFilterContext - override dashboard filter context with the custom filter context during the export
+     * @returns promise of the created scheduled email
+     */
+    createScheduledMail(
+        scheduledMail: IScheduledMailDefinition,
+        exportFilterContext?: IFilterContextDefinition,
+    ): Promise<IScheduledMail>;
+
+    /**
+     * Get the number of scheduled emails for particular dashboard
+     *
+     * @param dashboardRef - dashboard reference
+     * @returns promise with the number of scheduled emails connected to the dashborad
+     */
+    getScheduledMailsCountForDashboard(dashboardRef: ObjRef): Promise<number>;
 
     /**
      * Get all widget alerts for the current user

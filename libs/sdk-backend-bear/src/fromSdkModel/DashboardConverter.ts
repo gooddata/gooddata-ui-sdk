@@ -36,6 +36,9 @@ import {
     isDrillToDashboard,
     IWidgetAlert,
     IWidgetAlertDefinition,
+    ScheduledMailAttachment,
+    IScheduledMail,
+    IScheduledMailDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -45,6 +48,7 @@ import {
     GdcExtendedDateFilters,
     GdcMetadata,
     GdcFilterContext,
+    GdcScheduledMail,
 } from "@gooddata/gd-bear-model";
 import { ObjRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -418,4 +422,67 @@ export const convertWidgetAlert = (
     };
 
     return convertedKpiAlert;
+};
+
+export const convertScheduledMailAttachment = (
+    scheduledMailAttachment: ScheduledMailAttachment,
+): GdcScheduledMail.ScheduledMailAttachment => {
+    const { dashboard, format, filterContext } = scheduledMailAttachment;
+
+    const convertedAttachment: GdcScheduledMail.IKpiDashboardAttachment = {
+        kpiDashboardAttachment: {
+            uri: refToUri(dashboard),
+            format,
+            filterContext: filterContext && refToUri(filterContext),
+        },
+    };
+
+    return convertedAttachment;
+};
+
+export const convertScheduledMail = (
+    scheduledMail: IScheduledMail | IScheduledMailDefinition,
+): GdcScheduledMail.IWrappedScheduledMail => {
+    const {
+        title,
+        description,
+        uri,
+        identifier,
+        body,
+        subject,
+        to,
+        when,
+        bcc,
+        lastSuccessfull,
+        unsubscribed,
+        attachments,
+    } = scheduledMail;
+
+    const convertedScheduledMail: GdcScheduledMail.IWrappedScheduledMail = {
+        scheduledMail: {
+            content: {
+                attachments: attachments.map(convertScheduledMailAttachment),
+                body,
+                subject,
+                to,
+                when,
+                bcc,
+                lastSuccessfull,
+                unsubscribed,
+            },
+            // tslint:disable-next-line: no-object-literal-type-assertion
+            meta: {
+                ...(uri
+                    ? {
+                          uri,
+                          identifier,
+                      }
+                    : {}),
+                title,
+                summary: description,
+            } as GdcMetadata.IObjectMeta,
+        },
+    };
+
+    return convertedScheduledMail;
 };
