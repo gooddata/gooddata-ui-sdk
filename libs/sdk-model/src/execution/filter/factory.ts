@@ -14,7 +14,7 @@ import {
 import { IAttribute, attributeDisplayFormRef } from "../attribute";
 import { ObjRefInScope, ObjRef, isObjRef, Identifier } from "../../objRef";
 import { IMeasure, isMeasure, measureLocalId } from "../measure";
-import { idRef } from "../../objRef/factory";
+import { idRef, localIdRef } from "../../objRef/factory";
 
 /**
  * Creates a new positive attribute filter.
@@ -135,7 +135,7 @@ export function newRelativeDateFilter(
  * @public
  */
 export function newMeasureValueFilter(
-    measureOrRef: IMeasure | ObjRefInScope,
+    measureOrRef: IMeasure | ObjRefInScope | string,
     operator: ComparisonConditionOperator,
     value: number,
     treatNullValuesAs?: number,
@@ -154,7 +154,7 @@ export function newMeasureValueFilter(
  * @public
  */
 export function newMeasureValueFilter(
-    measureOrRef: IMeasure | ObjRefInScope,
+    measureOrRef: IMeasure | ObjRefInScope | string,
     operator: RangeConditionOperator,
     from: number,
     to: number,
@@ -174,7 +174,7 @@ export function newMeasureValueFilter(
  * @public
  */
 export function newMeasureValueFilter(
-    measureOrRef: IMeasure | ObjRefInScope,
+    measureOrRef: IMeasure | ObjRefInScope | string,
     operator: ComparisonConditionOperator | RangeConditionOperator,
     val1: number,
     val2OrTreatNullValuesAsInComparison?: number,
@@ -182,6 +182,8 @@ export function newMeasureValueFilter(
 ): IMeasureValueFilter {
     const ref: ObjRefInScope = isMeasure(measureOrRef)
         ? { localIdentifier: measureLocalId(measureOrRef) }
+        : typeof measureOrRef === "string"
+        ? localIdRef(measureOrRef)
         : measureOrRef;
 
     if (operator === "BETWEEN" || operator === "NOT_BETWEEN") {

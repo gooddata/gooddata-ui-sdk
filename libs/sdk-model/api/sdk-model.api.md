@@ -1454,10 +1454,10 @@ export const newMeasureMetadataObject: (ref: ObjRef, modifications?: BuilderModi
 export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
 
 // @public
-export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope, operator: ComparisonConditionOperator, value: number, treatNullValuesAs?: number): IMeasureValueFilter;
+export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: ComparisonConditionOperator, value: number, treatNullValuesAs?: number): IMeasureValueFilter;
 
 // @public
-export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope, operator: RangeConditionOperator, from: number, to: number, treatNullValuesAs?: number): IMeasureValueFilter;
+export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: RangeConditionOperator, from: number, to: number, treatNullValuesAs?: number): IMeasureValueFilter;
 
 // @public
 export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[]): INegativeAttributeFilter;
