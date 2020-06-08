@@ -1,20 +1,24 @@
 // (C) 2019-2020 GoodData Corporation
 import identity = require("lodash/identity");
-import { BuilderModifications, builderFactory, Builder } from "../../../base/builder";
-import { ICatalogDateDataset, ICatalogDateAttribute, CatalogDateAttributeGranularity } from ".";
-import { IAttributeMetadataObject } from "../../metadata/attribute";
-import { IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm";
-import { isObjRef, ObjRef } from "../../../objRef";
-import { newAttributeMetadataObject, AttributeMetadataObjectBuilder } from "../../metadata/attribute/factory";
+import { Builder, builderFactory, BuilderModifications } from "../../../base/builder";
+import { CatalogDateAttributeGranularity, ICatalogDateAttribute, ICatalogDateDataset } from ".";
+import { IAttributeMetadataObject, isAttributeMetadataObject } from "../../metadata/attribute";
+import {
+    IAttributeDisplayFormMetadataObject,
+    isAttributeDisplayFormMetadataObject,
+} from "../../metadata/attributeDisplayForm";
+import { ObjRef } from "../../../objRef";
+import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../../metadata/attribute/factory";
 import {
     AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
 } from "../../metadata/attributeDisplayForm/factory";
 import {
     DataSetMetadataObjectBuilder,
-    newDataSetMetadataObject,
     IDataSetMetadataObject,
+    newDataSetMetadataObject,
 } from "../../metadata";
+import { isDataSetMetadataObject } from "../../metadata/dataSet";
 
 /**
  * Catalog date attribute builder
@@ -34,7 +38,7 @@ export class CatalogDateAttributeBuilder<
         attributeOrRef: IAttributeMetadataObject | ObjRef,
         modifications?: BuilderModifications<AttributeMetadataObjectBuilder>,
     ): this {
-        if (isObjRef(attributeOrRef)) {
+        if (!isAttributeMetadataObject(attributeOrRef)) {
             this.item.attribute = newAttributeMetadataObject(attributeOrRef, modifications);
         } else {
             this.item.attribute = attributeOrRef;
@@ -46,7 +50,7 @@ export class CatalogDateAttributeBuilder<
         displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef,
         modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>,
     ): this {
-        if (isObjRef(displayFormOrRef)) {
+        if (!isAttributeDisplayFormMetadataObject(displayFormOrRef)) {
             this.item.defaultDisplayForm = newAttributeDisplayFormMetadataObject(
                 displayFormOrRef,
                 modifications,
@@ -92,7 +96,7 @@ export class CatalogDateDatasetBuilder<T extends ICatalogDateDataset = ICatalogD
         dataSetOrRef: IDataSetMetadataObject | ObjRef,
         modifications?: BuilderModifications<DataSetMetadataObjectBuilder>,
     ): this {
-        if (isObjRef(dataSetOrRef)) {
+        if (!isDataSetMetadataObject(dataSetOrRef)) {
             this.item.dataSet = newDataSetMetadataObject(dataSetOrRef, modifications);
         } else {
             this.item.dataSet = dataSetOrRef;

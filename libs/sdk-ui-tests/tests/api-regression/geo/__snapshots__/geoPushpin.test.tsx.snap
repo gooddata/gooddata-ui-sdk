@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GeoPushpin with legend on the left should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with legend on the left should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -27,7 +27,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -108,7 +108,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -125,7 +125,7 @@ Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -167,7 +167,59 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with legend on the right should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with legend on the left should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "legend": Object {
+      "enabled": false,
+      "position": "left",
+    },
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with legend on the right should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -194,7 +246,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -275,7 +327,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -292,7 +344,7 @@ Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -334,7 +386,59 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location and color should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with legend on the right should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "legend": Object {
+      "enabled": true,
+      "position": "right",
+    },
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location and color should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -426,7 +530,46 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location and color with tooltip should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location and color should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location and color with tooltip should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -444,7 +587,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -499,7 +642,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -515,7 +658,7 @@ Object {
     Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -542,7 +685,55 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location and segment should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location and color with tooltip should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location and segment should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -617,7 +808,46 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location and segment with tooltip should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location and segment should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location and segment with tooltip should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -644,7 +874,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -693,7 +923,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -705,7 +935,7 @@ Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -716,7 +946,55 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location and size  with tooltip should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location and segment with tooltip should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location and size  with tooltip should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -734,7 +1012,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -789,7 +1067,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -805,7 +1083,7 @@ Object {
     Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -832,7 +1110,55 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location and size should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location and size  with tooltip should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location and size should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -924,7 +1250,46 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location only should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location and size should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location only should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -979,7 +1344,46 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location only with tooltip should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location only should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location only with tooltip should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -997,7 +1401,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -1036,7 +1440,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -1047,7 +1451,7 @@ Object {
     Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -1058,7 +1462,55 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location, segment and color should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location only with tooltip should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location, segment and color should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1170,7 +1622,46 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location, segment and size should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location, segment and color should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location, segment and size should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1282,7 +1773,46 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location, segment, color with tooltip should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location, segment and size should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location, segment, color with tooltip should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1309,7 +1839,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -1374,7 +1904,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -1391,7 +1921,7 @@ Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -1418,7 +1948,55 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location, segment, size and color  should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location, segment, color with tooltip should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location, segment, size and color  should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1561,7 +2139,46 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location, segment, size and color with tooltip and filter should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location, segment, size and color  should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location, segment, size and color with tooltip and filter should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1588,7 +2205,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -1669,7 +2286,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -1686,7 +2303,7 @@ Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -1744,7 +2361,55 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location, segment, size and color with tooltip should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location, segment, size and color with tooltip and filter should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location, segment, size and color with tooltip should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1771,7 +2436,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -1852,7 +2517,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -1869,7 +2534,7 @@ Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -1911,7 +2576,55 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location, segment, size with tooltip should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location, segment, size and color with tooltip should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location, segment, size with tooltip should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1938,7 +2651,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -2003,7 +2716,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -2020,7 +2733,7 @@ Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
         "a_label.uscities.state_name",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -2047,7 +2760,55 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location, size and color should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location, segment, size with tooltip should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location, size and color should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -2170,7 +2931,46 @@ Object {
 }
 `;
 
-exports[`GeoPushpin with location, size and color with tooltip should create expected execution definition 1`] = `
+exports[`GeoPushpinChart with location, size and color should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
+}
+`;
+
+exports[`GeoPushpinChart with location, size and color with tooltip should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -2188,7 +2988,7 @@ Object {
           "identifier": "label.uscities.city",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.uscities.city",
+        "localIdentifier": "tooltipText_df",
       },
     },
   ],
@@ -2259,7 +3059,7 @@ Object {
               "identifier": "label.uscities.city",
               "type": "displayForm",
             },
-            "localIdentifier": "a_label.uscities.city",
+            "localIdentifier": "tooltipText_df",
           },
         },
       ],
@@ -2275,7 +3075,7 @@ Object {
     Object {
       "itemIdentifiers": Array [
         "a_label.uscities.city.location",
-        "a_label.uscities.city",
+        "tooltipText_df",
       ],
     },
   ],
@@ -2314,5 +3114,53 @@ Object {
   ],
   "sortBy": Array [],
   "workspace": "examples-workspace",
+}
+`;
+
+exports[`GeoPushpinChart with location, size and color with tooltip should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "currentUser": [Function],
+      "deauthenticate": [Function],
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "mapboxToken": "this-is-not-real-token",
+    "tooltipText": Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.uscities.city",
+          "type": "displayForm",
+        },
+        "localIdentifier": "tooltipText_df",
+      },
+    },
+  },
+  "error": null,
+  "exportTitle": "GeoPushpinChart",
+  "isLoading": true,
+  "onDataTooLarge": [Function],
+  "onNegativeValues": [Function],
 }
 `;

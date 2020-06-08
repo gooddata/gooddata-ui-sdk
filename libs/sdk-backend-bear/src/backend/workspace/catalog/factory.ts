@@ -2,6 +2,8 @@
 import { IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
 import partition from "lodash/partition";
 import uniq from "lodash/uniq";
+import flatMap from "lodash/flatMap";
+import keyBy = require("lodash/keyBy");
 import {
     CatalogItemType,
     ICatalogGroup,
@@ -28,8 +30,6 @@ import { BearAuthenticatedCallGuard } from "../../../types";
 import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "./types";
 import { BearWorkspaceCatalog } from "./catalog";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../fromObjRef/api";
-import keyBy = require("lodash/keyBy");
-import flatMap = require("lodash/flatMap");
 import { IGetObjectsByQueryOptions } from "@gooddata/gd-bear-client";
 import { isApiResponseError } from "../../../errors/errorHandling";
 
@@ -39,7 +39,7 @@ const bearCatalogItemToCatalogItem = (displayForms: IDisplayFormByKey) => (
     item: GdcCatalog.CatalogItem,
 ): CatalogItem => {
     if (GdcCatalog.isCatalogAttribute(item)) {
-        return convertAttribute(item, displayForms[item.links.defaultDisplayForm]);
+        return convertAttribute(item, displayForms);
     } else if (GdcCatalog.isCatalogMetric(item)) {
         return convertMeasure(item);
     }
@@ -304,7 +304,11 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     ): Promise<BearDisplayFormOrAttribute[]> => {
         const bearCatalogAttributes = bearCatalogItems.filter(GdcCatalog.isCatalogAttribute);
         const attributeUris = bearCatalogAttributes.map(attr => attr.links.self);
-        const displayFormUris = bearCatalogAttributes.map(attr => attr.links.defaultDisplayForm);
+        const displayFormUris = flatMap(bearCatalogAttributes, attr => {
+            const geoPins = attr.links.geoPinDisplayForms ?? [];
+
+            return [attr.links.defaultDisplayForm, ...geoPins];
+        });
 
         return this.authCall(sdk =>
             sdk.md.getObjects<BearDisplayFormOrAttribute>(

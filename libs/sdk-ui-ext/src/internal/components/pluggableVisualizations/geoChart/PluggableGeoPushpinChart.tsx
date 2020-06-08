@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
 import * as React from "react";
-import { render } from "react-dom";
 
 import {
     IBucketItem,
@@ -12,6 +11,7 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    PluggableVisualizationErrorCodes,
 } from "../../../interfaces/Visualization";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket";
@@ -32,14 +32,21 @@ import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpin
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     bucketAttribute,
+    idRef,
     IInsightDefinition,
     insightBucket,
-    insightProperties,
+    insightBuckets,
+    insightFilters,
+    insightHasDataDefined,
     ISortItem,
+    newAttribute,
     newAttributeSort,
+    newBucket,
+    ObjRef,
+    uriRef,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
@@ -62,6 +69,14 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         this.type = VisualizationTypes.PUSHPIN;
         this.geoPushpinElement = element;
         this.initializeProperties(visualizationProperties);
+    }
+
+    protected checkBeforeRender(insight: IInsightDefinition): boolean {
+        if (!insightHasDataDefined(insight)) {
+            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.EMPTY_AFM);
+        }
+
+        return true;
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
@@ -140,7 +155,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
         // NOTE: using pushData directly; no handlePushData here as in other visualizations.
         if (configPanelElement) {
-            render(
+            this.renderFun(
                 <GeoPushpinConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}
@@ -192,19 +207,58 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
-        const { dimensions = { height: undefined }, custom = {}, locale, config } = options;
+        const { dimensions = { height: undefined }, custom = {}, locale, config = {} } = options;
         const { height } = dimensions;
         const { geoPushpinElement, intl } = this;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
         const { drillableItems } = custom;
-        const supportedControls: IVisualizationProperties = insightProperties(insight).controls;
-        const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
-        const fullConfig = this.buildVisualizationConfig(config, configSupportedControls);
+        const supportedControls: IVisualizationProperties = this.visualizationProperties.controls || {};
+        const fullConfig = this.buildVisualizationConfig(config, supportedControls);
+
+        const buckets = insightBuckets(insight);
+
+        if (supportedControls && supportedControls?.tooltipText) {
+            const tooltipText: string = supportedControls?.tooltipText;
+            /*
+             * The display form to use for tooltip text is provided in properties :( This is unfortunate; the chart
+             * props could very well contain an extra prop for the tooltip bucket.
+             *
+             * Current guess is that this is because AD creates insight buckets; in order to create the tooltip
+             * bucket, AD would have to actually show the tooltip bucket in the UI - which is not desired. Thus the
+             * displayForm to add as bucket is passed in visualization properties.
+             *
+             * This workaround is highly unfortunate for two reasons:
+             *
+             * 1.  It leaks all the way to the API of geo chart: bucket geo does not have the tooltip bucket. Instead
+             *     it duplicates then here logic in chart transform
+             *
+             * 2.  The executeVisualization endpoint is useless for GeoChart; cannot be used to render geo chart because
+             *     the buckets stored in vis object are not complete. execVisualization takes buckets as is.
+             */
+
+            /*
+             * This is ugly hack to get geo working on tiger, where URIs are not supported. It is accompanied by
+             * another ugly hack in AD which sets tooltipText to either locationDisplayFormIdentifier or URI. We
+             * cannot use `ref` here as it would mess up compatibility of the visualization properties :(
+             */
+            let ref: ObjRef = idRef(tooltipText, "displayForm");
+
+            if (tooltipText.startsWith("/gdc")) {
+                ref = uriRef(tooltipText);
+            }
+
+            buckets.push(
+                newBucket(
+                    BucketNames.TOOLTIP_TEXT,
+                    newAttribute(ref, m => m.localId("tooltipText_df")),
+                ),
+            );
+        }
 
         const execution = executionFactory
-            .forInsight(insight)
+            .forBuckets(buckets, insightFilters(insight))
             .withDimensions(getGeoChartDimensions)
             .withSorting(...this.createSort(insight));
 
@@ -225,7 +279,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             ErrorComponent: null as any,
         };
 
-        render(<CoreGeoChart {...geoPushpinProps} />, document.querySelector(geoPushpinElement));
+        this.renderFun(<CoreGeoChart {...geoPushpinProps} />, document.querySelector(geoPushpinElement));
     }
 
     private sanitizeMeasures(extendedReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {

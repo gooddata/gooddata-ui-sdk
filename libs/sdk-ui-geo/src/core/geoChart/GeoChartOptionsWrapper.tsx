@@ -25,6 +25,8 @@ import { getColorStrategy } from "./colorStrategy/geoChart";
 import { isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { fixEmptyHeaderItems } from "./helpers/geoChart/dataSanitization";
 
+import "../../../styles/css/main.css";
+
 export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps> {
     private readonly emptyHeaderString: string;
     private readonly errorMap: IErrorDescriptors;

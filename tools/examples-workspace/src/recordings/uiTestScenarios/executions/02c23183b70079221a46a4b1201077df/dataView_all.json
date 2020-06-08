@@ -1,0 +1,233 @@
+{
+    "data": [
+        ["3210314", "1.28", "3603761", "6381966", "77702", "2804240", "76416", "1776841", "2228", "121", "0"],
+        ["1683", "3295", "7286", "4969", "1856", "1305", "628", "982", "256", "56", "0"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "measureHeaderItem": {
+                        "name": "m_fact.uscities.population_sum",
+                        "order": 0
+                    }
+                },
+                {
+                    "measureHeaderItem": {
+                        "name": "m_fact.uscities.density_sum",
+                        "order": 1
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "32.8312;-117.1225",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456349"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "34.1139;-118.4068",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456344"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "37.7562;-122.443",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456347"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "25.7839;-80.2102",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456377"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "26.5281;-80.0811",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456383"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "27.9942;-82.4451",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456379"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "28.2405;-82.1796",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456385"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "28.4772;-81.3369",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456381"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "26.2181;-98.418",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456622"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "26.2585;-97.695",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456624"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "26.3024;-98.6425",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456626"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "California",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=6340116"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "California",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=6340116"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "California",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=6340116"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Florida",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=6340105"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Florida",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=6340105"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Florida",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=6340105"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Florida",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=6340105"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Florida",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=6340105"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Texas",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=4436534"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Texas",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=4436534"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Texas",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461/elements?id=4436534"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "San Diego",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456349"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Los Angeles",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456344"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "San Francisco",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456347"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Miami",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456377"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Boynton Beach",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456383"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Tampa",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456379"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Zephyrhills",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456385"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Orlando",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456381"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Abram",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456622"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Lasana",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456624"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Longoria",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458/elements?id=10456626"
+                    }
+                }
+            ]
+        ]
+    ],
+    "count": [2, 11],
+    "offset": [0, 0],
+    "totalCount": [2, 11]
+}

@@ -16,3 +16,4 @@ export {
 export { GeoPushpinChart, getGeoChartDimensions } from "./GeoPushpinChart";
 
 export { CoreGeoChart } from "./core/CoreGeoChart";
+export { IGeoChartInnerProps } from "./core/geoChart/GeoChartInner";

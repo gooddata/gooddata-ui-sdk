@@ -16,6 +16,21 @@ export enum SettingCatalog {
      * Allows configuration of axis name position and visibility for Pluggable Visualizations.
      */
     enableAxisNameConfiguration = "enableAxisNameConfiguration",
+
+    /**
+     * Indicates whether the GeoPushpin Chart is available in AD
+     */
+    isGeoPushpinsEnabled = "isGeoPushpinsEnabled",
+
+    /**
+     * Indicates whether week filtering is available in AD
+     */
+    enableWeekFilters = "enableWeekFilters",
+
+    /**
+     * Indicates whether color picker config panel should allow users to select custom RGB colors.
+     */
+    enableCustomColorPicker = "enableCustomColorPicker",
 }
 
 /**

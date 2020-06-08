@@ -49,6 +49,9 @@ export function renderLegend(props: IGeoChartLegendRendererProps): React.ReactEl
     );
 }
 
+/**
+ * @internal
+ */
 export interface ICoreGeoChartProps extends IDataVisualizationProps {
     config?: IGeoConfig;
     height?: number;
@@ -60,6 +63,9 @@ export interface ICoreGeoChartProps extends IDataVisualizationProps {
     geoChartOptions?: IGeoChartInnerOptions;
 }
 
+/**
+ * @internal
+ */
 export type IGeoChartInnerProps = ICoreGeoChartProps & ILoadingInjectedProps & WrappedComponentProps;
 
 export interface IGeoChartInnerState {
@@ -67,6 +73,9 @@ export interface IGeoChartInnerState {
     showFluidLegend: boolean;
     colorAssignmentItem: IColorAssignment[];
 }
+/**
+ * @internal
+ */
 export interface IGeoChartInnerOptions {
     geoData: IGeoData;
     categoryItems: IPushpinCategoryLegendItem[];

@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { ObjRef, ObjectType } from "../../objRef";
+import isEmpty = require("lodash/isEmpty");
 
 /**
  * @public
@@ -50,4 +51,10 @@ export interface IMetadataObject {
      * not be shown to the users at all or may be shown with a special indicator.
      */
     unlisted: boolean;
+}
+
+export function isMetadataObject(obj: any): obj is IMetadataObject {
+    const c = obj as IMetadataObject;
+
+    return !isEmpty(c) && c.type !== undefined && c.ref !== undefined;
 }

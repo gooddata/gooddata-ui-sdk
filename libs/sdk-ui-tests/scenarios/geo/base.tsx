@@ -1,15 +1,22 @@
 // (C) 2007-2019 GoodData Corporation
 import { ExamplesLdm, ExamplesLdmExt } from "@gooddata/examples-workspace";
 import { GeoPushpinChart, IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
-import { scenariosFor } from "../../src";
-import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
-
-const MapboxTokenEnvVariable = "STORYBOOK_MAPBOX_ACCESS_TOKEN";
-const MapboxToken = process.env[MapboxTokenEnvVariable] ?? "this-is-not-real-token";
+import { MapboxToken, scenariosFor } from "../../src";
+import { IAttribute, modifyAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
 const DefaultConfig: IGeoConfig = {
     mapboxToken: MapboxToken,
 };
+
+/*
+ * Note the explicitly hardcoded local identifier. This is here for very intricate reasons related to constructing
+ * insights for GeoPushpin scenarios.
+ *
+ * See chartConfigToProperties.ts for more.
+ */
+const tooltipDisplayForm: IAttribute = modifyAttribute(ExamplesLdm.City.Default, m =>
+    m.localId("tooltipText_df"),
+);
 
 export const LocationSegmentSizeAndColorWithTooltip: IGeoPushpinChartProps = {
     location: ExamplesLdm.City.Location,
@@ -18,7 +25,7 @@ export const LocationSegmentSizeAndColorWithTooltip: IGeoPushpinChartProps = {
     color: ExamplesLdmExt.colorMeasure,
     config: {
         ...DefaultConfig,
-        tooltipText: ExamplesLdm.City.Default,
+        tooltipText: tooltipDisplayForm,
     },
 };
 
@@ -59,7 +66,7 @@ export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpin
         location: ExamplesLdm.City.Location,
         config: {
             ...DefaultConfig,
-            tooltipText: ExamplesLdm.City.Default,
+            tooltipText: tooltipDisplayForm,
         },
     })
     .addScenario("location and size  with tooltip", {
@@ -67,7 +74,7 @@ export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpin
         size: ExamplesLdmExt.sizeMeasure,
         config: {
             ...DefaultConfig,
-            tooltipText: ExamplesLdm.City.Default,
+            tooltipText: tooltipDisplayForm,
         },
     })
     .addScenario("location and color with tooltip", {
@@ -75,7 +82,7 @@ export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpin
         color: ExamplesLdmExt.colorMeasure,
         config: {
             ...DefaultConfig,
-            tooltipText: ExamplesLdm.City.Default,
+            tooltipText: tooltipDisplayForm,
         },
     })
     .addScenario("location, size and color with tooltip", {
@@ -84,7 +91,7 @@ export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpin
         color: ExamplesLdmExt.colorMeasure,
         config: {
             ...DefaultConfig,
-            tooltipText: ExamplesLdm.City.Default,
+            tooltipText: tooltipDisplayForm,
         },
     })
 
@@ -125,7 +132,7 @@ export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpin
         segmentBy: ExamplesLdm.StateName,
         config: {
             ...DefaultConfig,
-            tooltipText: ExamplesLdm.City.Default,
+            tooltipText: tooltipDisplayForm,
         },
     })
     .addScenario("location, segment, size with tooltip", {
@@ -134,7 +141,7 @@ export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpin
         size: ExamplesLdmExt.sizeMeasure,
         config: {
             ...DefaultConfig,
-            tooltipText: ExamplesLdm.City.Default,
+            tooltipText: tooltipDisplayForm,
         },
     })
     .addScenario("location, segment, color with tooltip", {
@@ -143,7 +150,7 @@ export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpin
         color: ExamplesLdmExt.colorMeasure,
         config: {
             ...DefaultConfig,
-            tooltipText: ExamplesLdm.City.Default,
+            tooltipText: tooltipDisplayForm,
         },
     })
     .addScenario("location, segment, size and color with tooltip", LocationSegmentSizeAndColorWithTooltip)

@@ -38,6 +38,9 @@ import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { handleGeoPushpinDrillEvent } from "./helpers/geoChart/drilling";
 
+/**
+ * @internal
+ */
 export interface IGeoChartRendererProps {
     config: IGeoConfig;
     drillableItems: IHeaderPredicate[];

@@ -1,13 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 import identity = require("lodash/identity");
-import { BuilderModifications, builderFactory } from "../../../base/builder";
+import { builderFactory, BuilderModifications } from "../../../base/builder";
 import { ICatalogMeasure } from ".";
-import { IMeasureMetadataObject } from "../../metadata/measure";
+import { IMeasureMetadataObject, isMeasureMetadataObject } from "../../metadata/measure";
 import { GroupableCatalogItemBuilder } from "../group/factory";
-import { ObjRef, isObjRef } from "../../../objRef";
+import { ObjRef } from "../../../objRef";
 import { MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "../../metadata";
 import { IMeasure } from "../../../execution/measure";
-import { newMeasure, MeasureModifications, MeasureBuilder } from "../../../execution/measure/factory";
+import { MeasureBuilder, MeasureModifications, newMeasure } from "../../../execution/measure/factory";
 
 /**
  * Catalog measure builder
@@ -22,7 +22,7 @@ export class CatalogMeasureBuilder<
         measureOrRef: IMeasureMetadataObject | ObjRef,
         modifications?: BuilderModifications<MeasureMetadataObjectBuilder>,
     ): this {
-        if (isObjRef(measureOrRef)) {
+        if (!isMeasureMetadataObject(measureOrRef)) {
             this.item.measure = newMeasureMetadataObject(measureOrRef, modifications);
         } else {
             this.item.measure = measureOrRef;

@@ -9,21 +9,18 @@ import compact = require("lodash/compact");
 
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
-import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import {
+    IMeasureDescriptor,
+    isAttributeDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
+} from "@gooddata/sdk-backend-spi";
 import { IColor, IColorMappingItem, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
-import { IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
+import { getMappingHeaderName, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
 import { ColorUtils } from "@gooddata/sdk-ui-charts";
 
 function getItemName(item: IColoredItem): string {
-    let name = "";
-
-    if (isMeasureDescriptor(item.mappingHeader)) {
-        name = item.mappingHeader.measureHeaderItem.name;
-    } else if (isResultAttributeHeader(item.mappingHeader)) {
-        name = item.mappingHeader.attributeHeaderItem.name;
-    }
-
-    return name || "";
+    return getMappingHeaderName(item.mappingHeader) || "";
 }
 
 export function getSearchedItems(inputItems: IColoredItem[], searchString: string): IColoredItem[] {
@@ -93,6 +90,8 @@ export function getProperties(
         return newProperties;
     } else if (isResultAttributeHeader(item)) {
         return mergeColorMappingToProperties(properties, item.attributeHeaderItem.uri, color);
+    } else if (isAttributeDescriptor(item)) {
+        return mergeColorMappingToProperties(properties, item.attributeHeader.uri, color);
     }
 
     return {};
@@ -110,32 +109,22 @@ export function getValidProperties(
         const { id } = mappingItem;
         const colorValue = mappingItem.color.value;
 
-        const isMeasureInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
+        const assignmentValid = colorAssignments.find((colorAssignment: IColorAssignment) => {
             if (isMeasureDescriptor(colorAssignment.headerItem)) {
                 return (
                     colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
                     isEqual(colorAssignment.color.value, colorValue)
                 );
-            }
-
-            return false;
-        });
-
-        if (isMeasureInAssignment) {
-            return true;
-        }
-
-        const isAttributeInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
-            if (isResultAttributeHeader(colorAssignment.headerItem)) {
+            } else if (isResultAttributeHeader(colorAssignment.headerItem)) {
                 return colorAssignment.headerItem.attributeHeaderItem.uri === id;
+            } else if (isAttributeDescriptor(colorAssignment.headerItem)) {
+                return colorAssignment.headerItem.attributeHeader.uri === id;
             }
 
             return false;
         });
 
-        if (isAttributeInAssignment) {
-            return true;
-        }
+        return assignmentValid !== undefined;
     });
 
     return {
