@@ -99,9 +99,28 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         return attributes.data.data.map(attribute => {
             const labelsRefs = (attribute.relationships as any).labels.data as LabelResourceReference[];
-            const defaultLabelRef = labelsRefs[0];
-            const attributeDisplayForm = getIncludedItem(defaultLabelRef.id, defaultLabelRef.type);
-            return convertAttribute(attribute, attributeDisplayForm as LabelResourceSchema);
+            const allLabels: LabelResourceSchema[] = labelsRefs
+                .map(ref => {
+                    const obj = getIncludedItem(ref.id, ref.type);
+
+                    if (!obj) {
+                        return;
+                    }
+
+                    return obj as LabelResourceSchema;
+                })
+                .filter((obj): obj is LabelResourceSchema => obj !== undefined);
+
+            const defaultLabel = allLabels[0];
+
+            /*
+             * TODO: this is temporary way to identify labels with geo pushpin; normally this should be done
+             *  using some indicator on the metadata object. for sakes of speed & after agreement with tiger team
+             *  falling back to use of id convention.
+             */
+            const geoLabels = allLabels.filter(label => label.id.search(/^.*\.geo__/) > -1);
+
+            return convertAttribute(attribute, defaultLabel, geoLabels);
         });
     };
 

@@ -12,6 +12,7 @@ import {
     newCatalogFact,
     IGroupableCatalogItemBase,
     IGroupableCatalogItemBuilder,
+    newAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
 import {
     AttributeResourceSchema,
@@ -55,17 +56,25 @@ const commonGroupableCatalogItemModifications = <
 
 export const convertAttribute = (
     attribute: AttributeResourceSchema,
-    defaultDisplayForm: LabelResourceSchema,
+    defaultLabel: LabelResourceSchema,
+    geoLabels: LabelResourceSchema[],
 ): ICatalogAttribute => {
+    const geoPinDisplayForms = geoLabels.map(label => {
+        return newAttributeDisplayFormMetadataObject(
+            idRef(label.id, "displayForm"),
+            commonMetadataObjectModifications(label),
+        );
+    });
+
     return newCatalogAttribute(catalogA =>
         catalogA
             .attribute(idRef(attribute.id, "attribute"), a =>
                 a.modify(commonMetadataObjectModifications(attribute)),
             )
-            .defaultDisplayForm(idRef(defaultDisplayForm.id, "displayForm"), df =>
-                df.modify(commonMetadataObjectModifications(defaultDisplayForm)),
+            .defaultDisplayForm(idRef(defaultLabel.id, "displayForm"), df =>
+                df.modify(commonMetadataObjectModifications(defaultLabel)),
             )
-            .geoPinDisplayForms([])
+            .geoPinDisplayForms(geoPinDisplayForms)
             .modify(commonGroupableCatalogItemModifications(attribute)),
     );
 };
