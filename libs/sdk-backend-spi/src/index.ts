@@ -263,3 +263,4 @@ export {
     IScheduledMailDefinition,
     ScheduledMailAttachment,
 } from "./workspace/dashboards/scheduledMail";
+export { IWorkspaceUser, IWorkspaceUsersQuery, IWorkspaceUsersQueryOptions } from "./workspace/users";

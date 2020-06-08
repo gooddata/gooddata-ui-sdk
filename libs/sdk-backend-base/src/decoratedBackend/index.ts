@@ -19,6 +19,7 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     IWorkspaceDashboards,
+    IWorkspaceUsersQuery,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
 
@@ -136,6 +137,10 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public permissions(): IWorkspacePermissionsFactory {
         return this.decorated.permissions();
+    }
+
+    public users(): IWorkspaceUsersQuery {
+        return this.decorated.users();
     }
 }
 

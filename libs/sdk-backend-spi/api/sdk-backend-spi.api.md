@@ -218,6 +218,7 @@ export interface IAnalyticalWorkspace {
     permissions(): IWorkspacePermissionsFactory;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
+    users(): IWorkspaceUsersQuery;
     // (undocumented)
     readonly workspace: string;
 }
@@ -1154,9 +1155,30 @@ export interface IWorkspaceStylingService {
 }
 
 // @public
+export interface IWorkspaceUser {
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    login: string;
+    ref: ObjRef;
+    uri: string;
+}
+
+// @public
 export interface IWorkspaceUserPermissions {
     allPermissions(): IWorkspacePermissions;
     hasPermission(permission: WorkspacePermission): boolean;
+}
+
+// @public
+export interface IWorkspaceUsersQuery {
+    queryAll(): Promise<IWorkspaceUser[]>;
+    withOptions(options: IWorkspaceUsersQueryOptions): IWorkspaceUsersQuery;
+}
+
+// @public
+export interface IWorkspaceUsersQueryOptions {
+    search?: string;
 }
 
 // @alpha
