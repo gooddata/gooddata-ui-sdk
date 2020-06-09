@@ -1,11 +1,11 @@
 // (C) 2007-2020 GoodData Corporation
-import { loadProjectMetadata } from "../../loaders/bear/loadProjectMetadata";
+import { bearLoad } from "../../loaders/bear/bearLoad";
 import { transformToTypescript } from "../toTypescript";
 
 jest.mock("@gooddata/gd-bear-client");
 
 describe("transformToCatalog", () => {
-    const projectMeta = loadProjectMetadata("test");
+    const projectMeta = bearLoad("test");
 
     it("creates new catalog", async () => {
         const transformResult = transformToTypescript(await projectMeta, "testOutput.ts", false);

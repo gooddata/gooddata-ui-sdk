@@ -8,7 +8,7 @@ import { log, logError } from "../../cli/loggers";
 import { promptPassword, promptProjectId, promptUsername } from "../../cli/prompts";
 import { clearLine } from "../../cli/clear";
 import gooddata from "@gooddata/gd-bear-client";
-import { loadProjectMetadata } from "./loadProjectMetadata";
+import { bearLoad } from "./bearLoad";
 
 /**
  * Given the export config, ask for any missing information and then load project metadata from
@@ -82,7 +82,7 @@ export async function loadProjectMetadataFromBear(config: CatalogExportConfig): 
             projectId = await promptProjectId();
         }
 
-        return loadProjectMetadata(projectId);
+        return bearLoad(projectId);
     } catch (err) {
         projectSpinner.stop();
 

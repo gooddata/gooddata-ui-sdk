@@ -2,9 +2,9 @@
 import ora from "ora";
 import { logError } from "../../cli/loggers";
 import { CatalogExportError, ProjectMetadata } from "../../base/types";
-import { loadCatalog } from "./catalog";
-import { loadDateDataSets } from "./dateDataSets";
-import { loadInsights } from "./visualization";
+import { loadCatalog } from "./bearCatalog";
+import { loadDateDataSets } from "./bearDataDatasets";
+import { loadInsights } from "./bearInsights";
 
 /**
  * Loads all project metadata that can be used for exporting into catalog.
@@ -12,7 +12,7 @@ import { loadInsights } from "./visualization";
  * @param projectId - project identifier
  * @throws CatalogExportError
  */
-export async function loadProjectMetadata(projectId: string): Promise<ProjectMetadata> {
+export async function bearLoad(projectId: string): Promise<ProjectMetadata> {
     const spinner = ora();
 
     try {
