@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/examples-workspace",
-    "version": "8.0.0-alpha.88",
+    "version": "8.0.0-alpha.89",
     "author": "GoodData",
     "description": "GoodData SDK TypeScript skeleton",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/examples-workspace",
@@ -35,13 +35,13 @@
         "refresh-recordings": "./bin/refresh-recordings.sh && npm run prettier-write && npm run build"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.88",
-        "@gooddata/sdk-model": "^8.0.0-alpha.88",
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.89",
+        "@gooddata/sdk-model": "^8.0.0-alpha.89",
         "lodash": "^4.17.15"
     },
     "devDependencies": {
-        "@gooddata/catalog-export": "^8.0.0-alpha.88",
-        "@gooddata/mock-handling": "8.0.0-alpha.88",
+        "@gooddata/catalog-export": "^8.0.0-alpha.89",
+        "@gooddata/mock-handling": "8.0.0-alpha.89",
         "@gooddata/tslint-config": "1.0.0",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^25.1.2",
