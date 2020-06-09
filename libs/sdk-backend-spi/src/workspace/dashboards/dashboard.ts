@@ -1,20 +1,19 @@
 // (C) 2019-2020 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, Identifier } from "@gooddata/sdk-model";
 import { Layout, LayoutDefinition } from "./layout";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
+import { IDashboardObjectIdentity } from "./common";
 import {
-    GUID,
     DateFilterConfigMode,
     DateFilterGranularity,
     IDashboardAddedPresets,
-} from "./extendedDateFilters";
-import { IDashboardObjectIdentity } from "./common";
+} from "../dateFilterConfigs/types";
 
 /**
  * Extended date filter config
  * @alpha
  */
-export interface IDateFilterConfig {
+export interface IDashboardDateFilterConfig {
     /**
      * Extended date filter name
      */
@@ -26,9 +25,9 @@ export interface IDateFilterConfig {
     mode: DateFilterConfigMode;
 
     /**
-     * Options to hide
+     * Local identifiers of options to hide
      */
-    hideOptions?: GUID[];
+    hideOptions?: Identifier[];
 
     /**
      * Granularities to hide
@@ -92,7 +91,7 @@ export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
     /**
      * Dashboard extended date filter config
      */
-    readonly dateFilterConfig?: IDateFilterConfig;
+    readonly dateFilterConfig?: IDashboardDateFilterConfig;
 }
 
 /**
@@ -115,7 +114,7 @@ export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboard
     /**
      * Dashboard extended date filter config
      */
-    readonly dateFilterConfig?: IDateFilterConfig;
+    readonly dateFilterConfig?: IDashboardDateFilterConfig;
 }
 
 /**

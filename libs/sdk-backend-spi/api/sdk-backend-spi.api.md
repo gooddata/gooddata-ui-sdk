@@ -19,6 +19,7 @@ import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataset } from '@gooddata/sdk-model';
+import { Identifier } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
@@ -131,7 +132,7 @@ export type DateFilterOption = IAllTimeDateFilter | AbsoluteDateFilterOption | R
 
 // @public
 export type DateFilterRelativeOptionGroup = {
-    [key in DateFilterGranularity]?: IRelativeDateFilterPresetOfGranularity<key>[];
+    [key in DateFilterGranularity]?: Array<IRelativeDateFilterPresetOfGranularity<key>>;
 };
 
 // @alpha
@@ -162,14 +163,7 @@ export type ErrorConverter = (e: any) => AnalyticalBackendError;
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
 // @public
-export type GUID = string;
-
-// @public
 export interface IAbsoluteDateFilterForm extends IDateFilterOption {
-    // (undocumented)
-    from?: DateString;
-    // (undocumented)
-    to?: DateString;
     // (undocumented)
     type: AbsoluteFormType;
 }
@@ -211,6 +205,8 @@ export interface IAnalyticalWorkspace {
     // Warning: (ae-incompatible-release-tags) The symbol "dashboards" is marked as @public, but its signature references "IWorkspaceDashboards" which is marked as @alpha
     dashboards(): IWorkspaceDashboards;
     dataSets(): IWorkspaceDatasetsService;
+    // Warning: (ae-incompatible-release-tags) The symbol "dateFilterConfigs" is marked as @public, but its signature references "IWorkspaceDateFilterConfigsQuery" which is marked as @alpha
+    dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery;
     elements(): IElementQueryFactory;
     execution(): IExecutionFactory;
     insights(): IWorkspaceInsights;
@@ -250,7 +246,7 @@ export interface IAuthenticationProvider {
 // @alpha
 export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
     readonly created: string;
-    readonly dateFilterConfig?: IDateFilterConfig;
+    readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: Layout;
     readonly updated: string;
@@ -307,6 +303,15 @@ export interface IDashboardDateFilter {
 }
 
 // @alpha
+export interface IDashboardDateFilterConfig {
+    addPresets?: IDashboardAddedPresets;
+    filterName: string;
+    hideGranularities?: DateFilterGranularity[];
+    hideOptions?: Identifier[];
+    mode: DateFilterConfigMode;
+}
+
+// @alpha
 export interface IDashboardDateFilterReference {
     dataSet: ObjRef;
     type: "dateFilterReference";
@@ -314,7 +319,7 @@ export interface IDashboardDateFilterReference {
 
 // @alpha
 export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboardObjectIdentity> {
-    readonly dateFilterConfig?: IDateFilterConfig;
+    readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: Layout | LayoutDefinition;
 }
@@ -345,19 +350,34 @@ export interface IDataView {
 
 // @alpha
 export interface IDateFilterConfig {
-    addPresets?: IDashboardAddedPresets;
-    filterName: string;
-    hideGranularities?: DateFilterGranularity[];
-    hideOptions?: GUID[];
-    mode: DateFilterConfigMode;
+    // (undocumented)
+    absoluteForm?: IAbsoluteDateFilterForm;
+    // (undocumented)
+    absolutePresets?: IAbsoluteDateFilterPreset[];
+    // (undocumented)
+    allTime?: IAllTimeDateFilter;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    relativeForm?: IRelativeDateFilterForm;
+    // (undocumented)
+    relativePresets?: IRelativeDateFilterPreset[];
+    // (undocumented)
+    selectedOption: Identifier;
+}
+
+// Warning: (ae-incompatible-release-tags) The symbol "IDateFilterConfigsQueryResult" is marked as @public, but its signature references "IDateFilterConfig" which is marked as @alpha
+//
+// @public
+export interface IDateFilterConfigsQueryResult extends IPagedResource<IDateFilterConfig> {
 }
 
 // @public
 export interface IDateFilterOption {
     // (undocumented)
-    localIdentifier: GUID;
+    localIdentifier: Identifier;
     // (undocumented)
-    name: string;
+    name?: string;
     // (undocumented)
     type: OptionType;
     // (undocumented)
@@ -702,12 +722,6 @@ export interface IPreparedExecution {
 export interface IRelativeDateFilterForm extends IDateFilterOption {
     // (undocumented)
     availableGranularities: DateFilterGranularity[];
-    // (undocumented)
-    from?: RelativeGranularityOffset;
-    // (undocumented)
-    granularity?: DateFilterGranularity;
-    // (undocumented)
-    to?: RelativeGranularityOffset;
     // (undocumented)
     type: RelativeFormType;
 }
@@ -1091,6 +1105,13 @@ export interface IWorkspaceDashboards {
 // @public
 export interface IWorkspaceDatasetsService {
     getDatasets(): Promise<IDataset[]>;
+}
+
+// @alpha
+export interface IWorkspaceDateFilterConfigsQuery {
+    query(): Promise<IDateFilterConfigsQueryResult>;
+    withLimit(limit: number): IWorkspaceDateFilterConfigsQuery;
+    withOffset(offset: number): IWorkspaceDateFilterConfigsQuery;
 }
 
 // @public

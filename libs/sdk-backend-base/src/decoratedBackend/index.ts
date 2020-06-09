@@ -20,6 +20,7 @@ import {
     IWorkspaceStylingService,
     IWorkspaceDashboards,
     IWorkspaceUsersQuery,
+    IWorkspaceDateFilterConfigsQuery,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
 
@@ -141,6 +142,10 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public users(): IWorkspaceUsersQuery {
         return this.decorated.users();
+    }
+
+    public dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
+        return this.decorated.dateFilterConfigs();
     }
 }
 

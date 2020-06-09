@@ -25,6 +25,7 @@ import {
     NotSupported,
     IWorkspaceDashboards,
     IWorkspaceUsersQuery,
+    IWorkspaceDateFilterConfigsQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -183,6 +184,9 @@ function recordedWorkspace(
             throw new NotSupported("not supported");
         },
         users(): IWorkspaceUsersQuery {
+            throw new NotSupported("not supported");
+        },
+        dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
             throw new NotSupported("not supported");
         },
     };

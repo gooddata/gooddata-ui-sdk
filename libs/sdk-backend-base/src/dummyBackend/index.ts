@@ -28,6 +28,7 @@ import {
     NotSupported,
     IWorkspaceDashboards,
     IWorkspaceUsersQuery,
+    IWorkspaceDateFilterConfigsQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
     CatalogItemType,
@@ -209,6 +210,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         users(): IWorkspaceUsersQuery {
+            throw new NotSupported("not supported");
+        },
+        dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
             throw new NotSupported("not supported");
         },
     };
