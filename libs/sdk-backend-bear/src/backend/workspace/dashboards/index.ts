@@ -3,7 +3,6 @@ import {
     IWorkspaceDashboards,
     IDashboard,
     IListedDashboard,
-    NotSupported,
     IDashboardDefinition,
     IWidget,
     IWidgetDefinition,
@@ -27,6 +26,8 @@ import {
     UnexpectedError,
     isTempFilterContext,
     IWidgetAlertCount,
+    IScheduledMailDefinition,
+    IScheduledMail,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual, uriRef, objRefToString } from "@gooddata/sdk-model";
 import {
@@ -110,7 +111,6 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         const emptyDashboard: IDashboardDefinition = {
             description: "",
             filterContext: undefined,
-            scheduledMails: [],
             title: "",
         };
 
@@ -146,7 +146,6 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         const { created, updated, ref, uri, identifier } = originalDashboard;
         const updatedDashboardWithSavedDependencies: IDashboard = {
             ...updatedDashboard,
-            scheduledMails: [], // TODO https://jira.intgdc.com/browse/RAIL-2220
             created, // update returns only the uri, so keep the old date
             updated, // update returns only the uri, so keep the old date
             ref,
@@ -165,9 +164,44 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         return updatedDashboardWithSavedDependencies;
     }
 
-    public async deleteDashboard(_dashboardRef: ObjRef): Promise<void> {
-        throw new NotSupported("not supported");
+    public async deleteDashboard(dashboardRef: ObjRef): Promise<void> {
+        await this.deleteBearMetadataObject(dashboardRef);
     }
+
+    public createScheduledMail = async (
+        scheduledMailDefinition: IScheduledMailDefinition,
+        exportFilterContextDefinition?: IFilterContextDefinition,
+    ): Promise<IScheduledMail> => {
+        const filterContext =
+            exportFilterContextDefinition &&
+            (await this.createBearFilterContext(exportFilterContextDefinition));
+        const scheduledMailWithFilterContext = filterContext
+            ? {
+                  ...scheduledMailDefinition,
+                  attachments: scheduledMailDefinition.attachments.map(attachment => ({
+                      ...attachment,
+                      filterContext: filterContext.ref,
+                  })),
+              }
+            : scheduledMailDefinition;
+        const convertedScheduledMail = fromSdkModel.convertScheduledMail(scheduledMailWithFilterContext);
+        const createdBearScheduledMail = await this.authCall(sdk =>
+            sdk.md.createObject(this.workspace, convertedScheduledMail),
+        );
+        return toSdkModel.convertScheduledMail(createdBearScheduledMail) as IScheduledMail;
+    };
+
+    public getScheduledMailsCountForDashboard = async (dashboardRef: ObjRef): Promise<number> => {
+        const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
+        const objectLinks = await this.authCall(sdk =>
+            sdk.md.getObjectUsedBy(this.workspace, dashboardUri, {
+                nearest: true,
+                types: ["scheduledMail"],
+            }),
+        );
+
+        return objectLinks.length;
+    };
 
     public getAllWidgetAlertsForCurrentUser = async (): Promise<IWidgetAlert[]> => {
         const alerts = await this.getAllBearKpiAlertsForCurrentUser();

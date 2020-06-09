@@ -1345,6 +1345,11 @@ export namespace GdcMetadata {
         uri: Uri;
     }
     // (undocumented)
+    export interface IGetObjectUsedBy {
+        // (undocumented)
+        entries: IObjectLink[];
+    }
+    // (undocumented)
     export interface IGetObjectUsing {
         // (undocumented)
         entries: IObjectLink[];
@@ -1799,7 +1804,7 @@ export namespace GdcScheduledMail {
     // (undocumented)
     export interface IScheduledMailContent {
         // (undocumented)
-        attachments: ScheduledMailAttachment;
+        attachments: ScheduledMailAttachment[];
         // (undocumented)
         bcc?: Email[];
         // (undocumented)
@@ -1830,6 +1835,8 @@ export namespace GdcScheduledMail {
         // (undocumented)
         timeZone: string;
     }
+    // (undocumented)
+    export function isKpiDashboardAttachment(obj: any): obj is IKpiDashboardAttachment;
     // (undocumented)
     export interface IWrappedScheduledMail {
         // (undocumented)

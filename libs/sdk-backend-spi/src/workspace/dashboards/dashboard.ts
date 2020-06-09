@@ -8,7 +8,6 @@ import {
     DateFilterGranularity,
     IDashboardAddedPresets,
 } from "./extendedDateFilters";
-import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
 import { IDashboardObjectIdentity } from "./common";
 
 /**
@@ -85,11 +84,6 @@ export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
     readonly layout?: Layout;
 
     /**
-     * Dashboard scheduled emails
-     */
-    readonly scheduledMails: IScheduledMail[];
-
-    /**
      * Dashboard filter context, or temporary filter context
      * (temporary filter context is used to override original filter context during the export)
      */
@@ -111,11 +105,6 @@ export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboard
      * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
      */
     readonly layout?: Layout | LayoutDefinition;
-
-    /**
-     * Dashboard scheduled emails
-     */
-    readonly scheduledMails: Array<IScheduledMail | IScheduledMailDefinition>;
 
     /**
      * Dashboard filter context, or temporary filter context

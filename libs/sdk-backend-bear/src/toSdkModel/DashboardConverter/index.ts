@@ -5,4 +5,5 @@ export * from "./drills";
 export * from "./filterContext";
 export * from "./layout";
 export * from "./widget";
+export * from "./scheduledMails";
 export * from "./types";

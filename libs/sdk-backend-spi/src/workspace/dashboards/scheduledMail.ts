@@ -8,6 +8,16 @@ import { IDashboardObjectIdentity } from "./common";
  */
 export interface IScheduledMailBase {
     /**
+     * Scheduled email title
+     */
+    title: string;
+
+    /**
+     * Scheduled email description
+     */
+    description: string;
+
+    /**
      * Scheduled email job interval
      */
     when: {
@@ -64,7 +74,7 @@ export interface IScheduledMailBase {
     /**
      * Email attachments
      */
-    attachments: ScheduledMailAttachment;
+    attachments: ScheduledMailAttachment[];
 
     /**
      * Last successfull job

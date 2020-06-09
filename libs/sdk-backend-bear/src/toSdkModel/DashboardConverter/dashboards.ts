@@ -97,8 +97,6 @@ export const convertDashboard = (
         created: created!,
         updated: updated!,
 
-        scheduledMails: [], // TODO: https://jira.intgdc.com/browse/RAIL-2220
-
         dateFilterConfig: dateFilterConfig && convertDateFilterConfig(dateFilterConfig),
 
         filterContext:

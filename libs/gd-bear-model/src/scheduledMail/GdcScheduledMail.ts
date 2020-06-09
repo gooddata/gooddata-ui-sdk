@@ -1,4 +1,5 @@
 // (C) 2020 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
 import { GdcMetadata } from "../meta/GdcMetadata";
 import { DateString, Email, Timestamp, Uri } from "../aliases";
 
@@ -20,7 +21,7 @@ export namespace GdcScheduledMail {
         unsubscribed?: Email[];
         subject: string;
         body: string;
-        attachments: ScheduledMailAttachment;
+        attachments: ScheduledMailAttachment[];
         lastSuccessfull?: Timestamp;
     }
 
@@ -74,5 +75,9 @@ export namespace GdcScheduledMail {
             format: "pdf";
             filterContext?: Uri;
         };
+    }
+
+    export function isKpiDashboardAttachment(obj: any): obj is IKpiDashboardAttachment {
+        return !isEmpty(obj) && !!(obj as IKpiDashboardAttachment).kpiDashboardAttachment;
     }
 }
