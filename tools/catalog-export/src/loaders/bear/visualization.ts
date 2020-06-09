@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import gooddata from "@gooddata/gd-bear-client";
-import { ObjectMeta } from "../base/types";
+import { ObjectMeta } from "../../base/types";
 
 /**
  * Loads information about insights defined in the project. Only descriptive information about

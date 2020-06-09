@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import ora from "ora";
-import { logError } from "../cli/loggers";
-import { CatalogExportError, ProjectMetadata } from "../base/types";
+import { logError } from "../../cli/loggers";
+import { CatalogExportError, ProjectMetadata } from "../../base/types";
 import { loadCatalog } from "./catalog";
 import { loadDateDataSets } from "./dateDataSets";
 import { loadInsights } from "./visualization";

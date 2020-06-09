@@ -2,7 +2,7 @@
 import gooddata from "@gooddata/gd-bear-client";
 import pmap from "p-map";
 import { flatMap, range } from "lodash";
-import { isAttribute, isMetric, Catalog, Attribute, Metric, Fact } from "../base/types";
+import { isAttribute, isMetric, Catalog, Attribute, Metric, Fact } from "../../base/types";
 
 type CatalogItemsResponse = {
     paging: {

@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import { loadProjectMetadata } from "../../loaders/loadProjectMetadata";
+// (C) 2007-2020 GoodData Corporation
+import { loadProjectMetadata } from "../../loaders/bear/loadProjectMetadata";
 import { transformToCatalog } from "../toCatalog";
 
 jest.mock("@gooddata/gd-bear-client");

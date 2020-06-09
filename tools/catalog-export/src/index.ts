@@ -1,20 +1,20 @@
+// (C) 2020 GoodData Corporation
 #!/usr/bin/env node
 // (C) 2007-2019 GoodData Corporation
 import program from "commander";
-import ora from "ora";
 import chalk from "chalk";
-import gooddata from "@gooddata/gd-bear-client";
 import * as path from "path";
 import * as pkg from "../package.json";
-import { log, logBox, logError, logSuccess, logWarn, printHeader } from "./cli/loggers";
-import { clearLine, clearTerminal } from "./cli/clear";
-import { promptPassword, promptProjectId, promptUsername, requestFilePath } from "./cli/prompts";
+import { logBox, logError, logSuccess, logWarn, printHeader } from "./cli/loggers";
+import { clearTerminal } from "./cli/clear";
+import { requestFilePath } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
 import { isCatalogExportError } from "./base/types";
 import { exportMetadataToCatalog } from "./exports/metaToCatalog";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript";
+import { loadProjectMetadataFromBackend } from "./loaders/bear";
 
 program
     .version(pkg.version)
@@ -27,6 +27,7 @@ program
     )
     .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
+    .option("--tiger", "Indicates that the tool runs against the GoodData tiger backend")
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
 
@@ -40,81 +41,22 @@ async function run() {
 
     const configFilePath = program.config || DEFAULT_CONFIG_FILE_NAME;
     const configFileOptions = getConfigFromConfigFile(configFilePath, getConfigFromProgram(program));
+    const { output } = configFileOptions;
 
-    const { projectName, hostname, output } = configFileOptions;
-    let { projectId, username, password } = configFileOptions;
-
-    gooddata.config.setCustomDomain(hostname || DEFAULT_HOSTNAME);
-    gooddata.config.setJsPackage(pkg.name, pkg.version);
-
-    const logInSpinner = ora();
     try {
-        if (username) {
-            log("Username", username);
-        } else {
-            username = await promptUsername();
-        }
-
-        password = password || (await promptPassword());
-
-        logInSpinner.start("Logging in...");
-        await gooddata.user.login(username, password);
-        logInSpinner.stop();
-        clearLine();
-    } catch (err) {
-        logInSpinner.fail();
-        clearLine();
-        logError(`Unable to log in to platform. The error was: ${err}`);
-
-        if (err.message && err.message.search(/.*(certificate|self-signed).*/) > -1) {
-            logError(
-                "It seems that this error is due to invalid certificates used on the server. " +
-                    "If you trust the server, you can use the --accept-untrusted-ssl option " +
-                    "to turn off certificate validation.",
-            );
-        }
-
-        process.exit(1);
-        return;
-    }
-
-    const projectSpinner = ora();
-    try {
-        if (projectName && !projectId) {
-            log("Project Name", projectName);
-            projectSpinner.start("Loading project");
-            const metadataResponse = await gooddata.xhr.get("/gdc/md");
-            const metadata = metadataResponse.getData();
-            projectSpinner.stop();
-            const projectMetadata = metadata.about
-                ? metadata.about.links.find((link: any) => {
-                      return link.title === projectName;
-                  })
-                : null;
-            if (projectMetadata) {
-                projectId = projectMetadata.identifier;
-            } else {
-                logError(`Could not find a project with name '${projectName}'`);
-            }
-        }
-        if (projectId) {
-            log("Project ID", projectId);
-        } else {
-            projectId = await promptProjectId();
-        }
-
         const filePath = path.resolve(output || (await requestFilePath()));
+        const projectMetadata = await loadProjectMetadataFromBackend(configFileOptions);
 
         if (filePath.endsWith(".ts")) {
-            await exportMetadataToTypescript(projectId, filePath);
+            await exportMetadataToTypescript(projectMetadata, filePath);
         } else if (filePath.endsWith(".js")) {
-            await exportMetadataToJavascript(projectId, filePath);
+            await exportMetadataToJavascript(projectMetadata, filePath);
         } else {
             logWarn(
                 "Exporting catalog to JSON document is deprecated and will disappear in next major release together with CatalogHelper. Please switch to generating TypeScript or JavaScript code.",
             );
 
-            await exportMetadataToCatalog(projectId, filePath);
+            await exportMetadataToCatalog(projectMetadata, filePath);
         }
 
         logSuccess("All data have been successfuly exported");
@@ -126,7 +68,6 @@ async function run() {
             logError(`${err.message}`);
             process.exit(err.rc);
         } else {
-            projectSpinner.stop();
             if (err.code && err.code === "ENOENT") {
                 logError(`${err.code} Could not create file`);
             } else {

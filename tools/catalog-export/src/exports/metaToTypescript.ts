@@ -1,17 +1,19 @@
-// (C) 2007-2019 GoodData Corporation
-import { loadProjectMetadata } from "../loaders/loadProjectMetadata";
+// (C) 2007-2020 GoodData Corporation
 import { transformToTypescript } from "../transform/toTypescript";
 import { format } from "prettier";
 import * as fs from "fs";
+import { ProjectMetadata } from "../base/types";
 
 /**
  * Exports project metadata into typescript file containing sdk-model entity definitions (attribute, measure, etc)
  *
- * @param projectId - id of project to export from
+ * @param projectMetadata - project metadata to export into typescript
  * @param outputFile - output typescript file - WILL be overwritten
  */
-export async function exportMetadataToTypescript(projectId: string, outputFile: string): Promise<void> {
-    const projectMetadata = await loadProjectMetadata(projectId);
+export async function exportMetadataToTypescript(
+    projectMetadata: ProjectMetadata,
+    outputFile: string,
+): Promise<void> {
     const output = transformToTypescript(projectMetadata, outputFile);
 
     const generatedTypescript = output.sourceFile.getFullText();

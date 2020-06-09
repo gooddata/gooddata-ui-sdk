@@ -1,16 +1,19 @@
-// (C) 2007-2019 GoodData Corporation
-import { loadProjectMetadata } from "../loaders/loadProjectMetadata";
+// (C) 2007-2020 GoodData Corporation
 import { transformToCatalog } from "../transform/toCatalog";
 import * as fs from "fs";
+import { ProjectMetadata } from "../base/types";
 
 /**
  * Exports project metadata into catalog JSON file. If the output file already exists, its contents
  * will be merged with the catalog built from current state of the project metadata.
  *
- * @param projectId - project to make catalog for
+ * @param projectMetadata - project metadata to export into JSON
  * @param outputFile - output file where the catalog should be saved
  */
-export async function exportMetadataToCatalog(projectId: string, outputFile: string): Promise<void> {
+export async function exportMetadataToCatalog(
+    projectMetadata: ProjectMetadata,
+    outputFile: string,
+): Promise<void> {
     let existingCatalog: any | undefined;
 
     if (fs.existsSync(outputFile)) {
@@ -18,7 +21,6 @@ export async function exportMetadataToCatalog(projectId: string, outputFile: str
         fs.renameSync(outputFile, `${outputFile}.bak`);
     }
 
-    const projectMetadata = await loadProjectMetadata(projectId);
     const catalog = transformToCatalog(projectMetadata, existingCatalog);
 
     fs.writeFileSync(outputFile, JSON.stringify(catalog, null, "  "));
