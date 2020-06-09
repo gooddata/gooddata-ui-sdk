@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`transformToCatalog creates new catalog 1`] = `
-"import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition } from \\"@gooddata/sdk-model\\";
+"import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition, idRef } from \\"@gooddata/sdk-model\\";
 
 /**
  * Attribute Title: Channel
@@ -22,13 +22,13 @@ export const EmployeeName = { /**
  * Metric ID: aaIHiWZjfWNA
  * Metric Type: MAQL Metric
  */
-export const FilterLast4Quarter: IMeasure<IMeasureDefinition> = newMeasure('aaIHiWZjfWNA');
+export const FilterLast4Quarter: IMeasure<IMeasureDefinition> = newMeasure(idRef('aaIHiWZjfWNA', \\"measure\\"));
 /**
  * Metric Title: _Filter Quarter
  * Metric ID: aaiF4bffe4yn
  * Metric Type: MAQL Metric
  */
-export const FilterQuarter: IMeasure<IMeasureDefinition> = newMeasure('aaiF4bffe4yn');
+export const FilterQuarter: IMeasure<IMeasureDefinition> = newMeasure(idRef('aaiF4bffe4yn', \\"measure\\"));
 /**
  * Fact Title: $ Menu Item Sales
  * Fact ID: fact.salesdetailfact.menuitemsales
@@ -38,37 +38,37 @@ export const $MenuItemSales = { /**
     * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: sum
     */
-    Sum: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('sum')),/** 
+    Sum: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('sum')),/** 
     * Fact Title: $ Menu Item Sales  
     * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: count
     */
-    Count: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('count')),/** 
+    Count: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('count')),/** 
     * Fact Title: $ Menu Item Sales  
     * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: avg
     */
-    Avg: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('avg')),/** 
+    Avg: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('avg')),/** 
     * Fact Title: $ Menu Item Sales  
     * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: min
     */
-    Min: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('min')),/** 
+    Min: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('min')),/** 
     * Fact Title: $ Menu Item Sales  
     * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: max
     */
-    Max: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('max')),/** 
+    Max: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('max')),/** 
     * Fact Title: $ Menu Item Sales  
     * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: median
     */
-    Median: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('median')),/** 
+    Median: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('median')),/** 
     * Fact Title: $ Menu Item Sales  
     * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: runsum
     */
-    Runsum: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('runsum')) } ;
+    Runsum: newMeasure(idRef('fact.salesdetailfact.menuitemsales', \\"fact\\"), m => m.aggregation('runsum')) } ;
 /**
  * Fact Title: Cost
  * Fact ID: fact.restaurantcostsfact.cost
@@ -78,37 +78,37 @@ export const Cost = { /**
     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: sum
     */
-    Sum: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('sum')),/** 
+    Sum: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('sum')),/** 
     * Fact Title: Cost  
     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: count
     */
-    Count: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('count')),/** 
+    Count: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('count')),/** 
     * Fact Title: Cost  
     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: avg
     */
-    Avg: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('avg')),/** 
+    Avg: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('avg')),/** 
     * Fact Title: Cost  
     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: min
     */
-    Min: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('min')),/** 
+    Min: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('min')),/** 
     * Fact Title: Cost  
     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: max
     */
-    Max: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('max')),/** 
+    Max: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('max')),/** 
     * Fact Title: Cost  
     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: median
     */
-    Median: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('median')),/** 
+    Median: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('median')),/** 
     * Fact Title: Cost  
     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: runsum
     */
-    Runsum: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('runsum')) } ;
+    Runsum: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('runsum')) } ;
 /**
  * Attribute Title: Year (Timeline)
  * Display Form ID: timeline.year

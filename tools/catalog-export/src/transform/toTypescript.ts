@@ -115,7 +115,7 @@ function initialize(outputFile: string): TypescriptOutput {
 function generateSdkModelImports(): OptionalKind<ImportDeclarationStructure> {
     return {
         moduleSpecifier: "@gooddata/sdk-model",
-        namedImports: ["newAttribute", "newMeasure", "IAttribute", "IMeasure", "IMeasureDefinition"],
+        namedImports: ["newAttribute", "newMeasure", "IAttribute", "IMeasure", "IMeasureDefinition", "idRef"],
     };
 }
 
@@ -212,7 +212,7 @@ function generateMeasureFromMetric(metric: Metric): OptionalKind<VariableStateme
             {
                 name: variableName,
                 type: "IMeasure<IMeasureDefinition>",
-                initializer: `newMeasure('${meta.identifier}')`,
+                initializer: `newMeasure(idRef('${meta.identifier}', "measure"))`,
             },
         ],
     };
@@ -225,7 +225,7 @@ function generateFactAggregations(fact: Fact): string[] {
         const jsDoc = `/** \n* Fact Title: ${meta.title}  \n* Fact ID: ${meta.identifier}\n * Fact Aggregation: ${aggregation}\n*/`;
         const name = aggregation.charAt(0).toUpperCase() + aggregation.substr(1);
 
-        return `${jsDoc}\n${name}: newMeasure('${meta.identifier}', m => m.aggregation('${aggregation}'))`;
+        return `${jsDoc}\n${name}: newMeasure(idRef('${meta.identifier}', "fact"), m => m.aggregation('${aggregation}'))`;
     });
 }
 
