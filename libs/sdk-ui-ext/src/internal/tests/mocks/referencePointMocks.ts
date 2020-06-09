@@ -330,8 +330,8 @@ export const geoAttributeItems: IBucketItem[] = [
         type: "attribute",
         aggregation: null,
         attribute: "attr.owner.country",
-        locationDisplayFormUri: "/geo/attribute/displayform/uri/1",
-        dfUri: "/geo/attribute/displayform/uri/2",
+        locationDisplayFormRef: { uri: "/geo/attribute/displayform/uri/1" },
+        dfRef: { uri: "/geo/attribute/displayform/uri/2" },
     },
     {
         localIdentifier: "a2",

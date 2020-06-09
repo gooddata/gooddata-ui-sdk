@@ -1271,9 +1271,10 @@ export type SectionHeader = ISectionHeader | ISectionDescription;
 export enum SettingCatalog {
     disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline",
     enableAxisNameConfiguration = "enableAxisNameConfiguration",
+    enableBulletChart = "enableBulletChart",
     enableCustomColorPicker = "enableCustomColorPicker",
-    enableWeekFilters = "enableWeekFilters",
-    isGeoPushpinsEnabled = "isGeoPushpinsEnabled"
+    enablePushpinGeoChart = "enablePushpinGeoChart",
+    enableWeekFilters = "enableWeekFilters"
 }
 
 // @public

@@ -158,4 +158,28 @@ export const visualizationClasses: IVisualizationClass[] = [
             uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/669",
         },
     },
+    {
+        visualizationClass: {
+            checksum: "local",
+            icon: "local:bullet",
+            orderIndex: 19,
+            iconSelected: "local:bullet.selected",
+            url: "local:bullet",
+            title: "Bullet",
+            identifier: "gdc.visualization.bullet",
+            uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1000",
+        },
+    },
+    {
+        visualizationClass: {
+            checksum: "local",
+            icon: "local:pushpin",
+            orderIndex: 20,
+            iconSelected: "local:pushpin.selected",
+            url: "local:pushpin",
+            title: "Geo Pushpin",
+            identifier: "gdc.visualization.pushpin",
+            uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1001",
+        },
+    },
 ];

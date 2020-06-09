@@ -24,7 +24,6 @@ import {
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
-    IGdcConfig,
     IReferencePoint,
     IReferences,
     IUiConfig,
@@ -204,7 +203,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
-        const { dimensions = { height: undefined }, custom = {}, locale, config } = options;
+        const { dimensions = { height: undefined }, custom = {}, locale } = options;
         const { height } = dimensions;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
@@ -212,7 +211,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const { drillableItems } = custom;
         const supportedControls: IVisualizationProperties = this.getSupportedControls(insight);
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
-        const fullConfig = this.buildVisualizationConfig(config, configSupportedControls);
+        const fullConfig = this.buildVisualizationConfig(options, configSupportedControls);
 
         const execution = executionFactory
             .forInsight(insight)
@@ -329,9 +328,10 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     };
 
     protected buildVisualizationConfig(
-        config: IGdcConfig,
+        options: IVisProps,
         supportedControls: IVisualizationProperties,
     ): IChartConfig {
+        const { config = {}, customVisualizationConfig = {} } = options;
         const colorMapping: IColorMappingItem[] = get(supportedControls, "colorMapping");
 
         const validColorMapping =
@@ -344,9 +344,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 }));
 
         return {
-            ...config,
+            separators: config.separators,
+            colorPalette: config.colorPalette,
             ...supportedControls,
             colorMapping: validColorMapping && validColorMapping.length > 0 ? validColorMapping : null,
+            ...customVisualizationConfig,
         };
     }
 

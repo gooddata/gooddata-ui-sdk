@@ -37,6 +37,9 @@ import {
     IExportFunction,
     IExtendedExportConfig,
 } from "@gooddata/sdk-ui";
+import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { IGeoConfig } from "@gooddata/sdk-ui-geo";
+import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
 
 /**
  * @public
@@ -66,6 +69,11 @@ export interface IInsightViewProps extends Partial<IVisCallbacks> {
     insight: ObjRef | string;
 
     /**
+     * Additional filters to apply on top of the insight.
+     */
+    filters?: IFilter[];
+
+    /**
      * Configure chart drillability; e.g. which parts of the charts can be clicked.
      */
     drillableItems?: IDrillableItem[];
@@ -77,9 +85,10 @@ export interface IInsightViewProps extends Partial<IVisCallbacks> {
     colorPalette?: IColorPalette;
 
     /**
-     * Additional filters to apply on top of the insight.
+     * When embedding insight rendered by a chart, you can specify extra options to merge with existing
+     * options saved for the insight.
      */
-    filters?: IFilter[];
+    config?: IChartConfig | IGeoConfig | IPivotTableConfig | any;
 
     /**
      * Locale to use for localization of texts appearing in the chart.
@@ -160,14 +169,20 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             return;
         }
 
+        const { config = {} } = this.props;
+
         const visProps: IVisProps = {
             locale: this.props.locale,
             custom: {
                 drillableItems: this.props.drillableItems,
             },
             config: {
+                separators: config.separators,
                 colorPalette: this.colorPalette,
+                mapboxToken: config.mapboxToken,
+                isInEditMode: false,
             },
+            customVisualizationConfig: config,
         };
 
         this.visualization.update(

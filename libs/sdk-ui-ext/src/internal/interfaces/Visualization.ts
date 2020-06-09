@@ -1,7 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IInsightDefinition, ITotal, VisualizationProperties } from "@gooddata/sdk-model";
+import {
+    IColorPalette,
+    IInsightDefinition,
+    ITotal,
+    VisualizationProperties,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import {
     ChartType,
     IDrillableItem,
@@ -50,6 +56,16 @@ export interface IVisProps {
     custom?: ICustomProps;
     locale?: ILocale;
     config?: IGdcConfig;
+
+    /*
+     * This can be used to override configuration of visualization when embedding through InsightView. The pluggable
+     * visualization implementation MUST take these custom properties and override the the effective visualization
+     * config with them.
+     *
+     * It is important that the override happens just before sending the config to the underlying chart -
+     * the custom config passed through here will be in the format that is understood by the underlying chart.
+     */
+    customVisualizationConfig?: any;
 }
 
 export interface IVisualizationOptions {
@@ -136,8 +152,6 @@ export interface IBucketItem {
     type?: string;
     aggregation?: boolean;
     attribute?: string;
-    dfUri?: string; // default displayFrom uri
-    locationDisplayFormUri?: string;
     filters?: IBucketFilter[];
     granularity?: string;
     showInPercent?: boolean;
@@ -147,6 +161,9 @@ export interface IBucketItem {
     overTimeComparisonType?: OverTimeComparisonType;
     operandLocalIdentifiers?: Array<string | null> | null;
     operator?: string | null;
+
+    dfRef?: ObjRef;
+    locationDisplayFormRef?: ObjRef;
 }
 
 export interface IFiltersBucketItem extends IBucketItem {
