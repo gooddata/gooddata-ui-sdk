@@ -182,6 +182,7 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         if (!filter) {
             return {
                 isInverted: true,
+                selectedItems: [],
             };
         }
 
