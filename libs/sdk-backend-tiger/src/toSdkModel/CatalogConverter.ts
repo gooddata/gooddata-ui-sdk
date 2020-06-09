@@ -1,27 +1,33 @@
 // (C) 2019-2020 GoodData Corporation
 import {
     ICatalogAttribute,
-    idRef,
-    ICatalogMeasure,
+    ICatalogDateAttribute,
+    ICatalogDateDataset,
     ICatalogFact,
     ICatalogGroup,
+    ICatalogMeasure,
     IdentifierRef,
-    newCatalogAttribute,
-    IMetadataObjectBuilder,
-    newCatalogMeasure,
-    newCatalogFact,
+    idRef,
     IGroupableCatalogItemBase,
     IGroupableCatalogItemBuilder,
+    IMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
+    newCatalogAttribute,
+    newCatalogDateAttribute,
+    newCatalogDateDataset,
+    newCatalogFact,
+    newCatalogMeasure,
 } from "@gooddata/sdk-model";
 import {
     AttributeResourceSchema,
-    MetricResourceSchema,
+    DatasetResourceSchema,
     FactResourceSchema,
-    TagResourceSchema,
     LabelResourceSchema,
+    MetricResourceSchema,
     TagResourceReference,
+    TagResourceSchema,
 } from "@gooddata/gd-tiger-client";
+import { toSdkGranularity } from "./dateGranularityConversions";
 
 type MetadataObjectResourceSchema =
     | AttributeResourceSchema
@@ -99,6 +105,42 @@ export const convertFact = (fact: FactResourceSchema): ICatalogFact => {
             .fact(idRef(fact.id, "fact"), f => f.modify(commonMetadataObjectModifications(fact)))
             .modify(commonGroupableCatalogItemModifications(fact)),
     );
+};
+
+export const convertDateAttribute = (
+    attribute: AttributeResourceSchema,
+    label: LabelResourceSchema,
+): ICatalogDateAttribute => {
+    return newCatalogDateAttribute(dateAttribute => {
+        return dateAttribute
+            .granularity(toSdkGranularity(attribute.attributes.granularity!))
+            .attribute(idRef(attribute.id, "attribute"), a =>
+                a.modify(commonMetadataObjectModifications(attribute)),
+            )
+            .defaultDisplayForm(idRef(label.id, "displayForm"), df =>
+                df.modify(commonMetadataObjectModifications(label)),
+            );
+    });
+};
+
+export const convertDateDataset = (
+    dataset: DatasetResourceSchema,
+    attributes: ICatalogDateAttribute[],
+): ICatalogDateDataset => {
+    return newCatalogDateDataset(dateDataset => {
+        return dateDataset
+            .relevance(0)
+            .dataSet(idRef(dataset.id, "dataSet"), m => {
+                return m
+                    .id(dataset.id)
+                    .uri((dataset.links as any)?.self)
+                    .title(dataset.attributes.title || "")
+                    .description(dataset.attributes.description || "")
+                    .production(true)
+                    .unlisted(false);
+            })
+            .dateAttributes(attributes);
+    });
 };
 
 export const convertGroup = (tag: TagResourceSchema): ICatalogGroup => {
