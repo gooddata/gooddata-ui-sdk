@@ -116,7 +116,7 @@ const convertLayout = (layout: Layout | LayoutDefinition): GdcDashboardLayout.La
     return convertedLayout;
 };
 
-const convertFilterContextItem = (
+export const convertFilterContextItem = (
     filterContextItem: FilterContextItem,
 ): GdcFilterContext.IDateFilter | GdcFilterContext.IAttributeFilter => {
     if (isDashboardDateFilter(filterContextItem)) {
