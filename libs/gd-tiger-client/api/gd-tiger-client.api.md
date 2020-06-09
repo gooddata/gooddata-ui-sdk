@@ -8268,6 +8268,8 @@ export namespace ExecuteAFM {
     export type SortItem = IAttributeSortItem | IMeasureSortItem;
     // (undocumented)
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
+    const // (undocumented)
+    isObjIdentifierQualifier: (value: any) => value is IObjIdentifierQualifier;
 }
 
 // @public (undocumented)
@@ -9332,6 +9334,38 @@ export interface TagResourcesResponseSchemaAllOf {
 
 // @public
 export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
+
+// @public (undocumented)
+export namespace VisualizationObject {
+    // (undocumented)
+    export type IAttributeOrMeasure = ExecuteAFM.IMeasure | ExecuteAFM.IAttribute;
+    // (undocumented)
+    export interface IBucket {
+        // (undocumented)
+        items: IAttributeOrMeasure[];
+        // (undocumented)
+        localIdentifier?: string;
+        // (undocumented)
+        totals?: ExecuteAFM.ITotalItem[];
+    }
+    // (undocumented)
+    export interface IVisualizationObject {
+        // (undocumented)
+        visualizationObject: {
+            title: string;
+            visualizationUrl: string;
+            buckets: IBucket[];
+            filters: ExecuteAFM.FilterItem[];
+            sorts: ExecuteAFM.SortItem[];
+            properties: VisualizationProperties;
+        };
+    }
+    // (undocumented)
+    export type VisualizationProperties = {
+        [key: string]: any;
+    };
+    {};
+}
 
 // @public
 export interface VisualizationObjectPatchResource {

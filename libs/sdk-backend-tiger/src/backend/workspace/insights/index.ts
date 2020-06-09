@@ -16,10 +16,13 @@ import {
     insightTitle,
     insightId,
 } from "@gooddata/sdk-model";
+import { VisualizationObject } from "@gooddata/gd-tiger-client";
 import uuid4 from "uuid/v4";
 
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToUri, objRefToIdentifier } from "../../../fromObjRef";
+import { convertVisualizationObject } from "../../../toSdkModel/VisualizationObjectConverter";
+import { convertInsight } from "../../../fromSdkModel/InsightConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
 
@@ -115,7 +118,9 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
         );
 
         const insight = insightFromInsightDefinition(
-            response.data.data.attributes.content! as IInsightDefinition,
+            convertVisualizationObject(
+                response.data.data.attributes.content! as VisualizationObject.IVisualizationObject,
+            ),
             response.data.data.id,
             (response.data.data.links as any)?.self,
         );
@@ -136,7 +141,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
                         id: uuid4(),
                         type: "visualizationObject", // should be VisualizationObjectPostResourceTypeEnum.VisualizationObject,
                         attributes: {
-                            content: insight,
+                            content: convertInsight(insight),
                             title: insightTitle(insight),
                         },
                     },
@@ -161,7 +166,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
                         id: insightId(insight),
                         type: "visualizationObject", // should be VisualizationObjectPostResourceTypeEnum.VisualizationObject,
                         attributes: {
-                            content: insight,
+                            content: convertInsight(insight),
                             title: insightTitle(insight),
                         },
                     },

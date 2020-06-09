@@ -197,4 +197,11 @@ export namespace ExecuteAFM {
             measureIdentifier: ILocalIdentifierQualifier;
         };
     }
+
+    export const isObjIdentifierQualifier = (value: any): value is IObjIdentifierQualifier => {
+        return !!(
+            (value as Partial<IObjIdentifierQualifier>)?.identifier?.id &&
+            (value as Partial<IObjIdentifierQualifier>)?.identifier?.type
+        );
+    };
 }
