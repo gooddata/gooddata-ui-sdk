@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 #!/usr/bin/env node
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import program from "commander";
 import chalk from "chalk";
 import * as path from "path";
@@ -10,11 +10,12 @@ import { clearTerminal } from "./cli/clear";
 import { requestFilePath } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
-import { isCatalogExportError } from "./base/types";
+import { CatalogExportConfig, isCatalogExportError, ProjectMetadata } from "./base/types";
 import { exportMetadataToCatalog } from "./exports/metaToCatalog";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript";
-import { loadProjectMetadataFromBackend } from "./loaders/bear";
+import { loadProjectMetadataFromBear } from "./loaders/bear";
+import { loadProjectMetadataFromTiger } from "./loaders/tiger";
 
 program
     .version(pkg.version)
@@ -31,6 +32,14 @@ program
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
 
+async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<ProjectMetadata> {
+    if (config.tiger) {
+        return loadProjectMetadataFromTiger(config);
+    }
+
+    return loadProjectMetadataFromBear(config);
+}
+
 async function run() {
     clearTerminal();
     printHeader(pkg.version);
@@ -40,12 +49,12 @@ async function run() {
     }
 
     const configFilePath = program.config || DEFAULT_CONFIG_FILE_NAME;
-    const configFileOptions = getConfigFromConfigFile(configFilePath, getConfigFromProgram(program));
-    const { output } = configFileOptions;
+    const mergedConfig = getConfigFromConfigFile(configFilePath, getConfigFromProgram(program));
+    const { output } = mergedConfig;
 
     try {
         const filePath = path.resolve(output || (await requestFilePath()));
-        const projectMetadata = await loadProjectMetadataFromBackend(configFileOptions);
+        const projectMetadata = await loadProjectMetadataFromBackend(mergedConfig);
 
         if (filePath.endsWith(".ts")) {
             await exportMetadataToTypescript(projectMetadata, filePath);

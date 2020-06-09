@@ -1,34 +1,38 @@
 // (C) 2007-2020 GoodData Corporation
 
 import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
-import { DEFAULT_HOSTNAME } from "../../base/constants";
-import * as pkg from "../../../package.json";
 import ora from "ora";
 import { log, logError } from "../../cli/loggers";
-import { promptPassword, promptProjectId, promptUsername } from "../../cli/prompts";
+import { promptPassword, promptUsername } from "../../cli/prompts";
 import { clearLine } from "../../cli/clear";
-import gooddata from "@gooddata/gd-bear-client";
+import { ITigerClient } from "@gooddata/gd-tiger-client";
 import { loadProjectMetadata } from "./loadProjectMetadata";
+import { createTigerClient } from "./client";
 
 /**
  * Given the export config, ask for any missing information and then load project metadata from
- * a bear project.
+ * a tiger project.
  *
  * @param config - tool configuration, may be missing username, password and project id - in that case code
- *  will promp
+ *  will prompt
  *
  * @returns loaded project metadata
  *
  * @throws CatalogExportError upon any error.
  */
-export async function loadProjectMetadataFromBear(config: CatalogExportConfig): Promise<ProjectMetadata> {
-    const { projectName, hostname } = config;
-    let { projectId, username, password } = config;
+export async function loadProjectMetadataFromTiger(config: CatalogExportConfig): Promise<ProjectMetadata> {
+    const { projectId, hostname } = config;
+    let { username, password } = config;
 
-    gooddata.config.setCustomDomain(hostname || DEFAULT_HOSTNAME);
-    gooddata.config.setJsPackage(pkg.name, pkg.version);
+    if (!projectId) {
+        throw new CatalogExportError(
+            "Please specify workspace identifier in either .gdcatalogrc or via the --project-id argument.",
+            1,
+        );
+    }
 
     const logInSpinner = ora();
+    let tigerClient: ITigerClient | undefined;
     try {
         if (username) {
             log("Username", username);
@@ -39,7 +43,14 @@ export async function loadProjectMetadataFromBear(config: CatalogExportConfig): 
         password = password || (await promptPassword());
 
         logInSpinner.start("Logging in...");
-        await gooddata.user.login(username, password);
+
+        tigerClient = createTigerClient(hostname!, username, password);
+
+        /*
+         * Tiger uses basic auth. Probe that credentials are correct using a GET.
+         */
+        await tigerClient.metadata.tagsGet({ contentType: "application/json" });
+
         logInSpinner.stop();
         clearLine();
     } catch (err) {
@@ -59,30 +70,7 @@ export async function loadProjectMetadataFromBear(config: CatalogExportConfig): 
 
     const projectSpinner = ora();
     try {
-        if (projectName && !projectId) {
-            log("Project Name", projectName);
-            projectSpinner.start("Loading project");
-            const metadataResponse = await gooddata.xhr.get("/gdc/md");
-            const metadata = metadataResponse.getData();
-            projectSpinner.stop();
-            const projectMetadata = metadata.about
-                ? metadata.about.links.find((link: any) => {
-                      return link.title === projectName;
-                  })
-                : null;
-            if (projectMetadata) {
-                projectId = projectMetadata.identifier;
-            } else {
-                logError(`Could not find a project with name '${projectName}'`);
-            }
-        }
-        if (projectId) {
-            log("Project ID", projectId);
-        } else {
-            projectId = await promptProjectId();
-        }
-
-        return loadProjectMetadata(projectId);
+        return loadProjectMetadata(projectId, tigerClient);
     } catch (err) {
         projectSpinner.stop();
 
