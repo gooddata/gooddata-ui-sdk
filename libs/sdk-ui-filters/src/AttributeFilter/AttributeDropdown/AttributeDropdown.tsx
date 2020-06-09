@@ -240,7 +240,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                 selectedItems: updatedSelectedItems,
                 prevSelectedItems: updatedPrevSelectedItems,
                 isLoading: false,
-                validElements: mergedValidElements,
+                validElements: state.searchString ? newElements : mergedValidElements,
                 items,
                 totalCount: state.firstLoad ? items.length : state.totalCount,
                 firstLoad: false,

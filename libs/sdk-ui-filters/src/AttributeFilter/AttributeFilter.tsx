@@ -180,7 +180,10 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
     private getInitialDropdownSelection = () => {
         const { filter } = this.props;
         if (!filter) {
-            return {};
+            return {
+                isInverted: true,
+                selectedItems: [],
+            };
         }
 
         const elements = filterAttributeElements(filter);
