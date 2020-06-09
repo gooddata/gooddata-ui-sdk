@@ -50,16 +50,16 @@ async function run() {
 
     const configFilePath = program.config || DEFAULT_CONFIG_FILE_NAME;
     const mergedConfig = getConfigFromConfigFile(configFilePath, getConfigFromProgram(program));
-    const { output } = mergedConfig;
+    const { output, tiger } = mergedConfig;
 
     try {
         const filePath = path.resolve(output || (await requestFilePath()));
         const projectMetadata = await loadProjectMetadataFromBackend(mergedConfig);
 
         if (filePath.endsWith(".ts")) {
-            await exportMetadataToTypescript(projectMetadata, filePath);
+            await exportMetadataToTypescript(projectMetadata, filePath, tiger === true);
         } else if (filePath.endsWith(".js")) {
-            await exportMetadataToJavascript(projectMetadata, filePath);
+            await exportMetadataToJavascript(projectMetadata, filePath, tiger === true);
         } else {
             logWarn(
                 "Exporting catalog to JSON document is deprecated and will disappear in next major release together with CatalogHelper. Please switch to generating TypeScript or JavaScript code.",

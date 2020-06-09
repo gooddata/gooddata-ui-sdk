@@ -9,12 +9,14 @@ import { ProjectMetadata } from "../base/types";
  *
  * @param projectMetadata - project metadata to export into typescript
  * @param outputFile - output typescript file - WILL be overwritten
+ * @param tiger - indicates whether running against tiger, this influences naming strategy to use for date datasets as they are different from bear
  */
 export async function exportMetadataToTypescript(
     projectMetadata: ProjectMetadata,
     outputFile: string,
+    tiger: boolean = false,
 ): Promise<void> {
-    const output = transformToTypescript(projectMetadata, outputFile);
+    const output = transformToTypescript(projectMetadata, outputFile, tiger);
 
     const generatedTypescript = output.sourceFile.getFullText();
     const formattedTypescript = format(generatedTypescript, { parser: "typescript", printWidth: 120 });

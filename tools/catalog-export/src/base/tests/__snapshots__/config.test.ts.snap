@@ -7,6 +7,7 @@ Object {
   "password": null,
   "projectId": null,
   "projectName": "project",
+  "tiger": null,
   "username": "valid",
 }
 `;
@@ -18,6 +19,7 @@ Object {
   "password": null,
   "projectId": null,
   "projectName": null,
+  "tiger": false,
   "username": "valid",
 }
 `;
@@ -29,6 +31,7 @@ Object {
   "password": null,
   "projectId": null,
   "projectName": null,
+  "tiger": false,
   "username": null,
 }
 `;
@@ -40,6 +43,7 @@ Object {
   "password": null,
   "projectId": null,
   "projectName": null,
+  "tiger": false,
   "username": "noone",
 }
 `;
@@ -51,6 +55,7 @@ Object {
   "password": null,
   "projectId": "abc",
   "projectName": null,
+  "tiger": null,
   "username": "valid",
 }
 `;

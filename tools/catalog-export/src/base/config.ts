@@ -23,7 +23,7 @@ function retrieveConfigFromObject(obj: any): CatalogExportConfig {
         username: get<string | null>(obj, "username", null),
         password: get<string | null>(obj, "password", null),
         output: get<string | null>(obj, "output", null),
-        tiger: get<boolean | null>(obj, "output", false),
+        tiger: get<boolean | null>(obj, "tiger", false),
     };
 }
 

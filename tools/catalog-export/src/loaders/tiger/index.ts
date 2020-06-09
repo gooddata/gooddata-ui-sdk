@@ -6,8 +6,8 @@ import { log, logError } from "../../cli/loggers";
 import { promptPassword, promptUsername } from "../../cli/prompts";
 import { clearLine } from "../../cli/clear";
 import { ITigerClient } from "@gooddata/gd-tiger-client";
-import { loadProjectMetadata } from "./loadProjectMetadata";
-import { createTigerClient } from "./client";
+import { tigerLoad } from "./tigerLoad";
+import { createTigerClient } from "./tigerClient";
 
 /**
  * Given the export config, ask for any missing information and then load project metadata from
@@ -70,7 +70,7 @@ export async function loadProjectMetadataFromTiger(config: CatalogExportConfig):
 
     const projectSpinner = ora();
     try {
-        return loadProjectMetadata(projectId, tigerClient);
+        return tigerLoad(projectId, tigerClient);
     } catch (err) {
         projectSpinner.stop();
 

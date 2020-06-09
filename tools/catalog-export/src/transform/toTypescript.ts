@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { flatten } from "lodash";
 import {
     ImportDeclarationStructure,
@@ -270,18 +270,30 @@ function generateMeasures(
  * Keeping it simple for now - generate per-attr constants for each attribute in date data set. For now there's
  * no thing that connects all date data sets under one umbrella.
  *
- * @param dd - date data set.
+ * @param dd - date data set
+ * @param naming - naming strategies to use for date datasets and attributes; some variability is needed
+ *  due to how different backends name date dimensions and their attributes
  */
-function generateDateDataSet(dd: DateDataSet): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
+function generateDateDataSet(
+    dd: DateDataSet,
+    naming: AttributeNaming,
+): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
     const { content } = dd.dateDataSet;
 
-    return content.attributes.map(a => generateAttribute(a, DateDataSetNaming));
+    return content.attributes.map(a => generateAttribute(a, naming));
 }
 
 function generateDateDataSets(
     projectMeta: ProjectMetadata,
+    tiger: boolean,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
-    return flatten(projectMeta.dateDataSets.map(generateDateDataSet));
+    let naming = DateDataSetNaming;
+
+    if (tiger) {
+        naming = DefaultNaming;
+    }
+
+    return flatten(projectMeta.dateDataSets.map(dd => generateDateDataSet(dd, naming)));
 }
 
 /**
@@ -322,9 +334,14 @@ function generateInsights(projectMeta: ProjectMetadata): OptionalKind<VariableSt
  *
  * @param projectMeta - project metadata to transform to typescript
  * @param outputFile - output typescript file
+ * @param tiger - indicates whether running against tiger, this influences naming strategy to use for date datasets as they are different from bear
  * @return return of the transformation process, new file is not saved at this point
  */
-export function transformToTypescript(projectMeta: ProjectMetadata, outputFile: string): TypescriptOutput {
+export function transformToTypescript(
+    projectMeta: ProjectMetadata,
+    outputFile: string,
+    tiger: boolean,
+): TypescriptOutput {
     GlobalNameScope = {};
 
     const output = initialize(outputFile);
@@ -333,7 +350,7 @@ export function transformToTypescript(projectMeta: ProjectMetadata, outputFile: 
     sourceFile.addImportDeclaration(generateSdkModelImports());
     sourceFile.addVariableStatements(generateAttributes(projectMeta));
     sourceFile.addVariableStatements(generateMeasures(projectMeta));
-    sourceFile.addVariableStatements(generateDateDataSets(projectMeta));
+    sourceFile.addVariableStatements(generateDateDataSets(projectMeta, tiger));
     sourceFile.addVariableStatement(generateInsights(projectMeta));
 
     return output;

@@ -8,7 +8,7 @@ describe("transformToCatalog", () => {
     const projectMeta = loadProjectMetadata("test");
 
     it("creates new catalog", async () => {
-        const transformResult = transformToTypescript(await projectMeta, "testOutput.ts");
+        const transformResult = transformToTypescript(await projectMeta, "testOutput.ts", false);
 
         /*
          * NOTE: source.getFullText() should not be used here as it includes the leading comments that

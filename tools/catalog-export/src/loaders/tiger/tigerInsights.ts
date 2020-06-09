@@ -2,9 +2,9 @@
 
 // @ts-ignore
 import { ObjectMeta } from "../../base/types";
-import { DefaultGetOptions } from "./client";
+import { DefaultGetOptions } from "./tigerClient";
 import { ITigerClient } from "@gooddata/gd-tiger-client";
-import { convertTags, createTagMap } from "./common";
+import { convertTags, createTagMap } from "./tigerCommon";
 
 /**
  * Load insights that are stored in workspace's metadata so that their links can be included
