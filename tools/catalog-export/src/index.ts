@@ -1,4 +1,3 @@
-// (C) 2020 GoodData Corporation
 #!/usr/bin/env node
 // (C) 2007-2020 GoodData Corporation
 import program from "commander";

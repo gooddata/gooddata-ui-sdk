@@ -90,7 +90,5 @@ export async function loadDateDataSets(
 
     const dateDatasets = findDateDatasetsWithAttributes(result.data.data, datasetsMap);
 
-    const x = convertToExportableFormat(dateDatasets, labelsMap, tagsMap);
-    console.log(JSON.stringify(x, null, 4));
-    return x;
+    return convertToExportableFormat(dateDatasets, labelsMap, tagsMap);
 }
