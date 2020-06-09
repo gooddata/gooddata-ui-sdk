@@ -18,12 +18,17 @@ export enum SettingCatalog {
     enableAxisNameConfiguration = "enableAxisNameConfiguration",
 
     /**
-     * Indicates whether the GeoPushpin Chart is available in AD
+     * Indicates whether the Bullet Chart is available in AD.
      */
-    isGeoPushpinsEnabled = "isGeoPushpinsEnabled",
+    enableBulletChart = "enableBulletChart",
 
     /**
-     * Indicates whether week filtering is available in AD
+     * Indicates whether the GeoPushpin Chart is available in AD.
+     */
+    enablePushpinGeoChart = "enablePushpinGeoChart",
+
+    /**
+     * Indicates whether week filtering is available in AD.
      */
     enableWeekFilters = "enableWeekFilters",
 

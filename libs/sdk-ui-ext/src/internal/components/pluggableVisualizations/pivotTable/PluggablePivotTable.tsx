@@ -349,7 +349,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, custom, dimensions, config } = options;
+        const { locale, custom, dimensions, config, customVisualizationConfig = {} } = options;
         const height = dimensions?.height;
         const { drillableItems } = custom;
 
@@ -371,6 +371,11 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 configUpdated,
             );
         }
+
+        configUpdated = {
+            ...configUpdated,
+            ...customVisualizationConfig,
+        };
 
         const pivotTableProps: ICorePivotTableProps = {
             execution,
@@ -413,7 +418,11 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                                 >
                                     <CorePivotTable
                                         {...pivotTableProps}
-                                        config={{ ...config, maxHeight: usedHeight }}
+                                        config={{
+                                            ...config,
+                                            maxHeight: usedHeight,
+                                            ...customVisualizationConfig,
+                                        }}
                                     />
                                 </div>
                             );

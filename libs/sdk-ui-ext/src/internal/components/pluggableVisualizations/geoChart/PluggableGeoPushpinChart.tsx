@@ -5,7 +5,6 @@ import {
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
-    IGdcConfig,
     IReferencePoint,
     IUiConfig,
     IVisConstruct,
@@ -34,6 +33,7 @@ import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedPro
 import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel";
 import { BucketNames, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
+    attributeDisplayFormRef,
     bucketAttribute,
     idRef,
     IInsightDefinition,
@@ -42,6 +42,7 @@ import {
     insightFilters,
     insightHasDataDefined,
     ISortItem,
+    isUriRef,
     newAttribute,
     newAttributeSort,
     newBucket,
@@ -49,7 +50,6 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig, CoreGeoChart, getGeoChartDimensions } from "@gooddata/sdk-ui-geo";
 import get = require("lodash/get");
 import set = require("lodash/set");
@@ -175,11 +175,12 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     }
 
     protected buildVisualizationConfig(
-        config: IGdcConfig,
+        options: IVisProps,
         supportedControls: IVisualizationProperties,
-    ): IChartConfig {
+    ): IGeoConfig {
+        const { config = {}, customVisualizationConfig = {} } = options;
         const { center, legend, viewport = {} } = supportedControls;
-        const { colorMapping } = super.buildVisualizationConfig(config, supportedControls);
+        const { colorMapping } = super.buildVisualizationConfig(options, supportedControls);
         const centerProp = center ? { center } : {};
         const legendProp = legend ? { legend } : {};
         const { isInEditMode, isExportMode } = config;
@@ -196,9 +197,13 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             ...viewportProp,
         };
         return {
+            separators: config.separators,
+            colorPalette: config.colorPalette,
+            mapboxToken: config.mapboxToken,
             ...supportedControls,
             ...geoChartConfig,
             colorMapping,
+            ...customVisualizationConfig,
         };
     }
 
@@ -207,7 +212,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
-        const { dimensions = { height: undefined }, custom = {}, locale, config = {} } = options;
+        const { dimensions = { height: undefined }, custom = {}, locale } = options;
         const { height } = dimensions;
         const { geoPushpinElement, intl } = this;
 
@@ -215,7 +220,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
         const { drillableItems } = custom;
         const supportedControls: IVisualizationProperties = this.visualizationProperties.controls || {};
-        const fullConfig = this.buildVisualizationConfig(config, supportedControls);
+        const fullConfig = this.buildVisualizationConfig(options, supportedControls);
 
         const buckets = insightBuckets(insight);
 
@@ -238,15 +243,15 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
              *     the buckets stored in vis object are not complete. execVisualization takes buckets as is.
              */
 
-            /*
-             * This is ugly hack to get geo working on tiger, where URIs are not supported. It is accompanied by
-             * another ugly hack in AD which sets tooltipText to either locationDisplayFormIdentifier or URI. We
-             * cannot use `ref` here as it would mess up compatibility of the visualization properties :(
-             */
+            const locationBucket = insightBucket(insight, BucketNames.LOCATION);
             let ref: ObjRef = idRef(tooltipText, "displayForm");
 
-            if (tooltipText.startsWith("/gdc")) {
-                ref = uriRef(tooltipText);
+            if (locationBucket) {
+                const attribute = bucketAttribute(locationBucket);
+
+                if (attribute && isUriRef(attributeDisplayFormRef(attribute))) {
+                    ref = uriRef(tooltipText);
+                }
             }
 
             buckets.push(
@@ -323,7 +328,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             buckets,
             [BucketNames.ATTRIBUTE, BucketNames.VIEW, BucketNames.LOCATION, BucketNames.TREND],
             [ATTRIBUTE],
-        ).filter((bucketItem: IBucketItem): boolean => Boolean(bucketItem.locationDisplayFormUri));
+        ).filter((bucketItem: IBucketItem): boolean => Boolean(bucketItem.locationDisplayFormRef));
 
         return locationItems.slice(0, this.getPreferedBucketItemLimit(BucketNames.LOCATION));
     }
@@ -340,7 +345,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             return referencePoint;
         }
         const referencePointConfigured = cloneDeep(referencePoint);
-        const { dfUri } = locationItem;
+        const { dfRef } = locationItem;
         const visualizationProperties = this.visualizationProperties || {};
         const { controls = {} } = visualizationProperties;
         const hasSizeMesure = getItemsCount(buckets, BucketNames.SIZE) > 0;
@@ -349,14 +354,17 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const hasSegmentAttribute = getItemsCount(buckets, BucketNames.SEGMENT) > 0;
         const groupNearbyPoints =
             hasLocationAttribute && !hasColorMesure && !hasSizeMesure && !hasSegmentAttribute;
+
         // For tooltip text, displayFrom uri must be default displayFrom
+        const tooltipText = isUriRef(dfRef) ? dfRef.uri : dfRef.identifier;
+
         set(referencePointConfigured, "properties", {
             controls: {
                 points: {
                     groupNearbyPoints,
                 },
                 ...controls,
-                tooltipText: dfUri,
+                tooltipText,
             },
         });
 

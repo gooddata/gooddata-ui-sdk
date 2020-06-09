@@ -6,6 +6,11 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
+const HardcodedSettings = {
+    enablePushpinGeoChart: true,
+    enableBulletChart: true,
+};
+
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
@@ -13,6 +18,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
         return this.authCall(async () => {
             return {
                 workspace: this.workspace,
+                ...HardcodedSettings,
             };
         });
     }
@@ -22,6 +28,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
             return {
                 userId: "dummy",
                 workspace: this.workspace,
+                ...HardcodedSettings,
             };
         });
     }
