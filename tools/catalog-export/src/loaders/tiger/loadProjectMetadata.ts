@@ -1,17 +1,13 @@
 // (C) 2007-2020 GoodData Corporation
-import { CatalogExportError, DateDataSet, ObjectMeta, ProjectMetadata } from "../../base/types";
+import { CatalogExportError, DateDataSet, ProjectMetadata } from "../../base/types";
 import { ITigerClient } from "@gooddata/gd-tiger-client";
 import ora from "ora";
 import { logError } from "../../cli/loggers";
 import { loadCatalog } from "./catalog";
+import { loadInsights } from "./insights";
 
 // @ts-ignore
 async function loadDateDataSets(_projectId: string, tigerClient: ITigerClient): Promise<DateDataSet[]> {
-    return [];
-}
-
-// @ts-ignore
-async function loadInsights(_projectId: string, tigerClient: ITigerClient): Promise<ObjectMeta[]> {
     return [];
 }
 

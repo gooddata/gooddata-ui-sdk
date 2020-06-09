@@ -2,38 +2,28 @@
 import { Attribute, Catalog, DisplayForm, Fact, Metric } from "../../base/types";
 import { DefaultGetOptions } from "./client";
 import {
-    TagResourceSchema,
-    LabelResourceSchema,
-    SuccessIncluded,
-    MetricResourcesResponseSchema,
-    FactResourcesResponseSchema,
     AttributeResourceSchema,
-    LabelResourceReference,
-    TagResourceReference,
     AttributeResourcesResponseSchema,
+    FactResourcesResponseSchema,
     ITigerClient,
+    LabelResourceReference,
+    LabelResourceSchema,
+    MetricResourcesResponseSchema,
+    SuccessIncluded,
+    TagResourceSchema,
 } from "@gooddata/gd-tiger-client";
 import { keyBy } from "lodash";
+import { convertTags, createTagMap } from "./common";
 
 type TagMap = { [id: string]: TagResourceSchema };
 type LabelMap = { [id: string]: LabelResourceSchema };
 
-function createTagMap(included: SuccessIncluded[]): TagMap {
-    const tags: TagResourceSchema[] = included
-        .map(include => {
-            if (include.type !== "tag") {
-                return null;
-            }
-
-            return include as TagResourceSchema;
-        })
-        .filter((include): include is TagResourceSchema => include !== null);
-
-    return keyBy(tags, t => t.id);
-}
-
 // @ts-ignore
-function createLabelMap(included: SuccessIncluded[]): LabelMap {
+function createLabelMap(included: SuccessIncluded[] | undefined): LabelMap {
+    if (!included) {
+        return {};
+    }
+
     const labels: LabelResourceSchema[] = included
         .map(include => {
             if (include.type !== "label") {
@@ -48,7 +38,7 @@ function createLabelMap(included: SuccessIncluded[]): LabelMap {
 }
 
 function convertMetrics(metrics: MetricResourcesResponseSchema): Metric[] {
-    const tags = metrics.included ? createTagMap(metrics.included) : {};
+    const tags = createTagMap(metrics.included);
 
     return metrics.data.map(metric => {
         return {
@@ -64,7 +54,7 @@ function convertMetrics(metrics: MetricResourcesResponseSchema): Metric[] {
 }
 
 function convertFacts(facts: FactResourcesResponseSchema): Fact[] {
-    const tags = facts.included ? createTagMap(facts.included) : {};
+    const tags = createTagMap(facts.included);
 
     return facts.data.map(fact => {
         return {
@@ -105,30 +95,9 @@ function convertLabels(
         .filter((df): df is DisplayForm => df !== undefined);
 }
 
-function convertTags(relationships: object | undefined, tagsMap: TagMap): string {
-    if (!relationships) {
-        return "";
-    }
-
-    const tagRefs: TagResourceReference[] = (relationships as any)?.tags?.data ?? [];
-
-    return tagRefs
-        .map(ref => {
-            const tag = tagsMap[ref.id];
-
-            if (!tag) {
-                return;
-            }
-
-            return tag.attributes.title ?? ref.id;
-        })
-        .filter(tag => typeof tag === "string")
-        .join(",");
-}
-
 function convertAttributes(attributes: AttributeResourcesResponseSchema): Attribute[] {
-    const tags = attributes.included ? createTagMap(attributes.included) : {};
-    const labels = attributes.included ? createLabelMap(attributes.included) : {};
+    const tags = createTagMap(attributes.included);
+    const labels = createLabelMap(attributes.included);
 
     return attributes.data
         .map(attribute => {
@@ -172,8 +141,6 @@ export async function loadCatalog(_projectId: string, tigerClient: ITigerClient)
             include: "labels,tags",
         }),
     ]);
-
-    console.log(JSON.stringify(attributesResult.data.data, null, 4));
 
     return {
         metrics: convertMetrics(metricsResult.data),
