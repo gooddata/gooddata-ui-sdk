@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/gd-bear-model",
-    "version": "8.0.0-alpha.92",
+    "version": "8.0.0-alpha.93",
     "description": "TypeScript definition files for GoodData platform",
     "typings": "dist/index.d.ts",
     "main": "dist/index.js",
