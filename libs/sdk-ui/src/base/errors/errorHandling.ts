@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     AnalyticalBackendErrorTypes,
     isAnalyticalBackendError,
@@ -49,6 +49,10 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
             icon: "icon-filter",
             message: intl.formatMessage({ id: "visualization.ErrorMessageNoData" }),
             description: intl.formatMessage({ id: "visualization.ErrorDescriptionNoData" }),
+        },
+        [ErrorCodes.GEO_MAPBOX_TOKEN_MISSING]: {
+            message: intl.formatMessage({ id: "visualization.ErrorDescriptionMissingMapboxToken" }),
+            description: intl.formatMessage({ id: "visualization.ErrorDescriptionMissingMapboxToken" }),
         },
         [ErrorCodes.UNKNOWN_ERROR]: {
             message: intl.formatMessage({ id: "visualization.ErrorMessageGeneric" }),
