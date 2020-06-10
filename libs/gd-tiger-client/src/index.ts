@@ -8,6 +8,7 @@ import { axios as defaultAxios, newAxios } from "./axios";
 
 export { ExecuteAFM } from "./gd-tiger-model/ExecuteAFM";
 export { Execution } from "./gd-tiger-model/Execution";
+export { VisualizationObject } from "./gd-tiger-model/VisualizationObject";
 
 export { newAxios };
 

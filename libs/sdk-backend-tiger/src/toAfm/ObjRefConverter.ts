@@ -27,8 +27,12 @@ const isValidAfmType = (obj: any): obj is AfmObjectType => {
 };
 
 // TODO: get rid of the defaultValue, tiger should explode if ref is not provided correctly
-function toTigerAfmType(value: ObjectType | undefined, defaultValue: TigerAfmType): TigerAfmType {
+function toTigerAfmType(value: ObjectType | undefined, defaultValue?: TigerAfmType): TigerAfmType {
     if (!value) {
+        if (!defaultValue) {
+            throw new UnexpectedError("No value or default value was provided to toTigerAfmType ");
+        }
+
         return defaultValue;
     }
 
@@ -40,7 +44,7 @@ function toTigerAfmType(value: ObjectType | undefined, defaultValue: TigerAfmTyp
     return type;
 }
 
-function toObjQualifier(ref: ObjRef, defaultValue: TigerAfmType): ObjQualifier {
+export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): ObjQualifier {
     if (isUriRef(ref)) {
         throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
     }
