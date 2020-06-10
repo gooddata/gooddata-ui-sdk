@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { get, pick, pickBy, identity } from "lodash";
 import * as fs from "fs";
 import * as path from "path";
@@ -9,7 +9,7 @@ function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG):
     return {
         ...prevConfig,
         ...pickBy(
-            pick(config, ["hostname", "projectId", "projectName", "username", "password", "output"]),
+            pick(config, ["hostname", "projectId", "projectName", "username", "password", "output", "tiger"]),
             identity,
         ),
     };
@@ -23,6 +23,7 @@ function retrieveConfigFromObject(obj: any): CatalogExportConfig {
         username: get<string | null>(obj, "username", null),
         password: get<string | null>(obj, "password", null),
         output: get<string | null>(obj, "output", null),
+        tiger: get<boolean | null>(obj, "tiger", false),
     };
 }
 

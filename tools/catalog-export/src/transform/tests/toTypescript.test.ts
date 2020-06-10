@@ -1,14 +1,14 @@
-// (C) 2007-2019 GoodData Corporation
-import { loadProjectMetadata } from "../../loaders/loadProjectMetadata";
+// (C) 2007-2020 GoodData Corporation
+import { bearLoad } from "../../loaders/bear/bearLoad";
 import { transformToTypescript } from "../toTypescript";
 
 jest.mock("@gooddata/gd-bear-client");
 
 describe("transformToCatalog", () => {
-    const projectMeta = loadProjectMetadata("test");
+    const projectMeta = bearLoad("test");
 
     it("creates new catalog", async () => {
-        const transformResult = transformToTypescript(await projectMeta, "testOutput.ts");
+        const transformResult = transformToTypescript(await projectMeta, "testOutput.ts", false);
 
         /*
          * NOTE: source.getFullText() should not be used here as it includes the leading comments that

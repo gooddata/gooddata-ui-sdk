@@ -104,7 +104,7 @@
     },
     {
       "name": "@gooddata/gd-tiger-client",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/gd-ui-filters",

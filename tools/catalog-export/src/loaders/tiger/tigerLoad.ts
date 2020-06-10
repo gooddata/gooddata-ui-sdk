@@ -1,31 +1,26 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
+import { CatalogExportError, ProjectMetadata } from "../../base/types";
+import { ITigerClient } from "@gooddata/gd-tiger-client";
 import ora from "ora";
-import { logError } from "../cli/loggers";
-import { CatalogExportError, ProjectMetadata } from "../base/types";
-import { loadCatalog } from "./catalog";
-import { loadDateDataSets } from "./dateDataSets";
-import { loadInsights } from "./visualization";
+import { logError } from "../../cli/loggers";
+import { loadCatalog } from "./tigerCatalog";
+import { loadInsights } from "./tigerInsights";
+import { loadDateDataSets } from "./tigerDateDatasets";
 
-/**
- * Loads all project metadata that can be used for exporting into catalog.
- *
- * @param projectId - project identifier
- * @throws CatalogExportError
- */
-export async function loadProjectMetadata(projectId: string): Promise<ProjectMetadata> {
+export async function tigerLoad(projectId: string, tigerClient: ITigerClient): Promise<ProjectMetadata> {
     const spinner = ora();
 
     try {
         spinner.start("Loading catalog of attributes and metrics…");
-        const catalog = await loadCatalog(projectId);
+        const catalog = await loadCatalog(projectId, tigerClient);
         spinner.succeed("Catalog loaded");
 
         spinner.start("Loading date data sets…");
-        const dateDataSets = await loadDateDataSets(projectId);
+        const dateDataSets = await loadDateDataSets(projectId, tigerClient);
         spinner.succeed("Date data sets loaded");
 
         spinner.start("Loading insights…");
-        const insights = await loadInsights(projectId);
+        const insights = await loadInsights(projectId, tigerClient);
         spinner.succeed("Insights loaded");
 
         return {

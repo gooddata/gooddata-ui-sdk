@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { isEmpty } from "lodash";
 
 /**
@@ -54,6 +54,11 @@ export type CatalogExportConfig = {
      * File to write output to.
      */
     output: string | null;
+
+    /**
+     * Indicates that the target backend is 'tiger'
+     */
+    tiger: boolean | null;
 };
 
 /**

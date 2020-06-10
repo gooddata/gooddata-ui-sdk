@@ -1,8 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
-import { loadProjectMetadata } from "../loaders/loadProjectMetadata";
 import { transformToTypescript } from "../transform/toTypescript";
 import { format } from "prettier";
 import * as fs from "fs";
+import { ProjectMetadata } from "../base/types";
 
 /**
  * Exports project metadata into javascript file containing sdk-model entity definitions (attribute, measure, etc)
@@ -10,12 +10,15 @@ import * as fs from "fs";
  * This is done by generating typescript code & then running it through babel plugin which strips away the
  * type annotations.
  *
- * @param projectId - id of project to export from
+ * @param projectMetadata - project metadata to export into javascript
  * @param outputFile - output typescript file - WILL be overwritten
  */
-export async function exportMetadataToJavascript(projectId: string, outputFile: string): Promise<void> {
-    const projectMetadata = await loadProjectMetadata(projectId);
-    const output = transformToTypescript(projectMetadata, outputFile);
+export async function exportMetadataToJavascript(
+    projectMetadata: ProjectMetadata,
+    outputFile: string,
+    tiger: boolean = false,
+): Promise<void> {
+    const output = transformToTypescript(projectMetadata, outputFile, tiger);
 
     const generatedTypescript = output.sourceFile.getFullText();
     const formattedTypescript = format(generatedTypescript, { parser: "typescript", printWidth: 120 });

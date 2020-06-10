@@ -1,11 +1,11 @@
-// (C) 2007-2019 GoodData Corporation
-import { loadProjectMetadata } from "../../loaders/loadProjectMetadata";
+// (C) 2007-2020 GoodData Corporation
+import { bearLoad } from "../../loaders/bear/bearLoad";
 import { transformToCatalog } from "../toCatalog";
 
 jest.mock("@gooddata/gd-bear-client");
 
 describe("transformToCatalog", () => {
-    const projectMeta = loadProjectMetadata("test");
+    const projectMeta = bearLoad("test");
 
     it("creates new catalog", async () => {
         expect(transformToCatalog(await projectMeta)).toMatchSnapshot();

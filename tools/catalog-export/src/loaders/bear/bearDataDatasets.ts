@@ -2,7 +2,7 @@
 import gooddata from "@gooddata/gd-bear-client";
 import { GdcDataSets } from "@gooddata/gd-bear-model";
 import { get } from "lodash";
-import { Attribute, DateDataSet, DisplayForm } from "../base/types";
+import { Attribute, DateDataSet, DisplayForm } from "../../base/types";
 
 /**
  * Loads date data sets defined in the provided project. This function retrieves the minimum

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { getConfigFromProgram } from "../config";
 import { CatalogExportConfig } from "../types";
 
@@ -10,6 +10,7 @@ describe("getConfigFromProgram", () => {
         password: null,
         projectId: null,
         username: null,
+        tiger: null,
     };
 
     const TEST_DATA: Array<[string, any, CatalogExportConfig | null]> = [
