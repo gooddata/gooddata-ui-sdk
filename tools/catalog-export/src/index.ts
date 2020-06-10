@@ -27,12 +27,15 @@ program
     )
     .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
-    .option("--tiger", "Indicates that the tool runs against the GoodData tiger backend")
+    .option(
+        "--backend <backend>",
+        "Indicates type of the backend that runs on the hostname. Can be either bear or tiger. Default: bear",
+    )
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
 
 async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<ProjectMetadata> {
-    if (config.tiger) {
+    if (config.backend === "tiger") {
         return loadProjectMetadataFromTiger(config);
     }
 
@@ -49,16 +52,16 @@ async function run() {
 
     const configFilePath = program.config || DEFAULT_CONFIG_FILE_NAME;
     const mergedConfig = getConfigFromConfigFile(configFilePath, getConfigFromProgram(program));
-    const { output, tiger } = mergedConfig;
+    const { output, backend } = mergedConfig;
 
     try {
         const filePath = path.resolve(output || (await requestFilePath()));
         const projectMetadata = await loadProjectMetadataFromBackend(mergedConfig);
 
         if (filePath.endsWith(".ts")) {
-            await exportMetadataToTypescript(projectMetadata, filePath, tiger === true);
+            await exportMetadataToTypescript(projectMetadata, filePath, backend === "tiger");
         } else if (filePath.endsWith(".js")) {
-            await exportMetadataToJavascript(projectMetadata, filePath, tiger === true);
+            await exportMetadataToJavascript(projectMetadata, filePath, backend === "tiger");
         } else {
             logWarn(
                 "Exporting catalog to JSON document is deprecated and will disappear in next major release together with CatalogHelper. Please switch to generating TypeScript or JavaScript code.",

@@ -2,60 +2,72 @@
 
 exports[`getConfigFromProgram should complement config from defaults 1`] = `
 Object {
+  "backend": "bear",
   "hostname": null,
   "output": null,
   "password": null,
   "projectId": null,
   "projectName": "project",
-  "tiger": null,
   "username": "valid",
 }
 `;
 
 exports[`getConfigFromProgram should handle case sensitivity 1`] = `
 Object {
+  "backend": "bear",
   "hostname": null,
   "output": null,
   "password": null,
   "projectId": null,
   "projectName": null,
-  "tiger": false,
   "username": "valid",
 }
 `;
 
 exports[`getConfigFromProgram should handle empty object 1`] = `
 Object {
+  "backend": "bear",
   "hostname": null,
   "output": null,
   "password": null,
   "projectId": null,
   "projectName": null,
-  "tiger": false,
   "username": null,
 }
 `;
 
 exports[`getConfigFromProgram should handle object with just some of the needed props 1`] = `
 Object {
+  "backend": "bear",
   "hostname": null,
   "output": null,
   "password": null,
   "projectId": null,
   "projectName": null,
-  "tiger": false,
   "username": "noone",
 }
 `;
 
 exports[`getConfigFromProgram should prefer input over default 1`] = `
 Object {
+  "backend": "bear",
   "hostname": null,
   "output": null,
   "password": null,
   "projectId": "abc",
   "projectName": null,
-  "tiger": null,
   "username": "valid",
+}
+`;
+
+exports[`getConfigFromProgram should propagate tiger backend type 1`] = `
+Object {
+  "backend": "tiger",
+  "hostname": null,
+  "output": null,
+  "password": null,
+  "projectId": null,
+  "projectName": null,
+  "username": null,
 }
 `;
