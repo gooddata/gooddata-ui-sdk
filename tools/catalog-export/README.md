@@ -48,6 +48,30 @@ The program is able to run in interactive or silent modes:
 > connection due to invalid certificates. You can use the `--accept-untrusted-ssl` option to disable this
 > check (under the covers this sets the node.js documented ENV var `NODE_TLS_REJECT_UNAUTHORIZED` to `0`)
 
+## Tiger usage notes
+
+The program can retrieve and generate catalogs from either GoodData Platform (bear) or GoodData Anywhere (tiger)
+backends. The program does not do auto-detection of the backend type - you have to indicate type of backend
+either through config or on command line.
+
+The catalog-export by default expects that it is connecting to GoodData Platform (bear). To switch the
+export to work with GoodData Anywhere (tiger), either specify the `--tiger` option on the CLI or include tiger
+setting in the `.gdcatalogrc`. Here is an example of full config for tiger:
+
+```json
+{
+    "hostname": "https://your.hostname.or.ip",
+    "tiger": true,
+    "projectId": "your workspace",
+    "username": "username",
+    "password": "password",
+    "output": "workspaceModel.ts"
+}
+```
+
+> Note: you have to enter `projectId` or use the `--project-id` option with tiger. Unlike for bear, the
+> catalog-export will not prompt you to select a workspace from a list of available workspaces.
+
 ## Recommendations
 
 Working with the catalog-export and its outputs on daily basis, we found a few good practices that we suggest for
