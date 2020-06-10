@@ -94,13 +94,13 @@ export namespace Execution {
     export interface IExecutionResult {
         dimensionHeaders?: IDimensionHeader[];
         data: DataValue[][] | DataValue[];
-        /* not yet returned by API
-        totals?: DataValue[][][];
         paging: {
             count: number[];
             offset: number[];
             total: number[];
         };
+        /* not yet returned by API
+        totals?: DataValue[][][];
         warnings?: Warning[];*/
     }
 

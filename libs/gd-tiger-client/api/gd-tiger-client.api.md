@@ -8328,6 +8328,12 @@ export namespace Execution {
         data: DataValue[][] | DataValue[];
         // (undocumented)
         dimensionHeaders?: IDimensionHeader[];
+        // (undocumented)
+        paging: {
+            count: number[];
+            offset: number[];
+            total: number[];
+        };
     }
     // (undocumented)
     export type IHeader = IMeasureGroupHeader | IAttributeHeader;
