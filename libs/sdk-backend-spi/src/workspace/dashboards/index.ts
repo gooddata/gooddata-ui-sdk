@@ -3,7 +3,7 @@ import { ObjRef } from "@gooddata/sdk-model";
 import { IListedDashboard, IDashboard, IDashboardDefinition } from "./dashboard";
 import { IWidgetAlert, IWidgetAlertDefinition, IWidgetAlertCount } from "./alert";
 import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
-import { IFilterContextDefinition } from "./filterContext";
+import { IFilterContextDefinition, FilterContextItem } from "./filterContext";
 
 /**
  * Service to list, create and update analytical dashboards
@@ -52,10 +52,20 @@ export interface IWorkspaceDashboards {
     /**
      * Delete dashboard
      *
-     * @param ref - dashboard ref
+     * @param ref - dashboard reference
      * @returns promise
      */
     deleteDashboard(ref: ObjRef): Promise<void>;
+
+    /**
+     * Export dashboard to pdf. You can optionally override dashboard filters with custom filters.
+     * When no custom filters are set, the persisted dashboard filters will be used.
+     *
+     * @param ref - dashboard reference
+     * @param filters - optionally override stored dashboard filters with custom filters
+     * @returns promise with link to download the exported dashboard
+     */
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
 
     /**
      * Create scheduled mail for the dashboard
@@ -72,10 +82,10 @@ export interface IWorkspaceDashboards {
     /**
      * Get the number of scheduled emails for particular dashboard
      *
-     * @param dashboardRef - dashboard reference
+     * @param ref - dashboard reference
      * @returns promise with the number of scheduled emails connected to the dashborad
      */
-    getScheduledMailsCountForDashboard(dashboardRef: ObjRef): Promise<number>;
+    getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
 
     /**
      * Get all widget alerts for the current user
@@ -87,7 +97,7 @@ export interface IWorkspaceDashboards {
     /**
      * Get the number of widget alerts (created by any user) for particular widgets
      *
-     * @param refs - widget refs
+     * @param refs - widget references
      * @returns promise with array of pairs of widget ref and alert count
      */
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;

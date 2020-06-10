@@ -28,6 +28,7 @@ import {
     IWidgetAlertCount,
     IScheduledMailDefinition,
     IScheduledMail,
+    FilterContextItem,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual, uriRef, objRefToString } from "@gooddata/sdk-model";
 import {
@@ -107,7 +108,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         return sdkDashboard;
     };
 
-    public async createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard> {
+    public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
         const emptyDashboard: IDashboardDefinition = {
             description: "",
             filterContext: undefined,
@@ -115,12 +116,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         };
 
         return this.updateDashboard(emptyDashboard as IDashboard, dashboard);
-    }
+    };
 
-    public async updateDashboard(
+    public updateDashboard = async (
         originalDashboard: IDashboard,
         updatedDashboard: IDashboard | IDashboardDefinition,
-    ): Promise<IDashboard> {
+    ): Promise<IDashboard> => {
         if (!areObjRefsEqual(originalDashboard.ref, updatedDashboard.ref)) {
             throw new Error("Cannot update dashboard with different refs!");
         } else if (isEqual(originalDashboard, updatedDashboard)) {
@@ -162,11 +163,22 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         await this.deleteBearWidgets(deletedWidgets);
 
         return updatedDashboardWithSavedDependencies;
-    }
+    };
 
-    public async deleteDashboard(dashboardRef: ObjRef): Promise<void> {
+    public deleteDashboard = async (dashboardRef: ObjRef): Promise<void> => {
         await this.deleteBearMetadataObject(dashboardRef);
-    }
+    };
+
+    public exportDashboardToPdf = async (
+        dashboardRef: ObjRef,
+        filters?: FilterContextItem[],
+    ): Promise<string> => {
+        const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
+        const convertedFilters = filters && filters.map(fromSdkModel.convertFilterContextItem);
+        return this.authCall(sdk =>
+            sdk.dashboard.exportToPdf(this.workspace, dashboardUri, convertedFilters).then(res => res.uri),
+        );
+    };
 
     public createScheduledMail = async (
         scheduledMailDefinition: IScheduledMailDefinition,
@@ -367,10 +379,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
 
     // Filter context
 
-    private async updateFilterContext(
+    private updateFilterContext = async (
         originalFilterContext: IFilterContext | ITempFilterContext | undefined,
         updatedFilterContext: IFilterContext | ITempFilterContext | IFilterContextDefinition | undefined,
-    ): Promise<IFilterContext | undefined> {
+    ): Promise<IFilterContext | undefined> => {
         if (isTempFilterContext(originalFilterContext)) {
             throw new UnexpectedError("Cannot update temp filter context!");
         } else if (isFilterContextDefinition(updatedFilterContext)) {
@@ -386,7 +398,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
 
         // No change, return the original filter context
         return originalFilterContext;
-    }
+    };
 
     private getBearExportFilterContext = async (
         exportFilterContextRef: ObjRef | undefined,
@@ -462,9 +474,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         return widget;
     };
 
-    private async deleteBearWidgets(widgets: IWidget[]): Promise<void> {
+    private deleteBearWidgets = async (widgets: IWidget[]): Promise<void> => {
         await Promise.all(widgets.map(widget => this.deleteBearMetadataObject(widget.ref)));
-    }
+    };
 
     private collectCreatedWidgetsWithLayoutPaths = (
         updatedLayout: Layout | LayoutDefinition | undefined,

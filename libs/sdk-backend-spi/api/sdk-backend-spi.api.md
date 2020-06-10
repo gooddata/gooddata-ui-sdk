@@ -1091,10 +1091,11 @@ export interface IWorkspaceDashboards {
     createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
     deleteDashboard(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
     getDashboards(): Promise<IListedDashboard[]>;
-    getScheduledMailsCountForDashboard(dashboardRef: ObjRef): Promise<number>;
+    getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
