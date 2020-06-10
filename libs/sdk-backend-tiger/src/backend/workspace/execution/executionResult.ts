@@ -3,16 +3,16 @@
 import {
     DataValue,
     IDataView,
+    IDimensionDescriptor,
     IExecutionResult,
     IExportConfig,
     IExportResult,
     IPreparedExecution,
-    IDimensionDescriptor,
     IResultHeader,
+    NoDataError,
     NotImplemented,
     NotSupported,
     UnexpectedError,
-    NoDataError,
 } from "@gooddata/sdk-backend-spi";
 import SparkMD5 from "spark-md5";
 import { transformResultDimensions } from "../../../fromAfm/dimensions";
@@ -90,51 +90,24 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     private asDataView: DataViewFactory = promisedRes => {
-        return promisedRes
-            .then(res => {
-                if (!res) {
-                    // TODO: SDK8: investigate when can this actually happen; perhaps end of data during paging?
-                    //  perhaps legitimate NoDataCase?
-                    throw new UnexpectedError("Server returned no data");
-                }
+        return promisedRes.then(res => {
+            if (!res) {
+                // TODO: SDK8: investigate when can this actually happen; perhaps end of data during paging?
+                //  perhaps legitimate NoDataCase?
+                throw new UnexpectedError("Server returned no data");
+            }
 
-                if (isEmptyDataResult(res)) {
-                    throw new NoDataError(
-                        "The execution resulted in no data to display.",
-                        new TigerDataView(this, res),
-                    );
-                }
-
-                return new TigerDataView(this, res);
-            })
-            .catch(e => {
-                throw new UnexpectedError(
-                    "An error has occurred while trying to obtain data view for result",
-                    e,
+            if (isEmptyDataResult(res)) {
+                throw new NoDataError(
+                    "The execution resulted in no data to display.",
+                    new TigerDataView(this, res),
                 );
-            });
+            }
+
+            return new TigerDataView(this, res);
+        });
     };
 }
-
-/*
-const TIGER_PAGE_SIZE_LIMIT = 1000;
-
-function sanitizeOffset(offset: number[]): number[] {
-    return offset.map((offsetItem = 0) => offsetItem);
-}
-
-function sanitizeSize(size: number[]): number[] {
-    return size.map((sizeInDim = TIGER_PAGE_SIZE_LIMIT) => {
-        if (sizeInDim > TIGER_PAGE_SIZE_LIMIT) {
-            // tslint:disable-next-line:no-console
-            console.warn("The maximum limit per page is " + TIGER_PAGE_SIZE_LIMIT);
-
-            return TIGER_PAGE_SIZE_LIMIT;
-        }
-        return sizeInDim;
-    });
-}
- */
 
 type DataViewFactory = (promisedRes: Promise<Execution.IExecutionResult | null>) => Promise<IDataView>;
 
@@ -159,9 +132,7 @@ class TigerDataView implements IDataView {
         this.headerItems = transfomedResult.headerItems;
         this.offset = transfomedResult.offset;
         this.count = transfomedResult.count;
-        // TODO: this is ok for now when tiger can only return all data and does not allow paging through
-        //  results. the count is equal to totalCount.
-        this.totalCount = transfomedResult.count;
+        this.totalCount = transfomedResult.total;
 
         /*
         this.totals = dataResult.totals ? dataResult.totals : [[[]]];
@@ -188,7 +159,13 @@ function hasEmptyData(result: Execution.IExecutionResult): boolean {
 }
 
 function hasMissingDimensionHeaders(result: Execution.IExecutionResult): boolean {
-    return !result.dimensionHeaders;
+    /*
+     * messy fix to tiger's afm always returning dimension headers with no content
+     */
+    const firstDimHeaders = result.dimensionHeaders?.[0]?.headerGroups?.[0]?.headers?.[0];
+    const secondDimHeaders = result.dimensionHeaders?.[1]?.headerGroups?.[0]?.headers?.[0];
+
+    return !result.dimensionHeaders || (!firstDimHeaders && !secondDimHeaders);
 }
 
 function isEmptyDataResult(result: Execution.IExecutionResult): boolean {

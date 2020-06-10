@@ -1,7 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { DataValue, IResultHeader } from "@gooddata/sdk-backend-spi";
 import { Execution } from "@gooddata/gd-tiger-client";
-import isArray = require("lodash/isArray");
 import isResultAttributeHeader = Execution.isResultAttributeHeader;
 import isResultMeasureHeader = Execution.isResultMeasureHeader;
 
@@ -10,6 +9,7 @@ export type TransformerResult = {
     readonly data: DataValue[][] | DataValue[];
     readonly offset: number[];
     readonly count: number[];
+    readonly total: number[];
 };
 
 function transformHeaderItems(dimensionHeaders?: Execution.IDimensionHeader[]): IResultHeader[][][] {
@@ -51,26 +51,12 @@ function transformHeaderItems(dimensionHeaders?: Execution.IDimensionHeader[]): 
     });
 }
 
-function calculateOffset(data: DataValue[][] | DataValue[]): number[] {
-    if (!data) {
-        return [0];
-    }
-
-    return isArray(data[0]) ? [0, 0] : [0];
-}
-
-function calculateCount(data: DataValue[][] | DataValue[]): number[] {
-    const xCount = data.length;
-    const yCount = isArray(data[0]) ? (data[0] as DataValue[]).length : 0;
-
-    return [xCount, yCount];
-}
-
 export function transformExecutionResult(result: Execution.IExecutionResult): TransformerResult {
     return {
         data: result.data,
         headerItems: transformHeaderItems(result.dimensionHeaders),
-        offset: calculateOffset(result.data),
-        count: calculateCount(result.data),
+        offset: result.paging.offset,
+        count: result.paging.count,
+        total: result.paging.total,
     };
 }
