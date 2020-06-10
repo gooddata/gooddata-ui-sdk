@@ -112,14 +112,21 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): Execute
     };
 }
 
-function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): ExecuteAFM.IPopMeasureDefinition {
+function convertPopMeasureDefinition(
+    definition: IPoPMeasureDefinition,
+): ExecuteAFM.IOverPeriodMeasureDefinition {
     const { popMeasureDefinition } = definition;
     const attributeRef = popMeasureDefinition.popAttribute;
 
     return {
-        popMeasure: {
+        overPeriodMeasure: {
             measureIdentifier: toLocalIdentifier(popMeasureDefinition.measureIdentifier),
-            popAttribute: toDisplayFormQualifier(attributeRef),
+            dateAttributes: [
+                {
+                    attribute: toDisplayFormQualifier(attributeRef),
+                    periodsAgo: 1,
+                },
+            ],
         },
     };
 }

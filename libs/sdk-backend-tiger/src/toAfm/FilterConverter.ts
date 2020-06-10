@@ -16,6 +16,7 @@ import {
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import { toDateDataSetQualifier, toDisplayFormQualifier } from "./ObjRefConverter";
+import { toTigerGranularity } from "../toSdkModel/dateGranularityConversions";
 
 function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPositiveAttributeFilter {
     const displayFormRef = filter.positiveAttributeFilter.displayForm;
@@ -91,7 +92,7 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteA
     return {
         relativeDateFilter: {
             dataset: toDateDataSetQualifier(datasetRef),
-            granularity: relativeDateFilter.granularity,
+            granularity: toTigerGranularity(relativeDateFilter.granularity as any),
             from: Number(relativeDateFilter.from),
             to: Number(relativeDateFilter.to),
         },

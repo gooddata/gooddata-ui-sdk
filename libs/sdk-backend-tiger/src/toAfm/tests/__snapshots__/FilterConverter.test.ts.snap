@@ -29,7 +29,7 @@ Object {
       },
     },
     "from": -11,
-    "granularity": "GDC.time.date",
+    "granularity": "day",
     "to": 0,
   },
 }
@@ -45,7 +45,7 @@ Object {
       },
     },
     "from": 5,
-    "granularity": "GDC.time.date",
+    "granularity": "day",
     "to": NaN,
   },
 }
@@ -63,7 +63,7 @@ Object {
       },
     },
     "from": -3,
-    "granularity": "GDC.time.month",
+    "granularity": "month",
     "to": 9,
   },
 }
@@ -79,7 +79,7 @@ Object {
       },
     },
     "from": 25,
-    "granularity": "GDC.time.quarter",
+    "granularity": "quarter",
     "to": -2,
   },
 }
@@ -95,7 +95,7 @@ Object {
       },
     },
     "from": 50,
-    "granularity": "GDC.time.week_us",
+    "granularity": "week",
     "to": 100,
   },
 }
@@ -111,7 +111,7 @@ Object {
       },
     },
     "from": 2,
-    "granularity": "GDC.time.year",
+    "granularity": "year",
     "to": 7,
   },
 }
@@ -180,7 +180,7 @@ Object {
       },
     },
     "from": 20,
-    "granularity": "GDC.time.date",
+    "granularity": "day",
     "to": 30,
   },
 }

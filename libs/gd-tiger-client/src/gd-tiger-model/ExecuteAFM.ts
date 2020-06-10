@@ -36,7 +36,7 @@ export namespace ExecuteAFM {
     export type MeasureDefinition =
         | ISimpleMeasureDefinition
         | IArithmeticMeasureDefinition
-        | IPopMeasureDefinition
+        | IOverPeriodMeasureDefinition
         | IPreviousPeriodMeasureDefinition;
 
     export interface ISimpleMeasureDefinition {
@@ -47,8 +47,8 @@ export namespace ExecuteAFM {
         arithmeticMeasure: IArithmeticMeasure;
     }
 
-    export interface IPopMeasureDefinition {
-        popMeasure: IPopMeasure;
+    export interface IOverPeriodMeasureDefinition {
+        overPeriodMeasure: IOverPeriodMeasure;
     }
 
     export interface IPreviousPeriodMeasureDefinition {
@@ -71,9 +71,14 @@ export namespace ExecuteAFM {
         operator: ArithmeticMeasureOperator;
     }
 
-    export interface IPopMeasure {
+    export interface IPopDateAttribute {
+        attribute: ObjQualifier;
+        periodsAgo: number;
+    }
+
+    export interface IOverPeriodMeasure {
         measureIdentifier: ILocalIdentifierQualifier;
-        popAttribute: ObjQualifier;
+        dateAttributes: IPopDateAttribute[];
     }
 
     export interface IPreviousPeriodMeasure {

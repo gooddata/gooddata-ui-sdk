@@ -8174,16 +8174,23 @@ export namespace ExecuteAFM {
         };
     }
     // (undocumented)
-    export interface IPopMeasure {
+    export interface IOverPeriodMeasure {
+        // (undocumented)
+        dateAttributes: IPopDateAttribute[];
         // (undocumented)
         measureIdentifier: ILocalIdentifierQualifier;
-        // (undocumented)
-        popAttribute: ObjQualifier;
     }
     // (undocumented)
-    export interface IPopMeasureDefinition {
+    export interface IOverPeriodMeasureDefinition {
         // (undocumented)
-        popMeasure: IPopMeasure;
+        overPeriodMeasure: IOverPeriodMeasure;
+    }
+    // (undocumented)
+    export interface IPopDateAttribute {
+        // (undocumented)
+        attribute: ObjQualifier;
+        // (undocumented)
+        periodsAgo: number;
     }
     // (undocumented)
     export interface IPositiveAttributeFilter {
@@ -8257,7 +8264,7 @@ export namespace ExecuteAFM {
     // (undocumented)
     export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
     // (undocumented)
-    export type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IPopMeasureDefinition | IPreviousPeriodMeasureDefinition;
+    export type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IOverPeriodMeasureDefinition | IPreviousPeriodMeasureDefinition;
     // (undocumented)
     export type ObjQualifier = IObjIdentifierQualifier;
     // (undocumented)
