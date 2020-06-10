@@ -2,17 +2,20 @@
 import * as React from "react";
 import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
-import { ExtendedDateFilters } from "./interfaces/ExtendedDateFilters";
+import {
+    isRelativeDateFilterForm,
+    DateFilterGranularity,
+    DashboardDateFilterConfigMode,
+} from "@gooddata/sdk-backend-spi";
 import { canExcludeCurrentPeriod } from "./utils/PeriodExlusion";
 
 import { DateFilterCore } from "./DateFilterCore";
 import { validateFilterOption } from "./validation/OptionValidation";
+import { DateFilterOption, IDateFilterOptionsByType } from "./interfaces";
 
-const normalizeSelectedFilterOption = (
-    selectedFilterOption: ExtendedDateFilters.DateFilterOption,
-): ExtendedDateFilters.DateFilterOption => {
+const normalizeSelectedFilterOption = (selectedFilterOption: DateFilterOption): DateFilterOption => {
     if (
-        ExtendedDateFilters.isRelativeDateFilterForm(selectedFilterOption) &&
+        isRelativeDateFilterForm(selectedFilterOption) &&
         selectedFilterOption.from > selectedFilterOption.to
     ) {
         return {
@@ -26,18 +29,18 @@ const normalizeSelectedFilterOption = (
 
 interface IStatePropsIntersection {
     excludeCurrentPeriod: boolean;
-    selectedFilterOption: ExtendedDateFilters.DateFilterOption;
+    selectedFilterOption: DateFilterOption;
 }
 
 /**
  * @beta
  */
 export interface IDateFilterOwnProps extends IStatePropsIntersection {
-    filterOptions: ExtendedDateFilters.IDateFilterOptionsByType;
-    availableGranularities: ExtendedDateFilters.DateFilterGranularity[];
+    filterOptions: IDateFilterOptionsByType;
+    availableGranularities: DateFilterGranularity[];
     isEditMode?: boolean;
     customFilterName?: string;
-    dateFilterMode: ExtendedDateFilters.DateFilterConfigMode;
+    dateFilterMode: DashboardDateFilterConfigMode;
     locale?: string;
 }
 
@@ -45,7 +48,7 @@ export interface IDateFilterOwnProps extends IStatePropsIntersection {
  * @beta
  */
 export interface IDateFilterCallbackProps {
-    onApply: (dateFilterOption: ExtendedDateFilters.DateFilterOption, excludeCurrentPeriod: boolean) => void;
+    onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
     onCancel?: () => void;
     onOpen?: () => void;
     onClose?: () => void;
@@ -58,7 +61,7 @@ export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallba
 
 interface IDateFilterState extends IStatePropsIntersection {
     initExcludeCurrentPeriod: boolean;
-    initSelectedFilterOption: ExtendedDateFilters.DateFilterOption;
+    initSelectedFilterOption: DateFilterOption;
     isExcludeCurrentPeriodEnabled: boolean;
 }
 
@@ -100,7 +103,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     }
 
     private static getStateFromSelectedOption = (
-        selectedFilterOption: ExtendedDateFilters.DateFilterOption,
+        selectedFilterOption: DateFilterOption,
         excludeCurrentPeriod: boolean,
     ) => {
         const canExcludeCurrent = canExcludeCurrentPeriod(selectedFilterOption);
@@ -183,9 +186,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         this.setState({ excludeCurrentPeriod });
     };
 
-    private handleSelectedFilterOptionChange = (
-        selectedFilterOption: ExtendedDateFilters.DateFilterOption,
-    ) => {
+    private handleSelectedFilterOptionChange = (selectedFilterOption: DateFilterOption) => {
         this.setState(state =>
             DateFilter.getStateFromSelectedOption(selectedFilterOption, state.excludeCurrentPeriod),
         );

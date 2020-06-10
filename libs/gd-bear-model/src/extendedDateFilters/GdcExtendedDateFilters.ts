@@ -64,21 +64,6 @@ export namespace GdcExtendedDateFilters {
         dateFilterConfig: IDateFilterConfig;
     }
 
-    export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
-
-    export interface IDashboardAddedPresets {
-        absolutePresets?: IDateFilterAbsolutePreset[];
-        relativePresets?: IDateFilterRelativePreset[];
-    }
-
-    export interface IDashboardDateFilterConfig {
-        filterName: string;
-        mode: DashboardDateFilterConfigMode;
-        hideOptions?: GUID[];
-        hideGranularities?: DateFilterGranularity[];
-        addPresets?: IDashboardAddedPresets;
-    }
-
     export interface IDateFilterReference {
         dateFilterReference: {
             dataSet: string;

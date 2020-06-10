@@ -1,15 +1,20 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
-import { ExtendedDateFilters } from "../../../interfaces/ExtendedDateFilters";
+import {
+    IAllTimeDateFilter,
+    IAbsoluteDateFilterPreset,
+    IRelativeDateFilterPreset,
+} from "@gooddata/sdk-backend-spi";
+import { IUiAbsoluteDateFilterForm } from "../../../interfaces";
 
-export const allTimeFilter: ExtendedDateFilters.IAllTimeDateFilter = {
+export const allTimeFilter: IAllTimeDateFilter = {
     localIdentifier: "ALL_TIME",
     type: "allTime",
     name: "",
     visible: true,
 };
 
-export const absoluteFormFilter: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+export const absoluteFormFilter: IUiAbsoluteDateFilterForm = {
     localIdentifier: "ABSOLUTE_FORM",
     type: "absoluteForm",
     from: "2019-01-01",
@@ -18,7 +23,7 @@ export const absoluteFormFilter: ExtendedDateFilters.IAbsoluteDateFilterForm = {
     visible: true,
 };
 
-export const absoluteFormFilterOneDay: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+export const absoluteFormFilterOneDay: IUiAbsoluteDateFilterForm = {
     localIdentifier: "ABSOLUTE_FORM",
     type: "absoluteForm",
     from: "2019-01-01",
@@ -27,7 +32,7 @@ export const absoluteFormFilterOneDay: ExtendedDateFilters.IAbsoluteDateFilterFo
     visible: true,
 };
 
-export const absolutePresetFilter: ExtendedDateFilters.IAbsoluteDateFilterPreset = {
+export const absolutePresetFilter: IAbsoluteDateFilterPreset = {
     localIdentifier: "ABSOLUTE_PRESET_FOO",
     type: "absolutePreset",
     from: "2019-01-01",
@@ -36,7 +41,7 @@ export const absolutePresetFilter: ExtendedDateFilters.IAbsoluteDateFilterPreset
     visible: true,
 };
 
-export const relativePresetFilter: ExtendedDateFilters.IRelativeDateFilterPreset = {
+export const relativePresetFilter: IRelativeDateFilterPreset = {
     localIdentifier: "RELATIVE_PRESET_FOO",
     type: "relativePreset",
     from: -5,

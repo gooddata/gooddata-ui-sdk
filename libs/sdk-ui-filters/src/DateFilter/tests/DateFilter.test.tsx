@@ -43,7 +43,8 @@ import {
     clickRelativeFormFilter,
     isRelativeFormSelectMenuVisible,
 } from "./extendedDateFilters_helpers";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { IRelativeDateFilterPreset } from "@gooddata/sdk-backend-spi";
+import { IUiRelativeDateFilterForm } from "../interfaces";
 
 describe("DateFilter", () => {
     it("should render without crash", () => {
@@ -624,7 +625,7 @@ describe("DateFilter", () => {
 });
 
 describe("normalizeSelectedFilterOption", () => {
-    const sampleFloatingRangeFormOption: ExtendedDateFilters.IRelativeDateFilterForm = {
+    const sampleFloatingRangeFormOption: IUiRelativeDateFilterForm = {
         from: -2,
         to: 0,
         granularity: "GDC.time.date",
@@ -635,7 +636,7 @@ describe("normalizeSelectedFilterOption", () => {
         visible: true,
     };
 
-    const sampleUnsortedFloatingRangeFormOption: ExtendedDateFilters.IRelativeDateFilterForm = {
+    const sampleUnsortedFloatingRangeFormOption: IUiRelativeDateFilterForm = {
         from: 99,
         to: -2,
         granularity: "GDC.time.date",
@@ -646,7 +647,7 @@ describe("normalizeSelectedFilterOption", () => {
         visible: true,
     };
 
-    const sampleFloatingRangePresetOption: ExtendedDateFilters.IRelativeDateFilterPreset = {
+    const sampleFloatingRangePresetOption: IRelativeDateFilterPreset = {
         from: -11,
         to: 0,
         granularity: "GDC.time.month",
@@ -657,7 +658,7 @@ describe("normalizeSelectedFilterOption", () => {
     };
 
     it("should sort floating range from and to fields", () => {
-        const normalizedOption: ExtendedDateFilters.IRelativeDateFilterForm = testAPI.normalizeSelectedFilterOption(
+        const normalizedOption: IUiRelativeDateFilterForm = testAPI.normalizeSelectedFilterOption(
             sampleUnsortedFloatingRangeFormOption,
         ) as any;
         expect(normalizedOption.from < normalizedOption.to).toBe(true);

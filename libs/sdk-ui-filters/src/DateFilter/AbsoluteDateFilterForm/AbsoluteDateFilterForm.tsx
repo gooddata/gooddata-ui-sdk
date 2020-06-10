@@ -3,13 +3,14 @@ import * as React from "react";
 
 import { dateFilterValueToDateRange, dateRangeToDateFilterValue } from "./conversions";
 import { DateRangePicker, IDateRange } from "../DateRangePicker/DateRangePicker";
-import { ExtendedDateFilters, IExtendedDateFilterErrors } from "../interfaces/ExtendedDateFilters";
+import { IExtendedDateFilterErrors, DateFilterOption } from "../interfaces";
+import { IAbsoluteDateFilterForm } from "@gooddata/sdk-backend-spi";
 
 interface IAbsoluteDateFilterFormProps {
-    selectedFilterOption: ExtendedDateFilters.IAbsoluteDateFilterForm;
+    selectedFilterOption: IAbsoluteDateFilterForm;
     isMobile: boolean;
     errors: IExtendedDateFilterErrors["absoluteForm"];
-    onSelectedFilterOptionChange: (option: ExtendedDateFilters.DateFilterOption) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }
 
 const dayPickerProps = {

@@ -1,8 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import MediaQuery from "react-responsive";
-import { ExtendedDateFilters, IExtendedDateFilterErrors } from "./interfaces/ExtendedDateFilters";
+import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized";
@@ -10,23 +11,23 @@ import { DateFilterBody } from "./DateFilterBody/DateFilterBody";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExlusion";
 
 export interface IDateFilterCoreProps {
-    filterOptions: ExtendedDateFilters.IDateFilterOptionsByType;
+    filterOptions: IDateFilterOptionsByType;
     /**
      * Filter option currently selected, it would be applied on Apply click.
      */
-    selectedFilterOption: ExtendedDateFilters.DateFilterOption;
-    onSelectedFilterOptionChange: (option: ExtendedDateFilters.DateFilterOption) => void;
+    selectedFilterOption: DateFilterOption;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     /**
      * Filter option selected before the filter dialog was opened.
      */
-    originalSelectedFilterOption: ExtendedDateFilters.DateFilterOption;
+    originalSelectedFilterOption: DateFilterOption;
 
     excludeCurrentPeriod: boolean;
     originalExcludeCurrentPeriod: boolean;
     isExcludeCurrentPeriodEnabled: boolean;
     onExcludeCurrentPeriodChange: (isExcluded: boolean) => void;
 
-    availableGranularities: ExtendedDateFilters.DateFilterGranularity[];
+    availableGranularities: DateFilterGranularity[];
 
     isEditMode: boolean;
     locale?: string;

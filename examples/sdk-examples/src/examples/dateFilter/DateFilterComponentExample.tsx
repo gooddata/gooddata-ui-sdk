@@ -1,18 +1,19 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { DateFilter, ExtendedDateFilters } from "@gooddata/sdk-ui-filters";
+import { DateFilter, IDateFilterOptionsByType, DateFilterOption } from "@gooddata/sdk-ui-filters";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 const dateFrom = new Date();
 dateFrom.setMonth(dateFrom.getMonth() - 1);
 
-const availableGranularities: ExtendedDateFilters.DateFilterGranularity[] = [
+const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.date",
     "GDC.time.month",
     "GDC.time.quarter",
     "GDC.time.year",
 ];
 
-const defaultDateFilterOptions: ExtendedDateFilters.IDateFilterOptionsByType = {
+const defaultDateFilterOptions: IDateFilterOptionsByType = {
     allTime: {
         localIdentifier: "ALL_TIME",
         type: "allTime",
@@ -169,7 +170,7 @@ const defaultDateFilterOptions: ExtendedDateFilters.IDateFilterOptionsByType = {
 const style = { width: 300 };
 
 interface IDateFilterComponentExampleState {
-    selectedFilterOption: ExtendedDateFilters.DateFilterOption;
+    selectedFilterOption: DateFilterOption;
     excludeCurrentPeriod: boolean;
 }
 
@@ -179,10 +180,7 @@ export const DateFilterComponentExample: React.FC = () => {
         excludeCurrentPeriod: false,
     });
 
-    const onApply = (
-        selectedFilterOption: ExtendedDateFilters.DateFilterOption,
-        excludeCurrentPeriod: boolean,
-    ) => {
+    const onApply = (selectedFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => {
         setState({
             selectedFilterOption,
             excludeCurrentPeriod,

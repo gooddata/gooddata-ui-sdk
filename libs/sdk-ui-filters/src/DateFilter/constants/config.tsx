@@ -2,12 +2,12 @@
 import * as moment from "moment";
 
 import { platformDateFormat } from "../constants/Platform";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { IDateFilterOptionsByType } from "../interfaces";
 
 /**
  * @beta
  */
-export const defaultDateFilterOptions: ExtendedDateFilters.IDateFilterOptionsByType = {
+export const defaultDateFilterOptions: IDateFilterOptionsByType = {
     allTime: {
         localIdentifier: "ALL_TIME",
         type: "allTime",

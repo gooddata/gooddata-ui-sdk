@@ -15,10 +15,25 @@ export namespace GdcDashboard {
         meta: GdcMetadata.IObjectMeta;
     }
 
+    export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
+
+    export interface IDashboardDateFilterAddedPresets {
+        absolutePresets?: GdcExtendedDateFilters.IDateFilterAbsolutePreset[];
+        relativePresets?: GdcExtendedDateFilters.IDateFilterRelativePreset[];
+    }
+
+    export interface IDashboardDateFilterConfig {
+        filterName: string;
+        mode: DashboardDateFilterConfigMode;
+        hideOptions?: GdcExtendedDateFilters.GUID[];
+        hideGranularities?: GdcExtendedDateFilters.DateFilterGranularity[];
+        addPresets?: IDashboardDateFilterAddedPresets;
+    }
+
     export interface IAnalyticalDashboardContent {
         widgets: string[];
         filterContext?: string;
         layout?: GdcDashboardLayout.Layout;
-        dateFilterConfig?: GdcExtendedDateFilters.IDashboardDateFilterConfig;
+        dateFilterConfig?: IDashboardDateFilterConfig;
     }
 }

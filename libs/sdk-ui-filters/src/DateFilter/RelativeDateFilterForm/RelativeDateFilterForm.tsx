@@ -1,13 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces";
 import { GranularityTabs } from "./GranularityTabs";
 import { RelativeRangePicker } from "../RelativeRangePicker/RelativeRangePicker";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 export interface IRelativeDateFilterFormProps {
-    availableGranularities: ExtendedDateFilters.DateFilterGranularity[];
-    selectedFilterOption: ExtendedDateFilters.IRelativeDateFilterForm;
-    onSelectedFilterOptionChange: (dateFilterOption: ExtendedDateFilters.DateFilterOption) => void;
+    availableGranularities: DateFilterGranularity[];
+    selectedFilterOption: IUiRelativeDateFilterForm;
+    onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;
     isMobile: boolean;
 }
 

@@ -4,13 +4,14 @@ import kebabCase = require("lodash/kebabCase");
 import cx from "classnames";
 import { ListItem } from "../ListItem/ListItem";
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { IAbsoluteDateFilterPreset } from "@gooddata/sdk-backend-spi";
+import { DateFilterOption } from "../interfaces";
 
 interface IAbsolutePresetFilterItemsProps {
-    filterOptions: ExtendedDateFilters.IAbsoluteDateFilterPreset[];
-    selectedFilterOption: ExtendedDateFilters.DateFilterOption;
+    filterOptions: IAbsoluteDateFilterPreset[];
+    selectedFilterOption: DateFilterOption;
     className?: string;
-    onSelectedFilterOptionChange: (option: ExtendedDateFilters.DateFilterOption) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }
 
 export const AbsolutePresetFilterItems: React.FC<IAbsolutePresetFilterItemsProps> = ({

@@ -29,6 +29,17 @@ const DateFilterHelpers = {
 // This is 1:1 reexported by root index.ts and is part of SDK's public API
 export { DateFilter, IDateFilterCallbackProps, IDateFilterOwnProps, IDateFilterProps, DateFilterHelpers };
 
-export { ExtendedDateFilters } from "./interfaces/ExtendedDateFilters";
+export {
+    AbsoluteDateFilterOption,
+    DateFilterOption,
+    DateFilterRelativeOptionGroup,
+    IDateFilterOptionsByType,
+    IExtendedDateFilterErrors,
+    RelativeDateFilterOption,
+    isAbsoluteDateFilterOption,
+    isRelativeDateFilterOption,
+    IUiAbsoluteDateFilterForm,
+    IUiRelativeDateFilterForm,
+} from "./interfaces";
 
 export { defaultDateFilterOptions } from "./constants/config";

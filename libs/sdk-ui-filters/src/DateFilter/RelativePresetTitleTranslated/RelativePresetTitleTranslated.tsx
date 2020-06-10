@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
-const intlIdDict: { [key in ExtendedDateFilters.DateFilterGranularity]: string } = {
+const intlIdDict: { [key in DateFilterGranularity]: string } = {
     "GDC.time.date": "filters.day.title",
     "GDC.time.week_us": "filters.week.title",
     "GDC.time.month": "filters.month.title",
@@ -12,7 +12,7 @@ const intlIdDict: { [key in ExtendedDateFilters.DateFilterGranularity]: string }
 };
 
 export const RelativePresetTitleTranslated: React.FC<{
-    granularity: ExtendedDateFilters.DateFilterGranularity;
+    granularity: DateFilterGranularity;
 }> = ({ granularity }) => {
     const intlId = intlIdDict[granularity] || null;
     if (!intlId) {

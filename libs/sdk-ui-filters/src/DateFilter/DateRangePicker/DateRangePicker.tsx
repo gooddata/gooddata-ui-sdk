@@ -9,7 +9,7 @@ import { convertDateToPlatformDateString, convertPlatformDateStringToDate } from
 import { DateRangePickerInputField } from "./DateRangePickerInputField";
 import { mergeDayPickerProps, areRangeBoundsCrossed } from "./utils";
 import { DateRangePickerError } from "./DateRangePickerError";
-import { IExtendedDateFilterErrors } from "../interfaces/ExtendedDateFilters";
+import { IExtendedDateFilterErrors } from "../interfaces";
 import { sanitizeLocaleForMoment } from "../utils/FormattingUtils";
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
 

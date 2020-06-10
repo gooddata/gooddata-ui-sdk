@@ -1,13 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import { IDateRange } from "../DateRangePicker/DateRangePicker";
 import { convertDateToPlatformDateString, convertPlatformDateStringToDate } from "../utils/DateConversions";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { IUiAbsoluteDateFilterForm } from "../interfaces";
 
 export const dateRangeToDateFilterValue = (
     range: IDateRange,
     localIdentifier: string,
-): ExtendedDateFilters.IAbsoluteDateFilterForm => ({
+): IUiAbsoluteDateFilterForm => ({
     // GD Platform doesn't support time here
     from: convertDateToPlatformDateString(range.from),
     to: convertDateToPlatformDateString(range.to),
@@ -17,9 +17,7 @@ export const dateRangeToDateFilterValue = (
     visible: true,
 });
 
-export const dateFilterValueToDateRange = (
-    value: ExtendedDateFilters.IAbsoluteDateFilterForm,
-): IDateRange => ({
+export const dateFilterValueToDateRange = (value: IUiAbsoluteDateFilterForm): IDateRange => ({
     from: value && convertPlatformDateStringToDate(value.from),
     to: value && convertPlatformDateStringToDate(value.to),
 });

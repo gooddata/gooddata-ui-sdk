@@ -1,17 +1,22 @@
-// (C) 2019 GoodData Corporation
-import { ExtendedDateFilters } from "../../interfaces/ExtendedDateFilters";
+// (C) 2019-2020 GoodData Corporation
+import {
+    IAllTimeDateFilter,
+    IAbsoluteDateFilterPreset,
+    IRelativeDateFilterPreset,
+} from "@gooddata/sdk-backend-spi";
 import { mapAbsoluteFilterToAfm, mapOptionToAfm, mapRelativeFilterToAfm } from "../AFMConversions";
+import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm } from "../../interfaces";
 
 const dataSet = {
     uri: "foo",
 };
-const allTimeDateFilterValue: ExtendedDateFilters.IAllTimeDateFilter = {
+const allTimeDateFilterValue: IAllTimeDateFilter = {
     localIdentifier: "baz",
     name: "bar",
     visible: true,
     type: "allTime",
 };
-const absoluteDateFilterFormValue: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+const absoluteDateFilterFormValue: IUiAbsoluteDateFilterForm = {
     localIdentifier: "baz",
     name: "bar",
     visible: true,
@@ -19,7 +24,7 @@ const absoluteDateFilterFormValue: ExtendedDateFilters.IAbsoluteDateFilterForm =
     from: "1",
     to: "2",
 };
-const absoluteDateFilterPresetValue: ExtendedDateFilters.IAbsoluteDateFilterPreset = {
+const absoluteDateFilterPresetValue: IAbsoluteDateFilterPreset = {
     localIdentifier: "baz",
     name: "bar",
     visible: true,
@@ -27,7 +32,7 @@ const absoluteDateFilterPresetValue: ExtendedDateFilters.IAbsoluteDateFilterPres
     from: "1",
     to: "2",
 };
-const relativeDateFilterFormValue: ExtendedDateFilters.IRelativeDateFilterForm = {
+const relativeDateFilterFormValue: IUiRelativeDateFilterForm = {
     localIdentifier: "baz",
     name: "bar",
     visible: true,
@@ -36,7 +41,7 @@ const relativeDateFilterFormValue: ExtendedDateFilters.IRelativeDateFilterForm =
     to: 2,
     availableGranularities: ["GDC.time.date"],
 };
-const relativeDateFilterPresetValue: ExtendedDateFilters.IRelativeDateFilterPreset = {
+const relativeDateFilterPresetValue: IRelativeDateFilterPreset = {
     localIdentifier: "baz",
     name: "bar",
     visible: true,

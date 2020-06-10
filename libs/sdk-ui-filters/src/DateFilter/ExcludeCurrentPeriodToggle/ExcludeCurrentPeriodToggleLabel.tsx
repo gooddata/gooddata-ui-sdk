@@ -3,11 +3,11 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { granularityIntlCodes } from "../constants/i18n";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 interface IExcludeCurrentPeriodToggleLabelProps {
     disabled?: boolean;
-    granularity?: ExtendedDateFilters.DateFilterGranularity;
+    granularity?: DateFilterGranularity;
 }
 
 export const ExcludeCurrentPeriodToggleLabel: React.FC<IExcludeCurrentPeriodToggleLabelProps> = props => {

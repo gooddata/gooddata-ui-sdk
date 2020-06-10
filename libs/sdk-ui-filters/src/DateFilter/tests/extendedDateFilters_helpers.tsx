@@ -5,9 +5,10 @@ import { platformDateFormat } from "../constants/Platform";
 import moment = require("moment");
 import noop = require("lodash/noop");
 import { IDateFilterProps, DateFilter } from "../DateFilter";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { IDateFilterOptionsByType } from "../interfaces";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
-export const defaultDateFilterOptions: ExtendedDateFilters.IDateFilterOptionsByType = {
+export const defaultDateFilterOptions: IDateFilterOptionsByType = {
     allTime: {
         localIdentifier: "ALL_TIME",
         type: "allTime",
@@ -166,7 +167,7 @@ export const defaultDateFilterOptions: ExtendedDateFilters.IDateFilterOptionsByT
     },
 };
 
-const availableGranularities: ExtendedDateFilters.DateFilterGranularity[] = [
+const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.month",
     "GDC.time.year",
     "GDC.time.quarter",

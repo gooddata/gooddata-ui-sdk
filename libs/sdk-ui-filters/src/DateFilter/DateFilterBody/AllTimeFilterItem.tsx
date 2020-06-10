@@ -2,14 +2,15 @@
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
 import { ListItem } from "../ListItem/ListItem";
+import { IAllTimeDateFilter } from "@gooddata/sdk-backend-spi";
+import { DateFilterOption } from "../interfaces";
 
 export const AllTimeFilterItem: React.FC<{
-    filterOption: ExtendedDateFilters.IAllTimeDateFilter;
-    selectedFilterOption: ExtendedDateFilters.DateFilterOption;
+    filterOption: IAllTimeDateFilter;
+    selectedFilterOption: DateFilterOption;
     className?: string;
-    onSelectedFilterOptionChange: (option: ExtendedDateFilters.DateFilterOption) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }> = ({ className, filterOption, selectedFilterOption, onSelectedFilterOptionChange }) => (
     <ListItem
         isSelected={filterOption.localIdentifier === selectedFilterOption.localIdentifier}

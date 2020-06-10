@@ -4,10 +4,31 @@ import { Layout, LayoutDefinition } from "./layout";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
 import { IDashboardObjectIdentity } from "./common";
 import {
-    DateFilterConfigMode,
     DateFilterGranularity,
-    IDashboardAddedPresets,
+    IAbsoluteDateFilterPreset,
+    IRelativeDateFilterPreset,
 } from "../dateFilterConfigs/types";
+
+/**
+ * Date filter configuration mode
+ * @alpha
+ */
+export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
+
+/**
+ * Date filter presets to add to the date filter for the current dashboard
+ * @alpha
+ */
+export interface IDashboardDateFilterAddedPresets {
+    /**
+     * Absolute date filter presets to include in the date filter for the current dashboard
+     */
+    absolutePresets?: IAbsoluteDateFilterPreset[];
+    /**
+     * Relative date filter presets to include in the date filter for the current dashboard
+     */
+    relativePresets?: IRelativeDateFilterPreset[];
+}
 
 /**
  * Extended date filter config
@@ -15,29 +36,29 @@ import {
  */
 export interface IDashboardDateFilterConfig {
     /**
-     * Extended date filter name
+     * Customized name of the date filter to display
      */
     filterName: string;
 
     /**
      * Extended date filter config mode
      */
-    mode: DateFilterConfigMode;
+    mode: DashboardDateFilterConfigMode;
 
     /**
-     * Local identifiers of options to hide
+     * Local identifiers of the date filter options to hide for the current dashboard
      */
     hideOptions?: Identifier[];
 
     /**
-     * Granularities to hide
+     * Date filter granularities to hide in the date filter dropdown for the current dashboard
      */
     hideGranularities?: DateFilterGranularity[];
 
     /**
-     * Added date filter presets
+     * Date filter presets to add to the date filter dropdown specific for the current dashboard
      */
-    addPresets?: IDashboardAddedPresets;
+    addPresets?: IDashboardDateFilterAddedPresets;
 }
 
 /**
