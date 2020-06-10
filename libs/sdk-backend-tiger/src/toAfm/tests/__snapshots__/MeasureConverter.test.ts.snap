@@ -39,15 +39,20 @@ Object {
 exports[`measure converter should return converted pop measure definition from model to AFM 1`] = `
 Object {
   "definition": Object {
-    "popMeasure": Object {
+    "overPeriodMeasure": Object {
+      "dateAttributes": Array [
+        Object {
+          "attribute": Object {
+            "identifier": Object {
+              "id": "attr",
+              "type": "attribute",
+            },
+          },
+          "periodsAgo": 1,
+        },
+      ],
       "measureIdentifier": Object {
         "localIdentifier": "m_acugFHNJgsBy",
-      },
-      "popAttribute": Object {
-        "identifier": Object {
-          "id": "attr",
-          "type": "attribute",
-        },
       },
     },
   },
@@ -279,7 +284,7 @@ Object {
               },
             },
             "from": 5,
-            "granularity": "GDC.time.date",
+            "granularity": "day",
             "to": 22,
           },
         },
