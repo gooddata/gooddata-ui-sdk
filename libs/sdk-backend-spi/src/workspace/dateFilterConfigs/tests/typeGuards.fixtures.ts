@@ -9,7 +9,7 @@ import {
     isRelativeDateFilterForm,
     isRelativeDateFilterOption,
     isRelativeDateFilterPreset,
-} from "../extendedDateFilters";
+} from "../types";
 import {
     allTimeDateFilter,
     absoluteDateFilterForm,
@@ -18,7 +18,7 @@ import {
     relativeDateFilterForm,
     relativeDateFilterOption,
     relativeDateFilterPreset,
-} from "./extendedDateFilters.fixtures";
+} from "./typeGuards";
 
 describe("dashboard extended date filters type guards", () => {
     describe("isAllTimeDateFilter", () => {

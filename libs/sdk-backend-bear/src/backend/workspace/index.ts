@@ -13,6 +13,7 @@ import {
     IWorkspaceInsights,
     IWorkspaceDashboards,
     IWorkspaceUsersQuery,
+    IWorkspaceDateFilterConfigsQuery,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./execution/executionFactory";
 import { BearWorkspaceMetadata } from "./metadata";
@@ -26,6 +27,7 @@ import { BearWorkspaceDataSets } from "./datasets";
 import { BearWorkspaceDashboards } from "./dashboards";
 import { BearAuthenticatedCallGuard } from "../../types";
 import { BearWorkspaceUsersQuery } from "./users";
+import { BearWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -72,5 +74,9 @@ export class BearWorkspace implements IAnalyticalWorkspace {
 
     public users(): IWorkspaceUsersQuery {
         return new BearWorkspaceUsersQuery(this.authCall, this.workspace);
+    }
+
+    public dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
+        return new BearWorkspaceDateFilterConfigsQuery(this.authCall, this.workspace);
     }
 }

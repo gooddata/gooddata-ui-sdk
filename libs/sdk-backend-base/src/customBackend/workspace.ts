@@ -14,6 +14,7 @@ import {
     IWorkspaceStylingService,
     NotSupported,
     IWorkspaceUsersQuery,
+    IWorkspaceDateFilterConfigsQuery,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution";
 import { CustomBackendConfig, CustomBackendState } from "./config";
@@ -80,5 +81,9 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public users(): IWorkspaceUsersQuery {
         throw new NotSupported("users are not supported");
+    }
+
+    public dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
+        throw new NotSupported("dateFilterConfigs are not supported");
     }
 }

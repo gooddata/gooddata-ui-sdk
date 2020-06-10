@@ -1,15 +1,11 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
+import { ObjRef, Identifier } from "@gooddata/sdk-model";
 
 /**
  * TODO: remove ExtendedDateFilters from sdk-ui-filters and update imports in other files
+ * https://jira.intgdc.com/browse/RAIL-2413
  */
-
-/**
- * TODO: docs
- * @public
- */
-export type GUID = string;
 
 /**
  * Date string - ISO-8601 calendar date string, eg.: '2018-12-30'
@@ -80,8 +76,8 @@ export type DateFilterGranularity =
  * @public
  */
 export interface IDateFilterOption {
-    localIdentifier: GUID;
-    name: string;
+    localIdentifier: Identifier;
+    name?: string;
     type: OptionType;
     visible: boolean;
 }
@@ -122,8 +118,6 @@ export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGr
  */
 export interface IAbsoluteDateFilterForm extends IDateFilterOption {
     type: AbsoluteFormType;
-    from?: DateString;
-    to?: DateString;
 }
 
 /**
@@ -132,10 +126,7 @@ export interface IAbsoluteDateFilterForm extends IDateFilterOption {
  */
 export interface IRelativeDateFilterForm extends IDateFilterOption {
     type: RelativeFormType;
-    granularity?: DateFilterGranularity;
     availableGranularities: DateFilterGranularity[];
-    from?: RelativeGranularityOffset;
-    to?: RelativeGranularityOffset;
 }
 
 /**
@@ -218,8 +209,7 @@ export type DateFilterOption = IAllTimeDateFilter | AbsoluteDateFilterOption | R
  * @public
  */
 export type DateFilterRelativeOptionGroup = {
-    // tslint:disable-next-line:array-type
-    [key in DateFilterGranularity]?: IRelativeDateFilterPresetOfGranularity<key>[];
+    [key in DateFilterGranularity]?: Array<IRelativeDateFilterPresetOfGranularity<key>>;
 };
 
 /**
@@ -260,6 +250,21 @@ export interface IExtendedDateFilterErrors {
  * @public
  */
 export interface IDashboardAddedPresets {
+    absolutePresets?: IAbsoluteDateFilterPreset[];
+    relativePresets?: IRelativeDateFilterPreset[];
+}
+
+/**
+ * Date filter configs allow to define your own date filter presets, that appear in the date filter.
+ *
+ * @alpha
+ */
+export interface IDateFilterConfig {
+    ref: ObjRef;
+    selectedOption: Identifier;
+    allTime?: IAllTimeDateFilter;
+    absoluteForm?: IAbsoluteDateFilterForm;
+    relativeForm?: IRelativeDateFilterForm;
     absolutePresets?: IAbsoluteDateFilterPreset[];
     relativePresets?: IRelativeDateFilterPreset[];
 }

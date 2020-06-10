@@ -140,9 +140,9 @@ export {
 export {
     IDashboard,
     IDashboardDefinition,
-    IDateFilterConfig,
     IListedDashboard,
     IDashboardBase,
+    IDashboardDateFilterConfig,
 } from "./workspace/dashboards/dashboard";
 export {
     IFilterContext,
@@ -224,6 +224,18 @@ export {
     isWidgetAlertDefinition,
 } from "./workspace/dashboards/alert";
 export {
+    IDashboardAttachment,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    ScheduledMailAttachment,
+} from "./workspace/dashboards/scheduledMail";
+export { IWorkspaceUser, IWorkspaceUsersQuery, IWorkspaceUsersQueryOptions } from "./workspace/users";
+export {
+    IWorkspaceDateFilterConfigsQuery,
+    IDateFilterConfigsQueryResult,
+} from "./workspace/dateFilterConfigs";
+export {
+    IDateFilterConfig,
     AbsoluteDateFilterOption,
     AbsoluteFormType,
     AbsolutePresetType,
@@ -233,7 +245,6 @@ export {
     DateFilterOption,
     DateFilterRelativeOptionGroup,
     DateString,
-    GUID,
     IAbsoluteDateFilterForm,
     IAbsoluteDateFilterPreset,
     IAllTimeDateFilter,
@@ -256,11 +267,4 @@ export {
     isRelativeDateFilterForm,
     isRelativeDateFilterOption,
     isRelativeDateFilterPreset,
-} from "./workspace/dashboards/extendedDateFilters";
-export {
-    IDashboardAttachment,
-    IScheduledMail,
-    IScheduledMailDefinition,
-    ScheduledMailAttachment,
-} from "./workspace/dashboards/scheduledMail";
-export { IWorkspaceUser, IWorkspaceUsersQuery, IWorkspaceUsersQueryOptions } from "./workspace/users";
+} from "./workspace/dateFilterConfigs/types";

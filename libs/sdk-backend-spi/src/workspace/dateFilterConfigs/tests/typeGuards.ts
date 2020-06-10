@@ -7,7 +7,7 @@ import {
     IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
     RelativeDateFilterOption,
-} from "../extendedDateFilters";
+} from "../types";
 
 export const allTimeDateFilter: IAllTimeDateFilter = {
     localIdentifier: "allTimeDateFilter",
@@ -21,8 +21,6 @@ export const absoluteDateFilterForm: IAbsoluteDateFilterForm = {
     name: "absoluteDateFilterForm",
     type: "absoluteForm",
     visible: true,
-    from: "2020-01-01",
-    to: "2020-05-05",
 };
 
 export const absoluteDateFilterPreset: IAbsoluteDateFilterPreset = {
@@ -41,10 +39,7 @@ export const relativeDateFilterForm: IRelativeDateFilterForm = {
     name: "relativeDateFilterForm",
     type: "relativeForm",
     visible: true,
-    from: -12,
-    to: -1,
     availableGranularities: ["GDC.time.month"],
-    granularity: "GDC.time.month",
 };
 
 export const relativeDateFilterPreset: IRelativeDateFilterPreset = {

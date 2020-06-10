@@ -915,50 +915,13 @@ export namespace GdcExecution {
 // @public (undocumented)
 export namespace GdcExtendedDateFilters {
     // (undocumented)
-    export type AbsoluteDateFilterOption = IAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
-    // (undocumented)
-    export type AbsoluteFormType = "absoluteForm";
-    // (undocumented)
-    export type AbsolutePresetType = "absolutePreset";
-    // (undocumented)
-    export type AllTimeType = "allTime";
-    // (undocumented)
     export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
     // (undocumented)
     export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
     // (undocumented)
-    export type DateFilterOption = IAllTimeDateFilter | AbsoluteDateFilterOption | RelativeDateFilterOption;
-    // (undocumented)
-    export type DateFilterRelativeOptionGroup = {
-        [key in DateFilterGranularity]?: IRelativeDateFilterPresetOfGranularity<key>[];
-    };
-    // (undocumented)
     export type DateString = string;
     // (undocumented)
     export type GUID = string;
-    // (undocumented)
-    export interface IAbsoluteDateFilterForm extends IDateFilterOption {
-        // (undocumented)
-        from?: DateString;
-        // (undocumented)
-        to?: DateString;
-        // (undocumented)
-        type: AbsoluteFormType;
-    }
-    // (undocumented)
-    export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
-        // (undocumented)
-        from: DateString;
-        // (undocumented)
-        to: DateString;
-        // (undocumented)
-        type: AbsolutePresetType;
-    }
-    // (undocumented)
-    export interface IAllTimeDateFilter extends IDateFilterOption {
-        // (undocumented)
-        type: AllTimeType;
-    }
     // (undocumented)
     export interface IAttributeFilterReference {
         // (undocumented)
@@ -995,27 +958,14 @@ export namespace GdcExtendedDateFilters {
         // (undocumented)
         to: DateString;
     }
-    const // (undocumented)
-    isAllTimeDateFilter: (option: DateFilterOption) => option is IAllTimeDateFilter;
-    const // (undocumented)
-    isAbsoluteDateFilterForm: (option: DateFilterOption) => option is IAbsoluteDateFilterForm;
-    const // (undocumented)
-    isAbsoluteDateFilterPreset: (option: DateFilterOption) => option is IAbsoluteDateFilterPreset;
-    const // (undocumented)
-    isAbsoluteDateFilterOption: (option: DateFilterOption) => option is AbsoluteDateFilterOption;
     // (undocumented)
     export type IDateFilterAllTime = IDateFilterBase;
-    const // (undocumented)
-    isRelativeDateFilterForm: (option: DateFilterOption) => option is IRelativeDateFilterForm;
-    const // (undocumented)
-    isRelativeDateFilterPreset: (option: DateFilterOption) => option is IRelativeDateFilterPreset;
-    const // (undocumented)
-    isRelativeDateFilterOption: (option: DateFilterOption) => option is RelativeDateFilterOption;
+    // (undocumented)
     export interface IDateFilterBase {
         // (undocumented)
         localIdentifier: GUID;
         // (undocumented)
-        name: string;
+        name?: string;
         // (undocumented)
         visible: boolean;
     }
@@ -1042,30 +992,6 @@ export namespace GdcExtendedDateFilters {
         selectedOption: GUID;
     }
     // (undocumented)
-    export interface IDateFilterOption {
-        // (undocumented)
-        localIdentifier: GUID;
-        // (undocumented)
-        name: string;
-        // (undocumented)
-        type: OptionType;
-        // (undocumented)
-        visible: boolean;
-    }
-    // (undocumented)
-    export interface IDateFilterOptionsByType {
-        // (undocumented)
-        absoluteForm?: IAbsoluteDateFilterForm;
-        // (undocumented)
-        absolutePreset?: IAbsoluteDateFilterPreset[];
-        // (undocumented)
-        allTime?: IAllTimeDateFilter;
-        // (undocumented)
-        relativeForm?: IRelativeDateFilterForm;
-        // (undocumented)
-        relativePreset?: DateFilterRelativeOptionGroup;
-    }
-    // (undocumented)
     export interface IDateFilterReference {
         // (undocumented)
         dateFilterReference: {
@@ -1086,71 +1012,15 @@ export namespace GdcExtendedDateFilters {
         // (undocumented)
         to: number;
     }
-    export interface IDateFilterValue {
-        // (undocumented)
-        from: string;
-        // (undocumented)
-        granularity: DateFilterGranularity;
-        // (undocumented)
-        optionLocalIdentifier: string;
-        // (undocumented)
-        to: string;
-        // (undocumented)
-        type: "absolute" | "relative";
-    }
-    // (undocumented)
-    export interface IDefaultDateFilterOptions {
-        // (undocumented)
-        optionsByType: IDateFilterOptionsByType;
-        // (undocumented)
-        selectedOption: GUID;
-    }
-    // (undocumented)
-    export interface IRelativeDateFilterForm extends IDateFilterOption {
-        // (undocumented)
-        availableGranularities: DateFilterGranularity[];
-        // (undocumented)
-        from?: RelativeGranularityOffset;
-        // (undocumented)
-        granularity?: DateFilterGranularity;
-        // (undocumented)
-        to?: RelativeGranularityOffset;
-        // (undocumented)
-        type: RelativeFormType;
-    }
-    // (undocumented)
-    export interface IRelativeDateFilterPreset extends IDateFilterOption {
-        // (undocumented)
-        from: RelativeGranularityOffset;
-        // (undocumented)
-        granularity: DateFilterGranularity;
-        // (undocumented)
-        to: RelativeGranularityOffset;
-        // (undocumented)
-        type: RelativePresetType;
-    }
-    // (undocumented)
-    export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity> extends IRelativeDateFilterPreset {
-        // (undocumented)
-        granularity: Key;
-    }
     // (undocumented)
     export interface IWrappedDateFilterConfig {
         // (undocumented)
         dateFilterConfig: IDateFilterConfig;
     }
-    // (undocumented)
-    export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
-    // (undocumented)
-    export type RelativeDateFilterOption = IRelativeDateFilterForm | IRelativeDateFilterPreset;
-    // (undocumented)
-    export type RelativeFormType = "relativeForm";
-    // (undocumented)
-    export type RelativeGranularityOffset = number;
     const // (undocumented)
     isDateFilterReference: (obj: any) => obj is IDateFilterReference;
     // (undocumented)
-    export type RelativePresetType = "relativePreset";
+    export type RelativeGranularityOffset = number;
     const // (undocumented)
     isAttributeFilterReference: (obj: any) => obj is IAttributeFilterReference;
 }

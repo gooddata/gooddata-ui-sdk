@@ -23,6 +23,7 @@ import {
     IWorkspaceDashboards,
     IUserWorkspaceSettings,
     IWorkspaceUsersQuery,
+    IWorkspaceDateFilterConfigsQuery,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedElementQueryFactory } from "./elements";
@@ -147,6 +148,9 @@ function recordedWorkspace(
             return recordedPermissionsFactory();
         },
         users(): IWorkspaceUsersQuery {
+            throw new NotSupported("not supported");
+        },
+        dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
             throw new NotSupported("not supported");
         },
     };

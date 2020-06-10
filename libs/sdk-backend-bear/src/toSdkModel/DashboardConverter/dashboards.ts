@@ -16,10 +16,10 @@ import {
     IListedDashboard,
     IDashboard,
     IFilterContext,
-    IDateFilterConfig,
     IDashboardAddedPresets,
     ITempFilterContext,
     isWidget,
+    IDashboardDateFilterConfig,
 } from "@gooddata/sdk-backend-spi";
 import { sanitizeExportFilterContext, convertFilterContext, convertTempFilterContext } from "./filterContext";
 import { convertLayout, createImplicitDashboardLayout } from "./layout";
@@ -47,9 +47,9 @@ const convertDateFilterConfigAddedPresets = (
     return convertedPresets;
 };
 
-export const convertDateFilterConfig = (
+export const convertDashboardDateFilterConfig = (
     dateFilterConfig: GdcExtendedDateFilters.IDashboardDateFilterConfig,
-): IDateFilterConfig => {
+): IDashboardDateFilterConfig => {
     const { filterName, mode, addPresets, hideGranularities, hideOptions } = dateFilterConfig;
 
     return {
@@ -97,7 +97,7 @@ export const convertDashboard = (
         created: created!,
         updated: updated!,
 
-        dateFilterConfig: dateFilterConfig && convertDateFilterConfig(dateFilterConfig),
+        dateFilterConfig: dateFilterConfig && convertDashboardDateFilterConfig(dateFilterConfig),
 
         filterContext:
             exportFilterContextUri && filterContextOrExportFilterContext
