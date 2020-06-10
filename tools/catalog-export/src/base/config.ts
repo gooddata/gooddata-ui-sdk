@@ -3,13 +3,21 @@ import { get, pick, pickBy, identity } from "lodash";
 import * as fs from "fs";
 import * as path from "path";
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants";
-import { CatalogExportConfig } from "./types";
+import { CatalogExportConfig, SupportedBackendTypes } from "./types";
 
 function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
     return {
         ...prevConfig,
         ...pickBy(
-            pick(config, ["hostname", "projectId", "projectName", "username", "password", "output", "tiger"]),
+            pick(config, [
+                "hostname",
+                "projectId",
+                "projectName",
+                "username",
+                "password",
+                "output",
+                "backend",
+            ]),
             identity,
         ),
     };
@@ -23,7 +31,7 @@ function retrieveConfigFromObject(obj: any): CatalogExportConfig {
         username: get<string | null>(obj, "username", null),
         password: get<string | null>(obj, "password", null),
         output: get<string | null>(obj, "output", null),
-        tiger: get<boolean | null>(obj, "tiger", false),
+        backend: get<SupportedBackendTypes | null>(obj, "backend", "bear"),
     };
 }
 

@@ -20,6 +20,8 @@ export class CatalogExportError extends Error {
  * Defines types used across catalog exporter
  */
 
+export type SupportedBackendTypes = "bear" | "tiger";
+
 /**
  * Exporter configuration
  */
@@ -56,9 +58,9 @@ export type CatalogExportConfig = {
     output: string | null;
 
     /**
-     * Indicates that the target backend is 'tiger'
+     * Indicates type of backend
      */
-    tiger: boolean | null;
+    backend: SupportedBackendTypes | null;
 };
 
 /**

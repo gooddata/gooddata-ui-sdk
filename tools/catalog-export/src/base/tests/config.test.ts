@@ -10,7 +10,7 @@ describe("getConfigFromProgram", () => {
         password: null,
         projectId: null,
         username: null,
-        tiger: null,
+        backend: null,
     };
 
     const TEST_DATA: Array<[string, any, CatalogExportConfig | null]> = [
@@ -27,6 +27,7 @@ describe("getConfigFromProgram", () => {
             { username: "valid", projectId: "abc" },
             { ...EMPTY_CONFIG, projectId: "xyz" },
         ],
+        ["propagate tiger backend type", { backend: "tiger" }, null],
     ];
 
     it.each(TEST_DATA)("should %s", (_, input: any, defaultOptions: CatalogExportConfig | null) => {

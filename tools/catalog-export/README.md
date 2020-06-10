@@ -55,13 +55,13 @@ backends. The program does not do auto-detection of the backend type - you have 
 either through config or on command line.
 
 The catalog-export by default expects that it is connecting to GoodData Platform (bear). To switch the
-export to work with GoodData Anywhere (tiger), either specify the `--tiger` option on the CLI or include tiger
+export to work with GoodData Anywhere (tiger), either specify the `--backend tiger` option on the CLI or include tiger
 setting in the `.gdcatalogrc`. Here is an example of full config for tiger:
 
 ```json
 {
     "hostname": "https://your.hostname.or.ip",
-    "tiger": true,
+    "backend": "tiger",
     "projectId": "your workspace",
     "username": "username",
     "password": "password",
