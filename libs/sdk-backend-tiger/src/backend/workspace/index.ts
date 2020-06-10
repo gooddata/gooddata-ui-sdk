@@ -26,16 +26,21 @@ import { TigerWorkspaceMetadata } from "./metadata";
 import { TigerWorkspacePermissionsFactory } from "./permissions";
 import { TigerWorkspaceStyling } from "./styling";
 import { TigerWorkspaceInsights } from "./insights";
+import { DateValueFormatter } from "../../dateFormatting/dateValueFormatter";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        public readonly workspace: string,
+        private readonly dateValueFormatter: DateValueFormatter,
+    ) {}
 
     public elements(): IElementQueryFactory {
         return new TigerWorkspaceElements(this.authCall, this.workspace);
     }
 
     public execution(): IExecutionFactory {
-        return new TigerExecution(this.authCall, this.workspace);
+        return new TigerExecution(this.authCall, this.workspace, this.dateValueFormatter);
     }
 
     public settings(): IWorkspaceSettingsService {

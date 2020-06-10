@@ -20,6 +20,7 @@ import { transformExecutionResult } from "../../../fromAfm/result";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { Execution } from "@gooddata/gd-tiger-client";
 import { TigerAuthenticatedCallGuard } from "../../../types";
+import { DateValueFormatter } from "../../../dateFormatting/dateValueFormatter";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 
@@ -48,6 +49,7 @@ export class TigerExecutionResult implements IExecutionResult {
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         readonly execResponse: Execution.IExecutionResponse,
+        private readonly dateValueFormatter: DateValueFormatter,
     ) {
         this.dimensions = transformResultDimensions(execResponse.executionResponse.dimensions);
         this.resultId = execResponse.executionResponse.links.executionResult;
@@ -100,11 +102,11 @@ export class TigerExecutionResult implements IExecutionResult {
             if (isEmptyDataResult(res)) {
                 throw new NoDataError(
                     "The execution resulted in no data to display.",
-                    new TigerDataView(this, res),
+                    new TigerDataView(this, res, this.dateValueFormatter),
                 );
             }
 
-            return new TigerDataView(this, res);
+            return new TigerDataView(this, res, this.dateValueFormatter);
         });
     };
 }
@@ -122,17 +124,21 @@ class TigerDataView implements IDataView {
     public readonly totals: DataValue[][][] = [[[]]];
     private readonly _fingerprint: string;
 
-    constructor(result: IExecutionResult, execResult: Execution.IExecutionResult) {
+    constructor(
+        result: IExecutionResult,
+        execResult: Execution.IExecutionResult,
+        dateValueFormatter: DateValueFormatter,
+    ) {
         this.result = result;
         this.definition = result.definition;
 
-        const transfomedResult = transformExecutionResult(execResult);
+        const transformedResult = transformExecutionResult(execResult, result.dimensions, dateValueFormatter);
 
-        this.data = transfomedResult.data;
-        this.headerItems = transfomedResult.headerItems;
-        this.offset = transfomedResult.offset;
-        this.count = transfomedResult.count;
-        this.totalCount = transfomedResult.total;
+        this.data = transformedResult.data;
+        this.headerItems = transformedResult.headerItems;
+        this.offset = transformedResult.offset;
+        this.count = transformedResult.count;
+        this.totalCount = transformedResult.total;
 
         /*
         this.totals = dataResult.totals ? dataResult.totals : [[[]]];
