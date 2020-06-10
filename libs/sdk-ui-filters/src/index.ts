@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 export { AttributeElements } from "./AttributeElements/AttributeElements";
 export { AttributeFilter } from "./AttributeFilter/AttributeFilter";
@@ -8,8 +8,17 @@ export {
     IDateFilterOwnProps,
     IDateFilterProps,
     DateFilterHelpers,
-    ExtendedDateFilters,
     defaultDateFilterOptions,
+    AbsoluteDateFilterOption,
+    DateFilterOption,
+    DateFilterRelativeOptionGroup,
+    IDateFilterOptionsByType,
+    IExtendedDateFilterErrors,
+    RelativeDateFilterOption,
+    isAbsoluteDateFilterOption,
+    isRelativeDateFilterOption,
+    IUiAbsoluteDateFilterForm,
+    IUiRelativeDateFilterForm,
 } from "./DateFilter";
 export {
     MeasureValueFilter,

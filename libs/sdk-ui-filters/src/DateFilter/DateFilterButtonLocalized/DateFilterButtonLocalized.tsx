@@ -3,10 +3,10 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { DateFilterButton } from "../DateFilterButton/DateFilterButton";
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { DateFilterOption } from "../interfaces";
 
 export interface IDateFilterButtonLocalizedProps {
-    dateFilterOption: ExtendedDateFilters.DateFilterOption;
+    dateFilterOption: DateFilterOption;
     isOpen?: boolean;
     isMobile: boolean;
     customFilterName?: string;

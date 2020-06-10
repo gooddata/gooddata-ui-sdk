@@ -1,11 +1,17 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IAbsoluteDateFilter, IRelativeDateFilter, ObjRef } from "@gooddata/sdk-model";
 import { applyExcludeCurrentPeriod } from "./PeriodExlusion";
-import DateFilterOption = ExtendedDateFilters.DateFilterOption;
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import {
+    AbsoluteDateFilterOption,
+    RelativeDateFilterOption,
+    isAbsoluteDateFilterOption,
+    DateFilterOption,
+    isRelativeDateFilterOption,
+} from "../interfaces";
+import { isAllTimeDateFilter } from "@gooddata/sdk-backend-spi";
 
 export const mapAbsoluteFilterToAfm = (
-    value: ExtendedDateFilters.AbsoluteDateFilterOption,
+    value: AbsoluteDateFilterOption,
     dataSet: ObjRef,
 ): IAbsoluteDateFilter => ({
     absoluteDateFilter: {
@@ -16,7 +22,7 @@ export const mapAbsoluteFilterToAfm = (
 });
 
 export const mapRelativeFilterToAfm = (
-    value: ExtendedDateFilters.RelativeDateFilterOption,
+    value: RelativeDateFilterOption,
     dataSet: ObjRef,
 ): IRelativeDateFilter => ({
     relativeDateFilter: {
@@ -34,15 +40,15 @@ export const mapOptionToAfm = (
 ) => {
     const excludeApplied = applyExcludeCurrentPeriod(value, excludeCurrentPeriod);
 
-    if (ExtendedDateFilters.isAllTimeDateFilter(excludeApplied)) {
+    if (isAllTimeDateFilter(excludeApplied)) {
         return null;
     }
 
-    if (ExtendedDateFilters.isAbsoluteDateFilterOption(excludeApplied)) {
+    if (isAbsoluteDateFilterOption(excludeApplied)) {
         return mapAbsoluteFilterToAfm(excludeApplied, dateDataSet);
     }
 
-    if (ExtendedDateFilters.isRelativeDateFilterOption(excludeApplied)) {
+    if (isRelativeDateFilterOption(excludeApplied)) {
         return mapRelativeFilterToAfm(excludeApplied, dateDataSet);
     }
 

@@ -6,11 +6,11 @@ import { getRelativeDateFilterItems } from "../DynamicSelect/utils";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces";
 
 interface IRelativeRangePickerProps {
-    selectedFilterOption: ExtendedDateFilters.IRelativeDateFilterForm;
-    onSelectedFilterOptionChange: (dateFilterOption: ExtendedDateFilters.DateFilterOption) => void;
+    selectedFilterOption: IUiRelativeDateFilterForm;
+    onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;
     isMobile: boolean;
 }
 

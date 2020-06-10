@@ -4,15 +4,15 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 import { ExcludeCurrentPeriodToggleLabel } from "./ExcludeCurrentPeriodToggleLabel";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
 
 interface IExcludeCurrentPeriodToggleProps {
     value: boolean;
     onChange: (excludeCurrentPeriod: boolean) => void;
     disabled?: boolean;
-    granularity?: ExtendedDateFilters.DateFilterGranularity;
+    granularity?: DateFilterGranularity;
 }
 
 const alignPoints = [{ align: "tc bc" }];

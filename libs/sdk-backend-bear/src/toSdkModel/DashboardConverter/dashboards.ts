@@ -7,7 +7,6 @@ import {
     GdcVisualizationWidget,
     GdcKpi,
     GdcVisualizationObject,
-    GdcExtendedDateFilters,
     GdcVisualizationClass,
 } from "@gooddata/gd-bear-model";
 import { uriRef } from "@gooddata/sdk-model";
@@ -16,7 +15,7 @@ import {
     IListedDashboard,
     IDashboard,
     IFilterContext,
-    IDashboardAddedPresets,
+    IDashboardDateFilterAddedPresets,
     ITempFilterContext,
     isWidget,
     IDashboardDateFilterConfig,
@@ -37,10 +36,10 @@ export const convertListedDashboard = (dashboardLink: GdcMetadata.IObjectLink): 
 });
 
 const convertDateFilterConfigAddedPresets = (
-    addPresets: GdcExtendedDateFilters.IDashboardAddedPresets,
-): IDashboardAddedPresets => {
+    addPresets: GdcDashboard.IDashboardDateFilterAddedPresets,
+): IDashboardDateFilterAddedPresets => {
     const { absolutePresets = [], relativePresets = [] } = addPresets;
-    const convertedPresets: IDashboardAddedPresets = {
+    const convertedPresets: IDashboardDateFilterAddedPresets = {
         absolutePresets: absolutePresets.map(preset => ({ ...preset, type: "absolutePreset" })),
         relativePresets: relativePresets.map(preset => ({ ...preset, type: "relativePreset" })),
     };
@@ -48,7 +47,7 @@ const convertDateFilterConfigAddedPresets = (
 };
 
 export const convertDashboardDateFilterConfig = (
-    dateFilterConfig: GdcExtendedDateFilters.IDashboardDateFilterConfig,
+    dateFilterConfig: GdcDashboard.IDashboardDateFilterConfig,
 ): IDashboardDateFilterConfig => {
     const { filterName, mode, addPresets, hideGranularities, hideOptions } = dateFilterConfig;
 

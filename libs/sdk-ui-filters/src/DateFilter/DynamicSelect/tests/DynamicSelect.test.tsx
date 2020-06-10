@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import { ExtendedDateFilters } from "../../interfaces/ExtendedDateFilters";
 import range = require("lodash/range");
 import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect";
 import { VirtualizedSelectMenu } from "../../Select/VirtualizedSelectMenu";
@@ -10,8 +9,8 @@ import { SelectOption } from "../../Select/SelectOption";
 import { SelectSeparator } from "../../Select/SelectSeparator";
 import { getRelativeDateFilterItems, DAY, WEEK_US, MONTH, QUARTER, YEAR } from "../utils";
 import { IMessageTranslator } from "../../utils/Translations/Translators";
-import DateFilterGranularity = ExtendedDateFilters.DateFilterGranularity;
 import { DynamicSelectItem } from "../types";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 const optionTranslator = (
     lastOneString: string,

@@ -1,11 +1,16 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { validateFilterOption } from "../OptionValidation";
-import { IExtendedDateFilterErrors, ExtendedDateFilters } from "../../interfaces/ExtendedDateFilters";
+import {
+    IExtendedDateFilterErrors,
+    IUiAbsoluteDateFilterForm,
+    IUiRelativeDateFilterForm,
+    DateFilterOption,
+} from "../../interfaces";
 
 describe("validateFilterOption", () => {
     describe("absoluteForm validation", () => {
         it("should validate semantically correct form", () => {
-            const filter: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+            const filter: IUiAbsoluteDateFilterForm = {
                 from: "2019-01-01",
                 to: "2019-30-01",
                 localIdentifier: "ABSOLUTE_FORM",
@@ -19,7 +24,7 @@ describe("validateFilterOption", () => {
         });
 
         it("should not validate semantically incorrect from (with message)", () => {
-            const filter: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+            const filter: IUiAbsoluteDateFilterForm = {
                 from: undefined,
                 to: "2019-30-01",
                 localIdentifier: "ABSOLUTE_FORM",
@@ -37,7 +42,7 @@ describe("validateFilterOption", () => {
         });
 
         it("should not validate semantically incorrect from (with message)", () => {
-            const filter: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+            const filter: IUiAbsoluteDateFilterForm = {
                 from: "2019-30-01",
                 to: undefined,
                 localIdentifier: "ABSOLUTE_FORM",
@@ -55,7 +60,7 @@ describe("validateFilterOption", () => {
         });
 
         it("should not validate form without from specified (without message)", () => {
-            const filter: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+            const filter: IUiAbsoluteDateFilterForm = {
                 from: null,
                 to: "2019-30-01",
                 localIdentifier: "ABSOLUTE_FORM",
@@ -71,7 +76,7 @@ describe("validateFilterOption", () => {
         });
 
         it("should not validate form without to specified (without message)", () => {
-            const filter: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+            const filter: IUiAbsoluteDateFilterForm = {
                 from: "2019-30-01",
                 to: null,
                 localIdentifier: "ABSOLUTE_FORM",
@@ -87,7 +92,7 @@ describe("validateFilterOption", () => {
         });
 
         it("should not validate hidden form (without message)", () => {
-            const filter: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+            const filter: IUiAbsoluteDateFilterForm = {
                 from: "2019-01-01",
                 to: "2019-30-01",
                 localIdentifier: "ABSOLUTE_FORM",
@@ -105,7 +110,7 @@ describe("validateFilterOption", () => {
 
     describe("relativeForm validation", () => {
         it("should validate semantically correct form", () => {
-            const filter: ExtendedDateFilters.IRelativeDateFilterForm = {
+            const filter: IUiRelativeDateFilterForm = {
                 from: 5,
                 to: 5,
                 localIdentifier: "RELATIVE_FORM",
@@ -121,7 +126,7 @@ describe("validateFilterOption", () => {
         });
 
         it("should validate semantically correct form with zeroes", () => {
-            const filter: ExtendedDateFilters.IRelativeDateFilterForm = {
+            const filter: IUiRelativeDateFilterForm = {
                 from: 0,
                 to: 0,
                 localIdentifier: "RELATIVE_FORM",
@@ -137,7 +142,7 @@ describe("validateFilterOption", () => {
         });
 
         it("should not validate form without from specified", () => {
-            const filter: ExtendedDateFilters.IRelativeDateFilterForm = {
+            const filter: IUiRelativeDateFilterForm = {
                 to: 5,
                 localIdentifier: "RELATIVE_FORM",
                 type: "relativeForm",
@@ -154,7 +159,7 @@ describe("validateFilterOption", () => {
         });
 
         it("should not validate form without to specified", () => {
-            const filter: ExtendedDateFilters.IRelativeDateFilterForm = {
+            const filter: IUiRelativeDateFilterForm = {
                 from: 5,
                 localIdentifier: "RELATIVE_FORM",
                 type: "relativeForm",
@@ -171,7 +176,7 @@ describe("validateFilterOption", () => {
         });
 
         it("should not validate hidden form (without message)", () => {
-            const filter: ExtendedDateFilters.IRelativeDateFilterForm = {
+            const filter: IUiRelativeDateFilterForm = {
                 from: 5,
                 to: 5,
                 localIdentifier: "RELATIVE_FORM",
@@ -228,7 +233,7 @@ describe("validateFilterOption", () => {
             expect(actual).toEqual(expected);
         });
 
-        const Scenarios: Array<[string, ExtendedDateFilters.DateFilterOption]> = [
+        const Scenarios: Array<[string, DateFilterOption]> = [
             [
                 "relative preset",
                 {
@@ -263,15 +268,12 @@ describe("validateFilterOption", () => {
             ],
         ];
 
-        it.each(Scenarios)(
-            "should not validate invisible %s filter",
-            (_, filter: ExtendedDateFilters.DateFilterOption) => {
-                const actual = validateFilterOption(filter);
-                const expected: IExtendedDateFilterErrors = {
-                    [filter.type]: {},
-                };
-                expect(actual).toEqual(expected);
-            },
-        );
+        it.each(Scenarios)("should not validate invisible %s filter", (_, filter: DateFilterOption) => {
+            const actual = validateFilterOption(filter);
+            const expected: IExtendedDateFilterErrors = {
+                [filter.type]: {},
+            };
+            expect(actual).toEqual(expected);
+        });
     });
 });

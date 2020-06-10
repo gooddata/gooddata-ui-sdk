@@ -4,13 +4,13 @@ import { mount } from "enzyme";
 import noop = require("lodash/noop");
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { ExtendedDateFilters } from "../../interfaces/ExtendedDateFilters";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 import { RelativeDateFilterForm, IRelativeDateFilterFormProps } from "../RelativeDateFilterForm";
 import { clickOn } from "../../tests/utils";
 import { GranularityTabs } from "../GranularityTabs";
 import { RelativeRangePicker } from "../../RelativeRangePicker/RelativeRangePicker";
 
-const availableGranularities: ExtendedDateFilters.DateFilterGranularity[] = [
+const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.date",
     "GDC.time.month",
     "GDC.time.quarter",

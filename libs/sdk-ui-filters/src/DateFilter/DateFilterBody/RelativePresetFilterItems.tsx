@@ -6,9 +6,10 @@ import { ListItem } from "../ListItem/ListItem";
 import { ListHeading } from "../ListHeading/ListHeading";
 import { RelativePresetTitleTranslated } from "../RelativePresetTitleTranslated/RelativePresetTitleTranslated";
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized";
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { DateFilterRelativeOptionGroup, DateFilterOption } from "../interfaces";
+import { IRelativeDateFilterPreset, DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
-const granularityOrder: ExtendedDateFilters.DateFilterGranularity[] = [
+const granularityOrder: DateFilterGranularity[] = [
     "GDC.time.date",
     "GDC.time.week_us",
     "GDC.time.month",
@@ -17,10 +18,10 @@ const granularityOrder: ExtendedDateFilters.DateFilterGranularity[] = [
 ];
 
 export const RelativePresetFilterItems: React.FC<{
-    filterOption: ExtendedDateFilters.DateFilterRelativeOptionGroup;
-    selectedFilterOption: ExtendedDateFilters.DateFilterOption;
+    filterOption: DateFilterRelativeOptionGroup;
+    selectedFilterOption: DateFilterOption;
     className?: string;
-    onSelectedFilterOptionChange: (option: ExtendedDateFilters.DateFilterOption) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }> = ({ filterOption, selectedFilterOption, onSelectedFilterOptionChange, className }) => {
     const relativePresets = granularityOrder
         .filter(granularity =>
@@ -28,7 +29,7 @@ export const RelativePresetFilterItems: React.FC<{
         )
         .map(granularity => ({
             granularity,
-            items: filterOption[granularity] as ExtendedDateFilters.IRelativeDateFilterPreset[],
+            items: filterOption[granularity] as IRelativeDateFilterPreset[],
         }));
 
     return (

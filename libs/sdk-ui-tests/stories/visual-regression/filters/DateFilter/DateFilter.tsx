@@ -1,5 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
-import { DateFilter, defaultDateFilterOptions, ExtendedDateFilters } from "@gooddata/sdk-ui-filters";
+import {
+    DateFilter,
+    defaultDateFilterOptions,
+    IUiAbsoluteDateFilterForm,
+    IDateFilterOptionsByType,
+} from "@gooddata/sdk-ui-filters";
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -10,7 +15,7 @@ import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
-const fixedAbsoluteDateForm: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+const fixedAbsoluteDateForm: IUiAbsoluteDateFilterForm = {
     localIdentifier: "ABSOLUTE_FORM",
     type: "absoluteForm",
     from: "2019-01-01",
@@ -19,7 +24,7 @@ const fixedAbsoluteDateForm: ExtendedDateFilters.IAbsoluteDateFilterForm = {
     visible: true,
 };
 
-const filterOptions: ExtendedDateFilters.IDateFilterOptionsByType = {
+const filterOptions: IDateFilterOptionsByType = {
     ...defaultDateFilterOptions,
     absoluteForm: fixedAbsoluteDateForm,
 };

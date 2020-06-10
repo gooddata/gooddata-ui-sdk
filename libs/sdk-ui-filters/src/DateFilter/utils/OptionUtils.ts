@@ -1,11 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import { DateFilterOption } from "../interfaces";
+import {
+    DateFilterGranularity,
+    isRelativeDateFilterForm,
+    isRelativeDateFilterPreset,
+} from "@gooddata/sdk-backend-spi";
 
-export function getDateFilterOptionGranularity(
-    dateFilterOption: ExtendedDateFilters.DateFilterOption,
-): ExtendedDateFilters.DateFilterGranularity {
-    return ExtendedDateFilters.isRelativeDateFilterForm(dateFilterOption) ||
-        ExtendedDateFilters.isRelativeDateFilterPreset(dateFilterOption)
+export function getDateFilterOptionGranularity(dateFilterOption: DateFilterOption): DateFilterGranularity {
+    return isRelativeDateFilterForm(dateFilterOption) || isRelativeDateFilterPreset(dateFilterOption)
         ? dateFilterOption.granularity
         : undefined;
 }

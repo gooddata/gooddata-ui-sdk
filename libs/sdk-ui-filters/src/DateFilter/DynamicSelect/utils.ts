@@ -1,24 +1,18 @@
 // (C) 2019-2020 GoodData Corporation
 import range = require("lodash/range");
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
 import { IMessageTranslator } from "../utils/Translations/Translators";
 import { granularityIntlCodes } from "../constants/i18n";
 
 import { getSelectableItems } from "../Select/utils";
 import { DynamicSelectItem, DynamicSelectOption } from "./types";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
-export const DAY: ExtendedDateFilters.DateFilterGranularity = "GDC.time.date";
-export const WEEK_US: ExtendedDateFilters.DateFilterGranularity = "GDC.time.week_us";
-export const MONTH: ExtendedDateFilters.DateFilterGranularity = "GDC.time.month";
-export const QUARTER: ExtendedDateFilters.DateFilterGranularity = "GDC.time.quarter";
-export const YEAR: ExtendedDateFilters.DateFilterGranularity = "GDC.time.year";
-export const GRANULARITIES: ExtendedDateFilters.DateFilterGranularity[] = [
-    DAY,
-    WEEK_US,
-    MONTH,
-    QUARTER,
-    YEAR,
-];
+export const DAY: DateFilterGranularity = "GDC.time.date";
+export const WEEK_US: DateFilterGranularity = "GDC.time.week_us";
+export const MONTH: DateFilterGranularity = "GDC.time.month";
+export const QUARTER: DateFilterGranularity = "GDC.time.quarter";
+export const YEAR: DateFilterGranularity = "GDC.time.year";
+export const GRANULARITIES: DateFilterGranularity[] = [DAY, WEEK_US, MONTH, QUARTER, YEAR];
 
 type InputCategory = "Empty" | "TooBig" | "Numeric" | "Textual";
 
@@ -55,7 +49,7 @@ const tooBigInputInfo: ITooBigInputInfo = {
     inputCategory: "TooBig",
 };
 
-const granularityOffsetLimits: { [key in ExtendedDateFilters.DateFilterGranularity]: number } = {
+const granularityOffsetLimits: { [key in DateFilterGranularity]: number } = {
     [DAY]: 365,
     [WEEK_US]: 104,
     [MONTH]: 60,
@@ -96,7 +90,7 @@ const parseInput = (trimmedInput: string): InputInfo => {
 
 const getOption = (
     offset: number,
-    granularity: ExtendedDateFilters.DateFilterGranularity,
+    granularity: DateFilterGranularity,
     intl: IMessageTranslator,
 ): DynamicSelectOption => {
     const dateCode = granularityIntlCodes[granularity];
@@ -114,12 +108,12 @@ const getOption = (
 
 const getOptionsForOffsets = (
     offsets: number[],
-    granularity: ExtendedDateFilters.DateFilterGranularity,
+    granularity: DateFilterGranularity,
     intl: IMessageTranslator,
 ): DynamicSelectOption[] => offsets.map(offset => getOption(offset, granularity, intl));
 
 const getDefaultOptions = (
-    granularity: ExtendedDateFilters.DateFilterGranularity,
+    granularity: DateFilterGranularity,
     intl: IMessageTranslator,
 ): DynamicSelectItem[] => {
     const optionRange = granularityOffsetLimits[granularity];
@@ -151,7 +145,7 @@ const getNoMatchOptions = (intl: IMessageTranslator): DynamicSelectItem[] => [
 
 const getOptionsByNumber = (
     offset: number,
-    granularity: ExtendedDateFilters.DateFilterGranularity,
+    granularity: DateFilterGranularity,
     intl: IMessageTranslator,
 ): DynamicSelectOption[] => {
     // for positive offsets, show the "ahead" option first
@@ -163,7 +157,7 @@ const getOptionsByNumber = (
 
 const getFullTextOptions = (
     offset: number | undefined,
-    granularity: ExtendedDateFilters.DateFilterGranularity,
+    granularity: DateFilterGranularity,
     intl: IMessageTranslator,
 ): DynamicSelectOption[] => {
     const coreOffsets = [-1, 0, 1];
@@ -177,7 +171,7 @@ const getFullTextOptions = (
 const getFullTextMatches = (
     trimmedInput: string,
     offset: number | undefined,
-    granularity: ExtendedDateFilters.DateFilterGranularity,
+    granularity: DateFilterGranularity,
     intl: IMessageTranslator,
 ): DynamicSelectItem[] => {
     const searchString = trimmedInput.toLowerCase();
@@ -205,7 +199,7 @@ export const findRelativeDateFilterOptionByValue = (
 
 export function getRelativeDateFilterItems(
     input: string = "",
-    granularity: ExtendedDateFilters.DateFilterGranularity = DAY,
+    granularity: DateFilterGranularity = DAY,
     intl: IMessageTranslator,
 ): DynamicSelectItem[] {
     const trimmedInput = getTrimmedInput(input);

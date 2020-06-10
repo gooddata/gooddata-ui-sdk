@@ -2,13 +2,13 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import noop = require("lodash/noop");
-import { ExtendedDateFilters } from "../../interfaces/ExtendedDateFilters";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 import { GranularityTabs, IGranularityTabsProps } from "../GranularityTabs";
 import { clickOn } from "../../tests/utils";
 import { GranularityIntlKey } from "../../constants/i18n";
 
-const granularityTuple: Array<[ExtendedDateFilters.DateFilterGranularity, GranularityIntlKey]> = [
+const granularityTuple: Array<[DateFilterGranularity, GranularityIntlKey]> = [
     ["GDC.time.date", "day"],
     ["GDC.time.week_us", "week"],
     ["GDC.time.month", "month"],
@@ -16,9 +16,7 @@ const granularityTuple: Array<[ExtendedDateFilters.DateFilterGranularity, Granul
     ["GDC.time.year", "year"],
 ];
 
-const availableGranularities: ExtendedDateFilters.DateFilterGranularity[] = granularityTuple.map(
-    tuple => tuple[0],
-);
+const availableGranularities: DateFilterGranularity[] = granularityTuple.map(tuple => tuple[0]);
 
 const classGranularities: GranularityIntlKey[] = granularityTuple.map(tuple => tuple[1]);
 

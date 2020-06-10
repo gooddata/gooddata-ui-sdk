@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { canExcludeCurrentPeriod, applyExcludeCurrentPeriod } from "../PeriodExlusion";
-import { ExtendedDateFilters } from "../../interfaces/ExtendedDateFilters";
+import { DateFilterOption } from "../../interfaces";
+import { IRelativeDateFilterPreset } from "@gooddata/sdk-backend-spi";
 
 describe("canExcludeCurrentPeriod", () => {
     it.each([
@@ -108,7 +109,7 @@ describe("canExcludeCurrentPeriod", () => {
 
 describe("applyExcludeCurrentPeriod", () => {
     it("should do nothing when passed excludeCurrentPeriod: false", () => {
-        const input: ExtendedDateFilters.IRelativeDateFilterPreset = {
+        const input: IRelativeDateFilterPreset = {
             from: -29,
             to: 0,
             granularity: "GDC.time.date",
@@ -121,11 +122,7 @@ describe("applyExcludeCurrentPeriod", () => {
         expect(actual).toEqual(input);
     });
 
-    const Scenarios: Array<[
-        string,
-        ExtendedDateFilters.DateFilterOption,
-        ExtendedDateFilters.DateFilterOption,
-    ]> = [
+    const Scenarios: Array<[string, DateFilterOption, DateFilterOption]> = [
         [
             "allTime",
             {
@@ -269,7 +266,7 @@ describe("applyExcludeCurrentPeriod", () => {
 
     it.each(Scenarios)(
         "should handle %s properly",
-        (_, input: ExtendedDateFilters.DateFilterOption, expected: ExtendedDateFilters.DateFilterOption) => {
+        (_, input: DateFilterOption, expected: DateFilterOption) => {
             const actual = applyExcludeCurrentPeriod(input, true);
             expect(actual).toEqual(expected);
         },

@@ -1,26 +1,33 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import {
+    isAllTimeDateFilter,
+    isAbsoluteDateFilterForm,
+    isAbsoluteDateFilterPreset,
+    isRelativeDateFilterForm,
+    isRelativeDateFilterPreset,
+} from "@gooddata/sdk-backend-spi";
+import { DateFilterOption } from "../interfaces";
 
 /**
  * Returns the date filter option with excludeCurrentPeriod applied if applicable.
  */
 export const applyExcludeCurrentPeriod = (
-    dateFilterOption: ExtendedDateFilters.DateFilterOption | undefined,
+    dateFilterOption: DateFilterOption | undefined,
     excludeCurrentPeriod: boolean,
-): ExtendedDateFilters.DateFilterOption => {
+): DateFilterOption => {
     if (!dateFilterOption || !excludeCurrentPeriod) {
         return dateFilterOption;
     }
 
     if (
-        ExtendedDateFilters.isAllTimeDateFilter(dateFilterOption) ||
-        ExtendedDateFilters.isAbsoluteDateFilterForm(dateFilterOption) ||
-        ExtendedDateFilters.isAbsoluteDateFilterPreset(dateFilterOption) ||
-        ExtendedDateFilters.isRelativeDateFilterForm(dateFilterOption)
+        isAllTimeDateFilter(dateFilterOption) ||
+        isAbsoluteDateFilterForm(dateFilterOption) ||
+        isAbsoluteDateFilterPreset(dateFilterOption) ||
+        isRelativeDateFilterForm(dateFilterOption)
     ) {
         return dateFilterOption;
-    } else if (ExtendedDateFilters.isRelativeDateFilterPreset(dateFilterOption)) {
+    } else if (isRelativeDateFilterPreset(dateFilterOption)) {
         const { from, to } = dateFilterOption;
         const shouldExcludeCurrent = to === 0 && from < to;
 
@@ -34,11 +41,11 @@ export const applyExcludeCurrentPeriod = (
     }
 };
 
-export const canExcludeCurrentPeriod = (dateFilterOption: ExtendedDateFilters.DateFilterOption): boolean => {
+export const canExcludeCurrentPeriod = (dateFilterOption: DateFilterOption): boolean => {
     if (!dateFilterOption.visible) {
         return false;
     }
-    if (ExtendedDateFilters.isRelativeDateFilterPreset(dateFilterOption)) {
+    if (isRelativeDateFilterPreset(dateFilterOption)) {
         return dateFilterOption.to === 0 && dateFilterOption.from < dateFilterOption.to;
     }
     return false;

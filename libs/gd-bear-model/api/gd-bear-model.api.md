@@ -171,6 +171,8 @@ export namespace GdcCatalog {
 // @public (undocumented)
 export namespace GdcDashboard {
     // (undocumented)
+    export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
+    // (undocumented)
     export interface IAnalyticalDashboard {
         // (undocumented)
         content: IAnalyticalDashboardContent;
@@ -180,13 +182,33 @@ export namespace GdcDashboard {
     // (undocumented)
     export interface IAnalyticalDashboardContent {
         // (undocumented)
-        dateFilterConfig?: GdcExtendedDateFilters.IDashboardDateFilterConfig;
+        dateFilterConfig?: IDashboardDateFilterConfig;
         // (undocumented)
         filterContext?: string;
         // (undocumented)
         layout?: GdcDashboardLayout.Layout;
         // (undocumented)
         widgets: string[];
+    }
+    // (undocumented)
+    export interface IDashboardDateFilterAddedPresets {
+        // (undocumented)
+        absolutePresets?: GdcExtendedDateFilters.IDateFilterAbsolutePreset[];
+        // (undocumented)
+        relativePresets?: GdcExtendedDateFilters.IDateFilterRelativePreset[];
+    }
+    // (undocumented)
+    export interface IDashboardDateFilterConfig {
+        // (undocumented)
+        addPresets?: IDashboardDateFilterAddedPresets;
+        // (undocumented)
+        filterName: string;
+        // (undocumented)
+        hideGranularities?: GdcExtendedDateFilters.DateFilterGranularity[];
+        // (undocumented)
+        hideOptions?: GdcExtendedDateFilters.GUID[];
+        // (undocumented)
+        mode: DashboardDateFilterConfigMode;
     }
     // (undocumented)
     export interface IWrappedAnalyticalDashboard {
@@ -915,8 +937,6 @@ export namespace GdcExecution {
 // @public (undocumented)
 export namespace GdcExtendedDateFilters {
     // (undocumented)
-    export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
-    // (undocumented)
     export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
     // (undocumented)
     export type DateString = string;
@@ -928,26 +948,6 @@ export namespace GdcExtendedDateFilters {
         attributeFilterReference: {
             displayForm: string;
         };
-    }
-    // (undocumented)
-    export interface IDashboardAddedPresets {
-        // (undocumented)
-        absolutePresets?: IDateFilterAbsolutePreset[];
-        // (undocumented)
-        relativePresets?: IDateFilterRelativePreset[];
-    }
-    // (undocumented)
-    export interface IDashboardDateFilterConfig {
-        // (undocumented)
-        addPresets?: IDashboardAddedPresets;
-        // (undocumented)
-        filterName: string;
-        // (undocumented)
-        hideGranularities?: DateFilterGranularity[];
-        // (undocumented)
-        hideOptions?: GUID[];
-        // (undocumented)
-        mode: DashboardDateFilterConfigMode;
     }
     // (undocumented)
     export type IDateFilterAbsoluteForm = IDateFilterBase;

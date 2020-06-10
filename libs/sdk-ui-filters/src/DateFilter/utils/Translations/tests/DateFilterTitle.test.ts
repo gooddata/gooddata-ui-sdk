@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { getDateFilterTitleUsingTranslator, getDateFilterTitle } from "../DateFilterTitle";
 import { IDateAndMessageTranslator } from "../Translators";
 import {
@@ -9,7 +9,8 @@ import {
     relativePresetFilter,
 } from "./fixtures";
 import { convertPlatformDateStringToDate } from "../../DateConversions";
-import { ExtendedDateFilters } from "../../../interfaces/ExtendedDateFilters";
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { IUiRelativeDateFilterForm } from "../../../interfaces";
 
 const serializingTranslator: IDateAndMessageTranslator = {
     formatDate: (id, options) => `${id}__${JSON.stringify(options)}`,
@@ -53,7 +54,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
         expect(actual).toEqual(expected);
     });
 
-    type RelativeFilterTestData = [number, number, ExtendedDateFilters.DateFilterGranularity, string, any];
+    type RelativeFilterTestData = [number, number, DateFilterGranularity, string, any];
     it.each([
         // days
         [0, 0, "GDC.time.date", "filters.thisDay.title", undefined],
@@ -105,11 +106,11 @@ describe("getDateFilterTitleUsingTranslator", () => {
         (
             from: number,
             to: number,
-            granularity: ExtendedDateFilters.DateFilterGranularity,
+            granularity: DateFilterGranularity,
             expectedId: string,
             expectedValues: {},
         ) => {
-            const filter: ExtendedDateFilters.IRelativeDateFilterForm = {
+            const filter: IUiRelativeDateFilterForm = {
                 localIdentifier: "RELATIVE_FORM",
                 type: "relativeForm",
                 granularity,

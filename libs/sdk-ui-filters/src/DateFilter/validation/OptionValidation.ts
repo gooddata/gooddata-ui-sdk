@@ -1,9 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
-import { ExtendedDateFilters, IExtendedDateFilterErrors } from "../interfaces/ExtendedDateFilters";
+// (C) 2007-2020 GoodData Corporation
+import {
+    IExtendedDateFilterErrors,
+    DateFilterOption,
+    IUiAbsoluteDateFilterForm,
+    IUiRelativeDateFilterForm,
+} from "../interfaces";
+import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-backend-spi";
 
-const validateVisibility = (
-    filterOption: ExtendedDateFilters.DateFilterOption,
-): IExtendedDateFilterErrors => {
+const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {
     const errors: IExtendedDateFilterErrors = {};
     if (!filterOption.visible) {
         // indicate that the Apply button should be disabled, it makes no sense for hidden forms
@@ -12,9 +16,7 @@ const validateVisibility = (
     return errors;
 };
 
-const validateAbsoluteForm = (
-    filterOption: ExtendedDateFilters.IAbsoluteDateFilterForm,
-): IExtendedDateFilterErrors => {
+const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtendedDateFilterErrors => {
     const errors = validateVisibility(filterOption);
     const absoluteFormKeys: Array<keyof IExtendedDateFilterErrors["absoluteForm"]> = ["from", "to"];
     absoluteFormKeys.forEach(field => {
@@ -30,9 +32,7 @@ const validateAbsoluteForm = (
     return errors.absoluteForm ? errors : {};
 };
 
-const validateRelativeForm = (
-    filterOption: ExtendedDateFilters.IRelativeDateFilterForm,
-): IExtendedDateFilterErrors => {
+const validateRelativeForm = (filterOption: IUiRelativeDateFilterForm): IExtendedDateFilterErrors => {
     const errors = validateVisibility(filterOption);
     const relativeFormKeys: Array<keyof IExtendedDateFilterErrors["relativeForm"]> = ["from", "to"];
     relativeFormKeys.forEach(field => {
@@ -44,12 +44,10 @@ const validateRelativeForm = (
     return errors.relativeForm ? errors : {};
 };
 
-export const validateFilterOption = (
-    filterOption: ExtendedDateFilters.DateFilterOption,
-): IExtendedDateFilterErrors => {
-    if (ExtendedDateFilters.isAbsoluteDateFilterForm(filterOption)) {
+export const validateFilterOption = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {
+    if (isAbsoluteDateFilterForm(filterOption)) {
         return validateAbsoluteForm(filterOption);
-    } else if (ExtendedDateFilters.isRelativeDateFilterForm(filterOption)) {
+    } else if (isRelativeDateFilterForm(filterOption)) {
         return validateRelativeForm(filterOption);
     } else {
         return validateVisibility(filterOption);

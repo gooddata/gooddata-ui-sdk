@@ -5,7 +5,13 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { ListItem } from "../ListItem/ListItem";
-import { IExtendedDateFilterErrors, ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
+import {
+    IExtendedDateFilterErrors,
+    IDateFilterOptionsByType,
+    DateFilterOption,
+    IUiAbsoluteDateFilterForm,
+    IUiRelativeDateFilterForm,
+} from "../interfaces";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar";
 import { getDateFilterOptionGranularity } from "../utils/OptionUtils";
@@ -20,6 +26,12 @@ import { DateFilterHeader } from "./DateFilterHeader";
 import { DateFilterBodyButton } from "./DateFilterBodyButton";
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems";
 import { DateFilterRoute } from "./types";
+import {
+    DateFilterGranularity,
+    IDateFilterOption,
+    isAbsoluteDateFilterForm,
+    isRelativeDateFilterForm,
+} from "@gooddata/sdk-backend-spi";
 
 const ACTIONS_BUTTONS_HEIGHT = 53;
 const EXCLUDE_OPEN_PERIOD_HEIGHT = 30; // height of 'Exclude open period' checkbox component
@@ -27,15 +39,15 @@ const MARGIN_BOTTOM = 8;
 const MOBILE_WIDTH = 414; // iPhone 11 Pro Max
 
 export interface IDateFilterBodyProps {
-    filterOptions: ExtendedDateFilters.IDateFilterOptionsByType;
-    selectedFilterOption: ExtendedDateFilters.DateFilterOption;
-    onSelectedFilterOptionChange: (option: ExtendedDateFilters.DateFilterOption) => void;
+    filterOptions: IDateFilterOptionsByType;
+    selectedFilterOption: DateFilterOption;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 
     excludeCurrentPeriod: boolean;
     isExcludeCurrentPeriodEnabled: boolean;
     onExcludeCurrentPeriodChange: (isExcluded: boolean) => void;
 
-    availableGranularities: ExtendedDateFilters.DateFilterGranularity[];
+    availableGranularities: DateFilterGranularity[];
 
     isEditMode: boolean;
     isMobile: boolean;
@@ -52,10 +64,8 @@ export interface IDateFilterBodyState {
     route: DateFilterRoute;
 }
 
-export const isFilterOptionSelected = (
-    filterOption: ExtendedDateFilters.IDateFilterOption,
-    selectedOption: ExtendedDateFilters.IDateFilterOption,
-) => filterOption.localIdentifier === selectedOption.localIdentifier;
+export const isFilterOptionSelected = (filterOption: IDateFilterOption, selectedOption: IDateFilterOption) =>
+    filterOption.localIdentifier === selectedOption.localIdentifier;
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 
@@ -72,9 +82,9 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         // Dropdown component does not expose isOpened prop but it mounts
         // this component every time it is opened and un-mounts when closed
         if (this.props.isMobile) {
-            if (ExtendedDateFilters.isAbsoluteDateFilterForm(this.props.selectedFilterOption)) {
+            if (isAbsoluteDateFilterForm(this.props.selectedFilterOption)) {
                 this.changeRoute("absoluteForm");
-            } else if (ExtendedDateFilters.isRelativeDateFilterForm(this.props.selectedFilterOption)) {
+            } else if (isRelativeDateFilterForm(this.props.selectedFilterOption)) {
                 this.changeRoute("relativeForm");
             }
         }
@@ -125,7 +135,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 )}
                 <div
                     className={cx("gd-extended-date-filter-body-wrapper", {
-                        "gd-extended-date-filter-body-wrapper-wide": ExtendedDateFilters.isRelativeDateFilterForm(
+                        "gd-extended-date-filter-body-wrapper-wide": isRelativeDateFilterForm(
                             selectedFilterOption,
                         ),
                     })}
@@ -208,7 +218,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                         // tslint:disable-next-line:jsx-no-lambda
                         onClick={() => {
                             this.changeRoute("absoluteForm");
-                            if (!ExtendedDateFilters.isAbsoluteDateFilterForm(selectedFilterOption)) {
+                            if (!isAbsoluteDateFilterForm(selectedFilterOption)) {
                                 onSelectedFilterOptionChange(filterOptions.absoluteForm);
                             }
                         }}
@@ -226,9 +236,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                         <AbsoluteDateFilterForm
                             errors={(errors && errors.absoluteForm) || undefined}
                             onSelectedFilterOptionChange={onSelectedFilterOptionChange}
-                            selectedFilterOption={
-                                selectedFilterOption as ExtendedDateFilters.IAbsoluteDateFilterForm
-                            }
+                            selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
                             isMobile={isMobile}
                         />
                     </DateFilterFormWrapper>
@@ -262,7 +270,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                         // tslint:disable-next-line:jsx-no-lambda
                         onClick={() => {
                             this.changeRoute("relativeForm");
-                            if (!ExtendedDateFilters.isRelativeDateFilterForm(selectedFilterOption)) {
+                            if (!isRelativeDateFilterForm(selectedFilterOption)) {
                                 onSelectedFilterOptionChange(filterOptions.relativeForm);
                             }
                         }}
@@ -288,9 +296,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             onSelectedFilterOptionChange={option => {
                                 onSelectedFilterOptionChange(option);
                             }}
-                            selectedFilterOption={
-                                selectedFilterOption as ExtendedDateFilters.IRelativeDateFilterForm
-                            }
+                            selectedFilterOption={selectedFilterOption as IUiRelativeDateFilterForm}
                             availableGranularities={availableGranularities}
                             isMobile={isMobile}
                         />

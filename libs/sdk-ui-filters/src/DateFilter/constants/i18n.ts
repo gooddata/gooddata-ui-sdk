@@ -1,12 +1,10 @@
-// (C) 2019 GoodData Corporation
-import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
-
-// (C) 2007-2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
+import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 export type GranularityIntlKey = "day" | "week" | "month" | "quarter" | "year";
 
 export const granularityIntlCodes: {
-    [key in ExtendedDateFilters.DateFilterGranularity]: GranularityIntlKey;
+    [key in DateFilterGranularity]: GranularityIntlKey;
 } = {
     "GDC.time.date": "day",
     "GDC.time.week_us": "week",

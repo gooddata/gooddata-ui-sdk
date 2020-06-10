@@ -3,49 +3,45 @@ import isEmpty from "lodash/isEmpty";
 import { ObjRef, Identifier } from "@gooddata/sdk-model";
 
 /**
- * TODO: remove ExtendedDateFilters from sdk-ui-filters and update imports in other files
- * https://jira.intgdc.com/browse/RAIL-2413
- */
-
-/**
  * Date string - ISO-8601 calendar date string, eg.: '2018-12-30'
- * @public
+ * TODO: https://jira.intgdc.com/browse/RAIL-2415
+ * @alpha
  */
 export type DateString = string;
 
 /**
- * TODO: docs
- * @public
+ * Type that identifies the the all time date filter
+ * @alpha
  */
 export type AllTimeType = "allTime";
 
 /**
- * TODO: docs
- * @public
+ * Type that identifies the absolute date filter form
+ * @alpha
  */
 export type AbsoluteFormType = "absoluteForm";
 
 /**
- * TODO: docs
- * @public
+ * Type that identifies the relative date filter form
+ * @alpha
  */
 export type RelativeFormType = "relativeForm";
 
 /**
- * TODO: docs
- * @public
+ * Type that identifies the absolute date filter preset
+ * @alpha
  */
 export type AbsolutePresetType = "absolutePreset";
 
 /**
- * TODO: docs
- * @public
+ * Type that identifies the relative date filter preset
+ * @alpha
  */
 export type RelativePresetType = "relativePreset";
 
 /**
- * TODO: docs
- * @public
+ * Type that identifies the date filter option
+ * @alpha
  */
 export type OptionType =
     | AllTimeType
@@ -55,14 +51,15 @@ export type OptionType =
     | RelativePresetType;
 
 /**
- * TODO: docs
- * @public
+ * Relative granularity offset
+ * (e.g. "GDC.time.year" granularity with offset -2 means "the previous 2 years")
+ * @alpha
  */
 export type RelativeGranularityOffset = number;
 
 /**
- * TODO: docs
- * @public
+ * Supported date filter granularities for the relative date filter
+ * @alpha
  */
 export type DateFilterGranularity =
     | "GDC.time.date"
@@ -72,76 +69,118 @@ export type DateFilterGranularity =
     | "GDC.time.year";
 
 /**
- * TODO: docs
- * @public
+ * Common props for date filter options
+ * @alpha
  */
 export interface IDateFilterOption {
+    /**
+     * Local identifier of the option
+     */
     localIdentifier: Identifier;
+    /**
+     * Customized name of the option to display in the dropdown
+     */
     name?: string;
+    /**
+     * Option type
+     */
     type: OptionType;
+    /**
+     * Sets whether this option will be visible in the dropdown
+     */
     visible: boolean;
 }
 
 /**
- * TODO: docs
- * @public
+ * Custom absolute date filter preset
+ * @alpha
  */
 export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
+    /**
+     * Type to identify an absolute date filter preset
+     */
     type: AbsolutePresetType;
+    /**
+     * Absolute date filter start date
+     */
     from: DateString;
+    /**
+     * Absolute date filter end date
+     */
     to: DateString;
 }
 
 /**
- * TODO: docs
- * @public
+ * Custom relative date filter preset
+ * @alpha
  */
 export interface IRelativeDateFilterPreset extends IDateFilterOption {
+    /**
+     * Type to identify a relative date filter preset
+     */
     type: RelativePresetType;
+    /**
+     * Relative date filter granularity (day/week/year,etc.)
+     */
     granularity: DateFilterGranularity;
+    /**
+     * Relative date filter granularity start offset
+     */
     from: RelativeGranularityOffset;
+    /**
+     * Relative date filter granularity end offset
+     */
     to: RelativeGranularityOffset;
 }
 
 /**
- * TODO: docs
- * @public
+ * Generic type to express relative date filter preset of a particular granularity
+ * @alpha
  */
 export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity>
     extends IRelativeDateFilterPreset {
+    /**
+     * Particular relative date filter preset granularity
+     */
     granularity: Key;
 }
 
 /**
- * TODO: docs
- * @public
+ * Customized options for the global absolute date filter
+ * @alpha
  */
 export interface IAbsoluteDateFilterForm extends IDateFilterOption {
+    /**
+     * Type to identify the global absolute date filter
+     */
     type: AbsoluteFormType;
 }
 
 /**
- * TODO: docs
- * @public
+ * Customized options for the global relative date filter
+ * @alpha
  */
 export interface IRelativeDateFilterForm extends IDateFilterOption {
+    /**
+     * Type to identify the global relative date filter
+     */
     type: RelativeFormType;
+    /**
+     * Available granularities for the global relative date filter
+     */
     availableGranularities: DateFilterGranularity[];
 }
 
 /**
- * TODO: docs
- * @public
+ * Customized options for the global all time date filter
+ * @alpha
  */
 export interface IAllTimeDateFilter extends IDateFilterOption {
+    /**
+     * Type to identify the global all time date filter
+     */
     type: AllTimeType;
 }
-
-/**
- * TODO: docs
- * @public
- */
-export type AbsoluteDateFilterOption = IAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAllTimeDateFilter}.
@@ -165,19 +204,6 @@ export const isAbsoluteDateFilterPreset = (obj: any): obj is IAbsoluteDateFilter
     !isEmpty(obj) && (obj as IAbsoluteDateFilterPreset).type === "absolutePreset";
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link AbsoluteDateFilterOption}.
- * @alpha
- */
-export const isAbsoluteDateFilterOption = (obj: any): obj is AbsoluteDateFilterOption =>
-    isAbsoluteDateFilterForm(obj) || isAbsoluteDateFilterPreset(obj);
-
-/**
- * TODO: docs
- * @public
- */
-export type RelativeDateFilterOption = IRelativeDateFilterForm | IRelativeDateFilterPreset;
-
-/**
  * Type-guard testing whether the provided object is an instance of {@link IRelativeDateFilterForm}.
  * @alpha
  */
@@ -192,79 +218,37 @@ export const isRelativeDateFilterPreset = (obj: any): obj is IRelativeDateFilter
     !isEmpty(obj) && (obj as IRelativeDateFilterPreset).type === "relativePreset";
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link RelativeDateFilterOption}.
- * @alpha
- */
-export const isRelativeDateFilterOption = (obj: any): obj is RelativeDateFilterOption =>
-    isRelativeDateFilterForm(obj) || isRelativeDateFilterPreset(obj);
-
-/**
- * TODO: docs
- * @public
- */
-export type DateFilterOption = IAllTimeDateFilter | AbsoluteDateFilterOption | RelativeDateFilterOption;
-
-/**
- * TODO: docs
- * @public
- */
-export type DateFilterRelativeOptionGroup = {
-    [key in DateFilterGranularity]?: Array<IRelativeDateFilterPresetOfGranularity<key>>;
-};
-
-/**
- * TODO: docs
- * @public
- */
-export interface IDateFilterOptionsByType {
-    allTime?: IAllTimeDateFilter;
-    absoluteForm?: IAbsoluteDateFilterForm;
-    relativeForm?: IRelativeDateFilterForm;
-    absolutePreset?: IAbsoluteDateFilterPreset[];
-    relativePreset?: DateFilterRelativeOptionGroup;
-}
-
-/**
- * TODO: docs
- * @public
- */
-export type DateFilterConfigMode = "readonly" | "hidden" | "active";
-
-/**
- * TODO: docs
- * @public
- */
-export interface IExtendedDateFilterErrors {
-    absoluteForm?: {
-        from?: string;
-        to?: string;
-    };
-    relativeForm?: {
-        from?: string;
-        to?: string;
-    };
-}
-
-/**
- * TODO: docs
- * @public
- */
-export interface IDashboardAddedPresets {
-    absolutePresets?: IAbsoluteDateFilterPreset[];
-    relativePresets?: IRelativeDateFilterPreset[];
-}
-
-/**
- * Date filter configs allow to define your own date filter presets, that appear in the date filter.
+ * Date filter configs allow to define your own date filter options, that appear in the date filter.
  *
  * @alpha
  */
 export interface IDateFilterConfig {
+    /**
+     * Extended date filter config reference
+     */
     ref: ObjRef;
+    /**
+     * Local identifier of the default selected date filter preset
+     */
     selectedOption: Identifier;
+    /**
+     * Options to customize displaying of the global all time date filter
+     */
     allTime?: IAllTimeDateFilter;
+    /**
+     * Options to customize displaying of the global absolute date filter
+     */
     absoluteForm?: IAbsoluteDateFilterForm;
+    /**
+     * Options to customize displaying of the global relative date filter
+     */
     relativeForm?: IRelativeDateFilterForm;
+    /**
+     * Custom absolute date filter presets (options to display in the extended date filter dropdown)
+     */
     absolutePresets?: IAbsoluteDateFilterPreset[];
+    /**
+     * Custom relative date filter presets (options to display in the extended date filter dropdown)
+     */
     relativePresets?: IRelativeDateFilterPreset[];
 }
