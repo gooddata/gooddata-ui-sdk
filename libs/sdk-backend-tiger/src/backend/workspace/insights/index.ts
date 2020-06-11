@@ -77,7 +77,9 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
 
         const insights = visualizationObjects.map(value => {
             return insightFromInsightDefinition(
-                value.attributes.content! as IInsightDefinition,
+                convertVisualizationObject(
+                    value.attributes.content! as VisualizationObject.IVisualizationObject,
+                ),
                 value.id,
                 (value.links as any)?.self,
             );
