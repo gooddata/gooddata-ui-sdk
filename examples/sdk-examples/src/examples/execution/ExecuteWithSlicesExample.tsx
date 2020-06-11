@@ -1,0 +1,73 @@
+// (C) 2007-2019 GoodData Corporation
+import React from "react";
+import { ErrorComponent, Execute, LoadingComponent } from "@gooddata/sdk-ui";
+import { Ldm } from "../../ldm";
+import { newAttributeSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const style = { border: "1px black solid" };
+
+export const ExecuteWithSlicesExample: React.FC = () => {
+    return (
+        <div>
+            <Execute
+                seriesBy={[Ldm.$TotalSales, Ldm.$FranchisedSales]}
+                slicesBy={[Ldm.LocationState, Ldm.LocationCity]}
+                sortBy={[newAttributeSort(Ldm.LocationState, "asc")]}
+                filters={[newPositiveAttributeFilter(Ldm.LocationState, ["Florida", "Texas"])]}
+            >
+                {({ error, isLoading, result }) => {
+                    if (error) {
+                        return (
+                            <div>
+                                <ErrorComponent
+                                    message="There was an error getting your execution"
+                                    description={JSON.stringify(error, null, 2)}
+                                />
+                            </div>
+                        );
+                    }
+                    if (isLoading || !result) {
+                        return (
+                            <div>
+                                <div className="gd-message progress">
+                                    <div className="gd-message-text">Loading…</div>
+                                </div>
+                                <LoadingComponent />
+                            </div>
+                        );
+                    }
+
+                    const slices = result
+                        .data()
+                        .slices()
+                        .toArray();
+
+                    return (
+                        <table style={style}>
+                            <tr style={style}>
+                                <th>State</th>
+                                <th>City</th>
+                                <th>Total Sales</th>
+                                <th>Total Franchised Cost</th>
+                            </tr>
+                            {slices.map(slice => {
+                                const sliceTitles = slice.sliceTitles();
+                                const sales = slice.dataPoints()[0];
+                                const franchisedSales = slice.dataPoints()[1];
+
+                                return (
+                                    <tr key={slice.id} style={style}>
+                                        <td style={style}>{sliceTitles[0]}</td>
+                                        <td style={style}>{sliceTitles[1]}</td>
+                                        <td style={style}>{sales.formattedValue()}</td>
+                                        <td style={style}>{franchisedSales.formattedValue()}</td>
+                                    </tr>
+                                );
+                            })}
+                        </table>
+                    );
+                }}
+            </Execute>
+        </div>
+    );
+};

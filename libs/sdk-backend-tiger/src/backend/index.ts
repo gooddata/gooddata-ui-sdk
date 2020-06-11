@@ -234,5 +234,5 @@ function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData)
 }
 
 function isNotAuthenticatedError(err: any): boolean {
-    return typeof err.response === "undefined" && err.response.status === 401;
+    return err?.response?.status === 401;
 }
