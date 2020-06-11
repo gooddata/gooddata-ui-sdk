@@ -106,9 +106,10 @@ export namespace ExecuteAFM {
     }
 
     export type CompatibilityFilter = IExpressionFilter | FilterItem;
-    export type FilterItem = DateFilterItem | AttributeFilterItem;
+    export type FilterItem = DateFilterItem | AttributeFilterItem | MeasureValueFilterItem;
     export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
     export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
+    export type MeasureValueFilterItem = IRangeMeasureValueFilter | IComparisonMeasureValueFilter;
 
     export interface IAttributeElementsByValue {
         values: string[];
@@ -144,6 +145,35 @@ export namespace ExecuteAFM {
             granularity: string;
             from: number;
             to: number;
+        };
+    }
+
+    export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
+
+    export interface IRangeMeasureValueFilter {
+        rangeMeasureValueFilter: {
+            measure: ObjQualifier | ILocalIdentifierQualifier;
+            operator: RangeConditionOperator;
+            from: number;
+            to: number;
+            treatNullValuesAs?: number;
+        };
+    }
+
+    export type ComparisonConditionOperator =
+        | "GREATER_THAN"
+        | "GREATER_THAN_OR_EQUAL_TO"
+        | "LESS_THAN"
+        | "LESS_THAN_OR_EQUAL_TO"
+        | "EQUAL_TO"
+        | "NOT_EQUAL_TO";
+
+    export interface IComparisonMeasureValueFilter {
+        comparisonMeasureValueFilter: {
+            measure: ObjQualifier | ILocalIdentifierQualifier;
+            operator: ComparisonConditionOperator;
+            value: number;
+            treatNullValuesAs?: number;
         };
     }
 

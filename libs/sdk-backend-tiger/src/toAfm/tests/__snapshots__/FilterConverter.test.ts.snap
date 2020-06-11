@@ -132,6 +132,19 @@ Object {
 }
 `;
 
+exports[`tiger filter converter from model to AFM convert visualization object filter should return comparison measure value filter 1`] = `
+Object {
+  "comparisonMeasureValueFilter": Object {
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": 0,
+    "value": 124,
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM convert visualization object filter should return negative attribute filter 1`] = `
 Object {
   "negativeAttributeFilter": Object {
@@ -170,6 +183,20 @@ Object {
 }
 `;
 
+exports[`tiger filter converter from model to AFM convert visualization object filter should return range measure value filter 1`] = `
+Object {
+  "rangeMeasureValueFilter": Object {
+    "from": 64,
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "BETWEEN",
+    "to": 128,
+    "treatNullValuesAs": undefined,
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM convert visualization object filter should return relative date filter 1`] = `
 Object {
   "relativeDateFilter": Object {
@@ -189,5 +216,3 @@ Object {
 exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;
 
 exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying attribute elements by value 2`] = `"Tiger backend only allows specifying attribute elements by value"`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error when visualization object filter does not support measure value filters 1`] = `"Tiger backend does not support measure value filters"`;
