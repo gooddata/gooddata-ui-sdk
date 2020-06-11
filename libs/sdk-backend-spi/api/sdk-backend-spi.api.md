@@ -1218,6 +1218,7 @@ export type SectionHeader = ISectionHeader | ISectionDescription;
 
 // @public
 export enum SettingCatalog {
+    ADMeasureValueFilterNullAsZeroOption = "ADMeasureValueFilterNullAsZeroOption",
     disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline",
     enableAxisNameConfiguration = "enableAxisNameConfiguration",
     enableBulletChart = "enableBulletChart",

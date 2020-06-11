@@ -11,6 +11,7 @@ import {
     newRelativeDateFilter,
     newPositiveAttributeFilter,
     newNegativeAttributeFilter,
+    newMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import { ReferenceLdmExt, ReferenceLdm } from "@gooddata/reference-workspace";
 
@@ -74,6 +75,11 @@ describe("tiger filter converter from model to AFM", () => {
                 "relative date filter",
                 newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, 20, 30),
             ],
+            [
+                "comparison measure value filter",
+                newMeasureValueFilter(ReferenceLdm.Won, "GREATER_THAN", 124, 0),
+            ],
+            ["range measure value filter", newMeasureValueFilter(ReferenceLdm.Won, "BETWEEN", 64, 128)],
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
             expect(convertVisualizationObjectFilter(input)).toMatchSnapshot();
@@ -88,12 +94,6 @@ describe("tiger filter converter from model to AFM", () => {
         it("should throw an error since tiger database only supports specifying attribute elements by value", () => {
             expect(() =>
                 convertVisualizationObjectFilter(visualizationObjectFilter.negativeAttributeFilter),
-            ).toThrowErrorMatchingSnapshot();
-        });
-
-        it("should throw an error when visualization object filter does not support measure value filters", () => {
-            expect(() =>
-                convertVisualizationObjectFilter(visualizationObjectFilter.measureValueFilter),
             ).toThrowErrorMatchingSnapshot();
         });
 

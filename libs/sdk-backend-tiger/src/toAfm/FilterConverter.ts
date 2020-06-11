@@ -8,14 +8,22 @@ import {
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
     IRelativeDateFilter,
+    IMeasureValueFilter,
     isAbsoluteDateFilter,
     isAttributeElementsByValue,
     isAttributeFilter,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
+    isMeasureValueFilter,
+    isComparisonCondition,
+    isRangeCondition,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/gd-tiger-client";
-import { toDateDataSetQualifier, toDisplayFormQualifier } from "./ObjRefConverter";
+import {
+    toDateDataSetQualifier,
+    toDisplayFormQualifier,
+    toMeasureValueFilterMeasureQualifier,
+} from "./ObjRefConverter";
 import { toTigerGranularity } from "../toSdkModel/dateGranularityConversions";
 
 function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPositiveAttributeFilter {
@@ -99,6 +107,38 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteA
     };
 }
 
+export function convertMeasureValueFilter(filter: IMeasureValueFilter): ExecuteAFM.FilterItem | null {
+    const { measureValueFilter } = filter;
+    const condition = measureValueFilter.condition;
+
+    if (isComparisonCondition(condition)) {
+        const { operator, value, treatNullValuesAs } = condition.comparison;
+        return {
+            comparisonMeasureValueFilter: {
+                measure: toMeasureValueFilterMeasureQualifier(measureValueFilter.measure),
+                operator,
+                value,
+                treatNullValuesAs,
+            },
+        };
+    }
+
+    if (isRangeCondition(condition)) {
+        const { operator, from, to, treatNullValuesAs } = condition.range;
+        return {
+            rangeMeasureValueFilter: {
+                measure: toMeasureValueFilterMeasureQualifier(measureValueFilter.measure),
+                operator,
+                from,
+                to,
+                treatNullValuesAs,
+            },
+        };
+    }
+
+    return null;
+}
+
 export function convertVisualizationObjectFilter(filter: IFilter): ExecuteAFM.FilterItem | null {
     if (isAttributeFilter(filter)) {
         return convertAttributeFilter(filter);
@@ -106,6 +146,8 @@ export function convertVisualizationObjectFilter(filter: IFilter): ExecuteAFM.Fi
         return convertAbsoluteDateFilter(filter);
     } else if (isRelativeDateFilter(filter)) {
         return convertRelativeDateFilter(filter);
+    } else if (isMeasureValueFilter(filter)) {
+        return convertMeasureValueFilter(filter);
     } else {
         throw new NotSupported("Tiger backend does not support measure value filters");
     }

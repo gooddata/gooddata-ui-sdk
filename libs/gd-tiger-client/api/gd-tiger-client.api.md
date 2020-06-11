@@ -8030,11 +8030,13 @@ export namespace ExecuteAFM {
     // (undocumented)
     export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
     // (undocumented)
+    export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+    // (undocumented)
     export type CompatibilityFilter = IExpressionFilter | FilterItem;
     // (undocumented)
     export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
     // (undocumented)
-    export type FilterItem = DateFilterItem | AttributeFilterItem;
+    export type FilterItem = DateFilterItem | AttributeFilterItem | MeasureValueFilterItem;
     // (undocumented)
     export interface IAbsoluteDateFilter {
         // (undocumented)
@@ -8094,6 +8096,16 @@ export namespace ExecuteAFM {
             direction: SortDirection;
             attributeIdentifier: ILocalIdentifierQualifier;
             aggregation?: "sum";
+        };
+    }
+    // (undocumented)
+    export interface IComparisonMeasureValueFilter {
+        // (undocumented)
+        comparisonMeasureValueFilter: {
+            measure: ObjQualifier | ILocalIdentifierQualifier;
+            operator: ComparisonConditionOperator;
+            value: number;
+            treatNullValuesAs?: number;
         };
     }
     // (undocumented)
@@ -8220,6 +8232,17 @@ export namespace ExecuteAFM {
         previousPeriodMeasure: IPreviousPeriodMeasure;
     }
     // (undocumented)
+    export interface IRangeMeasureValueFilter {
+        // (undocumented)
+        rangeMeasureValueFilter: {
+            measure: ObjQualifier | ILocalIdentifierQualifier;
+            operator: RangeConditionOperator;
+            from: number;
+            to: number;
+            treatNullValuesAs?: number;
+        };
+    }
+    // (undocumented)
     export interface IRelativeDateFilter {
         // (undocumented)
         relativeDateFilter: {
@@ -8266,7 +8289,11 @@ export namespace ExecuteAFM {
     // (undocumented)
     export type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IOverPeriodMeasureDefinition | IPreviousPeriodMeasureDefinition;
     // (undocumented)
+    export type MeasureValueFilterItem = IRangeMeasureValueFilter | IComparisonMeasureValueFilter;
+    // (undocumented)
     export type ObjQualifier = IObjIdentifierQualifier;
+    // (undocumented)
+    export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
     // (undocumented)
     export type SimpleMeasureAggregation = "SUM" | "COUNT" | "AVG" | "MIN" | "MAX" | "MEDIAN" | "RUNSUM";
     // (undocumented)

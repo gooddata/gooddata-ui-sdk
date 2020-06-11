@@ -36,6 +36,11 @@ export enum SettingCatalog {
      * Indicates whether color picker config panel should allow users to select custom RGB colors.
      */
     enableCustomColorPicker = "enableCustomColorPicker",
+
+    /**
+     * Indicates whether "Treat null as zero" option should be displayed in measure value filter configuration and its default state"
+     */
+    ADMeasureValueFilterNullAsZeroOption = "ADMeasureValueFilterNullAsZeroOption",
 }
 
 /**

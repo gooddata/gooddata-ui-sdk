@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isUriRef, ObjRef, ObjectType } from "@gooddata/sdk-model";
+import { isUriRef, ObjRef, ObjectType, isLocalIdRef, ObjRefInScope, isObjRef } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import ObjQualifier = ExecuteAFM.ObjQualifier;
 import ILocalIdentifierQualifier = ExecuteAFM.ILocalIdentifierQualifier;
@@ -85,4 +85,19 @@ export function toLocalIdentifier(localIdentifier: string): ILocalIdentifierQual
     return {
         localIdentifier,
     };
+}
+
+/**
+ * @internal
+ */
+export function toMeasureValueFilterMeasureQualifier(ref: ObjRefInScope) {
+    if (isLocalIdRef(ref)) {
+        return toLocalIdentifier(ref.localIdentifier);
+    } else if (isObjRef(ref)) {
+        return toObjQualifier(ref);
+    } else {
+        throw new UnexpectedError(
+            `The measure property of measure value filter must be either object reference or local identifier`,
+        );
+    }
 }
