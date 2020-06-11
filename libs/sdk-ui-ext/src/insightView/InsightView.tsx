@@ -21,7 +21,7 @@ import {
     insightTitle,
 } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisCallbacks, DefaultVisualizationCatalog, IVisProps } from "../internal";
+import { IVisualization, IVisCallbacks, FullVisualizationCatalog, IVisProps } from "../internal";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
 import {
     GoodDataSdkError,
@@ -204,7 +204,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             return;
         }
 
-        const visualizationFactory = DefaultVisualizationCatalog.forInsight(this.insight);
+        const visualizationFactory = FullVisualizationCatalog.forInsight(this.insight);
 
         this.visualization = visualizationFactory({
             backend: this.props.backend,
