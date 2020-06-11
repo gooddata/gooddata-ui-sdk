@@ -1,0 +1,231 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`available item filtering item filtering should filter-in date dataset if attribute ref matches 1`] = `
+Array [
+  Object {
+    "dataSet": Object {
+      "description": "DataSet Date",
+      "id": "activity.dataset.dt",
+      "ref": Object {
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/887",
+      },
+      "title": "Date (Activity)",
+      "type": "dataSet",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/887",
+    },
+    "dateAttributes": Array [
+      Object {
+        "attribute": Object {
+          "description": "Year",
+          "id": "activity.year",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827",
+          },
+          "title": "Year (Activity)",
+          "type": "attribute",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827",
+        },
+        "defaultDisplayForm": Object {
+          "description": "DisplayForm Year.",
+          "id": "activity.aag81lMifn6q",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/845",
+          },
+          "title": "Year (Activity)",
+          "type": "displayForm",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/845",
+        },
+        "granularity": "GDC.time.year",
+      },
+      Object {
+        "attribute": Object {
+          "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+          "id": "activity.week",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829",
+          },
+          "title": "Week (Sun-Sat)/Year (Activity)",
+          "type": "attribute",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829",
+        },
+        "defaultDisplayForm": Object {
+          "description": "DisplayForm Week #/Year (W1/2010).",
+          "id": "activity.aaA81lMifn6q",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/851",
+          },
+          "title": "Week #/Year (W1/2010) (Activity)",
+          "type": "displayForm",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/851",
+        },
+        "granularity": "GDC.time.week_us",
+      },
+      Object {
+        "attribute": Object {
+          "description": "Quarter and Year (Q1/2010)",
+          "id": "activity.quarter",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842",
+          },
+          "title": "Quarter/Year (Activity)",
+          "type": "attribute",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842",
+        },
+        "defaultDisplayForm": Object {
+          "description": "DisplayForm US Short.",
+          "id": "activity.aci81lMifn6q",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/877",
+          },
+          "title": "US Short (Activity)",
+          "type": "displayForm",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/877",
+        },
+        "granularity": "GDC.time.quarter",
+      },
+      Object {
+        "attribute": Object {
+          "description": "Month and Year",
+          "id": "activity.month",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843",
+          },
+          "title": "Month/Year (Activity)",
+          "type": "attribute",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843",
+        },
+        "defaultDisplayForm": Object {
+          "description": "DisplayForm Short (Jan 2010).",
+          "id": "activity.act81lMifn6q",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/878",
+          },
+          "title": "Short (Jan 2010) (Activity)",
+          "type": "displayForm",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/878",
+        },
+        "granularity": "GDC.time.month",
+      },
+      Object {
+        "attribute": Object {
+          "description": "Date",
+          "id": "activity.date",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844",
+          },
+          "title": "Date (Activity)",
+          "type": "attribute",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844",
+        },
+        "defaultDisplayForm": Object {
+          "description": "DisplayForm mm/dd/yyyy.",
+          "id": "activity.date.mmddyyyy",
+          "ref": Object {
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/883",
+          },
+          "title": "mm/dd/yyyy (Activity)",
+          "type": "displayForm",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/883",
+        },
+        "granularity": "GDC.time.date",
+      },
+    ],
+    "relevance": 0,
+    "type": "dateDataset",
+  },
+]
+`;
+
+exports[`available item filtering item filtering should filter-in simple object if ref matches 1`] = `
+Array [
+  Object {
+    "groups": Array [],
+    "measure": Object {
+      "description": "",
+      "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]
+",
+      "format": "#,##0.00",
+      "id": "abxgDICQav2J",
+      "ref": Object {
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
+      },
+      "title": "_Snapshot [EOP]",
+      "type": "measure",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
+    },
+    "type": "measure",
+  },
+]
+`;
+
+exports[`available item filtering response conversion should convert attribute id when it comes as object 1`] = `
+Array [
+  Object {
+    "identifier": "id",
+    "type": "attribute",
+  },
+]
+`;
+
+exports[`available item filtering response conversion should convert attribute id when it comes as string 1`] = `
+Array [
+  Object {
+    "identifier": "some_id",
+    "type": "attribute",
+  },
+]
+`;
+
+exports[`available item filtering response conversion should convert fact when it comes as object 1`] = `
+Array [
+  Object {
+    "identifier": "id",
+    "type": "fact",
+  },
+]
+`;
+
+exports[`available item filtering response conversion should convert fact when it comes as string 1`] = `
+Array [
+  Object {
+    "identifier": "some_id",
+    "type": "fact",
+  },
+]
+`;
+
+exports[`available item filtering response conversion should convert label id when it comes as object 1`] = `
+Array [
+  Object {
+    "identifier": "id",
+    "type": "displayForm",
+  },
+]
+`;
+
+exports[`available item filtering response conversion should convert label id when it comes as string 1`] = `
+Array [
+  Object {
+    "identifier": "some_id",
+    "type": "displayForm",
+  },
+]
+`;
+
+exports[`available item filtering response conversion should convert metric when it comes as object 1`] = `
+Array [
+  Object {
+    "identifier": "id",
+    "type": "measure",
+  },
+]
+`;
+
+exports[`available item filtering response conversion should convert metric when it comes as string 1`] = `
+Array [
+  Object {
+    "identifier": "some_id",
+    "type": "measure",
+  },
+]
+`;

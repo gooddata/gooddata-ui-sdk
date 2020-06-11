@@ -22,15 +22,19 @@ import {
     isDateFilter,
     isAttributeFilter,
     isMeasureValueFilter,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { AfmValidObjectsQueryTypesEnum } from "@gooddata/gd-tiger-client";
 import compact = require("lodash/compact");
+import intersectionWith = require("lodash/intersectionWith");
 
 import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertMeasure } from "../../../toAfm/MeasureConverter";
 import { convertVisualizationObjectFilter } from "../../../toAfm/FilterConverter";
 import { convertAttribute } from "../../../toAfm/AttributeConverter";
+import { jsonApiIdToObjRef, isJsonApiId } from "../../../fromAfm/ObjRefConverter";
+import { InvariantError } from "ts-invariant";
 
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {
     attribute: AfmValidObjectsQueryTypesEnum.Attributes,
@@ -45,14 +49,14 @@ const mapType = (type: CatalogItemType): AfmValidObjectsQueryTypesEnum => {
 
 const isSupportedType = (type: CatalogItemType): boolean => Object.keys(typesMatching).includes(type);
 
-const catalogItemId = (item: CatalogItem): string => {
+const catalogItemRefs = (item: CatalogItem): ObjRef[] => {
     return isCatalogAttribute(item)
-        ? item.attribute.id
+        ? [item.attribute.ref]
         : isCatalogFact(item)
-        ? item.fact.id
+        ? [item.fact.ref]
         : isCatalogMeasure(item)
-        ? item.measure.id
-        : "";
+        ? [item.measure.ref]
+        : item.dateAttributes.map(attr => attr.attribute.ref);
 };
 
 export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAvailableItemsFactory {
@@ -146,9 +150,37 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             }),
         );
 
-        const availableIds = availableItemsResponse.data.items;
-        const availableItems = this.items.filter(item => availableIds.includes(catalogItemId(item)));
+        const availableObjRefs: ObjRef[] = convertResponseToObjRefs(availableItemsResponse.data.items);
+        const availableItems = filterAvailableItems(availableObjRefs, this.items);
 
         return new TigerWorkspaceCatalogWithAvailableItems(this.groups, this.items, availableItems);
     }
+}
+
+export function convertResponseToObjRefs(availableItemIds: any[]): ObjRef[] {
+    if (isJsonApiId(availableItemIds[0])) {
+        // Forward-compatibility branch. This will be hit once tiger changes land. Tiger sends { id: string, type: string }
+
+        return availableItemIds.map(jsonApiIdToObjRef);
+    } else if (typeof availableItemIds[0] === "string") {
+        // Old branch; ids come as string `type/id`
+
+        return availableItemIds.map((idString: string) => {
+            const [type, id] = idString.split("/");
+
+            return jsonApiIdToObjRef({ id, type });
+        });
+    }
+
+    throw new InvariantError("tiger sent unexpected type of available item identifier");
+}
+/**
+ * @internal
+ */
+export function filterAvailableItems(refs: ObjRef[], items: CatalogItem[]): CatalogItem[] {
+    return items.filter(item => {
+        const itemRefs = catalogItemRefs(item);
+
+        return intersectionWith(refs, itemRefs, areObjRefsEqual).length > 0;
+    });
 }
