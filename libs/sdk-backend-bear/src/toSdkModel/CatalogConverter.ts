@@ -155,6 +155,23 @@ export const convertDateDataset = (dateDataset: GdcDateDataSets.IDateDataSet): I
     );
 };
 
+export const convertWrappedFact = (fact: GdcMetadata.IWrappedFact): ICatalogFact => {
+    const { meta } = fact.fact;
+    const factRef = uriRef(meta.uri);
+
+    return newCatalogFact(catalogFact =>
+        catalogFact.fact(factRef, f =>
+            f
+                .id(meta.identifier)
+                .uri(meta.uri)
+                .title(meta.title)
+                .description(meta.summary)
+                .production(meta.isProduction === 1)
+                .unlisted(meta.unlisted === 1),
+        ),
+    );
+};
+
 export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasure => {
     const { content, meta } = metric.metric;
     const measureRef = uriRef(meta.uri);
