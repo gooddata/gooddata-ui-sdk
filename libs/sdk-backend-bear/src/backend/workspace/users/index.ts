@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IWorkspaceUsersQuery, IWorkspaceUsersQueryOptions, IWorkspaceUser } from "@gooddata/sdk-backend-spi";
 
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertWorkspaceUser } from "../../../convertors/toSdkModel/UsersConverter";
 
 export class BearWorkspaceUsersQuery implements IWorkspaceUsersQuery {

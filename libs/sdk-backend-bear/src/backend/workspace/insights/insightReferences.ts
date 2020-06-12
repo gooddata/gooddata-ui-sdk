@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { CatalogItem, IInsight, IMetadataObject, insightUri } from "@gooddata/sdk-model";
 import { IInsightReferences, InsightReferenceTypes } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";

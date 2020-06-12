@@ -23,7 +23,7 @@ import { convertVisualizationClass } from "../../../convertors/toSdkModel/Visual
 import { convertVisualization } from "../../../convertors/toSdkModel/VisualizationConverter";
 import { convertInsight, convertInsightDefinition } from "../../../convertors/fromSdkModel/InsightConverter";
 import { objRefToUri } from "../../../convertors/fromObjRef/api";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { InsightReferencesQuery } from "./insightReferences";
 
 export class BearWorkspaceInsights implements IWorkspaceInsights {

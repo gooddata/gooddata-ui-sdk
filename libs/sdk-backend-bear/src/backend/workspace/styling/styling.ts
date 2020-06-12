@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { IColorPaletteItem } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 
 export class BearWorkspaceStyling implements IWorkspaceStylingService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}

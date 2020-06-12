@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IWorkspaceQueryFactory, IWorkspaceQuery, IWorkspaceQueryResult } from "@gooddata/sdk-backend-spi";
 import { convertUserProject } from "../../convertors/fromSdkModel/WorkspaceConverter";
-import { BearAuthenticatedCallGuard } from "../../types";
+import { BearAuthenticatedCallGuard } from "../../types/auth";
 import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api";
 
 export class BearWorkspaceQueryFactory implements IWorkspaceQueryFactory {

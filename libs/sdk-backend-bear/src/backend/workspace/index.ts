@@ -25,7 +25,7 @@ import { BearWorkspacePermissionsFactory } from "./permissions/permissions";
 import { BearWorkspaceInsights } from "./insights";
 import { BearWorkspaceDataSets } from "./datasets";
 import { BearWorkspaceDashboards } from "./dashboards";
-import { BearAuthenticatedCallGuard } from "../../types";
+import { BearAuthenticatedCallGuard } from "../../types/auth";
 import { BearWorkspaceUsersQuery } from "./users";
 import { BearWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
 

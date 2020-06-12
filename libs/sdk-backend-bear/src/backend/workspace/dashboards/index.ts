@@ -38,7 +38,7 @@ import {
     GdcVisualizationClass,
     GdcMetadataObject,
 } from "@gooddata/gd-bear-model";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import * as fromSdkModel from "../../../convertors/fromSdkModel/DashboardConverter";
 import * as toSdkModel from "../../../convertors/toSdkModel/DashboardConverter";
 import { objRefToUri } from "../../../convertors/fromObjRef/api";

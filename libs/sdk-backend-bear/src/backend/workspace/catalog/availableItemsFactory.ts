@@ -40,9 +40,9 @@ import {
 } from "../../../convertors/toSdkModel/CatalogConverter";
 import { convertInsightDefinition } from "../../../convertors/fromSdkModel/InsightConverter";
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
-import { IUriMappings } from "./types";
+import { IUriMappings } from "../../../types/catalog";
 import { BearWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../convertors/fromObjRef/api";
 import { InvariantError } from "ts-invariant";
 

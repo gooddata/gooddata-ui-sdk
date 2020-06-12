@@ -18,7 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
 import { objRefToUri } from "../../../convertors/fromObjRef/api";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import {
     convertMetadataObject,
     convertMetadataObjectXrefEntry,

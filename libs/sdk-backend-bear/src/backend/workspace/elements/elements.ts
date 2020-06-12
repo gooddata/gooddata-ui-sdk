@@ -8,7 +8,7 @@ import {
 import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { objRefToUri } from "../../../convertors/fromObjRef/api";
 import { getObjectIdFromUri } from "../../../utils/api";
 

@@ -10,7 +10,7 @@ import {
     IExecutionDefinition,
     ISortItem,
 } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../errors/errorHandling";
 import { BearExecutionResult } from "./executionResult";
 import { toAfmExecution } from "../../../convertors/toAfm/toAfmResultSpec";

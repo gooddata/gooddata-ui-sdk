@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { isUriRef, ObjRef, Uri, isIdentifierRef, Identifier } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../types";
+import { BearAuthenticatedCallGuard } from "../../types/auth";
 
 /**
  * Converts ObjRef instance to URI. For UriRef returns the uri as is, for IdentifierRef calls the backend and gets the URI.

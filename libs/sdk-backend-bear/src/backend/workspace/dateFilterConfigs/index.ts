@@ -2,7 +2,7 @@
 import { IWorkspaceDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { GdcExtendedDateFilters } from "@gooddata/gd-bear-model";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertDateFilterConfig } from "../../../convertors/toSdkModel/DateFilterConfigConverter";
 
 export class BearWorkspaceDateFilterConfigsQuery implements IWorkspaceDateFilterConfigsQuery {

@@ -17,7 +17,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../errors/errorHandling";
 import { toAfmExecution } from "../../../convertors/toAfm/toAfmResultSpec";
 

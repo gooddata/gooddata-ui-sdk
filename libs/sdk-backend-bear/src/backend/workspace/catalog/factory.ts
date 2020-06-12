@@ -26,8 +26,8 @@ import {
     isCompatibleCatalogItemType,
     convertMetric,
 } from "../../../convertors/toSdkModel/CatalogConverter";
-import { BearAuthenticatedCallGuard } from "../../../types";
-import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "./types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "../../../types/catalog";
 import { BearWorkspaceCatalog } from "./catalog";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../convertors/fromObjRef/api";
 import { IGetObjectsByQueryOptions } from "@gooddata/gd-bear-client";
