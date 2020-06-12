@@ -29,6 +29,7 @@ import {
     IAuthenticatedAsyncCallContext,
     TelemetryData,
 } from "@gooddata/sdk-backend-base";
+import { DateFormatter } from "../dateFormatting/types";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: false,
@@ -57,6 +58,12 @@ export type TigerBackendConfig = {
      * Version of the frontend package, this will be recorded by backend as initiator of HTTP requests.
      */
     packageVersion?: string;
+
+    /**
+     * Function used to format date values for a given granularity. It is given a parsed Date value and an appropriate granularity.
+     * If not specified, a default date formatted will be used.
+     */
+    dateFormatter?: DateFormatter;
 };
 
 /**
@@ -80,7 +87,7 @@ export class TigerBackend implements IAnalyticalBackend {
     public readonly config: AnalyticalBackendConfig;
 
     private readonly telemetry: TelemetryData;
-    private readonly implConfig: any;
+    private readonly implConfig: TigerBackendConfig;
     private readonly sdk: ITigerClient;
     private readonly authProvider: AuthProviderCallGuard | undefined;
 
@@ -123,7 +130,7 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public workspace(id: string): IAnalyticalWorkspace {
         invariant(isString(id), `Invalid workspaceId: ${id}`);
-        return new TigerWorkspace(this.authApiCall, id);
+        return new TigerWorkspace(this.authApiCall, id, this.implConfig.dateFormatter);
     }
 
     public workspaces(): IWorkspaceQueryFactory {
