@@ -171,7 +171,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
 
     public getReferencedObjects = async (
         insight: IInsight,
-        types: SupportedInsightReferenceTypes[] = ["dataSet", "measure"],
+        types: SupportedInsightReferenceTypes[] = ["dataSet", "measure", "fact"],
     ): Promise<IInsightReferences> => {
         return new InsightReferencesQuery(this.authCall, this.workspace, insight, types).run();
     };

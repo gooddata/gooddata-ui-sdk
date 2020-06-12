@@ -97,7 +97,7 @@ export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
  */
 export type SupportedInsightReferenceTypes = Exclude<
     InsightReferenceTypes,
-    "attribute" | "fact" | "displayForm" | "variable"
+    "attribute" | "displayForm" | "variable"
 >;
 
 /**
