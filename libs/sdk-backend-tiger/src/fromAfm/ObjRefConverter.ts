@@ -6,7 +6,7 @@ import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import ObjQualifier = ExecuteAFM.ObjQualifier;
 import { TigerAfmType } from "../types";
 
-const allValidTigerAfmTypes: TigerAfmType[] = ["metric", "label", "fact", "dataSet", "attribute"];
+const allValidTigerAfmTypes: TigerAfmType[] = ["metric", "label", "fact", "dataset", "attribute"];
 
 const objRefTypeByTigerType: {
     [objectType in TigerAfmType]: ObjectType;
@@ -14,7 +14,7 @@ const objRefTypeByTigerType: {
     attribute: "attribute",
     metric: "measure",
     label: "displayForm",
-    dataSet: "dataSet",
+    dataset: "dataSet",
     fact: "fact",
     variable: "variable",
 };
