@@ -10,7 +10,7 @@ export class TigerExecution extends AbstractExecutionFactory {
     constructor(
         private readonly authCall: AuthenticatedCallGuard,
         workspace: string,
-        private readonly dateFormatter?: DateFormatter,
+        private readonly dateFormatter: DateFormatter,
     ) {
         super(workspace);
     }

@@ -30,6 +30,7 @@ import {
     TelemetryData,
 } from "@gooddata/sdk-backend-base";
 import { DateFormatter } from "../dateFormatting/types";
+import { createDefaultDateFormatter } from "../dateFormatting/defaultDateFormatter";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: false,
@@ -90,6 +91,7 @@ export class TigerBackend implements IAnalyticalBackend {
     private readonly implConfig: TigerBackendConfig;
     private readonly sdk: ITigerClient;
     private readonly authProvider: AuthProviderCallGuard | undefined;
+    private readonly dateFormatter: DateFormatter;
 
     constructor(
         config: AnalyticalBackendConfig = {},
@@ -101,6 +103,7 @@ export class TigerBackend implements IAnalyticalBackend {
         this.implConfig = implConfig;
         this.telemetry = telemetry;
         this.authProvider = authProvider;
+        this.dateFormatter = implConfig.dateFormatter ?? createDefaultDateFormatter();
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
         this.sdk = tigerClientFactory(axios);
@@ -130,7 +133,7 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public workspace(id: string): IAnalyticalWorkspace {
         invariant(isString(id), `Invalid workspaceId: ${id}`);
-        return new TigerWorkspace(this.authApiCall, id, this.implConfig.dateFormatter);
+        return new TigerWorkspace(this.authApiCall, id, this.dateFormatter);
     }
 
     public workspaces(): IWorkspaceQueryFactory {

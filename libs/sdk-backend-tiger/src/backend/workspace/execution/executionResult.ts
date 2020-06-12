@@ -49,7 +49,7 @@ export class TigerExecutionResult implements IExecutionResult {
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         readonly execResponse: Execution.IExecutionResponse,
-        private readonly dateFormatter?: DateFormatter,
+        private readonly dateFormatter: DateFormatter,
     ) {
         this.dimensions = transformResultDimensions(execResponse.executionResponse.dimensions);
         this.resultId = execResponse.executionResponse.links.executionResult;
@@ -127,7 +127,7 @@ class TigerDataView implements IDataView {
     constructor(
         result: IExecutionResult,
         execResult: Execution.IExecutionResult,
-        dateFormatter?: DateFormatter,
+        dateFormatter: DateFormatter,
     ) {
         this.result = result;
         this.definition = result.definition;

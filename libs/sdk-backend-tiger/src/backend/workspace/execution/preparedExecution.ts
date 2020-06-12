@@ -22,7 +22,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
-        private readonly dateFormatter?: DateFormatter,
+        private readonly dateFormatter: DateFormatter,
     ) {}
 
     public async execute(): Promise<IExecutionResult> {
