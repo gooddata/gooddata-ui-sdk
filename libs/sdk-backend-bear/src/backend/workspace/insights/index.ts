@@ -19,10 +19,10 @@ import {
     IVisualizationClass,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { convertVisualizationClass } from "../../../toSdkModel/VisualizationClassConverter";
-import { convertVisualization } from "../../../toSdkModel/VisualizationConverter";
-import { convertInsight, convertInsightDefinition } from "../../../fromSdkModel/InsightConverter";
-import { objRefToUri } from "../../../fromObjRef/api";
+import { convertVisualizationClass } from "../../../convertors/toSdkModel/VisualizationClassConverter";
+import { convertVisualization } from "../../../convertors/toSdkModel/VisualizationConverter";
+import { convertInsight, convertInsightDefinition } from "../../../convertors/fromSdkModel/InsightConverter";
+import { objRefToUri } from "../../../convertors/fromObjRef/api";
 import { BearAuthenticatedCallGuard } from "../../../types";
 import { InsightReferencesQuery } from "./insightReferences";
 

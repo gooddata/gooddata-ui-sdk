@@ -6,7 +6,7 @@ import { IInsightReferences, InsightReferenceTypes } from "@gooddata/sdk-backend
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
 import { getObjectIdFromUri } from "../../../utils/api";
 import union from "lodash/union";
-import { convertMetadataObject } from "../../../toSdkModel/MetaConverter";
+import { convertMetadataObject } from "../../../convertors/toSdkModel/MetaConverter";
 import flow from "lodash/flow";
 import isEmpty from "lodash/isEmpty";
 import keyBy from "lodash/keyBy";

@@ -13,7 +13,7 @@ import {
 import { BearAuthenticatedCallGuard } from "../../../types";
 import { convertExecutionApiError } from "../../../errors/errorHandling";
 import { BearExecutionResult } from "./executionResult";
-import { toAfmExecution } from "../../../toAfm/toAfmResultSpec";
+import { toAfmExecution } from "../../../convertors/toAfm/toAfmResultSpec";
 
 export class BearPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;

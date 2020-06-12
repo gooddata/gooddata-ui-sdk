@@ -2,7 +2,7 @@
 import { IWorkspaceUsersQuery, IWorkspaceUsersQueryOptions, IWorkspaceUser } from "@gooddata/sdk-backend-spi";
 
 import { BearAuthenticatedCallGuard } from "../../../types";
-import { convertWorkspaceUser } from "../../../toSdkModel/UsersConverter";
+import { convertWorkspaceUser } from "../../../convertors/toSdkModel/UsersConverter";
 
 export class BearWorkspaceUsersQuery implements IWorkspaceUsersQuery {
     private options: IWorkspaceUsersQueryOptions = {};

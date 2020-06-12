@@ -19,7 +19,7 @@ import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { BearAuthenticatedCallGuard } from "../../../types";
 import { convertExecutionApiError } from "../../../errors/errorHandling";
-import { toAfmExecution } from "../../../toAfm/toAfmResultSpec";
+import { toAfmExecution } from "../../../convertors/toAfm/toAfmResultSpec";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];

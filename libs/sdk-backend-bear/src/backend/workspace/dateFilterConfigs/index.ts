@@ -3,7 +3,7 @@ import { IWorkspaceDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from 
 import invariant from "ts-invariant";
 import { GdcExtendedDateFilters } from "@gooddata/gd-bear-model";
 import { BearAuthenticatedCallGuard } from "../../../types";
-import { convertDateFilterConfig } from "../../../toSdkModel/DateFilterConfigConverter";
+import { convertDateFilterConfig } from "../../../convertors/toSdkModel/DateFilterConfigConverter";
 
 export class BearWorkspaceDateFilterConfigsQuery implements IWorkspaceDateFilterConfigsQuery {
     private limit: number | undefined;

@@ -39,9 +39,9 @@ import {
     GdcMetadataObject,
 } from "@gooddata/gd-bear-model";
 import { BearAuthenticatedCallGuard } from "../../../types";
-import * as fromSdkModel from "../../../fromSdkModel/DashboardConverter";
-import * as toSdkModel from "../../../toSdkModel/DashboardConverter";
-import { objRefToUri } from "../../../fromObjRef/api";
+import * as fromSdkModel from "../../../convertors/fromSdkModel/DashboardConverter";
+import * as toSdkModel from "../../../convertors/toSdkModel/DashboardConverter";
+import { objRefToUri } from "../../../convertors/fromObjRef/api";
 import isEqual from "lodash/isEqual";
 import clone from "lodash/clone";
 import set from "lodash/set";

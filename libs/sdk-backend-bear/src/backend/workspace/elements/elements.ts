@@ -9,7 +9,7 @@ import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { BearAuthenticatedCallGuard } from "../../../types";
-import { objRefToUri } from "../../../fromObjRef/api";
+import { objRefToUri } from "../../../convertors/fromObjRef/api";
 import { getObjectIdFromUri } from "../../../utils/api";
 
 export class BearWorkspaceElements implements IElementQueryFactory {

@@ -20,7 +20,7 @@ import { convertApiError, isApiResponseError } from "../errors/errorHandling";
 import { BearWorkspace } from "./workspace";
 import { BearWorkspaceQueryFactory } from "./workspaces";
 import { BearUserService } from "./user";
-import { convertInsight } from "../fromSdkModel/InsightConverter";
+import { convertInsight } from "../convertors/fromSdkModel/InsightConverter";
 import { GdcUser, GdcProjectDashboard } from "@gooddata/gd-bear-model";
 import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
 import {

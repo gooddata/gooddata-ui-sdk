@@ -2,7 +2,7 @@
 import { IWorkspacePermissionsFactory, IWorkspaceUserPermissions } from "@gooddata/sdk-backend-spi";
 import { IWorkspacePermissions, WorkspacePermission } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types";
-import { convertPermissions } from "../../../fromSdkModel/WorkspaceConverter";
+import { convertPermissions } from "../../../convertors/fromSdkModel/WorkspaceConverter";
 
 const emptyPermissions = { permissions: {} };
 

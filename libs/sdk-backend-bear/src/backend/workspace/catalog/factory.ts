@@ -25,11 +25,11 @@ import {
     convertGroup,
     isCompatibleCatalogItemType,
     convertMetric,
-} from "../../../toSdkModel/CatalogConverter";
+} from "../../../convertors/toSdkModel/CatalogConverter";
 import { BearAuthenticatedCallGuard } from "../../../types";
 import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "./types";
 import { BearWorkspaceCatalog } from "./catalog";
-import { objRefToIdentifier, objRefsToIdentifiers } from "../../../fromObjRef/api";
+import { objRefToIdentifier, objRefsToIdentifiers } from "../../../convertors/fromObjRef/api";
 import { IGetObjectsByQueryOptions } from "@gooddata/gd-bear-client";
 import { isApiResponseError } from "../../../errors/errorHandling";
 
