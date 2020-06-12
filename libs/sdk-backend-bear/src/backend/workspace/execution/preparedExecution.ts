@@ -11,9 +11,9 @@ import {
     ISortItem,
 } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { convertExecutionApiError } from "../../../errors/errorHandling";
+import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { BearExecutionResult } from "./executionResult";
-import { toAfmExecution } from "../../../convertors/toAfm/toAfmResultSpec";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
 
 export class BearPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;

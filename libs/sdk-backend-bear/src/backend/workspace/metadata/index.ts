@@ -17,15 +17,14 @@ import {
     newAttributeMetadataObject,
 } from "@gooddata/sdk-model";
 import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
-import { objRefToUri } from "../../../convertors/fromObjRef/api";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import {
     convertMetadataObject,
     convertMetadataObjectXrefEntry,
     SupportedMetadataObject,
     SupportedWrappedMetadataObject,
-} from "../../../convertors/toSdkModel/MetaConverter";
-import { getObjectIdFromUri } from "../../../utils/api";
+} from "../../../convertors/fromBackend/MetaConverter";
+import { getObjectIdFromUri, objRefToUri } from "../../../utils/api";
 
 export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}

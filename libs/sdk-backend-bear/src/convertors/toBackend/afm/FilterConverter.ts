@@ -16,7 +16,7 @@ import {
     MeasureValueFilterCondition,
 } from "@gooddata/sdk-model";
 import isNil from "lodash/isNil";
-import { toBearRef, toScopedBearRef } from "../fromObjRef/ObjRefConverter";
+import { toBearRef, toScopedBearRef } from "../ObjRefConverter";
 
 function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
     /*

@@ -13,7 +13,7 @@ import {
     MeasureGroupIdentifier,
     totalIsNative,
 } from "@gooddata/sdk-model";
-import { toBearRef } from "../fromObjRef/ObjRefConverter";
+import { toBearRef } from "../ObjRefConverter";
 
 function convertAttribute(attribute: IAttribute, idx: number): GdcExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;

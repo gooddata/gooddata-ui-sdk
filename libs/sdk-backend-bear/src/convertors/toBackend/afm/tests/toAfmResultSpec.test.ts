@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { toAfmExecution } from "../toAfmResultSpec";
+import { toAfmExecution } from "../ExecutionConverter";
 import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 

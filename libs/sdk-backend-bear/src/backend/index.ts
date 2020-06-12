@@ -16,11 +16,11 @@ import {
 import { IInsight, IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import isEmpty = require("lodash/isEmpty");
-import { convertApiError, isApiResponseError } from "../errors/errorHandling";
+import { convertApiError, isApiResponseError } from "../utils/errorHandling";
 import { BearWorkspace } from "./workspace";
 import { BearWorkspaceQueryFactory } from "./workspaces";
 import { BearUserService } from "./user";
-import { convertInsight } from "../convertors/fromSdkModel/InsightConverter";
+import { convertInsight } from "../convertors/toBackend/InsightConverter";
 import { GdcUser, GdcProjectDashboard } from "@gooddata/gd-bear-model";
 import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
 import {

@@ -39,13 +39,12 @@ import {
     GdcMetadataObject,
 } from "@gooddata/gd-bear-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import * as fromSdkModel from "../../../convertors/fromSdkModel/DashboardConverter";
-import * as toSdkModel from "../../../convertors/toSdkModel/DashboardConverter";
-import { objRefToUri } from "../../../convertors/fromObjRef/api";
+import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter";
+import * as toSdkModel from "../../../convertors/fromBackend/DashboardConverter";
 import isEqual from "lodash/isEqual";
 import clone from "lodash/clone";
 import set from "lodash/set";
-import { getObjectIdFromUri, userUriFromAuthenticatedPrincipal } from "../../../utils/api";
+import { objRefToUri, getObjectIdFromUri, userUriFromAuthenticatedPrincipal } from "../../../utils/api";
 import keyBy from "lodash/keyBy";
 
 type DashboardDependencyCategory = Extract<

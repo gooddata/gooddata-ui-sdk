@@ -77,19 +77,16 @@ export const dashboardTempFilterContext: ITempFilterContext = {
 export const emptyDashboard: IDashboard = {
     ...createObjectMeta("emptyDashboard"),
     filterContext: undefined,
-    scheduledMails: [],
 };
 
 export const dashboardWithFilterContext: IDashboard = {
     ...createObjectMeta("dashboardWithFilterContext"),
     filterContext: dashboardFilterContext,
-    scheduledMails: [],
 };
 
 export const dashboardWithTempFilterContext: IDashboard = {
     ...createObjectMeta("dashboardWithTempFilterContext"),
     filterContext: dashboardTempFilterContext,
-    scheduledMails: [],
 };
 
 export const widgetHeadline: IWidget = {

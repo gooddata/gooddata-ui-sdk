@@ -6,14 +6,14 @@ import { IInsightReferences, InsightReferenceTypes } from "@gooddata/sdk-backend
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
 import { getObjectIdFromUri } from "../../../utils/api";
 import union from "lodash/union";
-import { convertMetadataObject } from "../../../convertors/toSdkModel/MetaConverter";
+import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter";
 import flow from "lodash/flow";
 import isEmpty from "lodash/isEmpty";
 import keyBy from "lodash/keyBy";
 import flatMap from "lodash/fp/flatMap";
 import uniqBy from "lodash/fp/uniqBy";
 
-import { convertMetric, convertWrappedFact } from "../../../toSdkModel/CatalogConverter";
+import { convertMetric, convertWrappedFact } from "../../../convertors/fromBackend/CatalogConverter";
 
 const objectTypeToObjectCategory = (type: InsightReferenceTypes): GdcMetadata.ObjectCategory => {
     switch (type) {
