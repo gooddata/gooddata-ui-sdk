@@ -42,3 +42,19 @@ export function toObjRef(qualifier: ObjQualifier): ObjRef {
         type: toObjectType(qualifier.identifier.type as TigerAfmType),
     };
 }
+
+export type JsonApiId = {
+    id: string;
+    type: string;
+};
+
+export function isJsonApiId(obj: any): obj is JsonApiId {
+    return !isEmpty(obj) && obj?.id !== undefined && obj?.type !== undefined;
+}
+
+export function jsonApiIdToObjRef(idAndType: JsonApiId): ObjRef {
+    return {
+        identifier: idAndType.id,
+        type: toObjectType(idAndType.type as TigerAfmType),
+    };
+}
