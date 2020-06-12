@@ -29,7 +29,7 @@ import {
     IAuthenticatedAsyncCallContext,
     TelemetryData,
 } from "@gooddata/sdk-backend-base";
-import { DateValueFormatter, defaultValueDateFormatter } from "../dateFormatting/dateValueFormatter";
+import { DateFormatter } from "../dateFormatting/types";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: false,
@@ -60,9 +60,10 @@ export type TigerBackendConfig = {
     packageVersion?: string;
 
     /**
-     * Function used to format date values for a given granularity.
+     * Function used to format date values for a given granularity. It is given a parsed Date value and an appropriate granularity.
+     * If not specified, a default date formatted will be used.
      */
-    dateValueFormatter?: DateValueFormatter;
+    dateFormatter?: DateFormatter;
 };
 
 /**
@@ -129,11 +130,7 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public workspace(id: string): IAnalyticalWorkspace {
         invariant(isString(id), `Invalid workspaceId: ${id}`);
-        return new TigerWorkspace(
-            this.authApiCall,
-            id,
-            this.implConfig.dateValueFormatter ?? defaultValueDateFormatter,
-        );
+        return new TigerWorkspace(this.authApiCall, id, this.implConfig.dateFormatter);
     }
 
     public workspaces(): IWorkspaceQueryFactory {

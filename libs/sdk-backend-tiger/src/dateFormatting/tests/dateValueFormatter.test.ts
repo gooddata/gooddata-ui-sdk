@@ -1,8 +1,10 @@
 // (C) 2020 GoodData Corporation
 import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
-import { defaultValueDateFormatter, createDateValueFormatter } from "../dateValueFormatter";
+import { createDateValueFormatter } from "../dateValueFormatter";
 
-describe("defaultDateFormatter", () => {
+describe("createDateValueFormatter", () => {
+    const defaultDateValueFormatter = createDateValueFormatter();
+
     type Scenario = [string, CatalogDateAttributeGranularity, string];
     const scenarios: Scenario[] = [
         ["2020-01-31", "GDC.time.date", "01/31/2020"],
@@ -20,19 +22,7 @@ describe("defaultDateFormatter", () => {
     ];
 
     it.each(scenarios)("should format (%s, %s) as %s", (value, granularity, expected) => {
-        const actual = defaultValueDateFormatter(value, granularity);
+        const actual = defaultDateValueFormatter(value, granularity);
         expect(actual).toBe(expected);
-    });
-});
-
-describe("createDateFormatter localization", () => {
-    it("should support different locales", () => {
-        const formatter = createDateValueFormatter("es-ES");
-        const actual = formatter("11", "GDC.time.month_in_year");
-        expect(actual).toBe("nov");
-    });
-
-    it("should throw on invalid locale", () => {
-        expect(() => createDateValueFormatter("surely this is not a locale")).toThrow();
     });
 });

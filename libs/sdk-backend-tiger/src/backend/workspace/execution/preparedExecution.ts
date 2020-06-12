@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import { TigerExecutionResult } from "./executionResult";
 import { toAfmExecution } from "../../../toAfm/toAfmResultSpec";
-import { DateValueFormatter } from "../../../dateFormatting/dateValueFormatter";
+import { DateFormatter } from "../../../dateFormatting/types";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
 export class TigerPreparedExecution implements IPreparedExecution {
@@ -22,7 +22,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
-        private readonly dateValueFormatter: DateValueFormatter,
+        private readonly dateFormatter?: DateFormatter,
     ) {}
 
     public async execute(): Promise<IExecutionResult> {
@@ -31,12 +31,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
         const afmExecution = toAfmExecution(this.definition);
 
         return this.authCall(sdk => sdk.execution.executeAfm(afmExecution)).then(response => {
-            return new TigerExecutionResult(
-                this.authCall,
-                this.definition,
-                response,
-                this.dateValueFormatter,
-            );
+            return new TigerExecutionResult(this.authCall, this.definition, response, this.dateFormatter);
         });
     }
 

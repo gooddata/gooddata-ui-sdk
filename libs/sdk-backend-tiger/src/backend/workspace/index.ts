@@ -26,13 +26,13 @@ import { TigerWorkspaceMetadata } from "./metadata";
 import { TigerWorkspacePermissionsFactory } from "./permissions";
 import { TigerWorkspaceStyling } from "./styling";
 import { TigerWorkspaceInsights } from "./insights";
-import { DateValueFormatter } from "../../dateFormatting/dateValueFormatter";
+import { DateFormatter } from "../../dateFormatting/types";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly workspace: string,
-        private readonly dateValueFormatter: DateValueFormatter,
+        private readonly dateFormatter?: DateFormatter,
     ) {}
 
     public elements(): IElementQueryFactory {
@@ -40,7 +40,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public execution(): IExecutionFactory {
-        return new TigerExecution(this.authCall, this.workspace, this.dateValueFormatter);
+        return new TigerExecution(this.authCall, this.workspace, this.dateFormatter);
     }
 
     public settings(): IWorkspaceSettingsService {

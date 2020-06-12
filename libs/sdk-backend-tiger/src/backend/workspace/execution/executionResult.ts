@@ -20,7 +20,7 @@ import { transformExecutionResult } from "../../../fromAfm/result";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { Execution } from "@gooddata/gd-tiger-client";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { DateValueFormatter } from "../../../dateFormatting/dateValueFormatter";
+import { DateFormatter } from "../../../dateFormatting/types";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 
@@ -49,7 +49,7 @@ export class TigerExecutionResult implements IExecutionResult {
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         readonly execResponse: Execution.IExecutionResponse,
-        private readonly dateValueFormatter: DateValueFormatter,
+        private readonly dateFormatter?: DateFormatter,
     ) {
         this.dimensions = transformResultDimensions(execResponse.executionResponse.dimensions);
         this.resultId = execResponse.executionResponse.links.executionResult;
@@ -102,11 +102,11 @@ export class TigerExecutionResult implements IExecutionResult {
             if (isEmptyDataResult(res)) {
                 throw new NoDataError(
                     "The execution resulted in no data to display.",
-                    new TigerDataView(this, res, this.dateValueFormatter),
+                    new TigerDataView(this, res, this.dateFormatter),
                 );
             }
 
-            return new TigerDataView(this, res, this.dateValueFormatter);
+            return new TigerDataView(this, res, this.dateFormatter);
         });
     };
 }
@@ -127,12 +127,12 @@ class TigerDataView implements IDataView {
     constructor(
         result: IExecutionResult,
         execResult: Execution.IExecutionResult,
-        dateValueFormatter: DateValueFormatter,
+        dateFormatter?: DateFormatter,
     ) {
         this.result = result;
         this.definition = result.definition;
 
-        const transformedResult = transformExecutionResult(execResult, result.dimensions, dateValueFormatter);
+        const transformedResult = transformExecutionResult(execResult, result.dimensions, dateFormatter);
 
         this.data = transformedResult.data;
         this.headerItems = transformedResult.headerItems;

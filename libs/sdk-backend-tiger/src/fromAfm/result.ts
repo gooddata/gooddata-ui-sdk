@@ -11,7 +11,8 @@ import isResultAttributeHeader = Execution.isResultAttributeHeader;
 import isResultMeasureHeader = Execution.isResultMeasureHeader;
 import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
 import { toSdkGranularity } from "../toSdkModel/dateGranularityConversions";
-import { DateValueFormatter } from "../dateFormatting/dateValueFormatter";
+import { DateFormatter } from "../dateFormatting/types";
+import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
 
 export type TransformerResult = {
     readonly headerItems: IResultHeader[][][];
@@ -44,12 +45,14 @@ function getGranularity(header: IDimensionItemDescriptor): CatalogDateAttributeG
 
 function transformHeaderItems(
     dimensions: IDimensionDescriptor[],
-    dateValueFormatter: DateValueFormatter,
     dimensionHeaders?: Execution.IDimensionHeader[],
+    dateFormatter?: DateFormatter,
 ): IResultHeader[][][] {
     if (!dimensionHeaders) {
         return [[[]]];
     }
+
+    const dateValueFormatter = createDateValueFormatter(dateFormatter);
 
     return dimensionHeaders.map((dimensionHeader, dimensionIndex) => {
         return dimensionHeader.headerGroups.map((headerGroup, headerGroupIndex) => {
@@ -91,11 +94,11 @@ function transformHeaderItems(
 export function transformExecutionResult(
     result: Execution.IExecutionResult,
     dimensions: IDimensionDescriptor[],
-    dateValueFormatter: DateValueFormatter,
+    dateFormatter?: DateFormatter,
 ): TransformerResult {
     return {
         data: result.data,
-        headerItems: transformHeaderItems(dimensions, dateValueFormatter, result.dimensionHeaders),
+        headerItems: transformHeaderItems(dimensions, result.dimensionHeaders, dateFormatter),
         offset: result.paging.offset,
         count: result.paging.count,
         total: result.paging.total,

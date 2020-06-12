@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transformExecutionResult should format date dimensions values 1`] = `
+Object {
+  "count": Array [
+    1,
+    2,
+  ],
+  "data": Array [
+    Array [
+      "20.0",
+      "40.2",
+    ],
+  ],
+  "headerItems": Array [
+    Array [
+      Array [
+        Object {
+          "measureHeaderItem": Object {
+            "name": "m_1",
+            "order": 0,
+          },
+        },
+      ],
+    ],
+    Array [
+      Array [
+        Object {
+          "attributeHeaderItem": Object {
+            "name": "Q4/1906",
+            "uri": "/fake/1906-4",
+          },
+        },
+        Object {
+          "attributeHeaderItem": Object {
+            "name": "Q1/1910",
+            "uri": "/fake/1910-1",
+          },
+        },
+      ],
+    ],
+  ],
+  "offset": Array [
+    0,
+    0,
+  ],
+  "total": Array [
+    1,
+    2,
+  ],
+}
+`;
