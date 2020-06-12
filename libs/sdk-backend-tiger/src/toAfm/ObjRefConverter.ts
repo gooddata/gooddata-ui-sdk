@@ -17,7 +17,7 @@ const tigerAfmTypeByObjectAfmType: {
     attribute: "attribute",
     measure: "metric",
     displayForm: "label",
-    dataSet: "dataSet",
+    dataSet: "dataset",
     fact: "fact",
     variable: "variable",
 };
@@ -75,7 +75,7 @@ export function toDisplayFormQualifier(ref: ObjRef): ObjQualifier {
  * @internal
  */
 export function toDateDataSetQualifier(ref: ObjRef): ObjQualifier {
-    return toObjQualifier(ref, "dataSet");
+    return toObjQualifier(ref, "dataset");
 }
 
 /**
