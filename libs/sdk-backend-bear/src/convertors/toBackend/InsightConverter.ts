@@ -76,6 +76,9 @@ const convertInsightContent = (
     };
 };
 
+/**
+ * @internal
+ */
 export const convertInsightDefinition = (
     insight: IInsightDefinition,
 ): GdcVisualizationObject.IVisualizationObject => {
@@ -88,6 +91,9 @@ export const convertInsightDefinition = (
     } as GdcVisualizationObject.IVisualizationObject;
 };
 
+/**
+ * @internal
+ */
 export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisualizationObject => {
     const convertedDefinition = convertInsightDefinition(insight);
     const locked = insightIsLocked(insight);

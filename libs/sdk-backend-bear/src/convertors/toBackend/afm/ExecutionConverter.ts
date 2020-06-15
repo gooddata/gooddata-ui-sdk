@@ -126,6 +126,8 @@ function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IResultSpec
  *
  * @param def - execution definition
  * @returns AFM Execution
+ *
+ * @internal
  */
 export function toAfmExecution(def: IExecutionDefinition): GdcExecuteAFM.IExecution {
     return {

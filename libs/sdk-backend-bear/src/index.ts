@@ -24,3 +24,31 @@ export {
 };
 
 export default bearFactory;
+
+//
+// Exports to support legacy state in AD
+//
+
+import { convertVisualization } from "./convertors/fromBackend/VisualizationConverter";
+
+import { convertReferencesToUris } from "./convertors/fromBackend/ReferenceConverter";
+
+import { convertInsight, convertInsightDefinition } from "./convertors/toBackend/InsightConverter";
+
+import { toAfmExecution } from "./convertors/toBackend/afm/ExecutionConverter";
+
+/**
+ * Some of the convertors from and to bear types are exported through this so that they can be used by our
+ * applications that were using bear-specific types in their state.
+ *
+ * All of these exports are marked as internal and can break at any time.
+ *
+ * @internal
+ */
+export const BearConvertors = {
+    convertVisualization,
+    convertReferencesToUris,
+    convertInsight,
+    convertInsightDefinition,
+    toAfmExecution,
+};
