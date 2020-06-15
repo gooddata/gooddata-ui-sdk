@@ -30,7 +30,11 @@ class NoLoginAuthProvider extends BearAuthProviderBase implements IAuthenticatio
 }
 
 function createBackend(): IAnalyticalBackend {
-    const backend = bearFactory({ hostname: "localhost:8443" });
+    /*
+     * When running on CI, the whole ensemble shares a docker network where the mock backend is aliased as 'bear'.
+     */
+    const hostname = (process.env.CI && "bear") ?? "localhost";
+    const backend = bearFactory({ hostname: `${hostname}:8443` });
 
     if (process.env.GD_BEAR_REC) {
         const credentials = config();

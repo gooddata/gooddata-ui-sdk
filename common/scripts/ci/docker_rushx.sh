@@ -26,8 +26,10 @@ echo "-----------------------------------------------------------------------"
 
 docker run \
   --env CI \
+  --env WIREMOCK_NET \
   --env HOME="/workspace" \
   --rm \
+  --net "${WIREMOCK_NET}" --net-alias tests \
   --volume ${ROOT_DIR}:/workspace:Z \
   -u $(id -u ${USER}):$(id -g ${USER}) \
   -w /workspace \

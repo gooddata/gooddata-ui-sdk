@@ -10,7 +10,7 @@ WIREMOCK_FILE="${WIREMOCK_DIR}/.wiremock_containerid"
 STOP_RECORDING="${WIREMOCK_DIR}/stop_recording.sh"
 
 if [ -f ${WIREMOCK_FILE} ]; then
-  cid=$(cat ${WIREMOCK_FILE})
+  cid=$(cat "${WIREMOCK_FILE}")
   echo "Stopping Wiremock container ${cid}; recordings in progress will be stopped and saved"
 
   ${STOP_RECORDING}
