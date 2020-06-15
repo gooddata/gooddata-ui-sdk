@@ -32,7 +32,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly workspace: string,
-        private readonly dateFormatter?: DateFormatter,
+        private readonly dateFormatter: DateFormatter,
     ) {}
 
     public elements(): IElementQueryFactory {

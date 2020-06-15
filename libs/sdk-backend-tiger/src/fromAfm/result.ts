@@ -45,8 +45,8 @@ function getGranularity(header: IDimensionItemDescriptor): CatalogDateAttributeG
 
 function transformHeaderItems(
     dimensions: IDimensionDescriptor[],
+    dateFormatter: DateFormatter,
     dimensionHeaders?: Execution.IDimensionHeader[],
-    dateFormatter?: DateFormatter,
 ): IResultHeader[][][] {
     if (!dimensionHeaders) {
         return [[[]]];
@@ -94,11 +94,11 @@ function transformHeaderItems(
 export function transformExecutionResult(
     result: Execution.IExecutionResult,
     dimensions: IDimensionDescriptor[],
-    dateFormatter?: DateFormatter,
+    dateFormatter: DateFormatter,
 ): TransformerResult {
     return {
         data: result.data,
-        headerItems: transformHeaderItems(dimensions, result.dimensionHeaders, dateFormatter),
+        headerItems: transformHeaderItems(dimensions, dateFormatter, result.dimensionHeaders),
         offset: result.paging.offset,
         count: result.paging.count,
         total: result.paging.total,

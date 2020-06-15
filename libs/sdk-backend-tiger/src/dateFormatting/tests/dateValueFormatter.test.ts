@@ -1,9 +1,10 @@
 // (C) 2020 GoodData Corporation
 import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
 import { createDateValueFormatter } from "../dateValueFormatter";
+import { createDefaultDateFormatter } from "../defaultDateFormatter";
 
 describe("createDateValueFormatter", () => {
-    const defaultDateValueFormatter = createDateValueFormatter();
+    const defaultDateValueFormatter = createDateValueFormatter(createDefaultDateFormatter());
 
     type Scenario = [string, CatalogDateAttributeGranularity, string];
     const scenarios: Scenario[] = [
