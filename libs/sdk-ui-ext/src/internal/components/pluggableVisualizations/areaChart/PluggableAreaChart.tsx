@@ -129,7 +129,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
                     references={this.references}
                     pushData={this.handlePushData}
                     type={this.type}
-                    isError={this.isError}
+                    isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                 />,

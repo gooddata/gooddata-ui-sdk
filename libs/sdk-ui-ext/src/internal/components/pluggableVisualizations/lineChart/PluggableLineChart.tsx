@@ -139,7 +139,7 @@ export class PluggableLineChart extends PluggableBaseChart {
                     colors={this.colors}
                     pushData={this.handlePushData}
                     type={this.type}
-                    isError={this.isError}
+                    isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     axis={this.axis}
