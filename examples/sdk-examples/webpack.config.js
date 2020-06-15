@@ -129,6 +129,25 @@ module.exports = async (env, argv) => {
                     loaders: ["babel-loader"],
                 },
                 {
+                    test: /\.js?$/,
+                    include: rawModulePath => {
+                        // Some npm modules no longer transpiled to ES5, which
+                        // causes errors such in IE11.
+                        const inclusionReg = /node_modules\/.*((lru-cache)|(react-intl)|(intl-messageformat))/;
+                        // On Windows, mPath use backslashes for folder separators. We need
+                        // to convert these to forward slashes because our
+                        // test regex, inclusionReg, contains one.
+                        const modulePath = rawModulePath.replace(/\\/g, "/");
+                        return inclusionReg.test(modulePath);
+                    },
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            presets: ["@babel/preset-env"],
+                        },
+                    },
+                },
+                {
                     test: /\.(jpe?g|gif|png|svg|ico|eot|woff2?|ttf|wav|mp3)$/,
                     use: "file-loader",
                 },

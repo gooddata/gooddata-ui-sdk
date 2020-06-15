@@ -96,3 +96,8 @@ $dialog_width: 250px;
         display: none;
     }
 }
+
+.gd-dialog,
+.overlay.gd-dialog {
+    padding: 0px;
+}
