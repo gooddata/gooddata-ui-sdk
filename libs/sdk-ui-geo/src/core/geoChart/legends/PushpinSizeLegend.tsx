@@ -12,7 +12,7 @@ export interface IPushpinSizeLegendProps {
 
 export default function PushpinSizeLegend(props: IPushpinSizeLegendProps) {
     const { sizes = [], format, numericSymbols = [], measureName } = props;
-    const sizeData: number[] = sizes.filter(value => value !== null && isFinite) as number[];
+    const sizeData: number[] = sizes.filter(value => value !== null && isFinite && !isNaN(value)) as number[];
 
     if (!sizeData.length) {
         return null;
