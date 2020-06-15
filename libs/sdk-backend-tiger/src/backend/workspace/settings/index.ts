@@ -11,6 +11,7 @@ const HardcodedSettings = {
     enableBulletChart: true,
     enableNewADFilterBar: true,
     enableMeasureValueFilters: true,
+    enableMetricDateFilter: true,
     ADMeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",
 };
 
