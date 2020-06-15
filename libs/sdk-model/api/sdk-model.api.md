@@ -411,9 +411,9 @@ export interface IAttributeElement {
 
 // @public
 export interface IAttributeElementExpressionToken {
-    element: IAttributeElement;
+    deleted?: boolean;
     type: "attributeElement";
-    value: string;
+    value: string | undefined;
 }
 
 // @public
@@ -913,8 +913,7 @@ export function insightVisualizationUrl(insight: IInsightDefinition): string;
 
 // @public
 export interface IObjectExpressionToken {
-    meta: IMetadataObject;
-    type: "metadataObject";
+    type: ObjectType;
     value: string;
 }
 
