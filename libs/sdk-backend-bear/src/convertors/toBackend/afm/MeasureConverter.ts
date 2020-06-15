@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertMeasureFilter } from "./FilterConverter";
-import { toBearRef } from "../fromObjRef/ObjRefConverter";
+import { toBearRef } from "../ObjRefConverter";
 import compact = require("lodash/compact");
 import get = require("lodash/get");
 

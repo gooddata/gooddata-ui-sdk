@@ -1,19 +1,19 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { CatalogItem, IInsight, IMetadataObject, insightUri } from "@gooddata/sdk-model";
 import { IInsightReferences, InsightReferenceTypes } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
 import { getObjectIdFromUri } from "../../../utils/api";
 import union from "lodash/union";
-import { convertMetadataObject } from "../../../toSdkModel/MetaConverter";
+import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter";
 import flow from "lodash/flow";
 import isEmpty from "lodash/isEmpty";
 import keyBy from "lodash/keyBy";
 import flatMap from "lodash/fp/flatMap";
 import uniqBy from "lodash/fp/uniqBy";
 
-import { convertMetric, convertWrappedFact } from "../../../toSdkModel/CatalogConverter";
+import { convertMetric, convertWrappedFact } from "../../../convertors/fromBackend/CatalogConverter";
 
 const objectTypeToObjectCategory = (type: InsightReferenceTypes): GdcMetadata.ObjectCategory => {
     switch (type) {

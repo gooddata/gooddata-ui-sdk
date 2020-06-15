@@ -21,8 +21,8 @@ import {
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import omitBy from "lodash/omitBy";
-import { convertUrisToReferences } from "../toSdkModel/ReferenceConverter";
-import { serializeProperties } from "../toSdkModel/PropertiesConverter";
+import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
+import { serializeProperties } from "../fromBackend/PropertiesConverter";
 import { convertExtendedFilter, shouldFilterBeIncluded } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 
@@ -76,6 +76,9 @@ const convertInsightContent = (
     };
 };
 
+/**
+ * @internal
+ */
 export const convertInsightDefinition = (
     insight: IInsightDefinition,
 ): GdcVisualizationObject.IVisualizationObject => {
@@ -88,6 +91,9 @@ export const convertInsightDefinition = (
     } as GdcVisualizationObject.IVisualizationObject;
 };
 
+/**
+ * @internal
+ */
 export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisualizationObject => {
     const convertedDefinition = convertInsightDefinition(insight);
     const locked = insightIsLocked(insight);

@@ -2,7 +2,7 @@
 
 import { IPreparedExecution, NotImplemented } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, IFilter } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { BearPreparedExecution } from "./preparedExecution";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 

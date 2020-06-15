@@ -19,11 +19,11 @@ import {
     IVisualizationClass,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { convertVisualizationClass } from "../../../toSdkModel/VisualizationClassConverter";
-import { convertVisualization } from "../../../toSdkModel/VisualizationConverter";
-import { convertInsight, convertInsightDefinition } from "../../../fromSdkModel/InsightConverter";
-import { objRefToUri } from "../../../fromObjRef/api";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { convertVisualizationClass } from "../../../convertors/fromBackend/VisualizationClassConverter";
+import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
+import { convertInsight, convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter";
+import { objRefToUri } from "../../../utils/api";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { InsightReferencesQuery } from "./insightReferences";
 
 export class BearWorkspaceInsights implements IWorkspaceInsights {

@@ -8,9 +8,8 @@ import {
 import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
-import { BearAuthenticatedCallGuard } from "../../../types";
-import { objRefToUri } from "../../../fromObjRef/api";
-import { getObjectIdFromUri } from "../../../utils/api";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { objRefToUri, getObjectIdFromUri } from "../../../utils/api";
 
 export class BearWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}

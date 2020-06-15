@@ -1,10 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 import { AuthenticatedPrincipal, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import last from "lodash/last";
+import { Identifier, isIdentifierRef, isUriRef, ObjRef, Uri } from "@gooddata/sdk-model";
+import { BearAuthenticatedCallGuard } from "../types/auth";
 
 /**
  * Returns a user uri. This is used in some bear client calls
- * @param principal - principal to get the data from
+ * @param getPrincipal - function to obtain currently authenticated principal to get the data from
  *
  * @internal
  */
@@ -23,7 +25,7 @@ export const userUriFromAuthenticatedPrincipal = async (
 
 /**
  * Returns a user login md5. This is used in some bear client calls as a userId.
- * @param principal - principal to get the data from
+ * @param getPrincipal - function to obtain currently authenticated principal to get the data from
  *
  * @internal
  */
@@ -48,4 +50,52 @@ export const userLoginMd5FromAuthenticatedPrincipal = async (
 export const getObjectIdFromUri = (uri: string): string => {
     const match = /\/obj\/([^$\/\?]*)/.exec(uri);
     return match ? match[1] : "";
+};
+
+/**
+ * Converts ObjRef instance to URI. For UriRef returns the uri as is, for IdentifierRef calls the backend and gets the URI.
+ * @param ref - ref to convert
+ * @param workspace - workspace id to use
+ * @param authCall - call guard to perform API calls through
+ *
+ * @internal
+ */
+export const objRefToUri = async (
+    ref: ObjRef,
+    workspace: string,
+    authCall: BearAuthenticatedCallGuard,
+): Promise<Uri> => {
+    return isUriRef(ref) ? ref.uri : authCall(sdk => sdk.md.getObjectUri(workspace, ref.identifier));
+};
+
+/**
+ * Converts ObjRef instance to identifier. For IdentifierRef returns the identifier as is,
+ * for UriRef calls the backend and gets the identifier.
+ * @param ref - ref to convert
+ * @param workspace - workspace id to use
+ * @param authCall - call guard to perform API calls through
+ *
+ * @internal
+ */
+export const objRefToIdentifier = async (
+    ref: ObjRef,
+    authCall: BearAuthenticatedCallGuard,
+): Promise<Identifier> => {
+    return isIdentifierRef(ref) ? ref.identifier : authCall(sdk => sdk.md.getObjectIdentifier(ref.uri));
+};
+
+/**
+ * Converts ObjRef instances to identifiers. For IdentifierRefs returns the identifiers as is,
+ * for UriRefs calls the backend and gets the identifiers.
+ * @param refs - refs to convert
+ * @param workspace - workspace id to use
+ * @param authCall - call guard to perform API calls through
+ *
+ * @internal
+ */
+export const objRefsToIdentifiers = async (
+    refs: ObjRef[],
+    authCall: BearAuthenticatedCallGuard,
+): Promise<Identifier[]> => {
+    return Promise.all(refs.map(ref => objRefToIdentifier(ref, authCall)));
 };

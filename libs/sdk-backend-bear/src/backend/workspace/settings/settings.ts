@@ -4,7 +4,7 @@ import {
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { BearAuthenticatedCallGuard } from "../../../types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { userLoginMd5FromAuthenticatedPrincipal } from "../../../utils/api";
 
 export class BearWorkspaceSettings implements IWorkspaceSettingsService {

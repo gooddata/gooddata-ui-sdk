@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogFactoryOptions,
@@ -12,8 +12,8 @@ import {
     isCatalogMeasure,
     isCatalogDateDataset,
 } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types";
-import { IUriMappings } from "./types";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { IUriMappings } from "../../../types/catalog";
 import { BearWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory";
 
 export class BearWorkspaceCatalog implements IWorkspaceCatalog {

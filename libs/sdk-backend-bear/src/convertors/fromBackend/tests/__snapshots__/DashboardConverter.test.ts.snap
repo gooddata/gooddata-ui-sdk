@@ -18,7 +18,6 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
-  "scheduledMails": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -44,7 +43,6 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
   },
-  "scheduledMails": Array [],
   "title": "dashboardWithExtendedDateFilterConfig",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
@@ -99,7 +97,6 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
-  "scheduledMails": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -121,7 +118,6 @@ Object {
             Object {
               "content": Object {
                 "widget": Object {
-                  "alerts": Array [],
                   "dateDataSet": undefined,
                   "description": "",
                   "drills": Array [
@@ -168,7 +164,6 @@ Object {
             Object {
               "content": Object {
                 "widget": Object {
-                  "alerts": Array [],
                   "dateDataSet": undefined,
                   "description": "",
                   "drills": Array [
@@ -208,7 +203,6 @@ Object {
             Object {
               "content": Object {
                 "widget": Object {
-                  "alerts": Array [],
                   "dateDataSet": undefined,
                   "description": "",
                   "drills": Array [
@@ -251,7 +245,6 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
-  "scheduledMails": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -273,7 +266,6 @@ Object {
             Object {
               "content": Object {
                 "widget": Object {
-                  "alerts": Array [],
                   "dateDataSet": undefined,
                   "description": "",
                   "drills": Array [
@@ -313,7 +305,6 @@ Object {
             Object {
               "content": Object {
                 "widget": Object {
-                  "alerts": Array [],
                   "dateDataSet": undefined,
                   "description": "",
                   "drills": Array [
@@ -351,7 +342,6 @@ Object {
             Object {
               "content": Object {
                 "widget": Object {
-                  "alerts": Array [],
                   "dateDataSet": undefined,
                   "description": "",
                   "drills": Array [
@@ -403,7 +393,6 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
-  "scheduledMails": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -421,7 +410,6 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/emptyDashboard",
   },
-  "scheduledMails": Array [],
   "title": "emptyDashboard",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/emptyDashboard",
@@ -448,7 +436,6 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
-  "scheduledMails": Array [],
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",

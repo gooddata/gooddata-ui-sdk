@@ -7,8 +7,10 @@
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { AuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { AuthenticationContext } from '@gooddata/sdk-backend-spi';
+import { GdcExecuteAFM } from '@gooddata/gd-bear-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
+import { IExecutionDefinition } from '@gooddata/sdk-model';
 
 // @public
 export abstract class BearAuthProviderBase implements IAuthenticationProvider {
@@ -30,6 +32,17 @@ export type BearBackendConfig = {
     packageVersion?: string;
 };
 
+// Warning: (ae-internal-missing-underscore) The name "BearConvertors" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const BearConvertors: {
+    convertVisualization: (visualization: import("@gooddata/gd-bear-model").GdcVisualizationObject.IVisualization, visualizationClassUri: string) => import("@gooddata/sdk-model").IInsight;
+    convertReferencesToUris: import("./convertors/fromBackend/ReferenceConverter").ReferenceConverter;
+    convertInsight: (insight: import("@gooddata/sdk-model").IInsight) => import("@gooddata/gd-bear-model").GdcVisualizationObject.IVisualizationObject;
+    convertInsightDefinition: (insight: import("@gooddata/sdk-model").IInsightDefinition) => import("@gooddata/gd-bear-model").GdcVisualizationObject.IVisualizationObject;
+    toAfmExecution: typeof toAfmExecution;
+};
+
 // @public
 function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
 
@@ -48,6 +61,10 @@ export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase impl
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
     }
 
+
+// Warnings were encountered during analysis:
+//
+// dist/index.d.ts:29:5 - (ae-forgotten-export) The symbol "toAfmExecution" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

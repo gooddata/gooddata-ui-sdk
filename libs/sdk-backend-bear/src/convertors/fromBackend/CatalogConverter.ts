@@ -22,7 +22,7 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/gd-bear-model";
-import { IDisplayFormByKey } from "../backend/workspace/catalog/types";
+import { IDisplayFormByKey } from "../../types/catalog";
 
 export type CompatibleCatalogItemType = Exclude<CatalogItemType, "dateDataset">;
 export type CompatibleCatalogItem = Exclude<CatalogItem, ICatalogDateDataset>;

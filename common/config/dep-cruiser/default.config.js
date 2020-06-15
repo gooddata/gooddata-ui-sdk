@@ -273,11 +273,22 @@ function isolatedSubmodule(module, dir) {
  *
  * @param module module name
  * @param dir directory with module source code
- * @param deps array of directories with code that the module depends on
+ * @param deps array of directories with code that the module depends on; by default, when a directory dep
+ *  is provided, the rule assumes it is another module with its own index.ts; this is most often desired. however
+ *  some directories are not necessarily modules nor they will be and creating their own index is overkill. for
+ *  those situations, specify directory as 'src/something/*' and the rule will be more permissive, allowing imports
+ *  from anywhere in that directory (including subdirs)
  * @returns {{severity: string, name: string, comment: string, from: {path: *}, to: {pathNot: string}}}
  */
 function moduleWithDependencies(module, dir, deps) {
-    const allowedDeps = [dir].concat(deps.map(dep => `${dep}/index\.ts(x)?$`));
+    const allowedDeps = [dir].concat(
+        deps.map(dep => {
+            if (dep.endsWith("/*")) {
+                return `${dep.slice(0, -2)}/.*$`;
+            }
+            return `${dep}/index\.ts(x)?$`;
+        }),
+    );
 
     return {
         name: `${module}-dependencies`,

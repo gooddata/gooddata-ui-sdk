@@ -69,6 +69,8 @@ const convertReferenceToUri = (
  *
  * @param conversionData Data to convert
  * @param [idGenerator=uuid] Function that returns unique ids
+ *
+ * @internal
  */
 export const convertReferencesToUris = createConverter(({ references, properties }) => {
     return {
@@ -109,6 +111,7 @@ const createUriToReferenceConverter = (
  *
  * @param conversionData Data to convert
  * @param [idGenerator=uuid] Function that returns unique ids
+ * @internal
  */
 export const convertUrisToReferences = createConverter(({ properties, references }, idGenerator) => {
     const converter = createUriToReferenceConverter(references, idGenerator);

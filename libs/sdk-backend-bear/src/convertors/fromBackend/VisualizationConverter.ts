@@ -167,6 +167,10 @@ const resolveReferences = (
     };
 };
 
+/**
+ *
+ * @internal
+ */
 export const convertVisualization = (
     visualization: GdcVisualizationObject.IVisualization,
     visualizationClassUri: string,

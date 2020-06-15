@@ -10,10 +10,10 @@ import {
     IExecutionDefinition,
     ISortItem,
 } from "@gooddata/sdk-model";
-import { BearAuthenticatedCallGuard } from "../../../types";
-import { convertExecutionApiError } from "../../../errors/errorHandling";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { BearExecutionResult } from "./executionResult";
-import { toAfmExecution } from "../../../toAfm/toAfmResultSpec";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
 
 export class BearPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;

@@ -25,13 +25,13 @@ import {
     convertGroup,
     isCompatibleCatalogItemType,
     convertMetric,
-} from "../../../toSdkModel/CatalogConverter";
-import { BearAuthenticatedCallGuard } from "../../../types";
-import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "./types";
+} from "../../../convertors/fromBackend/CatalogConverter";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "../../../types/catalog";
 import { BearWorkspaceCatalog } from "./catalog";
-import { objRefToIdentifier, objRefsToIdentifiers } from "../../../fromObjRef/api";
+import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api";
 import { IGetObjectsByQueryOptions } from "@gooddata/gd-bear-client";
-import { isApiResponseError } from "../../../errors/errorHandling";
+import { isApiResponseError } from "../../../utils/errorHandling";
 
 type BearDisplayFormOrAttribute = GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute;
 
