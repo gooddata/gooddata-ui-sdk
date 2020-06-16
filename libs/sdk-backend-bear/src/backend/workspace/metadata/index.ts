@@ -100,13 +100,14 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         const allExpressionObjects = allExpressionWrappedObjects.map(
             GdcMetadataObject.unwrapMetadataObject,
         ) as SupportedMetadataObject[];
-        const allExpressionElements = await Promise.all(
+
+        const allExpressionAttributeElements = await Promise.all(
             expressionElementUris.map(elementUri =>
                 this.authCall(sdk => sdk.md.getAttributeElementDefaultDisplayFormValue(elementUri)),
             ),
         );
 
-        const objectByUri = allExpressionObjects.reduce(
+        const objectsByUri = allExpressionObjects.reduce(
             (acc: { [key: string]: GdcMetadataObject.IObject }, el) => {
                 return {
                     ...acc,
@@ -116,7 +117,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
             {},
         );
 
-        const objectByIdentifier = allExpressionObjects.reduce(
+        const objectsByIdentifier = allExpressionObjects.reduce(
             (acc: { [key: string]: GdcMetadataObject.IObject }, el) => {
                 return {
                     ...acc,
@@ -126,7 +127,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
             {},
         );
 
-        const elementByUri = allExpressionElements.reduce(
+        const attributeElementsByUri = allExpressionAttributeElements.reduce(
             (acc: { [key: string]: GdcMetadata.IAttributeElement }, el) => {
                 if (!el) {
                     return acc;
@@ -142,22 +143,26 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         const expressionTokensWithDetails = expressionTokens.map(
             (token): IMeasureExpressionToken => {
                 if (token.type === "element_uri") {
+                    const element = attributeElementsByUri[token.value];
                     return {
                         type: "attributeElement",
-                        value: token.value,
-                        element: elementByUri[token.value],
+                        ...(element
+                            ? {
+                                  value: element.title,
+                              }
+                            : {
+                                  value: "",
+                                  deleted: true,
+                              }),
                     };
-                } else if (token.type === "uri") {
+                } else if (token.type === "uri" || token.type === "identifier") {
+                    const meta =
+                        token.type === "uri"
+                            ? convertMetadataObject(objectsByUri[token.value])
+                            : convertMetadataObject(objectsByIdentifier[token.value]);
                     return {
-                        type: "metadataObject",
-                        value: token.value,
-                        meta: convertMetadataObject(objectByUri[token.value]),
-                    };
-                } else if (token.type === "identifier") {
-                    return {
-                        type: "metadataObject",
-                        value: token.value,
-                        meta: convertMetadataObject(objectByIdentifier[token.value]),
+                        type: meta.type,
+                        value: meta.title,
                     };
                 }
 

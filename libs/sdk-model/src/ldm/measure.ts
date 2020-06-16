@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IAttributeElement } from "./attributeElement";
-import { IMetadataObject } from "./metadata";
+import { ObjectType } from "../objRef";
 
 /**
  * Token representing part of parsed MAQL measure expression
@@ -12,18 +11,16 @@ import { IMetadataObject } from "./metadata";
  *          "value": "SELECT "
  *      \},
  *      \{
- *          "type": "metadataObject",
- *          "value": "/gdc/md/projectId/obj/6273",
- *          "meta": IObjectMeta,
+ *          "type": "measure",
+ *          "value": "Amount",
  *      \},
  *      \{
  *          "type": "text",
  *          "value": " WHERE "
  *      \},
  *      \{
- *          "type": "metadataObject",
- *          "value": "/gdc/md/projectId/obj/6307",
- *          "meta": IObjectMeta
+ *          "type": "attribute",
+ *          "value": "Status",
  *      \},
  *      \{
  *          "type": "text",
@@ -31,8 +28,7 @@ import { IMetadataObject } from "./metadata";
  *      \},
  *      \{
  *          "type": "attributeElement",
- *          "value": "/gdc/md/projectId/obj/6307/elements?id=5703453",
- *          "element": IAttributeElement
+ *          "value": "Won",
  *      \}
  *  \]
  *
@@ -52,17 +48,12 @@ export interface IObjectExpressionToken {
     /**
      * Expression token type
      */
-    type: "metadataObject";
+    type: ObjectType;
 
     /**
-     * Parsed maql value, in this case it's metadata object uri
+     * Title of the object
      */
     value: string;
-
-    /**
-     * Referenced metadata object
-     */
-    meta: IMetadataObject;
 }
 
 /**
@@ -77,18 +68,18 @@ export interface IAttributeElementExpressionToken {
     type: "attributeElement";
 
     /**
-     * Parsed maql value, in this case it's attribute element uri
+     * Element title
      */
-    value: string;
+    value: string | undefined;
 
     /**
-     * Referenced attribute element
+     * Deleted element
      */
-    element: IAttributeElement;
+    deleted?: boolean;
 }
 
 /**
- * Parsed maql text value
+ * Parsed maql text
  *
  * @public
  */
@@ -99,7 +90,7 @@ export interface ITextExpressionToken {
     type: "text";
 
     /**
-     * Parsed maql text value
+     * Plain text
      */
     value: string;
 }
