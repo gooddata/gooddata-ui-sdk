@@ -119,7 +119,7 @@ export class PluggablePieChart extends PluggableBaseChart {
                     pushData={this.handlePushData}
                     colors={this.colors}
                     type={this.type}
-                    isError={this.isError}
+                    isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     references={this.references}

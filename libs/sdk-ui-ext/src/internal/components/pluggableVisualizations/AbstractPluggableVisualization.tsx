@@ -59,8 +59,18 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected supportedPropertiesList: string[];
     protected propertiesMeta: any;
 
-    protected isError: boolean;
+    private hasError: boolean;
+    private hasEmptyAfm: boolean;
+
     protected isLoading: boolean;
+
+    protected setIsError = (value: boolean): void => {
+        this.hasError = value;
+    };
+
+    protected getIsError = (): boolean => {
+        return this.hasEmptyAfm || this.hasError;
+    };
 
     protected constructor(props: IVisConstruct) {
         this.callbacks = props.callbacks;
@@ -110,6 +120,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         executionFactory: IExecutionFactory,
     ): void {
         this.updateInstanceProperties(options, insight);
+        this.hasEmptyAfm = !insightHasDataDefined(insight);
 
         let shouldRenderVisualization: boolean;
         try {
@@ -197,14 +208,19 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected onError = (error: GoodDataSdkError) => {
         this.callbacks.onError?.(error);
 
-        this.isError = true;
+        // EMPTY_AFM is handled in update as it can change on any render contrary to other error types
+        // that have to be set manually or by loading
+        if (error.message !== PluggableVisualizationErrorCodes.EMPTY_AFM) {
+            this.hasError = true;
+        }
+
         this.renderConfigurationPanel(this.currentInsight);
     };
 
     protected onLoadingChanged = (loadingState: ILoadingState) => {
         this.callbacks.onLoadingChanged?.(loadingState);
 
-        this.isError = false;
+        this.hasError = false;
         this.isLoading = loadingState.isLoading;
         this.renderConfigurationPanel(this.currentInsight);
     };

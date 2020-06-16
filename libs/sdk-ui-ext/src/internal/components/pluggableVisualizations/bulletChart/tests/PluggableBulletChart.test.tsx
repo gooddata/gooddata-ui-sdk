@@ -227,7 +227,7 @@ describe("PluggableBulletChart", () => {
                 referencePointMocks.secondaryAndTertiaryMeasuresWithTwoAttributesReferencePoint,
             );
 
-            expect((bulletChart as any).isError).toEqual(true);
+            expect((bulletChart as any).getIsError()).toEqual(true);
         });
 
         it("should set to false if primary measure is present", async () => {
@@ -235,7 +235,7 @@ describe("PluggableBulletChart", () => {
                 referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
             );
 
-            expect((bulletChart as any).isError).toEqual(false);
+            expect((bulletChart as any).getIsError()).toEqual(false);
         });
     });
 

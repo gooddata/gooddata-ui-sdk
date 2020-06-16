@@ -165,7 +165,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                     insight={insight}
                     colors={this.colors}
                     type={this.type}
-                    isError={this.isError}
+                    isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                 />,

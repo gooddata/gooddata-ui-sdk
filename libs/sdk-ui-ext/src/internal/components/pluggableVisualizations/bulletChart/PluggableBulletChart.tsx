@@ -78,7 +78,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
                     colors={this.colors}
                     pushData={this.handlePushData}
                     type={this.type}
-                    isError={this.isError}
+                    isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                 />,
@@ -110,8 +110,10 @@ export class PluggableBulletChart extends PluggableBaseChart {
     }
 
     private setPrimaryMeasureIsMissingError(measureBuckets: IBucketOfFun[]): void {
-        this.isError =
+        const hasPrimaryMeasureIsMissingError =
             measureBuckets[0].items.length === 0 &&
             (measureBuckets[1].items.length > 0 || measureBuckets[2].items.length > 0);
+
+        this.setIsError(hasPrimaryMeasureIsMissingError);
     }
 }
