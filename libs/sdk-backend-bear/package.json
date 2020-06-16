@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-bear",
-    "version": "8.0.0-alpha.97",
+    "version": "8.0.0-alpha.98",
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for the Bear platform",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-bear",
@@ -40,11 +40,11 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/gd-bear-client": "^8.0.0-alpha.97",
-        "@gooddata/gd-bear-model": "^8.0.0-alpha.97",
-        "@gooddata/sdk-backend-base": "^8.0.0-alpha.97",
-        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.97",
-        "@gooddata/sdk-model": "^8.0.0-alpha.97",
+        "@gooddata/gd-bear-client": "^8.0.0-alpha.98",
+        "@gooddata/gd-bear-model": "^8.0.0-alpha.98",
+        "@gooddata/sdk-backend-base": "^8.0.0-alpha.98",
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.98",
+        "@gooddata/sdk-model": "^8.0.0-alpha.98",
         "http-status-codes": "^1.3.0",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.15",
@@ -53,7 +53,7 @@
         "uuid": "^3.3.3"
     },
     "devDependencies": {
-        "@gooddata/reference-workspace": "^8.0.0-alpha.97",
+        "@gooddata/reference-workspace": "^8.0.0-alpha.98",
         "@gooddata/tslint-config": "1.0.0",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^25.1.2",

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "8.0.0-alpha.97",
+    "version": "8.0.0-alpha.98",
     "description": "GoodData.UI SDK - Geo Charts",
     "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-geo",
@@ -38,10 +38,10 @@
     "dependencies": {
         "@gooddata/goodstrap": "^68.4.0",
         "@gooddata/numberjs": "^3.2.4",
-        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.97",
-        "@gooddata/sdk-model": "^8.0.0-alpha.97",
-        "@gooddata/sdk-ui": "^8.0.0-alpha.97",
-        "@gooddata/sdk-ui-vis-commons": "^8.0.0-alpha.97",
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.98",
+        "@gooddata/sdk-model": "^8.0.0-alpha.98",
+        "@gooddata/sdk-ui": "^8.0.0-alpha.98",
+        "@gooddata/sdk-ui-vis-commons": "^8.0.0-alpha.98",
         "classnames": "^2.2.6",
         "lodash": "^4.17.15",
         "mapbox-gl": "^1.6.1",
@@ -55,8 +55,8 @@
         "react-dom": "^16.5.2"
     },
     "devDependencies": {
-        "@gooddata/examples-workspace": "^8.0.0-alpha.97",
-        "@gooddata/sdk-backend-mockingbird": "^8.0.0-alpha.97",
+        "@gooddata/examples-workspace": "^8.0.0-alpha.98",
+        "@gooddata/sdk-backend-mockingbird": "^8.0.0-alpha.98",
         "@gooddata/tslint-config": "1.0.0",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/classnames": "2.2.3",
