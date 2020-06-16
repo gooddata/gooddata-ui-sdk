@@ -14,11 +14,22 @@
 
 // @ts-ignore
 import * as globalImportUrl from "url";
+import * as globalImportQs from "qs";
 import { Configuration } from "./configuration";
 import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from "./base";
+
+// utility function that adds support for nested objects in query
+const addFlattenedObjectTo = (object: any, baseName: string, target: any): void => {
+    const semiFlattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
+    const flattened = semiFlattened[Object.keys(semiFlattened)[0]];
+
+    Object.keys(flattened).forEach(key => {
+        target[`${baseName}${key}`] = (flattened as any)[key];
+    });
+};
 
 /**
  *
@@ -3931,55 +3942,107 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterGranularity !== undefined) {
-                localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                if (typeof filterGranularity === "object") {
+                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter["sort"] = sort;
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (pageLimit !== undefined) {
-                localVarQueryParameter["page[limit]"] = pageLimit;
+                if (typeof pageLimit === "object") {
+                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[limit]"] = pageLimit;
+                }
             }
 
             if (pageOffset !== undefined) {
-                localVarQueryParameter["page[offset]"] = pageOffset;
+                if (typeof pageOffset === "object") {
+                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[offset]"] = pageOffset;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -4043,11 +4106,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -4108,11 +4179,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -4205,43 +4284,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterAttribute !== undefined) {
-                localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                if (typeof filterAttribute === "object") {
+                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterPrimary !== undefined) {
-                localVarQueryParameter["filter[primary]"] = filterPrimary;
+                if (typeof filterPrimary === "object") {
+                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[primary]"] = filterPrimary;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -4305,11 +4424,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -4402,43 +4529,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterAttribute !== undefined) {
-                localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                if (typeof filterAttribute === "object") {
+                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterPrimary !== undefined) {
-                localVarQueryParameter["filter[primary]"] = filterPrimary;
+                if (typeof filterPrimary === "object") {
+                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[primary]"] = filterPrimary;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -4534,47 +4701,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -4667,47 +4882,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -4814,79 +5077,159 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
+                if (typeof filterType === "object") {
+                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[type]"] = filterType;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterReferences !== undefined) {
-                localVarQueryParameter["filter[references]"] = filterReferences;
+                if (typeof filterReferences === "object") {
+                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[references]"] = filterReferences;
+                }
             }
 
             if (filterGrain !== undefined) {
-                localVarQueryParameter["filter[grain]"] = filterGrain;
+                if (typeof filterGrain === "object") {
+                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[grain]"] = filterGrain;
+                }
             }
 
             if (filterReferenceProperties !== undefined) {
-                localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                if (typeof filterReferenceProperties === "object") {
+                    addFlattenedObjectTo(
+                        filterReferenceProperties,
+                        "filter[referenceProperties]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                }
             }
 
             if (filterSourceTable !== undefined) {
-                localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                if (typeof filterSourceTable === "object") {
+                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                }
             }
 
             if (filterTitleBase !== undefined) {
-                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                if (typeof filterTitleBase === "object") {
+                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                }
             }
 
             if (filterTitlePattern !== undefined) {
-                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                if (typeof filterTitlePattern === "object") {
+                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter["sort"] = sort;
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (pageLimit !== undefined) {
-                localVarQueryParameter["page[limit]"] = pageLimit;
+                if (typeof pageLimit === "object") {
+                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[limit]"] = pageLimit;
+                }
             }
 
             if (pageOffset !== undefined) {
-                localVarQueryParameter["page[offset]"] = pageOffset;
+                if (typeof pageOffset === "object") {
+                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[offset]"] = pageOffset;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -4979,43 +5322,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterGranularity !== undefined) {
-                localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                if (typeof filterGranularity === "object") {
+                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -5102,39 +5485,75 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -5195,11 +5614,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -5310,67 +5737,135 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
+                if (typeof filterType === "object") {
+                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[type]"] = filterType;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterReferences !== undefined) {
-                localVarQueryParameter["filter[references]"] = filterReferences;
+                if (typeof filterReferences === "object") {
+                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[references]"] = filterReferences;
+                }
             }
 
             if (filterGrain !== undefined) {
-                localVarQueryParameter["filter[grain]"] = filterGrain;
+                if (typeof filterGrain === "object") {
+                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[grain]"] = filterGrain;
+                }
             }
 
             if (filterReferenceProperties !== undefined) {
-                localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                if (typeof filterReferenceProperties === "object") {
+                    addFlattenedObjectTo(
+                        filterReferenceProperties,
+                        "filter[referenceProperties]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                }
             }
 
             if (filterSourceTable !== undefined) {
-                localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                if (typeof filterSourceTable === "object") {
+                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                }
             }
 
             if (filterTitleBase !== undefined) {
-                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                if (typeof filterTitleBase === "object") {
+                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                }
             }
 
             if (filterTitlePattern !== undefined) {
-                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                if (typeof filterTitlePattern === "object") {
+                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -5463,43 +5958,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterGranularity !== undefined) {
-                localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                if (typeof filterGranularity === "object") {
+                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -5589,39 +6124,75 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -5732,67 +6303,135 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
+                if (typeof filterType === "object") {
+                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[type]"] = filterType;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterReferences !== undefined) {
-                localVarQueryParameter["filter[references]"] = filterReferences;
+                if (typeof filterReferences === "object") {
+                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[references]"] = filterReferences;
+                }
             }
 
             if (filterGrain !== undefined) {
-                localVarQueryParameter["filter[grain]"] = filterGrain;
+                if (typeof filterGrain === "object") {
+                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[grain]"] = filterGrain;
+                }
             }
 
             if (filterReferenceProperties !== undefined) {
-                localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                if (typeof filterReferenceProperties === "object") {
+                    addFlattenedObjectTo(
+                        filterReferenceProperties,
+                        "filter[referenceProperties]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                }
             }
 
             if (filterSourceTable !== undefined) {
-                localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                if (typeof filterSourceTable === "object") {
+                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                }
             }
 
             if (filterTitleBase !== undefined) {
-                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                if (typeof filterTitleBase === "object") {
+                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                }
             }
 
             if (filterTitlePattern !== undefined) {
-                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                if (typeof filterTitlePattern === "object") {
+                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -5888,47 +6527,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6021,47 +6708,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6147,51 +6882,99 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter["sort"] = sort;
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (pageLimit !== undefined) {
-                localVarQueryParameter["page[limit]"] = pageLimit;
+                if (typeof pageLimit === "object") {
+                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[limit]"] = pageLimit;
+                }
             }
 
             if (pageOffset !== undefined) {
-                localVarQueryParameter["page[offset]"] = pageOffset;
+                if (typeof pageOffset === "object") {
+                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[offset]"] = pageOffset;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6252,11 +7035,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6317,11 +7108,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6385,11 +7184,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6485,47 +7292,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6618,47 +7473,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6747,55 +7650,107 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterAttribute !== undefined) {
-                localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                if (typeof filterAttribute === "object") {
+                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterPrimary !== undefined) {
-                localVarQueryParameter["filter[primary]"] = filterPrimary;
+                if (typeof filterPrimary === "object") {
+                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[primary]"] = filterPrimary;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter["sort"] = sort;
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (pageLimit !== undefined) {
-                localVarQueryParameter["page[limit]"] = pageLimit;
+                if (typeof pageLimit === "object") {
+                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[limit]"] = pageLimit;
+                }
             }
 
             if (pageOffset !== undefined) {
-                localVarQueryParameter["page[offset]"] = pageOffset;
+                if (typeof pageOffset === "object") {
+                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[offset]"] = pageOffset;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6859,11 +7814,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6924,11 +7887,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -6992,11 +7963,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -7092,47 +8071,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -7225,47 +8252,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -7366,71 +8441,139 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterMaql !== undefined) {
-                localVarQueryParameter["filter[maql]"] = filterMaql;
+                if (typeof filterMaql === "object") {
+                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[maql]"] = filterMaql;
+                }
             }
 
             if (filterFormat !== undefined) {
-                localVarQueryParameter["filter[format]"] = filterFormat;
+                if (typeof filterFormat === "object") {
+                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[format]"] = filterFormat;
+                }
             }
 
             if (filterAst !== undefined) {
-                localVarQueryParameter["filter[ast]"] = filterAst;
+                if (typeof filterAst === "object") {
+                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[ast]"] = filterAst;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter["sort"] = sort;
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (pageLimit !== undefined) {
-                localVarQueryParameter["page[limit]"] = pageLimit;
+                if (typeof pageLimit === "object") {
+                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[limit]"] = pageLimit;
+                }
             }
 
             if (pageOffset !== undefined) {
-                localVarQueryParameter["page[offset]"] = pageOffset;
+                if (typeof pageOffset === "object") {
+                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[offset]"] = pageOffset;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -7579,43 +8722,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterGranularity !== undefined) {
-                localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                if (typeof filterGranularity === "object") {
+                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -7948,39 +9131,75 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -8175,11 +9394,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -8322,43 +9549,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterAttribute !== undefined) {
-                localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                if (typeof filterAttribute === "object") {
+                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterPrimary !== undefined) {
-                localVarQueryParameter["filter[primary]"] = filterPrimary;
+                if (typeof filterPrimary === "object") {
+                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[primary]"] = filterPrimary;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -8647,59 +9914,115 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterMaql !== undefined) {
-                localVarQueryParameter["filter[maql]"] = filterMaql;
+                if (typeof filterMaql === "object") {
+                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[maql]"] = filterMaql;
+                }
             }
 
             if (filterFormat !== undefined) {
-                localVarQueryParameter["filter[format]"] = filterFormat;
+                if (typeof filterFormat === "object") {
+                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[format]"] = filterFormat;
+                }
             }
 
             if (filterAst !== undefined) {
-                localVarQueryParameter["filter[ast]"] = filterAst;
+                if (typeof filterAst === "object") {
+                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[ast]"] = filterAst;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -9045,43 +10368,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterGranularity !== undefined) {
-                localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                if (typeof filterGranularity === "object") {
+                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -9367,39 +10730,75 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -9688,43 +11087,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterAttribute !== undefined) {
-                localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                if (typeof filterAttribute === "object") {
+                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterPrimary !== undefined) {
-                localVarQueryParameter["filter[primary]"] = filterPrimary;
+                if (typeof filterPrimary === "object") {
+                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[primary]"] = filterPrimary;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -10025,59 +11464,115 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterMaql !== undefined) {
-                localVarQueryParameter["filter[maql]"] = filterMaql;
+                if (typeof filterMaql === "object") {
+                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[maql]"] = filterMaql;
+                }
             }
 
             if (filterFormat !== undefined) {
-                localVarQueryParameter["filter[format]"] = filterFormat;
+                if (typeof filterFormat === "object") {
+                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[format]"] = filterFormat;
+                }
             }
 
             if (filterAst !== undefined) {
-                localVarQueryParameter["filter[ast]"] = filterAst;
+                if (typeof filterAst === "object") {
+                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[ast]"] = filterAst;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -10369,47 +11864,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -10695,47 +12238,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -10997,35 +12588,67 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTables !== undefined) {
-                localVarQueryParameter["filter[tables]"] = filterTables;
+                if (typeof filterTables === "object") {
+                    addFlattenedObjectTo(filterTables, "filter[tables]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tables]"] = filterTables;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter["sort"] = sort;
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (pageLimit !== undefined) {
-                localVarQueryParameter["page[limit]"] = pageLimit;
+                if (typeof pageLimit === "object") {
+                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[limit]"] = pageLimit;
+                }
             }
 
             if (pageOffset !== undefined) {
-                localVarQueryParameter["page[offset]"] = pageOffset;
+                if (typeof pageOffset === "object") {
+                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[offset]"] = pageOffset;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -11086,11 +12709,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -11171,27 +12802,51 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterSource !== undefined) {
-                localVarQueryParameter["filter[source]"] = filterSource;
+                if (typeof filterSource === "object") {
+                    addFlattenedObjectTo(filterSource, "filter[source]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[source]"] = filterSource;
+                }
             }
 
             if (filterColumns !== undefined) {
-                localVarQueryParameter["filter[columns]"] = filterColumns;
+                if (typeof filterColumns === "object") {
+                    addFlattenedObjectTo(filterColumns, "filter[columns]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[columns]"] = filterColumns;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -11269,27 +12924,51 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterSource !== undefined) {
-                localVarQueryParameter["filter[source]"] = filterSource;
+                if (typeof filterSource === "object") {
+                    addFlattenedObjectTo(filterSource, "filter[source]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[source]"] = filterSource;
+                }
             }
 
             if (filterColumns !== undefined) {
-                localVarQueryParameter["filter[columns]"] = filterColumns;
+                if (typeof filterColumns === "object") {
+                    addFlattenedObjectTo(filterColumns, "filter[columns]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[columns]"] = filterColumns;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -11366,39 +13045,75 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterSource !== undefined) {
-                localVarQueryParameter["filter[source]"] = filterSource;
+                if (typeof filterSource === "object") {
+                    addFlattenedObjectTo(filterSource, "filter[source]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[source]"] = filterSource;
+                }
             }
 
             if (filterColumns !== undefined) {
-                localVarQueryParameter["filter[columns]"] = filterColumns;
+                if (typeof filterColumns === "object") {
+                    addFlattenedObjectTo(filterColumns, "filter[columns]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[columns]"] = filterColumns;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter["sort"] = sort;
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (pageLimit !== undefined) {
-                localVarQueryParameter["page[limit]"] = pageLimit;
+                if (typeof pageLimit === "object") {
+                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[limit]"] = pageLimit;
+                }
             }
 
             if (pageOffset !== undefined) {
-                localVarQueryParameter["page[offset]"] = pageOffset;
+                if (typeof pageOffset === "object") {
+                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[offset]"] = pageOffset;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -11459,11 +13174,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -11527,11 +13250,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -11592,11 +13323,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -11688,59 +13427,119 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter["sort"] = sort;
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (pageLimit !== undefined) {
-                localVarQueryParameter["page[limit]"] = pageLimit;
+                if (typeof pageLimit === "object") {
+                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[limit]"] = pageLimit;
+                }
             }
 
             if (pageOffset !== undefined) {
-                localVarQueryParameter["page[offset]"] = pageOffset;
+                if (typeof pageOffset === "object") {
+                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[offset]"] = pageOffset;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -11883,43 +13682,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterGranularity !== undefined) {
-                localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                if (typeof filterGranularity === "object") {
+                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -12214,67 +14053,135 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
+                if (typeof filterType === "object") {
+                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[type]"] = filterType;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterReferences !== undefined) {
-                localVarQueryParameter["filter[references]"] = filterReferences;
+                if (typeof filterReferences === "object") {
+                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[references]"] = filterReferences;
+                }
             }
 
             if (filterGrain !== undefined) {
-                localVarQueryParameter["filter[grain]"] = filterGrain;
+                if (typeof filterGrain === "object") {
+                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[grain]"] = filterGrain;
+                }
             }
 
             if (filterReferenceProperties !== undefined) {
-                localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                if (typeof filterReferenceProperties === "object") {
+                    addFlattenedObjectTo(
+                        filterReferenceProperties,
+                        "filter[referenceProperties]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                }
             }
 
             if (filterSourceTable !== undefined) {
-                localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                if (typeof filterSourceTable === "object") {
+                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                }
             }
 
             if (filterTitleBase !== undefined) {
-                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                if (typeof filterTitleBase === "object") {
+                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                }
             }
 
             if (filterTitlePattern !== undefined) {
-                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                if (typeof filterTitlePattern === "object") {
+                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -12601,39 +14508,75 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -12828,11 +14771,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -12975,43 +14926,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterAttribute !== undefined) {
-                localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                if (typeof filterAttribute === "object") {
+                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterPrimary !== undefined) {
-                localVarQueryParameter["filter[primary]"] = filterPrimary;
+                if (typeof filterPrimary === "object") {
+                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[primary]"] = filterPrimary;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -13300,59 +15291,115 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterMaql !== undefined) {
-                localVarQueryParameter["filter[maql]"] = filterMaql;
+                if (typeof filterMaql === "object") {
+                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[maql]"] = filterMaql;
+                }
             }
 
             if (filterFormat !== undefined) {
-                localVarQueryParameter["filter[format]"] = filterFormat;
+                if (typeof filterFormat === "object") {
+                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[format]"] = filterFormat;
+                }
             }
 
             if (filterAst !== undefined) {
-                localVarQueryParameter["filter[ast]"] = filterAst;
+                if (typeof filterAst === "object") {
+                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[ast]"] = filterAst;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -13698,43 +15745,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterGranularity !== undefined) {
-                localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                if (typeof filterGranularity === "object") {
+                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -14041,67 +16128,135 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterType !== undefined) {
-                localVarQueryParameter["filter[type]"] = filterType;
+                if (typeof filterType === "object") {
+                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[type]"] = filterType;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterReferences !== undefined) {
-                localVarQueryParameter["filter[references]"] = filterReferences;
+                if (typeof filterReferences === "object") {
+                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[references]"] = filterReferences;
+                }
             }
 
             if (filterGrain !== undefined) {
-                localVarQueryParameter["filter[grain]"] = filterGrain;
+                if (typeof filterGrain === "object") {
+                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[grain]"] = filterGrain;
+                }
             }
 
             if (filterReferenceProperties !== undefined) {
-                localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                if (typeof filterReferenceProperties === "object") {
+                    addFlattenedObjectTo(
+                        filterReferenceProperties,
+                        "filter[referenceProperties]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
+                }
             }
 
             if (filterSourceTable !== undefined) {
-                localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                if (typeof filterSourceTable === "object") {
+                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
+                }
             }
 
             if (filterTitleBase !== undefined) {
-                localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                if (typeof filterTitleBase === "object") {
+                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
+                }
             }
 
             if (filterTitlePattern !== undefined) {
-                localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                if (typeof filterTitlePattern === "object") {
+                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -14387,39 +16542,75 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -14708,43 +16899,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterAttribute !== undefined) {
-                localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                if (typeof filterAttribute === "object") {
+                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterPrimary !== undefined) {
-                localVarQueryParameter["filter[primary]"] = filterPrimary;
+                if (typeof filterPrimary === "object") {
+                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[primary]"] = filterPrimary;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -15045,59 +17276,115 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterMaql !== undefined) {
-                localVarQueryParameter["filter[maql]"] = filterMaql;
+                if (typeof filterMaql === "object") {
+                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[maql]"] = filterMaql;
+                }
             }
 
             if (filterFormat !== undefined) {
-                localVarQueryParameter["filter[format]"] = filterFormat;
+                if (typeof filterFormat === "object") {
+                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[format]"] = filterFormat;
+                }
             }
 
             if (filterAst !== undefined) {
-                localVarQueryParameter["filter[ast]"] = filterAst;
+                if (typeof filterAst === "object") {
+                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[ast]"] = filterAst;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -15389,47 +17676,91 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -15721,47 +18052,91 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -16047,59 +18422,115 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (sort !== undefined) {
-                localVarQueryParameter["sort"] = sort;
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (pageLimit !== undefined) {
-                localVarQueryParameter["page[limit]"] = pageLimit;
+                if (typeof pageLimit === "object") {
+                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[limit]"] = pageLimit;
+                }
             }
 
             if (pageOffset !== undefined) {
-                localVarQueryParameter["page[offset]"] = pageOffset;
+                if (typeof pageOffset === "object") {
+                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page[offset]"] = pageOffset;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -16192,43 +18623,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterGranularity !== undefined) {
-                localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                if (typeof filterGranularity === "object") {
+                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -16374,39 +18845,75 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -16470,11 +18977,19 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -16567,43 +19082,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterAttribute !== undefined) {
-                localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                if (typeof filterAttribute === "object") {
+                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterPrimary !== undefined) {
-                localVarQueryParameter["filter[primary]"] = filterPrimary;
+                if (typeof filterPrimary === "object") {
+                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[primary]"] = filterPrimary;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -16708,59 +19263,115 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterMaql !== undefined) {
-                localVarQueryParameter["filter[maql]"] = filterMaql;
+                if (typeof filterMaql === "object") {
+                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[maql]"] = filterMaql;
+                }
             }
 
             if (filterFormat !== undefined) {
-                localVarQueryParameter["filter[format]"] = filterFormat;
+                if (typeof filterFormat === "object") {
+                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[format]"] = filterFormat;
+                }
             }
 
             if (filterAst !== undefined) {
-                localVarQueryParameter["filter[ast]"] = filterAst;
+                if (typeof filterAst === "object") {
+                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[ast]"] = filterAst;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -16921,43 +19532,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterGranularity !== undefined) {
-                localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                if (typeof filterGranularity === "object") {
+                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[granularity]"] = filterGranularity;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -17047,39 +19698,75 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterDataset !== undefined) {
-                localVarQueryParameter["filter[dataset]"] = filterDataset;
+                if (typeof filterDataset === "object") {
+                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[dataset]"] = filterDataset;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -17172,43 +19859,83 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterAttribute !== undefined) {
-                localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                if (typeof filterAttribute === "object") {
+                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attribute]"] = filterAttribute;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterPrimary !== undefined) {
-                localVarQueryParameter["filter[primary]"] = filterPrimary;
+                if (typeof filterPrimary === "object") {
+                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[primary]"] = filterPrimary;
+                }
             }
 
             if (filterSourceColumn !== undefined) {
-                localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                if (typeof filterSourceColumn === "object") {
+                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -17313,59 +20040,115 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterDescription !== undefined) {
-                localVarQueryParameter["filter[description]"] = filterDescription;
+                if (typeof filterDescription === "object") {
+                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[description]"] = filterDescription;
+                }
             }
 
             if (filterMaql !== undefined) {
-                localVarQueryParameter["filter[maql]"] = filterMaql;
+                if (typeof filterMaql === "object") {
+                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[maql]"] = filterMaql;
+                }
             }
 
             if (filterFormat !== undefined) {
-                localVarQueryParameter["filter[format]"] = filterFormat;
+                if (typeof filterFormat === "object") {
+                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[format]"] = filterFormat;
+                }
             }
 
             if (filterAst !== undefined) {
-                localVarQueryParameter["filter[ast]"] = filterAst;
+                if (typeof filterAst === "object") {
+                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[ast]"] = filterAst;
+                }
             }
 
             if (filterTags !== undefined) {
-                localVarQueryParameter["filter[tags]"] = filterTags;
+                if (typeof filterTags === "object") {
+                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[tags]"] = filterTags;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -17517,47 +20300,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {
@@ -17849,47 +20680,95 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             if (filter !== undefined) {
-                localVarQueryParameter["filter"] = filter;
+                if (typeof filter === "object") {
+                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter"] = filter;
+                }
             }
 
             if (filterTitle !== undefined) {
-                localVarQueryParameter["filter[title]"] = filterTitle;
+                if (typeof filterTitle === "object") {
+                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[title]"] = filterTitle;
+                }
             }
 
             if (filterLabels !== undefined) {
-                localVarQueryParameter["filter[labels]"] = filterLabels;
+                if (typeof filterLabels === "object") {
+                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[labels]"] = filterLabels;
+                }
             }
 
             if (filterAttributes !== undefined) {
-                localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                if (typeof filterAttributes === "object") {
+                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[attributes]"] = filterAttributes;
+                }
             }
 
             if (filterFacts !== undefined) {
-                localVarQueryParameter["filter[facts]"] = filterFacts;
+                if (typeof filterFacts === "object") {
+                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[facts]"] = filterFacts;
+                }
             }
 
             if (filterDatasets !== undefined) {
-                localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                if (typeof filterDatasets === "object") {
+                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[datasets]"] = filterDatasets;
+                }
             }
 
             if (filterMetrics !== undefined) {
-                localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                if (typeof filterMetrics === "object") {
+                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[metrics]"] = filterMetrics;
+                }
             }
 
             if (filterVisualizationObjects !== undefined) {
-                localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                if (typeof filterVisualizationObjects === "object") {
+                    addFlattenedObjectTo(
+                        filterVisualizationObjects,
+                        "filter[visualizationObjects]",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
+                }
             }
 
             if (filterId !== undefined) {
-                localVarQueryParameter["filter[id]"] = filterId;
+                if (typeof filterId === "object") {
+                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["filter[id]"] = filterId;
+                }
             }
 
             if (fields !== undefined) {
-                localVarQueryParameter["fields"] = fields;
+                if (typeof fields === "object") {
+                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["fields"] = fields;
+                }
             }
 
             if (include !== undefined) {
-                localVarQueryParameter["include"] = include;
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (contentType !== undefined && contentType !== null) {

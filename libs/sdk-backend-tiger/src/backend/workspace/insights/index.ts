@@ -66,11 +66,20 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
 
             const sanitizedOrderBy = orderBy !== "updated" ? orderBy : undefined;
 
+            const filter = options?.title
+                ? {
+                      filter: {
+                          // the % sign means 0..many characters so %foo% means infix match of foo (case insensitive)
+                          title: { LIKE: `%${options.title}%` },
+                      },
+                  }
+                : undefined;
+
             return sdk.metadata.visualizationObjectsGet({
                 contentType: "application/json",
                 ...(options?.limit ? { pageLimit: options?.limit } : {}),
                 pageOffset: options?.offset ?? 0,
-                ...(options?.title ? { filterTitle: options?.title } : {}),
+                ...((filter ? { filter } : {}) as any),
                 ...(sanitizedOrderBy ? { sort: sanitizedOrderBy } : {}),
             });
         });
