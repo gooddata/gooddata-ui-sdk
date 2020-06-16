@@ -44,26 +44,28 @@ export const ExecuteWithSlicesExample: React.FC = () => {
 
                     return (
                         <table style={style}>
-                            <tr style={style}>
-                                <th>State</th>
-                                <th>City</th>
-                                <th>Total Sales</th>
-                                <th>Total Franchised Cost</th>
-                            </tr>
-                            {slices.map(slice => {
-                                const sliceTitles = slice.sliceTitles();
-                                const sales = slice.dataPoints()[0];
-                                const franchisedSales = slice.dataPoints()[1];
+                            <tbody>
+                                <tr style={style}>
+                                    <th>State</th>
+                                    <th>City</th>
+                                    <th>Total Sales</th>
+                                    <th>Total Franchised Cost</th>
+                                </tr>
+                                {slices.map(slice => {
+                                    const sliceTitles = slice.sliceTitles();
+                                    const sales = slice.dataPoints()[0];
+                                    const franchisedSales = slice.dataPoints()[1];
 
-                                return (
-                                    <tr key={slice.id} style={style}>
-                                        <td style={style}>{sliceTitles[0]}</td>
-                                        <td style={style}>{sliceTitles[1]}</td>
-                                        <td style={style}>{sales.formattedValue()}</td>
-                                        <td style={style}>{franchisedSales.formattedValue()}</td>
-                                    </tr>
-                                );
-                            })}
+                                    return (
+                                        <tr key={slice.id} style={style}>
+                                            <td style={style}>{sliceTitles[0]}</td>
+                                            <td style={style}>{sliceTitles[1]}</td>
+                                            <td style={style}>{sales.formattedValue()}</td>
+                                            <td style={style}>{franchisedSales.formattedValue()}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
                         </table>
                     );
                 }}

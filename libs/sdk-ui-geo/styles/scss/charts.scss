@@ -1,0 +1,16 @@
+// (C) 2007-2020 GoodData Corporation
+
+.viz-line-family-chart-wrap {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+
+    &.flex-direction-row {
+        flex-direction: row;
+    }
+
+    &.flex-direction-column {
+        flex-direction: column;
+    }
+}
