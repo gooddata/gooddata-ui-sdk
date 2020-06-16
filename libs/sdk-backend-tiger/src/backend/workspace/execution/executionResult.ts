@@ -21,6 +21,7 @@ import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { Execution } from "@gooddata/gd-tiger-client";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { DateFormatter } from "../../../dateFormatting/types";
+import { trimToRequestedWindow } from "../../../fromAfm/clientSidePaging";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 
@@ -67,10 +68,10 @@ export class TigerExecutionResult implements IExecutionResult {
         const saneSize = sanitizeSize(size);
 
         const executionResultPromise = this.authCall(sdk =>
-            sdk.execution.executionResult(this.resultId, saneSize, saneOffset),
+            sdk.execution.executionResult(this.resultId, saneOffset, saneSize),
         );
 
-        return this.asDataView(executionResultPromise);
+        return this.asDataView(executionResultPromise, saneOffset, saneSize);
     }
 
     public transform(): IPreparedExecution {
@@ -91,7 +92,11 @@ export class TigerExecutionResult implements IExecutionResult {
         return this._fingerprint;
     }
 
-    private asDataView: DataViewFactory = promisedRes => {
+    private asDataView = (
+        promisedRes: Promise<Execution.IExecutionResult>,
+        requestedOffset?: number[],
+        requestedSize?: number[],
+    ): Promise<IDataView> => {
         return promisedRes.then(res => {
             if (!res) {
                 // TODO: SDK8: investigate when can this actually happen; perhaps end of data during paging?
@@ -99,19 +104,22 @@ export class TigerExecutionResult implements IExecutionResult {
                 throw new UnexpectedError("Server returned no data");
             }
 
-            if (isEmptyDataResult(res)) {
+            const resultToUse =
+                requestedOffset && requestedSize
+                    ? trimToRequestedWindow(res, requestedOffset, requestedSize)
+                    : res;
+
+            if (isEmptyDataResult(resultToUse)) {
                 throw new NoDataError(
                     "The execution resulted in no data to display.",
-                    new TigerDataView(this, res, this.dateFormatter),
+                    new TigerDataView(this, resultToUse, this.dateFormatter),
                 );
             }
 
-            return new TigerDataView(this, res, this.dateFormatter);
+            return new TigerDataView(this, resultToUse, this.dateFormatter);
         });
     };
 }
-
-type DataViewFactory = (promisedRes: Promise<Execution.IExecutionResult | null>) => Promise<IDataView>;
 
 class TigerDataView implements IDataView {
     public readonly data: DataValue[][] | DataValue[];
@@ -121,7 +129,7 @@ class TigerDataView implements IDataView {
     public readonly count: number[];
     public readonly offset: number[];
     public readonly result: IExecutionResult;
-    public readonly totals: DataValue[][][] = [[[]]];
+    public readonly totals?: DataValue[][][];
     private readonly _fingerprint: string;
 
     constructor(
@@ -142,13 +150,10 @@ class TigerDataView implements IDataView {
 
         /*
         this.totals = dataResult.totals ? dataResult.totals : [[[]]];
-        this.count = dataResult.paging.count;
-        this.offset = dataResult.paging.offset;
 
-        this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
         */
 
-        this._fingerprint = `${result.fingerprint()}/*`;
+        this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
     }
 
     public fingerprint(): string {
