@@ -72,15 +72,21 @@ const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFi
         }
 
         // check for all-time filters with missing bounds (even one missing bound suggests an all time filter)
+        // we cannot remove them, as they do make sense in some rare legacy contexts
         if (isNil(filter.relativeDateFilter.from) || isNil(filter.relativeDateFilter.to)) {
-            return null;
+            // tslint:disable-next-line: no-console
+            console.warn(
+                "RelativeDateFilter without 'from' or 'to' field encountered." +
+                    "This can make sense in some legacy contexts (e.g. PoP measures with All time global filter), but generally, this indicates an error." +
+                    "Please check the visualization object data to make sure the relativeDateFilter data is what you expected.",
+            );
         }
 
         return {
             relativeDateFilter: {
                 ...filter.relativeDateFilter,
-                from: filter.relativeDateFilter.from,
-                to: filter.relativeDateFilter.to,
+                from: filter.relativeDateFilter.from!,
+                to: filter.relativeDateFilter.to!,
             },
         };
     }
