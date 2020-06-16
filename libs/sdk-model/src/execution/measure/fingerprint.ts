@@ -4,6 +4,7 @@ import stringify from "json-stable-stringify";
 import { IMeasureFilter } from "../filter";
 import { IMeasure, IMeasureDefinition, isSimpleMeasure } from "./index";
 import merge = require("lodash/merge");
+import { isFilterRelevantForFingerprinting } from "../filter/fingerprint";
 
 type MeasureDefinitionPropsToDefault = Pick<
     IMeasureDefinition["measureDefinition"],
@@ -11,6 +12,13 @@ type MeasureDefinitionPropsToDefault = Pick<
 >;
 
 function simpleMeasureFingerprint(measure: IMeasure<IMeasureDefinition>): string {
+    const { measureDefinition } = measure.measure.definition;
+
+    const measureDefinitionWithSanitizedFilters = {
+        ...measureDefinition,
+        filters: measureDefinition.filters?.filter(isFilterRelevantForFingerprinting),
+    };
+
     const measureDefinitionDefaults: MeasureDefinitionPropsToDefault = {
         filters: [] as IMeasureFilter[],
         computeRatio: false,
@@ -18,7 +26,7 @@ function simpleMeasureFingerprint(measure: IMeasure<IMeasureDefinition>): string
 
     const measureDefinitionWithDefaults = merge(
         measureDefinitionDefaults,
-        measure.measure.definition.measureDefinition,
+        measureDefinitionWithSanitizedFilters,
     );
 
     return stringify({
