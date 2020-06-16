@@ -5,7 +5,7 @@ WIREMOCK_DIR="${DIR}/../../../libs/sdk-backend-bear/tests/wiremock"
 
 # Network for the wiremock server(s) & the test code to share; this is exported and propagated to dockerized
 # rush runs.
-export WIREMOCK_NET="sdk-ui-mocks-${RANDOM}"
+export WIREMOCK_NET="wiremock-sdk-ui-${RANDOM}"
 
 _RUSH="${DIR}/docker_rush.sh"
 
@@ -23,6 +23,7 @@ start_wiremocks () {
   _WIREMOCK_START="${WIREMOCK_DIR}/start_wiremock.sh"
   _WIREMOCK_STOP="${WIREMOCK_DIR}/stop_wiremock.sh"
 
+  docker network prune -f
   docker network create ${WIREMOCK_NET} || { echo "Network creation failed" && exit 1 ; }
 
   $_WIREMOCK_START detached
@@ -49,20 +50,36 @@ if ! start_wiremocks ; then
     exit 1
 fi
 
-$_RUSH install
-$_RUSH build
-$_RUSH validate-ci
+RC=1
 
-#
-# Explicitly limiting parallelism during tests; this is because Jest already does parallel test execution on
-# per-project basis.
-#
-$_RUSH test-ci --parallelism 4
-RC=$?
+{
+  $_RUSH install
+  RC=$?
 
-#
-# Stop all mock servers
-#
-stop_wiremocks
+  if [ $RC -eq 0 ]; then
+    $_RUSH build
+    RC=$?
+  fi;
+
+  if [ $RC -eq 0 ]; then
+    $_RUSH validate-ci
+    RC=$?
+  fi;
+
+  if [ $RC -eq 0 ]; then
+    #
+    # Explicitly limiting parallelism during tests; this is because Jest already does parallel test execution on
+    # per-project basis.
+    #
+
+    $_RUSH test-ci --parallelism 4
+    RC=$?
+  fi
+
+  stop_wiremocks
+} || {
+  stop_wiremocks
+}
+
 
 exit ${RC}

@@ -66,7 +66,7 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
                 postInteractionWait: 200,
             },
             "select-position": {
-                clickSelectors: [".gd-button-primary", ".s-down"],
+                clickSelectors: [".gd-button-primary", ".s-bottom"],
                 postInteractionWait: 200,
             },
         });
@@ -101,7 +101,7 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
                 postInteractionWait: 200,
             },
             "select-position": {
-                clickSelectors: [".gd-button-primary", ".s-runter"],
+                clickSelectors: [".gd-button-primary", ".s-unten"],
                 postInteractionWait: 200,
             },
         });

@@ -22,12 +22,18 @@ echo "-----------------------------------------------------------------------"
 # /workspace directory
 #
 
+if [ -z $WIREMOCK_NET ]; then
+  net_param=""
+else
+  net_param="--net ${WIREMOCK_NET} --net-alias tests"
+fi
+
 docker run \
   --env CI \
   --env WIREMOCK_NET \
   --env HOME="/workspace" \
   --rm \
-  --net "${WIREMOCK_NET}" --net-alias tests \
+  ${net_param} \
   --volume ${ROOT_DIR}:/workspace:Z \
   -u $(id -u ${USER}):$(id -g ${USER}) \
   -w /workspace \

@@ -8,14 +8,15 @@ STORYBOOK_CONF="${ROOT_DIR}/stories/storybook.conf"
 BACKSTOP_DIR="${ROOT_DIR}/backstop"
 
 # randomize network just in case two jobs run on the same machine
-NETWORK="sdk-ui-tests-${RANDOM}"
+BACKSTOP_NET="backstop-sdk-ui-${RANDOM}"
 
 UID=$(id -u)
 GID=$(id -g)
 
-echo "Creating docker network for the storybook & backstop to share: ${NETWORK}"
+echo "Creating docker network for the storybook & backstop to share: ${BACKSTOP_NET}"
 
-docker network create ${NETWORK} || { echo "Network creation failed" && exit 1 ; }
+docker network prune -f
+docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && exit 1 ; }
 
 {
     echo "Starting nginx container serving storybooks from ${STORYBOOK_ASSETS}"
@@ -23,7 +24,7 @@ docker network create ${NETWORK} || { echo "Network creation failed" && exit 1 ;
     # Note: careful with the net-alias; it is used as hostname in scenarios.config.js
     NGINX_CONTAINER=$(docker run --rm \
         --detach \
-        --net ${NETWORK} --net-alias storybook \
+        --net "${BACKSTOP_NET}" --net-alias storybook \
         --volume ${STORYBOOK_ASSETS}:/usr/share/nginx/html:ro,Z \
         --volume ${STORYBOOK_CONF}:/etc/nginx/conf.d/storybook.conf:ro,Z \
         nginx:1.17.6)
@@ -40,7 +41,7 @@ docker network create ${NETWORK} || { echo "Network creation failed" && exit 1 ;
             --env BACKSTOP_CAPTURE_LIMIT \
             --env BACKSTOP_COMPARE_LIMIT \
             --user $UID:$GID \
-            --net ${NETWORK} --net-alias backstop \
+            --net ${BACKSTOP_NET} --net-alias backstop \
             --volume ${BACKSTOP_DIR}:/src:Z backstopjs/backstopjs:4.5.1 \
             --config=/src/backstop.config.js "$@"
 
@@ -48,8 +49,13 @@ docker network create ${NETWORK} || { echo "Network creation failed" && exit 1 ;
     }
 
     docker kill ${NGINX_CONTAINER}
+
+    echo "Cleaning up docker network ${BACKSTOP_NET}"
+
+    docker network rm "${BACKSTOP_NET}"
+} || {
+  echo "Error running backstop. Cleaning up network: ${BACKSTOP_NET}"
+
+  docker network rm "${BACKSTOP_NET}"
 }
 
-echo "Cleaning up docker network ${NETWORK}"
-
-docker network rm ${NETWORK}
