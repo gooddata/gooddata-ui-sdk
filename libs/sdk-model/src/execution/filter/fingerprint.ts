@@ -8,9 +8,9 @@ import {
 } from "../filter";
 
 /**
- * Calculates filter fingerprint; ensures that filters that have semantically no effect result in no fingerprint.
+ * Determines if a filter has a semantic effect and thus must be taken into account when computing fingerprints.
  *
- * This is the case for:
+ * Irrelevant filters are:
  *
  * -  Measure Value filter with no condition specified
  * -  Negative attribute filter with empty 'notIn' field
@@ -19,16 +19,23 @@ import {
  *
  * @internal
  */
-export function filterFingerprint(filter: IFilter): string | undefined {
+export function isFilterRelevantForFingerprinting(filter: IFilter): boolean {
     if (isMeasureValueFilter(filter)) {
-        if (!filter.measureValueFilter.condition) {
-            return;
-        }
+        return !!filter.measureValueFilter.condition;
     } else if (isNegativeAttributeFilter(filter)) {
-        if (attributeElementsIsEmpty(filter.negativeAttributeFilter.notIn)) {
-            return;
-        }
+        return !attributeElementsIsEmpty(filter.negativeAttributeFilter.notIn);
     }
 
-    return stringify(filter);
+    return true;
+}
+
+/**
+ * Calculates filter fingerprint; ensures that filters that have semantically no effect result in no fingerprint.
+ *
+ * @remarks see {@link isFilterRelevantForFingerprinting} for information on which filters are considered irrelevant.
+ *
+ * @internal
+ */
+export function filterFingerprint(filter: IFilter): string | undefined {
+    return isFilterRelevantForFingerprinting(filter) ? stringify(filter) : undefined;
 }
