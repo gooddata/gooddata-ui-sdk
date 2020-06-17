@@ -16,3 +16,4 @@ function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnal
 }
 
 export default tigerFactory;
+export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";

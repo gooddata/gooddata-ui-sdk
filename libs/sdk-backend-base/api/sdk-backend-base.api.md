@@ -66,6 +66,18 @@ export type AnalyticalBackendCallbacks = {
     failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
 };
 
+// @public
+export class AnonymousAuthProvider implements IAuthProviderCallGuard {
+    // (undocumented)
+    authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    // (undocumented)
+    deauthenticate(_context: AuthenticationContext): Promise<void>;
+    // (undocumented)
+    getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
+    // (undocumented)
+    reset(): void;
+}
+
 // @beta (undocumented)
 export type ApiClientProvider = (config: CustomBackendConfig) => any;
 
@@ -286,9 +298,7 @@ export interface IAuthenticatedAsyncCallContext {
     getPrincipal(): Promise<AuthenticatedPrincipal>;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "IAuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @public
 export interface IAuthProviderCallGuard extends IAuthenticationProvider {
     // (undocumented)
     reset(): void;
