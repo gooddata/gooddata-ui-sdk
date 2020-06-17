@@ -26,29 +26,56 @@ export {
 export default bearFactory;
 
 //
-// Exports to support legacy state in AD
+// Exports to support legacy state in AD / KD
 //
 
-import { convertVisualization } from "./convertors/fromBackend/VisualizationConverter";
-
-import { convertReferencesToUris } from "./convertors/fromBackend/ReferenceConverter";
-
+import { convertScheduledMail } from "./convertors/toBackend/DashboardConverter";
 import { convertInsight, convertInsightDefinition } from "./convertors/toBackend/InsightConverter";
-
 import { toAfmExecution } from "./convertors/toBackend/afm/ExecutionConverter";
 
 /**
- * Some of the convertors from and to bear types are exported through this so that they can be used by our
+ * Some of the convertors from bear types are exported through this so that they can be used by our
  * applications that were using bear-specific types in their state.
  *
  * All of these exports are marked as internal and can break at any time.
  *
  * @internal
  */
-export const BearConvertors = {
-    convertVisualization,
-    convertReferencesToUris,
+export const BearToBackendConvertors = {
     convertInsight,
     convertInsightDefinition,
     toAfmExecution,
+    convertScheduledMail,
+};
+
+import { convertVisualization } from "./convertors/fromBackend/VisualizationConverter";
+import { convertReferencesToUris } from "./convertors/fromBackend/ReferenceConverter";
+import {
+    convertFilterContext,
+    convertFilterContextItem,
+    convertFilterReference,
+    convertKpiDrill,
+    convertVisualizationWidgetDrill,
+    convertScheduledMail as convertScheduledMailFromBackend,
+    convertDashboardDateFilterConfig,
+} from "./convertors/fromBackend/DashboardConverter";
+
+/**
+ * Some of the convertors to bear types are exported through this so that they can be used by our
+ * applications that were using bear-specific types in their state.
+ *
+ * All of these exports are marked as internal and can break at any time.
+ *
+ * @internal
+ */
+export const BackendToBearConvertors = {
+    convertVisualization,
+    convertReferencesToUris,
+    convertFilterContext,
+    convertFilterContextItem,
+    convertFilterReference,
+    convertKpiDrill,
+    convertVisualizationWidgetDrill,
+    convertScheduledMail: convertScheduledMailFromBackend,
+    convertDashboardDateFilterConfig,
 };

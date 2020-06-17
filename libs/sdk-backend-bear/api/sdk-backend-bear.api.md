@@ -12,6 +12,21 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 
+// Warning: (ae-internal-missing-underscore) The name "BackendToBearConvertors" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const BackendToBearConvertors: {
+    convertVisualization: (visualization: import("@gooddata/gd-bear-model").GdcVisualizationObject.IVisualization, visualizationClassUri: string) => import("@gooddata/sdk-model").IInsight;
+    convertReferencesToUris: import("./convertors/fromBackend/ReferenceConverter").ReferenceConverter;
+    convertFilterContext: (filterContext: import("@gooddata/gd-bear-model").GdcFilterContext.IWrappedFilterContext) => import("@gooddata/sdk-backend-spi").IFilterContextDefinition | import("@gooddata/sdk-backend-spi").IFilterContext;
+    convertFilterContextItem: (filterContextItem: import("@gooddata/gd-bear-model").GdcFilterContext.FilterContextItem) => import("@gooddata/sdk-backend-spi").FilterContextItem;
+    convertFilterReference: (filterReference: import("@gooddata/gd-bear-model").GdcExtendedDateFilters.IDateFilterReference | import("@gooddata/gd-bear-model").GdcExtendedDateFilters.IAttributeFilterReference) => import("@gooddata/sdk-backend-spi").IDashboardFilterReference;
+    convertKpiDrill: (kpi: import("@gooddata/gd-bear-model").GdcKpi.IWrappedKPI) => import("@gooddata/sdk-backend-spi").IDrillToLegacyDashboard;
+    convertVisualizationWidgetDrill: (drill: import("@gooddata/gd-bear-model").GdcVisualizationWidget.IDrillDefinition) => import("@gooddata/sdk-backend-spi").DrillDefinition;
+    convertScheduledMail: (scheduledMail: import("@gooddata/gd-bear-model").GdcScheduledMail.IWrappedScheduledMail) => import("@gooddata/sdk-backend-spi").IScheduledMailDefinition | import("@gooddata/sdk-backend-spi").IScheduledMail;
+    convertDashboardDateFilterConfig: (dateFilterConfig: import("@gooddata/gd-bear-model").GdcDashboard.IDashboardDateFilterConfig) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig;
+};
+
 // @public
 export abstract class BearAuthProviderBase implements IAuthenticationProvider {
     // (undocumented)
@@ -32,21 +47,20 @@ export type BearBackendConfig = {
     packageVersion?: string;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "BearConvertors" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export const BearConvertors: {
-    convertVisualization: (visualization: import("@gooddata/gd-bear-model").GdcVisualizationObject.IVisualization, visualizationClassUri: string) => import("@gooddata/sdk-model").IInsight;
-    convertReferencesToUris: import("./convertors/fromBackend/ReferenceConverter").ReferenceConverter;
-    convertInsight: (insight: import("@gooddata/sdk-model").IInsight) => import("@gooddata/gd-bear-model").GdcVisualizationObject.IVisualizationObject;
-    convertInsightDefinition: (insight: import("@gooddata/sdk-model").IInsightDefinition) => import("@gooddata/gd-bear-model").GdcVisualizationObject.IVisualizationObject;
-    toAfmExecution: typeof toAfmExecution;
-};
-
 // @public
 function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
 
 export default bearFactory;
+
+// Warning: (ae-internal-missing-underscore) The name "BearToBackendConvertors" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const BearToBackendConvertors: {
+    convertInsight: (insight: import("@gooddata/sdk-model").IInsight) => import("@gooddata/gd-bear-model").GdcVisualizationObject.IVisualizationObject;
+    convertInsightDefinition: (insight: import("@gooddata/sdk-model").IInsightDefinition) => import("@gooddata/gd-bear-model").GdcVisualizationObject.IVisualizationObject;
+    toAfmExecution: typeof toAfmExecution;
+    convertScheduledMail: (scheduledMail: import("@gooddata/sdk-backend-spi").IScheduledMailDefinition | import("@gooddata/sdk-backend-spi").IScheduledMail) => import("@gooddata/gd-bear-model").GdcScheduledMail.IWrappedScheduledMail;
+};
 
 // @public
 export class ContextDeferredAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
@@ -64,7 +78,7 @@ export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase impl
 
 // Warnings were encountered during analysis:
 //
-// dist/index.d.ts:29:5 - (ae-forgotten-export) The symbol "toAfmExecution" needs to be exported by the entry point index.d.ts
+// dist/index.d.ts:27:5 - (ae-forgotten-export) The symbol "toAfmExecution" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
