@@ -26,7 +26,7 @@
         "prettier": "~1.19.1",
         "pretty-quick": "~1.11.0",
         "ts-node": "^8.4.1",
-        "typescript": "3.8.3"
+        "typescript": "3.9.5"
         /**
          * When someone asks for "^1.0.0" make sure they get "1.2.3" when working in this repo,
          * instead of the latest version.

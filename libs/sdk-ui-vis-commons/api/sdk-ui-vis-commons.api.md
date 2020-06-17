@@ -443,7 +443,7 @@ export function normalizeColorToRGB(color: string): string;
 // Warning: (ae-internal-missing-underscore) The name "Paging" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export const Paging: (props: IPagingProps) => React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)> | null) | (new (props: any) => React_2.Component<any, any, any>)>;
+export const Paging: (props: IPagingProps) => React_2.ReactElement;
 
 // Warning: (ae-internal-missing-underscore) The name "parseRGBColorCode" should be prefixed with an underscore because the declaration is marked as @internal
 //

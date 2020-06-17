@@ -59,7 +59,7 @@ export class AttributeBuilder {
     };
     defaultLocalId: () => this;
     displayForm: (ref: ObjRef) => this;
-    localId: (localId?: string | undefined) => this;
+    localId: (localId?: Identifier | undefined) => this;
     noAlias: () => this;
 }
 
@@ -1228,11 +1228,11 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     // @internal
     constructor(measureOrRef: IMeasure<IMeasureDefinition> | ObjRef);
-    aggregation: (aggregation?: "max" | "sum" | "count" | "avg" | "min" | "median" | "runsum" | undefined) => this;
+    aggregation: (aggregation?: MeasureAggregation | undefined) => this;
     // (undocumented)
     protected buildDefinition(): IMeasureDefinition;
     defaultAggregation: () => this;
-    filters: (...filters: (import("../filter").IPositiveAttributeFilter | import("../filter").INegativeAttributeFilter | import("../filter").IAbsoluteDateFilter | import("../filter").IRelativeDateFilter)[]) => this;
+    filters: (...filters: IMeasureFilter[]) => this;
     // (undocumented)
     protected generateLocalId(): string;
     measureItem: (ref: ObjRef) => this;
@@ -1257,7 +1257,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     protected abstract generateLocalId(): string;
     // Warning: (ae-forgotten-export) The symbol "MeasureEnvelope" needs to be exported by the entry point index.d.ts
     protected initializeFromExisting(measure: MeasureEnvelope): void;
-    localId: (localId?: string | undefined) => this;
+    localId: (localId?: Identifier | undefined) => this;
     noAlias: () => this;
     noTitle: () => this;
     title: (title?: string | undefined) => this;
@@ -1388,13 +1388,13 @@ export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocal
 export function newAttribute(displayFormRefOrId: ObjRef | Identifier, modifications?: AttributeModifications): IAttribute;
 
 // @public
-export const newAttributeDisplayFormMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder<IAttributeDisplayFormMetadataObject>, IAttributeDisplayFormMetadataObject>) => IAttributeDisplayFormMetadataObject;
+export const newAttributeDisplayFormMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>) => IAttributeDisplayFormMetadataObject;
 
 // @public
 export function newAttributeLocator(attributeOrId: IAttribute | string, element: string): IAttributeLocatorItem;
 
 // @public
-export const newAttributeMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder<IAttributeMetadataObject>, IAttributeMetadataObject>) => IAttributeMetadataObject;
+export const newAttributeMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>) => IAttributeMetadataObject;
 
 // @public
 export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection?: SortDirection, aggregation?: boolean): IAttributeSortItem;
@@ -1403,25 +1403,25 @@ export function newAttributeSort(attributeOrId: IAttribute | string, sortDirecti
 export function newBucket(localId: string, ...content: Array<IAttributeOrMeasure | ITotal | undefined>): IBucket;
 
 // @public
-export const newCatalogAttribute: (modifications?: BuilderModifications<CatalogAttributeBuilder<ICatalogAttribute>, ICatalogAttribute>) => ICatalogAttribute;
+export const newCatalogAttribute: (modifications?: BuilderModifications<CatalogAttributeBuilder>) => ICatalogAttribute;
 
 // @public
-export const newCatalogDateAttribute: (modifications?: BuilderModifications<CatalogDateAttributeBuilder<ICatalogDateAttribute>, ICatalogDateAttribute>) => ICatalogDateAttribute;
+export const newCatalogDateAttribute: (modifications?: BuilderModifications<CatalogDateAttributeBuilder>) => ICatalogDateAttribute;
 
 // @public
-export const newCatalogDateDataset: (modifications?: BuilderModifications<CatalogDateDatasetBuilder<ICatalogDateDataset>, ICatalogDateDataset>) => ICatalogDateDataset;
+export const newCatalogDateDataset: (modifications?: BuilderModifications<CatalogDateDatasetBuilder>) => ICatalogDateDataset;
 
 // @public
-export const newCatalogFact: (modifications?: BuilderModifications<CatalogFactBuilder<ICatalogFact>, ICatalogFact>) => ICatalogFact;
+export const newCatalogFact: (modifications?: BuilderModifications<CatalogFactBuilder>) => ICatalogFact;
 
 // @public
-export const newCatalogGroup: (modifications?: BuilderModifications<CatalogGroupBuilder<ICatalogGroup>, ICatalogGroup>) => ICatalogGroup;
+export const newCatalogGroup: (modifications?: BuilderModifications<CatalogGroupBuilder>) => ICatalogGroup;
 
 // @public
-export const newCatalogMeasure: (modifications?: BuilderModifications<CatalogMeasureBuilder<ICatalogMeasure>, ICatalogMeasure>) => ICatalogMeasure;
+export const newCatalogMeasure: (modifications?: BuilderModifications<CatalogMeasureBuilder>) => ICatalogMeasure;
 
 // @public
-export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder<IDataSetMetadataObject>, IDataSetMetadataObject>) => IDataSetMetadataObject;
+export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder>) => IDataSetMetadataObject;
 
 // @public
 export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;
@@ -1436,7 +1436,7 @@ export function newDefForItems(workspace: string, items: IAttributeOrMeasure[], 
 export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimension;
 
 // @public
-export const newFactMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder<IFactMetadataObject>, IFactMetadataObject>) => IFactMetadataObject;
+export const newFactMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder>) => IFactMetadataObject;
 
 // Warning: (ae-internal-missing-underscore) The name "newInsightDefinition" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -1447,7 +1447,7 @@ export function newInsightDefinition(visualizationUrl: string, modifications?: I
 export function newMeasure(measure: ObjRef | Identifier, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @public
-export const newMeasureMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<MeasureMetadataObjectBuilder<IMeasureMetadataObject>, IMeasureMetadataObject>) => IMeasureMetadataObject;
+export const newMeasureMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<MeasureMetadataObjectBuilder>) => IMeasureMetadataObject;
 
 // @public
 export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
@@ -1480,7 +1480,7 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, at
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export const newVariableMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<VariableMetadataObjectBuilder<IVariableMetadataObject>, IVariableMetadataObject>) => IVariableMetadataObject;
+export const newVariableMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<VariableMetadataObjectBuilder>) => IVariableMetadataObject;
 
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable";
@@ -1507,7 +1507,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     // (undocumented)
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
-    popAttribute: (popAttrIdOrRef: string | import("../../objRef").UriRef | import("../../objRef").IdentifierRef) => this;
+    popAttribute: (popAttrIdOrRef: ObjRef | Identifier) => this;
     }
 
 // @public

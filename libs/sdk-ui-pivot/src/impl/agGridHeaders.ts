@@ -215,7 +215,7 @@ export const assortDimensionDescriptors = (dimensions: IDimensionDescriptor[]) =
     };
 };
 
-export function getMinimalRowData(dv: DataViewFacade) {
+export function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
     const data = dv.rawData().twoDimData();
     const rowHeaders = dv.meta().allHeaders()[0];
     const numberOfRowHeaderItems = (rowHeaders[0] || []).length;
