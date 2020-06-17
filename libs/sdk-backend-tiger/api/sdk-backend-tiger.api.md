@@ -5,7 +5,10 @@
 ```ts
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+
+export { AnonymousAuthProvider }
 
 // @public
 function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;

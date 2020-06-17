@@ -28,6 +28,8 @@ import {
     AuthenticatedAsyncCall,
     IAuthenticatedAsyncCallContext,
     TelemetryData,
+    AnonymousAuthProvider,
+    IAuthProviderCallGuard,
 } from "@gooddata/sdk-backend-base";
 import { DateFormatter } from "../dateFormatting/types";
 import { createDefaultDateFormatter } from "../dateFormatting/defaultDateFormatter";
@@ -90,7 +92,7 @@ export class TigerBackend implements IAnalyticalBackend {
     private readonly telemetry: TelemetryData;
     private readonly implConfig: TigerBackendConfig;
     private readonly sdk: ITigerClient;
-    private readonly authProvider: AuthProviderCallGuard | undefined;
+    private readonly authProvider: IAuthProviderCallGuard;
     private readonly dateFormatter: DateFormatter;
 
     constructor(
@@ -102,7 +104,7 @@ export class TigerBackend implements IAnalyticalBackend {
         this.config = config;
         this.implConfig = implConfig;
         this.telemetry = telemetry;
-        this.authProvider = authProvider;
+        this.authProvider = authProvider || new AnonymousAuthProvider();
         this.dateFormatter = implConfig.dateFormatter ?? createDefaultDateFormatter();
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
@@ -141,11 +143,32 @@ export class TigerBackend implements IAnalyticalBackend {
     }
 
     public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
-        return Promise.resolve({ userId: "anonymouse" });
+        return new Promise((resolve, reject) => {
+            this.authProvider
+                .getCurrentPrincipal({ client: this.sdk })
+                .then(res => {
+                    resolve(res);
+                })
+                .catch(err => {
+                    if (isNotAuthenticatedError(err)) {
+                        resolve(null);
+                    }
+
+                    reject(err);
+                });
+        });
     }
 
-    public authenticate(): Promise<AuthenticatedPrincipal> {
-        return Promise.resolve({ userId: "anonymouse" });
+    public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
+        if (!force) {
+            return this.authApiCall(async sdk => {
+                const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
+                invariant(principal, "Principal must be defined");
+                return principal!;
+            });
+        }
+
+        return this.triggerAuthentication(true);
     }
 
     /**

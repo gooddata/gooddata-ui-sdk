@@ -29,6 +29,7 @@ export {
     IAuthenticatedAsyncCallContext,
     IAuthProviderCallGuard,
     NoopAuthProvider,
+    AnonymousAuthProvider,
 } from "./toolkit/auth";
 
 export { TelemetryData } from "./toolkit/backend";

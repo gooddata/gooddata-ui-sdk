@@ -44,7 +44,7 @@ export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(
 
 /**
  * see AuthProviderCallGuard
- * @internal
+ * @public
  */
 export interface IAuthProviderCallGuard extends IAuthenticationProvider {
     reset(): void;
@@ -138,6 +138,7 @@ export const AnonymousUser: AuthenticatedPrincipal = {
 /**
  * This is a noop implementation of authentication provider - it does nothing and assumes anonymous user.
  *
+ * @public
  */
 export class AnonymousAuthProvider implements IAuthProviderCallGuard {
     public authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
