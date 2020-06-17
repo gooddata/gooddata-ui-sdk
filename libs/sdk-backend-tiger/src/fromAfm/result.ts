@@ -5,6 +5,8 @@ import {
     IDimensionDescriptor,
     isAttributeDescriptor,
     IDimensionItemDescriptor,
+    IMeasureDescriptor,
+    isMeasureGroupDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { Execution, AttributeGranularityResourceAttribute } from "@gooddata/gd-tiger-client";
 import isResultAttributeHeader = Execution.isResultAttributeHeader;
@@ -43,6 +45,18 @@ function getGranularity(header: IDimensionItemDescriptor): CatalogDateAttributeG
         : undefined; // not a date attribute
 }
 
+function getMeasuresFromDimensions(dimensions: IDimensionDescriptor[]): IMeasureDescriptor[] {
+    for (const dim of dimensions) {
+        const measureGroup = dim.headers.find(isMeasureGroupDescriptor);
+
+        if (measureGroup) {
+            return measureGroup.measureGroupHeader.items;
+        }
+    }
+
+    return [];
+}
+
 function transformHeaderItems(
     dimensions: IDimensionDescriptor[],
     dateFormatter: DateFormatter,
@@ -52,6 +66,7 @@ function transformHeaderItems(
         return [[[]]];
     }
 
+    const measureDescriptors = getMeasuresFromDimensions(dimensions);
     const dateValueFormatter = createDateValueFormatter(dateFormatter);
 
     return dimensionHeaders.map((dimensionHeader, dimensionIndex) => {
@@ -60,9 +75,12 @@ function transformHeaderItems(
             return headerGroup.headers.map(
                 (header): IResultHeader => {
                     if (isResultAttributeHeader(header)) {
+                        const primaryLabel =
+                            header.attributeHeader.primaryLabelValue ?? header.attributeHeader.labelValue;
+
                         return {
                             attributeHeaderItem: {
-                                uri: `/fake/${header.attributeHeader.labelValue}`,
+                                uri: `/obj/${headerGroupIndex}/elements?id=${primaryLabel}`,
                                 name: granularity
                                     ? dateValueFormatter(header.attributeHeader.labelValue, granularity)
                                     : header.attributeHeader.labelValue,
@@ -71,10 +89,16 @@ function transformHeaderItems(
                     }
 
                     if (isResultMeasureHeader(header)) {
+                        /*
+                         * Tiger sends just the measure index in the measure headers. This is the index of the
+                         * measure descriptor within the measure group.
+                         */
+                        const measureIndex = header.measureHeader.measureIndex;
+
                         return {
                             measureHeaderItem: {
-                                name: header.measureHeader.name,
-                                order: header.measureHeader.order,
+                                name: measureDescriptors[measureIndex]?.measureHeaderItem.name,
+                                order: measureIndex,
                             },
                         };
                     }

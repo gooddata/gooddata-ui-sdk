@@ -8391,6 +8391,7 @@ export namespace Execution {
         // (undocumented)
         attributeHeader: {
             labelValue: string;
+            primaryLabelValue?: string;
         };
     }
     // (undocumented)
@@ -8404,8 +8405,7 @@ export namespace Execution {
     export interface IResultMeasureHeader {
         // (undocumented)
         measureHeader: {
-            name: string;
-            order: number;
+            measureIndex: number;
         };
     }
     // (undocumented)

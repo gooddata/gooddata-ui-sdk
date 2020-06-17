@@ -11,7 +11,7 @@ import isAttributeHeader = Execution.isAttributeHeader;
 
 function transformDimension(dim: Execution.IResultDimension): IDimensionDescriptor {
     return {
-        headers: dim.headers.map(header => {
+        headers: dim.headers.map((header, headerIdx) => {
             const h = header;
 
             if (isAttributeHeader(h)) {
@@ -21,12 +21,12 @@ function transformDimension(dim: Execution.IResultDimension): IDimensionDescript
                 //  changes across public interface of the SDK (drilling etc)
                 const attrDescriptor: IAttributeDescriptor = {
                     attributeHeader: {
-                        uri: `/fakeAttrUri/${h.attributeHeader.identifier}`,
+                        uri: `/obj/${headerIdx}/${h.attributeHeader.identifier}`,
                         identifier: h.attributeHeader.identifier,
                         formOf: {
                             identifier: h.attributeHeader.formOf.identifier,
                             name: h.attributeHeader.formOf.name,
-                            uri: `/fakeDfUri/${h.attributeHeader.formOf.identifier}`,
+                            uri: `/obj/${666 + headerIdx}/${h.attributeHeader.formOf.identifier}`,
                         },
                         localIdentifier: h.attributeHeader.localIdentifier,
                         name: h.attributeHeader.name,

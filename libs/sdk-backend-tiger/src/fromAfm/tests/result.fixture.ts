@@ -11,8 +11,7 @@ export const mockResult: Execution.IExecutionResult = {
                     headers: [
                         {
                             measureHeader: {
-                                name: "m_1",
-                                order: 0,
+                                measureIndex: 0,
                             },
                         },
                     ],

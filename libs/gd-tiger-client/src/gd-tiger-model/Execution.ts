@@ -42,13 +42,13 @@ export namespace Execution {
     export interface IResultAttributeHeader {
         attributeHeader: {
             labelValue: string;
+            primaryLabelValue?: string;
         };
     }
 
     export interface IResultMeasureHeader {
         measureHeader: {
-            name: string;
-            order: number;
+            measureIndex: number;
         };
     }
 
