@@ -4,7 +4,7 @@ import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { isUriRef, ObjRef, ObjectType } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import ObjQualifier = ExecuteAFM.ObjQualifier;
-import { TigerAfmType } from "../types";
+import { TigerAfmType } from "../../../types";
 
 const allValidTigerAfmTypes: TigerAfmType[] = ["metric", "label", "fact", "dataset", "attribute"];
 

@@ -18,7 +18,7 @@ import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/gd-tiger-c
 import isEmpty = require("lodash/isEmpty");
 import isString = require("lodash/isString");
 
-import { convertApiError } from "../errors/errorHandling";
+import { convertApiError } from "../utils/errorHandling";
 
 import { TigerWorkspace } from "./workspace";
 import { TigerWorkspaceQueryFactory } from "./workspaces";
@@ -31,8 +31,8 @@ import {
     AnonymousAuthProvider,
     IAuthProviderCallGuard,
 } from "@gooddata/sdk-backend-base";
-import { DateFormatter } from "../dateFormatting/types";
-import { createDefaultDateFormatter } from "../dateFormatting/defaultDateFormatter";
+import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types";
+import { createDefaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: false,

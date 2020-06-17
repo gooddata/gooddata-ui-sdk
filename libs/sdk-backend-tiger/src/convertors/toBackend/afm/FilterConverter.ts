@@ -23,8 +23,8 @@ import {
     toDateDataSetQualifier,
     toDisplayFormQualifier,
     toMeasureValueFilterMeasureQualifier,
-} from "./ObjRefConverter";
-import { toTigerGranularity } from "../toSdkModel/dateGranularityConversions";
+} from "../ObjRefConverter";
+import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions";
 
 function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPositiveAttributeFilter {
     const displayFormRef = filter.positiveAttributeFilter.displayForm;

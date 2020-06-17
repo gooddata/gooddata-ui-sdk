@@ -15,13 +15,13 @@ import {
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import SparkMD5 from "spark-md5";
-import { transformResultDimensions } from "../../../fromAfm/dimensions";
-import { transformExecutionResult } from "../../../fromAfm/result";
+import { transformResultDimensions } from "../../../convertors/fromBackend/afm/dimensions";
+import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { Execution } from "@gooddata/gd-tiger-client";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { DateFormatter } from "../../../dateFormatting/types";
-import { trimToRequestedWindow } from "../../../fromAfm/clientSidePaging";
+import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
+import { trimToRequestedWindow } from "../../../convertors/fromBackend/afm/clientSidePaging";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 

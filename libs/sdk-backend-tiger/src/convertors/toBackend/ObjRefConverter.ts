@@ -5,7 +5,7 @@ import { isUriRef, ObjRef, ObjectType, isLocalIdRef, ObjRefInScope, isObjRef } f
 import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import ObjQualifier = ExecuteAFM.ObjQualifier;
 import ILocalIdentifierQualifier = ExecuteAFM.ILocalIdentifierQualifier;
-import { TigerAfmType } from "../types";
+import { TigerAfmType } from "../../types";
 
 type AfmObjectType = Exclude<ObjectType, "tag" | "insight">;
 

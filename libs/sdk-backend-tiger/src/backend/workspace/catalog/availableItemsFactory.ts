@@ -30,10 +30,10 @@ import intersectionWith = require("lodash/intersectionWith");
 
 import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { convertMeasure } from "../../../toAfm/MeasureConverter";
-import { convertVisualizationObjectFilter } from "../../../toAfm/FilterConverter";
-import { convertAttribute } from "../../../toAfm/AttributeConverter";
-import { jsonApiIdToObjRef, isJsonApiId } from "../../../fromAfm/ObjRefConverter";
+import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter";
+import { convertVisualizationObjectFilter } from "../../../convertors/toBackend/afm/FilterConverter";
+import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter";
+import { jsonApiIdToObjRef, isJsonApiId } from "../../../convertors/fromBackend/afm/ObjRefConverter";
 import { InvariantError } from "ts-invariant";
 
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {

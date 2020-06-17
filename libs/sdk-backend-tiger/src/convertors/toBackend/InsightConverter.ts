@@ -3,7 +3,7 @@ import cloneDeepWith from "lodash/cloneDeepWith";
 import { IInsightDefinition, isIdentifierRef } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/gd-tiger-client";
 
-import { toObjQualifier } from "../toAfm/ObjRefConverter";
+import { toObjQualifier } from "./ObjRefConverter";
 
 const cloneWithSanitizedIds = (item: any) =>
     cloneDeepWith(item, value => {

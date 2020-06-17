@@ -13,7 +13,7 @@ import {
 import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
-import { toLocalIdentifier } from "./ObjRefConverter";
+import { toLocalIdentifier } from "../ObjRefConverter";
 import { convertAttribute } from "./AttributeConverter";
 
 function convertAFM(def: IExecutionDefinition): ExecuteAFM.IAfm {

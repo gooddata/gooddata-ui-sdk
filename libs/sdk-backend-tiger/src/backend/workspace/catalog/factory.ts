@@ -6,9 +6,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { CatalogItem, CatalogItemType, ICatalogFact, ICatalogMeasure, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { convertFact, convertGroup, convertMeasure } from "../../../toSdkModel/CatalogConverter";
+import { convertFact, convertGroup, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
 import { TigerWorkspaceCatalog } from "./catalog";
-import { objRefToIdentifier } from "../../../fromObjRef";
+import { objRefToIdentifier } from "../../../utils/api";
 import { loadAttributesAndDateDatasets } from "./datasetLoader";
 import flatten = require("lodash/flatten");
 

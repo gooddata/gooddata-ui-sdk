@@ -14,7 +14,7 @@ import {
     convertAttribute,
     convertDateAttribute,
     convertDateDataset,
-} from "../../../toSdkModel/CatalogConverter";
+} from "../../../convertors/fromBackend/CatalogConverter";
 
 export type LoaderResult = {
     nonDateAttributes: ICatalogAttribute[];
