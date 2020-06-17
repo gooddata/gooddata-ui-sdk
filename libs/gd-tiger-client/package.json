@@ -39,6 +39,7 @@
         "@gooddata/sdk-model": "^8.0.0-alpha.99",
         "axios": "^0.19.0",
         "lodash": "^4.17.15",
+        "qs": "^6.5.1",
         "spark-md5": "^3.0.0"
     },
     "devDependencies": {
@@ -47,6 +48,7 @@
         "@openapitools/openapi-generator-cli": "^1.0.10-4.2.3",
         "@types/jest": "^25.1.2",
         "@types/lodash": "^4.14.123",
+        "@types/qs": "^6.5.1",
         "@types/spark-md5": "^3.0.1",
         "commander": "^3.0.2",
         "dependency-cruiser": "^8.0.1",

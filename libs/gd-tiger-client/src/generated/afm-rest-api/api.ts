@@ -1,3 +1,4 @@
+// (C) 2020 GoodData Corporation
 // tslint:disable
 /**
  * OpenAPI definition
@@ -13,11 +14,22 @@
 
 // @ts-ignore
 import * as globalImportUrl from "url";
+import * as globalImportQs from "qs";
 import { Configuration } from "./configuration";
 import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from "./base";
+
+// utility function that adds support for nested objects in query
+const addFlattenedObjectTo = (object: any, baseName: string, target: any): void => {
+    const semiFlattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
+    const flattened = semiFlattened[Object.keys(semiFlattened)[0]];
+
+    Object.keys(flattened).forEach(key => {
+        target[`${baseName}${key}`] = (flattened as any)[key];
+    });
+};
 
 /**
  *
@@ -719,35 +731,71 @@ export const ElementsControllerApiAxiosParamCreator = function(configuration?: C
             const localVarQueryParameter = {} as any;
 
             if (workspace !== undefined) {
-                localVarQueryParameter["workspace"] = workspace;
+                if (typeof workspace === "object") {
+                    addFlattenedObjectTo(workspace, "workspace", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["workspace"] = workspace;
+                }
             }
 
             if (label !== undefined) {
-                localVarQueryParameter["label"] = label;
+                if (typeof label === "object") {
+                    addFlattenedObjectTo(label, "label", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["label"] = label;
+                }
             }
 
             if (sortOrder !== undefined) {
-                localVarQueryParameter["sortOrder"] = sortOrder;
+                if (typeof sortOrder === "object") {
+                    addFlattenedObjectTo(sortOrder, "sortOrder", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sortOrder"] = sortOrder;
+                }
             }
 
             if (includeTotalWithoutFilters !== undefined) {
-                localVarQueryParameter["includeTotalWithoutFilters"] = includeTotalWithoutFilters;
+                if (typeof includeTotalWithoutFilters === "object") {
+                    addFlattenedObjectTo(
+                        includeTotalWithoutFilters,
+                        "includeTotalWithoutFilters",
+                        localVarQueryParameter,
+                    );
+                } else {
+                    localVarQueryParameter["includeTotalWithoutFilters"] = includeTotalWithoutFilters;
+                }
             }
 
             if (complementFilter !== undefined) {
-                localVarQueryParameter["complementFilter"] = complementFilter;
+                if (typeof complementFilter === "object") {
+                    addFlattenedObjectTo(complementFilter, "complementFilter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["complementFilter"] = complementFilter;
+                }
             }
 
             if (patternFilter !== undefined) {
-                localVarQueryParameter["patternFilter"] = patternFilter;
+                if (typeof patternFilter === "object") {
+                    addFlattenedObjectTo(patternFilter, "patternFilter", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["patternFilter"] = patternFilter;
+                }
             }
 
             if (offset !== undefined) {
-                localVarQueryParameter["offset"] = offset;
+                if (typeof offset === "object") {
+                    addFlattenedObjectTo(offset, "offset", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["offset"] = offset;
+                }
             }
 
             if (limit !== undefined) {
-                localVarQueryParameter["limit"] = limit;
+                if (typeof limit === "object") {
+                    addFlattenedObjectTo(limit, "limit", localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["limit"] = limit;
+                }
             }
 
             if (skipCache !== undefined && skipCache !== null) {

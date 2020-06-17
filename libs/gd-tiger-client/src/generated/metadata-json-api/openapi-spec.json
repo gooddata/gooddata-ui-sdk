@@ -2506,7 +2506,7 @@
                 "items": {
                     "properties": {
                         "dataType": {
-                            "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP"],
+                            "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "BOOLEAN"],
                             "type": "string"
                         },
                         "name": {

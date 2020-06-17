@@ -138,7 +138,11 @@ export const {{classname}}AxiosParamCreator = function (configuration?: Configur
                     {{paramName}};
                 {{/isDate}}
                 {{^isDate}}
-                localVarQueryParameter['{{baseName}}'] = {{paramName}};
+                if (typeof {{paramName}} === 'object') {
+                    addFlattenedObjectTo({{paramName}}, '{{baseName}}', localVarQueryParameter);
+                } else {
+                    localVarQueryParameter['{{baseName}}'] = {{paramName}};
+                }
                 {{/isDate}}
                 {{/isDateTime}}
             }
