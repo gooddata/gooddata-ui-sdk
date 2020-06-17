@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-charts",
-    "version": "8.0.0-alpha.102",
+    "version": "8.0.0-alpha.101",
     "description": "GoodData.UI SDK - Charts",
     "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-charts",
@@ -35,13 +35,13 @@
     },
     "typings": "dist/index.d.ts",
     "dependencies": {
-        "@gooddata/goodstrap": "^68.11.0",
+        "@gooddata/goodstrap": "68.10.0-alpha-tulean-master-2020-06-17T14-37-14-925Z",
         "@gooddata/js-utils": "^3.4.0",
         "@gooddata/numberjs": "^3.2.4",
-        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.102",
-        "@gooddata/sdk-model": "^8.0.0-alpha.102",
-        "@gooddata/sdk-ui": "^8.0.0-alpha.102",
-        "@gooddata/sdk-ui-vis-commons": "^8.0.0-alpha.102",
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.101",
+        "@gooddata/sdk-model": "^8.0.0-alpha.101",
+        "@gooddata/sdk-ui": "^8.0.0-alpha.101",
+        "@gooddata/sdk-ui-vis-commons": "^8.0.0-alpha.101",
         "classnames": "^2.2.6",
         "custom-event": "^1.0.1",
         "date-fns": "^2.8.1",
@@ -59,8 +59,8 @@
         "react-dom": "^16.10.0"
     },
     "devDependencies": {
-        "@gooddata/reference-workspace": "^8.0.0-alpha.102",
-        "@gooddata/sdk-backend-mockingbird": "^8.0.0-alpha.102",
+        "@gooddata/reference-workspace": "^8.0.0-alpha.101",
+        "@gooddata/sdk-backend-mockingbird": "^8.0.0-alpha.101",
         "@gooddata/tslint-config": "1.0.0",
         "@types/classnames": "2.2.3",
         "@types/enzyme": "^3.10.3",
