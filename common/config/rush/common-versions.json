@@ -15,7 +15,10 @@
      * will recalculate all version selections.
      */
     "preferredVersions": {
-        "@microsoft/api-extractor": "^7.3.8",
+        /*
+         * API extractor version >=7.8.2 fails to cope with inline imports. Must wait for a fix.
+         */
+        "@microsoft/api-extractor": "7.8.1",
         "@microsoft/api-documenter": "^7.3.16",
         "@gooddata/frontend-npm-scripts": "1.0.1",
         "@gooddata/tslint-config": "1.0.0",
@@ -42,6 +45,11 @@
      * This design avoids unnecessary churn in this file.
      */
     "allowedAlternativeVersions": {
+        /*
+         * Packages use caret for api extractor. the preferred version above can then narrow things down
+         * as needed.
+         */
+        "@microsoft/api-extractor": [ "^7.3.8" ]
         /**
          * For example, allow some projects to use an older TypeScript compiler
          * (in addition to whatever "usual" version is being used by other projects in the repo):
