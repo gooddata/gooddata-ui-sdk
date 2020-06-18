@@ -62,7 +62,7 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url")
-                .then(r => {
+                .then((r) => {
                     expect(r.response.status).toBe(200);
                     expect(r.getData()).toEqual(parsedDummyBody);
                 });
@@ -86,7 +86,7 @@ describe("fetch", () => {
                     () => {
                         throw new Error("should be rejected");
                     },
-                    err => {
+                    (err) => {
                         expect(err.response.status).toBe(404);
                     },
                 );
@@ -150,7 +150,7 @@ describe("fetch", () => {
 
             const xhr = createXhr({});
 
-            return xhr.ajax("/some/url").then(result => {
+            return xhr.ajax("/some/url").then((result) => {
                 expect(result.response.headers.get("X-GDC-DEPRECATED")).toBeNull();
             });
         });
@@ -163,10 +163,10 @@ describe("fetch", () => {
 
             const xhr = createXhr({});
 
-            return xhr.ajax("/some/url").then(result => {
+            return xhr.ajax("/some/url").then((result) => {
                 expect(result.response.headers.get("X-GDC-DEPRECATED")).toEqual("deprecated");
 
-                return xhr.ajax("/some/url").then(result => {
+                return xhr.ajax("/some/url").then((result) => {
                     expect(result.response.headers.get("X-GDC-DEPRECATED")).toEqual("deprecated");
                     expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
 
@@ -190,7 +190,7 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url")
-                .then(r => {
+                .then((r) => {
                     expect(r.response.status).toBe(204);
                 });
         });
@@ -201,7 +201,7 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url")
-                .then(null, err => {
+                .then(null, (err) => {
                     expect(err.response.status).toBe(401);
                 });
         });
@@ -220,7 +220,7 @@ describe("fetch", () => {
 
             const xhr = createXhr();
 
-            return Promise.all([xhr.ajax("/some/url/1"), xhr.ajax("/some/url/2")]).then(r => {
+            return Promise.all([xhr.ajax("/some/url/1"), xhr.ajax("/some/url/2")]).then((r) => {
                 expect(r[0].response.status).toBe(200);
                 expect(r[1].response.status).toBe(200);
             });
@@ -245,7 +245,7 @@ describe("fetch", () => {
         });
 
         it("should retry request after delay", () => {
-            fetchMock.get("/some/url", url => {
+            fetchMock.get("/some/url", (url) => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
@@ -255,7 +255,7 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url", { pollDelay: 0 })
-                .then(r => {
+                .then((r) => {
                     expect(r.response.status).toBe(200);
                     expect(fetchMock.calls("/some/url").length).toBe(3);
                     expect(r.getData()).toEqual(parsedDummyBody);
@@ -275,7 +275,7 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url", { pollDelay: 0 })
-                .then(r => {
+                .then((r) => {
                     expect(r.response.status).toBe(200);
 
                     expect(fetchMock.calls("/some/url").length).toBe(1);
@@ -286,7 +286,7 @@ describe("fetch", () => {
         });
 
         it("should not poll if client forbids it", () => {
-            fetchMock.get("/some/url", url => {
+            fetchMock.get("/some/url", (url) => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
@@ -295,14 +295,14 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url", { pollDelay: 0, dontPollOnResult: true })
-                .then(r => {
+                .then((r) => {
                     expect(r.response.status).toBe(202);
                     expect(fetchMock.calls("/some/url").length).toBe(1);
                 });
         });
 
         it("should correctly reject after retry is 404", () => {
-            fetchMock.get("/some/url", url => {
+            fetchMock.get("/some/url", (url) => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
@@ -311,7 +311,7 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url", { pollDelay: 0 })
-                .then(null, err => {
+                .then(null, (err) => {
                     expect(err.response.status).toBe(404);
                 });
         });
@@ -321,7 +321,7 @@ describe("fetch", () => {
         it("should retry request after delay", () => {
             fetchMock.get("/some/url", { status: 202, headers: { Location: "/other/url" } });
 
-            fetchMock.get("/other/url", url => {
+            fetchMock.get("/other/url", (url) => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
@@ -330,7 +330,7 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url", { pollDelay: 0 })
-                .then(r => {
+                .then((r) => {
                     expect(r.response.status).toBe(200);
                     expect(fetchMock.calls("/some/url").length).toBe(1);
                     expect(fetchMock.calls("/other/url").length).toBe(3);
@@ -345,7 +345,7 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url", { pollDelay: 0 })
-                .then(r => {
+                .then((r) => {
                     expect(r.response.status).toBe(200);
                     expect(fetchMock.calls("/some/url").length).toBe(1);
                     expect(fetchMock.calls("/other/url").length).toBe(1);
@@ -356,7 +356,7 @@ describe("fetch", () => {
 
         it("should correctly reject after retry 404", () => {
             fetchMock.get("/some/url", { status: 202, headers: { Location: "/other/url" } });
-            fetchMock.get("/other/url", url => {
+            fetchMock.get("/other/url", (url) => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
@@ -365,7 +365,7 @@ describe("fetch", () => {
 
             return createXhr()
                 .ajax("/some/url", { pollDelay: 0 })
-                .then(null, err => {
+                .then(null, (err) => {
                     expect(err.response.status).toBe(404);
                     expect(fetchMock.calls("/some/url").length).toBe(1);
                     expect(fetchMock.calls("/other/url").length).toBe(3);

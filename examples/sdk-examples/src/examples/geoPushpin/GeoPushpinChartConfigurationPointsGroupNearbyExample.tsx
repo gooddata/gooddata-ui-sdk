@@ -52,7 +52,7 @@ export class GeoPushpinChartConfigurationPointsGroupNearbyExample extends Compon
     }
 
     private toggleGroupNearbyPoints = () => {
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
             groupNearbyPoints: !prevState.groupNearbyPoints,
         }));
     };

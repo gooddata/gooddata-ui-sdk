@@ -39,7 +39,7 @@ export const tokenizeExpression = (expression: string): IExpressionToken[] => {
         }
     }
 
-    return tokens.map(token => ({
+    return tokens.map((token) => ({
         ...token,
         value: token.value.replace(REMOVE_BRACKETS_REGEXP, ""),
     }));

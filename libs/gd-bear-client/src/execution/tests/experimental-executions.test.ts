@@ -43,25 +43,25 @@ function missingColumn(column: string, closest: string) {
 }
 
 function getClosestMatch(candidates: any[], getDistance: (candidate: any) => number) {
-    const table = candidates.map(candidate => {
+    const table = candidates.map((candidate) => {
         const distance = getDistance(candidate);
 
         return { distance, candidate };
     });
 
-    const closestMatch = first(sortBy(table, row => row.distance));
+    const closestMatch = first(sortBy(table, (row) => row.distance));
 
     return get(closestMatch, "candidate");
 }
 
 function getClosestColumn(column: string, candidates: any[]) {
-    return getClosestMatch(candidates, candidate => {
+    return getClosestMatch(candidates, (candidate) => {
         return levenshtein.get(column, candidate);
     });
 }
 
 function getClosestMetricDefinition(definition: IMetricDefinition, candidates: IMetricDefinition[]) {
-    return getClosestMatch(candidates, candidate => {
+    return getClosestMatch(candidates, (candidate) => {
         return Object.keys(candidate).reduce((sum, prop: string) => {
             const definitionString: string = definition[prop] || "";
             return sum + levenshtein.get(definitionString, candidate[prop]);
@@ -182,7 +182,7 @@ describe("execution", () => {
 
                     return createExecution()
                         .getData("myFakeProjectId", ["attrId", "metricId"])
-                        .then(result => {
+                        .then((result) => {
                             expect(result.headers[0].id).toBe("attrId");
                             expect(result.headers[0].uri).toBe("attrUri");
                             expect(result.headers[0].type).toBe("attrLabel");
@@ -214,7 +214,7 @@ describe("execution", () => {
 
                     return createExecution()
                         .getData("myFakeProjectId", ["attrId", "metricId"])
-                        .then(result => {
+                        .then((result) => {
                             expect(result.warnings).toEqual([1, 2, 3]);
                         });
                 });
@@ -267,7 +267,7 @@ describe("execution", () => {
 
                     return createExecution()
                         .getData("myFakeProjectId", ["attrId", "metricId"], {})
-                        .then(result => {
+                        .then((result) => {
                             expect(result.rawData).toEqual([
                                 [{ id: "1", name: "a" }, "2"],
                                 [{ id: "2", name: "b" }, "3"],
@@ -287,7 +287,7 @@ describe("execution", () => {
 
                     return createExecution()
                         .getData("myFakeProjectId", ["attrId", "metricId"])
-                        .then(result => {
+                        .then((result) => {
                             expect(result.rawData).toEqual([]);
                             expect(result.isEmpty).toBe(true);
                         });
@@ -298,7 +298,7 @@ describe("execution", () => {
 
                     return createExecution()
                         .getData("myFakeProjectId", ["attrId", "metricId"])
-                        .catch(err => {
+                        .catch((err) => {
                             expect(err).toBeInstanceOf(Error);
                             expect(err.response.status).toBe(400);
                         });
@@ -316,7 +316,7 @@ describe("execution", () => {
 
                     return createExecution()
                         .getData("myFakeProjectId", [{ type: "metric", uri: "/metric/uri" }])
-                        .then(null, err => {
+                        .then(null, (err) => {
                             expect(err).toBeInstanceOf(Error);
                         });
                 });
@@ -335,7 +335,7 @@ describe("execution", () => {
                         .getData("myFakeProjectId", [{ type: "metric", uri: "/metric/uri" }], {
                             metricMappings: [{ element: "metricUri", measureIndex: 0 }],
                         })
-                        .then(result => {
+                        .then((result) => {
                             expect(result.headers[1]).toEqual({
                                 id: "metricId",
                                 title: "Metric Title",

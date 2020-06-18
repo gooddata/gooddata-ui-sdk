@@ -105,7 +105,7 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
         try {
             const moreItems = await this.state.validElements.next();
 
-            this.setState(state => ({
+            this.setState((state) => ({
                 ...state,
                 isLoading: false,
                 validElements: {

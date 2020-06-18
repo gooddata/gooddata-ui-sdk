@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
@@ -39,5 +39,5 @@ export function generateConstantsForDisplayForms(
     recordings: DisplayFormRecording[],
     targetDir: string,
 ): Array<OptionalKind<VariableStatementStructure>> {
-    return recordings.map(r => generateRecordingConst(r, targetDir));
+    return recordings.map((r) => generateRecordingConst(r, targetDir));
 }

@@ -170,7 +170,7 @@ export function getDerivedTypesFromArithmeticMeasure(
         return [];
     }
 
-    const allMeasures = flatMap<IBucketOfFun, IBucketItem>(buckets, bucket => bucket.items);
+    const allMeasures = flatMap<IBucketOfFun, IBucketItem>(buckets, (bucket) => bucket.items);
     const overTimeComparisonTypes = findDerivedTypesReferencedByArithmeticMeasure(
         measure,
         allMeasures,
@@ -180,7 +180,7 @@ export function getDerivedTypesFromArithmeticMeasure(
 }
 
 export function filterOutDerivedMeasures(measures: IBucketItem[]): IBucketItem[] {
-    return measures.filter(measure => !isDerivedBucketItem(measure));
+    return measures.filter((measure) => !isDerivedBucketItem(measure));
 }
 
 function isArithmeticMeasureFromDerived(measure: IBucketItem, buckets: IBucketOfFun[]): boolean {
@@ -191,7 +191,7 @@ export function filterOutArithmeticMeasuresFromDerived(
     measures: IBucketItem[],
     buckets: IBucketOfFun[],
 ): IBucketItem[] {
-    return measures.filter(measure => !isArithmeticMeasureFromDerived(measure, buckets));
+    return measures.filter((measure) => !isArithmeticMeasureFromDerived(measure, buckets));
 }
 
 function isArithmeticMeasureFromDerivedOfTypeOnly(
@@ -208,7 +208,7 @@ export function keepOnlyMasterAndDerivedMeasuresOfType(
     derivedType: OverTimeComparisonType,
 ): IBucketItem[] {
     return measures.filter(
-        measure => !isDerivedBucketItem(measure) || isDerivedOfTypeBucketItem(measure, derivedType),
+        (measure) => !isDerivedBucketItem(measure) || isDerivedOfTypeBucketItem(measure, derivedType),
     );
 }
 
@@ -232,7 +232,7 @@ export function isDateBucketItem(bucketItem: IBucketItem): boolean {
 export const isNotDateBucketItem = negate(isDateBucketItem);
 
 export function getDateFilter(filtersBucket: IFilters): IDateFilter {
-    const dateFiltersInclEmpty = flatMap(filtersBucket.items, filterItem => {
+    const dateFiltersInclEmpty = flatMap(filtersBucket.items, (filterItem) => {
         const filters = get<IFiltersBucketItem, "filters", IBucketFilter[]>(filterItem, "filters", []);
         return filters.find(isDateFilter);
     });
@@ -324,7 +324,7 @@ export function getItemsCount(buckets: IBucketOfFun[], localIdentifier: string):
 
 export function getBucketItems(buckets: IBucketOfFun[], localIdentifier: string): IBucketItem[] {
     return get(
-        buckets.find(bucket => bucket.localIdentifier === localIdentifier),
+        buckets.find((bucket) => bucket.localIdentifier === localIdentifier),
         "items",
         [],
     );
@@ -380,7 +380,7 @@ export function getPreferredBucket(
 
         return buckets.find((bucket: IBucketOfFun) => {
             const preferenceMatch = bucket.localIdentifier === preference;
-            const typeMatch = every(get(bucket, "items", []), item => type.indexOf(item.type) !== -1);
+            const typeMatch = every(get(bucket, "items", []), (item) => type.indexOf(item.type) !== -1);
 
             return preferenceMatch && typeMatch;
         });
@@ -406,8 +406,8 @@ export function getAllItemsByType(buckets: IBucketOfFun[], types: string[]): IBu
 export function removeDuplicateBucketItems(buckets: IBucketOfFun[]): IBucketOfFun[] {
     const usedIdentifiersMap: { [key: string]: boolean } = {};
 
-    return buckets.map(bucket => {
-        const filteredBucketItems = bucket.items.filter(bucketItem => {
+    return buckets.map((bucket) => {
+        const filteredBucketItems = bucket.items.filter((bucketItem) => {
             const isDuplicate = usedIdentifiersMap[bucketItem.localIdentifier];
             usedIdentifiersMap[bucketItem.localIdentifier] = true;
             return !isDuplicate;
@@ -422,13 +422,13 @@ export function removeDuplicateBucketItems(buckets: IBucketOfFun[]): IBucketOfFu
 }
 
 export function getTotalsFromBucket(buckets: IBucketOfFun[], bucketName: string): ITotal[] {
-    const selectedBucket = buckets.find(bucket => bucket.localIdentifier === bucketName);
+    const selectedBucket = buckets.find((bucket) => bucket.localIdentifier === bucketName);
     return get(selectedBucket, "totals", []);
 }
 
 export function getUniqueAttributes(buckets: IBucketOfFun[]) {
     const attributes = getAllItemsByType(buckets, [ATTRIBUTE, DATE]);
-    return uniqBy(attributes, attribute => get(attribute, "attribute"));
+    return uniqBy(attributes, (attribute) => get(attribute, "attribute"));
 }
 
 export function getMeasuresFromMdObject(insight: IInsightDefinition) {
@@ -452,7 +452,7 @@ export function getFirstValidMeasure(buckets: IBucketOfFun[]): IBucketItem {
 function isValidMeasure(measure: IBucketItem): boolean {
     if (isArithmeticBucketItem(measure)) {
         return measure.operandLocalIdentifiers.every(
-            operandLocalIdentifier => operandLocalIdentifier !== null,
+            (operandLocalIdentifier) => operandLocalIdentifier !== null,
         );
     }
     return true;
@@ -498,7 +498,7 @@ export function getAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
 }
 
 export function getAttributeItemsWithoutStacks(buckets: IBucketOfFun[]): IBucketItem[] {
-    return getAttributeItems(buckets).filter(attribute => {
+    return getAttributeItems(buckets).filter((attribute) => {
         return !includes(getStackItems(buckets), attribute);
     });
 }
@@ -527,8 +527,10 @@ export function getAllAttributeItemsWithPreference(
         const prefBucket = getPreferredBucket(buckets, [pref], [ATTRIBUTE, DATE]);
         return [...acc, ...get(prefBucket, "items", [])];
     }, []);
-    const allBucketNames: string[] = buckets.map(bucket => get(bucket, "localIdentifier"));
-    const otherBucketNames: string[] = allBucketNames.filter(bucketName => !includes(preference, bucketName));
+    const allBucketNames: string[] = buckets.map((bucket) => get(bucket, "localIdentifier"));
+    const otherBucketNames: string[] = allBucketNames.filter(
+        (bucketName) => !includes(preference, bucketName),
+    );
     const allOtherAttributes = otherBucketNames.reduce(
         (attributes, bucketName) =>
             attributes.concat(getBucketItemsByType(buckets, bucketName, [ATTRIBUTE, DATE])),
@@ -571,7 +573,7 @@ export function applyUiConfig(referencePoint: IExtendedReferencePoint): IExtende
 }
 
 export function hasBucket(buckets: IBucketOfFun[], localIdentifier: string): boolean {
-    return buckets.some(bucket => bucket.localIdentifier === localIdentifier);
+    return buckets.some((bucket) => bucket.localIdentifier === localIdentifier);
 }
 
 export function findBucket(buckets: IBucketOfFun[], localIdentifier: string): IBucketOfFun {
@@ -586,7 +588,7 @@ export function getFirstMasterWithDerived(measureItems: IBucketItem[]): IBucketI
     const masters = filterOutDerivedMeasures(measureItems);
     const chosenMaster = masters[0];
     return measureItems.filter(
-        measureItem =>
+        (measureItem) =>
             measureItem.masterLocalIdentifier === chosenMaster.localIdentifier ||
             measureItem === chosenMaster,
     );
@@ -596,7 +598,7 @@ export function removeAllArithmeticMeasuresFromDerived(
     extendedReferencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint {
     const originalBuckets = cloneDeep(extendedReferencePoint.buckets);
-    forEach(extendedReferencePoint.buckets, bucket => {
+    forEach(extendedReferencePoint.buckets, (bucket) => {
         bucket.items = filterOutArithmeticMeasuresFromDerived(bucket.items, originalBuckets);
     });
     return extendedReferencePoint;
@@ -605,7 +607,7 @@ export function removeAllArithmeticMeasuresFromDerived(
 export function removeAllDerivedMeasures(
     extendedReferencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint {
-    forEach(extendedReferencePoint.buckets, bucket => {
+    forEach(extendedReferencePoint.buckets, (bucket) => {
         bucket.items = filterOutDerivedMeasures(bucket.items);
     });
     return extendedReferencePoint;
@@ -615,18 +617,20 @@ export function findMasterBucketItem(
     derivedBucketItem: IBucketItem,
     bucketItems: IBucketItem[],
 ): IBucketItem {
-    return bucketItems.find(item => item.localIdentifier === derivedBucketItem.masterLocalIdentifier);
+    return bucketItems.find((item) => item.localIdentifier === derivedBucketItem.masterLocalIdentifier);
 }
 
 export function findMasterBucketItems(bucketItems: IBucketItem[]): IBucketItem[] {
-    return bucketItems.filter(measure => !isDerivedBucketItem(measure));
+    return bucketItems.filter((measure) => !isDerivedBucketItem(measure));
 }
 
 export function findDerivedBucketItems(
     masterBucketItem: IBucketItem,
     bucketItems: IBucketItem[],
 ): IBucketItem[] {
-    return bucketItems.filter(measure => measure.masterLocalIdentifier === masterBucketItem.localIdentifier);
+    return bucketItems.filter(
+        (measure) => measure.masterLocalIdentifier === masterBucketItem.localIdentifier,
+    );
 }
 
 export function findDerivedBucketItem(
@@ -634,14 +638,14 @@ export function findDerivedBucketItem(
     bucketItems: IBucketItem[],
 ): IBucketItem {
     return bucketItems.find(
-        bucketItem => bucketItem.masterLocalIdentifier === masterBucketItem.localIdentifier,
+        (bucketItem) => bucketItem.masterLocalIdentifier === masterBucketItem.localIdentifier,
     );
 }
 
 export function hasDerivedBucketItems(masterBucketItem: IBucketItem, buckets: IBucketOfFun[]): boolean {
-    return buckets.some(bucket =>
+    return buckets.some((bucket) =>
         bucket.items.some(
-            bucketItem => bucketItem.masterLocalIdentifier === masterBucketItem.localIdentifier,
+            (bucketItem) => bucketItem.masterLocalIdentifier === masterBucketItem.localIdentifier,
         ),
     );
 }
@@ -782,7 +786,7 @@ function getDependenciesLocalIdentifiers(measure: IBucketItem, allMeasures: IBuc
 
     if (measure.operandLocalIdentifiers) {
         measure.operandLocalIdentifiers
-            .filter(operandLocalIdentifier => operandLocalIdentifier !== null)
+            .filter((operandLocalIdentifier) => operandLocalIdentifier !== null)
             .forEach((operandLocalIdentifier: string) => {
                 const operandMeasure = findMeasureByLocalIdentifier(operandLocalIdentifier, allMeasures);
                 if (operandMeasure !== undefined) {

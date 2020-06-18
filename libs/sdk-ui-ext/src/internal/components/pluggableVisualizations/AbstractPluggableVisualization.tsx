@@ -255,7 +255,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         }
 
         const newReferencePoint = cloneDeep<IReferencePoint>(referencePoint);
-        newReferencePoint.buckets = referencePoint.buckets.map(bucket => {
+        newReferencePoint.buckets = referencePoint.buckets.map((bucket) => {
             return {
                 ...bucket,
                 items: this.mergeDerivedBucketItems(referencePoint, bucket, newDerivedBucketItems),

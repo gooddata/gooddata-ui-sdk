@@ -11,7 +11,7 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public query(): Promise<IWorkspaceSettings> {
-        return this.authCall(async sdk => {
+        return this.authCall(async (sdk) => {
             const flags = await sdk.project.getProjectFeatureFlags(this.workspace);
 
             return {

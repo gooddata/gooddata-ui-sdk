@@ -27,7 +27,7 @@ export function createTagMap(included: SuccessIncluded[] | undefined): TagMap {
     }
 
     const tags: TagResourceSchema[] = included
-        .map(include => {
+        .map((include) => {
             if (include.type !== "tag") {
                 return null;
             }
@@ -36,7 +36,7 @@ export function createTagMap(included: SuccessIncluded[] | undefined): TagMap {
         })
         .filter((include): include is TagResourceSchema => include !== null);
 
-    return keyBy(tags, t => t.id);
+    return keyBy(tags, (t) => t.id);
 }
 
 /**
@@ -54,7 +54,7 @@ export function convertTags(relationships: object | undefined, tagsMap: TagMap):
     const tagRefs: TagResourceReference[] = (relationships as any)?.tags?.data ?? [];
 
     return tagRefs
-        .map(ref => {
+        .map((ref) => {
             const tag = tagsMap[ref.id];
 
             if (!tag) {
@@ -63,7 +63,7 @@ export function convertTags(relationships: object | undefined, tagsMap: TagMap):
 
             return tag.attributes.title ?? ref.id;
         })
-        .filter(tag => typeof tag === "string")
+        .filter((tag) => typeof tag === "string")
         .join(",");
 }
 
@@ -73,7 +73,7 @@ export function createLabelMap(included: SuccessIncluded[] | undefined): LabelMa
     }
 
     const labels: LabelResourceSchema[] = included
-        .map(include => {
+        .map((include) => {
             if (include.type !== "label") {
                 return null;
             }
@@ -82,7 +82,7 @@ export function createLabelMap(included: SuccessIncluded[] | undefined): LabelMa
         })
         .filter((include): include is LabelResourceSchema => include !== null);
 
-    return keyBy(labels, t => t.id);
+    return keyBy(labels, (t) => t.id);
 }
 
 export function createDatasetMap(included: SuccessIncluded[] | undefined): DatasetMap {
@@ -91,7 +91,7 @@ export function createDatasetMap(included: SuccessIncluded[] | undefined): Datas
     }
 
     const labels: DatasetResourceSchema[] = included
-        .map(include => {
+        .map((include) => {
             if (include.type !== "dataset") {
                 return null;
             }
@@ -100,7 +100,7 @@ export function createDatasetMap(included: SuccessIncluded[] | undefined): Datas
         })
         .filter((include): include is DatasetResourceSchema => include !== null);
 
-    return keyBy(labels, t => t.id);
+    return keyBy(labels, (t) => t.id);
 }
 
 export function getReferencedDataset(
@@ -128,7 +128,7 @@ export function convertLabels(
     const labelRefs: LabelResourceReference[] = (attribute.relationships as any)?.labels?.data ?? [];
 
     return labelRefs
-        .map(ref => {
+        .map((ref) => {
             const label = labelsMap[ref.id];
 
             if (!label) {

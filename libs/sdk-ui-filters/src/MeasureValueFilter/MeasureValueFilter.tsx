@@ -96,6 +96,6 @@ export class MeasureValueFilter extends React.PureComponent<
     };
 
     private toggleDropdown = () => {
-        this.setState(state => ({ ...state, displayDropdown: !state.displayDropdown }));
+        this.setState((state) => ({ ...state, displayDropdown: !state.displayDropdown }));
     };
 }

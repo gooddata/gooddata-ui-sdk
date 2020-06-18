@@ -190,7 +190,7 @@ function recordedPermissionsFactory(): IWorkspacePermissionsFactory {
                 canCreateScheduledMail: true,
                 canListUsersInProject: true,
             }),
-            hasPermission: _ => true,
+            hasPermission: (_) => true,
         }),
     };
 }

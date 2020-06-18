@@ -42,14 +42,14 @@ describe("IntlStore", () => {
             ];
 
             it("should return message in en-US", () => {
-                localizations.forEach(locale => {
+                localizations.forEach((locale) => {
                     const result = getTranslation("visualizations.more", locale);
                     expect(result).toBeTruthy();
                 });
             });
 
             it("should return message in en-US with replaced placeholders for values", () => {
-                localizations.forEach(locale => {
+                localizations.forEach((locale) => {
                     const result = getTranslation("gs.list.limitExceeded", locale, {
                         limit: 42,
                     });

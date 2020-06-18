@@ -26,7 +26,7 @@ import { withChart } from "../_base/withChart";
 const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = {
     chartName: "Treemap",
     bucketPropsKeys: ["measures", "viewBy", "segmentBy", "filters"],
-    bucketsFactory: props => {
+    bucketsFactory: (props) => {
         return [
             newBucket(BucketNames.MEASURES, ...props.measures),
             newBucket(BucketNames.VIEW, props.viewBy),
@@ -110,7 +110,7 @@ function getDefaultTreemapSort(buckets: IBucket[]): ISortItem[] {
 
         return [
             newAttributeSort(viewAttribute, "asc", false),
-            ...measures.map(measure => newMeasureSort(measure, "desc")),
+            ...measures.map((measure) => newMeasureSort(measure, "desc")),
         ];
     }
 

@@ -78,7 +78,7 @@ export namespace GdcFilterContext {
             !isEmpty(obj) &&
             (obj as ITempFilterContext).created &&
             (obj as ITempFilterContext).uri &&
-            (obj as ITempFilterContext).filters.every(x => isDateFilter(x) || isAttributeFilter(x))
+            (obj as ITempFilterContext).filters.every((x) => isDateFilter(x) || isAttributeFilter(x))
         );
     }
 

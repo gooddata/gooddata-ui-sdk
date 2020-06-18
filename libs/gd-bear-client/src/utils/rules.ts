@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import invariant from "invariant";
 import find from "lodash/find";
 import every from "lodash/every";
@@ -19,7 +19,7 @@ export class Rules {
     }
 
     public match(subject: any, params: any) {
-        const [, callback] = find(this.rules, ([tests]) => every(tests, test => test(subject, params)));
+        const [, callback] = find(this.rules, ([tests]) => every(tests, (test) => test(subject, params)));
 
         invariant(callback, "Callback not found :-(");
 

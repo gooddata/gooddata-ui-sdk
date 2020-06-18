@@ -90,7 +90,7 @@ const bucketPresets: any = {
         bucketProps: {
             measures,
             rows,
-            columns: rows.map(attribute => ({
+            columns: rows.map((attribute) => ({
                 insightViewAttribute: {
                     ...attribute,
                     localIdentifier: `${attributeLocalId(attribute)}_2`,
@@ -356,14 +356,14 @@ const drillHandlingPresets: any = {
 
 export const getDrillableItems = (drillableKeys: any) => {
     return Object.keys(drillableKeys)
-        .filter(itemKey => drillableKeys[itemKey])
-        .map(itemKey => drillingPresets[itemKey].drillableItem);
+        .filter((itemKey) => drillableKeys[itemKey])
+        .map((itemKey) => drillingPresets[itemKey].drillableItem);
 };
 
 export const getTotalItems = (totalKeys: any) => {
     return Object.keys(totalKeys)
-        .filter(itemKey => totalKeys[itemKey])
-        .map(itemKey => totalPresets[itemKey].totalItem);
+        .filter((itemKey) => totalKeys[itemKey])
+        .map((itemKey) => totalPresets[itemKey].totalItem);
 };
 
 export const getGroupRows = (groupRowsKey: any) => {
@@ -533,12 +533,12 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
         }
 
         const filters = Object.keys(filterPresets)
-            .filter(itemKey => filterPresetKeys[itemKey] && filterPresets[itemKey].filterItem)
-            .map(itemKey => filterPresets[itemKey].filterItem);
+            .filter((itemKey) => filterPresetKeys[itemKey] && filterPresets[itemKey].filterItem)
+            .map((itemKey) => filterPresets[itemKey].filterItem);
         const filtersProp = filters.length > 0 ? { filters } : {};
 
         const totals = getTotalItems(totalPresetKeys);
-        const grandTotalsOnly = totals.filter(total => {
+        const grandTotalsOnly = totals.filter((total) => {
             const firstAttribute = rows[0];
             return (
                 firstAttribute !== undefined &&
@@ -568,7 +568,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </style>
                 <div className="presets">
                     Data presets:{" "}
-                    {Object.keys(bucketPresets).map(presetItemKey => {
+                    {Object.keys(bucketPresets).map((presetItemKey) => {
                         const { key, label } = bucketPresets[presetItemKey];
                         return (
                             <ElementWithParam
@@ -586,7 +586,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </div>
                 <div className="presets">
                     Filter presets:{" "}
-                    {Object.keys(filterPresets).map(presetItemKey => {
+                    {Object.keys(filterPresets).map((presetItemKey) => {
                         const { key, label } = filterPresets[presetItemKey];
                         return (
                             <ElementWithParam
@@ -604,7 +604,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </div>
                 <div className="presets">
                     Drilling presets:{" "}
-                    {Object.keys(drillingPresets).map(presetItemKey => {
+                    {Object.keys(drillingPresets).map((presetItemKey) => {
                         const { key, label } = drillingPresets[presetItemKey];
                         return (
                             <ElementWithParam
@@ -622,7 +622,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </div>
                 <div className="presets">
                     Sorting presets:{" "}
-                    {Object.keys(sortingPresets).map(presetItemKey => {
+                    {Object.keys(sortingPresets).map((presetItemKey) => {
                         const { key, label } = sortingPresets[presetItemKey];
                         return (
                             <ElementWithParam
@@ -640,7 +640,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </div>
                 <div className="presets">
                     Total presets:{" "}
-                    {Object.keys(totalPresets).map(presetItemKey => {
+                    {Object.keys(totalPresets).map((presetItemKey) => {
                         const { key, label } = totalPresets[presetItemKey];
                         return (
                             <ElementWithParam
@@ -658,7 +658,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </div>
                 <div className="presets">
                     Menu presets:{" "}
-                    {Object.keys(menuPresets).map(presetItemKey => {
+                    {Object.keys(menuPresets).map((presetItemKey) => {
                         const { key, label } = menuPresets[presetItemKey];
                         return (
                             <ElementWithParam
@@ -676,7 +676,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </div>
                 <div className="presets">
                     Pivot table size:{" "}
-                    {Object.keys(pivotTableSizePresets).map(presetItemKey => {
+                    {Object.keys(pivotTableSizePresets).map((presetItemKey) => {
                         const { key, label } = pivotTableSizePresets[presetItemKey];
                         return (
                             <ElementWithParam
@@ -694,7 +694,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </div>
                 <div className="presets">
                     Max height:{" "}
-                    {Object.keys(maxHeightPresets).map(presetItemKey => {
+                    {Object.keys(maxHeightPresets).map((presetItemKey) => {
                         const { key, label } = maxHeightPresets[presetItemKey];
                         return (
                             <ElementWithParam
@@ -712,7 +712,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </div>
                 <div className="presets">
                     Group rows:{" "}
-                    {Object.keys(groupRowsPresets).map(presetItemKey => {
+                    {Object.keys(groupRowsPresets).map((presetItemKey) => {
                         const { key, label } = groupRowsPresets[presetItemKey];
                         return (
                             <ElementWithParam
@@ -730,7 +730,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 </div>
                 <div className="presets">
                     Drill handling:{" "}
-                    {Object.keys(drillHandlingPresets).map(presetItemKey => {
+                    {Object.keys(drillHandlingPresets).map((presetItemKey) => {
                         const { key, label } = drillHandlingPresets[presetItemKey];
                         return (
                             <ElementWithParam

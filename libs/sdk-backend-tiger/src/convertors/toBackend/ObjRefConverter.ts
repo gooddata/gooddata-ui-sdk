@@ -23,7 +23,7 @@ const tigerAfmTypeByObjectAfmType: {
 };
 
 const isValidAfmType = (obj: any): obj is AfmObjectType => {
-    return !isEmpty(obj) && allValidAfmTypes.some(afmType => afmType === obj);
+    return !isEmpty(obj) && allValidAfmTypes.some((afmType) => afmType === obj);
 };
 
 // TODO: get rid of the defaultValue, tiger should explode if ref is not provided correctly

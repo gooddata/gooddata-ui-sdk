@@ -59,10 +59,10 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
         if (!cacheEntry) {
             const result = super
                 .execute()
-                .then(res => {
+                .then((res) => {
                     return new WithExecutionResultCaching(res, this.createNew, this.ctx);
                 })
-                .catch(e => {
+                .catch((e) => {
                     cache.del(cacheKey);
                     throw e;
                 });
@@ -101,7 +101,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
 
     public readAll = (): Promise<IDataView> => {
         if (!this.allData) {
-            this.allData = super.readAll().catch(e => {
+            this.allData = super.readAll().catch((e) => {
                 this.allData = undefined;
                 throw e;
             });
@@ -119,7 +119,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         let window: Promise<IDataView> | undefined = this.windows.get(cacheKey);
 
         if (!window) {
-            window = super.readWindow(offset, size).catch(e => {
+            window = super.readWindow(offset, size).catch((e) => {
                 if (this.windows) {
                     this.windows.del(cacheKey);
                 }
@@ -152,7 +152,7 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
         let catalog = cache.get(cacheKey);
 
         if (!catalog) {
-            catalog = super.load().catch(e => {
+            catalog = super.load().catch((e) => {
                 cache.del(cacheKey);
                 throw e;
             });
@@ -190,7 +190,7 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
 
 function cachedExecutions(ctx: CachingContext): ExecutionDecoratorFactory {
     return (original: IExecutionFactory) =>
-        new DecoratedExecutionFactory(original, execution => new WithExecutionCaching(execution, ctx));
+        new DecoratedExecutionFactory(original, (execution) => new WithExecutionCaching(execution, ctx));
 }
 
 function cachedCatalog(ctx: CachingContext): CatalogDecoratorFactory {

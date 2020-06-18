@@ -214,8 +214,5 @@ export function prepareExecution(
     backend: IAnalyticalBackend,
     definition: IExecutionDefinition,
 ): IPreparedExecution {
-    return backend
-        .workspace(definition.workspace)
-        .execution()
-        .forDefinition(definition);
+    return backend.workspace(definition.workspace).execution().forDefinition(definition);
 }

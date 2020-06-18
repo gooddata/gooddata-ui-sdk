@@ -316,7 +316,7 @@ function getHeatmapLegendLabels(series: IHeatmapLegendItem[], format: string, nu
     const max = get(last(series), "range.to", 0);
     const diff = max - min;
 
-    return range(series.length + 1).map(index => {
+    return range(series.length + 1).map((index) => {
         let value;
 
         if (index === 0) {

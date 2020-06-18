@@ -189,9 +189,9 @@ export class AttributeDropdownCore extends React.PureComponent<
     ) => {
         const nonEmptyItems = items.filter(isNonEmptyListItem);
 
-        return selection.map(selectedItem => {
+        return selection.map((selectedItem) => {
             const foundItem = nonEmptyItems.find(
-                item =>
+                (item) =>
                     (selectedItem.uri && item.uri === selectedItem.uri) ||
                     (selectedItem.title && item.title === selectedItem.title),
             );
@@ -223,7 +223,7 @@ export class AttributeDropdownCore extends React.PureComponent<
             .withLimit(limit)
             .query();
 
-        this.setState(state => {
+        this.setState((state) => {
             const mergedValidElements = mergeElementQueryResults(state.validElements, newElements);
             const { items } = mergedValidElements;
 
@@ -282,7 +282,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                 return isInverted ? title : `${title}: ${getAllPartIntl}`;
             }
 
-            const itemTitlesToString = selectedItems.map(selectedItem => selectedItem.title).join(", ");
+            const itemTitlesToString = selectedItems.map((selectedItem) => selectedItem.title).join(", ");
             const fullTitle = isInverted
                 ? `${title}: ${getAllPartIntl} ${itemTitlesToString}`
                 : `${title}: ${itemTitlesToString}`;
@@ -380,7 +380,7 @@ export class AttributeDropdownCore extends React.PureComponent<
             ? this.props.translationProps.emptyHeaderString
             : "(empty value)";
         const nonEmptyItems = items.filter(isNonEmptyListItem);
-        nonEmptyItems.forEach(item => {
+        nonEmptyItems.forEach((item) => {
             if (isEmpty(item.title)) {
                 // TODO: SDK8: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
                 // @ts-ignore

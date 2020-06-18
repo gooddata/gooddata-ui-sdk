@@ -95,7 +95,7 @@ function createExecution(buckets: IBucket[], props: IXirrProps): IPreparedExecut
         .withDimensions(
             newDimension([
                 "measureGroup",
-                ...bucketsAttributes(buckets).map(attribute => attributeLocalId(attribute)),
+                ...bucketsAttributes(buckets).map((attribute) => attributeLocalId(attribute)),
             ]),
         );
 }

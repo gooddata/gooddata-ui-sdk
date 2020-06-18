@@ -26,7 +26,7 @@ function lookupRelatedObject(included: SuccessIncluded[] | undefined, id: string
         return;
     }
 
-    return included?.find(item => item.type === type && item.id === id);
+    return included?.find((item) => item.type === type && item.id === id);
 }
 
 function getAttributeLabels(
@@ -35,7 +35,7 @@ function getAttributeLabels(
 ): LabelResourceSchema[] {
     const labelsRefs = (attribute.relationships as any).labels.data as LabelResourceReference[];
     const allLabels: LabelResourceSchema[] = labelsRefs
-        .map(ref => {
+        .map((ref) => {
             const obj = lookupRelatedObject(included, ref.id, ref.type);
 
             if (!obj) {
@@ -59,11 +59,11 @@ function isGeoLabel(label: LabelResourceSchema): boolean {
 }
 
 function createNonDateAttributes(attributes: AttributeResourcesResponseSchema): ICatalogAttribute[] {
-    const nonDateAttributes = attributes.data.filter(attr => attr.attributes.granularity === undefined);
+    const nonDateAttributes = attributes.data.filter((attr) => attr.attributes.granularity === undefined);
 
-    return nonDateAttributes.map(attribute => {
+    return nonDateAttributes.map((attribute) => {
         const allLabels = getAttributeLabels(attribute, attributes.included);
-        const nonGeoLabels = allLabels.filter(label => !isGeoLabel(label));
+        const nonGeoLabels = allLabels.filter((label) => !isGeoLabel(label));
         const geoLabels = allLabels.filter(isGeoLabel);
         const defaultLabel = nonGeoLabels[0] ?? geoLabels[0];
 
@@ -82,7 +82,7 @@ function identifyDateDatasets(
 ) {
     const datasets: { [id: string]: DatasetWithAttributes } = {};
 
-    dateAttributes.forEach(attribute => {
+    dateAttributes.forEach((attribute) => {
         const ref = (attribute.relationships as any)?.dataset?.data;
 
         if (!ref) {
@@ -111,11 +111,11 @@ function identifyDateDatasets(
 }
 
 function createDateDatasets(attributes: AttributeResourcesResponseSchema): ICatalogDateDataset[] {
-    const dateAttributes = attributes.data.filter(attr => attr.attributes.granularity !== undefined);
+    const dateAttributes = attributes.data.filter((attr) => attr.attributes.granularity !== undefined);
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 
-    return dateDatasets.map(dd => {
-        const catalogDateAttributes = dd.attributes.map(attribute => {
+    return dateDatasets.map((dd) => {
+        const catalogDateAttributes = dd.attributes.map((attribute) => {
             const labels = getAttributeLabels(attribute, attributes.included);
             const defaultLabel = labels[0];
 

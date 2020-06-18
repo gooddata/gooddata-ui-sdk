@@ -60,7 +60,7 @@ const toggleNonStackedChartLabels = (
         visiblePoints.filter((point: any) => {
             return hasDataLabel(point) && hasShape(point);
         }),
-    ).some(pointPair => {
+    ).some((pointPair) => {
         const [firstPoint, nextPoint]: any[] = pointPair || [];
         const firstDataLabelAttr = getDataLabelAttributes(firstPoint);
         const nextDataLabelAttr = getDataLabelAttributes(nextPoint);
@@ -126,7 +126,7 @@ export function isOverlappingWidth(visiblePoints: Highcharts.Point[]) {
 }
 
 export function areNeighborsOverlapping(neighbors: IUnsafeDataLabels[][]): boolean {
-    return neighbors.some(labelsPair => {
+    return neighbors.some((labelsPair) => {
         const [firstLabel, nextLabel]: IUnsafeDataLabels[] = labelsPair || [];
 
         if (!isEmpty(firstLabel) && !isEmpty(nextLabel)) {

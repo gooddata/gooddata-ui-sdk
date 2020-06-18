@@ -51,10 +51,7 @@ export class CatalogRecording implements IRecording {
     }
 
     public async makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void> {
-        const catalog = await backend
-            .workspace(workspace)
-            .catalog()
-            .load();
+        const catalog = await backend.workspace(workspace).catalog().load();
 
         const items = catalog.getItems();
         const groups = catalog.getGroups();

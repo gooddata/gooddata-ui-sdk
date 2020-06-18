@@ -89,8 +89,8 @@ export class ArithmeticMeasureTitleFactory {
         measureTitles: IMeasureTitleProps[],
     ): string | undefined {
         const measureCurrentNames = measureTitles
-            .filter(measureTitle => measureTitle.localIdentifier === localIdentifier)
-            .map(measureTitle => measureTitle.alias || measureTitle.title);
+            .filter((measureTitle) => measureTitle.localIdentifier === localIdentifier)
+            .map((measureTitle) => measureTitle.alias || measureTitle.title);
 
         return measureCurrentNames.length > 0 ? measureCurrentNames[0] : undefined;
     }

@@ -27,7 +27,7 @@ class WithExecutionEventing extends DecoratedPreparedExecution {
             beforeExecute(this.definition);
         }
 
-        return super.execute().then(result => {
+        return super.execute().then((result) => {
             if (successfulExecute) {
                 successfulExecute(result);
             }
@@ -56,14 +56,14 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
         const promisedDataView = super.readAll();
 
         return promisedDataView
-            .then(res => {
+            .then((res) => {
                 if (successfulResultReadAll) {
                     successfulResultReadAll(res);
                 }
 
                 return res;
             })
-            .catch(e => {
+            .catch((e) => {
                 if (failedResultReadAll) {
                     failedResultReadAll(e);
                 }
@@ -78,14 +78,14 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
         const promisedDataView = super.readWindow(offset, size);
 
         return promisedDataView
-            .then(res => {
+            .then((res) => {
                 if (successfulResultReadWindow) {
                     successfulResultReadWindow(offset, size, res);
                 }
 
                 return res;
             })
-            .catch(e => {
+            .catch((e) => {
                 if (failedResultReadWindow) {
                     failedResultReadWindow(offset, size, e);
                 }
@@ -167,10 +167,10 @@ export function withEventing(
     }
 
     return decoratedBackend(realBackend, {
-        execution: original =>
+        execution: (original) =>
             new DecoratedExecutionFactory(
                 original,
-                execution => new WithExecutionEventing(execution, callbacks),
+                (execution) => new WithExecutionEventing(execution, callbacks),
             ),
     });
 }

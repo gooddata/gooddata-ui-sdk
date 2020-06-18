@@ -110,7 +110,7 @@ const getOptionsForOffsets = (
     offsets: number[],
     granularity: DateFilterGranularity,
     intl: IMessageTranslator,
-): DynamicSelectOption[] => offsets.map(offset => getOption(offset, granularity, intl));
+): DynamicSelectOption[] => offsets.map((offset) => getOption(offset, granularity, intl));
 
 const getDefaultOptions = (
     granularity: DateFilterGranularity,
@@ -175,7 +175,7 @@ const getFullTextMatches = (
     intl: IMessageTranslator,
 ): DynamicSelectItem[] => {
     const searchString = trimmedInput.toLowerCase();
-    const matches = getFullTextOptions(offset, granularity, intl).filter(option =>
+    const matches = getFullTextOptions(offset, granularity, intl).filter((option) =>
         option.label.toLowerCase().includes(searchString),
     );
 
@@ -187,14 +187,14 @@ export const findRelativeDateFilterOptionByLabel = (
     input: string,
 ): DynamicSelectOption | null => {
     const trimmedInput = getTrimmedInput(input);
-    return getSelectableItems(options).find(option => option.label === trimmedInput);
+    return getSelectableItems(options).find((option) => option.label === trimmedInput);
 };
 
 export const findRelativeDateFilterOptionByValue = (
     options: DynamicSelectItem[],
     value: number,
 ): DynamicSelectOption | null => {
-    return getSelectableItems(options).find(option => option.value === value);
+    return getSelectableItems(options).find((option) => option.value === value);
 };
 
 export function getRelativeDateFilterItems(

@@ -39,12 +39,12 @@ export const DynamicSortingExample: React.FC = () => {
         direction: "asc",
     });
     const onSortOptionChange = (sortOption: ISortOption) => () =>
-        setState(state => ({
+        setState((state) => ({
             ...state,
             sortOption,
         }));
     const onDirectionChange = (direction: SortDirection) => () =>
-        setState(state => ({
+        setState((state) => ({
             ...state,
             direction,
         }));
@@ -60,47 +60,47 @@ export const DynamicSortingExample: React.FC = () => {
         {
             key: "state",
             label: "State",
-            description: dir =>
+            description: (dir) =>
                 `The column stacks (states) are sorted alphabetically by the label of the state attribute in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: dir => [newAttributeSort(LdmExt.LocationState, dir)],
+            sortBy: (dir) => [newAttributeSort(LdmExt.LocationState, dir)],
         },
         {
             key: "date",
             label: "Date attribute",
-            description: dir =>
+            description: (dir) =>
                 `The columns (date) are sorted by the value of the date attribute in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: dir => [newAttributeSort(LdmExt.monthDate, dir)],
+            sortBy: (dir) => [newAttributeSort(LdmExt.monthDate, dir)],
         },
         {
             key: "sum-of-column",
             label: "Date attribute by sum of the column",
-            description: dir =>
+            description: (dir) =>
                 `The columns (date) are sorted by the sum of the Total Sales stacks in each column in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: dir => [newAttributeSort(LdmExt.monthDate, dir, true)],
+            sortBy: (dir) => [newAttributeSort(LdmExt.monthDate, dir, true)],
         },
         {
             key: "sum-of-stacks",
             label: "State attribute by sum of individual stacks",
-            description: dir =>
+            description: (dir) =>
                 `The stacks (state) are sorted by the sum of the Total Sales stacks across all columns in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: dir => [newAttributeSort(LdmExt.LocationState, dir, true)],
+            sortBy: (dir) => [newAttributeSort(LdmExt.LocationState, dir, true)],
         },
         {
             key: "state-element",
             label: "Measure of California",
-            description: dir =>
+            description: (dir) =>
                 `The columns (date) are sorted by the value of the Total Sales of California stack in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: dir => [
+            sortBy: (dir) => [
                 newMeasureSort(LdmExt.TotalSales1, dir, [
                     newAttributeLocator(LdmExt.LocationState, LdmExt.locationStateAttributeCaliforniaUri),
                 ]),
@@ -109,11 +109,11 @@ export const DynamicSortingExample: React.FC = () => {
         {
             key: "date-element",
             label: "Measure of January",
-            description: dir =>
+            description: (dir) =>
                 `The column stacks (states) are sorted by the value of Total Sales in the January column in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: dir => [
+            sortBy: (dir) => [
                 newMeasureSort(LdmExt.TotalSales1, dir, [
                     newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateIdentifierJanuary),
                 ]),
@@ -162,7 +162,7 @@ export const DynamicSortingExample: React.FC = () => {
             `}</style>
             <div className="sorting-options">
                 <span className="sorting-label">Sort by</span>
-                {sortOptions.map(sortOptionItem => {
+                {sortOptions.map((sortOptionItem) => {
                     return (
                         <button
                             key={sortOptionItem.key}

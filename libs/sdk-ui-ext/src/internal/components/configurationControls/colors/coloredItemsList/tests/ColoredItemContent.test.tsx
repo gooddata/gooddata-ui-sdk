@@ -22,11 +22,6 @@ function createComponent(customProps: Partial<IColoredItemContentProps> = {}) {
 describe("ColoredItemContent", () => {
     it("should set s-color class with the current RGB color", () => {
         const wrapper = createComponent({ color: { r: 1, g: 2, b: 3 } });
-        expect(
-            wrapper
-                .find(ColoredItemContent)
-                .find(".s-color-1-2-3")
-                .exists(),
-        ).toBe(true);
+        expect(wrapper.find(ColoredItemContent).find(".s-color-1-2-3").exists()).toBe(true);
     });
 });

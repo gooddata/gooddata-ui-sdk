@@ -61,7 +61,7 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
             throw new UnexpectedError("Tiger backend does not allow referencing objects by URI");
         }
 
-        const response = await this.authCall(sdk => {
+        const response = await this.authCall((sdk) => {
             const elementsRequest: Parameters<typeof sdk.labelElements.processElementsRequest>[0] = {
                 ...(options?.complement && { complementFilter: options.complement }),
                 ...(options?.filter && { patternFilter: options.filter }),

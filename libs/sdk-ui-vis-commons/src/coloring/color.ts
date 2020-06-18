@@ -72,7 +72,7 @@ export function getLighterColorFromRGB(color: IRgbColorValue, percent: number) {
 export function normalizeColorToRGB(color: string) {
     const hexPattern = /#([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})/i;
     return color.replace(hexPattern, (_prefix: string, r: string, g: string, b: string) => {
-        return `rgb(${[r, g, b].map(value => parseInt(value, 16).toString(10)).join(", ")})`;
+        return `rgb(${[r, g, b].map((value) => parseInt(value, 16).toString(10)).join(", ")})`;
     });
 }
 
@@ -126,7 +126,7 @@ export function getColorFromMapping(
         return undefined;
     }
 
-    const mapping = colorMapping.find(item => item.predicate(mappingHeader, { dv }));
+    const mapping = colorMapping.find((item) => item.predicate(mappingHeader, { dv }));
     return mapping && mapping.color;
 }
 

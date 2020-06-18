@@ -41,7 +41,7 @@ export type SupportedMetadataObject =
     | GdcMetadata.IPrompt;
 
 const isSupportedMetadataObject = (obj: any): obj is SupportedMetadataObject =>
-    supportedMetadataObjectsTypeGuards.some(isType => isType(obj));
+    supportedMetadataObjectsTypeGuards.some((isType) => isType(obj));
 
 export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataObject => {
     if (!isSupportedMetadataObject(obj)) {
@@ -61,25 +61,25 @@ export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataO
             .uri(obj.meta.uri);
 
     if (GdcMetadata.isAttribute(obj)) {
-        return newAttributeMetadataObject(ref, a => a.modify(commonModifications));
+        return newAttributeMetadataObject(ref, (a) => a.modify(commonModifications));
     } else if (GdcMetadata.isAttributeDisplayForm(obj)) {
-        return newAttributeDisplayFormMetadataObject(ref, a =>
+        return newAttributeDisplayFormMetadataObject(ref, (a) =>
             a.modify(commonModifications).attribute(uriRef(obj.content.formOf)),
         );
     } else if (GdcMetadata.isMetric(obj)) {
-        return newMeasureMetadataObject(ref, m =>
+        return newMeasureMetadataObject(ref, (m) =>
             m
                 .modify(commonModifications)
                 .expression(obj.content.expression)
                 .format(obj.content.format || "##,#"),
         );
     } else if (GdcMetadata.isFact(obj)) {
-        return newFactMetadataObject(ref, f => f.modify(commonModifications));
+        return newFactMetadataObject(ref, (f) => f.modify(commonModifications));
     } else if (GdcMetadata.isDataSet(obj)) {
-        return newDataSetMetadataObject(ref, ds => ds.modify(commonModifications));
+        return newDataSetMetadataObject(ref, (ds) => ds.modify(commonModifications));
     } else {
         // is prompt
-        return newVariableMetadataObject(ref, v => v.modify(commonModifications));
+        return newVariableMetadataObject(ref, (v) => v.modify(commonModifications));
     }
 };
 

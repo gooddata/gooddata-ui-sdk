@@ -40,7 +40,7 @@ describe("Combo Configuration", () => {
     }
 
     describe("getDefaultChartType", () => {
-        it.each([COLUMN, LINE, AREA])("should return '%s' when both y axes have same chart type", type => {
+        it.each([COLUMN, LINE, AREA])("should return '%s' when both y axes have same chart type", (type) => {
             const config: IChartConfig = {
                 primaryChartType: type,
                 secondaryChartType: type,

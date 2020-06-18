@@ -28,9 +28,7 @@ describe("PluggableXirr", () => {
         renderFun: jest.fn(),
     };
 
-    const executionFactory = dummyBackend()
-        .workspace("PROJECTID")
-        .execution();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
 
     function createComponent(customProps: Partial<IVisConstruct> = {}) {
         return new PluggableXirr({

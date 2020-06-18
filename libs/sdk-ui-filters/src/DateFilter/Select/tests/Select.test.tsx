@@ -85,8 +85,8 @@ describe("Select", () => {
             const props: ISelectMenuProps<string> = {
                 className: "menuClassName",
                 items: sampleItems,
-                getItemProps: f => f,
-                getMenuProps: f => f,
+                getItemProps: (f) => f,
+                getMenuProps: (f) => f,
                 highlightedIndex: 0,
                 optionClassName: "optionClassName",
                 selectedItem: optionLast,

@@ -92,7 +92,7 @@ function loadScenarios(directory: string): ScenarioDescriptor[] {
         }
 
         const validScenarios = scenarios.filter(
-            s => s.vis !== undefined && s.scenario !== undefined,
+            (s) => s.vis !== undefined && s.scenario !== undefined,
         ) as ScenarioDescriptor[];
 
         if (validScenarios.length !== scenarios.length) {
@@ -269,7 +269,7 @@ export class ExecutionRecording implements IRecording {
         }
 
         if (this.dataViewRequests.windows) {
-            this.dataViewRequests.windows.forEach(win => {
+            this.dataViewRequests.windows.forEach((win) => {
                 const filename = path.join(this.directory, DataViewWindowFile(win));
 
                 files[filename] = win;

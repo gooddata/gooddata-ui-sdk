@@ -115,7 +115,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({
 
     const { pathname } = location;
     const href = pathname;
-    const currentRoute = (href !== undefined && routes.find(link => link.path === BASEPATH + href)) || null;
+    const currentRoute = (href !== undefined && routes.find((link) => link.path === BASEPATH + href)) || null;
     const pageTitle =
         currentRoute === null || currentRoute.title === appName
             ? appName

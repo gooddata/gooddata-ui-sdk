@@ -29,9 +29,9 @@ function findDateDatasetsWithAttributes(
     /*
      * TODO: this can be replaced with server-side filtering, need to figure out the query
      */
-    const dateAttributes = attributes.filter(entity => entity.attributes.granularity !== undefined);
+    const dateAttributes = attributes.filter((entity) => entity.attributes.granularity !== undefined);
 
-    dateAttributes.forEach(attribute => {
+    dateAttributes.forEach((attribute) => {
         const dataset = getReferencedDataset(attribute.relationships, datasetsMap);
         if (!dataset) {
             return;
@@ -67,7 +67,7 @@ function convertToExportableFormat(
                 },
                 content: {
                     attributes: attributes
-                        .map(attribute => convertAttribute(attribute, labelsMap, tagsMap))
+                        .map((attribute) => convertAttribute(attribute, labelsMap, tagsMap))
                         .filter((a): a is Attribute => a !== undefined),
                 },
             },

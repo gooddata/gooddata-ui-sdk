@@ -20,7 +20,7 @@ const objRefTypeByTigerType: {
 };
 
 const isValidTigerAfmType = (obj: any): obj is TigerAfmType => {
-    return !isEmpty(obj) && allValidTigerAfmTypes.some(afmType => afmType === obj);
+    return !isEmpty(obj) && allValidTigerAfmTypes.some((afmType) => afmType === obj);
 };
 
 function toObjectType(value: TigerAfmType): ObjectType {

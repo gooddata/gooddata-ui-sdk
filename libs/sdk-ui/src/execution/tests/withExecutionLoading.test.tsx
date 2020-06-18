@@ -23,7 +23,7 @@ const renderEnhancedComponent = (
     hocConfig?: Omit<IWithExecution<IDummyComponentProps>, "execution" | "exportTitle">,
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
-    const CoreComponent: React.FC<WithLoadingResult & IDummyComponentProps> = props => {
+    const CoreComponent: React.FC<WithLoadingResult & IDummyComponentProps> = (props) => {
         const { result, error, reload, isLoading } = props;
         return (
             <div>
@@ -77,10 +77,7 @@ describe("withExecution", () => {
     it("should start loading again after invoking injected fetch function", async () => {
         const wrapper = renderEnhancedComponent();
         await createDummyPromise({ delay: 150 });
-        wrapper
-            .dive()
-            .find(".Refetch")
-            .simulate("click");
+        wrapper.dive().find(".Refetch").simulate("click");
 
         expect(wrapper.prop("isLoading")).toBe(true);
     });

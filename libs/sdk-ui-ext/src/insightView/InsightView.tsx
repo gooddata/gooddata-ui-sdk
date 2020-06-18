@@ -209,7 +209,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
         this.visualization = visualizationFactory({
             backend: this.props.backend,
             callbacks: {
-                onError: error => {
+                onError: (error) => {
                     this.setError(error);
                     if (this.props.onError) {
                         this.props.onError(error);
@@ -278,15 +278,15 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
                 ? idRef(this.props.insight, "insight")
                 : this.props.insight;
 
-        return this.getRemoteResource<IInsight>(workspace => workspace.insights().getInsight(ref));
+        return this.getRemoteResource<IInsight>((workspace) => workspace.insights().getInsight(ref));
     };
 
     private getColorPaletteFromProject = () => {
-        return this.getRemoteResource<IColorPalette>(workspace => workspace.styling().colorPalette());
+        return this.getRemoteResource<IColorPalette>((workspace) => workspace.styling().colorPalette());
     };
 
     private getWorkspaceSettings = () => {
-        return this.getRemoteResource<IWorkspaceSettings>(workspace => workspace.settings().query());
+        return this.getRemoteResource<IWorkspaceSettings>((workspace) => workspace.settings().query());
     };
 
     private updateWorkspaceSettings = async () => {

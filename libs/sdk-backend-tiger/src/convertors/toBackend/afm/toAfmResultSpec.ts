@@ -46,7 +46,7 @@ function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotal
         .reduce((acc, totals) => acc.concat(...totals), [])
         .filter(totalIsNative);
 
-    return nativeTotals.map(t => {
+    return nativeTotals.map((t) => {
         // then for each native total, look across buckets (if any) for an attribute that is specified in
         // the total definition
         const attribute = bucketsFindAttribute(def.buckets, t.attributeIdentifier);
@@ -74,7 +74,7 @@ function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotal
 }
 
 function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
-    return def.dimensions.map(dim => {
+    return def.dimensions.map((dim) => {
         if (!isEmpty(dim.totals)) {
             throw new Error("Tiger backend does not support totals.");
         }

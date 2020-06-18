@@ -11,7 +11,7 @@ function testInsight(id: string, title?: string): IInsight {
         insight: {
             identifier: id,
             uri: "test",
-            ...newInsightDefinition("local:test", m => m.title(title ?? "Untitled test insight")).insight,
+            ...newInsightDefinition("local:test", (m) => m.title(title ?? "Untitled test insight")).insight,
         },
     };
 }
@@ -20,7 +20,7 @@ describe("recorded insights", () => {
     it("should allow adding new insights", async () => {
         const insights = new RecordedInsights();
         const result = await insights.createInsight(
-            newInsightDefinition("local:test", m => m.title("Test Insight 1")),
+            newInsightDefinition("local:test", (m) => m.title("Test Insight 1")),
         );
 
         expect(insightId(result)).toBeDefined();

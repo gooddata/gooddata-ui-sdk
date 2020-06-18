@@ -12,8 +12,8 @@ const getUriFromPairByIdentifier = (
     excludeUris: string[],
 ): string | undefined => {
     const resolvedPair = uriIdentifierPairs
-        .filter(result => !includes(excludeUris, result.uri))
-        .find(result => result.identifier === identifier);
+        .filter((result) => !includes(excludeUris, result.uri))
+        .find((result) => result.identifier === identifier);
 
     return resolvedPair?.uri;
 };
@@ -45,7 +45,7 @@ export const sanitizeDrillingActivationPostMessageData = async (
     const allUris = uniq([
         ...simpleUris,
         ...compact(
-            simpleIdentifiers.map(identifier =>
+            simpleIdentifiers.map((identifier) =>
                 getUriFromPairByIdentifier(identifier, urisFromIdentifiers, simpleUris),
             ),
         ),
@@ -54,7 +54,7 @@ export const sanitizeDrillingActivationPostMessageData = async (
     const allComposedFromUris = uniq([
         ...composedFromUris,
         ...compact(
-            composedFromIdentifiers.map(identifier =>
+            composedFromIdentifiers.map((identifier) =>
                 getUriFromPairByIdentifier(identifier, urisFromIdentifiers, composedFromUris),
             ),
         ),

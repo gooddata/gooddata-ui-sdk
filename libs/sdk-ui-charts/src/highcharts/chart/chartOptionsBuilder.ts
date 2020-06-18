@@ -373,7 +373,7 @@ export function getScatterPlotSeries(
 }
 
 function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
-    return bucketEmptyFlags.filter(bucketEmpyFlag => bucketEmpyFlag).length;
+    return bucketEmptyFlags.filter((bucketEmpyFlag) => bucketEmpyFlag).length;
 }
 
 export function getBubbleChartSeries(
@@ -1031,7 +1031,7 @@ export function getDrillableSeries(
                     null,
                 );
 
-                const drilldown: boolean = drillableHooks.some(drillableHook =>
+                const drilldown: boolean = drillableHooks.some((drillableHook) =>
                     isSomeHeaderPredicateMatched(drillableItems, drillableHook, dv),
                 );
 

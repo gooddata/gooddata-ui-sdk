@@ -24,11 +24,11 @@ export const DEFAULT_COLOR_PALETTE = [
     "rgb(189,234,222)",
     "rgb(239,197,194)",
 ].map(
-    color =>
+    (color) =>
         `#${/rgb\(([\d]*),([\d]*),([\d]*)\)/
             .exec(color)!
             .slice(1)
-            .map(val => `0${parseInt(val, 10).toString(16)}`.slice(-2))
+            .map((val) => `0${parseInt(val, 10).toString(16)}`.slice(-2))
             .join("")}`,
 );
 

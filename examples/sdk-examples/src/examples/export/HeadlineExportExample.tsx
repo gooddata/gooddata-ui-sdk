@@ -17,7 +17,7 @@ const style = { display: "flex" };
 export const HeadlineExportExample: React.FC = () => {
     return (
         <ExampleWithExport filters={filters}>
-            {onExportReady => (
+            {(onExportReady) => (
                 <div className="s-headline" style={style}>
                     <Headline
                         primaryMeasure={primaryMeasure}

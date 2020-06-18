@@ -44,7 +44,7 @@ export function tryToMapForeignBuckets(extendedReferencePoint: Readonly<IExtende
             continue;
         }
 
-        const isCompatibleMeasureType = every(sourceBucket.items, item => item.type === METRIC);
+        const isCompatibleMeasureType = every(sourceBucket.items, (item) => item.type === METRIC);
         if (!isCompatibleMeasureType) {
             allMeasuresCompatible = false;
             continue;

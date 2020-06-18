@@ -20,7 +20,7 @@ describe("util", () => {
         it("should work as resolve function of promise", () => {
             return Promise.resolve(testObj)
                 .then(getIn("b.c"))
-                .then(result => {
+                .then((result) => {
                     expect(result).toEqual({ d: 2 });
                 });
         });
@@ -68,7 +68,7 @@ describe("util", () => {
             fetchMock.restore();
         });
 
-        it("should return timeout error if maxAttempts are reached", async done => {
+        it("should return timeout error if maxAttempts are reached", async (done) => {
             mockPollingRequestWithStatus(URI, runningTask, finishedTask);
 
             await handleHeadPolling(mockedXHR(), URI, () => false, options).then(null, (error: Error) => {
@@ -77,7 +77,7 @@ describe("util", () => {
             });
         });
 
-        it("should return error if the status is 400", async done => {
+        it("should return error if the status is 400", async (done) => {
             mockPollingRequestWithStatus(URI, runningTask, failedTask);
 
             await handleHeadPolling(mockedXHR(), URI, isPollingDone, options).then(null, (error: Error) => {
@@ -86,7 +86,7 @@ describe("util", () => {
             });
         });
 
-        it("should return uri if the status is 200", async done => {
+        it("should return uri if the status is 200", async (done) => {
             mockPollingRequestWithStatus(URI, runningTask, finishedTask);
 
             await handleHeadPolling(mockedXHR(), URI, isPollingDone, options).then(

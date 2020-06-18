@@ -5,7 +5,7 @@ import { IErrorProps } from "../base";
 /**
  * @internal
  */
-export const KpiError: React.StatelessComponent<IErrorProps> = props => {
+export const KpiError: React.StatelessComponent<IErrorProps> = (props) => {
     const message: string = props.message;
 
     return (

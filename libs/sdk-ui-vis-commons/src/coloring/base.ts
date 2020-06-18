@@ -136,7 +136,7 @@ export function getAtributeColorAssignment(
         "attributeHeaderItem.uri",
     );
 
-    return uniqItems.map(headerItem => {
+    return uniqItems.map((headerItem) => {
         const mappedColor = getColorFromMapping(headerItem, colorMapping, dv);
 
         const color: IColor =

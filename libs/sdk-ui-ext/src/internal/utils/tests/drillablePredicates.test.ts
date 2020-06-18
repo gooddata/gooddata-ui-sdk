@@ -12,7 +12,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
 
     function assertPredicates(result: IHeaderPredicate[], expectedCount: number) {
         expect(result).toHaveLength(expectedCount);
-        result.forEach(predicate => {
+        result.forEach((predicate) => {
             expect(typeof predicate).toBe("function");
         });
     }

@@ -38,7 +38,7 @@ export class BearExecutionResult implements IExecutionResult {
     public async readAll(): Promise<IDataView> {
         return this.asDataView(
             this.authApiCall(
-                sdk => sdk.execution.getExecutionResult(this.execResponse.links.executionResult),
+                (sdk) => sdk.execution.getExecutionResult(this.execResponse.links.executionResult),
                 convertExecutionApiError,
             ),
         );
@@ -50,7 +50,7 @@ export class BearExecutionResult implements IExecutionResult {
 
         return this.asDataView(
             this.authApiCall(
-                sdk =>
+                (sdk) =>
                     sdk.execution.getPartialExecutionResult(
                         this.execResponse.links.executionResult,
                         saneSize,
@@ -77,7 +77,7 @@ export class BearExecutionResult implements IExecutionResult {
             optionsForBackend.afm = toAfmExecution(this.definition).execution.afm;
         }
 
-        return this.authApiCall(sdk =>
+        return this.authApiCall((sdk) =>
             sdk.report.exportResult(
                 this.definition.workspace,
                 this.execResponse.links.executionResult,
@@ -94,8 +94,8 @@ export class BearExecutionResult implements IExecutionResult {
         return this._fingerprint;
     }
 
-    private asDataView: DataViewFactory = promisedRes => {
-        return promisedRes.then(res => {
+    private asDataView: DataViewFactory = (promisedRes) => {
+        return promisedRes.then((res) => {
             if (!res) {
                 // TODO: SDK8: investigate when can this actually happen; perhaps end of data during paging?
                 //  perhaps legitimate NoDataCase?

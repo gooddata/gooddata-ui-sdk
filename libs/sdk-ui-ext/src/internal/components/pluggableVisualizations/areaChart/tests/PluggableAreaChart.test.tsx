@@ -27,9 +27,7 @@ describe("PluggableAreaChart", () => {
         renderFun: noop,
     };
 
-    const executionFactory = dummyBackend()
-        .workspace("PROJECTID")
-        .execution();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
 
     function createComponent(props = defaultProps) {
         return new PluggableAreaChart(props);

@@ -42,10 +42,10 @@ export const useWorkspace = () => {
  * @internal
  */
 export function withWorkspace<T extends { workspace?: string }>(Chart: React.ComponentType<T>) {
-    const ComponentWithInjectedWorkspace: React.FC<T> = props => {
+    const ComponentWithInjectedWorkspace: React.FC<T> = (props) => {
         return (
             <WorkspaceContext.Consumer>
-                {workspace => <Chart workspace={workspace} {...props} />}
+                {(workspace) => <Chart workspace={workspace} {...props} />}
             </WorkspaceContext.Consumer>
         );
     };

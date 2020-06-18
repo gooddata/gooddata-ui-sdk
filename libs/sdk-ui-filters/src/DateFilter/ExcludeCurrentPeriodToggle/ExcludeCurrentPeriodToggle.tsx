@@ -35,7 +35,7 @@ export const ExcludeCurrentPeriodToggle: React.FC<IExcludeCurrentPeriodTogglePro
                     type="checkbox"
                     className="input-checkbox"
                     checked={value}
-                    onChange={e => onChange(e.target.checked)} // tslint:disable-line:jsx-no-lambda
+                    onChange={(e) => onChange(e.target.checked)} // tslint:disable-line:jsx-no-lambda
                     disabled={disabled}
                 />
                 &ensp;

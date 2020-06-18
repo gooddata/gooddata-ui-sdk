@@ -26,34 +26,14 @@ describe("ColorPalette", () => {
 
     it("should render small ColorPalette control", () => {
         const wrapper = createComponent();
-        expect(
-            wrapper
-                .find("div")
-                .first()
-                .hasClass("gd-color-drop-down-list"),
-        ).toBeTruthy();
-        expect(
-            wrapper
-                .find("div")
-                .first()
-                .hasClass("gd-color-drop-down-list-large"),
-        ).toBeFalsy();
+        expect(wrapper.find("div").first().hasClass("gd-color-drop-down-list")).toBeTruthy();
+        expect(wrapper.find("div").first().hasClass("gd-color-drop-down-list-large")).toBeFalsy();
     });
 
     it("should render large ColorPalette control", () => {
         const wrapper = createComponent({ colorPalette: getLargePalette() });
-        expect(
-            wrapper
-                .find("div")
-                .first()
-                .hasClass("gd-color-drop-down-list"),
-        ).toBeFalsy();
-        expect(
-            wrapper
-                .find("div")
-                .first()
-                .hasClass("gd-color-drop-down-list-large"),
-        ).toBeTruthy();
+        expect(wrapper.find("div").first().hasClass("gd-color-drop-down-list")).toBeFalsy();
+        expect(wrapper.find("div").first().hasClass("gd-color-drop-down-list-large")).toBeTruthy();
     });
 
     it("should render 5 ColorPaletteItem controls", () => {

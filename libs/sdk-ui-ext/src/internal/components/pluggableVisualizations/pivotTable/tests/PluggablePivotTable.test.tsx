@@ -329,26 +329,26 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with adapted buckets", () => {
                 const expectedBuckets: IBucketOfFun[] = mockPivotTableReferencePoint.buckets;
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
             });
 
             it("should return a new reference point with identical filters", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedFilters: IFilters = sourceReferencePoint.filters;
                     expect(extendedReferencePoint.filters).toEqual(expectedFilters);
                 });
             });
 
             it("should return a new reference point with pivotTable UI config", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.uiConfig).toEqual(mockPivotTableReferencePoint.uiConfig);
                 });
             });
 
             it("should return a new reference point with filtered sortItems (in this case identical)", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedSortItems: ISortItem[] = sourceReferencePoint.properties.sortItems;
                     expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
                 });
@@ -370,26 +370,26 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with adapted buckets", () => {
                 const expectedBuckets: IBucketOfFun[] = mockPivotTableReferencePoint.buckets;
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
             });
 
             it("should return a new reference point with identical filters", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedFilters: IFilters = sourceReferencePoint.filters;
                     expect(extendedReferencePoint.filters).toEqual(expectedFilters);
                 });
             });
 
             it("should return a new reference point with pivotTable UI config", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.uiConfig).toEqual(uiConfigMocks.defaultPivotTableUiConfig);
                 });
             });
 
             it("should return a new reference point with filtered sortItems (in this case identical)", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedSortItems: ISortItem[] = sourceReferencePoint.properties.sortItems;
                     expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
                 });
@@ -419,7 +419,7 @@ describe("PluggablePivotTable", () => {
             const extendedReferencePointPromise: Promise<IExtendedReferencePoint> = pivotTable.getExtendedReferencePoint(
                 mockPivotTableReferencePoint,
             );
-            return extendedReferencePointPromise.then(extendedReferencePoint => {
+            return extendedReferencePointPromise.then((extendedReferencePoint) => {
                 expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
             });
         });
@@ -439,7 +439,7 @@ describe("PluggablePivotTable", () => {
             const extendedReferencePointPromise = pivotTable.getExtendedReferencePoint(sourceReferencePoint);
 
             it("should return a new reference point without duplicates in buckets", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedBuckets: IBucketOfFun[] = mockReferencePoint.buckets;
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
@@ -455,27 +455,27 @@ describe("PluggablePivotTable", () => {
             );
 
             it("should return a new reference point with empty buckets", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedBuckets: IBucketOfFun[] = mockReferencePoint.buckets;
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
             });
 
             it("should return a new reference point with empty filters", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedFilters: IFilters = { localIdentifier: "filters", items: [] };
                     expect(extendedReferencePoint.filters).toEqual(expectedFilters);
                 });
             });
 
             it("should return a new reference point with pivotTable UI config", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.uiConfig).toEqual(mockReferencePoint.uiConfig);
                 });
             });
 
             it("should return a new reference point without sortItems (default)", () => {
-                return extendedReferencePointPromise.then(extendedReferencePoint => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.properties.sortItems).toBeUndefined();
                 });
             });
@@ -516,7 +516,7 @@ describe("PluggablePivotTable", () => {
                     referencePointMocks.tableGrandAndSubtotalsReferencePoint,
                     referencePointMocks.tableTotalsReferencePoint,
                 )
-                .then(extendedReferencePoint => {
+                .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
         });
@@ -556,7 +556,7 @@ describe("PluggablePivotTable", () => {
 
             return createComponent()
                 .getExtendedReferencePoint(referencePointMocks.tableGrandAndSubtotalsReferencePoint)
-                .then(extendedReferencePoint => {
+                .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
         });
@@ -624,7 +624,7 @@ const knownBucketNames = [
     "columns",
 ];
 
-const allBucketTypes: IBucketOfFun[] = knownBucketNames.map(bucketName => createMockBucket(bucketName));
+const allBucketTypes: IBucketOfFun[] = knownBucketNames.map((bucketName) => createMockBucket(bucketName));
 
 describe("getColumnAttributes", () => {
     it("should collect common and date attributes from buckets: columns, stack, segment", () => {

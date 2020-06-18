@@ -58,7 +58,7 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public async readAll(): Promise<IDataView> {
-        const executionResultPromise = this.authCall(sdk => sdk.execution.executionResult(this.resultId));
+        const executionResultPromise = this.authCall((sdk) => sdk.execution.executionResult(this.resultId));
 
         return this.asDataView(executionResultPromise);
     }
@@ -67,7 +67,7 @@ export class TigerExecutionResult implements IExecutionResult {
         const saneOffset = sanitizeOffset(offset);
         const saneSize = sanitizeSize(size);
 
-        const executionResultPromise = this.authCall(sdk =>
+        const executionResultPromise = this.authCall((sdk) =>
             sdk.execution.executionResult(this.resultId, saneOffset, saneSize),
         );
 
@@ -97,7 +97,7 @@ export class TigerExecutionResult implements IExecutionResult {
         requestedOffset?: number[],
         requestedSize?: number[],
     ): Promise<IDataView> => {
-        return promisedRes.then(res => {
+        return promisedRes.then((res) => {
             if (!res) {
                 // TODO: SDK8: investigate when can this actually happen; perhaps end of data during paging?
                 //  perhaps legitimate NoDataCase?

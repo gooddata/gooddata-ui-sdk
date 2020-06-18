@@ -66,10 +66,7 @@ export const ExecuteExample: React.FC = () => {
                         );
                     }
 
-                    const measureSeries = result
-                        .data()
-                        .series()
-                        .firstForMeasure(measure);
+                    const measureSeries = result.data().series().firstForMeasure(measure);
 
                     return (
                         <div>

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import autohideLabels from "./plugins/autohideLabels/autohideLabels";
 import { extendDataLabelColors } from "./plugins/dataLabelsColors";
 import { applyPointHaloOptions } from "./plugins/pointHalo";
@@ -8,7 +8,7 @@ import { renderBubbles } from "./plugins/renderBubbles";
 import { adjustTickAmount } from "./plugins/adjustTickAmount";
 
 const extendRenderStackTotals = (Highcharts: any) => {
-    Highcharts.wrap(Highcharts.Axis.prototype, "renderStackTotals", function(proceed: any) {
+    Highcharts.wrap(Highcharts.Axis.prototype, "renderStackTotals", function (proceed: any) {
         const axis = this;
         const { chart, stackTotalGroup } = axis;
         const { renderer } = chart;

@@ -80,10 +80,7 @@ describe("DynamicSelect", () => {
         const input = mounted.find("input");
         input.simulate("focus");
 
-        const selectOption = mounted
-            .find(SelectOption)
-            .find({ isFocused: true })
-            .first();
+        const selectOption = mounted.find(SelectOption).find({ isFocused: true }).first();
 
         expect(selectOption).toExist();
         expect(selectOption).toHaveText("today");
@@ -138,10 +135,7 @@ describe("DynamicSelect", () => {
         const input = mounted.find("input");
         input.simulate("change", { target: { value: "to" } });
 
-        const selectOption = mounted
-            .find(SelectOption)
-            .find({ isFocused: true })
-            .first();
+        const selectOption = mounted.find(SelectOption).find({ isFocused: true }).first();
 
         expect(selectOption).toExist();
         expect(selectOption).toHaveText("today");
@@ -154,10 +148,7 @@ describe("DynamicSelect", () => {
         mounted.update();
         input.simulate("change", { target: { value: "" } });
 
-        const selectOption = mounted
-            .find(SelectOption)
-            .find({ isFocused: true })
-            .first();
+        const selectOption = mounted.find(SelectOption).find({ isFocused: true }).first();
 
         expect(selectOption).toExist();
         expect(selectOption).toHaveText("today");
@@ -209,10 +200,7 @@ describe("DynamicSelect", () => {
         input.simulate("click");
         input.simulate("keyDown", { key: "ArrowDown" });
 
-        const selectOption = mounted
-            .find(SelectOption)
-            .find({ isFocused: true })
-            .first();
+        const selectOption = mounted.find(SelectOption).find({ isFocused: true }).first();
 
         expect(selectOption).toExist();
         expect(selectOption).toHaveText("tomorrow");
@@ -250,7 +238,7 @@ describe("DynamicSelect", () => {
                 365,
                 DAY,
                 [
-                    ...range(-365, -1).map(offset => ({
+                    ...range(-365, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} days ago`,
@@ -260,7 +248,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "today" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "tomorrow" },
-                    ...range(2, 366).map(offset => ({
+                    ...range(2, 366).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} days ahead`,
@@ -271,7 +259,7 @@ describe("DynamicSelect", () => {
                 104,
                 WEEK_US,
                 [
-                    ...range(-104, -1).map(offset => ({
+                    ...range(-104, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} weeks ago`,
@@ -281,7 +269,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "this week" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "next week" },
-                    ...range(2, 105).map(offset => ({
+                    ...range(2, 105).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} weeks ahead`,
@@ -292,7 +280,7 @@ describe("DynamicSelect", () => {
                 60,
                 MONTH,
                 [
-                    ...range(-60, -1).map(offset => ({
+                    ...range(-60, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} months ago`,
@@ -302,7 +290,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "this month" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "next month" },
-                    ...range(2, 61).map(offset => ({
+                    ...range(2, 61).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} months ahead`,
@@ -313,7 +301,7 @@ describe("DynamicSelect", () => {
                 20,
                 QUARTER,
                 [
-                    ...range(-20, -1).map(offset => ({
+                    ...range(-20, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} quarters ago`,
@@ -323,7 +311,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "this quarter" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "next quarter" },
-                    ...range(2, 21).map(offset => ({
+                    ...range(2, 21).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} quarters ahead`,
@@ -334,7 +322,7 @@ describe("DynamicSelect", () => {
                 20,
                 YEAR,
                 [
-                    ...range(-20, -1).map(offset => ({
+                    ...range(-20, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} years ago`,
@@ -344,7 +332,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "this year" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "next year" },
-                    ...range(2, 21).map(offset => ({
+                    ...range(2, 21).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} years ahead`,

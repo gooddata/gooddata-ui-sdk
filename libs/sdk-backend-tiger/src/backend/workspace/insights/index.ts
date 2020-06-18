@@ -43,7 +43,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const visualizationClasses = await this.getVisualizationClasses();
 
-        const visualizationClass = visualizationClasses.find(v => v.visualizationClass.uri === uri);
+        const visualizationClass = visualizationClasses.find((v) => v.visualizationClass.uri === uri);
         if (!visualizationClass) {
             throw new UnexpectedError(`Visualization class for ${objRefToString(ref)} not found!`);
         }
@@ -57,7 +57,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
     public getInsights = async (options?: IInsightQueryOptions): Promise<IInsightQueryResult> => {
         const {
             data: { data: visualizationObjects, links, meta },
-        } = await this.authCall(sdk => {
+        } = await this.authCall((sdk) => {
             const orderBy = options?.orderBy;
             if (orderBy === "updated") {
                 // tslint:disable-next-line: no-console
@@ -84,7 +84,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
             });
         });
 
-        const insights = visualizationObjects.map(value => {
+        const insights = visualizationObjects.map((value) => {
             return insightFromInsightDefinition(
                 convertVisualizationObject(
                     value.attributes.content! as VisualizationObject.IVisualizationObject,
@@ -121,7 +121,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
         const id = await objRefToIdentifier(ref, this.authCall);
 
-        const response = await this.authCall(sdk =>
+        const response = await this.authCall((sdk) =>
             sdk.metadata.visualizationObjectsIdGet({
                 contentType: "application/json",
                 id,
@@ -144,7 +144,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
     };
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
-        const createResponse = await this.authCall(sdk => {
+        const createResponse = await this.authCall((sdk) => {
             return sdk.metadata.visualizationObjectsPost({
                 contentType: "application/json",
                 visualizationObjectPostResource: {
@@ -168,7 +168,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
-        await this.authCall(sdk =>
+        await this.authCall((sdk) =>
             sdk.metadata.visualizationObjectsIdPatch({
                 contentType: "application/json",
                 id: insightId(insight),
@@ -191,7 +191,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
     public deleteInsight = async (ref: ObjRef): Promise<void> => {
         const id = await objRefToIdentifier(ref, this.authCall);
 
-        await this.authCall(sdk =>
+        await this.authCall((sdk) =>
             sdk.metadata.visualizationObjectsIdDelete({
                 contentType: "application/json",
                 id,

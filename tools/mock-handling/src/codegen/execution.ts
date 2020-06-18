@@ -52,7 +52,7 @@ function generateScenarioForVis(entries: VisScenarioRecording[]): string {
 }
 
 function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<VariableStatementStructure> {
-    const recsWithVisAndScenario = flatMap(recordings, rec =>
+    const recsWithVisAndScenario = flatMap(recordings, (rec) =>
         rec.scenarios.map<VisScenarioRecording>((s, idx) => [s.vis, s.scenario, rec, idx]),
     );
     const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
@@ -83,5 +83,8 @@ export function generateConstantsForExecutions(
     recordings: ExecutionRecording[],
     targetDir: string,
 ): Array<OptionalKind<VariableStatementStructure>> {
-    return [...recordings.map(r => generateRecordingConst(r, targetDir)), generateScenariosConst(recordings)];
+    return [
+        ...recordings.map((r) => generateRecordingConst(r, targetDir)),
+        generateScenariosConst(recordings),
+    ];
 }

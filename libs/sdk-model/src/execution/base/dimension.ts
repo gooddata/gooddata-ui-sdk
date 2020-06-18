@@ -191,7 +191,7 @@ export function dimensionsFindItem(dims: IDimension[], localId: string): ItemInD
 
     for (let dimIdx = 0; dimIdx < dims.length; dimIdx++) {
         const dim = dims[dimIdx];
-        const itemIdx = dim.itemIdentifiers.findIndex(i => i === localId);
+        const itemIdx = dim.itemIdentifiers.findIndex((i) => i === localId);
 
         if (itemIdx >= 0) {
             result.push({ dim, dimIdx, itemIdx });

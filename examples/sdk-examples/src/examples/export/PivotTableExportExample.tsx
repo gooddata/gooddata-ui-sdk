@@ -25,7 +25,7 @@ const style = { height: 300 };
 export const PivotTableExportExample: React.FC = () => {
     return (
         <ExampleWithExport filters={filters}>
-            {onExportReady => (
+            {(onExportReady) => (
                 <div style={style} className="s-pivot-table-sorting">
                     <PivotTable
                         measures={measures}

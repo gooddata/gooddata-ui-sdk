@@ -154,9 +154,10 @@ export function getOccupiedMeasureBucketsLocalIdentifiers(dv: DataViewFacade): I
     const availableMeasureBucketsLocalIdentifiers = SUPPORTED_MEASURE_BUCKETS;
     const notEmptyMeasureBucketsLocalIdentifiers = buckets
         .filter(
-            b => !bucketIsEmpty(b) && availableMeasureBucketsLocalIdentifiers.indexOf(b.localIdentifier) >= 0,
+            (b) =>
+                !bucketIsEmpty(b) && availableMeasureBucketsLocalIdentifiers.indexOf(b.localIdentifier) >= 0,
         )
-        .map(b => b.localIdentifier);
+        .map((b) => b.localIdentifier);
 
     return !isEmpty(notEmptyMeasureBucketsLocalIdentifiers)
         ? notEmptyMeasureBucketsLocalIdentifiers

@@ -72,7 +72,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         if (nonStackAttributes.length > 1 && isEmpty(stacks)) {
             // first attribute is taken, find next available non-date attribute
             const attributesWithoutFirst = tail(nonStackAttributes);
-            const nonDate = attributesWithoutFirst.filter(attribute => !isDateBucketItem(attribute));
+            const nonDate = attributesWithoutFirst.filter((attribute) => !isDateBucketItem(attribute));
             stacks = nonDate.slice(0, 1);
         }
 

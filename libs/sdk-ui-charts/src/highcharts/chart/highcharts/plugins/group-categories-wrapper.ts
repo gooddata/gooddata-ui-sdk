@@ -12,14 +12,14 @@ export function groupCategoriesWrapper(Highcharts: any) {
         }
     }
 
-    wrap(Highcharts.Axis.prototype, "render", function(proceed: any) {
+    wrap(Highcharts.Axis.prototype, "render", function (proceed: any) {
         // default behaviour
         proceed.apply(this, Array.prototype.slice.call(arguments, 1));
 
         hideGridInXAxis.call(this);
     });
 
-    wrap(Highcharts.Tick.prototype, "getPosition", function(
+    wrap(Highcharts.Tick.prototype, "getPosition", function (
         proceed: any,
         horiz: boolean,
         tickPos: number,

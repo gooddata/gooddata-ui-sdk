@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     interpolate,
     parse,
@@ -43,7 +43,7 @@ export class DomainsModule {
     public getDomains(contractId: string, query: string | null) {
         return this.xhr
             .get(interpolate(CONTRACT_DOMAINS, { contractId }, query))
-            .then(r => r.getData())
+            .then((r) => r.getData())
             .then((result: any) => ({ items: result.domains.items.map(transformDomain) })); // TODO: paging?
     }
 
@@ -58,7 +58,7 @@ export class DomainsModule {
 
         return this.xhr
             .get(uri)
-            .then(r => r.getData())
+            .then((r) => r.getData())
             .then((result: any) => ({
                 ...result.domainUsers,
                 items: result.domainUsers.items.map(transformDomainUser),
@@ -86,7 +86,7 @@ export class DomainsModule {
 
         return this.xhr
             .get(uri)
-            .then(r => r.getData())
+            .then((r) => r.getData())
             .then((result: any) => ({
                 ...result.domainProjects,
                 items: result.domainProjects.items.map((item: any) => item.project),

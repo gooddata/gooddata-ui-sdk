@@ -32,7 +32,7 @@ export const Select = <V extends {}>({
         <Downshift
             onChange={onChange}
             itemToString={itemToString}
-            selectedItem={selectableOptions.find(item => item.value === value) || selectableOptions[0]}
+            selectedItem={selectableOptions.find((item) => item.value === value) || selectableOptions[0]}
             initialIsOpen={initialIsOpen}
         >
             {({

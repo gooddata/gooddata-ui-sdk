@@ -134,7 +134,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
         const compatibleBearItemTypes = types.filter(isCompatibleCatalogItemType);
 
         const bearTypes = compatibleBearItemTypes.map(convertItemType);
-        const itemDescriptions = await this.authCall(sdk =>
+        const itemDescriptions = await this.authCall((sdk) =>
             sdk.catalogue.loadItemDescriptionObjects(
                 this.workspace,
                 sanitizedVisualizationObject.content,
@@ -142,7 +142,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             ),
         );
 
-        const availableItemUris = await this.authCall(sdk =>
+        const availableItemUris = await this.authCall((sdk) =>
             sdk.catalogue.loadAvailableItemUris(this.workspace, {
                 catalogQueryRequest: {
                     bucketItems: itemDescriptions,
@@ -151,7 +151,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             }),
         );
 
-        return this.items.filter(item => availableItemUris.includes(catalogItemUri(item)));
+        return this.items.filter((item) => availableItemUris.includes(catalogItemUri(item)));
     };
 
     private loadAvailableDateDatasets = async (
@@ -170,7 +170,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             dataset ? objRefToIdentifier(dataset, this.authCall) : Promise.resolve(""),
         ]);
 
-        const result = await this.authCall(sdk =>
+        const result = await this.authCall((sdk) =>
             sdk.catalogue.loadDateDataSets(this.workspace, {
                 bucketItems: sanitizedVisualizationObject.content,
                 includeAvailableDateAttributes: true,
@@ -204,7 +204,7 @@ function createVisObjectForAvailability(
 
     const itemsToUse = insight ? insightItems(insight) : items;
     const validItems = filterItemsForAvailabilityQuery(itemsToUse);
-    const itemsWithUris = validItems.map(item => translateIdentifiersToUris(item, mappings));
+    const itemsWithUris = validItems.map((item) => translateIdentifiersToUris(item, mappings));
 
     const tempInsight: IInsightDefinition = {
         insight: {
@@ -231,7 +231,7 @@ function filterItemsForAvailabilityQuery(items: IAttributeOrMeasure[]): IAttribu
     const arithmeticMeasuresIds: Set<string> = new Set<string>();
     const otherMeasureIds: Set<string> = new Set<string>();
 
-    items.forEach(measure => {
+    items.forEach((measure) => {
         if (isArithmeticMeasure(measure)) {
             arithmeticMeasuresIds.add(measureLocalId(measure));
         } else if (isMeasure(measure)) {
@@ -265,7 +265,7 @@ function translateIdentifiersToUris(item: IAttributeOrMeasure, mappings: IUriMap
         if (isIdentifierRef(ref)) {
             const displayForm = mappings.displayFormById[ref.identifier];
 
-            return modifyAttribute(item, m =>
+            return modifyAttribute(item, (m) =>
                 m.displayForm(uriRef(displayForm.meta.uri)).localId(attributeLocalId(item)),
             );
         }
@@ -279,7 +279,7 @@ function translateIdentifiersToUris(item: IAttributeOrMeasure, mappings: IUriMap
             const fact = mappings.factById[ref.identifier];
             const uri = metric?.uri ?? fact.uri;
 
-            return modifySimpleMeasure(item, m => m.measureItem(uriRef(uri)).localId(measureLocalId(item)));
+            return modifySimpleMeasure(item, (m) => m.measureItem(uriRef(uri)).localId(measureLocalId(item)));
         }
 
         return item;
@@ -291,7 +291,7 @@ function translateIdentifiersToUris(item: IAttributeOrMeasure, mappings: IUriMap
             const dateAttribute = mappings.dateAttributeById[ref.identifier];
             const uri = attribute?.attribute.meta.uri ?? dateAttribute.attribute.uri;
 
-            return modifyPopMeasure(item, m => m.popAttribute(uriRef(uri)).localId(measureLocalId(item)));
+            return modifyPopMeasure(item, (m) => m.popAttribute(uriRef(uri)).localId(measureLocalId(item)));
         }
     }
 

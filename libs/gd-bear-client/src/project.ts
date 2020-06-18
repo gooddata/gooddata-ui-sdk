@@ -68,7 +68,7 @@ export class ProjectModule {
     public getCurrentProjectId() {
         return this.xhr
             .get("/gdc/app/account/bootstrap")
-            .then(r => r.getData())
+            .then((r) => r.getData())
             .then((result: any) => {
                 const currentProject = result.bootstrapResource.current.project;
                 // handle situation in which current project is missing (e.g. new user)
@@ -120,7 +120,7 @@ export class ProjectModule {
         }
 
         const uri = `/gdc/internal/projects/?${stringify(mergedOptions)}`;
-        return this.xhr.get(uri).then(res => res.getData());
+        return this.xhr.get(uri).then((res) => res.getData());
     }
 
     /**
@@ -133,7 +133,7 @@ export class ProjectModule {
     public getDatasets(projectId: string) {
         return this.xhr
             .get(`/gdc/md/${projectId}/query/datasets`)
-            .then(r => r.getData())
+            .then((r) => r.getData())
             .then(getIn("query.entries"));
     }
 
@@ -167,7 +167,7 @@ export class ProjectModule {
                     };
                 });
             })
-            .catch(e => {
+            .catch((e) => {
                 if (!(e instanceof ApiError)) {
                     return DEFAULT_PALETTE;
                 }
@@ -200,7 +200,7 @@ export class ProjectModule {
                     return undefined;
                 }
             })
-            .catch(e => {
+            .catch((e) => {
                 if (!(e instanceof ApiError)) {
                     return undefined;
                 }
@@ -246,7 +246,7 @@ export class ProjectModule {
 
         return this.xhr
             .get(bootstrapUrl)
-            .then(r => r.getData())
+            .then((r) => r.getData())
             .then((result: any) => {
                 return result.bootstrapResource.current.timezone;
             });
@@ -262,7 +262,7 @@ export class ProjectModule {
             .post(timezoneServiceUrl, {
                 body: data,
             })
-            .then(r => r.getData());
+            .then((r) => r.getData());
     }
 
     /**
@@ -303,7 +303,7 @@ export class ProjectModule {
                     },
                 }),
             })
-            .then(r => r.getData())
+            .then((r) => r.getData())
             .then((project: any) =>
                 handlePolling(
                     this.xhr.get.bind(this.xhr),
@@ -379,10 +379,10 @@ export class ProjectModule {
     public getProjectFeatureFlags(projectId: string, source?: string): Promise<IFeatureFlags> {
         return this.getConfig(projectId).then((settingItems: IProjectConfigSettingItem[]) => {
             const filteredSettingItems = source
-                ? settingItems.filter(settingItem => settingItem.settingItem.source === source)
+                ? settingItems.filter((settingItem) => settingItem.settingItem.source === source)
                 : settingItems;
             const featureFlags: IFeatureFlags = {};
-            filteredSettingItems.forEach(settingItem => {
+            filteredSettingItems.forEach((settingItem) => {
                 featureFlags[settingItem.settingItem.key] = parseSettingItemValue(
                     settingItem.settingItem.value,
                 );

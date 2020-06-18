@@ -116,9 +116,9 @@ describe("assortDimensionDescriptors", () => {
         const dimensions = fixture.meta().dimensions();
         const { attributeDescriptors, measureDescriptors } = assortDimensionDescriptors(dimensions);
         expect(attributeDescriptors).toHaveLength(2);
-        expect(attributeDescriptors.filter(header => isAttributeDescriptor(header))).toHaveLength(2);
+        expect(attributeDescriptors.filter((header) => isAttributeDescriptor(header))).toHaveLength(2);
         expect(measureDescriptors).toHaveLength(1);
-        expect(measureDescriptors.filter(header => isMeasureDescriptor(header))).toHaveLength(1);
+        expect(measureDescriptors.filter((header) => isMeasureDescriptor(header))).toHaveLength(1);
     });
 });
 
@@ -137,7 +137,7 @@ describe("getMinimalRowData", () => {
         const expectedLength = NoMeasureData.meta().allHeaders()[0][0].length;
 
         expect(result.length).toEqual(expectedLength);
-        expect(result.filter(e => e[0] === null).length).toEqual(expectedLength);
+        expect(result.filter((e) => e[0] === null).length).toEqual(expectedLength);
     });
 
     it("should return a identical data if measure data is available", () => {

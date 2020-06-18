@@ -40,7 +40,7 @@ export function bucketsAttributes(
         return [];
     }
 
-    return flatMap(buckets, b => bucketAttributes(b, predicate));
+    return flatMap(buckets, (b) => bucketAttributes(b, predicate));
 }
 
 /**
@@ -61,7 +61,7 @@ export function bucketsMeasures(buckets: IBucket[], predicate: MeasurePredicate 
         return [];
     }
 
-    return flatMap(buckets, b => bucketMeasures(b, predicate));
+    return flatMap(buckets, (b) => bucketMeasures(b, predicate));
 }
 
 /**
@@ -185,7 +185,7 @@ export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[] {
         return [];
     }
 
-    return buckets.filter(b => b.localIdentifier && ids.indexOf(b.localIdentifier) >= 0);
+    return buckets.filter((b) => b.localIdentifier && ids.indexOf(b.localIdentifier) >= 0);
 }
 
 /**
@@ -198,7 +198,7 @@ export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[] {
 export function bucketsItems(buckets: IBucket[]): IAttributeOrMeasure[] {
     invariant(buckets, "buckets must be specified");
 
-    return flatMap(buckets, b => bucketItems(b));
+    return flatMap(buckets, (b) => bucketItems(b));
 }
 
 /**
@@ -211,7 +211,7 @@ export function bucketsItems(buckets: IBucket[]): IAttributeOrMeasure[] {
 export function bucketsTotals(buckets: IBucket[]): ITotal[] {
     invariant(buckets, "buckets must be specified");
 
-    return flatMap(buckets, b => bucketTotals(b));
+    return flatMap(buckets, (b) => bucketTotals(b));
 }
 
 /**

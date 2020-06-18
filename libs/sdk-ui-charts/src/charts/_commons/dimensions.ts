@@ -88,9 +88,7 @@ export function heatmapDimensions(def: IExecutionDefinition): IDimension[] {
 
     return newTwoDimensional(
         viewAttributeLocalIdentifiers,
-        bucketAttributes(stack)
-            .map(attributeLocalId)
-            .concat([MeasureGroupIdentifier]),
+        bucketAttributes(stack).map(attributeLocalId).concat([MeasureGroupIdentifier]),
     );
 }
 

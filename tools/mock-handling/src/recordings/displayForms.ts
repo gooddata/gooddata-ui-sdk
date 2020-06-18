@@ -125,10 +125,7 @@ export class DisplayFormRecording implements IRecording {
     private createValidElementsQuery(backend: IAnalyticalBackend, workspace: string): IElementQuery {
         const { offset, elementCount } = this.spec;
 
-        let validElements = backend
-            .workspace(workspace)
-            .elements()
-            .forDisplayForm(idRef(this.displayFormId));
+        let validElements = backend.workspace(workspace).elements().forDisplayForm(idRef(this.displayFormId));
 
         if (offset !== undefined) {
             validElements = validElements.withOffset(offset);

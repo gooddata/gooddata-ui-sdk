@@ -4,17 +4,11 @@ import { modifySimpleMeasure } from "@gooddata/sdk-model";
 import { workspace } from "../constants/fixtures";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 
-export const sizeMeasure = modifySimpleMeasure(Ldm.Population.Sum, m =>
-    m
-        .format("#,##0.00")
-        .alias("Population")
-        .defaultLocalId(),
+export const sizeMeasure = modifySimpleMeasure(Ldm.Population.Sum, (m) =>
+    m.format("#,##0.00").alias("Population").defaultLocalId(),
 );
-export const colorMeasure = modifySimpleMeasure(Ldm.Density.Sum, m =>
-    m
-        .format("#,##0.00")
-        .alias("Density")
-        .defaultLocalId(),
+export const colorMeasure = modifySimpleMeasure(Ldm.Density.Sum, (m) =>
+    m.format("#,##0.00").alias("Density").defaultLocalId(),
 );
 export const locationAttribute = Ldm.City.Location;
 export const segmentByAttribute = Ldm.StateName;

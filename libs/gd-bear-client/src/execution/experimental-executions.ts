@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import md5 from "md5";
 import invariant from "invariant";
 import cloneDeep from "lodash/cloneDeep";
@@ -35,7 +35,7 @@ function findHeaderForMappingFn(mapping: any, header: any) {
 
 function wrapMeasureIndexesFromMappings(metricMappings: any[], headers: any[]) {
     if (metricMappings) {
-        metricMappings.forEach(mapping => {
+        metricMappings.forEach((mapping) => {
             const header = find(headers, partial(findHeaderForMappingFn, mapping));
             if (header) {
                 header.measureIndex = mapping.measureIndex;
@@ -98,7 +98,7 @@ function isEmptyFilter(metricFilter: any) {
 }
 
 function allFiltersEmpty(item: any) {
-    return every(map(getMeasureFilters(item), f => isEmptyFilter(f)));
+    return every(map(getMeasureFilters(item), (f) => isEmptyFilter(f)));
 }
 
 function isDerived(measure: any) {
@@ -137,7 +137,7 @@ function getAttrFilterExpression(measureFilter: any, attributesMap: any) {
     if (isEmpty(elements)) {
         return null;
     }
-    const elementsForQuery = map(elements, e => `[${e}]`);
+    const elementsForQuery = map(elements, (e) => `[${e}]`);
     const negative = isNegative ? "NOT " : "";
 
     return `[${attributeUri}] ${negative}IN (${elementsForQuery.join(",")})`;
@@ -158,7 +158,10 @@ function getFilterExpression(attributesMap: any, measureFilter: any) {
 function getGeneratedMetricExpression(item: any, attributesMap: any) {
     const aggregation = getAggregation(item).toUpperCase();
     const objectUri = get(getDefinition(item), "item.uri");
-    const where = filter(map(getMeasureFilters(item), partial(getFilterExpression, attributesMap)), e => !!e);
+    const where = filter(
+        map(getMeasureFilters(item), partial(getFilterExpression, attributesMap)),
+        (e) => !!e,
+    );
 
     return `SELECT ${aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`}${
         notEmpty(...where) ? ` WHERE ${where.join(" AND ")}` : ""
@@ -178,7 +181,7 @@ function getPercentMetricExpression(category: any, attributesMap: any, measure: 
     const attributeUri = getAttrUriFromMap(get(category, "displayForm.uri"), attributesMap);
     const whereFilters = filter(
         map(getMeasureFilters(measure), partial(getFilterExpression, attributesMap)),
-        e => !!e,
+        (e) => !!e,
     );
     const whereExpression = notEmpty(...whereFilters) ? ` WHERE ${whereFilters.join(" AND ")}` : "";
 
@@ -489,7 +492,7 @@ function getExecutionDefinitionsAndColumns(
         ),
     );
     if (options.removeDateItems) {
-        attributes = filter(attributes, attribute => !isDateAttribute(attribute, attributesMap));
+        attributes = filter(attributes, (attribute) => !isDateAttribute(attribute, attributesMap));
     }
     attributes = map(attributes, partial(categoryToElement, attributesMap, mdObj));
 
@@ -593,7 +596,7 @@ export class ExperimentalExecutionsModule {
         };
         // enrich configuration with supported properties such as
         // where clause with query-like filters
-        ["where", "orderBy", "definitions"].forEach(property => {
+        ["where", "orderBy", "definitions"].forEach((property) => {
             if (executionConfiguration[property]) {
                 request.execution[property] = executionConfiguration[property];
             }
@@ -605,8 +608,8 @@ export class ExperimentalExecutionsModule {
                 ...settings,
                 body: JSON.stringify(request),
             })
-            .then(r => r.getData())
-            .then(response => {
+            .then((r) => r.getData())
+            .then((response) => {
                 executedReport.headers = wrapMeasureIndexesFromMappings(
                     get(executionConfiguration, "metricMappings"),
                     get(response, ["executionResult", "headers"], []),
@@ -664,7 +667,7 @@ export class ExperimentalExecutionsModule {
         return new Promise((resolve, reject) => {
             this.xhr
                 .ajax(uri, settings)
-                .then(r => {
+                .then((r) => {
                     const { response } = r;
 
                     if (response.status === 204) {

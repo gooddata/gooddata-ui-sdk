@@ -9,10 +9,7 @@ export function setMeasuresToSecondaryAxis(config: IChartConfig = {}, dv: DataVi
     const isDualAxis: boolean = get(config, "dualAxis", true);
     const type: VisType = get(config, "type");
     const { secondary_yaxis: secondaryYAxis, ...remainConfig } = config;
-    const secondaryMeasuresIds = dv
-        .def()
-        .bucketMeasures(BucketNames.SECONDARY_MEASURES)
-        .map(measureLocalId);
+    const secondaryMeasuresIds = dv.def().bucketMeasures(BucketNames.SECONDARY_MEASURES).map(measureLocalId);
 
     if (!isComboChart(type)) {
         return config;

@@ -12,7 +12,7 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
  *  project on which both of filters and ext can depend. perhaps the purpose of the new project would be to provide
  *  thin layer on top of goodstrap (?)
  */
-const DROPDOWN_ALIGMENTS = alignPoints.map(align => ({ align, offset: { x: 1, y: 0 } }));
+const DROPDOWN_ALIGMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
 interface IDropdownOwnProps {
     onApply: (operator: string, value: IMeasureValueFilterValue, treatNullValuesAsZero: boolean) => void;

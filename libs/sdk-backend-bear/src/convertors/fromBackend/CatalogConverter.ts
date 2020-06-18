@@ -48,18 +48,12 @@ export const bearCatalogItemToBearRef = (obj: GdcCatalog.CatalogItem) => uriRef(
 
 export const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }) => {
     const { groups = [] } = item;
-    return groups.map(tagId => idRef(tagId));
+    return groups.map((tagId) => idRef(tagId));
 };
 
 const commonMetadataModifications = <T extends IMetadataObjectBuilder>(item: GdcMetadata.IObjectMeta) => (
     builder: T,
-) =>
-    builder
-        .id(item.identifier)
-        .uri(item.uri)
-        .title(item.title)
-        .description(item.summary)
-        .unlisted(false);
+) => builder.id(item.identifier).uri(item.uri).title(item.title).description(item.summary).unlisted(false);
 
 const commonCatalogItemModifications = <T extends IMetadataObjectBuilder>(item: GdcCatalog.CatalogItem) => (
     builder: T,
@@ -77,7 +71,7 @@ const convertDisplayForm = (
 ): IAttributeDisplayFormMetadataObject => {
     const ref = bearObjectMetaToBearRef(df.meta);
 
-    return newAttributeDisplayFormMetadataObject(ref, m => {
+    return newAttributeDisplayFormMetadataObject(ref, (m) => {
         return m.modify(commonMetadataModifications(df.meta)).attribute(attrRef);
     });
 };
@@ -88,14 +82,14 @@ export const convertAttribute = (
 ): ICatalogAttribute => {
     const attrRef = bearCatalogItemToBearRef(attribute);
     const defaultDisplayForm = displayForms[attribute.links.defaultDisplayForm];
-    const geoPinDisplayForms = (attribute.links.geoPinDisplayForms ?? []).map(uri => displayForms[uri]);
+    const geoPinDisplayForms = (attribute.links.geoPinDisplayForms ?? []).map((uri) => displayForms[uri]);
     const groups = bearGroupableCatalogItemToTagRefs(attribute);
 
-    return newCatalogAttribute(catalogA =>
+    return newCatalogAttribute((catalogA) =>
         catalogA
-            .attribute(attrRef, a => a.modify(commonCatalogItemModifications(attribute)))
+            .attribute(attrRef, (a) => a.modify(commonCatalogItemModifications(attribute)))
             .defaultDisplayForm(convertDisplayForm(defaultDisplayForm, attrRef))
-            .geoPinDisplayForms(geoPinDisplayForms.map(df => convertDisplayForm(df, attrRef)))
+            .geoPinDisplayForms(geoPinDisplayForms.map((df) => convertDisplayForm(df, attrRef)))
             .groups(groups),
     );
 };
@@ -104,9 +98,9 @@ export const convertMeasure = (metric: GdcCatalog.ICatalogMetric): ICatalogMeasu
     const measureRef = bearCatalogItemToBearRef(metric);
     const groups = bearGroupableCatalogItemToTagRefs(metric);
 
-    return newCatalogMeasure(catalogM =>
+    return newCatalogMeasure((catalogM) =>
         catalogM
-            .measure(measureRef, m =>
+            .measure(measureRef, (m) =>
                 m
                     .modify(commonCatalogItemModifications(metric))
                     .expression(metric.expression)
@@ -120,8 +114,8 @@ export const convertFact = (fact: GdcCatalog.ICatalogFact): ICatalogFact => {
     const factRef = bearCatalogItemToBearRef(fact);
     const groups = bearGroupableCatalogItemToTagRefs(fact);
 
-    return newCatalogFact(catalogF =>
-        catalogF.fact(factRef, f => f.modify(commonCatalogItemModifications(fact))).groups(groups),
+    return newCatalogFact((catalogF) =>
+        catalogF.fact(factRef, (f) => f.modify(commonCatalogItemModifications(fact))).groups(groups),
     );
 };
 
@@ -132,10 +126,10 @@ const convertDateDataSetAttribute = (
     const attributeRef = bearObjectMetaToBearRef(attributeMeta);
     const displayFormRef = bearObjectMetaToBearRef(defaultDisplayFormMeta);
 
-    return newCatalogDateAttribute(catalogDa =>
+    return newCatalogDateAttribute((catalogDa) =>
         catalogDa
-            .attribute(attributeRef, a => a.modify(commonMetadataModifications(attributeMeta)))
-            .defaultDisplayForm(displayFormRef, df =>
+            .attribute(attributeRef, (a) => a.modify(commonMetadataModifications(attributeMeta)))
+            .defaultDisplayForm(displayFormRef, (df) =>
                 df.modify(commonMetadataModifications(defaultDisplayFormMeta)),
             )
             .granularity(dateDatasetAttribute.type),
@@ -147,9 +141,9 @@ export const convertDateDataset = (dateDataset: GdcDateDataSets.IDateDataSet): I
     const dateDatasetRef = bearObjectMetaToBearRef(dateDataset.meta);
     const dateAttributes = availableDateAttributes.map(convertDateDataSetAttribute);
 
-    return newCatalogDateDataset(catalogDs =>
+    return newCatalogDateDataset((catalogDs) =>
         catalogDs
-            .dataSet(dateDatasetRef, ds => ds.modify(commonMetadataModifications(dateDataset.meta)))
+            .dataSet(dateDatasetRef, (ds) => ds.modify(commonMetadataModifications(dateDataset.meta)))
             .dateAttributes(dateAttributes)
             .relevance(dateDataset.relevance),
     );
@@ -159,8 +153,8 @@ export const convertWrappedFact = (fact: GdcMetadata.IWrappedFact): ICatalogFact
     const { meta } = fact.fact;
     const factRef = uriRef(meta.uri);
 
-    return newCatalogFact(catalogFact =>
-        catalogFact.fact(factRef, f =>
+    return newCatalogFact((catalogFact) =>
+        catalogFact.fact(factRef, (f) =>
             f
                 .id(meta.identifier)
                 .uri(meta.uri)
@@ -176,8 +170,8 @@ export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasu
     const { content, meta } = metric.metric;
     const measureRef = uriRef(meta.uri);
 
-    return newCatalogMeasure(catalogMeasure =>
-        catalogMeasure.measure(measureRef, m =>
+    return newCatalogMeasure((catalogMeasure) =>
+        catalogMeasure.measure(measureRef, (m) =>
             m
                 .expression(content.expression)
                 .format(content.format ?? "#,#.##")
@@ -191,5 +185,5 @@ export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasu
 };
 
 export const convertGroup = (group: GdcCatalog.ICatalogGroup): ICatalogGroup => {
-    return newCatalogGroup(catalogG => catalogG.title(group.title).tag(idRef(group.identifier)));
+    return newCatalogGroup((catalogG) => catalogG.title(group.title).tag(idRef(group.identifier)));
 };

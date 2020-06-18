@@ -55,7 +55,7 @@ function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTo
         .reduce((acc, totals) => acc.concat(...totals), [])
         .filter(totalIsNative);
 
-    return nativeTotals.map(t => {
+    return nativeTotals.map((t) => {
         // then for each native total, look across buckets (if any) for an attribute that is specified in
         // the total definition
         const attributeInDims = dimensionsFindItem(def.dimensions, t.attributeIdentifier);
@@ -74,7 +74,7 @@ function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTo
         // now, knowing the dimension and index of the attribute.. roll up all attributes that are before it
         const rollupAttributes = attributeDim.dim.itemIdentifiers
             .slice(0, attributeDim.itemIdx)
-            .filter(id => id !== MeasureGroupIdentifier);
+            .filter((id) => id !== MeasureGroupIdentifier);
 
         // and create native total such, that it rolls up all those attributes
         return {
@@ -85,7 +85,7 @@ function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTo
 }
 
 function convertTotals(totals: ITotal[] = []): GdcExecuteAFM.ITotalItem[] {
-    return totals.map(t => {
+    return totals.map((t) => {
         const newItem: GdcExecuteAFM.ITotalItem = {
             type: t.type,
             attributeIdentifier: t.attributeIdentifier,
@@ -97,7 +97,7 @@ function convertTotals(totals: ITotal[] = []): GdcExecuteAFM.ITotalItem[] {
 }
 
 function convertDimensions(def: IExecutionDefinition): GdcExecuteAFM.IDimension[] {
-    return def.dimensions.map(dim => {
+    return def.dimensions.map((dim) => {
         const totals = convertTotals(dim.totals);
         const totalsProp = !isEmpty(totals) ? { totals } : {};
 

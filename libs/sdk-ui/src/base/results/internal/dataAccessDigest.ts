@@ -245,22 +245,22 @@ function createDataSeriesDigest(
 
     const dimIdx = locations[0];
     const headerItems = dataViewHeaders(dataView, dimIdx);
-    const measureHeaders: IResultMeasureHeader[] = headerItems.find(headers =>
+    const measureHeaders: IResultMeasureHeader[] = headerItems.find((headers) =>
         isResultMeasureHeader(headers[0]),
     ) as any;
-    const allAttributeHeaders: IResultAttributeHeader[][] = headerItems.filter(headers =>
+    const allAttributeHeaders: IResultAttributeHeader[][] = headerItems.filter((headers) =>
         isResultAttributeHeader(headers[0]),
     ) as any;
     const count = measureHeaders ? measureHeaders.length : 0;
     const fromMeasures: IMeasureDescriptor[] = measureGroupItems(measureGroup);
     const fromMeasuresDef: IMeasure[] = fromMeasures.map(
-        m => def.measuresIndex[m.measureHeaderItem.localIdentifier],
+        (m) => def.measuresIndex[m.measureHeaderItem.localIdentifier],
     );
     const scopingAttributes: IAttributeDescriptor[] = dataViewDimensionItems(dataView, dimIdx).filter(
         isAttributeDescriptor,
     );
     const scopingAttributesDef: IAttribute[] = scopingAttributes.map(
-        a => def.attributesIndex[a.attributeHeader.localIdentifier],
+        (a) => def.attributesIndex[a.attributeHeader.localIdentifier],
     );
     const measureIndexes = createMeasureIndexes(fromMeasures, measureHeaders);
 
@@ -295,7 +295,7 @@ function createDataSlicesDigest(
         isAttributeDescriptor,
     );
     const descriptorsDef: IAttribute[] = descriptors.map(
-        d => def.attributesIndex[d.attributeHeader.localIdentifier],
+        (d) => def.attributesIndex[d.attributeHeader.localIdentifier],
     );
 
     return {

@@ -10,7 +10,7 @@ interface IExcludeCurrentPeriodToggleLabelProps {
     granularity?: DateFilterGranularity;
 }
 
-export const ExcludeCurrentPeriodToggleLabel: React.FC<IExcludeCurrentPeriodToggleLabelProps> = props => {
+export const ExcludeCurrentPeriodToggleLabel: React.FC<IExcludeCurrentPeriodToggleLabelProps> = (props) => {
     const id =
         !props.disabled && props.granularity
             ? `filters.${granularityIntlCodes[props.granularity]}.excludeCurrentPeriod`

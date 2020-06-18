@@ -152,8 +152,8 @@ export function dummyDataView(
 
     const fp = defFingerprint(definition) + "/emptyView";
 
-    const emptyHeaders: IResultHeader[][][] = definition.dimensions.map(dim =>
-        dim.itemIdentifiers.map(_ => []),
+    const emptyHeaders: IResultHeader[][][] = definition.dimensions.map((dim) =>
+        dim.itemIdentifiers.map((_) => []),
     );
 
     return {
@@ -289,7 +289,7 @@ function dummyPreparedExecution(
             return executionFactory.forDefinition(defWithSorting(definition, items));
         },
         execute(): Promise<IExecutionResult> {
-            return new Promise(r => r(dummyExecutionResult(definition, executionFactory, config)));
+            return new Promise((r) => r(dummyExecutionResult(definition, executionFactory, config)));
         },
         fingerprint(): string {
             return fp;

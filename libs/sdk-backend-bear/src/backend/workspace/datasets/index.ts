@@ -8,7 +8,7 @@ export class BearWorkspaceDataSets implements IWorkspaceDatasetsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public async getDatasets(): Promise<IDataset[]> {
-        const result = await this.authCall(sdk => sdk.catalogue.loadDataSets(this.workspace));
+        const result = await this.authCall((sdk) => sdk.catalogue.loadDataSets(this.workspace));
         return result.map(convertDataSet);
     }
 }

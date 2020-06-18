@@ -65,7 +65,7 @@ describe("Heatmap configuration", () => {
         };
         resetPointPaddingForTooSmallHeatmapCells(series);
 
-        const pointPaddings = series.points.map(point => point.pointPadding);
+        const pointPaddings = series.points.map((point) => point.pointPadding);
         expect(pointPaddings).toEqual([2, 0, 0]);
     });
 });

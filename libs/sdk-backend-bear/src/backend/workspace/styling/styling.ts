@@ -7,7 +7,7 @@ export class BearWorkspaceStyling implements IWorkspaceStylingService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public colorPalette = async (): Promise<IColorPaletteItem[]> => {
-        const palette = await this.authCall(sdk => sdk.project.getColorPaletteWithGuids(this.workspace));
+        const palette = await this.authCall((sdk) => sdk.project.getColorPaletteWithGuids(this.workspace));
         return palette || [];
     };
 }

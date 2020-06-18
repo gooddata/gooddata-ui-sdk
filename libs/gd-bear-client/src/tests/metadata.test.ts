@@ -775,8 +775,8 @@ describe("metadata", () => {
 
         describe("getObjects", () => {
             const generateUrisAndResponse = (projectId: string, num: number) => {
-                const uris = range(num).map(i => `/gdc/md/${projectId}/obj/${i}`);
-                const respondEntries = uris.map(uri => ({
+                const uris = range(num).map((i) => `/gdc/md/${projectId}/obj/${i}`);
+                const respondEntries = uris.map((uri) => ({
                     content: {},
                     meta: { uri },
                 }));
@@ -818,7 +818,7 @@ describe("metadata", () => {
 
                     // respond with only those items which were requested
                     const respondItems = requestBody.get.items.map((itemUri: string) =>
-                        find(respondEntries, responseItem => responseItem.meta.uri === itemUri),
+                        find(respondEntries, (responseItem) => responseItem.meta.uri === itemUri),
                     );
 
                     return {
@@ -1070,7 +1070,7 @@ describe("metadata", () => {
 
                 return createMd()
                     .getValidElements(projectId, attributeId, options)
-                    .then(result => {
+                    .then((result) => {
                         const request = fetchMock.lastOptions(`${uri}?filter=foo`) as RequestInit;
 
                         expect(JSON.parse(request.body!.toString())).toEqual({

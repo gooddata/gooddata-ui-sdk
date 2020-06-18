@@ -9,7 +9,7 @@ type ValueTransform = (value: string) => string;
 const granularityParseValueTransformations: {
     [granularity in CatalogDateAttributeGranularity]?: ValueTransform;
 } = {
-    "GDC.time.day_in_week": value => {
+    "GDC.time.day_in_week": (value) => {
         // server returns 0 = Sunday, 6 = Saturday
         // date-fns expects 1 = Monday, 7 = Sunday
         return value === "0" ? "7" : value;

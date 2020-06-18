@@ -8,20 +8,14 @@ import { DataViewFacade } from "../../base/results/facade";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
-const makeChild = () => jest.fn(_ => <div />);
+const makeChild = () => jest.fn((_) => <div />);
 const renderDummyExecutor = (
     child: jest.Mock<JSX.Element>,
     props: Omit<IRawExecuteProps, "execution" | "children"> = {},
     backend: IAnalyticalBackend = DummyBackendEmptyData,
 ) => {
     return mount(
-        <RawExecute
-            execution={backend
-                .workspace("dummy")
-                .execution()
-                .forItems([])}
-            {...props}
-        >
+        <RawExecute execution={backend.workspace("dummy").execution().forItems([])} {...props}>
             {child}
         </RawExecute>,
     );

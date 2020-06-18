@@ -52,7 +52,7 @@ export class RecordedMetadata implements IWorkspaceMetadata {
 
         const recording = this.recordings.metadata.catalog.items
             .filter(isCatalogAttribute)
-            .find(wrappedAttribute => {
+            .find((wrappedAttribute) => {
                 return areObjRefsEqual(ref, wrappedAttribute.attribute.ref);
             });
 
@@ -64,13 +64,8 @@ export class RecordedMetadata implements IWorkspaceMetadata {
 
         const { title, uri, id, production, description } = recording.attribute;
         return Promise.resolve(
-            newAttributeMetadataObject(ref, a =>
-                a
-                    .title(title)
-                    .uri(uri)
-                    .production(Boolean(production))
-                    .id(id)
-                    .description(description),
+            newAttributeMetadataObject(ref, (a) =>
+                a.title(title).uri(uri).production(Boolean(production)).id(id).description(description),
             ),
         );
     }

@@ -57,8 +57,8 @@ export const defWithAlias: IExecutionDefinition = {
     buckets: [],
     measures: [],
     attributes: [
-        newAttribute("attribute1", m => m.alias("alias")),
-        newAttribute("attribute2", m => m.localId()),
+        newAttribute("attribute1", (m) => m.alias("alias")),
+        newAttribute("attribute2", (m) => m.localId()),
     ],
     filters: [],
     sortBy: [],

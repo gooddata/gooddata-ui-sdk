@@ -21,7 +21,7 @@ export class PreviousPeriodHeadlineExample extends Component {
         const secondaryMeasure = newPreviousPeriodMeasure(
             LdmExt.TotalSales2,
             [{ dataSet: LdmExt.dateDatasetIdentifier, periodsAgo: 1 }],
-            m => m.alias("$ Total Sales - period ago"),
+            (m) => m.alias("$ Total Sales - period ago"),
         );
 
         return (

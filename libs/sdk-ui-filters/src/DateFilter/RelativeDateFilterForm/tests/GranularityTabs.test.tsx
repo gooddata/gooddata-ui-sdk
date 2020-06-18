@@ -16,9 +16,9 @@ const granularityTuple: Array<[DateFilterGranularity, GranularityIntlKey]> = [
     ["GDC.time.year", "year"],
 ];
 
-const availableGranularities: DateFilterGranularity[] = granularityTuple.map(tuple => tuple[0]);
+const availableGranularities: DateFilterGranularity[] = granularityTuple.map((tuple) => tuple[0]);
 
-const classGranularities: GranularityIntlKey[] = granularityTuple.map(tuple => tuple[1]);
+const classGranularities: GranularityIntlKey[] = granularityTuple.map((tuple) => tuple[1]);
 
 const createTabs = (props?: Partial<IGranularityTabsProps>) => {
     const defaultProps: IGranularityTabsProps = {

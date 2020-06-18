@@ -63,7 +63,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         );
 
         const measures = getMeasureItems(buckets);
-        const rowItems = allAttributes.filter(attribute => {
+        const rowItems = allAttributes.filter((attribute) => {
             return !includes(stackItems, attribute);
         });
         const columnItems = allAttributes.length > 1 ? tail(allAttributes) : stackItems;

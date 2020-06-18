@@ -10,7 +10,7 @@ import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
-const makeChild = () => jest.fn(_ => <div />);
+const makeChild = () => jest.fn((_) => <div />);
 const renderDummyExecutor = (
     child: jest.Mock<JSX.Element>,
     props: Omit<IExecuteProps, "backend" | "workspace" | "children" | "seriesBy"> = {},

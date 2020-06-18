@@ -65,7 +65,7 @@ export const objRefToUri = async (
     workspace: string,
     authCall: BearAuthenticatedCallGuard,
 ): Promise<Uri> => {
-    return isUriRef(ref) ? ref.uri : authCall(sdk => sdk.md.getObjectUri(workspace, ref.identifier));
+    return isUriRef(ref) ? ref.uri : authCall((sdk) => sdk.md.getObjectUri(workspace, ref.identifier));
 };
 
 /**
@@ -81,7 +81,7 @@ export const objRefToIdentifier = async (
     ref: ObjRef,
     authCall: BearAuthenticatedCallGuard,
 ): Promise<Identifier> => {
-    return isIdentifierRef(ref) ? ref.identifier : authCall(sdk => sdk.md.getObjectIdentifier(ref.uri));
+    return isIdentifierRef(ref) ? ref.identifier : authCall((sdk) => sdk.md.getObjectIdentifier(ref.uri));
 };
 
 /**
@@ -97,5 +97,5 @@ export const objRefsToIdentifiers = async (
     refs: ObjRef[],
     authCall: BearAuthenticatedCallGuard,
 ): Promise<Identifier[]> => {
-    return Promise.all(refs.map(ref => objRefToIdentifier(ref, authCall)));
+    return Promise.all(refs.map((ref) => objRefToIdentifier(ref, authCall)));
 };

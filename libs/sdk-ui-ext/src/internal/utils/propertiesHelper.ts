@@ -140,7 +140,7 @@ export function isDualAxisOrSomeSecondaryAxisMeasure(
 ): boolean {
     return (
         get(extReferencePoint, PROPERTY_CONTROLS_DUAL_AXIS, true) ||
-        secondaryMeasures.some(item => get(item, SHOW_ON_SECONDARY_AXIS))
+        secondaryMeasures.some((item) => get(item, SHOW_ON_SECONDARY_AXIS))
     );
 }
 

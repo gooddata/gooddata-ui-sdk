@@ -37,7 +37,7 @@ import zipObject = require("lodash/zipObject");
  */
 
 const getSubtotalLabelCellIndex = (resultHeaderItems: IResultHeader[][], rowIndex: number): number => {
-    return resultHeaderItems.findIndex(headerItem => isResultTotalHeader(headerItem[rowIndex]));
+    return resultHeaderItems.findIndex((headerItem) => isResultTotalHeader(headerItem[rowIndex]));
 };
 
 const getCell = (
@@ -136,7 +136,7 @@ export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: Int
     const measureIds = dv
         .meta()
         .measureDescriptors()
-        .map(m => m.measureHeaderItem.localIdentifier);
+        .map((m) => m.measureHeaderItem.localIdentifier);
     const totalDefs = dv.definition.dimensions[0].totals;
 
     return totals[0].map((totalRow: string[], totalIndex: number) => {
@@ -175,8 +175,10 @@ export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: Int
         // create measure ids in the form of "m_index" for measures having the current type of grand total
         // this makes it easier to match against in the cell renderer
         const rowTotalActiveMeasures = totalDefs
-            .filter(t => t.type === grandTotalName && t.attributeIdentifier === grandTotalAttributeIdentifier)
-            .map(t => `m_${measureIds.indexOf(t.measureIdentifier)}`);
+            .filter(
+                (t) => t.type === grandTotalName && t.attributeIdentifier === grandTotalAttributeIdentifier,
+            )
+            .map((t) => `m_${measureIds.indexOf(t.measureIdentifier)}`);
 
         return {
             colSpan: {

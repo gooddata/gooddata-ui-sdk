@@ -138,7 +138,7 @@ class ResultMetaMethods implements IResultMetaMethods {
     }
 
     public attributeDescriptors(): IAttributeDescriptor[] {
-        return flatMap(this.dataView.result.dimensions, dim => {
+        return flatMap(this.dataView.result.dimensions, (dim) => {
             return dim.headers.filter(isAttributeDescriptor);
         });
     }
@@ -163,7 +163,7 @@ class ResultMetaMethods implements IResultMetaMethods {
 
     public attributeHeaders(): IResultAttributeHeader[][][] {
         return this.dataView.headerItems.map((dimension: IResultHeader[][]) => {
-            return dimension.filter(headerList =>
+            return dimension.filter((headerList) =>
                 isResultAttributeHeader(headerList[0]),
             ) as IResultAttributeHeader[][];
         });

@@ -26,24 +26,24 @@ describe("measure converter", () => {
         ],
         ["converted simple measure from model to AFM", newMeasure("foo")],
         ["format of measure: change", newArithmeticMeasure(["foo", "bar"], "change")],
-        ["format of measure: ratio", newMeasure("foo", m => m.ratio())],
-        ["format of measure: count", newMeasure("foo", m => m.aggregation("count"))],
-        ["format of measure: sum", newMeasure("foo", m => m.aggregation("sum"))],
-        ["format of measure: avg", newMeasure("foo", m => m.aggregation("avg"))],
-        ["format of measure: max", newMeasure("foo", m => m.aggregation("max"))],
-        ["format of measure: median", newMeasure("foo", m => m.aggregation("median"))],
-        ["format of measure: min", newMeasure("foo", m => m.aggregation("min"))],
-        ["format of measure: runsum", newMeasure("foo", m => m.aggregation("runsum"))],
+        ["format of measure: ratio", newMeasure("foo", (m) => m.ratio())],
+        ["format of measure: count", newMeasure("foo", (m) => m.aggregation("count"))],
+        ["format of measure: sum", newMeasure("foo", (m) => m.aggregation("sum"))],
+        ["format of measure: avg", newMeasure("foo", (m) => m.aggregation("avg"))],
+        ["format of measure: max", newMeasure("foo", (m) => m.aggregation("max"))],
+        ["format of measure: median", newMeasure("foo", (m) => m.aggregation("median"))],
+        ["format of measure: min", newMeasure("foo", (m) => m.aggregation("min"))],
+        ["format of measure: runsum", newMeasure("foo", (m) => m.aggregation("runsum"))],
         [
             "measure with two filters",
-            newMeasure("foo", m =>
+            newMeasure("foo", (m) =>
                 m.filters(
                     newAbsoluteDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, "2019-08-06", "2019-08-12"),
                     newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, 5, 22),
                 ),
             ),
         ],
-        ["converted alias", newMeasure("foo", m => m.alias("alias"))],
+        ["converted alias", newMeasure("foo", (m) => m.alias("alias"))],
     ];
 
     it.each(Scenarios)("should return %s", (_desc, input) => {

@@ -22,7 +22,7 @@ const convertLayoutColumn = (
 ): IFluidLayoutColumn => {
     const { content } = column;
     if (GdcDashboardLayout.isLayoutWidget(content)) {
-        const widget = widgetDependencies.find(dep => {
+        const widget = widgetDependencies.find((dep) => {
             const { qualifier } = content.widget;
             if (GdcVisualizationObject.isObjUriQualifier(qualifier)) {
                 return areObjRefsEqual(uriRef(qualifier.uri), dep.ref);
@@ -50,7 +50,7 @@ const convertLayoutRow = (
 ): IFluidLayoutRow => {
     return {
         ...row,
-        columns: row.columns.map(column => convertLayoutColumn(column, widgetDependencies)),
+        columns: row.columns.map((column) => convertLayoutColumn(column, widgetDependencies)),
     };
 };
 
@@ -62,7 +62,7 @@ export const convertLayout = (layout: GdcDashboardLayout.Layout, widgetDependenc
     const convertedLayout: Layout = {
         fluidLayout: {
             ...fluidLayout,
-            rows: rows.map(row => convertLayoutRow(row, widgetDependencies)),
+            rows: rows.map((row) => convertLayoutRow(row, widgetDependencies)),
         },
     };
     return convertedLayout;
@@ -104,7 +104,7 @@ function createColumns(
     dependencies: BearDashboardDependency[],
     visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
 ): IFluidLayoutColumn[] {
-    return widgets.map(widget => createColumn(widget, dependencies, visualizationClasses));
+    return widgets.map((widget) => createColumn(widget, dependencies, visualizationClasses));
 }
 
 function createColumn(
@@ -131,11 +131,12 @@ function findImplicitWidgetWidth(
 
     const visualizationUri = (widget.insight as UriRef).uri;
     const vis = dependencies.find(
-        v => GdcVisualizationObject.isVisualization(v) && v.visualizationObject.meta.uri === visualizationUri,
+        (v) =>
+            GdcVisualizationObject.isVisualization(v) && v.visualizationObject.meta.uri === visualizationUri,
     ) as GdcVisualizationObject.IVisualization;
     const visualizationClassUri = vis.visualizationObject.content.visualizationClass.uri;
     const visualizationClass = visualizationClasses.find(
-        visClass => visClass.visualizationClass.meta.uri === visualizationClassUri,
+        (visClass) => visClass.visualizationClass.meta.uri === visualizationClassUri,
     );
     return getVisualizationLegacyWidth(visualizationClass!);
 }

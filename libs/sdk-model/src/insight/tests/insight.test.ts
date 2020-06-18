@@ -47,13 +47,13 @@ const AttributeFilter = newPositiveAttributeFilter(Account.Name, ["myAccount"]);
 
 const VisClassId = "myVis";
 const EmptyInsight = newInsight(VisClassId);
-const InsightWithSingleBucket = newInsight(VisClassId, m => m.buckets([MixedBucket]));
-const InsightWithTwoBuckets = newInsight(VisClassId, m => m.buckets([AttributeBucket, MixedBucket]));
-const InsightWithThreeBuckets = newInsight(VisClassId, m =>
+const InsightWithSingleBucket = newInsight(VisClassId, (m) => m.buckets([MixedBucket]));
+const InsightWithTwoBuckets = newInsight(VisClassId, (m) => m.buckets([AttributeBucket, MixedBucket]));
+const InsightWithThreeBuckets = newInsight(VisClassId, (m) =>
     m.buckets([MeasureBucket, AttributeBucket, MixedBucket]),
 );
-const InsightWithJustAttrBucket = newInsight(VisClassId, m => m.buckets([AttributeBucket]));
-const InsightWithJustMeasureBucket = newInsight(VisClassId, m => m.buckets([MeasureBucket]));
+const InsightWithJustAttrBucket = newInsight(VisClassId, (m) => m.buckets([AttributeBucket]));
+const InsightWithJustMeasureBucket = newInsight(VisClassId, (m) => m.buckets([MeasureBucket]));
 
 const InvalidScenarios: Array<[string, any]> = [
     ["insight is undefined", undefined],
@@ -205,7 +205,7 @@ describe("insightHasDataDefined", () => {
 });
 
 describe("insightFilters", () => {
-    const InsightWithFilters = newInsight(VisClassId, m =>
+    const InsightWithFilters = newInsight(VisClassId, (m) =>
         m.buckets([MixedBucket]).filters([AttributeFilter]),
     );
 
@@ -229,22 +229,22 @@ describe("insightSorts", () => {
     const WonSort = newMeasureSort(Won, "asc");
     const WonAndAccountSort = newMeasureSort(Won, "asc", [newAttributeLocator(Account.Name, "myAccount")]);
 
-    const InsightWithValidAttributeSort = newInsight(VisClassId, m =>
+    const InsightWithValidAttributeSort = newInsight(VisClassId, (m) =>
         m.buckets([MixedBucket]).sorts([AccountSort]),
     );
-    const InsightWithValidMeasureSort1 = newInsight(VisClassId, m =>
+    const InsightWithValidMeasureSort1 = newInsight(VisClassId, (m) =>
         m.buckets([MixedBucket]).sorts([WonSort]),
     );
-    const InsightWithValidMeasureSort2 = newInsight(VisClassId, m =>
+    const InsightWithValidMeasureSort2 = newInsight(VisClassId, (m) =>
         m.buckets([MixedBucket]).sorts([WonAndAccountSort]),
     );
-    const InsightWithInvalidAttributeSort = newInsight(VisClassId, m =>
+    const InsightWithInvalidAttributeSort = newInsight(VisClassId, (m) =>
         m.buckets([MixedBucket]).sorts([newAttributeSort(Activity.Subject)]),
     );
-    const InsightWithInvalidMeasureSort1 = newInsight(VisClassId, m =>
+    const InsightWithInvalidMeasureSort1 = newInsight(VisClassId, (m) =>
         m.buckets([MixedBucket]).sorts([newMeasureSort(Velocity.Min)]),
     );
-    const InsightWithInvalidMeasureSort2 = newInsight(VisClassId, m =>
+    const InsightWithInvalidMeasureSort2 = newInsight(VisClassId, (m) =>
         m
             .buckets([MixedBucket])
             .sorts([newMeasureSort(Won, "desc", [newAttributeLocator(Activity.Subject, "myActivity")])]),
@@ -273,7 +273,7 @@ describe("insightSorts", () => {
 describe("insightTotals", () => {
     const Total = newTotal("sum", Won, Account.Name);
     const BucketWithTotals = newBucket("bucketWithTotals", Won, Account.Name, Total);
-    const InsightWithTotals = newInsight(VisClassId, m => m.buckets([BucketWithTotals]));
+    const InsightWithTotals = newInsight(VisClassId, (m) => m.buckets([BucketWithTotals]));
 
     const Scenarios: Array<[string, any, ITotal[]]> = [
         ["no totals for empty insight", EmptyInsight, []],
@@ -292,7 +292,7 @@ describe("insightTotals", () => {
 
 describe("insightProperties", () => {
     const Properties = { grid: true };
-    const InsightWithProperties = newInsight(VisClassId, m =>
+    const InsightWithProperties = newInsight(VisClassId, (m) =>
         m.buckets([MixedBucket]).properties(Properties),
     );
 
@@ -332,7 +332,7 @@ describe("insightUri", () => {
 });
 
 describe("insightIsLocked", () => {
-    const LockedInsight = newInsight(VisClassId, m => m.isLocked(true));
+    const LockedInsight = newInsight(VisClassId, (m) => m.isLocked(true));
 
     const Scenarios: Array<[boolean, string, any]> = [
         [false, "non-locked insight", EmptyInsight],
@@ -350,7 +350,7 @@ describe("insightIsLocked", () => {
 
 describe("insightUpdated", () => {
     const insightUpdatedDate = "2020-01-31 13:24:07";
-    const UpdatedInsight = newInsight(VisClassId, m => m.updated(insightUpdatedDate));
+    const UpdatedInsight = newInsight(VisClassId, (m) => m.updated(insightUpdatedDate));
 
     const Scenarios: Array<[string | undefined, string, any]> = [
         [undefined, "insight that has not been updated", EmptyInsight],

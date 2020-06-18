@@ -26,9 +26,7 @@ const enhance = withFormik<ILoginProps, IFormValues>({
         password,
     }),
     validationSchema: Yup.object().shape({
-        email: Yup.string()
-            .email("Invalid e-mail address")
-            .required("E-mail is required"),
+        email: Yup.string().email("Invalid e-mail address").required("E-mail is required"),
         password: Yup.string().required("Password is required"),
     }),
     handleSubmit: ({ email, password }, { props: { logIn }, setSubmitting }) => {
@@ -45,7 +43,7 @@ const enhance = withFormik<ILoginProps, IFormValues>({
     displayName: "LoginForm", // helps with React DevTools
 });
 
-const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = props => {
+const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = (props) => {
     const {
         values,
         touched,

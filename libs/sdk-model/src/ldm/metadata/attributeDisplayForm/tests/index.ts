@@ -12,7 +12,7 @@ describe("attribute display form", () => {
     const _attributeDisplayFormRef = idRef("label.account.account");
     const _attributeDisplayFormAttributeRef = idRef("attr.account.account");
 
-    const attributeDisplayForm = newAttributeDisplayFormMetadataObject(_attributeDisplayFormRef, df =>
+    const attributeDisplayForm = newAttributeDisplayFormMetadataObject(_attributeDisplayFormRef, (df) =>
         df.attribute(_attributeDisplayFormAttributeRef).title(_attributeDisplayFormTitle),
     );
 

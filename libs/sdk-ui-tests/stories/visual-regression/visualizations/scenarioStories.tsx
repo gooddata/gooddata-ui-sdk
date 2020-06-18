@@ -16,7 +16,7 @@ import groupBy = require("lodash/groupBy");
 const DefaultWrapperStyle = { width: 800, height: 400 };
 
 const backend = StorybookBackend();
-const ScenarioGroupsByVis = Object.entries(groupBy<ScenarioGroup<any>>(chartGroups, g => g.vis));
+const ScenarioGroupsByVis = Object.entries(groupBy<ScenarioGroup<any>>(chartGroups, (g) => g.vis));
 
 function simpleStory(Component: React.ComponentType, props: any, wrapperStyle: any) {
     return () => {

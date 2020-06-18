@@ -131,16 +131,16 @@ export class BearBackend implements IAnalyticalBackend {
             const legacyFunctions: BearLegacyFunctions = {
                 openAsReport: (workspace, insight) => {
                     const visualizationObject = convertInsight(insight);
-                    return this.authApiCall(sdk =>
+                    return this.authApiCall((sdk) =>
                         sdk.md.openVisualizationAsReport(workspace, { visualizationObject }),
                     );
                 },
 
-                getBootstrapResource: options => {
-                    return this.authApiCall(sdk => sdk.user.getBootstrapResource(options));
+                getBootstrapResource: (options) => {
+                    return this.authApiCall((sdk) => sdk.user.getBootstrapResource(options));
                 },
 
-                ajaxSetup: settings => {
+                ajaxSetup: (settings) => {
                     this.sdk.xhr.ajaxSetup(settings);
                 },
 
@@ -155,7 +155,7 @@ export class BearBackend implements IAnalyticalBackend {
                         currentProjectUri: `/gdc/projects/${workspace}`,
                     };
 
-                    await this.authApiCall(sdk =>
+                    await this.authApiCall((sdk) =>
                         sdk.user.updateProfileSettings(userId!, { profileSetting: newProfileSetting }),
                     );
                 },
@@ -165,11 +165,11 @@ export class BearBackend implements IAnalyticalBackend {
                         workspace,
                         postMessageData,
                         (workspace, identifiers) =>
-                            this.authApiCall(sdk => sdk.md.getUrisFromIdentifiers(workspace, identifiers)),
+                            this.authApiCall((sdk) => sdk.md.getUrisFromIdentifiers(workspace, identifiers)),
                     ),
 
                 getProjectDashboards: (workspace: string) => {
-                    return this.authApiCall(sdk => sdk.md.getProjectDashboards(workspace));
+                    return this.authApiCall((sdk) => sdk.md.getProjectDashboards(workspace));
                 },
             };
 
@@ -200,10 +200,10 @@ export class BearBackend implements IAnalyticalBackend {
         return new Promise((resolve, reject) => {
             this.authProvider
                 .getCurrentPrincipal({ client: this.sdk })
-                .then(res => {
+                .then((res) => {
                     resolve(res);
                 })
-                .catch(err => {
+                .catch((err) => {
                     if (isNotAuthenticatedError(err)) {
                         resolve(null);
                     }
@@ -215,7 +215,7 @@ export class BearBackend implements IAnalyticalBackend {
 
     public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
         if (!force) {
-            return this.authApiCall(async sdk => {
+            return this.authApiCall(async (sdk) => {
                 const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
                 invariant(principal, "Principal must be defined");
                 return principal!;

@@ -34,7 +34,7 @@ function comparatorDataSample(a: [string, DataSampleRecording[]], b: [string, Da
 function generateDataSampleConst(
     recordings: DisplayFormRecording[],
 ): OptionalKind<VariableStatementStructure> {
-    const recsWithDataSample: DataSampleRecording[] = recordings.map(rec => [
+    const recsWithDataSample: DataSampleRecording[] = recordings.map((rec) => [
         createUniqueVariableName(rec.getDisplayFormTitle()),
         rec,
     ]);
@@ -68,7 +68,7 @@ export function generateConstantsForDataSamples(
     recordings: DisplayFormRecording[],
     targetDir: string,
 ): Array<OptionalKind<VariableStatementStructure>> {
-    const recConsts = recordings.map(rec => {
+    const recConsts = recordings.map((rec) => {
         return {
             declarationKind: VariableDeclarationKind.Const,
             isExported: false,

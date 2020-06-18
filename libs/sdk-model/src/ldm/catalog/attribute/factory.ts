@@ -64,10 +64,10 @@ export class CatalogAttributeBuilder<
             throw new Error("Cannot convert catalog attribute to execution model, no displayForm found!");
         }
 
-        const defaultModifications: AttributeModifications = a =>
+        const defaultModifications: AttributeModifications = (a) =>
             a.alias(this.item.defaultDisplayForm?.title!);
 
-        return newAttribute(this.item.defaultDisplayForm.ref, m => modifications(defaultModifications(m)));
+        return newAttribute(this.item.defaultDisplayForm.ref, (m) => modifications(defaultModifications(m)));
     }
 }
 

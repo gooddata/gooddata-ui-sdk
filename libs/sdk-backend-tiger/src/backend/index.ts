@@ -146,10 +146,10 @@ export class TigerBackend implements IAnalyticalBackend {
         return new Promise((resolve, reject) => {
             this.authProvider
                 .getCurrentPrincipal({ client: this.sdk })
-                .then(res => {
+                .then((res) => {
                     resolve(res);
                 })
-                .catch(err => {
+                .catch((err) => {
                     if (isNotAuthenticatedError(err)) {
                         resolve(null);
                     }
@@ -161,7 +161,7 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
         if (!force) {
-            return this.authApiCall(async sdk => {
+            return this.authApiCall(async (sdk) => {
                 const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
                 invariant(principal, "Principal must be defined");
                 return principal!;
@@ -183,18 +183,18 @@ export class TigerBackend implements IAnalyticalBackend {
         call: AuthenticatedAsyncCall<ITigerClient, T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
-        return call(this.sdk, await this.getAsyncCallContext()).catch(err => {
+        return call(this.sdk, await this.getAsyncCallContext()).catch((err) => {
             if (!isNotAuthenticatedError(err)) {
                 throw errorConverter(err);
             }
 
             return this.triggerAuthentication()
-                .then(async _ => {
-                    return call(this.sdk, await this.getAsyncCallContext()).catch(e => {
+                .then(async (_) => {
+                    return call(this.sdk, await this.getAsyncCallContext()).catch((e) => {
                         throw errorConverter(e);
                     });
                 })
-                .catch(err2 => {
+                .catch((err2) => {
                     throw new NotAuthenticated("Current session is not authenticated.", err2);
                 });
         });

@@ -14,7 +14,7 @@ const style = { height: 300 };
 export const BarChartExportExample: React.FC = () => {
     return (
         <ExampleWithExport filters={filters}>
-            {onExportReady => (
+            {(onExportReady) => (
                 <div style={style} className="s-bar-chart">
                     <BarChart
                         measures={measures}

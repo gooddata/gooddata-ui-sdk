@@ -537,7 +537,7 @@ describe("executeAfm", () => {
 
         return createExecuteAfm()
             .executeAfm("myFakeProjectId", getExecution())
-            .catch(err => {
+            .catch((err) => {
                 expect(err).toBeInstanceOf(Error);
                 expect(err.response.status).toBe(400);
             });
@@ -550,7 +550,7 @@ describe("executeAfm", () => {
 
         return createExecuteAfm()
             .executeAfm("myFakeProjectId", getExecution())
-            .catch(err => {
+            .catch((err) => {
                 expect(err).toBeInstanceOf(Error);
                 expect(err.response.status).toBe(400);
             });
@@ -578,7 +578,7 @@ describe("executeAfm", () => {
 
         return createExecuteAfm()
             .executeAfm("myFakeProjectId", getExecution())
-            .catch(err => {
+            .catch((err) => {
                 expect(err).toBeInstanceOf(Error);
                 expect(err.response.status).toBe(413);
             });
@@ -604,7 +604,7 @@ describe("executeAfm", () => {
 
         return createExecuteAfm()
             .executeAfm("myFakeProjectId", getExecution())
-            .catch(error => {
+            .catch((error) => {
                 expect(error.name).toEqual("Invariant Violation");
                 expect(error.message).toEqual(
                     "3 dimensions are not allowed. Only 1 or 2 dimensions are supported.",
@@ -649,8 +649,20 @@ describe("executeAfm", () => {
             "0,0": {
                 executionResult: {
                     headerItems: [
-                        [[...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))]],
-                        [[...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))]],
+                        [
+                            [
+                                ...range(1, DEFAULT_TEST_LIMIT + 1).map((i) =>
+                                    createAttributeHeaderItem(`a${i}`),
+                                ),
+                            ],
+                        ],
+                        [
+                            [
+                                ...range(1, DEFAULT_TEST_LIMIT + 1).map((i) =>
+                                    createMeasureHeaderItem(`m${i}`, i),
+                                ),
+                            ],
+                        ],
                     ],
                     data: Array(DEFAULT_TEST_LIMIT)
                         .fill(0)
@@ -665,7 +677,13 @@ describe("executeAfm", () => {
             ["0," + DEFAULT_TEST_LIMIT]: {
                 executionResult: {
                     headerItems: [
-                        [[...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createAttributeHeaderItem(`a${i}`))]],
+                        [
+                            [
+                                ...range(1, DEFAULT_TEST_LIMIT + 1).map((i) =>
+                                    createAttributeHeaderItem(`a${i}`),
+                                ),
+                            ],
+                        ],
                         [[createMeasureHeaderItem("m" + (DEFAULT_TEST_LIMIT + 1), DEFAULT_TEST_LIMIT + 1)]],
                     ],
                     data: Array(DEFAULT_TEST_LIMIT).fill([0]),
@@ -680,7 +698,13 @@ describe("executeAfm", () => {
                 executionResult: {
                     headerItems: [
                         [[createAttributeHeaderItem("a" + (DEFAULT_TEST_LIMIT + 1))]],
-                        [[...range(1, DEFAULT_TEST_LIMIT + 1).map(i => createMeasureHeaderItem(`m${i}`, i))]],
+                        [
+                            [
+                                ...range(1, DEFAULT_TEST_LIMIT + 1).map((i) =>
+                                    createMeasureHeaderItem(`m${i}`, i),
+                                ),
+                            ],
+                        ],
                     ],
                     data: [Array(DEFAULT_TEST_LIMIT).fill(0)],
                     paging: {
@@ -723,14 +747,14 @@ describe("executeAfm", () => {
                         headerItems: [
                             [
                                 [
-                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map(i =>
+                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map((i) =>
                                         createAttributeHeaderItem(`a${i}`),
                                     ),
                                 ],
                             ],
                             [
                                 [
-                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map(i =>
+                                    ...range(1, DEFAULT_TEST_LIMIT + 2).map((i) =>
                                         createMeasureHeaderItem(`m${i}`, i),
                                     ),
                                 ],
@@ -789,7 +813,7 @@ describe("executeAfm", () => {
 
         fetchMock.mock(
             "glob:/gdc/app/projects/myFakeProjectId/executionResults/123?dimensions=1&limit=*&offset=*",
-            url => {
+            (url) => {
                 const offset = url.replace(/.*offset=/, "");
                 return { status: 200, body: JSON.stringify(pagesByOffset[offset]) };
             },

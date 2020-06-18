@@ -48,9 +48,9 @@ describe("Normalizer", () => {
             "duplicate attributes and measures",
             newDefForItems("test", [
                 ReferenceLdm.Region,
-                modifyAttribute(ReferenceLdm.Region, m => m.localId("duplicateAttr")),
+                modifyAttribute(ReferenceLdm.Region, (m) => m.localId("duplicateAttr")),
                 ReferenceLdm.Won,
-                modifyMeasure(ReferenceLdm.Won, m => m.localId("duplicateMeasure")),
+                modifyMeasure(ReferenceLdm.Won, (m) => m.localId("duplicateMeasure")),
             ]),
         ],
         [
@@ -78,7 +78,7 @@ describe("Normalizer", () => {
             "simple measures with filters",
             newDefForItems("test", [
                 ReferenceLdm.Won,
-                modifySimpleMeasure(ReferenceLdm.Won, m =>
+                modifySimpleMeasure(ReferenceLdm.Won, (m) =>
                     m
                         .filters(newNegativeAttributeFilter(ReferenceLdm.Region, ["East Coast"]))
                         .defaultLocalId(),
@@ -121,7 +121,7 @@ describe("Normalizer", () => {
 
     it("should strip away empty negative attr filter (noop) from simple measure", () => {
         const def = newDefForItems("test", [
-            modifySimpleMeasure(ReferenceLdm.Won, m =>
+            modifySimpleMeasure(ReferenceLdm.Won, (m) =>
                 m.filters(newNegativeAttributeFilter(ReferenceLdm.Region, [])),
             ),
         ]);
@@ -152,7 +152,7 @@ describe("Normalizer", () => {
     it("should throw if circular references", () => {
         const def = newDefForItems("test", [
             ReferenceLdm.Won,
-            newArithmeticMeasure([ReferenceLdm.Won, "cycle"], "multiplication", m => m.localId("cycle")),
+            newArithmeticMeasure([ReferenceLdm.Won, "cycle"], "multiplication", (m) => m.localId("cycle")),
         ]);
 
         expect(() => Normalizer.normalize(def)).toThrow();

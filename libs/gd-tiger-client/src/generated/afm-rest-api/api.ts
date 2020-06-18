@@ -26,7 +26,7 @@ const addFlattenedObjectTo = (object: any, baseName: string, target: any): void 
     const semiFlattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
     const flattened = semiFlattened[Object.keys(semiFlattened)[0]] ?? {};
 
-    Object.keys(flattened).forEach(key => {
+    Object.keys(flattened).forEach((key) => {
         target[`${baseName}${key}`] = (flattened as any)[key];
     });
 };
@@ -351,7 +351,7 @@ export interface ResultSpec {
  * AfmControllerApi - axios parameter creator
  * @export
  */
-export const AfmControllerApiAxiosParamCreator = function(configuration?: Configuration) {
+export const AfmControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          *
@@ -468,7 +468,7 @@ export const AfmControllerApiAxiosParamCreator = function(configuration?: Config
  * AfmControllerApi - functional programming interface
  * @export
  */
-export const AfmControllerApiFp = function(configuration?: Configuration) {
+export const AfmControllerApiFp = function (configuration?: Configuration) {
     return {
         /**
          *
@@ -528,7 +528,7 @@ export const AfmControllerApiFp = function(configuration?: Configuration) {
  * AfmControllerApi - factory interface
  * @export
  */
-export const AfmControllerApiFactory = function(
+export const AfmControllerApiFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,
@@ -665,7 +665,7 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
  * ElementsControllerApi - axios parameter creator
  * @export
  */
-export const ElementsControllerApiAxiosParamCreator = function(configuration?: Configuration) {
+export const ElementsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          *
@@ -819,7 +819,7 @@ export const ElementsControllerApiAxiosParamCreator = function(configuration?: C
  * ElementsControllerApi - functional programming interface
  * @export
  */
-export const ElementsControllerApiFp = function(configuration?: Configuration) {
+export const ElementsControllerApiFp = function (configuration?: Configuration) {
     return {
         /**
          *
@@ -867,7 +867,7 @@ export const ElementsControllerApiFp = function(configuration?: Configuration) {
  * ElementsControllerApi - factory interface
  * @export
  */
-export const ElementsControllerApiFactory = function(
+export const ElementsControllerApiFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,

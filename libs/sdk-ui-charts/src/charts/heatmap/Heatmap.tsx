@@ -14,7 +14,7 @@ import { withChart } from "../_base/withChart";
 const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = {
     chartName: "Heatmap",
     bucketPropsKeys: ["measure", "rows", "columns", "filters", "sortBy"],
-    bucketsFactory: props => {
+    bucketsFactory: (props) => {
         return [
             newBucket(BucketNames.MEASURES, props.measure),
             newBucket(BucketNames.VIEW, props.rows),

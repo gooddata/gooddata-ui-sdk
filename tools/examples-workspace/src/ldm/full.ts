@@ -531,37 +531,37 @@ export const $MenuItemSales = {
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.salesdetailfact.menuitemsales", m => m.aggregation("sum")),
+    Sum: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("sum")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.salesdetailfact.menuitemsales", m => m.aggregation("count")),
+     */ Count: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("count")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.salesdetailfact.menuitemsales", m => m.aggregation("avg")),
+     */ Avg: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("avg")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.salesdetailfact.menuitemsales", m => m.aggregation("min")),
+     */ Min: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("min")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.salesdetailfact.menuitemsales", m => m.aggregation("max")),
+     */ Max: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("max")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.salesdetailfact.menuitemsales", m => m.aggregation("median")),
+     */ Median: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("median")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.salesdetailfact.menuitemsales", m => m.aggregation("runsum")),
+     */ Runsum: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Cost
@@ -573,37 +573,37 @@ export const Cost = {
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.restaurantcostsfact.cost", m => m.aggregation("sum")),
+    Sum: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("sum")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.restaurantcostsfact.cost", m => m.aggregation("count")),
+     */ Count: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("count")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.restaurantcostsfact.cost", m => m.aggregation("avg")),
+     */ Avg: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("avg")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.restaurantcostsfact.cost", m => m.aggregation("min")),
+     */ Min: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("min")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.restaurantcostsfact.cost", m => m.aggregation("max")),
+     */ Max: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("max")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.restaurantcostsfact.cost", m => m.aggregation("median")),
+     */ Median: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("median")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.restaurantcostsfact.cost", m => m.aggregation("runsum")),
+     */ Runsum: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Density
@@ -615,37 +615,37 @@ export const Density = {
      * Fact ID: fact.uscities.density
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.uscities.density", m => m.aggregation("sum")),
+    Sum: newMeasure("fact.uscities.density", (m) => m.aggregation("sum")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.uscities.density", m => m.aggregation("count")),
+     */ Count: newMeasure("fact.uscities.density", (m) => m.aggregation("count")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.uscities.density", m => m.aggregation("avg")),
+     */ Avg: newMeasure("fact.uscities.density", (m) => m.aggregation("avg")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.uscities.density", m => m.aggregation("min")),
+     */ Min: newMeasure("fact.uscities.density", (m) => m.aggregation("min")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.uscities.density", m => m.aggregation("max")),
+     */ Max: newMeasure("fact.uscities.density", (m) => m.aggregation("max")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.uscities.density", m => m.aggregation("median")),
+     */ Median: newMeasure("fact.uscities.density", (m) => m.aggregation("median")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.uscities.density", m => m.aggregation("runsum")),
+     */ Runsum: newMeasure("fact.uscities.density", (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Menu Item Quantity
@@ -657,37 +657,37 @@ export const MenuItemQuantity = {
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.salesdetailfact.menuitemquantity", m => m.aggregation("sum")),
+    Sum: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("sum")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.salesdetailfact.menuitemquantity", m => m.aggregation("count")),
+     */ Count: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("count")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.salesdetailfact.menuitemquantity", m => m.aggregation("avg")),
+     */ Avg: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("avg")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.salesdetailfact.menuitemquantity", m => m.aggregation("min")),
+     */ Min: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("min")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.salesdetailfact.menuitemquantity", m => m.aggregation("max")),
+     */ Max: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("max")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.salesdetailfact.menuitemquantity", m => m.aggregation("median")),
+     */ Median: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("median")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.salesdetailfact.menuitemquantity", m => m.aggregation("runsum")),
+     */ Runsum: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Population
@@ -699,37 +699,37 @@ export const Population = {
      * Fact ID: fact.uscities.population
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.uscities.population", m => m.aggregation("sum")),
+    Sum: newMeasure("fact.uscities.population", (m) => m.aggregation("sum")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.uscities.population", m => m.aggregation("count")),
+     */ Count: newMeasure("fact.uscities.population", (m) => m.aggregation("count")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.uscities.population", m => m.aggregation("avg")),
+     */ Avg: newMeasure("fact.uscities.population", (m) => m.aggregation("avg")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.uscities.population", m => m.aggregation("min")),
+     */ Min: newMeasure("fact.uscities.population", (m) => m.aggregation("min")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.uscities.population", m => m.aggregation("max")),
+     */ Max: newMeasure("fact.uscities.population", (m) => m.aggregation("max")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.uscities.population", m => m.aggregation("median")),
+     */ Median: newMeasure("fact.uscities.population", (m) => m.aggregation("median")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.uscities.population", m => m.aggregation("runsum")),
+     */ Runsum: newMeasure("fact.uscities.population", (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Scheduled Cost
@@ -741,37 +741,37 @@ export const ScheduledCost = {
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.restaurantcostsfact.scheduledcost", m => m.aggregation("sum")),
+    Sum: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("sum")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.restaurantcostsfact.scheduledcost", m => m.aggregation("count")),
+     */ Count: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("count")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.restaurantcostsfact.scheduledcost", m => m.aggregation("avg")),
+     */ Avg: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("avg")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.restaurantcostsfact.scheduledcost", m => m.aggregation("min")),
+     */ Min: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("min")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.restaurantcostsfact.scheduledcost", m => m.aggregation("max")),
+     */ Max: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("max")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.restaurantcostsfact.scheduledcost", m => m.aggregation("median")),
+     */ Median: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("median")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.restaurantcostsfact.scheduledcost", m => m.aggregation("runsum")),
+     */ Runsum: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("runsum")),
 };
 /**
  * Attribute Title: Year (Date)

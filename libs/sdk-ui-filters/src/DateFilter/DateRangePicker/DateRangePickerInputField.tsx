@@ -18,9 +18,7 @@ interface IDateRangePickerInputFieldProps extends DayPicker.DayPickerInputProps 
 }
 
 function formatDate(date: Date, format: string, locale: string): string {
-    return moment(date)
-        .locale(locale)
-        .format(format);
+    return moment(date).locale(locale).format(format);
 }
 
 function parseDate(str: string, format: string, locale: string): Date | void {

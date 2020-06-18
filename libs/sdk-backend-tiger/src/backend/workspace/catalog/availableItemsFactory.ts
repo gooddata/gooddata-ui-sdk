@@ -56,7 +56,7 @@ const catalogItemRefs = (item: CatalogItem): ObjRef[] => {
         ? [item.fact.ref]
         : isCatalogMeasure(item)
         ? [item.measure.ref]
-        : item.dateAttributes.map(attr => attr.attribute.ref);
+        : item.dateAttributes.map((attr) => attr.attribute.ref);
 };
 
 export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAvailableItemsFactory {
@@ -127,7 +127,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const relevantItems = insight
             ? [...insightMeasures(insight), ...insightAttributes(insight), ...insightFilters(insight)]
             : items;
-        const availableItemsResponse = await this.authCall(sdk =>
+        const availableItemsResponse = await this.authCall((sdk) =>
             sdk.validObjects.processAfmValidObjectsQuery({
                 afmValidObjectsQuery: {
                     types: relevantTypes.map(mapType),
@@ -178,7 +178,7 @@ export function convertResponseToObjRefs(availableItemIds: any[]): ObjRef[] {
  * @internal
  */
 export function filterAvailableItems(refs: ObjRef[], items: CatalogItem[]): CatalogItem[] {
-    return items.filter(item => {
+    return items.filter((item) => {
         const itemRefs = catalogItemRefs(item);
 
         return intersectionWith(refs, itemRefs, areObjRefsEqual).length > 0;

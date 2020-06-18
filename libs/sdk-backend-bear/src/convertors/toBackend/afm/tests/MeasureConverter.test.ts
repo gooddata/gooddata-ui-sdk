@@ -24,13 +24,13 @@ describe("measure converter", () => {
             newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }]),
         ],
         ["format of measure: change", newArithmeticMeasure(["foo", "bar"], "change")],
-        ["format of measure: ratio", newMeasure("foo", m => m.ratio())],
-        ["format of measure: count", newMeasure("foo", m => m.aggregation("count"))],
+        ["format of measure: ratio", newMeasure("foo", (m) => m.ratio())],
+        ["format of measure: count", newMeasure("foo", (m) => m.aggregation("count"))],
         [
             "converted definition",
-            newMeasure("foo", m => m.filters(newPositiveAttributeFilter("filter", { uris: ["baz"] }))),
+            newMeasure("foo", (m) => m.filters(newPositiveAttributeFilter("filter", { uris: ["baz"] }))),
         ],
-        ["converted alias", newMeasure("foo", m => m.alias("alias"))],
+        ["converted alias", newMeasure("foo", (m) => m.alias("alias"))],
     ];
     it.each(Scenarios)("should return %s", (_disc, input) => {
         expect(convertMeasure(input)).toMatchSnapshot();

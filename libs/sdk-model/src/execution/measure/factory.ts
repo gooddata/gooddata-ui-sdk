@@ -226,7 +226,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
         }
 
         return ["m", this.buildEnvelopeLocalIdPart(), this.generateLocalId()]
-            .filter(part => !isEmpty(part))
+            .filter((part) => !isEmpty(part))
             .join("_");
     }
 
@@ -460,7 +460,7 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
 
     protected generateLocalId(): string {
         const hasher = new SparkMD5();
-        this.arithmeticMeasure.measureIdentifiers.forEach(id => hasher.append(id));
+        this.arithmeticMeasure.measureIdentifiers.forEach((id) => hasher.append(id));
 
         return hasher.end();
     }

@@ -38,9 +38,7 @@ describe("PluggableHeadline", () => {
         },
     };
 
-    const executionFactory = dummyBackend()
-        .workspace("PROJECTID")
-        .execution();
+    const executionFactory = dummyBackend().workspace("PROJECTID").execution();
 
     function createComponent(customProps: Partial<IVisConstruct> = {}) {
         return new PluggableHeadline({
@@ -232,7 +230,7 @@ describe("PluggableHeadline", () => {
                 referencePointMocks.measureWithDerivedWithoutDateFilterRefPoint,
             );
 
-            getMeasureItems(extendedReferencePoint.buckets).forEach(bucketItem => {
+            getMeasureItems(extendedReferencePoint.buckets).forEach((bucketItem) => {
                 expect(bucketItem).not.toHaveProperty("derivedMeasureDefinition");
             });
         });

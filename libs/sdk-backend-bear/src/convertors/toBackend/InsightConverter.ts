@@ -61,9 +61,7 @@ const convertInsightContent = (
 
     const nonEmptyProperties = omitBy(properties, (value, key) => key !== "controls" && isEmpty(value));
 
-    const filters = insightFilters(insight)
-        .filter(shouldFilterBeIncluded)
-        .map(convertExtendedFilter);
+    const filters = insightFilters(insight).filter(shouldFilterBeIncluded).map(convertExtendedFilter);
 
     return {
         buckets: insightBuckets(insight).map(convertBucket),

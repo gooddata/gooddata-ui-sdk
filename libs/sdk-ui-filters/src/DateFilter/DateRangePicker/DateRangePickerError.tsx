@@ -8,7 +8,9 @@ interface IDateRangePickerErrorProps {
     errorId: string;
 }
 
-const DateRangePickerErrorComponent: React.FC<IDateRangePickerErrorProps & WrappedComponentProps> = props => {
+const DateRangePickerErrorComponent: React.FC<IDateRangePickerErrorProps & WrappedComponentProps> = (
+    props,
+) => {
     const { errorId, intl } = props;
 
     return (

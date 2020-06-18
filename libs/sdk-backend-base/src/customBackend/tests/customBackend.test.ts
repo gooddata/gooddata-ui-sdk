@@ -162,11 +162,7 @@ describe("custom backend", () => {
         it("should be called once during execution", async () => {
             const { backend, mockClientProvider } = createBackend();
 
-            await backend
-                .workspace("test")
-                .execution()
-                .forDefinition(TestDefinition)
-                .execute();
+            await backend.workspace("test").execution().forDefinition(TestDefinition).execute();
 
             expect(mockClientProvider).toBeCalledTimes(1);
         });
@@ -191,11 +187,7 @@ describe("custom backend", () => {
              */
             const { backend, mockClientProvider } = createBackend(resultThatFirstFailsDueToNoAuth());
 
-            await backend
-                .workspace("test")
-                .execution()
-                .forDefinition(TestDefinition)
-                .execute();
+            await backend.workspace("test").execution().forDefinition(TestDefinition).execute();
 
             expect(mockClientProvider).toBeCalledTimes(1);
         });

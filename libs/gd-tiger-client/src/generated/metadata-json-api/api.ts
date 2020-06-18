@@ -26,7 +26,7 @@ const addFlattenedObjectTo = (object: any, baseName: string, target: any): void 
     const semiFlattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
     const flattened = semiFlattened[Object.keys(semiFlattened)[0]] ?? {};
 
-    Object.keys(flattened).forEach(key => {
+    Object.keys(flattened).forEach((key) => {
         target[`${baseName}${key}`] = (flattened as any)[key];
     });
 };
@@ -3868,7 +3868,7 @@ export interface VisualizationObjectResourcesResponseSchemaAllOf {
  * DefaultApi - axios parameter creator
  * @export
  */
-export const DefaultApiAxiosParamCreator = function(configuration?: Configuration) {
+export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Retrieve a List of attribute resources
@@ -20988,7 +20988,7 @@ export const DefaultApiAxiosParamCreator = function(configuration?: Configuratio
  * DefaultApi - functional programming interface
  * @export
  */
-export const DefaultApiFp = function(configuration?: Configuration) {
+export const DefaultApiFp = function (configuration?: Configuration) {
     return {
         /**
          * Retrieve a List of attribute resources
@@ -26606,7 +26606,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
  * DefaultApi - factory interface
  * @export
  */
-export const DefaultApiFactory = function(
+export const DefaultApiFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,

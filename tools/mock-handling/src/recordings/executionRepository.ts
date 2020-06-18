@@ -20,7 +20,5 @@ function loadRecording(recordingDefinition: string): IRecording | null {
 }
 
 export async function discoverExecutionRecordings(recordingDir: string): Promise<IRecording[]> {
-    return findFiles(recordingDir, ExecutionDefinitionFile)
-        .map(loadRecording)
-        .filter(isNonNullRecording);
+    return findFiles(recordingDir, ExecutionDefinitionFile).map(loadRecording).filter(isNonNullRecording);
 }

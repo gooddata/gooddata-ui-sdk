@@ -8,22 +8,22 @@ describe("newAttribute", () => {
     });
 
     it("should return an attribute with an alias", () => {
-        expect(newAttribute("foo", a => a.alias("alias"))).toMatchSnapshot();
+        expect(newAttribute("foo", (a) => a.alias("alias"))).toMatchSnapshot();
     });
 
     it("should return an attribute with a custom localId", () => {
-        expect(newAttribute("foo", a => a.localId("custom"))).toMatchSnapshot();
+        expect(newAttribute("foo", (a) => a.localId("custom"))).toMatchSnapshot();
     });
 });
 
 describe("modifyAttribute", () => {
     it("should keep localId if one not provided during modification", () => {
-        expect(modifyAttribute(Account.Name, m => m.alias("My Account Name"))).toMatchSnapshot();
+        expect(modifyAttribute(Account.Name, (m) => m.alias("My Account Name"))).toMatchSnapshot();
     });
 
     it("should use localId provided during modification", () => {
         expect(
-            modifyAttribute(Account.Name, m => m.alias("My Account Name").localId("my_custom_id")),
+            modifyAttribute(Account.Name, (m) => m.alias("My Account Name").localId("my_custom_id")),
         ).toMatchSnapshot();
     });
 });

@@ -54,7 +54,7 @@ export function getColorPalette(baseColor: string | IRgbColorValue, opacity: num
     const colorItemsCount = 6;
     const { r, g, b } = getRGBColorCode(baseColor);
     const channels = [r, g, b];
-    const steps = channels.map(channel => (255 - channel) / colorItemsCount);
+    const steps = channels.map((channel) => (255 - channel) / colorItemsCount);
     const generatedColors = getCalculatedColors(colorItemsCount, channels, steps, opacity);
     return [...generatedColors.reverse(), formatColor(r, g, b, opacity)];
 }

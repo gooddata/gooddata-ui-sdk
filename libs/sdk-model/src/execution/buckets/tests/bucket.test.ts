@@ -226,8 +226,8 @@ describe("bucketTotals", () => {
 });
 
 describe("applyRatioRule", () => {
-    const MeasureWithRatio1 = modifySimpleMeasure(Won, m => m.ratio());
-    const MeasureWithRatio2 = modifySimpleMeasure(Velocity.Avg, m => m.ratio());
+    const MeasureWithRatio1 = modifySimpleMeasure(Won, (m) => m.ratio());
+    const MeasureWithRatio2 = modifySimpleMeasure(Velocity.Avg, (m) => m.ratio());
 
     const Scenarios: Array<[string, any, any, any]> = [
         [

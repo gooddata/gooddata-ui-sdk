@@ -53,9 +53,8 @@ const commonGroupableCatalogItemModifications = <
 >(
     item: MetadataObjectResourceSchema,
 ) => (builder: T) => {
-    const tagRefs = (((item.relationships as any)?.tags?.data || []) as TagResourceReference[]).map(tagRef =>
-        idRef(tagRef.id, "tag"),
-    );
+    const tagRefs = (((item.relationships as any)?.tags?.data ||
+        []) as TagResourceReference[]).map((tagRef) => idRef(tagRef.id, "tag"));
 
     return builder.groups(tagRefs);
 };
@@ -65,19 +64,19 @@ export const convertAttribute = (
     defaultLabel: LabelResourceSchema,
     geoLabels: LabelResourceSchema[],
 ): ICatalogAttribute => {
-    const geoPinDisplayForms = geoLabels.map(label => {
+    const geoPinDisplayForms = geoLabels.map((label) => {
         return newAttributeDisplayFormMetadataObject(
             idRef(label.id, "displayForm"),
             commonMetadataObjectModifications(label),
         );
     });
 
-    return newCatalogAttribute(catalogA =>
+    return newCatalogAttribute((catalogA) =>
         catalogA
-            .attribute(idRef(attribute.id, "attribute"), a =>
+            .attribute(idRef(attribute.id, "attribute"), (a) =>
                 a.modify(commonMetadataObjectModifications(attribute)),
             )
-            .defaultDisplayForm(idRef(defaultLabel.id, "displayForm"), df =>
+            .defaultDisplayForm(idRef(defaultLabel.id, "displayForm"), (df) =>
                 df.modify(commonMetadataObjectModifications(defaultLabel)),
             )
             .geoPinDisplayForms(geoPinDisplayForms)
@@ -90,9 +89,9 @@ export const convertMeasure = (measure: MetricResourceSchema): ICatalogMeasure =
         attributes: { maql },
     } = measure;
 
-    return newCatalogMeasure(catalogM =>
+    return newCatalogMeasure((catalogM) =>
         catalogM
-            .measure(idRef(measure.id, "measure"), m =>
+            .measure(idRef(measure.id, "measure"), (m) =>
                 m.modify(commonMetadataObjectModifications(measure)).expression(maql || ""),
             )
             .modify(commonGroupableCatalogItemModifications(measure)),
@@ -100,9 +99,9 @@ export const convertMeasure = (measure: MetricResourceSchema): ICatalogMeasure =
 };
 
 export const convertFact = (fact: FactResourceSchema): ICatalogFact => {
-    return newCatalogFact(catalogF =>
+    return newCatalogFact((catalogF) =>
         catalogF
-            .fact(idRef(fact.id, "fact"), f => f.modify(commonMetadataObjectModifications(fact)))
+            .fact(idRef(fact.id, "fact"), (f) => f.modify(commonMetadataObjectModifications(fact)))
             .modify(commonGroupableCatalogItemModifications(fact)),
     );
 };
@@ -111,13 +110,13 @@ export const convertDateAttribute = (
     attribute: AttributeResourceSchema,
     label: LabelResourceSchema,
 ): ICatalogDateAttribute => {
-    return newCatalogDateAttribute(dateAttribute => {
+    return newCatalogDateAttribute((dateAttribute) => {
         return dateAttribute
             .granularity(toSdkGranularity(attribute.attributes.granularity!))
-            .attribute(idRef(attribute.id, "attribute"), a =>
+            .attribute(idRef(attribute.id, "attribute"), (a) =>
                 a.modify(commonMetadataObjectModifications(attribute)),
             )
-            .defaultDisplayForm(idRef(label.id, "displayForm"), df =>
+            .defaultDisplayForm(idRef(label.id, "displayForm"), (df) =>
                 df.modify(commonMetadataObjectModifications(label)),
             );
     });
@@ -127,10 +126,10 @@ export const convertDateDataset = (
     dataset: DatasetResourceSchema,
     attributes: ICatalogDateAttribute[],
 ): ICatalogDateDataset => {
-    return newCatalogDateDataset(dateDataset => {
+    return newCatalogDateDataset((dateDataset) => {
         return dateDataset
             .relevance(0)
-            .dataSet(idRef(dataset.id, "dataSet"), m => {
+            .dataSet(idRef(dataset.id, "dataSet"), (m) => {
                 return m
                     .id(dataset.id)
                     .uri((dataset.links as any)?.self)

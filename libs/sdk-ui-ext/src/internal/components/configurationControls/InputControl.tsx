@@ -83,7 +83,7 @@ export class InputControl extends React.Component<
                 <label className="adi-bucket-inputfield gd-input gd-input-small">
                     <span className="input-label-text">{getTranslation(labelText, intl)}</span>
                     <input
-                        ref={input => (this.inputRef = input)}
+                        ref={(input) => (this.inputRef = input)}
                         className={this.getInputClassNames()}
                         value={this.state.value}
                         placeholder={getTranslation(placeholder, intl)}

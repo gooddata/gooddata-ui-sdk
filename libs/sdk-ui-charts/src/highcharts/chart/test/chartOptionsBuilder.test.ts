@@ -463,13 +463,13 @@ describe("chartOptionsBuilder", () => {
             );
 
             it("should fill correct pointData name", () => {
-                expect(pieSeriesItemData.map(pointData => pointData.name)).toEqual([
+                expect(pieSeriesItemData.map((pointData) => pointData.name)).toEqual([
                     "Lost",
                     "Won",
                     "Expected",
                 ]);
 
-                expect(treemapSeriesItemData.map(pointData => pointData.name)).toEqual([
+                expect(treemapSeriesItemData.map((pointData) => pointData.name)).toEqual([
                     "Lost",
                     "Won",
                     "Expected",
@@ -477,13 +477,13 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should fill correct pointData color", () => {
-                expect(pieSeriesItemData.map(pointData => pointData.color)).toEqual([
+                expect(pieSeriesItemData.map((pointData) => pointData.color)).toEqual([
                     FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                     SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
                     getRgbString(DefaultColorPalette[2]),
                 ]);
 
-                expect(treemapSeriesItemData.map(pointData => pointData.color)).toEqual([
+                expect(treemapSeriesItemData.map((pointData) => pointData.color)).toEqual([
                     FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                     SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
                     getRgbString(DefaultColorPalette[2]),
@@ -491,19 +491,19 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should fill correct pointData legendIndex", () => {
-                expect(pieSeriesItemData.map(pointData => pointData.legendIndex)).toEqual([0, 1, 2]);
+                expect(pieSeriesItemData.map((pointData) => pointData.legendIndex)).toEqual([0, 1, 2]);
 
-                expect(treemapSeriesItemData.map(pointData => pointData.legendIndex)).toEqual([0, 1, 2]);
+                expect(treemapSeriesItemData.map((pointData) => pointData.legendIndex)).toEqual([0, 1, 2]);
             });
 
             it("should fill correct pointData format", () => {
-                expect(pieSeriesItemData.map(pointData => pointData.format)).toEqual([
+                expect(pieSeriesItemData.map((pointData) => pointData.format)).toEqual([
                     "#,##0.00",
                     "#,##0.00",
                     "#,##0.00",
                 ]);
 
-                expect(treemapSeriesItemData.map(pointData => pointData.format)).toEqual([
+                expect(treemapSeriesItemData.map((pointData) => pointData.format)).toEqual([
                     "#,##0.00",
                     "#,##0.00",
                     "#,##0.00",
@@ -557,42 +557,42 @@ describe("chartOptionsBuilder", () => {
             );
 
             it("should fill correct pointData name", () => {
-                expect(pieSeriesItemData.map(pointData => pointData.name)).toEqual([
+                expect(pieSeriesItemData.map((pointData) => pointData.name)).toEqual([
                     "Direct Sales",
                     "Inside Sales",
                 ]);
 
-                expect(treemapSeriesItemData.map(pointData => pointData.name)).toEqual([
+                expect(treemapSeriesItemData.map((pointData) => pointData.name)).toEqual([
                     "Direct Sales",
                     "Inside Sales",
                 ]);
             });
 
             it("should fill correct pointData color", () => {
-                expect(pieSeriesItemData.map(pointData => pointData.color)).toEqual([
+                expect(pieSeriesItemData.map((pointData) => pointData.color)).toEqual([
                     FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                     SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
                 ]);
 
-                expect(treemapSeriesItemData.map(pointData => pointData.color)).toEqual([
+                expect(treemapSeriesItemData.map((pointData) => pointData.color)).toEqual([
                     FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                     SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
                 ]);
             });
 
             it("should fill correct pointData legendIndex", () => {
-                expect(pieSeriesItemData.map(pointData => pointData.legendIndex)).toEqual([0, 1]);
+                expect(pieSeriesItemData.map((pointData) => pointData.legendIndex)).toEqual([0, 1]);
 
-                expect(treemapSeriesItemData.map(pointData => pointData.legendIndex)).toEqual([0, 1]);
+                expect(treemapSeriesItemData.map((pointData) => pointData.legendIndex)).toEqual([0, 1]);
             });
 
             it("should fill correct pointData format", () => {
-                expect(pieSeriesItemData.map(pointData => pointData.format)).toEqual([
+                expect(pieSeriesItemData.map((pointData) => pointData.format)).toEqual([
                     "#,##0.00",
                     "#,##0.00",
                 ]);
 
-                expect(treemapSeriesItemData.map(pointData => pointData.format)).toEqual([
+                expect(treemapSeriesItemData.map((pointData) => pointData.format)).toEqual([
                     "#,##0.00",
                     "#,##0.00",
                 ]);
@@ -715,7 +715,7 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should fill correct series data", () => {
-                const expectedData = [0, 1].map(seriesIndex => {
+                const expectedData = [0, 1].map((seriesIndex) => {
                     const parameters = getSeriesItemDataParameters(dv, seriesIndex);
                     const seriesItem = parameters[0];
                     const si = parameters[1];
@@ -1539,7 +1539,7 @@ describe("chartOptionsBuilder", () => {
             const { measureGroup } = getMVS(dv);
             const heatmapSeries = getHeatmapSeries(dv, measureGroup);
             const heatmapDataPoints = heatmapSeries[0].data;
-            const firstEmptyCellIndex = heatmapDataPoints.findIndex(point => isNil(point.value));
+            const firstEmptyCellIndex = heatmapDataPoints.findIndex((point) => isNil(point.value));
 
             it("should return only one series", () => {
                 expect(heatmapSeries.length).toBe(1);
@@ -1547,7 +1547,7 @@ describe("chartOptionsBuilder", () => {
 
             it("should have two data points at null value", () => {
                 const nullDataCount = 3;
-                const nullPointCount = heatmapSeries[0].data.map(data => data.value).filter(isNil).length;
+                const nullPointCount = heatmapSeries[0].data.map((data) => data.value).filter(isNil).length;
                 expect(nullPointCount).toBe(nullDataCount * 2);
             });
 

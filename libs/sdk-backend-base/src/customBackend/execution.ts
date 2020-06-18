@@ -66,7 +66,7 @@ class CustomPreparedExecution implements IPreparedExecution {
     public execute = (): Promise<IExecutionResult> => {
         const { authApiCall } = this.state;
 
-        return authApiCall(client => {
+        return authApiCall((client) => {
             const context: ResultProviderContext = {
                 config: this.config,
                 execution: this,
@@ -121,7 +121,7 @@ class CustomExecutionResult implements IExecutionResult {
     }
 
     public readAll = (): Promise<IDataView> => {
-        return this.state.authApiCall(client => {
+        return this.state.authApiCall((client) => {
             if (!this.config.dataProvider) {
                 throw new NotImplemented("custom backend does not specify dataProvider");
             }
@@ -138,7 +138,7 @@ class CustomExecutionResult implements IExecutionResult {
     };
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
-        return this.state.authApiCall(client => {
+        return this.state.authApiCall((client) => {
             if (!this.config.dataProvider) {
                 throw new NotImplemented("custom backend does not specify dataProvider");
             }

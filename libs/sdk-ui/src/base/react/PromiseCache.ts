@@ -68,8 +68,8 @@ export class PromiseCache<TParams, TResult, TError = any> {
         }
         const cancelablePromise = makeCancelable(this.handler(params));
         cancelablePromise.promise
-            .then(result => (this.results[cacheKey] = result))
-            .catch(error => (this.errors[cacheKey] = error));
+            .then((result) => (this.results[cacheKey] = result))
+            .catch((error) => (this.errors[cacheKey] = error));
 
         this.promises[cacheKey] = cancelablePromise;
         return cancelablePromise.promise;

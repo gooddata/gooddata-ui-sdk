@@ -106,7 +106,7 @@ export type ElementCountSelector = string | ElementCountSelectorFun;
 function loadedPivotTableSelector(element: HTMLElement): number {
     const tables = element.querySelectorAll<HTMLElement>(".s-pivot-table");
 
-    return sumBy(tables, table => (table.querySelector(".s-loading-done") !== null ? 1 : 0));
+    return sumBy(tables, (table) => (table.querySelector(".s-loading-done") !== null ? 1 : 0));
 }
 
 const DefaultSelectors = ["highcharts-container", "s-headline-value", loadedPivotTableSelector];
@@ -127,7 +127,7 @@ export function createElementCountResolver(
     selectors: ElementCountSelector[] = DefaultSelectors,
 ) {
     return (element: HTMLElement) => {
-        const totalCount = sumBy(selectors, selector => {
+        const totalCount = sumBy(selectors, (selector) => {
             if (typeof selector === "string") {
                 return element.getElementsByClassName(selector).length;
             }
@@ -146,6 +146,6 @@ export function createElementCountResolver(
  */
 export function andResolver(...resolvers: ReadyResolverFunction[]): ReadyResolverFunction {
     return (element: HTMLElement) => {
-        return resolvers.every(resolver => resolver(element));
+        return resolvers.every((resolver) => resolver(element));
     };
 }

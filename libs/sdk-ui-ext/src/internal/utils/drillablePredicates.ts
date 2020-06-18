@@ -29,9 +29,9 @@ export async function convertPostMessageToDrillablePredicates(
     //  will call the factory with 3 args (value, index and all values)
 
     return [
-        ...simpleUris.map(uri => HeaderPredicates.uriMatch(uri)),
-        ...simpleIdentifiers.map(identifier => HeaderPredicates.identifierMatch(identifier)),
-        ...composedFromUris.map(uri => HeaderPredicates.composedFromUri(uri)),
-        ...composedFromIdentifiers.map(identifier => HeaderPredicates.composedFromIdentifier(identifier)),
+        ...simpleUris.map((uri) => HeaderPredicates.uriMatch(uri)),
+        ...simpleIdentifiers.map((identifier) => HeaderPredicates.identifierMatch(identifier)),
+        ...composedFromUris.map((uri) => HeaderPredicates.composedFromUri(uri)),
+        ...composedFromIdentifiers.map((identifier) => HeaderPredicates.composedFromIdentifier(identifier)),
     ];
 }

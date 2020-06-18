@@ -37,7 +37,7 @@ function transformDimension(dim: Execution.IResultDimension): IDimensionDescript
             } else {
                 const measureDescriptor: IMeasureGroupDescriptor = {
                     measureGroupHeader: {
-                        items: h.measureGroupHeader.items.map(m => {
+                        items: h.measureGroupHeader.items.map((m) => {
                             const newItem: IMeasureDescriptor = {
                                 measureHeaderItem: {
                                     localIdentifier: m.measureHeaderItem.localIdentifier,

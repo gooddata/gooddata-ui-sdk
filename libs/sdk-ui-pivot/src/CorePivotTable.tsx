@@ -218,10 +218,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.onLoadingChanged({ isLoading: true });
         execution
             .execute()
-            .then(result => {
+            .then((result) => {
                 result
                     .readWindow([0, 0], [this.props.pageSize, COLS_PER_PAGE])
-                    .then(dataView => {
+                    .then((dataView) => {
                         if (this.unmounted) {
                             /*
                              * Stop right now if the component gets unmounted while it is still being
@@ -257,7 +257,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                         const supportedDrillableItems = this.getSupportedDrillableItems(this.visibleData);
                         this.props.pushData({ dataView, supportedDrillableItems });
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         if (this.unmounted) {
                             return;
                         }
@@ -277,7 +277,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                         this.onError(convertError(error));
                     });
             })
-            .catch(error => {
+            .catch((error) => {
                 if (this.unmounted) {
                     return;
                 }
@@ -430,7 +430,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private isAgGridRerenderNeeded(props: ICorePivotTableProps, prevProps: ICorePivotTableProps): boolean {
         const propsRequiringAgGridRerender = [["config", "menu"]];
         return propsRequiringAgGridRerender.some(
-            propKey => !isEqual(get(props, propKey), get(prevProps, propKey)),
+            (propKey) => !isEqual(get(props, propKey), get(prevProps, propKey)),
         );
     }
 
@@ -608,7 +608,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
 
         const leafColumnDefs = getTreeLeaves(tableHeaders.allHeaders);
-        const columnIndex = leafColumnDefs.findIndex(gridHeader => gridHeader.field === colDef.field);
+        const columnIndex = leafColumnDefs.findIndex((gridHeader) => gridHeader.field === colDef.field);
         const row = getDrillRowData(leafColumnDefs, cellEvent.data);
         const intersection = this.getDrillIntersection(cellEvent, drillItems, tableHeaders.colHeaders);
 
@@ -656,8 +656,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const sortModel: ISortModelItem[] = event.columnApi
             .getAllColumns()
-            .filter(col => col.getSort() !== undefined && col.getSort() !== null)
-            .map(col => ({
+            .filter((col) => col.getSort() !== undefined && col.getSort() !== null)
+            .map((col) => ({
                 colId: col.getColDef().field,
                 sort: col.getSort() as SortDirection,
             }));
@@ -774,7 +774,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 [ROW_ATTRIBUTE_COLUMN]: {
                     cellClass: this.getCellClass("gd-row-attribute-column"),
                     headerClass: this.getHeaderClass("gd-row-attribute-column-header"),
-                    colSpan: params => {
+                    colSpan: (params) => {
                         if (
                             // params.data is undefined when rows are in loading state
                             params.data &&
@@ -787,7 +787,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                         }
                         return 1;
                     },
-                    valueFormatter: params => {
+                    valueFormatter: (params) => {
                         return params.value === undefined ? null : params.value;
                     },
                     cellRenderer,
@@ -811,7 +811,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                               )
                             : null;
                     },
-                    cellStyle: params => {
+                    cellStyle: (params) => {
                         return params.value !== undefined
                             ? getMeasureCellStyle(
                                   params.value,
@@ -893,7 +893,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
               )
             : null;
         const colGroupIndex = treeIndexes ? treeIndexes[treeIndexes.length - 1] : null;
-        const isFirstColumn = treeIndexes !== null && !treeIndexes.some(index => index !== 0);
+        const isFirstColumn = treeIndexes !== null && !treeIndexes.some((index) => index !== 0);
 
         return classNames(
             classList,
@@ -952,7 +952,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private getTotalBodyHeight(dv: DataViewFacade): number {
-        const aggregationCount = sumBy(dv.rawData().totals(), total => total.length);
+        const aggregationCount = sumBy(dv.rawData().totals(), (total) => total.length);
         const rowCount = dv.rawData().firstDimSize();
 
         const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
@@ -1013,7 +1013,7 @@ const CorePivotTableWithIntl = injectIntl(CorePivotTablePure);
 /**
  * @internal
  */
-export const CorePivotTable: React.FC<ICorePivotTableProps> = props => (
+export const CorePivotTable: React.FC<ICorePivotTableProps> = (props) => (
     <IntlWrapper locale={props.locale}>
         <CorePivotTableWithIntl {...props} />
     </IntlWrapper>

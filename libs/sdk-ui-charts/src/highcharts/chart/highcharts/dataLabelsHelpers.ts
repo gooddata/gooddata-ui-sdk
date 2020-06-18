@@ -100,9 +100,9 @@ export function showStackLabelInAxisRange(point: any, axisRangeForAxes: IAxisRan
     }
 }
 
-export const hideAllLabels = ({ series }: any) => hideDataLabels(flatMap(series, s => s.points));
+export const hideAllLabels = ({ series }: any) => hideDataLabels(flatMap(series, (s) => s.points));
 
-export const showAllLabels = ({ series }: any) => showDataLabels(flatMap(series, s => s.points));
+export const showAllLabels = ({ series }: any) => showDataLabels(flatMap(series, (s) => s.points));
 
 export function getDataLabelAttributes(point: any): IRectBySize {
     const dataLabel = get(point, "dataLabel", null);

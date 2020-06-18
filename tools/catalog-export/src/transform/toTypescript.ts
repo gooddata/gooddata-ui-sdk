@@ -177,7 +177,7 @@ function generateAttribute(
          * If there are multiple DFs, have mapping of const AttrName = { DfName: newAttribute(), OtherDfName: newAttribute()}
          */
         const localNameScope: TakenNamesSet = {};
-        const displayFormInits: string[] = attribute.attribute.content.displayForms.map(df =>
+        const displayFormInits: string[] = attribute.attribute.content.displayForms.map((df) =>
             generateAttributeDisplayForm(df, variableName, localNameScope, naming),
         );
 
@@ -197,7 +197,7 @@ function generateAttribute(
 function generateAttributes(
     projectMeta: ProjectMetadata,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
-    return projectMeta.catalog.attributes.map(a => generateAttribute(a));
+    return projectMeta.catalog.attributes.map((a) => generateAttribute(a));
 }
 
 function generateMeasureFromMetric(metric: Metric): OptionalKind<VariableStatementStructure> {
@@ -221,7 +221,7 @@ function generateMeasureFromMetric(metric: Metric): OptionalKind<VariableStateme
 function generateFactAggregations(fact: Fact): string[] {
     const { meta } = fact.fact;
 
-    return FACT_AGGREGATIONS.map(aggregation => {
+    return FACT_AGGREGATIONS.map((aggregation) => {
         const jsDoc = `/** \n* Fact Title: ${meta.title}  \n* Fact ID: ${meta.identifier}\n * Fact Aggregation: ${aggregation}\n*/`;
         const name = aggregation.charAt(0).toUpperCase() + aggregation.substr(1);
 
@@ -280,7 +280,7 @@ function generateDateDataSet(
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
     const { content } = dd.dateDataSet;
 
-    return content.attributes.map(a => generateAttribute(a, naming));
+    return content.attributes.map((a) => generateAttribute(a, naming));
 }
 
 function generateDateDataSets(
@@ -293,7 +293,7 @@ function generateDateDataSets(
         naming = DefaultNaming;
     }
 
-    return flatten(projectMeta.dateDataSets.map(dd => generateDateDataSet(dd, naming)));
+    return flatten(projectMeta.dateDataSets.map((dd) => generateDateDataSet(dd, naming)));
 }
 
 /**
@@ -302,7 +302,7 @@ function generateDateDataSets(
  * @param projectMeta - project metadata containing the insights
  */
 function generateInsights(projectMeta: ProjectMetadata): OptionalKind<VariableStatementStructure> {
-    const insightInitializer: string[] = projectMeta.insights.map(insight => {
+    const insightInitializer: string[] = projectMeta.insights.map((insight) => {
         const propName = uniqueVariable(insight.title);
         const jsDoc = `/** \n* Insight Title: ${insight.title}  \n* Insight ID: ${insight.identifier}\n*/`;
 

@@ -20,8 +20,8 @@ export async function loadDateDataSets(projectId: string): Promise<DateDataSet[]
     });
 
     dataSets
-        .filter(ds => get(ds, "dataSet.content.urn", "").endsWith(":date"))
-        .forEach(ds => {
+        .filter((ds) => get(ds, "dataSet.content.urn", "").endsWith(":date"))
+        .forEach((ds) => {
             const newDs: DateDataSet = {
                 dateDataSet: {
                     meta: {

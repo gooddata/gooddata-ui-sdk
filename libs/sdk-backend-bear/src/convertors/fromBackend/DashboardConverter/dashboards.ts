@@ -40,8 +40,8 @@ const convertDateFilterConfigAddedPresets = (
 ): IDashboardDateFilterAddedPresets => {
     const { absolutePresets = [], relativePresets = [] } = addPresets;
     const convertedPresets: IDashboardDateFilterAddedPresets = {
-        absolutePresets: absolutePresets.map(preset => ({ ...preset, type: "absolutePreset" })),
-        relativePresets: relativePresets.map(preset => ({ ...preset, type: "relativePreset" })),
+        absolutePresets: absolutePresets.map((preset) => ({ ...preset, type: "absolutePreset" })),
+        relativePresets: relativePresets.map((preset) => ({ ...preset, type: "relativePreset" })),
     };
     return convertedPresets;
 };
@@ -73,15 +73,15 @@ export const convertDashboard = (
 
     const sdkDependencies = dependencies
         // Filter out visualization objects - we only need them to create implicit layout
-        .filter(d => !GdcVisualizationObject.isVisualization(d))
+        .filter((d) => !GdcVisualizationObject.isVisualization(d))
         .map(convertDashboardDependency);
     const unsortedWidgets = sdkDependencies.filter(isWidget);
 
     // To preserve the logic of createImplicitDashboardLayout, we must preserve the order of the widgets
     const widgetByUri = keyBy(unsortedWidgets, "uri");
-    const widgets = widgetsUris.map(widgetUri => widgetByUri[widgetUri]);
+    const widgets = widgetsUris.map((widgetUri) => widgetByUri[widgetUri]);
 
-    const filterContextOrExportFilterContext = sdkDependencies.find(dep =>
+    const filterContextOrExportFilterContext = sdkDependencies.find((dep) =>
         exportFilterContextUri ? dep.uri === exportFilterContextUri : dep.uri === filterContext,
     ) as IFilterContext | ITempFilterContext | undefined;
 

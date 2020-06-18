@@ -48,7 +48,7 @@ export const colIdIsSimpleAttribute = (colId: string) => {
 
 export const getRowNodeId = (item: any) => {
     return Object.keys(item.headerItemMap)
-        .map(key => {
+        .map((key) => {
             const mappingHeader: IMappingHeader = item.headerItemMap[key];
 
             if (isTotalDescriptor(mappingHeader)) {
@@ -151,8 +151,10 @@ export function getSubtotalStyles(dimension: IDimension): string[] {
     }
 
     let even = false;
-    const subtotalStyles = dimension.itemIdentifiers.slice(1).map(attributeIdentifier => {
-        const hasSubtotal = dimension.totals.some(total => total.attributeIdentifier === attributeIdentifier);
+    const subtotalStyles = dimension.itemIdentifiers.slice(1).map((attributeIdentifier) => {
+        const hasSubtotal = dimension.totals.some(
+            (total) => total.attributeIdentifier === attributeIdentifier,
+        );
 
         if (hasSubtotal) {
             even = !even;

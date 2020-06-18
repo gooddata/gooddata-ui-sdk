@@ -171,14 +171,15 @@ export type MeasurePredicate = (measure: IMeasure) => boolean;
  *
  * @public
  */
-export const anyMeasure: MeasurePredicate = _ => true;
+export const anyMeasure: MeasurePredicate = (_) => true;
 
 /**
  * Factory function for measure predicate which evaluates true for measures that match particular ID.
  *
  * @public
  */
-export const idMatchMeasure: (id: string) => MeasurePredicate = id => m => m.measure.localIdentifier === id;
+export const idMatchMeasure: (id: string) => MeasurePredicate = (id) => (m) =>
+    m.measure.localIdentifier === id;
 
 //
 // Type guards

@@ -79,7 +79,7 @@ describe("ComboChart", () => {
                 const execution = wrapper.find(CoreComboChart).prop("execution");
                 const expectedMeasures = [
                     ReferenceLdm.Amount,
-                    modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, m => m.noRatio()),
+                    modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, (m) => m.noRatio()),
                 ];
 
                 expect(execution.definition.measures).toEqual(expectedMeasures);
@@ -97,8 +97,8 @@ describe("ComboChart", () => {
             );
             const execution = wrapper.find(CoreComboChart).prop("execution");
             const expectedMeasures = [
-                modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, m => m.noRatio()),
-                modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, m => m.noRatio()),
+                modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, (m) => m.noRatio()),
+                modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, (m) => m.noRatio()),
             ];
 
             expect(execution.definition.measures).toEqual(expectedMeasures);

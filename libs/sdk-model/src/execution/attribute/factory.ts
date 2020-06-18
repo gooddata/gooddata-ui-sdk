@@ -130,7 +130,7 @@ export class AttributeBuilder {
         }
 
         return ["a", this.calculateAliasHash(), objRefToString(this.attribute.displayForm)]
-            .filter(part => !isEmpty(part))
+            .filter((part) => !isEmpty(part))
             .join("_");
     }
 

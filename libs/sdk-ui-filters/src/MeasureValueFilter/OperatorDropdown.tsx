@@ -79,7 +79,7 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
     private closeOperatorDropdown = () => this.setState({ opened: false });
 
     private handleOperatorDropdownButtonClick = () =>
-        this.setState(state => ({ ...state, opened: !state.opened }));
+        this.setState((state) => ({ ...state, opened: !state.opened }));
 }
 
 export default injectIntl(OperatorDropdown);

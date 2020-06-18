@@ -70,12 +70,9 @@ describe("Measure value filter dropdown", () => {
         const filter = newMeasureValueFilter({ identifier: "myMeasure" }, "LESS_THAN", 100);
         const component = renderComponent({ filter });
 
-        expect(
-            component
-                .openOperatorDropdown()
-                .getOperator("LESS_THAN")
-                .hasClass("is-selected"),
-        ).toEqual(true);
+        expect(component.openOperatorDropdown().getOperator("LESS_THAN").hasClass("is-selected")).toEqual(
+            true,
+        );
     });
 
     it("should render an input suffix for comparison value input field to display percentage sign if the measure is native percent", () => {
@@ -112,11 +109,7 @@ describe("Measure value filter dropdown", () => {
         const component = renderComponent();
 
         const hasTooltipClass = (operator: string) =>
-            component
-                .openOperatorDropdown()
-                .getOperator(operator)
-                .find(".tooltip-bubble")
-                .exists();
+            component.openOperatorDropdown().getOperator(operator).find(".tooltip-bubble").exists();
 
         it.each`
             operator                      | showTooltip
@@ -180,10 +173,7 @@ describe("Measure value filter dropdown", () => {
             const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "LESS_THAN", 100);
             const component = renderComponent({ filter, onApply });
 
-            component
-                .openOperatorDropdown()
-                .selectOperator("ALL")
-                .clickApply();
+            component.openOperatorDropdown().selectOperator("ALL").clickApply();
 
             expect(onApply).toBeCalledWith(null);
         });
@@ -224,10 +214,7 @@ describe("Measure value filter dropdown", () => {
             const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "LESS_THAN", 100);
             const component = renderComponent({ filter, onApply, usePercentage: true });
 
-            component
-                .openOperatorDropdown()
-                .selectOperator("ALL")
-                .clickApply();
+            component.openOperatorDropdown().selectOperator("ALL").clickApply();
 
             expect(onApply).toBeCalledWith(null);
         });
@@ -462,11 +449,7 @@ describe("Measure value filter dropdown", () => {
             const onCancel = jest.fn();
             const component = renderComponent({ onCancel });
 
-            component
-                .openOperatorDropdown()
-                .selectOperator("BETWEEN")
-                .setRangeFrom("100")
-                .clickCancel();
+            component.openOperatorDropdown().selectOperator("BETWEEN").setRangeFrom("100").clickCancel();
 
             expect(onCancel).toBeCalled();
         });

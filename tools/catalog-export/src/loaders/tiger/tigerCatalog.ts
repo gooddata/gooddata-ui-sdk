@@ -12,7 +12,7 @@ import { convertAttribute, convertTags, createLabelMap, createTagMap } from "./t
 function convertMetrics(metrics: MetricResourcesResponseSchema): Metric[] {
     const tags = createTagMap(metrics.included);
 
-    return metrics.data.map(metric => {
+    return metrics.data.map((metric) => {
         return {
             metric: {
                 meta: {
@@ -28,7 +28,7 @@ function convertMetrics(metrics: MetricResourcesResponseSchema): Metric[] {
 function convertFacts(facts: FactResourcesResponseSchema): Fact[] {
     const tags = createTagMap(facts.included);
 
-    return facts.data.map(fact => {
+    return facts.data.map((fact) => {
         return {
             fact: {
                 meta: {
@@ -53,8 +53,8 @@ function convertAttributes(attributes: AttributeResourcesResponseSchema): Attrib
      */
 
     return attributes.data
-        .filter(attribute => attribute.attributes.granularity === undefined)
-        .map(attribute => convertAttribute(attribute, labels, tags))
+        .filter((attribute) => attribute.attributes.granularity === undefined)
+        .map((attribute) => convertAttribute(attribute, labels, tags))
         .filter((a): a is Attribute => a !== undefined);
 }
 

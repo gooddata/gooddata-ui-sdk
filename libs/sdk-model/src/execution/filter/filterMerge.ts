@@ -46,7 +46,7 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
         measureValue: [],
     };
 
-    filters.forEach(f => {
+    filters.forEach((f) => {
         if (isAttributeFilter(f)) {
             result.attribute.push(f);
         } else if (isDateFilter(f)) {

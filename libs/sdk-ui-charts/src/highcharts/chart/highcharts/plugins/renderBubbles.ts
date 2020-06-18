@@ -41,7 +41,7 @@ export function renderBubbles(HighchartsInstance: any) {
 
     if (HighchartsInstance.seriesTypes.bubble) {
         // Set default size for bubbles in bubble chart where size value is not provided
-        wrap(HighchartsInstance.seriesTypes.bubble.prototype, "getRadius", function(
+        wrap(HighchartsInstance.seriesTypes.bubble.prototype, "getRadius", function (
             proceed: any,
             zMin: number,
             zMax: number,
@@ -59,7 +59,7 @@ export function renderBubbles(HighchartsInstance: any) {
         });
 
         // #SD-479 fix bubbles is not rendered with min/max config
-        wrap(HighchartsInstance.Axis.prototype, "beforePadding", function(_proceed: any) {
+        wrap(HighchartsInstance.Axis.prototype, "beforePadding", function (_proceed: any) {
             const axis: IBubbleAxis = this;
             const axisLength: number = this.len;
             const chart: Highcharts.Chart = this.chart;

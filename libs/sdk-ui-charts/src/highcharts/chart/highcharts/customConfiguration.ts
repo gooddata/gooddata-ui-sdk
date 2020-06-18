@@ -835,7 +835,7 @@ function getHoverStyles({ type }: any, config: any) {
 
         case VisualizationTypes.COMBO:
         case VisualizationTypes.COMBO2:
-            seriesMapFn = seriesOrig => {
+            seriesMapFn = (seriesOrig) => {
                 const { type } = seriesOrig;
 
                 if (type === "line") {
@@ -848,7 +848,7 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.TREEMAP:
-            seriesMapFn = seriesOrig => {
+            seriesMapFn = (seriesOrig) => {
                 const series = cloneDeep(seriesOrig);
 
                 return {

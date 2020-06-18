@@ -70,14 +70,14 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         const measures =
             measuresBucketItems.length > 0
                 ? measuresBucketItems.slice(0, 1)
-                : allMeasures.filter(measure => !includes(secondaryAndTertiaryItems, measure)).slice(0, 1);
+                : allMeasures.filter((measure) => !includes(secondaryAndTertiaryItems, measure)).slice(0, 1);
 
         const secondaryMeasures =
             secondaryMeasuresBucketItems.length > 0
                 ? secondaryMeasuresBucketItems.slice(0, 1)
                 : allMeasures
                       .filter(
-                          measure =>
+                          (measure) =>
                               !includes([...measures, ...tertiaryMeasuresBucketItems.slice(0, 1)], measure),
                       )
                       .slice(0, 1);
@@ -86,7 +86,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
             tertiaryMeasuresBucketItems.length > 0
                 ? tertiaryMeasuresBucketItems.slice(0, 1)
                 : allMeasures
-                      .filter(measure => !includes([...measures, ...secondaryMeasures], measure))
+                      .filter((measure) => !includes([...measures, ...secondaryMeasures], measure))
                       .slice(0, 1);
 
         set(newReferencePoint, BUCKETS, [

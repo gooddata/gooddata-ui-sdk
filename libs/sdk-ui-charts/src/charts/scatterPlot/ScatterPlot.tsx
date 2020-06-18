@@ -14,7 +14,7 @@ import { withChart } from "../_base/withChart";
 const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterPlotProps> = {
     chartName: "ScatterPlot",
     bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "attribute", "filters", "sortBy"],
-    bucketsFactory: props => {
+    bucketsFactory: (props) => {
         return [
             newBucket(BucketNames.MEASURES, props.xAxisMeasure),
             newBucket(BucketNames.SECONDARY_MEASURES, props.yAxisMeasure),

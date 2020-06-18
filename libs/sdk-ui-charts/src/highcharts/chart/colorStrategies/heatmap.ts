@@ -73,7 +73,7 @@ export class HeatmapColorStrategy extends ColorStrategy {
         const { r, g, b } = baseColor;
         const colorItemsCount = 6;
         const channels = [r, g, b];
-        const steps = channels.map(channel => (255 - channel) / colorItemsCount);
+        const steps = channels.map((channel) => (255 - channel) / colorItemsCount);
         const generatedColors = this.getCalculatedColors(colorItemsCount, channels, steps);
         return ["rgb(255,255,255)", ...generatedColors.reverse(), getRgbStringFromRGB(baseColor)];
     }

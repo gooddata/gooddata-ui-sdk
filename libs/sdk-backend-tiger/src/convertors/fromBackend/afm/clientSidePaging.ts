@@ -54,7 +54,7 @@ export function trimToRequestedWindow(
 
     const dimensionHeaders = result.dimensionHeaders?.map((dimHeaders, dimIdx) => {
         const newHeader: IDimensionHeader = {
-            headerGroups: dimHeaders.headerGroups.map(header => {
+            headerGroups: dimHeaders.headerGroups.map((header) => {
                 return {
                     headers: header.headers.slice(
                         effectiveOffset[dimIdx],

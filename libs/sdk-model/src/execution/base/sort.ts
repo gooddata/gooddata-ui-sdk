@@ -178,7 +178,7 @@ export function sortEntityIds(sort: ISortItem): SortEntityIds {
         res.attributeIdentifiers.push(attrId);
         res.allIdentifiers.push(attrId);
     } else if (isMeasureSort(sort)) {
-        sort.measureSortItem.locators.forEach(loc => {
+        sort.measureSortItem.locators.forEach((loc) => {
             if (isAttributeLocator(loc)) {
                 const attrId = loc.attributeLocatorItem.attributeIdentifier;
 

@@ -9,9 +9,9 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
  * @param emptyHeaderString - value to use for empty strings
  */
 export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: string): void {
-    dataView.headerItems.forEach(dim => {
-        dim.forEach(attr => {
-            attr.forEach(item => {
+    dataView.headerItems.forEach((dim) => {
+        dim.forEach((attr) => {
+            attr.forEach((item) => {
                 const type = Object.keys(item)[0];
 
                 if (["attributeHeaderItem", "measureHeaderItem", "totalHeaderItem"].indexOf(type) >= 0) {

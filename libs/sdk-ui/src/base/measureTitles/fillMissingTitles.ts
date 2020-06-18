@@ -39,21 +39,21 @@ function findOverTimeComparisonType(measure: IMeasure): OverTimeComparisonType {
 }
 
 function containsMeasureTitleItem(measureTitleProps: IMeasureTitleProps[], localIdentifier: string): boolean {
-    return measureTitleProps.some(prop => prop.localIdentifier === localIdentifier);
+    return measureTitleProps.some((prop) => prop.localIdentifier === localIdentifier);
 }
 
 function containsMeasureTitleItems(
     measureTitleProps: IMeasureTitleProps[],
     localIdentifiers: string[],
 ): boolean {
-    return localIdentifiers.every(identifier => containsMeasureTitleItem(measureTitleProps, identifier));
+    return localIdentifiers.every((identifier) => containsMeasureTitleItem(measureTitleProps, identifier));
 }
 
 function findMeasureTitleItem(
     measureTitles: IMeasureTitleProps[],
     localIdentifier: string,
 ): IMeasureTitleProps | null {
-    return measureTitles.find(prop => prop.localIdentifier === localIdentifier) || null;
+    return measureTitles.find((prop) => prop.localIdentifier === localIdentifier) || null;
 }
 
 function findTitleForDerivedMeasure(
@@ -168,7 +168,7 @@ function buildMeasureTitles(
     while (isMeasureTitlePropsChanged) {
         isMeasureTitlePropsChanged = false;
 
-        measures.forEach(measure => {
+        measures.forEach((measure) => {
             const localId = measureLocalId(measure);
             if (!containsMeasureTitleItem(measureTitleProps, localId)) {
                 const newMeasureTitleProp =
@@ -220,7 +220,7 @@ function updateBucketTitles(bucket: IBucket, measureTitleProps: IMeasureTitlePro
     const items = bucketItems(bucket);
     return {
         ...bucket,
-        items: items.map(bucketItem => updateBucketItemTitle(bucketItem, measureTitleProps)),
+        items: items.map((bucketItem) => updateBucketItemTitle(bucketItem, measureTitleProps)),
     };
 }
 
@@ -233,7 +233,7 @@ function updateVisualizationObjectTitles<T extends IInsightDefinition>(
     return {
         insight: {
             ...insight.insight,
-            buckets: buckets.map(bucket => updateBucketTitles(bucket, measureTitleProps)),
+            buckets: buckets.map((bucket) => updateBucketTitles(bucket, measureTitleProps)),
         },
     } as T;
 }

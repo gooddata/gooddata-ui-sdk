@@ -15,28 +15,30 @@ import * as ReferenceLdm from "./full";
  * when testing.
  */
 
-export const MinAmount = modifyMeasure(ReferenceLdm.Amount_1.Min, m =>
+export const MinAmount = modifyMeasure(ReferenceLdm.Amount_1.Min, (m) =>
     m.alias("Min Amount").defaultLocalId(),
 );
-export const MedianAmount = modifyMeasure(ReferenceLdm.Amount_1.Median, m =>
+export const MedianAmount = modifyMeasure(ReferenceLdm.Amount_1.Median, (m) =>
     m.alias("Median Amount").defaultLocalId(),
 );
-export const MaxAmount = modifyMeasure(ReferenceLdm.Amount_1.Max, m =>
+export const MaxAmount = modifyMeasure(ReferenceLdm.Amount_1.Max, (m) =>
     m.alias("Max Amount").defaultLocalId(),
 );
 
 /**
  * Arithmetic measure doing difference of Amount and Won measures
  */
-export const CalculatedLost = newArithmeticMeasure([ReferenceLdm.Amount, ReferenceLdm.Won], "difference", m =>
-    m.alias("Calculated 'Lost' measure"),
+export const CalculatedLost = newArithmeticMeasure(
+    [ReferenceLdm.Amount, ReferenceLdm.Won],
+    "difference",
+    (m) => m.alias("Calculated 'Lost' measure"),
 );
 
 /**
  * Arithmetic measure calculating ratio of calculated 'Lost' and
  * MAQL 'Won' measure
  */
-export const CalculatedWonLostRatio = newArithmeticMeasure([CalculatedLost, ReferenceLdm.Won], "ratio", m =>
+export const CalculatedWonLostRatio = newArithmeticMeasure([CalculatedLost, ReferenceLdm.Won], "ratio", (m) =>
     m.alias("Ratio of Won and Lost"),
 );
 
@@ -46,7 +48,9 @@ export const CalculatedWonLostRatio = newArithmeticMeasure([CalculatedLost, Refe
  * NOTE: popAttrId is hardcoded like this because PoP measure needs attribute ID and not display form ID and
  * attribute ids are not yet in the generated LDM catalog.
  */
-export const WonPopClosedYear = newPopMeasure(ReferenceLdm.Won, "closed.year", m => m.alias("Won Last Year"));
+export const WonPopClosedYear = newPopMeasure(ReferenceLdm.Won, "closed.year", (m) =>
+    m.alias("Won Last Year"),
+);
 
 /**
  * A previous period measure derived from 'Won' measure
@@ -57,11 +61,8 @@ export const WonPreviousPeriod = newPreviousPeriodMeasure(ReferenceLdm.Won, [
 /**
  * Measure that computes ratio
  */
-export const AmountWithRatio = modifySimpleMeasure(ReferenceLdm.Amount, m =>
-    m
-        .alias("Amount with Ratio")
-        .ratio()
-        .localId("Amount with Ratio"),
+export const AmountWithRatio = modifySimpleMeasure(ReferenceLdm.Amount, (m) =>
+    m.alias("Amount with Ratio").ratio().localId("Amount with Ratio"),
 );
 /**
  * A reference to date data set of the 'Closed' dimension

@@ -35,7 +35,7 @@ export class UserModule {
     public isLoggedIn(): Promise<boolean> {
         return new Promise((resolve, reject) => {
             this.xhr.get("/gdc/account/token").then(
-                r => {
+                (r) => {
                     if (r.response.ok) {
                         resolve(true);
                     }
@@ -63,12 +63,12 @@ export class UserModule {
      *                   rejects if user not logged in
      */
     public isLoggedInProject(projectId: string) {
-        return this.getCurrentProfile().then(profile => {
+        return this.getCurrentProfile().then((profile) => {
             return new Promise((resolve, reject) => {
                 const projectModule = new ProjectModule(this.xhr);
 
                 projectModule.getProjects(profile.links.self.split("/")[4]).then(
-                    projects => {
+                    (projects) => {
                         if (projects.find((p: any) => p.links.self === `/gdc/projects/${projectId}`)) {
                             resolve(true);
                         } else {
@@ -105,7 +105,7 @@ export class UserModule {
                     },
                 }),
             })
-            .then(r => r.getData());
+            .then((r) => r.getData());
     }
 
     /**
@@ -158,7 +158,7 @@ export class UserModule {
      * @return {Promise} Resolves with account setting object
      */
     public getCurrentProfile() {
-        return this.xhr.get("/gdc/account/profile/current").then(r => r.getData().accountSetting);
+        return this.xhr.get("/gdc/account/profile/current").then((r) => r.getData().accountSetting);
     }
 
     /**
@@ -217,13 +217,13 @@ export class UserModule {
      * @return {IFeatureFlags} Hash table of feature flags and their values where feature flag is the key
      */
     public getUserFeatureFlags(userId: string, sourceFilter?: string[]): Promise<IFeatureFlags> {
-        return this.getUserConfigs(userId).then(settingItems => {
+        return this.getUserConfigs(userId).then((settingItems) => {
             const filteredSettingItems = sourceFilter
-                ? settingItems.filter(item => sourceFilter.includes(item.settingItem.source))
+                ? settingItems.filter((item) => sourceFilter.includes(item.settingItem.source))
                 : settingItems;
 
             const featureFlags: IFeatureFlags = {};
-            filteredSettingItems.forEach(settingItem => {
+            filteredSettingItems.forEach((settingItem) => {
                 featureFlags[settingItem.settingItem.key] = parseSettingItemValue(
                     settingItem.settingItem.value,
                 );
@@ -269,8 +269,8 @@ export class UserModule {
     public initiateSamlSso(relayState: string) {
         this.xhr
             .get(`/gdc/account/samlrequest?${qs.stringify({ relayState })}`)
-            .then(data => data.getData())
-            .then(response => {
+            .then((data) => data.getData())
+            .then((response) => {
                 const loginUrl = response.samlRequests.items[0].samlRequest.loginUrl;
                 window.location.assign(loginUrl);
             });

@@ -77,14 +77,14 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
     describe("configurePercent", () => {
         it("should remove all showInPercent flags from metrics if show in percent not allowed by bucket rules", () => {
             const referencePoint: IExtendedReferencePoint = getSingleMeasureNoFilterReferencePoint(2);
-            referencePoint.buckets[0].items.forEach(item => (item.showInPercent = true));
+            referencePoint.buckets[0].items.forEach((item) => (item.showInPercent = true));
 
             const newReferencePoint: IExtendedReferencePoint = configurePercent(
                 cloneDeep(referencePoint),
                 false,
             );
 
-            newReferencePoint.buckets[0].items.forEach(item => expect(item.showInPercent).toBeFalsy());
+            newReferencePoint.buckets[0].items.forEach((item) => expect(item.showInPercent).toBeFalsy());
         });
 
         it("should mark show in percent in measure buckets ui config if buckets conditions are met", () => {
@@ -123,7 +123,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                 true,
             );
 
-            newReferencePoint.buckets[0].items.forEach(item => expect(item.showInPercent).toBeFalsy());
+            newReferencePoint.buckets[0].items.forEach((item) => expect(item.showInPercent).toBeFalsy());
         });
     });
 

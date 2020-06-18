@@ -39,8 +39,8 @@ export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
 
     const wrappedPromise = new Promise<T>((resolve, reject) => {
         promise.then(
-            value => (hasCanceled ? reject(new CancelError(cancelReason)) : resolve(value)),
-            error => (hasCanceled ? reject(new CancelError(cancelReason)) : reject(error)),
+            (value) => (hasCanceled ? reject(new CancelError(cancelReason)) : resolve(value)),
+            (error) => (hasCanceled ? reject(new CancelError(cancelReason)) : reject(error)),
         );
     });
 

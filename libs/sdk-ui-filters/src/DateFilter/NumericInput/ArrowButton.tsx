@@ -15,7 +15,7 @@ export const ArrowButton: React.FC<{
     onClick: () => void;
     arrowDirection: ArrowDirection;
     disabled?: boolean;
-}> = props => (
+}> = (props) => (
     <button
         type="button"
         className={cx(

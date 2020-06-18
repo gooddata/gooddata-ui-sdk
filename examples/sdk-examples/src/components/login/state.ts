@@ -8,7 +8,7 @@ import { DemoProjectAuthStatus, IDemoProjectState } from "./types";
 
 const uriToId = (uri: string) => uri.split("/").pop();
 const isDemoProjectAssignedToUser = (projects: any[]) =>
-    projects.some(project => {
+    projects.some((project) => {
         return uriToId(project.links.metadata) === workspace;
     });
 
@@ -21,12 +21,12 @@ export const useDemoProjectAuth = () => {
     const [{ authStatus, profileUri, projects, error }, setState] = useState<IDemoProjectState>(initialState);
     const hasUserDemoProjectAssigned = projects && isDemoProjectAssignedToUser(projects);
 
-    const setProfileUri = (profileUri: string) => setState(state => ({ ...state, profileUri }));
-    const setProjects = (projects: any[]) => setState(state => ({ ...state, projects }));
+    const setProfileUri = (profileUri: string) => setState((state) => ({ ...state, profileUri }));
+    const setProjects = (projects: any[]) => setState((state) => ({ ...state, projects }));
     const setAuthStatus = (authStatus: DemoProjectAuthStatus) =>
-        setState(state => ({ ...state, authStatus }));
+        setState((state) => ({ ...state, authStatus }));
     const setCheckProjectAvailabilityError = (error: string) =>
-        setState(state => ({
+        setState((state) => ({
             ...state,
             error: `Could not confirm demo project availability. Examples might not have access to the demo project with id ${workspace}.
             You can try logging out and logging back in. ${error}`,
@@ -41,9 +41,7 @@ export const useDemoProjectAuth = () => {
 
         if (userAuthStatus === AuthStatus.AUTHORIZED) {
             setAuthStatus(DemoProjectAuthStatus.CHECKING_DEMO_AVAILABILITY);
-            getProfileUri()
-                .then(setProfileUri)
-                .catch(setCheckProjectAvailabilityError);
+            getProfileUri().then(setProfileUri).catch(setCheckProjectAvailabilityError);
         } else if (userAuthStatus === AuthStatus.UNAUTHORIZED) {
             setAuthStatus(DemoProjectAuthStatus.UNAUTHORIZED);
         }
@@ -58,9 +56,7 @@ export const useDemoProjectAuth = () => {
         };
 
         if (profileUri) {
-            getProjects()
-                .then(setProjects)
-                .catch(setCheckProjectAvailabilityError);
+            getProjects().then(setProjects).catch(setCheckProjectAvailabilityError);
         }
     }, [profileUri]);
 

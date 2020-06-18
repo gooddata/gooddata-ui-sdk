@@ -101,7 +101,7 @@ function addTotals(
         bucket.totals = [];
     }
 
-    newTotals.forEach(total => {
+    newTotals.forEach((total) => {
         bucket.totals.push(total);
     });
 
