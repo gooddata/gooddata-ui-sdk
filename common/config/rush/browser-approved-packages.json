@@ -879,6 +879,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "tslib",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "tslint",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

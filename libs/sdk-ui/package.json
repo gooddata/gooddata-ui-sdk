@@ -47,7 +47,8 @@
         "invariant": "^2.2.2",
         "lodash": "^4.17.15",
         "react-intl": "^3.6.0",
-        "ts-invariant": "^0.4.4"
+        "ts-invariant": "^0.4.4",
+        "tslib": "^2.0.0"
     },
     "peerDependencies": {
         "react": "^16.10.0",

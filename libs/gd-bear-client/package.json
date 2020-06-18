@@ -45,6 +45,7 @@
         "md5": "^2.2.1",
         "node-fetch": "^1.7.3",
         "qs": "^6.5.1",
+        "tslib": "^2.0.0",
         "uuid": "^3.3.3"
     },
     "devDependencies": {

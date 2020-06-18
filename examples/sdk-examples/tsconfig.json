@@ -5,6 +5,7 @@
         "jsx": "react",
         "sourceMap": true,
         "esModuleInterop": true,
+        "importHelpers": true,
         "outDir": "dist",
         "strict": true,
         "noImplicitAny": true,

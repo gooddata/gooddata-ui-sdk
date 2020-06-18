@@ -6,6 +6,7 @@
         "lib": ["es7", "dom"],
         "module": "commonjs",
         "moduleResolution": "node",
+        "importHelpers": true,
         "outDir": "./dist",
         "sourceMap": true,
         "strict": true,

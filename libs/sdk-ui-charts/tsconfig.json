@@ -7,6 +7,7 @@
         "lib": ["es7", "dom"],
         "module": "commonjs",
         "moduleResolution": "node",
+        "importHelpers": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,

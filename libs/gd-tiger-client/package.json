@@ -40,7 +40,8 @@
         "axios": "^0.19.0",
         "lodash": "^4.17.15",
         "qs": "^6.5.1",
-        "spark-md5": "^3.0.0"
+        "spark-md5": "^3.0.0",
+        "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@gooddata/reference-workspace": "^8.0.0-alpha.102",

@@ -39,7 +39,8 @@
         "@gooddata/sdk-ui-charts": "^8.0.0-alpha.102",
         "@gooddata/sdk-ui-ext": "^8.0.0-alpha.102",
         "@gooddata/sdk-ui-filters": "^8.0.0-alpha.102",
-        "@gooddata/sdk-ui-pivot": "^8.0.0-alpha.102"
+        "@gooddata/sdk-ui-pivot": "^8.0.0-alpha.102",
+        "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",
