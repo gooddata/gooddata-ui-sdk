@@ -80,6 +80,9 @@ Long story short here are facts and commands you need to know:
 
 -   `rush add` - adds a new dependency to a project.
 
+> Note: Rush by default tries to use all cores available on the machine. It is possible to override this using
+> the `--parallelism` option on the CLI or using the `RUSH_PARALLELISM` environment variable.
+
 #### Bulk projects commands
 
 On top of Rush built-in commands, we have added our own custom commands (see [command-line.json](common/config/rush/command-line.json)):

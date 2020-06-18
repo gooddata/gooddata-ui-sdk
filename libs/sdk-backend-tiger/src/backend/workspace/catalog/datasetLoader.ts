@@ -14,7 +14,7 @@ import {
     convertAttribute,
     convertDateAttribute,
     convertDateDataset,
-} from "../../../toSdkModel/CatalogConverter";
+} from "../../../convertors/fromBackend/CatalogConverter";
 
 export type LoaderResult = {
     nonDateAttributes: ICatalogAttribute[];
@@ -49,19 +49,23 @@ function getAttributeLabels(
     return allLabels;
 }
 
+function isGeoLabel(label: LabelResourceSchema): boolean {
+    /*
+     * TODO: this is temporary way to identify labels with geo pushpin; normally this should be done
+     *  using some indicator on the metadata object. for sakes of speed & after agreement with tiger team
+     *  falling back to use of id convention.
+     */
+    return label.id.search(/^.*\.geo__/) > -1;
+}
+
 function createNonDateAttributes(attributes: AttributeResourcesResponseSchema): ICatalogAttribute[] {
     const nonDateAttributes = attributes.data.filter(attr => attr.attributes.granularity === undefined);
 
     return nonDateAttributes.map(attribute => {
         const allLabels = getAttributeLabels(attribute, attributes.included);
-        const defaultLabel = allLabels[0];
-
-        /*
-         * TODO: this is temporary way to identify labels with geo pushpin; normally this should be done
-         *  using some indicator on the metadata object. for sakes of speed & after agreement with tiger team
-         *  falling back to use of id convention.
-         */
-        const geoLabels = allLabels.filter(label => label.id.search(/^.*\.geo__/) > -1);
+        const nonGeoLabels = allLabels.filter(label => !isGeoLabel(label));
+        const geoLabels = allLabels.filter(isGeoLabel);
+        const defaultLabel = nonGeoLabels[0] ?? geoLabels[0];
 
         return convertAttribute(attribute, defaultLabel, geoLabels);
     });

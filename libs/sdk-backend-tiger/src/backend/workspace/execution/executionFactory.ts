@@ -4,7 +4,7 @@ import { IPreparedExecution, NotImplemented } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, IFilter } from "@gooddata/sdk-model";
 import { TigerPreparedExecution } from "./preparedExecution";
 import { AuthenticatedCallGuard, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
-import { DateFormatter } from "../../../dateFormatting/types";
+import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
 
 export class TigerExecution extends AbstractExecutionFactory {
     constructor(

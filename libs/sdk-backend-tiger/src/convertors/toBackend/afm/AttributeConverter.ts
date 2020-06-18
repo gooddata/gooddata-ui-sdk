@@ -3,7 +3,7 @@
 import { IAttribute } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 
-import { toDisplayFormQualifier } from "./ObjRefConverter";
+import { toDisplayFormQualifier } from "../ObjRefConverter";
 
 export function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;

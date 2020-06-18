@@ -19,7 +19,7 @@ import {
     toFactQualifier,
     toDisplayFormQualifier,
     toLocalIdentifier,
-} from "./ObjRefConverter";
+} from "../ObjRefConverter";
 import compact = require("lodash/compact");
 import get = require("lodash/get");
 

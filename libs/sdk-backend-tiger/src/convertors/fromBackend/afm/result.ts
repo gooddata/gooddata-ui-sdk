@@ -12,7 +12,7 @@ import { Execution, AttributeGranularityResourceAttribute } from "@gooddata/gd-t
 import isResultAttributeHeader = Execution.isResultAttributeHeader;
 import isResultMeasureHeader = Execution.isResultMeasureHeader;
 import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
-import { toSdkGranularity } from "../toSdkModel/dateGranularityConversions";
+import { toSdkGranularity } from "../dateGranularityConversions";
 import { DateFormatter } from "../dateFormatting/types";
 import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
 

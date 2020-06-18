@@ -11,8 +11,8 @@ import {
     ISortItem,
 } from "@gooddata/sdk-model";
 import { TigerExecutionResult } from "./executionResult";
-import { toAfmExecution } from "../../../toAfm/toAfmResultSpec";
-import { DateFormatter } from "../../../dateFormatting/types";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec";
+import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
 export class TigerPreparedExecution implements IPreparedExecution {

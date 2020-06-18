@@ -20,9 +20,9 @@ import { VisualizationObject } from "@gooddata/gd-tiger-client";
 import uuid4 from "uuid/v4";
 
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { objRefToUri, objRefToIdentifier } from "../../../fromObjRef";
-import { convertVisualizationObject } from "../../../toSdkModel/VisualizationObjectConverter";
-import { convertInsight } from "../../../fromSdkModel/InsightConverter";
+import { objRefToUri, objRefToIdentifier } from "../../../utils/api";
+import { convertVisualizationObject } from "../../../convertors/fromBackend/VisualizationObjectConverter";
+import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
 

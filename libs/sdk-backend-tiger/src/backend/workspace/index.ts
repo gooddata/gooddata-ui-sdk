@@ -26,7 +26,7 @@ import { TigerWorkspaceMetadata } from "./metadata";
 import { TigerWorkspacePermissionsFactory } from "./permissions";
 import { TigerWorkspaceStyling } from "./styling";
 import { TigerWorkspaceInsights } from "./insights";
-import { DateFormatter } from "../../dateFormatting/types";
+import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
