@@ -70,7 +70,7 @@ async function run() {
             await exportMetadataToCatalog(projectMetadata, filePath);
         }
 
-        logSuccess("All data have been successfuly exported");
+        logSuccess("All data have been successfully exported");
         logBox(chalk`The result is located at {bold ${filePath}}`);
 
         process.exit(0);
