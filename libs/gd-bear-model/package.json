@@ -44,7 +44,7 @@
     "homepage": "https://github.com/gooddata/gooddata-typings#readme",
     "dependencies": {
         "lodash": "^4.17.15",
-        "tslib": "~2.0.0"
+        "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",

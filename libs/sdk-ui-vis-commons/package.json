@@ -45,7 +45,7 @@
         "prop-types": "^15.6.0",
         "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
-        "tslib": "~2.0.0"
+        "tslib": "^2.0.0"
     },
     "peerDependencies": {
         "react": "^16.5.2",

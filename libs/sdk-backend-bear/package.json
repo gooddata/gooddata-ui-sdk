@@ -50,7 +50,7 @@
         "lodash": "^4.17.15",
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.4.4",
-        "tslib": "~2.0.0",
+        "tslib": "^2.0.0",
         "uuid": "^3.3.3"
     },
     "devDependencies": {
