@@ -8,6 +8,7 @@
         "esModuleInterop": true,
         "module": "commonjs",
         "moduleResolution": "node",
+        "importHelpers": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,

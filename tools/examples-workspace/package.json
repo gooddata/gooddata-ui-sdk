@@ -37,7 +37,8 @@
     "dependencies": {
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.102",
         "@gooddata/sdk-model": "^8.0.0-alpha.102",
-        "lodash": "^4.17.15"
+        "lodash": "^4.17.15",
+        "tslib": "~2.0.0"
     },
     "devDependencies": {
         "@gooddata/catalog-export": "^8.0.0-alpha.102",

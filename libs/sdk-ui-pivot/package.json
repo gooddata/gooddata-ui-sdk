@@ -51,7 +51,8 @@
         "fixed-data-table-2": "^0.7.17",
         "invariant": "^2.2.2",
         "lodash": "^4.17.15",
-        "react-intl": "^3.6.0"
+        "react-intl": "^3.6.0",
+        "tslib": "~2.0.0"
     },
     "peerDependencies": {
         "react": "^16.10.0",

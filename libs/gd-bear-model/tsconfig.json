@@ -4,6 +4,7 @@
         "declaration": true,
         "lib": ["es6", "dom"],
         "module": "commonjs",
+        "importHelpers": true,
         "moduleResolution": "node",
         "noImplicitAny": true,
         "noUnusedLocals": true,

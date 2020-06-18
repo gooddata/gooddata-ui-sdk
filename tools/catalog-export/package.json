@@ -49,7 +49,8 @@
         "prettier": "~2.0.5",
         "prompt": "^1.0.0",
         "strip-ansi": "^5.2.0",
-        "ts-morph": "^4.2.0"
+        "ts-morph": "^4.2.0",
+        "tslib": "~2.0.0"
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",
