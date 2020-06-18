@@ -15,13 +15,15 @@ export const DefaultGetOptions = {
  * @param username - username for authentication
  * @param password - password for authentication
  */
-export function createTigerClient(hostname: string, username: string, password: string): ITigerClient {
+export function createTigerClient(hostname: string, username?: string, password?: string): ITigerClient {
     const axios = newAxios(hostname);
 
-    axios.defaults.auth = {
-        username,
-        password,
-    };
+    if (username && password) {
+        axios.defaults.auth = {
+            username,
+            password,
+        };
+    }
 
     return tigerClientFactory(axios);
 }
