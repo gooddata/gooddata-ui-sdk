@@ -7,8 +7,6 @@ import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { InsightViewColumnChartByIdentifierExample } from "./InsightViewColumnChartByIdentifierExample";
 import { InsightViewComboChartByIdentifierExample } from "./InsightViewComboChartByIdentifierExample";
-// import insightViewTableExample from "../components/insightViewTableByIdentifierExample";
-// import CustominsightViewExample from "../components/CustominsightViewExample";
 import { InsightViewBarByIdentifierExample } from "./InsightViewBarByIdentifierExample";
 import { InsightViewLineByIdentifierExample } from "./InsightViewLineByIdentifierExample";
 import { InsightViewAreaByIdentifierExample } from "./InsightViewAreaByIdentifierExample";
@@ -23,8 +21,7 @@ import { InsightViewGeoPushpinByIdentifierExample } from "./InsightViewGeoPushpi
 
 import InsightViewColumnChartByIdentifierExampleSRC from "!raw-loader!./InsightViewColumnChartByIdentifierExample";
 import InsightViewComboChartByIdentifierExampleSRC from "!raw-loader!./InsightViewComboChartByIdentifierExample";
-// import insightViewTableExampleSRC from "!raw-loader!./insightViewTableByIdentifierExample";
-// import CustominsightViewExampleSRC from "!raw-loader!./CustominsightViewExample";
+import InsightViewTableExampleSRC from "!raw-loader!./InsightViewTableByIdentifierExample";
 import InsightViewBarByIdentifierExampleSRC from "!raw-loader!./InsightViewBarByIdentifierExample";
 import InsightViewLineByIdentifierExampleSRC from "!raw-loader!./InsightViewLineByIdentifierExample";
 import InsightViewAreaByIdentifierExampleSRC from "!raw-loader!./InsightViewAreaByIdentifierExample";
@@ -39,8 +36,7 @@ import InsightViewGeoPushpinByIdentifierExampleSRC from "!raw-loader!./InsightVi
 
 import InsightViewColumnChartByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewColumnChartByIdentifierExample";
 import InsightViewComboChartByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewComboChartByIdentifierExample";
-// import insightViewTableExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/insightViewTableByIdentifierExample";
-// import CustominsightViewExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/CustominsightViewExample";
+import InsightViewTableExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewTableByIdentifierExample";
 import InsightViewBarByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewBarByIdentifierExample";
 import InsightViewLineByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewLineByIdentifierExample";
 import InsightViewAreaByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewAreaByIdentifierExample";
@@ -52,6 +48,7 @@ import InsightViewDonutByIdentifierExampleSRCJS from "!raw-loader!../../../examp
 import InsightViewTreemapByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewTreemapByIdentifierExample";
 import InsightViewHeatmapByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewHeatmapByIdentifierExample";
 import InsightViewGeoPushpinByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewGeoPushpinByIdentifierExample";
+import { InsightViewTableByIdentifierExample } from "./InsightViewTableByIdentifierExample";
 
 export const InsightView = () => (
     <div>
@@ -71,25 +68,14 @@ export const InsightView = () => (
             sourceJS={InsightViewColumnChartByIdentifierExampleSRCJS}
         />
 
-        {/* <hr className="separator" />
+        <hr className="separator" />
 
-    <h2 id="table">Table</h2>
-    <ExampleWithSource
-      for={insightViewTableExample}
-      source={insightViewTableExampleSRC}
-      sourceJS={insightViewTableExampleSRCJS}
-    />
-
-    <hr className="separator" />
-    <h2 id="custom">Custom insightView</h2>
-    <p>
-      Using <a href="https://github.com/recharts/recharts">Recharts library</a>
-    </p>
-    <ExampleWithSource
-      for={CustominsightViewExample}
-      source={CustominsightViewExampleSRC}
-      sourceJS={CustominsightViewExampleSRCJS}
-    /> */}
+        <h2 id="table">Table</h2>
+        <ExampleWithSource
+            for={InsightViewTableByIdentifierExample}
+            source={InsightViewTableExampleSRC}
+            sourceJS={InsightViewTableExampleSRCJS}
+        />
 
         <hr className="separator" />
 
