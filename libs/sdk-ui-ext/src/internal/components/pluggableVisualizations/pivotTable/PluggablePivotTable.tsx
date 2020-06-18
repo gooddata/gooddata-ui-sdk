@@ -97,7 +97,7 @@ function adaptSortItemsToPivotTable(
             const filteredSortItem: IMeasureSortItem = {
                 measureSortItem: {
                     ...sortItem.measureSortItem,
-                    locators: sortItem.measureSortItem.locators.filter(locator => {
+                    locators: sortItem.measureSortItem.locators.filter((locator) => {
                         // filter out invalid measure locators
                         if (isMeasureLocator(locator)) {
                             return includes(
@@ -116,7 +116,7 @@ function adaptSortItemsToPivotTable(
 
             // keep sortItem if measureLocator is present and locators are correct length
             if (
-                filteredSortItem.measureSortItem.locators.some(locator => isMeasureLocator(locator)) &&
+                filteredSortItem.measureSortItem.locators.some((locator) => isMeasureLocator(locator)) &&
                 filteredSortItem.measureSortItem.locators.length ===
                     columnAttributeLocalIdentifiers.length + 1
             ) {
@@ -139,10 +139,10 @@ export function adaptReferencePointSortItemsToPivotTable(
     rowAttributes: IBucketItem[],
     columnAttributes: IBucketItem[],
 ): ISortItem[] {
-    const measureLocalIdentifiers = measures.map(measure => measure.localIdentifier);
-    const rowAttributeLocalIdentifiers = rowAttributes.map(rowAttribute => rowAttribute.localIdentifier);
+    const measureLocalIdentifiers = measures.map((measure) => measure.localIdentifier);
+    const rowAttributeLocalIdentifiers = rowAttributes.map((rowAttribute) => rowAttribute.localIdentifier);
     const columnAttributeLocalIdentifiers = columnAttributes.map(
-        columnAttribute => columnAttribute.localIdentifier,
+        (columnAttribute) => columnAttribute.localIdentifier,
     );
 
     return adaptSortItemsToPivotTable(
@@ -177,9 +177,9 @@ const isAttributeSortItemVisible = (_sortItem: IAttributeSortItem, _filters: IBu
 
 const isMeasureSortItemMatchedByFilter = (sortItem: IMeasureSortItem, filter: IAttributeFilter): boolean =>
     filter.selectedElements
-        ? filter.selectedElements.some(selectedElement =>
+        ? filter.selectedElements.some((selectedElement) =>
               sortItem.measureSortItem.locators.some(
-                  locator =>
+                  (locator) =>
                       !isMeasureLocator(locator) &&
                       locator.attributeLocatorItem.element === selectedElement.uri,
               ),
@@ -214,7 +214,7 @@ export function addDefaultSort(
     // detect custom sort
     const firstRow = rowAttributes[0];
     const previousFirstRow = previousRowAttributes && previousRowAttributes[0];
-    const hasVisibleCustomSort = sortItems.some(sortItem => {
+    const hasVisibleCustomSort = sortItems.some((sortItem) => {
         if (!isSortItemVisible(sortItem, filters)) {
             return false;
         }
@@ -320,7 +320,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                     columnAttributes,
                 ),
                 newReferencePoint.filters
-                    ? flatMap(newReferencePoint.filters.items, item => item.filters)
+                    ? flatMap(newReferencePoint.filters.items, (item) => item.filters)
                     : [],
                 rowAttributes,
                 previousRowAttributes,

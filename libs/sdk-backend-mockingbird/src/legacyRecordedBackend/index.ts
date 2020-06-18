@@ -244,10 +244,10 @@ function recordedExecutionResult(
         definition,
         dimensions: afmResponse.dimensions,
         readAll(): Promise<IDataView> {
-            return new Promise(r => r(recordedDataView(definition, result, recording)));
+            return new Promise((r) => r(recordedDataView(definition, result, recording)));
         },
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
-            return new Promise(r => r(recordedDataView(definition, result, recording)));
+            return new Promise((r) => r(recordedDataView(definition, result, recording)));
         },
         fingerprint(): string {
             return fp;

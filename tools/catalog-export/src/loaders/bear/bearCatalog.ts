@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import gooddata from "@gooddata/gd-bear-client";
 import pmap from "p-map";
 import { flatMap, range } from "lodash";
@@ -51,7 +51,7 @@ async function loadCatalogueItems(projectId: string): Promise<CatalogItem[]> {
     // and dispatch their load in concurrent fashion
     const allPages = await pmap(pageOffsets, loadPage, { concurrency: 4 });
 
-    return firstPageItems.concat(flatMap(allPages, p => p.catalog));
+    return firstPageItems.concat(flatMap(allPages, (p) => p.catalog));
 }
 
 /**
@@ -69,7 +69,7 @@ export async function loadCatalog(projectId: string): Promise<Catalog> {
         facts: [],
     };
 
-    allCatalogueItems.forEach(item => {
+    allCatalogueItems.forEach((item) => {
         if (isAttribute(item)) {
             result.attributes.push(item);
         } else if (isMetric(item)) {

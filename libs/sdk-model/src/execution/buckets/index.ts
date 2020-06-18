@@ -47,14 +47,15 @@ export type BucketPredicate = (bucket: IBucket) => boolean;
  *
  * @public
  */
-export const anyBucket: BucketPredicate = _ => true;
+export const anyBucket: BucketPredicate = (_) => true;
 
 /**
  * Factory function for predicates that will evaluate true if bucket's id is same as the provided id.
  *
  * @public
  */
-export const idMatchBucket: (id: string) => BucketPredicate = id => bucket => bucket.localIdentifier === id;
+export const idMatchBucket: (id: string) => BucketPredicate = (id) => (bucket) =>
+    bucket.localIdentifier === id;
 
 /**
  * Describes exact location of attribute in a bucket.
@@ -117,7 +118,7 @@ export function newBucket(
     const items: IAttributeOrMeasure[] = [];
     const totals: ITotal[] = [];
 
-    (content ? content : []).forEach(i => {
+    (content ? content : []).forEach((i) => {
         if (!i) {
             return;
         }
@@ -349,7 +350,7 @@ export function applyRatioRule<T extends IAttributeOrMeasure>(
  */
 export function disableComputeRatio<T extends IAttributeOrMeasure>(item: T): T {
     if (isSimpleMeasure(item)) {
-        return modifySimpleMeasure(item, m => m.noRatio()) as T;
+        return modifySimpleMeasure(item, (m) => m.noRatio()) as T;
     }
 
     return item;

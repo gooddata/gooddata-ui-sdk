@@ -68,8 +68,8 @@ export class AgGridDatasource implements IDatasource {
         const { offset, count, totalCount } = dv.dataView;
 
         const rowAttributeIds = columnDefs
-            .filter(columnDef => columnDef.type === ROW_ATTRIBUTE_COLUMN)
-            .map(columnDef => columnDef.field);
+            .filter((columnDef) => columnDef.type === ROW_ATTRIBUTE_COLUMN)
+            .map((columnDef) => columnDef.field);
 
         this.grouping.processPage(rowData, offset[0], rowAttributeIds);
 
@@ -113,23 +113,23 @@ export class AgGridDatasource implements IDatasource {
                 definition.dimensions[1],
             )
             .execute()
-            .then(newResult => {
+            .then((newResult) => {
                 this.currentResult = newResult;
 
                 newResult
                     .readWindow([startRow, 0], [endRow - startRow, undefined])
-                    .then(data => {
+                    .then((data) => {
                         this.gridApiProvider().setInfiniteRowCount(data.totalCount[0]);
                         this.processData(DataViewFacade.for(data), params);
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         // tslint:disable-next-line:no-console
                         console.error("Error while doing execution to obtain data view", err);
 
                         failCallback();
                     });
             })
-            .catch(err => {
+            .catch((err) => {
                 // tslint:disable-next-line:no-console
                 console.error("Error while doing execution to obtain transformed results", err);
 
@@ -182,10 +182,10 @@ export class AgGridDatasource implements IDatasource {
         } else {
             result
                 .readWindow([startRow, 0], [endRow - startRow, COLS_PER_PAGE])
-                .then(data => {
+                .then((data) => {
                     this.processData(DataViewFacade.for(data), params);
                 })
-                .catch(err => {
+                .catch((err) => {
                     // tslint:disable-next-line:no-console
                     console.error("Error while doing execution to obtain data view", err);
 

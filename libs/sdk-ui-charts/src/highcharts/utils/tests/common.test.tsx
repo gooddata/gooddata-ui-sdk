@@ -91,7 +91,7 @@ describe("Common utils", () => {
             [999600000, "", 20000, "1G"],
         ];
 
-        testSet.forEach(testCase => {
+        testSet.forEach((testCase) => {
             it(`should correctly format  number ${testCase[0]}`, () => {
                 expect(
                     formatLegendLabel(testCase[0] as number, testCase[1] as string, testCase[2] as number, [

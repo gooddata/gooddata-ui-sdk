@@ -46,7 +46,7 @@ describe("stickyRowHandler", () => {
     }
 
     function assertOnlyListedMethodsHaveBeenCalled(obj: any, exceptMethodNames: string[]) {
-        Object.getOwnPropertyNames(obj).forEach(propName => {
+        Object.getOwnPropertyNames(obj).forEach((propName) => {
             if (typeof obj[propName] === "function") {
                 if (exceptMethodNames.indexOf(propName) >= 0) {
                     expect(obj[propName]).toHaveBeenCalled();

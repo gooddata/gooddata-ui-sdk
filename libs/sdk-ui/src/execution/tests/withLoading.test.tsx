@@ -15,7 +15,7 @@ const renderEnhancedComponent = <T, E>(
 ) => {
     const promiseFactory = (_props?: T) => createDummyPromise(promiseConfig);
 
-    const CoreComponent: React.FC<WithLoadingResult> = props => {
+    const CoreComponent: React.FC<WithLoadingResult> = (props) => {
         const { result, error, reload, isLoading } = props;
         return (
             <div>
@@ -72,10 +72,7 @@ describe("withLoading", () => {
     it("should start loading again after invoking injected fetch function", async () => {
         const wrapper = renderEnhancedComponent({ delay: 100 });
         await createDummyPromise({ delay: 150 });
-        wrapper
-            .dive()
-            .find(".Refetch")
-            .simulate("click");
+        wrapper.dive().find(".Refetch").simulate("click");
 
         expect(wrapper.prop("isLoading")).toBe(true);
     });

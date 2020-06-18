@@ -26,9 +26,9 @@ export type TransformerResult = {
 
 // gets all the enum values
 const supportedSuffixes: string[] = Object.keys(AttributeGranularityResourceAttribute)
-    .filter(item => isNaN(Number(item)))
+    .filter((item) => isNaN(Number(item)))
     .map(
-        key =>
+        (key) =>
             AttributeGranularityResourceAttribute[key as keyof typeof AttributeGranularityResourceAttribute],
     );
 

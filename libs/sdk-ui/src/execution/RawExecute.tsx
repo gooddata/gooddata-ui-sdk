@@ -104,8 +104,8 @@ export const RawExecute = withExecution<IRawExecuteProps>({
         const relevantPropsDeepEqual: Array<keyof IRawExecuteProps> = ["window"];
 
         return (
-            relevantProps.some(propName => prevProps[propName] !== nextProps[propName]) ||
-            relevantPropsDeepEqual.some(propName => !isEqual(prevProps[propName], nextProps[propName])) ||
+            relevantProps.some((propName) => prevProps[propName] !== nextProps[propName]) ||
+            relevantPropsDeepEqual.some((propName) => !isEqual(prevProps[propName], nextProps[propName])) ||
             prevProps.execution.fingerprint() !== nextProps.execution.fingerprint()
         );
     },

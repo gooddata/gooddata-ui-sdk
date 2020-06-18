@@ -45,7 +45,7 @@ export function configureOverTimeComparison(
     const comparisonOverTimeAllowed = isComparisonOverTimeAllowed(buckets, filters);
     const originalBuckets = cloneDeep(buckets);
 
-    forEach(buckets, bucket => {
+    forEach(buckets, (bucket) => {
         let newItems = bucket.items;
 
         if (!comparisonOverTimeAllowed) {
@@ -76,7 +76,7 @@ export function configurePercent(
     extendedReferencePoint: IExtendedReferencePoint,
     percentDisabled: boolean = false,
 ): IExtendedReferencePoint {
-    forEach(extendedReferencePoint.buckets, bucket => {
+    forEach(extendedReferencePoint.buckets, (bucket) => {
         const showInPercentEnabled =
             !percentDisabled &&
             isShowInPercentAllowed(
@@ -86,7 +86,7 @@ export function configurePercent(
             );
 
         if (!showInPercentEnabled) {
-            bucket.items.forEach(measure => {
+            bucket.items.forEach((measure) => {
                 if (measure.type === METRIC) {
                     removeShowInPercent(measure);
                 }

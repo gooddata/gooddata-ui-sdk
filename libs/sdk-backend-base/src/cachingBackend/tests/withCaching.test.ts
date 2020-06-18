@@ -16,11 +16,7 @@ function createBackend(realBackend: IAnalyticalBackend = dummyBackendEmptyData()
 }
 
 function doExecution(backend: IAnalyticalBackend, items: IAttributeOrMeasure[]): Promise<IExecutionResult> {
-    return backend
-        .workspace("test")
-        .execution()
-        .forItems(items)
-        .execute();
+    return backend.workspace("test").execution().forItems(items).execute();
 }
 
 describe("withCaching", () => {
@@ -88,14 +84,8 @@ describe("withCaching", () => {
     it("caches workspace catalogs", () => {
         const backend = createBackend();
 
-        const first = backend
-            .workspace("test")
-            .catalog()
-            .load();
-        const second = backend
-            .workspace("test")
-            .catalog()
-            .load();
+        const first = backend.workspace("test").catalog().load();
+        const second = backend.workspace("test").catalog().load();
 
         expect(second).toBe(first);
     });
@@ -103,18 +93,9 @@ describe("withCaching", () => {
     it("evicts workspace catalogs", () => {
         const backend = createBackend();
 
-        const first = backend
-            .workspace("test")
-            .catalog()
-            .load();
-        backend
-            .workspace("someOtherWorkspace")
-            .catalog()
-            .load();
-        const second = backend
-            .workspace("test")
-            .catalog()
-            .load();
+        const first = backend.workspace("test").catalog().load();
+        backend.workspace("someOtherWorkspace").catalog().load();
+        const second = backend.workspace("test").catalog().load();
 
         expect(second).not.toBe(first);
     });
@@ -123,23 +104,13 @@ describe("withCaching", () => {
         const backend = createBackend();
 
         // first call caches result when getting catalog with default options
-        const first = backend
-            .workspace("test")
-            .catalog()
-            .load();
+        const first = backend.workspace("test").catalog().load();
 
         // second call done explicitly with different options => evict previous entry
-        backend
-            .workspace("test")
-            .catalog()
-            .forTypes(["attribute"])
-            .load();
+        backend.workspace("test").catalog().forTypes(["attribute"]).load();
 
         // now back to default options, will be new promise
-        const second = backend
-            .workspace("test")
-            .catalog()
-            .load();
+        const second = backend.workspace("test").catalog().load();
 
         expect(second).not.toBe(first);
     });

@@ -28,11 +28,11 @@ class RelativeRangePickerComponent extends React.Component<
         const commonProps: IDynamicSelectProps = {
             visibleItemsRange: isMobile ? mobileVisibleItemsRange : defaultVisibleItemsRange,
             optionClassName: "s-relative-date-filter-option s-do-not-close-dropdown-on-click",
-            getItems: value => {
+            getItems: (value) => {
                 const items = getRelativeDateFilterItems(value, selectedFilterOption.granularity, intl);
 
                 // separators are not needed in mobile as all the items have borders
-                return isMobile ? items.filter(item => item.type !== "separator") : items;
+                return isMobile ? items.filter((item) => item.type !== "separator") : items;
             },
         };
 

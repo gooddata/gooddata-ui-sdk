@@ -345,7 +345,7 @@ export function shouldBeHandledByHighcharts(axis: IHighchartsAxisExtend): boolea
 }
 
 export const adjustTickAmount = (HighchartsInstance: any) => {
-    Highcharts.wrap(HighchartsInstance.Axis.prototype, "adjustTickAmount", function(
+    Highcharts.wrap(HighchartsInstance.Axis.prototype, "adjustTickAmount", function (
         proceed: Highcharts.WrapProceedFunction,
     ) {
         const axis = this;

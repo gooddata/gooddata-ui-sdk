@@ -80,7 +80,7 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
             throw new UnexpectedResponseError("No catalog recording", 404, {});
         }
 
-        const typeFilteredItems = catalog.items.filter(item => this.options.types.includes(item.type));
+        const typeFilteredItems = catalog.items.filter((item) => this.options.types.includes(item.type));
         return new RecordedCatalog(this.workspace, catalog.groups, typeFilteredItems);
     }
 }

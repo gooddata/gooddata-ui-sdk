@@ -19,7 +19,7 @@ const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilter
 const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtendedDateFilterErrors => {
     const errors = validateVisibility(filterOption);
     const absoluteFormKeys: Array<keyof IExtendedDateFilterErrors["absoluteForm"]> = ["from", "to"];
-    absoluteFormKeys.forEach(field => {
+    absoluteFormKeys.forEach((field) => {
         if (!filterOption[field]) {
             errors.absoluteForm = errors.absoluteForm || {};
             // null means empty, undefined means invalid
@@ -35,7 +35,7 @@ const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtende
 const validateRelativeForm = (filterOption: IUiRelativeDateFilterForm): IExtendedDateFilterErrors => {
     const errors = validateVisibility(filterOption);
     const relativeFormKeys: Array<keyof IExtendedDateFilterErrors["relativeForm"]> = ["from", "to"];
-    relativeFormKeys.forEach(field => {
+    relativeFormKeys.forEach((field) => {
         if (filterOption[field] === undefined) {
             errors.relativeForm = errors.relativeForm || {};
             // There is no validation message as we have no place to show it

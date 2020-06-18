@@ -64,7 +64,7 @@ export class ExecuteAfmModule {
                     .then((executionResult: GdcExecution.IExecutionResult | null) => {
                         return { executionResponse, executionResult };
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         throw new ApiExecutionResponseError(error, executionResponse);
                     });
             },
@@ -88,7 +88,7 @@ export class ExecuteAfmModule {
         validateNumOfDimensions(get(execution, "execution.resultSpec.dimensions").length);
         return this.xhr
             .post(`/gdc/app/projects/${projectId}/executeAfm`, { body: convertExecutionToJson(execution) })
-            .then(apiResponse => apiResponse.getData())
+            .then((apiResponse) => apiResponse.getData())
             .then(unwrapExecutionResponse);
     }
 
@@ -145,7 +145,7 @@ export class ExecuteAfmModule {
 
         return this.xhr
             .post(`/gdc/app/projects/${projectId}/executeVisualization`, { body })
-            .then(apiResponse => apiResponse.getData())
+            .then((apiResponse) => apiResponse.getData())
             .then(unwrapExecutionResponse);
     }
 
@@ -246,7 +246,7 @@ export class ExecuteAfmModule {
 
         return this.xhr
             .get(uri)
-            .then(apiResponse => (apiResponse.response.status === 204 ? null : apiResponse.getData()));
+            .then((apiResponse) => (apiResponse.response.status === 204 ? null : apiResponse.getData()));
     }
 }
 

@@ -38,13 +38,13 @@ describe("PluggableGeoPushpinChart", () => {
         );
 
         it("should return a new reference point with geoPushpin adapted buckets", () => {
-            return extendedReferencePointPromise.then(extendedReferencePoint => {
+            return extendedReferencePointPromise.then((extendedReferencePoint) => {
                 expect(extendedReferencePoint.buckets).toEqual(sourceReferencePoint.buckets);
             });
         });
 
         it("should return a new reference point with geoPushpin UI config", () => {
-            return extendedReferencePointPromise.then(extendedReferencePoint => {
+            return extendedReferencePointPromise.then((extendedReferencePoint) => {
                 expect(extendedReferencePoint.uiConfig).toEqual(uiConfigMocks.defaultGeoPushpinUiConfig);
             });
         });

@@ -17,13 +17,8 @@ export const defaultDateFilterOptions: IDateFilterOptionsByType = {
     absoluteForm: {
         localIdentifier: "ABSOLUTE_FORM",
         type: "absoluteForm",
-        from: moment()
-            .subtract(1, "month")
-            .startOf("day")
-            .format(platformDateFormat),
-        to: moment()
-            .startOf("day")
-            .format(platformDateFormat),
+        from: moment().subtract(1, "month").startOf("day").format(platformDateFormat),
+        to: moment().startOf("day").format(platformDateFormat),
         name: "",
         visible: true,
     },

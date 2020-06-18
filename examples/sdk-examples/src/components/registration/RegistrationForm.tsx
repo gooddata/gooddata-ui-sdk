@@ -47,9 +47,7 @@ const enhance = withFormik<IRegistrationFormProps, IRegistrationFormValues>({
         termsOfUse: false,
     }),
     validationSchema: Yup.object().shape({
-        email: Yup.string()
-            .email("Invalid e-mail address")
-            .required("E-mail is required"),
+        email: Yup.string().email("Invalid e-mail address").required("E-mail is required"),
         firstName: Yup.string().required("First name is required"),
         lastName: Yup.string().required("Last name is required"),
         password: Yup.string().required("Password is required"),
@@ -68,11 +66,11 @@ const enhance = withFormik<IRegistrationFormProps, IRegistrationFormValues>({
             isLoading: true,
         });
         register(email, password, firstName, lastName)!
-            .then(response => {
+            .then((response) => {
                 setSubmitting(false);
                 setStatus({ response });
             })
-            .catch(error => {
+            .catch((error) => {
                 const status: any = {
                     response: null,
                     isLoading: false,
@@ -99,8 +97,9 @@ const enhance = withFormik<IRegistrationFormProps, IRegistrationFormValues>({
     displayName: "RegistrationForm", // helps with React DevTools
 });
 
-const CoreRegistrationForm: React.FC<IRegistrationFormProps &
-    FormikProps<IRegistrationFormValues>> = props => {
+const CoreRegistrationForm: React.FC<IRegistrationFormProps & FormikProps<IRegistrationFormValues>> = (
+    props,
+) => {
     const {
         values,
         touched,
@@ -247,7 +246,7 @@ const CoreRegistrationForm: React.FC<IRegistrationFormProps &
             <div>
                 <ReCAPTCHA
                     sitekey="6LcduVUUAAAAABUt48F_cf27DEY0uOzKGIzpzGAm"
-                    onChange={value => setFieldValue("captcha", value)}
+                    onChange={(value) => setFieldValue("captcha", value)}
                     onExpired={() => setFieldValue("captcha", "")}
                 />
                 {errors.captcha && touched.captcha && (

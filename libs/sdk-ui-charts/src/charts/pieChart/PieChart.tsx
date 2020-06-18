@@ -14,7 +14,7 @@ import { withChart } from "../_base/withChart";
 const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps> = {
     chartName: "PieChart",
     bucketPropsKeys: ["measures", "viewBy", "filters", "sortBy"],
-    bucketsFactory: props => {
+    bucketsFactory: (props) => {
         return [
             newBucket(BucketNames.MEASURES, ...props.measures),
             newBucket(BucketNames.VIEW, props.viewBy),

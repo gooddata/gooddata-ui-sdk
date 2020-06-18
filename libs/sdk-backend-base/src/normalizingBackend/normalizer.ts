@@ -94,7 +94,7 @@ export class Denormalizer {
      * @returns new descriptors
      */
     public denormalizeDimDescriptors = (normalizedDims: IDimensionDescriptor[]): IDimensionDescriptor[] => {
-        return cloneDeepWith(normalizedDims, value => {
+        return cloneDeepWith(normalizedDims, (value) => {
             if (isAttributeDescriptor(value)) {
                 const localIdentifier = this.originalLocalId(value.attributeHeader.localIdentifier);
                 const attribute = this.originalAttributes[localIdentifier]!;
@@ -139,7 +139,7 @@ export class Denormalizer {
      * @returns new headers
      */
     public denormalizeHeaders = (headerItems: IResultHeader[][][]): IResultHeader[][][] => {
-        return cloneDeepWith(headerItems, value => {
+        return cloneDeepWith(headerItems, (value) => {
             if (isResultMeasureHeader(value)) {
                 const newHeader: IResultMeasureHeader = {
                     measureHeaderItem: {
@@ -228,7 +228,7 @@ export class Normalizer {
         const copy = cloneDeep(this.original);
 
         // throw away noop filters
-        const filters = copy.filters.filter(f => {
+        const filters = copy.filters.filter((f) => {
             if (isAttributeFilter(f)) {
                 return !filterIsEmpty(f);
             } else if (isMeasureValueFilter(f)) {
@@ -243,7 +243,7 @@ export class Normalizer {
             filters,
         };
 
-        copy.measures.forEach(measure => this.originalMeasures.set(measureLocalId(measure), measure));
+        copy.measures.forEach((measure) => this.originalMeasures.set(measureLocalId(measure), measure));
     }
 
     /**
@@ -284,11 +284,11 @@ export class Normalizer {
     };
 
     private normalizeAttributes = () => {
-        this.normalized.attributes.forEach(attr => {
+        this.normalized.attributes.forEach((attr) => {
             delete attr.attribute.alias;
 
             const originalLocalId = attributeLocalId(attr);
-            const normalizedLocalId = attributeLocalId(modifyAttribute(attr, m => m.defaultLocalId()));
+            const normalizedLocalId = attributeLocalId(modifyAttribute(attr, (m) => m.defaultLocalId()));
 
             attr.attribute.localIdentifier = this.createUniqueMapping(originalLocalId, normalizedLocalId);
         });
@@ -302,7 +302,7 @@ export class Normalizer {
             return;
         }
 
-        def.measureDefinition.filters = def.measureDefinition.filters?.filter(filter => {
+        def.measureDefinition.filters = def.measureDefinition.filters?.filter((filter) => {
             return !isNegativeAttributeFilter(filter) || !filterIsEmpty(filter);
         });
     };
@@ -324,7 +324,7 @@ export class Normalizer {
     };
 
     private normalizeArithmetic = (def: IArithmeticMeasureDefinition, path: Set<string>): void => {
-        const normalizedIds: Identifier[] = def.arithmeticMeasure.measureIdentifiers.map(operand => {
+        const normalizedIds: Identifier[] = def.arithmeticMeasure.measureIdentifiers.map((operand) => {
             return this.maybeNormalizedLocalId(operand) || this.normalizeMeasureByLocalId(operand, path);
         });
 
@@ -370,7 +370,7 @@ export class Normalizer {
         delete measure.measure.title;
         delete measure.measure.format;
 
-        const newLocalId = measureLocalId(modifyMeasure(measure, m => m.defaultLocalId()));
+        const newLocalId = measureLocalId(modifyMeasure(measure, (m) => m.defaultLocalId()));
         const newUniqueLocalId = this.createUniqueMapping(originalLocalId, newLocalId);
 
         measure.measure.localIdentifier = newUniqueLocalId;
@@ -387,11 +387,11 @@ export class Normalizer {
     };
 
     private normalizeMeasures = () => {
-        this.normalized.measures.forEach(measure => this.normalizeMeasure(measure));
+        this.normalized.measures.forEach((measure) => this.normalizeMeasure(measure));
     };
 
     private normalizeFilters = () => {
-        this.normalized.filters.forEach(filter => {
+        this.normalized.filters.forEach((filter) => {
             if (isMeasureValueFilter(filter)) {
                 const ref = filter.measureValueFilter.measure;
 
@@ -403,13 +403,13 @@ export class Normalizer {
     };
 
     private normalizeSorts = () => {
-        this.normalized.sortBy.forEach(sort => {
+        this.normalized.sortBy.forEach((sort) => {
             if (isAttributeSort(sort)) {
                 sort.attributeSortItem.attributeIdentifier = this.normalizedLocalId(
                     sort.attributeSortItem.attributeIdentifier,
                 );
             } else if (isMeasureSort(sort)) {
-                sort.measureSortItem.locators.forEach(locator => {
+                sort.measureSortItem.locators.forEach((locator) => {
                     if (isAttributeLocator(locator)) {
                         locator.attributeLocatorItem.attributeIdentifier = this.normalizedLocalId(
                             locator.attributeLocatorItem.attributeIdentifier,
@@ -425,8 +425,8 @@ export class Normalizer {
     };
 
     private normalizeDimensions = () => {
-        this.normalized.dimensions.forEach(dim => {
-            dim.itemIdentifiers = dim.itemIdentifiers.map(item => {
+        this.normalized.dimensions.forEach((dim) => {
+            dim.itemIdentifiers = dim.itemIdentifiers.map((item) => {
                 if (item === MeasureGroupIdentifier) {
                     return item;
                 } else {
@@ -435,7 +435,7 @@ export class Normalizer {
             });
 
             if (dim.totals) {
-                dim.totals.forEach(total => {
+                dim.totals.forEach((total) => {
                     total.attributeIdentifier = this.normalizedLocalId(total.attributeIdentifier);
                     total.measureIdentifier = this.normalizedLocalId(total.measureIdentifier);
                 });

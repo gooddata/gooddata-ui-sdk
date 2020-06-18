@@ -92,7 +92,7 @@ function getAvailableInsights(recordings: RecordingIndex): IInsight[] {
      * getting list of insights for storybook must be a sync operation, thus have to access the
      * recording index directly when building storybook...
      */
-    return Object.values(recordings.metadata?.insights ?? {}).map(rec => rec.obj);
+    return Object.values(recordings.metadata?.insights ?? {}).map((rec) => rec.obj);
 }
 
 const Insights = [
@@ -106,9 +106,9 @@ const InsightsByVisUrl = Object.entries(groupBy(Insights, insightVisualizationUr
 //
 
 const AllTestScenarios: Array<IScenario<any>> = flatten<IScenario<any>>(
-    AllTestScenarioGroups.map(g => g.forTestTypes("visual").scenarioList),
+    AllTestScenarioGroups.map((g) => g.forTestTypes("visual").scenarioList),
 );
-const TestScenariosByInsightId = keyBy(AllTestScenarios, scenario => scenario.insightId);
+const TestScenariosByInsightId = keyBy(AllTestScenarios, (scenario) => scenario.insightId);
 
 //
 // Story creation

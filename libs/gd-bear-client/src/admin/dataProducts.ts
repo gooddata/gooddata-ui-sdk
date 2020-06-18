@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     interpolate,
     parse,
@@ -69,7 +69,7 @@ export class DataProductsModule {
             body: JSON.stringify({
                 dataProductCreate: {
                     id: dataProductId,
-                    domains: domainIds.map(domainId =>
+                    domains: domainIds.map((domainId) =>
                         interpolate(CONTRACT_DOMAIN, { contractId, domainId }),
                     ),
                 },

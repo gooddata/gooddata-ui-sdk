@@ -541,9 +541,9 @@ describe("setSortItems", () => {
 });
 
 describe("getDefaultTreemapSortFromBuckets", () => {
-    const measure1 = newMeasure("mid1", m => m.localId("m1").alias("Measure m1"));
-    const attribute1 = newAttribute("aid1", a => a.localId("a1"));
-    const attribute2 = newAttribute("aid2", a => a.localId("a2"));
+    const measure1 = newMeasure("mid1", (m) => m.localId("m1").alias("Measure m1"));
+    const attribute1 = newAttribute("aid1", (a) => a.localId("a1"));
+    const attribute2 = newAttribute("aid2", (a) => a.localId("a2"));
     const viewBucket = newBucket(BucketNames.VIEW, attribute1);
     const segmentBucket = newBucket(BucketNames.SEGMENT, attribute2);
     const emptySegmentBucket = newBucket(BucketNames.SEGMENT);

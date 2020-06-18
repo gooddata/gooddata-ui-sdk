@@ -25,7 +25,7 @@ describe("user", () => {
 
                 return createUser()
                     .login("login", "pass")
-                    .then(result => {
+                    .then((result) => {
                         expect(result).toEqual({
                             userLogin: {
                                 profile: "/gdc/account/profile/abcd",
@@ -41,7 +41,7 @@ describe("user", () => {
 
                 return createUser()
                     .login("bad", "creds")
-                    .then(null, err => expect(err).toBeInstanceOf(Error));
+                    .then(null, (err) => expect(err).toBeInstanceOf(Error));
             });
         });
 
@@ -60,7 +60,7 @@ describe("user", () => {
 
                 return createUser()
                     .loginSso(encryptedClaims, ssoProvider, targetUrl)
-                    .then(r => expect(r.response.ok).toBeTruthy());
+                    .then((r) => expect(r.response.ok).toBeTruthy());
             });
 
             it("should reject for invalid sessionId", () => {
@@ -76,7 +76,7 @@ describe("user", () => {
                 fetchMock.mock("/gdc/account/customerlogin", 400);
                 return createUser()
                     .loginSso(encryptedClaims, ssoProvider, targetUrl)
-                    .then(null, err => {
+                    .then(null, (err) => {
                         expect(err.response.status).toBe(400);
                     });
             });
@@ -205,7 +205,7 @@ describe("user", () => {
 
                 return createUser()
                     .logout()
-                    .then(r => {
+                    .then((r) => {
                         expect(r && r.response.ok).toBeTruthy();
                     });
             });
@@ -228,7 +228,7 @@ describe("user", () => {
 
                 return createUser()
                     .getCurrentProfile()
-                    .then(accountSetting => {
+                    .then((accountSetting) => {
                         expect(accountSetting.links.self).toEqual(profileUri);
                     });
             });
@@ -242,7 +242,7 @@ describe("user", () => {
                 fetchMock.mock(`/gdc/account/profile/${userId}/settings`, { status: 400, body: "" });
                 return createUser()
                     .updateProfileSettings(userId, [])
-                    .then(null, err => {
+                    .then(null, (err) => {
                         return expect(err.response.status).toBe(400);
                     });
             });
@@ -282,7 +282,7 @@ describe("user", () => {
 
                 return createUser()
                     .getAccountInfo()
-                    .then(accountInfo => {
+                    .then((accountInfo) => {
                         expect(accountInfo.login).toEqual(login);
                         expect(accountInfo.loginMD5).toEqual(loginMD5);
                         expect(accountInfo.firstName).toEqual(firstName);
@@ -328,7 +328,7 @@ describe("user", () => {
                 });
                 return createUser()
                     .getUserConfigs(userId)
-                    .then(userConfigs => {
+                    .then((userConfigs) => {
                         expect(userConfigs.length).toBe(2);
                         expect(userConfigs).toEqual(settingItems);
                     });
@@ -371,7 +371,7 @@ describe("user", () => {
                 });
                 return createUser()
                     .getUserFeatureFlags(userId)
-                    .then(userConfigs => {
+                    .then((userConfigs) => {
                         expect(userConfigs).toEqual({
                             activeFiltersByDefault: false,
                             platformEdition: "free",
@@ -390,7 +390,7 @@ describe("user", () => {
                 });
                 return createUser()
                     .getUserFeatureFlags(userId, ["user"])
-                    .then(userConfigs => {
+                    .then((userConfigs) => {
                         expect(userConfigs).toEqual({
                             activeFiltersByDefault: false,
                         });

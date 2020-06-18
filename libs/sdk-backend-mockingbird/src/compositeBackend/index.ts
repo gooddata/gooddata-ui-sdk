@@ -61,7 +61,7 @@ export function compositeBackend(...components: CompositeBackendPart[]): IAnalyt
             return primaryBackend.currentUser();
         },
         workspace(id: string): IAnalyticalWorkspace {
-            const targetBackend = components.find(b => b.workspace === id)?.backend ?? primaryBackend;
+            const targetBackend = components.find((b) => b.workspace === id)?.backend ?? primaryBackend;
 
             return targetBackend.workspace(id);
         },

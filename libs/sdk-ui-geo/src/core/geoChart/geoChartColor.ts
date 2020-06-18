@@ -105,7 +105,7 @@ export function getPushpinColors(
         );
     }
 
-    const colorsWithoutNull = colorValues.filter(value => value !== null && isFinite(value)) as number[];
+    const colorsWithoutNull = colorValues.filter((value) => value !== null && isFinite(value)) as number[];
     const { min, max } = getMinMax(colorsWithoutNull);
 
     if (min === max && !segmentValues.length) {

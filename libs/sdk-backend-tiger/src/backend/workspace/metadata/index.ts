@@ -29,14 +29,14 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
 
     public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
         return this.authCall(async () =>
-            newAttributeDisplayFormMetadataObject(ref, df =>
+            newAttributeDisplayFormMetadataObject(ref, (df) =>
                 df.title("Display form").attribute(idRef("attr.dummy")),
             ),
         );
     };
 
     public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
-        return this.authCall(async () => newAttributeMetadataObject(ref, att => att.title("dummyTitle")));
+        return this.authCall(async () => newAttributeMetadataObject(ref, (att) => att.title("dummyTitle")));
     };
 
     public async getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
@@ -44,7 +44,7 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
             throw new Error("only identifiers supported");
         }
 
-        const metricMetadata = await this.authCall(sdk =>
+        const metricMetadata = await this.authCall((sdk) =>
             sdk.metadata.metricsIdGet({
                 contentType: "application/json",
                 id: ref.identifier,
@@ -54,16 +54,12 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
         const maql = metricMetadata.data.data.attributes.maql || "";
 
         const regexTokens = tokenizeExpression(maql);
-        return regexTokens.map(regexToken => this.resolveToken(regexToken, metricMetadata));
+        return regexTokens.map((regexToken) => this.resolveToken(regexToken, metricMetadata));
     }
 
     public async getFactDatasetMeta(_ref: ObjRef): Promise<IMetadataObject> {
-        return newDataSetMetadataObject(idRef("dummyDataset"), m =>
-            m
-                .id("dummyDataset")
-                .uri("/dummy/dataset")
-                .title("Dummy dataset")
-                .description(""),
+        return newDataSetMetadataObject(idRef("dummyDataset"), (m) =>
+            m.id("dummyDataset").uri("/dummy/dataset").title("Dummy dataset").description(""),
         );
     }
 
@@ -86,7 +82,7 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
         objectType: "metric" | "fact" | "attribute" | "label",
         includedObjects: ReadonlyArray<SuccessIncluded>,
     ): IMeasureExpressionToken {
-        const includedObject = includedObjects.find(includedObject => {
+        const includedObject = includedObjects.find((includedObject) => {
             return includedObject.id === objectId && includedObject.type === objectType;
         }) as MetricResourceSchema | LabelResourceSchema | AttributeResourceSchema | FactResourceSchema;
 

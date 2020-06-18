@@ -144,7 +144,7 @@ function registerDrilldownHandler(configuration: any, chartOptions: any, drillCo
 }
 
 export function handleChartLoad(chartType: ChartType) {
-    return function() {
+    return function () {
         setupDrilldown(this, chartType);
     };
 }

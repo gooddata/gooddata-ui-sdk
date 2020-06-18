@@ -45,7 +45,7 @@ describe("ScatterPlotColorStrategy", () => {
 
         expect(colorStrategy).toBeInstanceOf(ScatterPlotColorStrategy);
         expect(colorStrategy.getColorAssignment().length).toEqual(1);
-        range(6).map(itemIndex => {
+        range(6).map((itemIndex) => {
             expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColor);
         });
     });

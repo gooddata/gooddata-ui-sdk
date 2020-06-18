@@ -215,7 +215,7 @@ export const assortDimensionDescriptors = (dimensions: IDimensionDescriptor[]) =
     };
 };
 
-export function getMinimalRowData(dv: DataViewFacade) {
+export function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
     const data = dv.rawData().twoDimData();
     const rowHeaders = dv.meta().allHeaders()[0];
     const numberOfRowHeaderItems = (rowHeaders[0] || []).length;
@@ -245,7 +245,7 @@ export const getAttributeSortItemFieldAndDirection = (
     const localIdentifier = sortItem.attributeSortItem.attributeIdentifier;
 
     const sortHeader = attributeDescriptors.find(
-        header => header.attributeHeader.localIdentifier === localIdentifier,
+        (header) => header.attributeHeader.localIdentifier === localIdentifier,
     );
     invariant(sortHeader, `Could not find sortHeader with localIdentifier ${localIdentifier}`);
 
@@ -262,10 +262,10 @@ export const getMeasureSortItemFieldAndDirection = (
     measureDescriptors: IMeasureDescriptor[],
 ): [string, string] => {
     const keys: string[] = [];
-    sortItem.measureSortItem.locators.forEach(locator => {
+    sortItem.measureSortItem.locators.forEach((locator) => {
         if (isMeasureLocator(locator)) {
             const measureSortHeaderIndex = measureDescriptors.findIndex(
-                measureHeaderItem =>
+                (measureHeaderItem) =>
                     measureHeaderItem.measureHeaderItem.localIdentifier ===
                     locator.measureLocatorItem.measureIdentifier,
             );
@@ -291,7 +291,7 @@ export function createTableHeaders(dataView: IDataView, options: IGridAdapterOpt
     const sorting = dv.definition.sortBy;
     const sortingMap = {};
     const { attributeDescriptors, measureDescriptors } = assortDimensionDescriptors(dimensions);
-    sorting.forEach(sortItem => {
+    sorting.forEach((sortItem) => {
         if (isAttributeSort(sortItem)) {
             const [field, direction] = getAttributeSortItemFieldAndDirection(sortItem, attributeDescriptors);
             sortingMap[field] = direction;
@@ -317,7 +317,7 @@ export function createTableHeaders(dataView: IDataView, options: IGridAdapterOpt
             ? [
                   {
                       headerName: dimensions[1].headers
-                          .filter(dimItem => isAttributeDescriptor(dimItem))
+                          .filter((dimItem) => isAttributeDescriptor(dimItem))
                           .map((attributeDescriptor: IAttributeDescriptor) => {
                               return getMappingHeaderName(attributeDescriptor);
                           })
@@ -347,7 +347,7 @@ export function createTableHeaders(dataView: IDataView, options: IGridAdapterOpt
     });
 
     const colFields: string[] = getFields(headerItems[1]);
-    const rowFields: string[] = rowHeaders.map(header => header.field);
+    const rowFields: string[] = rowHeaders.map((header) => header.field);
 
     const leafColumnDefs = getTreeLeaves(allHeaders);
     if (leafColumnDefs[0]) {

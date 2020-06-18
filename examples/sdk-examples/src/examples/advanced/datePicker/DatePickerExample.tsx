@@ -24,7 +24,7 @@ export const DatePickerExample: React.FC = () => {
     });
 
     const onDateChange = (prop: any, value: Date) => {
-        setState(oldState => {
+        setState((oldState) => {
             const { from, to } = oldState;
             const newState: any = {
                 from,

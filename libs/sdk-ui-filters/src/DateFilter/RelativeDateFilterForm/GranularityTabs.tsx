@@ -16,7 +16,7 @@ const granularityOrders: { [G in DateFilterGranularity]: number } = {
 };
 
 const sortGranularities = (granularities: DateFilterGranularity[]): DateFilterGranularity[] =>
-    sortBy(granularities, granularity => granularityOrders[granularity]);
+    sortBy(granularities, (granularity) => granularityOrders[granularity]);
 
 export interface IGranularityTabsProps {
     availableGranularities: DateFilterGranularity[];
@@ -30,7 +30,7 @@ export const GranularityTabs: React.FC<IGranularityTabsProps> = ({
     selectedGranularity,
 }) => (
     <TabsWrapper className="gd-relative-filter-form-granularity-tabs s-relative-filter-form-granularity-tabs">
-        {sortGranularities(availableGranularities).map(granularity => {
+        {sortGranularities(availableGranularities).map((granularity) => {
             const intlGranularity = granularityIntlCodes[granularity];
             return (
                 <Tab

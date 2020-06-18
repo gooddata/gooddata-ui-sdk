@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { ProjectMetadata, Attribute } from "../base/types";
 import { createUniqueName } from "./titles";
 import { get, set, cloneDeep, findKey, forOwn, isEmpty } from "lodash";
@@ -55,7 +55,7 @@ type TitleToItemMap = { [key: string]: IIdentifierWithTags };
 function createMeasures(projectMeta: ProjectMetadata): TitleToItemMap {
     const newMapping: TitleToItemMap = {};
 
-    projectMeta.catalog.metrics.forEach(metric => {
+    projectMeta.catalog.metrics.forEach((metric) => {
         const { title, identifier, tags } = metric.metric.meta;
         const uniqueTitle = createUniqueName(title, newMapping);
         newMapping[uniqueTitle] = {
@@ -64,7 +64,7 @@ function createMeasures(projectMeta: ProjectMetadata): TitleToItemMap {
         };
     });
 
-    projectMeta.catalog.facts.forEach(fact => {
+    projectMeta.catalog.facts.forEach((fact) => {
         const { title, identifier, tags } = fact.fact.meta;
         const uniqueTitle = createUniqueName(title, newMapping);
         newMapping[uniqueTitle] = { identifier, tags };
@@ -76,12 +76,12 @@ function createMeasures(projectMeta: ProjectMetadata): TitleToItemMap {
 function createAttributes(attributes: Attribute[]): IAttrs {
     const newAttrs: IAttrs = {};
 
-    attributes.forEach(attr => {
+    attributes.forEach((attr) => {
         const uniqueAttrTitle = createUniqueName(attr.attribute.meta.title, newAttrs);
         const newDisplayForms: IDisplayForms = {};
         let firstDisplayForm: IIdentifierWithTags | undefined;
 
-        attr.attribute.content.displayForms.forEach(df => {
+        attr.attribute.content.displayForms.forEach((df) => {
             const { title, identifier, tags } = df.meta;
             const uniqueDfTitle = createUniqueName(title, newDisplayForms);
             const newDisplayForm: IIdentifierWithTags = {
@@ -119,7 +119,7 @@ function createCatalogAttributes(projectMeta: ProjectMetadata): IAttrs {
 function createDateDatasets(projectMeta: ProjectMetadata): TitleToDataSet {
     const newDataSets: TitleToDataSet = {};
 
-    projectMeta.dateDataSets.forEach(dd => {
+    projectMeta.dateDataSets.forEach((dd) => {
         const { title, identifier, tags } = dd.dateDataSet.meta;
         const uniqueDsTitle = createUniqueName(title, newDataSets);
         const attributes: IAttrs = createAttributes(dd.dateDataSet.content.attributes);
@@ -138,7 +138,7 @@ function createDateDatasets(projectMeta: ProjectMetadata): TitleToDataSet {
 function createVisualizations(projectMeta: ProjectMetadata): TitleToItemMap {
     const newMapping: TitleToItemMap = {};
 
-    projectMeta.insights.forEach(insight => {
+    projectMeta.insights.forEach((insight) => {
         const { title, identifier, tags } = insight;
         const uniqueTitle = createUniqueName(title, newMapping);
         newMapping[uniqueTitle] = { identifier, tags };
@@ -173,13 +173,13 @@ function mergeData(
 ): ICatalog {
     const result = cloneDeep(newCatalog);
 
-    mergePaths.forEach(path => {
+    mergePaths.forEach((path) => {
         set(result, path, {});
         const newItems = get(newCatalog, path);
         const existingItems = get(existingCatalog, path);
 
         forOwn(newItems, (newItem, newItemKey) => {
-            const existingTitle = findKey(existingItems, item => item.identifier === newItem.identifier);
+            const existingTitle = findKey(existingItems, (item) => item.identifier === newItem.identifier);
             const resolvedTitle = existingTitle ? existingTitle : newItemKey;
             const nonConflictingTitle = createUniqueName(resolvedTitle, get(result, path));
 
@@ -189,7 +189,7 @@ function mergeData(
 
             let resultItem = newItem;
             if (existingTitle) {
-                subItemKeys.forEach(subItemKey => {
+                subItemKeys.forEach((subItemKey) => {
                     if (resultItem.hasOwnProperty(subItemKey)) {
                         resultItem = mergeData(resultItem, existingItems[existingTitle], [subItemKey]);
                     }

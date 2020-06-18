@@ -33,10 +33,10 @@ import { idRef, uriRef } from "../../../objRef/factory";
 import { applyRatioRule, ComputeRatioRule } from "../../buckets";
 
 const SimpleMeasureWithIdentifier = Won;
-const SimpleMeasureWithRatio = modifySimpleMeasure(Won, m => m.ratio());
+const SimpleMeasureWithRatio = modifySimpleMeasure(Won, (m) => m.ratio());
 const SimpleMeasureWithUri = modifySimpleMeasure(Won);
 SimpleMeasureWithUri.measure.definition.measureDefinition.item = { uri: "/uri" };
-const SimpleMeasureWithFilters = modifySimpleMeasure(Won, m =>
+const SimpleMeasureWithFilters = modifySimpleMeasure(Won, (m) =>
     m.filters(newPositiveAttributeFilter(idRef("myAttribute"), ["foo"])),
 );
 
@@ -172,7 +172,7 @@ describe("measureArithmeticOperator", () => {
 });
 
 describe("measureAlias", () => {
-    const MeasureWithAlias = modifyMeasure(SimpleMeasureWithIdentifier, m => m.alias("customAlias"));
+    const MeasureWithAlias = modifyMeasure(SimpleMeasureWithIdentifier, (m) => m.alias("customAlias"));
     const Scenarios: Array<[string, any, string | undefined]> = [
         ["undefined for measure without alias", SimpleMeasureWithIdentifier, undefined],
         ["alias value when defined", MeasureWithAlias, "customAlias"],
@@ -188,7 +188,7 @@ describe("measureAlias", () => {
 });
 
 describe("measureTitle", () => {
-    const MeasureWithTitle = modifyMeasure(SimpleMeasureWithIdentifier, m => m.title("customTitle"));
+    const MeasureWithTitle = modifyMeasure(SimpleMeasureWithIdentifier, (m) => m.title("customTitle"));
     const Scenarios: Array<[string, any, string | undefined]> = [
         ["undefined for measure without title", SimpleMeasureWithIdentifier, undefined],
         ["title value when defined", MeasureWithTitle, "customTitle"],
@@ -204,7 +204,7 @@ describe("measureTitle", () => {
 });
 
 describe("measureFormat", () => {
-    const MeasureWithFormat = modifyMeasure(SimpleMeasureWithIdentifier, m => m.format("customFormat"));
+    const MeasureWithFormat = modifyMeasure(SimpleMeasureWithIdentifier, (m) => m.format("customFormat"));
     const Scenarios: Array<[string, any, string | undefined]> = [
         ["undefined for measure without format", SimpleMeasureWithIdentifier, undefined],
         ["format value when defined", MeasureWithFormat, "customFormat"],
@@ -220,7 +220,7 @@ describe("measureFormat", () => {
 });
 
 describe("measureAggregation", () => {
-    const MeasureWithAggregation = modifySimpleMeasure(SimpleMeasureWithIdentifier, m =>
+    const MeasureWithAggregation = modifySimpleMeasure(SimpleMeasureWithIdentifier, (m) =>
         m.aggregation("median"),
     );
     const Scenarios: Array<[string, any, string | undefined]> = [
@@ -303,7 +303,7 @@ describe("measurePreviousPeriodDateDataSets", () => {
 
 describe("bugfixes", () => {
     it("should not cause RAIL-2352", () => {
-        const measureWithCustomLocalId = modifySimpleMeasure(Won, m => m.localId("customLocalId"));
+        const measureWithCustomLocalId = modifySimpleMeasure(Won, (m) => m.localId("customLocalId"));
         const derivedMeasure = newPreviousPeriodMeasure(measureWithCustomLocalId, [
             { dataSet: "dataSet", periodsAgo: 1 },
         ]);

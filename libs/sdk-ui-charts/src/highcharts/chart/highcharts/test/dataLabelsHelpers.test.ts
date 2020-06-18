@@ -358,25 +358,25 @@ describe("dataLabelsHelpers", () => {
 
         it.each([null, NORMAL_STACK, PERCENT_STACK])(
             "should return black data label for area chart although stacking is %s",
-            stacking => {
+            (stacking) => {
                 expect(getLabelStyle(VisualizationTypes.AREA, stacking)).toEqual(BLACK_LABEL);
             },
         );
 
-        it.each(whiteDataLabelTypes)("should return white data label for %s chart", chart => {
+        it.each(whiteDataLabelTypes)("should return white data label for %s chart", (chart) => {
             expect(getLabelStyle(chart, null)).toEqual(WHITE_LABEL);
         });
 
         it.each(CHART_TYPES)(
             "should return white data label if %s chart has stacking configuration",
-            chart => {
+            (chart) => {
                 expect(getLabelStyle(chart, "normal")).toEqual(WHITE_LABEL);
             },
         );
 
         it.each(CHART_TYPES)(
             "should return black data label if %s chart has no stacking configuration",
-            chart => {
+            (chart) => {
                 expect(getLabelStyle(chart, null)).toEqual(BLACK_LABEL);
             },
         );

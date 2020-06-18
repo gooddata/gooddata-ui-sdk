@@ -23,7 +23,7 @@ export interface IDropdownControlProps {
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 
-export const DROPDOWN_ALIGMENTS = alignPoints.map(align => ({ align, offset: { x: 1, y: 0 } }));
+export const DROPDOWN_ALIGMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
 class DropdownControl extends React.PureComponent<IDropdownControlProps & WrappedComponentProps> {
     public static defaultProps = {
@@ -85,7 +85,7 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
 
     private getSelectedItem(value: string): IDropdownItem {
         if (this.props.items) {
-            return this.props.items.find(item => item.value === value);
+            return this.props.items.find((item) => item.value === value);
         }
 
         return undefined;

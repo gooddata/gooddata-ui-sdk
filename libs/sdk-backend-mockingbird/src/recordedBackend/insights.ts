@@ -81,7 +81,7 @@ export class RecordedInsights implements IWorkspaceInsights {
             return new RecordingPager<IInsight>([], limit, offset);
         }
 
-        const insights = Object.values(this.insights).map(rec => cloneDeep(rec.obj));
+        const insights = Object.values(this.insights).map((rec) => cloneDeep(rec.obj));
 
         if (orderBy) {
             insights.sort(comparator(orderBy));
@@ -135,7 +135,7 @@ export class RecordedInsights implements IWorkspaceInsights {
     };
 
     private async getVisualizationClassByUri(uri: string): Promise<IVisualizationClass> {
-        const result = this.visClasses.find(visClass => visClassUri(visClass) === uri);
+        const result = this.visClasses.find((visClass) => visClassUri(visClass) === uri);
 
         if (!result) {
             throw new UnexpectedResponseError(`No visClass with URI: ${uri}`, 404, {});
@@ -145,7 +145,7 @@ export class RecordedInsights implements IWorkspaceInsights {
     }
 
     private async getVisualizationClassById(id: string): Promise<IVisualizationClass> {
-        const result = this.visClasses.find(visClass => visClassId(visClass) === id);
+        const result = this.visClasses.find((visClass) => visClassId(visClass) === id);
 
         if (!result) {
             throw new UnexpectedResponseError(`No visClass with ID: ${id}`, 404, {});

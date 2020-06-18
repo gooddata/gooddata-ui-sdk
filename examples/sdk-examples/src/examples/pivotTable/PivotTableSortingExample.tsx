@@ -13,7 +13,7 @@ const measures = [
 const attributes = [
     Ldm.LocationState,
     Ldm.LocationName.Default,
-    modifyAttribute(Ldm.MenuCategory, a => a.localId("menu")),
+    modifyAttribute(Ldm.MenuCategory, (a) => a.localId("menu")),
 ];
 const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
 const sortBy = [newAttributeSort("menu", "asc")];

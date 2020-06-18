@@ -32,7 +32,7 @@ export class BearWorkspaceDateFilterConfigsQuery implements IWorkspaceDateFilter
         offset: number | undefined = 0,
         limit: number | undefined,
     ): Promise<IDateFilterConfigsQueryResult> {
-        const data = await this.authCall(sdk =>
+        const data = await this.authCall((sdk) =>
             sdk.md.getObjectsByQueryWithPaging<GdcExtendedDateFilters.IWrappedDateFilterConfig>(
                 this.workspace,
                 {

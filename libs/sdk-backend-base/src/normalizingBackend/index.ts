@@ -54,7 +54,7 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
 
         this.config.normalizationStatus?.(normalizationState);
 
-        return normalizedExecution.execute().then(result => {
+        return normalizedExecution.execute().then((result) => {
             return new DenormalizingExecutionResult(result, normalizationState, this, this.decorated);
         });
     };
@@ -114,7 +114,7 @@ class DenormalizingExecutionResult implements IExecutionResult {
         const promisedDataView = this.normalizedResult.readAll();
         const result = this;
 
-        return promisedDataView.then(dataView => {
+        return promisedDataView.then((dataView) => {
             return new DenormalizedDataView(result, dataView, result.denormalizer);
         });
     };
@@ -123,7 +123,7 @@ class DenormalizingExecutionResult implements IExecutionResult {
         const promisedDataView = this.normalizedResult.readWindow(offset, size);
         const result = this;
 
-        return promisedDataView.then(dataView => {
+        return promisedDataView.then((dataView) => {
             return new DenormalizedDataView(result, dataView, result.denormalizer);
         });
     };
@@ -211,6 +211,6 @@ export function withNormalization(
     config: NormalizationConfig = {},
 ): IAnalyticalBackend {
     return decoratedBackend(realBackend, {
-        execution: original => new WithNormalizationExecutionFactory(original, config),
+        execution: (original) => new WithNormalizationExecutionFactory(original, config),
     });
 }

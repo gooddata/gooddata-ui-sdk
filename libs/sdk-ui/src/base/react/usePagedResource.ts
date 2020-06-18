@@ -31,7 +31,7 @@ export function usePagedResource<TParams, TItem>(
     const reset = () => setState(initialState);
 
     const mergeResult = (result: IPagedResource<TItem>) =>
-        setState(state => {
+        setState((state) => {
             const isFirstResult = typeof state.totalItemsCount === "undefined";
             const items = isFirstResult ? new Array(result.totalCount) : [...state.items];
 

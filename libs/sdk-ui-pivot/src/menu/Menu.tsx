@@ -20,7 +20,7 @@ const Menu: React.SFC<IMenuProps> = (props: IMenuProps) => (
         defaultOpened={props.defaultOpened}
         onOpenedChange={props.onOpenedChange}
     >
-        {controlledProps => (
+        {(controlledProps) => (
             <ControlledMenu
                 opened={controlledProps.opened}
                 onOpenedChange={controlledProps.onOpenedChange}

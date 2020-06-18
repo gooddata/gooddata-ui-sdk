@@ -129,7 +129,7 @@ const employeeAdditionalInfo = [
 ];
 
 export const EmployeeCard = ({ name }: { name: string }) => {
-    const { avatarUrl, gender, startDate } = employeeAdditionalInfo.find(info => info.name === name) || {};
+    const { avatarUrl, gender, startDate } = employeeAdditionalInfo.find((info) => info.name === name) || {};
 
     return (
         <div className="employee-card">

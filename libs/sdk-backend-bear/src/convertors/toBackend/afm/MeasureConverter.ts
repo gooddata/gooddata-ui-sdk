@@ -95,7 +95,7 @@ function convertPreviousPeriodMeasureDefinition(
     return {
         previousPeriodMeasure: {
             measureIdentifier: previousPeriodMeasure.measureIdentifier,
-            dateDataSets: previousPeriodMeasure.dateDataSets.map(dateDataSet => ({
+            dateDataSets: previousPeriodMeasure.dateDataSets.map((dateDataSet) => ({
                 dataSet: toBearRef(dateDataSet.dataSet),
                 periodsAgo: dateDataSet.periodsAgo,
             })),

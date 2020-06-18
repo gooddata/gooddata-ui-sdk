@@ -35,10 +35,10 @@ export class CatalogMeasureBuilder<
             throw new Error("Cannot convert catalog measure to execution model, no measure found!");
         }
 
-        const defaultModifications: MeasureModifications<MeasureBuilder> = m =>
+        const defaultModifications: MeasureModifications<MeasureBuilder> = (m) =>
             m.alias(this.item.measure?.title!).format(this.item.measure?.format!);
 
-        return newMeasure(this.item.measure.ref, m => modifications(defaultModifications(m)));
+        return newMeasure(this.item.measure.ref, (m) => modifications(defaultModifications(m)));
     }
 }
 

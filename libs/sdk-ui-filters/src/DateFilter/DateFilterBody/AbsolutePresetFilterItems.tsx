@@ -21,7 +21,7 @@ export const AbsolutePresetFilterItems: React.FC<IAbsolutePresetFilterItemsProps
     className,
 }) => (
     <>
-        {filterOptions.map(item => (
+        {filterOptions.map((item) => (
             <ListItem
                 key={item.localIdentifier}
                 isSelected={item.localIdentifier === selectedFilterOption.localIdentifier}

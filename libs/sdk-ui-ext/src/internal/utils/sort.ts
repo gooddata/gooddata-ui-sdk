@@ -118,7 +118,7 @@ export function getDefaultTreemapSortFromBuckets(
     const stackAttr = segmentBy ? bucketAttributes(segmentBy) : [];
 
     if (!isEmpty(viewAttr) && !isEmpty(stackAttr)) {
-        return [newAttributeSort(viewAttr[0], "asc"), ...measures.map(m => newMeasureSort(m, "desc"))];
+        return [newAttributeSort(viewAttr[0], "asc"), ...measures.map((m) => newMeasureSort(m, "desc"))];
     }
 
     return [];
@@ -165,7 +165,7 @@ export function getBucketItemIdentifiers(referencePoint: IExtendedReferencePoint
 function isSortItemValid(item: ISortItem, identifiers: string[]) {
     const sortIdentifiers: SortEntityIds = sortEntityIds(item);
 
-    return every(sortIdentifiers.allIdentifiers, id => includes(identifiers, id));
+    return every(sortIdentifiers.allIdentifiers, (id) => includes(identifiers, id));
 }
 
 export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>) {

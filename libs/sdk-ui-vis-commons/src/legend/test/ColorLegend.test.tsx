@@ -17,7 +17,7 @@ describe("ColorLegend", () => {
     });
 
     it("should render color legend", () => {
-        const data = range(0, 6).map(itemId => ({
+        const data = range(0, 6).map((itemId) => ({
             color: "color" + itemId,
             range: {
                 from: itemId,

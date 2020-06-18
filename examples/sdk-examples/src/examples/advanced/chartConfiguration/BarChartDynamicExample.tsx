@@ -22,7 +22,7 @@ export const BarChartDynamicExample: React.FC = () => {
     });
 
     const onPaletteChange = () =>
-        setState(state => {
+        setState((state) => {
             const { config: currentConfig, customPaletteUsed } = state;
             return {
                 ...state,
@@ -35,7 +35,7 @@ export const BarChartDynamicExample: React.FC = () => {
         });
 
     const onLegendChange = () =>
-        setState(state => {
+        setState((state) => {
             const { config: currentConfig, customLegendUsed } = state;
             return {
                 ...state,
@@ -51,7 +51,7 @@ export const BarChartDynamicExample: React.FC = () => {
         });
 
     const onSeparatorChange = () =>
-        setState(state => {
+        setState((state) => {
             const { config: currentConfig, customSeparatorUsed } = state;
             return {
                 ...state,

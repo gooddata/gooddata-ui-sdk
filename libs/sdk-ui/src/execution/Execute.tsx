@@ -130,14 +130,7 @@ const CoreExecute: React.FC<Props> = (props: Props) => {
  * When caller desires just data series and no slicing, create a single-dim result.
  */
 function seriesOnlyDim(seriesBy: IAttributeOrMeasure[]): IDimension[] {
-    return [
-        newDimension(
-            seriesBy
-                .filter(isAttribute)
-                .map(attributeLocalId)
-                .concat(MeasureGroupIdentifier),
-        ),
-    ];
+    return [newDimension(seriesBy.filter(isAttribute).map(attributeLocalId).concat(MeasureGroupIdentifier))];
 }
 
 /**
@@ -157,10 +150,7 @@ function seriesAndSlicesDim(
 
     return newTwoDimensional(
         firstDimItems,
-        seriesBy
-            .filter(isAttribute)
-            .map(attributeLocalId)
-            .concat(MeasureGroupIdentifier),
+        seriesBy.filter(isAttribute).map(attributeLocalId).concat(MeasureGroupIdentifier),
     );
 }
 
@@ -244,8 +234,8 @@ export const Execute = withContexts(
             ];
 
             return (
-                relevantProps.some(propName => prevProps[propName] !== nextProps[propName]) ||
-                relevantPropsDeepEqual.some(propName => !isEqual(prevProps[propName], nextProps[propName]))
+                relevantProps.some((propName) => prevProps[propName] !== nextProps[propName]) ||
+                relevantPropsDeepEqual.some((propName) => !isEqual(prevProps[propName], nextProps[propName]))
             );
         },
         loadOnMount: (props?: IExecuteProps) => {

@@ -25,7 +25,7 @@ import { sanitizeConfig } from "../_commons/sanitizeStacking";
 const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChartProps> = {
     chartName: "ComboChart",
     bucketPropsKeys: ["primaryMeasures", "secondaryMeasures", "viewBy", "filters", "sortBy"],
-    propTransformation: props => {
+    propTransformation: (props) => {
         const { primaryMeasures = [], secondaryMeasures = [] } = props;
         const isDualAxis = get(props, "config.dualAxis", true);
         const computeRatioRule =
@@ -39,7 +39,7 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
             secondaryMeasures: applyRatioRule(secondaryMeasures, computeRatioRule),
         };
     },
-    bucketsFactory: props => {
+    bucketsFactory: (props) => {
         const { primaryMeasures, secondaryMeasures, viewBy } = props;
         const categories = isArray(viewBy) ? [viewBy[0]] : [viewBy];
 
@@ -60,7 +60,7 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
             .withSorting(...props.sortBy)
             .withDimensions(defaultDimensions);
     },
-    propOverridesFactory: props => {
+    propOverridesFactory: (props) => {
         return {
             config: getConfiguration(props),
         };

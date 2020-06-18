@@ -193,10 +193,7 @@ export function defFingerprint(def: IExecutionDefinition): string {
     hasher.append(def.workspace);
     def.attributes.map(attributeFingerprint).forEach(hashFun);
     def.measures.map(measureFingerprint).forEach(hashFun);
-    def.filters
-        .map(filterFingerprint)
-        .filter(isString)
-        .forEach(hashFun);
+    def.filters.map(filterFingerprint).filter(isString).forEach(hashFun);
     def.sortBy.map(sortFingerprint).forEach(hashFun);
     def.dimensions.map(dimensionFingerprint).forEach(hashFun);
 

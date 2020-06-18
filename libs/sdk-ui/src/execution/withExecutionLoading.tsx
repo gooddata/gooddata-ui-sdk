@@ -230,7 +230,7 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
                 onLoadingChanged(true, this.props);
 
                 this.effectiveProps = undefined;
-                this.setState(state => ({
+                this.setState((state) => ({
                     ...state,
                     isLoading: true,
                     error: undefined,
@@ -245,7 +245,7 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
                 onLoadingChanged(false, this.props);
                 onExportReady(createExportErrorFunction(error));
 
-                this.setState(state => ({
+                this.setState((state) => ({
                     ...state,
                     isLoading: false,
                     error,
@@ -261,7 +261,7 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
                 onExportReady(createExportFunction(result.result(), title));
 
                 this.effectiveProps = this.props;
-                this.setState(state => ({
+                this.setState((state) => ({
                     ...state,
                     isLoading: false,
                     error: undefined,

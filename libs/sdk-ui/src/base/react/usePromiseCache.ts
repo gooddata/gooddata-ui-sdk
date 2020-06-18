@@ -37,9 +37,9 @@ export function usePromiseCache<TParams, TResult, TError>(
     const [state, setState] = useState<IUsePromiseCacheState<TResult, TError>>(initialState);
 
     const setInitialState = () => setState(initialState);
-    const setResults = (results: TResult[]) => setState(state => ({ ...state, results }));
-    const setErrors = (errors: TError[]) => setState(state => ({ ...state, errors }));
-    const setLoading = (isLoading: boolean) => setState(state => ({ ...state, isLoading }));
+    const setResults = (results: TResult[]) => setState((state) => ({ ...state, results }));
+    const setErrors = (errors: TError[]) => setState((state) => ({ ...state, errors }));
+    const setLoading = (isLoading: boolean) => setState((state) => ({ ...state, isLoading }));
 
     useEffect(() => {
         return () => {
@@ -49,7 +49,7 @@ export function usePromiseCache<TParams, TResult, TError>(
     }, resetDeps);
 
     useEffect(() => {
-        const newParams = fetchParams.filter(params => !promiseCacheRef.current.getResult(params));
+        const newParams = fetchParams.filter((params) => !promiseCacheRef.current.getResult(params));
         const newPromises = newParams.map(promiseCacheRef.current.load);
 
         if (newPromises.length === 0) {
@@ -64,13 +64,13 @@ export function usePromiseCache<TParams, TResult, TError>(
         const usedPromiseCache = promiseCacheRef.current;
         setLoading(true);
         Promise.all(newPromises)
-            .then(results => {
+            .then((results) => {
                 setLoading(false);
                 if (usedPromiseCache === promiseCacheRef.current) {
                     setResults(results);
                 }
             })
-            .catch(errors => {
+            .catch((errors) => {
                 setLoading(false);
                 if (usedPromiseCache === promiseCacheRef.current) {
                     setErrors(errors);

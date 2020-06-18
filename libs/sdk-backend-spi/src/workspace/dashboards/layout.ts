@@ -442,7 +442,7 @@ export function layoutWidgets(layout: LayoutDefinition): Array<IWidgetDefinition
 export function layoutWidgets(layout: Layout | LayoutDefinition): Array<IWidgetDefinition | IWidget> {
     const collectedWidgets: Array<IWidgetDefinition | IWidget> = [];
     walkLayout(layout, {
-        widgetCallback: widget => collectedWidgets.push(widget),
+        widgetCallback: (widget) => collectedWidgets.push(widget),
     });
 
     return collectedWidgets;

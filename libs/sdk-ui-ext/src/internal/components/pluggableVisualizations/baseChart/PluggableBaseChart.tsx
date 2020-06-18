@@ -181,7 +181,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         if (masterMeasures.length <= 1 && allAttributes.length > 1) {
             // first attribute is taken, find next available non-date attribute
             const attributesWithoutFirst = tail(allAttributes);
-            const nonDate = attributesWithoutFirst.filter(attribute => !isDateBucketItem(attribute));
+            const nonDate = attributesWithoutFirst.filter((attribute) => !isDateBucketItem(attribute));
             stacks = nonDate.slice(0, 1);
         }
 
@@ -337,8 +337,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const validColorMapping =
             colorMapping &&
             colorMapping
-                .filter(mapping => mapping != null)
-                .map(mapItem => ({
+                .filter((mapping) => mapping != null)
+                .map((mapItem) => ({
                     predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
                     color: mapItem.color,
                 }));

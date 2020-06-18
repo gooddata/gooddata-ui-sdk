@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { queryString } from "../util";
 
 export const ROOT = "/gdc/admin";
@@ -71,5 +71,5 @@ export const parse = (route: string, template: string) => {
 export const interpolate = (route: string, params: any, query: any = null) =>
     route
         .split("/")
-        .map(view => (view[0] === ":" ? params[view.substr(1)] : view))
+        .map((view) => (view[0] === ":" ? params[view.substr(1)] : view))
         .join("/") + queryString(query);

@@ -22,7 +22,7 @@ const style = { height: 300 };
 export const insightViewColumnChartExportExample = () => {
     return (
         <ExampleWithExport>
-            {onExportReady => (
+            {(onExportReady) => (
                 <div style={style} className="s-insightView-chart">
                     <InsightView
                         insight={Ldm.Insights.PieChart}

@@ -61,13 +61,13 @@ function initialize(targetDir: string, fileName: string): TypescriptOutput {
 }
 
 function recNameList(recs: IRecording[]): string {
-    return recs.map(r => r.getRecordingName()).join(",");
+    return recs.map((r) => r.getRecordingName()).join(",");
 }
 
 function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableStatementStructure> {
     const executionsInit = `executions: {${input
         .executions()
-        .map(e => e.getRecordingName())
+        .map((e) => e.getRecordingName())
         .join(",")}}`;
 
     const metadataInit = `
@@ -125,7 +125,7 @@ type IndexGeneratorInput = {
 };
 
 function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
-    const categorized = groupBy(recordings, rec => rec.getRecordingType());
+    const categorized = groupBy(recordings, (rec) => rec.getRecordingType());
 
     return {
         executions: () => {

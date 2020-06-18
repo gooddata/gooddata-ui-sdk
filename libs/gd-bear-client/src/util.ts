@@ -11,7 +11,7 @@ import { ApiResponse, ApiResponseError } from "./xhr";
  * Omit nil or empty object/array values of the object. Keep booleans & numbers.
  * Checks only first level object properties, does not check it recursively.
  */
-export const omitEmpty = omitBy(val => {
+export const omitEmpty = omitBy((val) => {
     if (isNil(val)) {
         return true;
     } else if (isObject(val)) {
@@ -137,13 +137,13 @@ export const isUri = (value: string) => REG_URI_OBJ.test(value);
 export function queryString(query: any) {
     function getSingleParam(key: string, value: string) {
         return Array.isArray(value)
-            ? value.map(item => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`).join("&")
+            ? value.map((item) => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`).join("&")
             : `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     }
 
     return query
         ? `?${Object.keys(query)
-              .map(k => getSingleParam(k, query[k]))
+              .map((k) => getSingleParam(k, query[k]))
               .join("&")}`
         : "";
 }

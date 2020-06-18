@@ -12,7 +12,7 @@ import * as uuid from "uuid";
  */
 const getReferenceValue = (id: string, references: GdcVisualizationObject.IReferenceItems) => references[id];
 const getReferenceId = (value: string, references: GdcVisualizationObject.IReferenceItems) =>
-    Object.keys(references).find(id => references[id] === value);
+    Object.keys(references).find((id) => references[id] === value);
 
 type IdGenerator = () => string;
 
@@ -25,7 +25,7 @@ type StringTransformation = (value: string) => string;
  */
 const traverse = (obj: any, convert: StringTransformation): any => {
     if (isArray(obj)) {
-        return obj.map(a => traverse(a, convert));
+        return obj.map((a) => traverse(a, convert));
     } else if (isObject(obj)) {
         return Object.keys(obj).reduce((result, key) => {
             result[key] = traverse((obj as any)[key], convert);
@@ -60,9 +60,9 @@ const createConverter = (conversionFunction: ConversionFunction): ReferenceConve
 /*
  * Conversion from References to URIs
  */
-const convertReferenceToUri = (
-    references: GdcVisualizationObject.IReferenceItems,
-): StringTransformation => value => getReferenceValue(value, references) || value;
+const convertReferenceToUri = (references: GdcVisualizationObject.IReferenceItems): StringTransformation => (
+    value,
+) => getReferenceValue(value, references) || value;
 
 /**
  * Converts URIs to reference based values

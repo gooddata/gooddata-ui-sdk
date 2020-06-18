@@ -202,9 +202,7 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         this.setState({ error: null, isLoading: true });
 
         try {
-            const metadata = this.getBackend()
-                .workspace(this.props.workspace)
-                .metadata();
+            const metadata = this.getBackend().workspace(this.props.workspace).metadata();
             const displayForm = await metadata.getAttributeDisplayForm(this.getObjRef());
             const attribute = await metadata.getAttribute(displayForm.attribute);
 
@@ -225,8 +223,8 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         const filter = filterFactory(
             this.getObjRef(),
             useUriElements
-                ? { uris: selectedItems.map(item => item.uri) }
-                : { values: selectedItems.map(item => item.title) },
+                ? { uris: selectedItems.map((item) => item.uri) }
+                : { values: selectedItems.map((item) => item.title) },
         );
 
         return this.props.onApply(filter);
@@ -250,7 +248,7 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
                     <FilterError error={error} />
                 ) : (
                     <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                        {isMobile => (
+                        {(isMobile) => (
                             <IntlTranslationsProvider>
                                 {(translationProps: ITranslationsComponentProps) => {
                                     return (

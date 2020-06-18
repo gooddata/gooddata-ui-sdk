@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import isFunction = require("lodash/isFunction");
 import sumBy = require("lodash/sumBy");
 import * as differenceInDaysModule from "date-fns/differenceInDays";
@@ -45,7 +45,7 @@ const newtonRaphson = (fun: NumericFunction, derivative: NumericFunction, guess:
 export const calculateXirr = (transactions: IXirrInput[], guess = 0.1) => {
     // convert any date to a fractional year difference to allow non-uniform cash-flow distribution (the X in XIRR)
     const startDate = transactions[0].when;
-    const data = transactions.map(t => ({
+    const data = transactions.map((t) => ({
         C_n: t.amount,
         t_n: differenceInDays(t.when, startDate) / 365,
     }));
@@ -66,7 +66,7 @@ export const calculateXirr = (transactions: IXirrInput[], guess = 0.1) => {
 
         IRR is defined as a real solution for r in NPV = 0
     */
-    const npv: NumericFunction = r => sumBy(data, ({ t_n, C_n }) => C_n / Math.pow(1 + r, t_n));
+    const npv: NumericFunction = (r) => sumBy(data, ({ t_n, C_n }) => C_n / Math.pow(1 + r, t_n));
 
     /*
         We use Newton Raphson method to find the real root of NPV = 0, so we need its derivative:
@@ -80,7 +80,7 @@ export const calculateXirr = (transactions: IXirrInput[], guess = 0.1) => {
                ====
                n = 0
      */
-    const npvDerivative: NumericFunction = r =>
+    const npvDerivative: NumericFunction = (r) =>
         -1 * sumBy(data, ({ t_n, C_n }) => (t_n * C_n) / Math.pow(1 + r, t_n + 1));
 
     return newtonRaphson(npv, npvDerivative, guess);

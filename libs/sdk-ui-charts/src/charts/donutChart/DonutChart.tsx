@@ -14,7 +14,7 @@ import { withChart } from "../_base/withChart";
 const donutChartDefinition: IChartDefinition<IDonutChartBucketProps, IDonutChartProps> = {
     chartName: "DonutChart",
     bucketPropsKeys: ["measures", "viewBy", "filters", "sortBy"],
-    bucketsFactory: props => {
+    bucketsFactory: (props) => {
         const measures: IAttributeOrMeasure[] = Array.isArray(props.measures)
             ? props.measures
             : [props.measures];

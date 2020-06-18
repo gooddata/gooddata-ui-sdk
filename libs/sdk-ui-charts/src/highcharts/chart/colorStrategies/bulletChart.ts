@@ -39,7 +39,7 @@ class BulletChartColorStrategy extends ColorStrategy {
             occupiedMeasureBucketsLocalIdentifiers,
         );
 
-        const colorAssignment = measureGroup.items.map(headerItem => {
+        const colorAssignment = measureGroup.items.map((headerItem) => {
             const color: IColor = this.mapMeasureColor(
                 headerItem,
                 colorPalette,
@@ -68,8 +68,8 @@ class BulletChartColorStrategy extends ColorStrategy {
                     return getColorByGuid(colorPalette, colorAssignment.color.value as string, index);
                 }
             })
-            .filter(color => typeof color !== "undefined")
-            .map(color => getRgbStringFromRGB(color));
+            .filter((color) => typeof color !== "undefined")
+            .map((color) => getRgbStringFromRGB(color));
     }
 
     protected mapMeasureColor(

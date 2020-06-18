@@ -23,7 +23,7 @@ import { sanitizeConfig } from "../_commons/sanitizeStacking";
 const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletChartProps> = {
     chartName: "BulletChart",
     bucketPropsKeys: ["primaryMeasure", "targetMeasure", "comparativeMeasure", "viewBy", "filters", "sortBy"],
-    propTransformation: props => {
+    propTransformation: (props) => {
         /*
          * Modify input props - disable compute ratio on all measures
          */
@@ -36,7 +36,7 @@ const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletCh
                 : undefined,
         };
     },
-    bucketsFactory: props => {
+    bucketsFactory: (props) => {
         const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
 
         return [

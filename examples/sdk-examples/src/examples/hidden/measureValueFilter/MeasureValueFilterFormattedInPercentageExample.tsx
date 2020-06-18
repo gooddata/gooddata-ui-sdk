@@ -34,7 +34,7 @@ export const MeasureValueFilterFormattedInPercentageExample: React.FC = () => {
     return (
         <div>
             <div>
-                {filterPresets.map(presetItem => {
+                {filterPresets.map((presetItem) => {
                     const { key, label, filters: _filters } = presetItem;
                     const isActive = filters === _filters;
                     return (

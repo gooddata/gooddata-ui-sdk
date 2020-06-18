@@ -40,9 +40,9 @@ describe("measureFingerprint", () => {
             expect(measureFingerprint(left)).toEqual(measureFingerprint(right));
         });
 
-        const WonRatioTrue = modifySimpleMeasure(Won, m => m.ratio());
+        const WonRatioTrue = modifySimpleMeasure(Won, (m) => m.ratio());
         const VelocityAvg = Velocity.Avg;
-        const WonRatioWithFilters = modifySimpleMeasure(Won, m =>
+        const WonRatioWithFilters = modifySimpleMeasure(Won, (m) =>
             m.filters(newPositiveAttributeFilter(Account.Name, ["account"])),
         );
 

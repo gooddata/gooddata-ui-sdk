@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { unmountComponentAtNode } from "react-dom";
 
 export function unmountComponentsAtNodes(
@@ -14,7 +14,7 @@ export function unmountComponentsAtNodes(
         documentInstance: document,
     },
 ) {
-    elementSelectors.forEach(elementSelector => {
+    elementSelectors.forEach((elementSelector) => {
         const element = documentInstance.querySelector(elementSelector);
         if (element) {
             unmount(element);

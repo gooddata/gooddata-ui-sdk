@@ -234,7 +234,7 @@ export class XhrModule {
         if (data) {
             urlWithParams = `${url}?${stringify(data)}`;
         }
-        return this.ajax<T>(urlWithParams, merge({ method: "GET" }, restSettings)).then(response =>
+        return this.ajax<T>(urlWithParams, merge({ method: "GET" }, restSettings)).then((response) =>
             response.getData(),
         );
     }
@@ -257,7 +257,7 @@ export class XhrModule {
      * Wrapper for xhr.ajax method POST, returns parsed JSON response body
      */
     public postParsed<T>(url: string, settings?: any) {
-        return this.ajax<T>(url, merge({ method: "POST" }, settings)).then(response => response.getData());
+        return this.ajax<T>(url, merge({ method: "POST" }, settings)).then((response) => response.getData());
     }
 
     /**

@@ -328,7 +328,7 @@ describe("project", () => {
                 }
 
                 it("should preset default values", () => {
-                    mockInitialPost(options => {
+                    mockInitialPost((options) => {
                         const params = JSON.parse(options.body);
                         expect(params.project.content.guidedNavigation).toEqual(1);
                         expect(params.project.content.driver).toEqual("Pg");

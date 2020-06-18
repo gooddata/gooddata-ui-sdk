@@ -37,10 +37,7 @@ export const ExecuteWithSlicesExample: React.FC = () => {
                         );
                     }
 
-                    const slices = result
-                        .data()
-                        .slices()
-                        .toArray();
+                    const slices = result.data().slices().toArray();
 
                     return (
                         <table style={style}>
@@ -51,7 +48,7 @@ export const ExecuteWithSlicesExample: React.FC = () => {
                                     <th>Total Sales</th>
                                     <th>Total Franchised Cost</th>
                                 </tr>
-                                {slices.map(slice => {
+                                {slices.map((slice) => {
                                     const sliceTitles = slice.sliceTitles();
                                     const sales = slice.dataPoints()[0];
                                     const franchisedSales = slice.dataPoints()[1];

@@ -109,15 +109,15 @@ async function captureRecordings(
 
     const results = await pmap(
         recordings,
-        rec => {
+        (rec) => {
             return rec
                 .makeRecording(backend, config.projectId!)
-                .then(_ => {
+                .then((_) => {
                     onCaptured(rec);
 
                     return rec;
                 })
-                .catch(err => {
+                .catch((err) => {
                     onCaptured(
                         rec,
                         `An error '${err}' has occurred while obtaining data for recording in ${rec.directory}; it is highly likely that the recording definition is semantically incorrect.`,
@@ -169,13 +169,13 @@ async function run() {
         ...(await discoverVisClassesRecordings(absoluteRecordingDir)),
     ];
 
-    const incompleteRecordings = recordings.filter(e => !e.isComplete());
+    const incompleteRecordings = recordings.filter((e) => !e.isComplete());
 
     logInfo(
         `Discovered ${recordings.length} recordings; out of these ${incompleteRecordings.length} are missing recorded data.`,
     );
 
-    let recordingsToIndex = recordings.filter(e => e.isComplete());
+    let recordingsToIndex = recordings.filter((e) => e.isComplete());
 
     if (incompleteRecordings.length) {
         /*
@@ -197,7 +197,7 @@ async function run() {
 
         const newRecordings = await captureRecordings(incompleteRecordings, backend, fullConfig);
 
-        recordingsToIndex = recordingsToIndex.concat(newRecordings.filter(e => e.isComplete()));
+        recordingsToIndex = recordingsToIndex.concat(newRecordings.filter((e) => e.isComplete()));
     }
 
     logInfo(`Building recording index for all executions with captured data in ${absoluteRecordingDir}`);
@@ -209,7 +209,7 @@ async function run() {
     process.exit(0);
 }
 
-run().catch(err => {
+run().catch((err) => {
     if (isDataRecorderError(err)) {
         process.exit(err.rc);
     } else {

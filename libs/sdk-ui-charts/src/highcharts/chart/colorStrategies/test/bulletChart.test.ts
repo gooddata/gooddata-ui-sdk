@@ -57,7 +57,7 @@ describe("BulletChartColorStrategy", () => {
                     dv,
                 });
 
-                range(expectedColors.length).map(itemIndex => {
+                range(expectedColors.length).map((itemIndex) => {
                     expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColors[itemIndex]);
                 });
             },
@@ -93,7 +93,7 @@ describe("BulletChartColorStrategy", () => {
         ])("should map colors", (colorMapping: IColorMapping[], expectedColors: string[]) => {
             const colorStrategy = getBulletColorStrategy({ dv: AllMeasures, colorMapping });
 
-            range(expectedColors.length).map(itemIndex => {
+            range(expectedColors.length).map((itemIndex) => {
                 expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColors[itemIndex]);
             });
         });

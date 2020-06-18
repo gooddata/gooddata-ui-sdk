@@ -134,7 +134,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         const variants = customizer(baseName, baseProps, this.defaultTags);
 
         variants.forEach(([name, props, tags]) => {
-            this.addScenario(name, props, builder => {
+            this.addScenario(name, props, (builder) => {
                 /*
                  * Customizer MAY specify that particular scenarios should have certain tags.
                  *
@@ -173,7 +173,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     public forTestTypes = (...testTypes: TestTypes[]): ScenarioGroup<T> => {
         const filtered = new ScenarioGroup(this.vis, this.component);
 
-        this.scenarioList.forEach(u => {
+        this.scenarioList.forEach((u) => {
             if (intersection(u.tests, testTypes).length > 0) {
                 filtered.insertScenario(u);
             }
@@ -186,7 +186,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      * Transform scenarios for this component to an inputs for parameterized Jest tests.
      */
     public asTestInput = (): Array<ScenarioTestInput<T>> => {
-        return this.scenarioList.map(scenario => scenario.asTestInput());
+        return this.scenarioList.map((scenario) => scenario.asTestInput());
     };
 
     /**
@@ -194,7 +194,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      * the second is the entire scenario.
      */
     public asScenarioDescAndScenario = (): Array<ScenarioAndDescription<T>> => {
-        return this.scenarioList.map(scenario => [scenario.name, scenario]);
+        return this.scenarioList.map((scenario) => [scenario.name, scenario]);
     };
 
     /**

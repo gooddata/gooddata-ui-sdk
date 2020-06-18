@@ -259,9 +259,9 @@ function getColumnExtremeValue(
     series: ISeriesItem[],
     extremeColumnGetter: (data: number[]) => number,
 ): number[] {
-    const seriesDataPerColumn = zip(...series.filter(isSerieVisible).map(serie => serie.data));
+    const seriesDataPerColumn = zip(...series.filter(isSerieVisible).map((serie) => serie.data));
 
-    const seriesDataYValue = seriesDataPerColumn.map(data => data.map(x => x.y));
+    const seriesDataYValue = seriesDataPerColumn.map((data) => data.map((x) => x.y));
     return seriesDataYValue.map(extremeColumnGetter);
 }
 

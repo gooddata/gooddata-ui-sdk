@@ -42,7 +42,7 @@
         "jest": "^25.1.0",
         "jest-junit": "^3.0.0",
         "node-sass": "^4.13.0",
-        "prettier": "~1.19.1",
+        "prettier": "~2.0.5",
         "raw-loader": "^4.0.1",
         "sass-loader": "^8.0.0",
         "stats-webpack-plugin": "^0.7.0",
@@ -52,7 +52,7 @@
         "testcafe": "^1.8.4",
         "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",
-        "typescript": "3.8.3",
+        "typescript": "3.9.5",
         "webpack": "^4.39.2",
         "webpack-cli": "^3.3.7",
         "webpack-dev-server": "^3.8.0"

@@ -6,11 +6,11 @@ import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { modifyMeasure } from "@gooddata/sdk-model";
 
 const measures = [
-    modifyMeasure(LdmExt.FranchiseFeesAdRoyalty, m => m.localId("franchiseFeesAdRoyaltyIdentifier")),
-    modifyMeasure(LdmExt.FranchiseFeesInitialFranchiseFee, m =>
+    modifyMeasure(LdmExt.FranchiseFeesAdRoyalty, (m) => m.localId("franchiseFeesAdRoyaltyIdentifier")),
+    modifyMeasure(LdmExt.FranchiseFeesInitialFranchiseFee, (m) =>
         m.localId("franchiseFeesInitialFranchiseFeeIdentifier"),
     ),
-    modifyMeasure(LdmExt.FranchiseFeesOngoingRoyalty, m =>
+    modifyMeasure(LdmExt.FranchiseFeesOngoingRoyalty, (m) =>
         m.localId("franchiseFeesIdentifierOngoingRoyalty"),
     ),
 ];

@@ -187,7 +187,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     };
 
     private handleSelectedFilterOptionChange = (selectedFilterOption: DateFilterOption) => {
-        this.setState(state =>
+        this.setState((state) =>
             DateFilter.getStateFromSelectedOption(selectedFilterOption, state.excludeCurrentPeriod),
         );
     };

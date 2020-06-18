@@ -18,35 +18,35 @@ describe("measure factories", () => {
             expect(newMeasure("foo")).toMatchSnapshot();
         });
         it("should return a simple measure with different aggregation", () => {
-            expect(newMeasure("foo", m => m.aggregation("sum"))).toMatchSnapshot();
+            expect(newMeasure("foo", (m) => m.aggregation("sum"))).toMatchSnapshot();
         });
         it("should honor custom-set localId for simple measures with aggregation", () => {
-            expect(newMeasure("foo", m => m.localId("bar").aggregation("sum"))).toMatchSnapshot();
+            expect(newMeasure("foo", (m) => m.localId("bar").aggregation("sum"))).toMatchSnapshot();
         });
         it("should return a measure with alias", () => {
-            expect(newMeasure("foo", m => m.alias("bar"))).toMatchSnapshot();
+            expect(newMeasure("foo", (m) => m.alias("bar"))).toMatchSnapshot();
         });
         it("should return a measure with custom localIdentifier", () => {
-            expect(newMeasure("foo", m => m.localId("custom"))).toMatchSnapshot();
+            expect(newMeasure("foo", (m) => m.localId("custom"))).toMatchSnapshot();
         });
         it("should return a measure with format", () => {
-            expect(newMeasure("foo", m => m.format("bar"))).toMatchSnapshot();
+            expect(newMeasure("foo", (m) => m.format("bar"))).toMatchSnapshot();
         });
         it("should return a measure with title", () => {
-            expect(newMeasure("foo", m => m.title("bar"))).toMatchSnapshot();
+            expect(newMeasure("foo", (m) => m.title("bar"))).toMatchSnapshot();
         });
         it("should return a measure with a filter", () => {
             expect(
-                newMeasure("foo", m => m.filters(newPositiveAttributeFilter("filter", { uris: ["baz"] }))),
+                newMeasure("foo", (m) => m.filters(newPositiveAttributeFilter("filter", { uris: ["baz"] }))),
             ).toMatchSnapshot();
         });
     });
 
     describe("modifyMeasure", () => {
-        const ExistingMeasure = newMeasure("measure1", m => m.localId("measure1"));
+        const ExistingMeasure = newMeasure("measure1", (m) => m.localId("measure1"));
 
         it("should not modify input measure", () => {
-            modifyMeasure(ExistingMeasure, m => m.localId("measure2"));
+            modifyMeasure(ExistingMeasure, (m) => m.localId("measure2"));
 
             expect(measureLocalId(ExistingMeasure)).toEqual("measure1");
         });
@@ -58,36 +58,29 @@ describe("measure factories", () => {
         });
 
         it("should create new measure with modified local id", () => {
-            expect(modifyMeasure(ExistingMeasure, m => m.localId("measure2"))).toMatchSnapshot();
+            expect(modifyMeasure(ExistingMeasure, (m) => m.localId("measure2"))).toMatchSnapshot();
         });
     });
 
     describe("modifySimpleMeasure", () => {
-        const ExistingMeasure = newMeasure("measure1", m => m.localId("measure1"));
-        const ExistingMeasureWithCustomizations = newMeasure("measure1", m =>
-            m
-                .localId("measure1")
-                .alias("alias")
-                .format("format")
-                .title("title"),
+        const ExistingMeasure = newMeasure("measure1", (m) => m.localId("measure1"));
+        const ExistingMeasureWithCustomizations = newMeasure("measure1", (m) =>
+            m.localId("measure1").alias("alias").format("format").title("title"),
         );
 
         it("should create new measure with modified aggregation and same localId", () => {
-            expect(modifySimpleMeasure(ExistingMeasure, m => m.aggregation("min"))).toMatchSnapshot();
+            expect(modifySimpleMeasure(ExistingMeasure, (m) => m.aggregation("min"))).toMatchSnapshot();
         });
 
         it("should create new measure with modified aggregation and custom local id", () => {
             expect(
-                modifySimpleMeasure(ExistingMeasure, m => m.aggregation("min").localId("customLocalId")),
+                modifySimpleMeasure(ExistingMeasure, (m) => m.aggregation("min").localId("customLocalId")),
             ).toMatchSnapshot();
         });
 
         it("should create new measure with cleaned up customizations and same localId", () => {
-            const result = modifySimpleMeasure(ExistingMeasureWithCustomizations, m =>
-                m
-                    .defaultFormat()
-                    .noAlias()
-                    .noTitle(),
+            const result = modifySimpleMeasure(ExistingMeasureWithCustomizations, (m) =>
+                m.defaultFormat().noAlias().noTitle(),
             );
 
             expect(result).toMatchSnapshot();

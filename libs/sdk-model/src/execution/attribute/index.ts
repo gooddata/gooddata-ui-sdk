@@ -68,14 +68,14 @@ export type AttributePredicate = (attribute: IAttribute) => boolean;
  *
  * @public
  */
-export const anyAttribute: AttributePredicate = _ => true;
+export const anyAttribute: AttributePredicate = (_) => true;
 
 /**
  * Factory function for attribute predicate which evaluates true for attributes that match particular ID.
  *
  * @public
  */
-export const idMatchAttribute: (id: string) => AttributePredicate = id => attr =>
+export const idMatchAttribute: (id: string) => AttributePredicate = (id) => (attr) =>
     attr.attribute.localIdentifier === id;
 
 //

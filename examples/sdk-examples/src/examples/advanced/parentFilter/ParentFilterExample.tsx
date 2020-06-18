@@ -69,14 +69,14 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
         if (stateFilterValues.length) {
             visFilters.push(
                 newPositiveAttributeFilter(Ldm.LocationState, {
-                    uris: stateFilterValues.map(filter => filter.value),
+                    uris: stateFilterValues.map((filter) => filter.value),
                 }),
             );
         }
         if (cityFilterValues.length) {
             visFilters.push(
                 newPositiveAttributeFilter(Ldm.LocationCity, {
-                    uris: cityFilterValues.map(filter => filter.value),
+                    uris: cityFilterValues.map((filter) => filter.value),
                 }),
             );
         }
@@ -108,7 +108,7 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
                         return <div>{error}</div>;
                     }
                     const selectOptions = validElements
-                        ? validElements.items.map(item => ({
+                        ? validElements.items.map((item) => ({
                               label: item.title,
                               value: item.uri,
                           }))
@@ -157,7 +157,7 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
         if (stateFilterValues.length) {
             // parent value uris need to be surrounded by '[]' and separated by ','
             const selectedParentItems = stateFilterValues
-                .map(parentItem => `[${parentItem.value}]`)
+                .map((parentItem) => `[${parentItem.value}]`)
                 .join(", ");
 
             const afm = {

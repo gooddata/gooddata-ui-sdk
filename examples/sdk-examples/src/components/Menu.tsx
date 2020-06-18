@@ -13,7 +13,7 @@ interface IMenuProps {
 const CoreMenu: React.FC<IMenuProps> = ({ sideNavigationRoutes = [], routes = [], location }) => {
     const { pathname } = location;
     const href = pathname;
-    const currentRoute = (href !== undefined && routes.find(link => link.path === BASEPATH + href)) || null;
+    const currentRoute = (href !== undefined && routes.find((link) => link.path === BASEPATH + href)) || null;
 
     const navigationElements = sideNavigationRoutes.map(({ path, title, exact = false }) => (
         <li key={path} className={`navListItem${path === currentRoute ? " navListItemActive" : ""}`}>

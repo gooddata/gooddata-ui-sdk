@@ -20,7 +20,7 @@ interface IDynamicMeasuresExampleState {
 }
 
 const getNewMeasureDefinition = (measureItem: any, index: number) => {
-    return newMeasure(measureItem.identifier, m => m.format("#,##0").localId(`m${index}`));
+    return newMeasure(measureItem.identifier, (m) => m.format("#,##0").localId(`m${index}`));
 };
 
 const getMeasureListByTag = async (tag: string) => {
@@ -42,10 +42,10 @@ export const DynamicMeasuresExample: React.FC = () => {
 
     useEffect(() => {
         getMeasureListByTag(LdmExt.franchiseFeesTag)
-            .then(measures => {
+            .then((measures) => {
                 const updatedState = measures.length
                     ? {
-                          measureList: measures.map(entry => ({
+                          measureList: measures.map((entry) => ({
                               ...entry,
                               isSelected: true,
                           })),
@@ -61,7 +61,7 @@ export const DynamicMeasuresExample: React.FC = () => {
 
                 setState(updatedState);
             })
-            .catch(error => {
+            .catch((error) => {
                 setState({
                     measureList: null,
                     error: {
@@ -73,7 +73,7 @@ export const DynamicMeasuresExample: React.FC = () => {
     }, []);
 
     const onMeasureChange = (measureIdentifier: string) => {
-        const updatedMeasure = measureList!.find(measure => measure.identifier === measureIdentifier);
+        const updatedMeasure = measureList!.find((measure) => measure.identifier === measureIdentifier);
         const updatedMeasureIndex = measureList!.indexOf(updatedMeasure);
         const updatedMeasures = [...measureList!];
         updatedMeasures[updatedMeasureIndex] = {
@@ -140,7 +140,7 @@ export const DynamicMeasuresExample: React.FC = () => {
     let content = loadingBlock;
 
     if (measureList) {
-        const selectedMeasures = measureList.filter(measure => measure.isSelected);
+        const selectedMeasures = measureList.filter((measure) => measure.isSelected);
         const measures = selectedMeasures.map(getNewMeasureDefinition);
 
         if (selectedMeasures.length) {

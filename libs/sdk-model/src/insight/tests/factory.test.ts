@@ -11,12 +11,12 @@ describe("insight factory", () => {
     });
 
     it("should create new empty insight with custom title", () => {
-        expect(newInsightDefinition("local:bar", b => b.title("My Insight"))).toMatchSnapshot();
+        expect(newInsightDefinition("local:bar", (b) => b.title("My Insight"))).toMatchSnapshot();
     });
 
     it("should create new empty insight with buckets, filters and sorts", () => {
         expect(
-            newInsightDefinition("local:bar", b => {
+            newInsightDefinition("local:bar", (b) => {
                 return b
                     .buckets([newBucket("test", Won)])
                     .filters([newPositiveAttributeFilter(Department, ["Inside Sales"])])
@@ -27,7 +27,7 @@ describe("insight factory", () => {
 
     it("should create new empty insight with custom properties", () => {
         expect(
-            newInsightDefinition("local:bar", b => b.properties({ controls: { grid: true } })),
+            newInsightDefinition("local:bar", (b) => b.properties({ controls: { grid: true } })),
         ).toMatchSnapshot();
     });
 });

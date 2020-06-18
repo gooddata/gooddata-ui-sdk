@@ -25,7 +25,7 @@ export const immutableSet = (dataSet: any, path: any, newValue: any) =>
     setWith({ ...dataSet }, path, newValue, clone);
 
 export const repeatItemsNTimes = (array: any[], n: number) =>
-    new Array(n).fill(null).reduce(result => [...result, ...array], []);
+    new Array(n).fill(null).reduce((result) => [...result, ...array], []);
 
 export const unEscapeAngleBrackets = (str: string) =>
     str && str.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");

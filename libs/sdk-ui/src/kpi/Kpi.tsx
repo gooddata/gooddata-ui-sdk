@@ -25,7 +25,7 @@ import { InvariantError } from "ts-invariant";
 
 const KpiLoading = () => <LoadingComponent inline={true} />;
 
-const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = props => {
+const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
     const {
         backend,
         workspace,
@@ -110,7 +110,7 @@ const getMeasureFormat = (result: DataViewFacade) => {
 
 const IntlKpi = injectIntl(CoreKpi);
 
-const RenderKpi: React.FC<IKpiProps> = props => {
+const RenderKpi: React.FC<IKpiProps> = (props) => {
     const { locale } = props;
     return (
         <IntlWrapper locale={locale}>

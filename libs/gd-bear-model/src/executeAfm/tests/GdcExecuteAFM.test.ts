@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcExecuteAFM as AFM } from "../GdcExecuteAFM";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 import {
@@ -159,7 +159,7 @@ describe("GdcExecuteAFM", () => {
 
     describe("isAttributeElementsArray", () => {
         const Scenarios: Array<[boolean, string, any]> = [
-            ...InvalidInputTestCases.filter(testCase => testCase[1] !== "array"),
+            ...InvalidInputTestCases.filter((testCase) => testCase[1] !== "array"),
             [true, "empty array", []],
             [false, "attribute elements by ref", attributeElementsByRef],
             [false, "attribute elements by value", valuesElementsByValue],

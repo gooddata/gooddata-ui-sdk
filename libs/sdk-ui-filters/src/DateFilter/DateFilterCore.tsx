@@ -46,7 +46,7 @@ const DropdownBody: React.FC<{
     isMobile?: boolean;
     closeDropdown?: () => void;
     children: (props: { isMobile: boolean; closeDropdown: () => void }) => React.ReactElement<any>;
-}> = props => {
+}> = (props) => {
     return props.children({
         isMobile: props.isMobile,
         closeDropdown: props.closeDropdown,
@@ -65,7 +65,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     return (
         <IntlWrapper locale={locale || "en-US"}>
             <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                {isMobile => {
+                {(isMobile) => {
                     const dateFilterButton = (
                         <DateFilterButtonLocalized
                             isMobile={isMobile}

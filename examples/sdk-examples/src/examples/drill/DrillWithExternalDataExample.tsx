@@ -46,7 +46,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
             name,
             uri,
         };
-        setState(oldState => ({
+        setState((oldState) => ({
             ...oldState,
             location,
             state: null,
@@ -59,7 +59,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
             name,
             uri: `${LdmExt.locationStateAttributeUri}/elements?id=${id}`,
         };
-        setState(oldState => ({
+        setState((oldState) => ({
             ...oldState,
             state,
             location: null,
@@ -67,20 +67,20 @@ export const DrillWithExternalDataExample: React.FC = () => {
     };
 
     const onStateClear = () =>
-        setState(oldState => ({
+        setState((oldState) => ({
             ...oldState,
             state: null,
         }));
 
     const onLocationClear = () =>
-        setState(oldState => ({
+        setState((oldState) => ({
             ...oldState,
             location: null,
         }));
 
     const onEmployeeDrill = (drillTarget: any) => {
         const employee = drillTarget.drillContext.row[0];
-        setState(oldState => ({
+        setState((oldState) => ({
             ...oldState,
             employee,
             employee3rdPartyData: {
@@ -93,15 +93,15 @@ export const DrillWithExternalDataExample: React.FC = () => {
         const firstName = employee.name.split(" ")[0];
 
         fetch(`https://api.genderize.io/?name=${firstName}&country_id=us`)
-            .then(res => res.json())
+            .then((res) => res.json())
             .then(({ gender }) => {
                 return fetch(
                     `https://randomuser.me/api/?nat=us&inc=dob,cell,registered,location&gender=${gender}&seed=gooddata-${employee.id}`,
                 )
-                    .then(res => res.json())
+                    .then((res) => res.json())
                     .then(
                         ({ results }) => {
-                            setState(oldState => ({
+                            setState((oldState) => ({
                                 ...oldState,
                                 employee3rdPartyData: {
                                     isLoading: false,
@@ -114,8 +114,8 @@ export const DrillWithExternalDataExample: React.FC = () => {
                                 },
                             }));
                         },
-                        error => {
-                            setState(oldState => ({
+                        (error) => {
+                            setState((oldState) => ({
                                 ...oldState,
                                 employee3rdPartyData: {
                                     error,

@@ -64,7 +64,7 @@ describe("agGridApiWrapper", () => {
     }
 
     async function renderGridReady() {
-        return new Promise<GridApi>(resolve => {
+        return new Promise<GridApi>((resolve) => {
             const onGridReady = (params: GridReadyEvent) => {
                 params.api.setPinnedTopRowData([{ [firstAttributeColumnId]: firstAttributePinnedTopValue }]);
             };

@@ -71,7 +71,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
     ): Promise<IElementQueryResult> {
         const mergedOptions = { ...options, limit, offset };
         const objectId = await this.getObjectId();
-        const data = await this.authCall(sdk =>
+        const data = await this.authCall((sdk) =>
             sdk.md.getValidElements(this.workspace, objectId, mergedOptions),
         );
 

@@ -31,14 +31,14 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
 
     public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
         const displayFormUri = await objRefToUri(ref, this.workspace, this.authCall);
-        const wrappedDisplayForm: GdcMetadata.IWrappedAttributeDisplayForm = await this.authCall(sdk =>
+        const wrappedDisplayForm: GdcMetadata.IWrappedAttributeDisplayForm = await this.authCall((sdk) =>
             sdk.md.getObjectDetails(displayFormUri),
         );
         const displayFormDetails = wrappedDisplayForm.attributeDisplayForm;
 
         const attrRef = uriRef(displayFormDetails.content.formOf);
 
-        return newAttributeDisplayFormMetadataObject(ref, df =>
+        return newAttributeDisplayFormMetadataObject(ref, (df) =>
             df
                 .attribute(attrRef)
                 .title(displayFormDetails.meta.title)
@@ -50,24 +50,19 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
 
     public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
         const attributeUri = await objRefToUri(ref, this.workspace, this.authCall);
-        const wrappedAttribute: GdcMetadata.IWrappedAttribute = await this.authCall(sdk =>
+        const wrappedAttribute: GdcMetadata.IWrappedAttribute = await this.authCall((sdk) =>
             sdk.md.getObjectDetails(attributeUri),
         );
         const { title, uri, isProduction, identifier, summary } = wrappedAttribute.attribute.meta;
 
-        return newAttributeMetadataObject(ref, a =>
-            a
-                .title(title)
-                .uri(uri)
-                .production(Boolean(isProduction))
-                .id(identifier)
-                .description(summary),
+        return newAttributeMetadataObject(ref, (a) =>
+            a.title(title).uri(uri).production(Boolean(isProduction)).id(identifier).description(summary),
         );
     };
 
     public async getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
-        const metricMetadata = await this.authCall(sdk =>
+        const metricMetadata = await this.authCall((sdk) =>
             sdk.xhr.getParsed<GdcMetadataObject.WrappedObject>(uri),
         );
 
@@ -81,10 +76,10 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         const expressionIdentifiers = getTokenValuesOfType("identifier", expressionTokens);
         const expressionUris = getTokenValuesOfType("uri", expressionTokens);
         const expressionElementUris = getTokenValuesOfType("element_uri", expressionTokens);
-        const expressionIdentifierUrisPairs = await this.authCall(sdk =>
+        const expressionIdentifierUrisPairs = await this.authCall((sdk) =>
             sdk.md.getUrisFromIdentifiers(this.workspace, expressionIdentifiers),
         );
-        const expressionIdentifierUris = expressionIdentifierUrisPairs.map(pair => pair.uri);
+        const expressionIdentifierUris = expressionIdentifierUrisPairs.map((pair) => pair.uri);
         const allExpressionElementAttributeUris = flow(
             map(replace(/\/elements\?id=.*/, "")),
             uniq,
@@ -94,7 +89,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
             ...expressionIdentifierUris,
             ...allExpressionElementAttributeUris,
         ]);
-        const allExpressionWrappedObjects = await this.authCall(sdk =>
+        const allExpressionWrappedObjects = await this.authCall((sdk) =>
             sdk.md.getObjects<SupportedWrappedMetadataObject>(this.workspace, allExpressionUris),
         );
         const allExpressionObjects = allExpressionWrappedObjects.map(
@@ -102,8 +97,8 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         ) as SupportedMetadataObject[];
 
         const allExpressionAttributeElements = await Promise.all(
-            expressionElementUris.map(elementUri =>
-                this.authCall(sdk => sdk.md.getAttributeElementDefaultDisplayFormValue(elementUri)),
+            expressionElementUris.map((elementUri) =>
+                this.authCall((sdk) => sdk.md.getAttributeElementDefaultDisplayFormValue(elementUri)),
             ),
         );
 
@@ -180,7 +175,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const objectId = getObjectIdFromUri(uri);
 
-        return this.authCall(async sdk => {
+        return this.authCall(async (sdk) => {
             const usedBy = await sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
                 `/gdc/md/${this.workspace}/usedby2/${objectId}?types=dataSet`,
             );

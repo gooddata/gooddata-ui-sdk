@@ -16,10 +16,10 @@ export class BearWorkspaceUsersQuery implements IWorkspaceUsersQuery {
 
     public async queryAll(): Promise<IWorkspaceUser[]> {
         const { search } = this.options;
-        return this.authCall(sdk =>
+        return this.authCall((sdk) =>
             sdk.project
                 .getUserList(this.workspace, { prefixSearch: search, userState: "ACTIVE" })
-                .then(users => users.map(convertWorkspaceUser)),
+                .then((users) => users.map(convertWorkspaceUser)),
         );
     }
 }

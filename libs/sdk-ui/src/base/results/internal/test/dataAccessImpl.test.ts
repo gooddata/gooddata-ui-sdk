@@ -33,7 +33,7 @@ describe("DataAccessMethods", () => {
             const firstSeriesRawData = firstSeries.rawData();
             const firstSeriesDataPoints = Array.from(firstSeries);
 
-            expect(firstSeriesDataPoints.map(dp => dp.rawValue)).toEqual(firstSeriesRawData);
+            expect(firstSeriesDataPoints.map((dp) => dp.rawValue)).toEqual(firstSeriesRawData);
         });
 
         it("should return empty slices", () => {
@@ -70,7 +70,7 @@ describe("DataAccessMethods", () => {
 
             for (const s of series) {
                 const rawData = s.rawData();
-                const dataPoints = Array.from(s).map(dp => dp.rawValue);
+                const dataPoints = Array.from(s).map((dp) => dp.rawValue);
 
                 expect(rawData.length).toEqual(1);
                 expect(dataPoints).toEqual(rawData);
@@ -125,7 +125,7 @@ describe("DataAccessMethods", () => {
 
                 expect(dataPoints.length).toEqual(1);
                 expect(dataPoints[0].sliceDesc).not.toBeDefined();
-                expect(dataPoints.map(dp => dp.rawValue)).toEqual(rawData);
+                expect(dataPoints.map((dp) => dp.rawValue)).toEqual(rawData);
             }
         });
 
@@ -165,10 +165,10 @@ describe("DataAccessMethods", () => {
                 const rawData = s.rawData();
 
                 expect(dataPoints.length).toEqual(6);
-                expect(dataPoints.map(dp => dp.rawValue)).toEqual(rawData);
+                expect(dataPoints.map((dp) => dp.rawValue)).toEqual(rawData);
                 expect({
                     series: `${s.scopeTitles().join(" > ")} > ${s.measureTitle()}`,
-                    slices: dataPoints.map(slice => slice.sliceDesc!.sliceTitles()).join("|"),
+                    slices: dataPoints.map((slice) => slice.sliceDesc!.sliceTitles()).join("|"),
                     rawData,
                 }).toMatchSnapshot();
             }
@@ -203,10 +203,10 @@ describe("DataAccessMethods", () => {
                 const rawData = s.rawData();
 
                 expect(dataPoints.length).toEqual(30);
-                expect(dataPoints.map(dp => dp.rawValue)).toEqual(rawData);
+                expect(dataPoints.map((dp) => dp.rawValue)).toEqual(rawData);
                 expect({
                     series: `${s.scopeTitles().join(" > ")} > ${s.measureTitle()}`,
-                    slices: dataPoints.map(slice => slice.sliceDesc!.sliceTitles()).join("|"),
+                    slices: dataPoints.map((slice) => slice.sliceDesc!.sliceTitles()).join("|"),
                     rawData,
                 }).toMatchSnapshot();
             }

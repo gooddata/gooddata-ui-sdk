@@ -25,12 +25,9 @@ export async function promptPassword(): Promise<string> {
 }
 
 export async function promptProjectId(): Promise<string> {
-    const projects = await getBackend()
-        .workspaces()
-        .forCurrentUser()
-        .query();
+    const projects = await getBackend().workspaces().forCurrentUser().query();
 
-    const projectChoices = projects.items.map(project => ({
+    const projectChoices = projects.items.map((project) => ({
         name: project.title,
         value: project.id,
     }));

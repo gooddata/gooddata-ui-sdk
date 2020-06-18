@@ -25,7 +25,7 @@ export const dummyInsight: IInsightDefinition = {
         buckets: [
             {
                 localIdentifier: "attribute",
-                items: [newAttribute("attr1", a => a.localId("a1"))],
+                items: [newAttribute("attr1", (a) => a.localId("a1"))],
             },
         ],
         filters: [],

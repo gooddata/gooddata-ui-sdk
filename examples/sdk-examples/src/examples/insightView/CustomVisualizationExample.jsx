@@ -57,7 +57,7 @@ export class CustominsightView extends Component {
 
         const measures = get(executionResult, "headerItems[0][0]");
 
-        const bars = range(measures.length).map(barIndex => {
+        const bars = range(measures.length).map((barIndex) => {
             return (
                 <Bar
                     key={barIndex}
@@ -75,7 +75,7 @@ export class CustominsightView extends Component {
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="label" />
-                        <YAxis domain={[0, dataMax => dataMax * 1.1]} />
+                        <YAxis domain={[0, (dataMax) => dataMax * 1.1]} />
                         <Legend />
                         {bars}
                     </BarChart>
@@ -98,8 +98,8 @@ export class CustominsightView extends Component {
     }
 }
 
-const CustomBaseChart = props => {
-    return <BaseChart {...props} insightViewComponent={visProps => <CustominsightView {...visProps} />} />;
+const CustomBaseChart = (props) => {
+    return <BaseChart {...props} insightViewComponent={(visProps) => <CustominsightView {...visProps} />} />;
 };
 
 export class CustominsightViewExample extends Component {

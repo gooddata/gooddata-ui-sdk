@@ -10,7 +10,7 @@ export class BearWorkspacePermissionsFactory implements IWorkspacePermissionsFac
     constructor(public readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public async forCurrentUser(): Promise<IWorkspaceUserPermissions> {
-        const bootstrapResource = await this.authCall(sdk =>
+        const bootstrapResource = await this.authCall((sdk) =>
             sdk.user.getBootstrapResource({ projectId: this.workspace }),
         );
         const permissions = convertPermissions(

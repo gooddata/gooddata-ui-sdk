@@ -17,22 +17,22 @@ const Size = ExamplesLdm.Population.Sum;
 const LocationBucket = newBucket(BucketNames.LOCATION, Location);
 const SizeBucket = newBucket(BucketNames.SIZE, Size);
 
-const InsightWithoutLocation: IInsightDefinition = newInsightDefinition("local:pushpin", m =>
+const InsightWithoutLocation: IInsightDefinition = newInsightDefinition("local:pushpin", (m) =>
     m.buckets([SizeBucket]),
 );
-const InsightForClustering: IInsightDefinition = newInsightDefinition("local:pushpin", m =>
+const InsightForClustering: IInsightDefinition = newInsightDefinition("local:pushpin", (m) =>
     m.buckets([LocationBucket, newBucket(BucketNames.SIZE)]),
 );
-const InsightWithLocationAndSize: IInsightDefinition = newInsightDefinition("local:pushpin", m =>
+const InsightWithLocationAndSize: IInsightDefinition = newInsightDefinition("local:pushpin", (m) =>
     m.buckets([LocationBucket, SizeBucket]),
 );
 
-const DefaultInsight: IInsightDefinition = newInsightDefinition("local:pushpin", m => {
+const DefaultInsight: IInsightDefinition = newInsightDefinition("local:pushpin", (m) => {
     return m.buckets([
         LocationBucket,
         newBucket(
             BucketNames.SIZE,
-            modifyMeasure(ExamplesLdm.Density.Sum, m => m.alias("Density").format("#,##0.00")),
+            modifyMeasure(ExamplesLdm.Density.Sum, (m) => m.alias("Density").format("#,##0.00")),
         ),
     ]);
 });

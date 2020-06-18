@@ -352,7 +352,7 @@ export class DataAccessImpl {
              * Need to extract data from particular columns of two-dim data. Go through all rows, from
              * each row take value at the desired column's index.
              */
-            return (this.dataView.data as DataValue[][]).map(row => {
+            return (this.dataView.data as DataValue[][]).map((row) => {
                 return row[idx];
             });
         } else {
@@ -416,7 +416,7 @@ export class DataAccessImpl {
         } = seriesDigest;
 
         const measureHeader = measureHeaders[seriesIdx];
-        const attributeHeaders = allAttributeHeaders.map(headers => headers[seriesIdx]);
+        const attributeHeaders = allAttributeHeaders.map((headers) => headers[seriesIdx]);
         const measureDescriptor = fromMeasures[measureHeader.measureHeaderItem.order];
         const measureDefinition = fromMeasuresDef[measureHeader.measureHeaderItem.order];
         const { headerTranslator } = this.config;
@@ -440,7 +440,7 @@ export class DataAccessImpl {
                     return attributeHeaders.map(resultHeaderName);
                 }
 
-                return attributeHeaders.map(h => headerTranslator(resultHeaderName(h)));
+                return attributeHeaders.map((h) => headerTranslator(resultHeaderName(h)));
             },
         };
     };
@@ -458,7 +458,7 @@ export class DataAccessImpl {
 
         let total: boolean = false;
 
-        headerItems.forEach(h => {
+        headerItems.forEach((h) => {
             const header: IResultAttributeHeader | IResultTotalHeader = h[sliceIdx] as any;
 
             headers.push(header);
@@ -479,7 +479,7 @@ export class DataAccessImpl {
                     return headers.map(resultHeaderName);
                 }
 
-                return headers.map(h => headerTranslator(resultHeaderName(h)));
+                return headers.map((h) => headerTranslator(resultHeaderName(h)));
             },
         };
     };

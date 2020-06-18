@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { has } from "lodash";
 
 const NonAlphaNumRegex = /[^\w\d$]+/g;
@@ -21,8 +21,8 @@ function titleToVariableName(title: string): string {
      */
     const variableName = onlyAlphaNumWithSpaces
         .split(" ")
-        .filter(s => s.length > 0)
-        .map(s => s.charAt(0).toLocaleUpperCase() + s.substr(1))
+        .filter((s) => s.length > 0)
+        .map((s) => s.charAt(0).toLocaleUpperCase() + s.substr(1))
         .join("");
 
     if (!variableName.length) {

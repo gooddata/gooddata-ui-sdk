@@ -38,7 +38,7 @@ describe("getPushpinColors", () => {
         const { dv, geoData } = RecShortcuts.LocationAndColor_Small;
         const colorStrategy: IColorStrategy = getColorStrategy(DefaultColorPalette, [], geoData, dv);
 
-        const sameColorValues = geoData.color!.data.map(_ => 10);
+        const sameColorValues = geoData.color!.data.map((_) => 10);
 
         expect(getPushpinColors(sameColorValues, undefined, colorStrategy)).toEqual([
             { background: "rgba(20,178,226,0.7)", border: "rgb(233,237,241)" },

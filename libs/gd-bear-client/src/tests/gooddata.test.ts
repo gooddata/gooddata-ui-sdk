@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { factory } from "../gooddata";
@@ -17,15 +17,15 @@ describe("factory", () => {
 
         const sdk = createSDK();
 
-        modules.forEach(m => expect(sdk).toHaveProperty(m));
+        modules.forEach((m) => expect(sdk).toHaveProperty(m));
 
         return sdk.xhr
             .ajax("/some/url")
-            .then(response => {
+            .then((response) => {
                 expect(response.response.status).toBe(200);
                 return response.responseBody;
             })
-            .then(body => {
+            .then((body) => {
                 expect(body).toBe("hello");
             });
     });
@@ -55,14 +55,14 @@ describe("factory", () => {
         return Promise.all([
             sdkStg3.xhr
                 .ajax("/some/url")
-                .then(r => r.responseBody)
-                .then(body => {
+                .then((r) => r.responseBody)
+                .then((body) => {
                     expect(body).toEqual("hello from stg3");
                 }),
             sdkStg2.xhr
                 .ajax("/some/url")
-                .then(r => r.responseBody)
-                .then(body => {
+                .then((r) => r.responseBody)
+                .then((body) => {
                     expect(body).toEqual("hello from stg2");
                 }),
         ]);

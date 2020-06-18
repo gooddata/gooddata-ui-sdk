@@ -66,15 +66,15 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
     });
 
     const onExportReady = (exportFunction: IExportFunction) =>
-        setState(oldState => ({ ...oldState, exportFunction }));
+        setState((oldState) => ({ ...oldState, exportFunction }));
 
-    const exportToCSV = () => setState(oldState => ({ ...oldState, exportConfig: {} }));
-    const exportToXLSX = () => setState(oldState => ({ ...oldState, exportConfig: { format: "xlsx" } }));
+    const exportToCSV = () => setState((oldState) => ({ ...oldState, exportConfig: {} }));
+    const exportToXLSX = () => setState((oldState) => ({ ...oldState, exportConfig: { format: "xlsx" } }));
     const exportWithCustomName = () =>
-        setState(oldState => ({ ...oldState, exportConfig: { title: "CustomName" } }));
+        setState((oldState) => ({ ...oldState, exportConfig: { title: "CustomName" } }));
 
-    const openExportDialog = () => setState(oldState => ({ ...oldState, showExportDialog: true }));
-    const cancelExportDialog = () => setState(oldState => ({ ...oldState, showExportDialog: false }));
+    const openExportDialog = () => setState((oldState) => ({ ...oldState, showExportDialog: true }));
+    const cancelExportDialog = () => setState((oldState) => ({ ...oldState, showExportDialog: false }));
     const submitExportDialog = ({ mergeHeaders, includeFilterContext }: IExportDialogData) => {
         const exportConfig: IExtendedExportConfig = {
             format: "xlsx",
@@ -85,7 +85,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
             // TODO: RAIL-2260 Make exports work
             // exportConfig.showFilters = filters;
         }
-        setState(oldState => ({ ...oldState, showExportDialog: false, exportConfig }));
+        setState((oldState) => ({ ...oldState, showExportDialog: false, exportConfig }));
     };
 
     useEffect(() => {
@@ -103,18 +103,18 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
         };
 
         if (exportFunction && exportConfig) {
-            setState(oldState => ({ ...oldState, exporting: true }));
+            setState((oldState) => ({ ...oldState, exporting: true }));
             getExportUri()
-                .then(uri =>
-                    setState(oldState => ({
+                .then((uri) =>
+                    setState((oldState) => ({
                         ...oldState,
                         errorMessage: undefined,
                         downloadUri: uri,
                         exporting: false,
                     })),
                 )
-                .catch(errorMessage =>
-                    setState(oldState => ({
+                .catch((errorMessage) =>
+                    setState((oldState) => ({
                         ...oldState,
                         errorMessage,
                         downloadUri: undefined,
@@ -128,7 +128,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
         if (downloadUri) {
             downloadFile(downloadUri);
 
-            setState(oldState => ({
+            setState((oldState) => ({
                 ...oldState,
                 downloadUri: undefined,
             }));

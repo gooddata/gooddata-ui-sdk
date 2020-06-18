@@ -18,7 +18,7 @@ export async function loadInsights(_projectId: string, tigerClient: ITigerClient
 
     const tagsMap = createTagMap(result.data.included);
 
-    return result.data.data.map(vis => {
+    return result.data.data.map((vis) => {
         const tags = convertTags(vis.relationships, tagsMap);
 
         return {

@@ -73,11 +73,11 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const { includeTags = [] } = this.options;
         const tagsIdentifiers = await this.objRefsToIdentifiers(includeTags);
 
-        return this.authCall(sdk => loadAttributesAndDateDatasets(sdk, tagsIdentifiers));
+        return this.authCall((sdk) => loadAttributesAndDateDatasets(sdk, tagsIdentifiers));
     };
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {
-        const measures = await this.authCall(sdk =>
+        const measures = await this.authCall((sdk) =>
             sdk.metadata.metricsGet({
                 contentType: "application/json",
             }),
@@ -90,7 +90,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const { includeTags = [] } = this.options;
         const tagsIdentifiers = await this.objRefsToIdentifiers(includeTags);
 
-        const facts = await this.authCall(sdk =>
+        const facts = await this.authCall((sdk) =>
             sdk.metadata.factsGet(
                 {
                     contentType: "application/json",
@@ -106,7 +106,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadGroups = async () => {
-        const groups = await this.authCall(sdk =>
+        const groups = await this.authCall((sdk) =>
             sdk.metadata.tagsGet({
                 contentType: "application/json",
             }),
@@ -116,6 +116,6 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private objRefsToIdentifiers = async (objRefs: ObjRef[]) => {
-        return Promise.all(objRefs.map(ref => objRefToIdentifier(ref, this.authCall)));
+        return Promise.all(objRefs.map((ref) => objRefToIdentifier(ref, this.authCall)));
     };
 }

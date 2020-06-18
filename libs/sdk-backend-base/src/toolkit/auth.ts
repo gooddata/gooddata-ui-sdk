@@ -84,13 +84,13 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
 
         this.inflightRequest = this.realProvider
             .authenticate(context)
-            .then(res => {
+            .then((res) => {
                 this.principal = res;
                 this.inflightRequest = undefined;
 
                 return res;
             })
-            .catch(err => {
+            .catch((err) => {
                 this.inflightRequest = undefined;
 
                 throw err;

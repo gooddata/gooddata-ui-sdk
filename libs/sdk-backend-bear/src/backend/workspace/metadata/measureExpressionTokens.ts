@@ -23,7 +23,7 @@ const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
 export const getTokenValuesOfType = (tokenType: ExpressionTokenType, tokens: IExpressionToken[]) =>
     flow(
         filter((token: IExpressionToken) => token.type === tokenType),
-        map(token => token.value),
+        map((token) => token.value),
         uniq,
     )(tokens);
 
@@ -50,7 +50,7 @@ export const tokenizeExpression = (expression: string): IExpressionToken[] => {
         }
     }
 
-    return tokens.map(token => ({
+    return tokens.map((token) => ({
         ...token,
         value: token.value.replace(REMOVE_BRACKETS_REGEXP, ""),
     }));

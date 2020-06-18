@@ -52,7 +52,7 @@ describe("convertDrillableItemsToPredicates", () => {
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
         expect(drillablePredicates).toHaveLength(drillableItems.length);
-        drillablePredicates.forEach(predicate => {
+        drillablePredicates.forEach((predicate) => {
             expect(typeof predicate).toBe("function");
             expect(typeof predicate(measureDescriptors.uriBasedMeasure, context)).toBe("boolean");
         });
@@ -69,7 +69,7 @@ describe("convertDrillableItemsToPredicates", () => {
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
         expect(drillablePredicates).toHaveLength(drillableItems.length);
-        drillablePredicates.forEach(predicate => {
+        drillablePredicates.forEach((predicate) => {
             expect(typeof predicate).toBe("function");
             expect(typeof predicate(measureDescriptors.uriBasedMeasure, context)).toBe("boolean");
         });
@@ -98,7 +98,7 @@ describe("convertDrillableItemsToPredicates", () => {
         ];
 
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
-        drillablePredicates.forEach(predicate => {
+        drillablePredicates.forEach((predicate) => {
             expect(predicate(measureDescriptors.uriBasedMeasure, context)).toEqual(true);
         });
     });

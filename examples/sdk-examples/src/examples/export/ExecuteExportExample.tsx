@@ -12,7 +12,7 @@ const filters = [newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, "2017-01-01
 export const ExecuteExportExample: React.FC = () => {
     return (
         <ExampleWithExport filters={filters}>
-            {onExportReady => {
+            {(onExportReady) => {
                 return (
                     <div>
                         <Execute seriesBy={[primaryMeasure]} onExportReady={onExportReady} filters={filters}>
@@ -35,10 +35,7 @@ export const ExecuteExportExample: React.FC = () => {
                                     );
                                 }
 
-                                const measureSeries = result
-                                    .data()
-                                    .series()
-                                    .firstForMeasure(primaryMeasure);
+                                const measureSeries = result.data().series().firstForMeasure(primaryMeasure);
 
                                 return (
                                     <div>

@@ -257,7 +257,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             buckets.push(
                 newBucket(
                     BucketNames.TOOLTIP_TEXT,
-                    newAttribute(ref, m => m.localId("tooltipText_df")),
+                    newAttribute(ref, (m) => m.localId("tooltipText_df")),
                 ),
             );
         }

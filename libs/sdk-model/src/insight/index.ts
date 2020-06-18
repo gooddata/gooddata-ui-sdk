@@ -355,7 +355,7 @@ export function insightSorts(insight: IInsightDefinition): ISortItem[] {
         return intersection(arr1, arr2).length === arr2.length;
     }
 
-    return insight.insight.sorts.filter(s => {
+    return insight.insight.sorts.filter((s) => {
         const entities: SortEntityIds = sortEntityIds(s);
 
         return (

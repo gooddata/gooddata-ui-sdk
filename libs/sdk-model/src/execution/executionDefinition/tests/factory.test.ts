@@ -80,14 +80,14 @@ describe("newDefForBuckets", () => {
 
 describe("newDefForInsight", () => {
     const EmptyInsight = newInsight(VisClassId);
-    const InsightWithJustBuckets = newInsight(VisClassId, m => m.buckets([MixedBucket]));
-    const InsightWithBucketsAndFilters = newInsight(VisClassId, m =>
+    const InsightWithJustBuckets = newInsight(VisClassId, (m) => m.buckets([MixedBucket]));
+    const InsightWithBucketsAndFilters = newInsight(VisClassId, (m) =>
         m.buckets([MixedBucket]).filters([PositiveFilter]),
     );
-    const InsightWithBucketsAndMeasureValueFilter = newInsight(VisClassId, m =>
+    const InsightWithBucketsAndMeasureValueFilter = newInsight(VisClassId, (m) =>
         m.buckets([MixedBucket]).filters([MeasureValueFilter]),
     );
-    const InsightWithSorts = newInsight(VisClassId, m => m.buckets([MixedBucket]).sorts([AttributeSort]));
+    const InsightWithSorts = newInsight(VisClassId, (m) => m.buckets([MixedBucket]).sorts([AttributeSort]));
 
     const Scenarios: Array<[string, any, any]> = [
         ["empty def if empty insight", EmptyInsight, undefined],

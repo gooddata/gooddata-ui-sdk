@@ -58,7 +58,7 @@ export function updateContent(
                 return uriTranslator(uri);
             }),
         },
-        value => {
+        (value) => {
             const uri = value.uri;
             if (!uri) {
                 return;
@@ -141,11 +141,11 @@ export class MetadataModuleExt {
             return duplicateDashboardUri;
         } catch (err) {
             if (this.shouldCopyVisObj(options)) {
-                await Promise.all(visWidgetUris.map(uri => this.cascadingDelete(projectId, uri)));
+                await Promise.all(visWidgetUris.map((uri) => this.cascadingDelete(projectId, uri)));
             } else {
-                await Promise.all(visWidgetUris.map(uri => this.metadataModule.deleteObject(uri)));
+                await Promise.all(visWidgetUris.map((uri) => this.metadataModule.deleteObject(uri)));
             }
-            await Promise.all(allCreatedObjUris.map(uri => this.cascadingDelete(projectId, uri)));
+            await Promise.all(allCreatedObjUris.map((uri) => this.cascadingDelete(projectId, uri)));
             return dashboardUri;
         }
     }

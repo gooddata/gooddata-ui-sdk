@@ -6,7 +6,7 @@ import { ExecuteAFM, VisualizationObject } from "@gooddata/gd-tiger-client";
 import { toObjRef } from "./afm/ObjRefConverter";
 
 const cloneWithSanitizedIds = (item: any) =>
-    cloneDeepWith(item, value => {
+    cloneDeepWith(item, (value) => {
         if (ExecuteAFM.isObjIdentifierQualifier(value)) {
             return toObjRef(value);
         }

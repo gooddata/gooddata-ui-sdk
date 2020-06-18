@@ -32,7 +32,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
     public getVisualizationClass = async (ref: ObjRef): Promise<IVisualizationClass> => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const visClassResult = await this.authCall(
-            sdk => sdk.md.getObjects(this.workspace, [uri]) as Promise<any>,
+            (sdk) => sdk.md.getObjects(this.workspace, [uri]) as Promise<any>,
         );
 
         return convertVisualizationClass(visClassResult[0]);
@@ -40,7 +40,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
 
     public getVisualizationClasses = async (): Promise<IVisualizationClass[]> => {
         const visualizationClassesResult: GdcVisualizationClass.IVisualizationClassWrapped[] = await this.authCall(
-            sdk =>
+            (sdk) =>
                 sdk.md.getObjectsByQuery(this.workspace, {
                     category: "visualizationClass",
                 }),
@@ -61,9 +61,9 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
 
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
-        const visualization = await this.authCall(sdk => sdk.md.getVisualization(uri));
+        const visualization = await this.authCall((sdk) => sdk.md.getVisualization(uri));
 
-        const visClassResult: any[] = await this.authCall(sdk =>
+        const visClassResult: any[] = await this.authCall((sdk) =>
             sdk.md.getObjects(this.workspace, [
                 visualization.visualizationObject.content.visualizationClass.uri,
             ]),
@@ -80,7 +80,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
         const {
             items: visualizations,
             paging: { count, offset, totalCount },
-        } = await this.authCall(sdk =>
+        } = await this.authCall((sdk) =>
             sdk.md.getObjectsByQueryWithPaging<GdcVisualizationObject.IVisualization>(this.workspace, {
                 category: "visualizationObject",
                 ...mergedOptions,
@@ -100,7 +100,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
             };
         }, {});
 
-        const insights = visualizations.map(visualization =>
+        const insights = visualizations.map((visualization) =>
             convertVisualization(
                 visualization,
                 visualizationClassUrlByVisualizationClassUri[
@@ -133,7 +133,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         const withConvertedVisClass = await this.getInsightWithConvertedVisClass(insight);
 
-        const mdObject = await this.authCall(sdk =>
+        const mdObject = await this.authCall((sdk) =>
             sdk.md.saveVisualization(this.workspace, {
                 visualizationObject: convertInsightDefinition(withConvertedVisClass),
             }),
@@ -144,11 +144,11 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
         const id = insightId(insight);
-        const uri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
+        const uri = await this.authCall((sdk) => sdk.md.getObjectUri(this.workspace, id));
 
         const withConvertedVisClass = await this.getInsightWithConvertedVisClass(insight);
 
-        await this.authCall(sdk =>
+        await this.authCall((sdk) =>
             sdk.md.updateVisualization(this.workspace, uri, {
                 visualizationObject: convertInsight(withConvertedVisClass),
             }),
@@ -159,12 +159,12 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
 
     public deleteInsight = async (ref: ObjRef): Promise<void> => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
-        await this.authCall(sdk => sdk.md.deleteVisualization(uri));
+        await this.authCall((sdk) => sdk.md.deleteVisualization(uri));
     };
 
     public openInsightAsReport = async (insight: IInsightDefinition): Promise<string> => {
         const visualizationObject = convertInsightDefinition(insight);
-        return this.authCall(sdk =>
+        return this.authCall((sdk) =>
             sdk.md.openVisualizationAsReport(this.workspace, { visualizationObject }),
         );
     };
@@ -178,7 +178,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
 
     private getVisualizationClassByUrl = async (url: string): Promise<IVisualizationClass | undefined> => {
         const allVisClasses = await this.getVisualizationClasses();
-        return allVisClasses.find(visClass => visClass.visualizationClass.url === url);
+        return allVisClasses.find((visClass) => visClass.visualizationClass.url === url);
     };
 
     private async getInsightWithConvertedVisClass<T extends IInsight | IInsightDefinition>(

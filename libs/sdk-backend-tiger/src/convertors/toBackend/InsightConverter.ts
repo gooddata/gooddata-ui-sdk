@@ -6,7 +6,7 @@ import { VisualizationObject } from "@gooddata/gd-tiger-client";
 import { toObjQualifier } from "./ObjRefConverter";
 
 const cloneWithSanitizedIds = (item: any) =>
-    cloneDeepWith(item, value => {
+    cloneDeepWith(item, (value) => {
         if (isIdentifierRef(value)) {
             return toObjQualifier(value);
         }

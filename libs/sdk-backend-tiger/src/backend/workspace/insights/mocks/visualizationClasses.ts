@@ -185,5 +185,5 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
             },
         },
     ],
-    cls => cls.visualizationClass.orderIndex,
+    (cls) => cls.visualizationClass.orderIndex,
 );

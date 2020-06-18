@@ -5,7 +5,7 @@ import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newPopMeasure } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 
-const totalSalesYearAgo = newPopMeasure(Ldm.$TotalSales, LdmExt.yearDateDataSetAttributeIdentifier, m =>
+const totalSalesYearAgo = newPopMeasure(Ldm.$TotalSales, LdmExt.yearDateDataSetAttributeIdentifier, (m) =>
     m.alias("$ Total Sales - SP year ago"),
 );
 

@@ -62,7 +62,9 @@ export class DateRangePickerComponent extends React.Component<IDateRangePickerPr
                 )}
                 placeholder={intl.formatMessage({ id: "filters.from" })}
                 // tslint:disable-next-line:jsx-no-lambda
-                onChange={event => this.handleFromChange(convertPlatformDateStringToDate(event.target.value))}
+                onChange={(event) =>
+                    this.handleFromChange(convertPlatformDateStringToDate(event.target.value))
+                }
                 value={convertDateToPlatformDateString(from)}
             />
         ) : (
@@ -93,7 +95,7 @@ export class DateRangePickerComponent extends React.Component<IDateRangePickerPr
                 )}
                 placeholder={intl.formatMessage({ id: "filters.to" })}
                 // tslint:disable-next-line:jsx-no-lambda
-                onChange={event => this.handleToChange(convertPlatformDateStringToDate(event.target.value))}
+                onChange={(event) => this.handleToChange(convertPlatformDateStringToDate(event.target.value))}
                 value={convertDateToPlatformDateString(to)}
             />
         ) : (

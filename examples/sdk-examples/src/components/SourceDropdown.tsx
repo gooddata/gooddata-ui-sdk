@@ -20,11 +20,11 @@ export class SourceDropdown extends React.Component<ISourceDropdownProps, ISourc
     }
 
     public toggle = () => {
-        this.setState(state => ({ ...state, hidden: !state.hidden }));
+        this.setState((state) => ({ ...state, hidden: !state.hidden }));
     };
 
     public toggleTSJS = () => {
-        this.setState(state => ({ ...state, viewJS: !state.viewJS }));
+        this.setState((state) => ({ ...state, viewJS: !state.viewJS }));
     };
 
     public render() {

@@ -19,18 +19,12 @@ export default class MeasureValueFilterFragment {
     public isOperatorDropdownOpen = () => this.component.find(CLASS_OPERATOR_DROPDOWN_BODY).exists();
 
     public clickApply = () => {
-        this.component
-            .find(CLASS_APPLY_BUTTON)
-            .hostNodes()
-            .simulate("click");
+        this.component.find(CLASS_APPLY_BUTTON).hostNodes().simulate("click");
         return this;
     };
 
     public clickCancel = () => {
-        this.component
-            .find(CLASS_CANCEL_BUTTON)
-            .hostNodes()
-            .simulate("click");
+        this.component.find(CLASS_CANCEL_BUTTON).hostNodes().simulate("click");
         return this;
     };
 
@@ -71,10 +65,7 @@ export default class MeasureValueFilterFragment {
     };
 
     public isApplyButtonDisabled = () => {
-        return this.component
-            .find(CLASS_APPLY_BUTTON)
-            .at(0)
-            .prop("disabled");
+        return this.component.find(CLASS_APPLY_BUTTON).at(0).prop("disabled");
     };
 
     public pressEnterInComparisonInput = () =>

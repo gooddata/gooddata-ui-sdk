@@ -72,7 +72,7 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
             throw new GoodDataSdkError(`Unknown visualization class URI: ${uri}`);
         }
 
-        return params => new VisType(params);
+        return (params) => new VisType(params);
     }
 
     public forInsight(insight: IInsightDefinition): PluggableVisualizationFactory {

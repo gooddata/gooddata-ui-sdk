@@ -53,8 +53,8 @@ function generateScenarioForVis(entries: VisScenarioToInsight[]): string {
 
 function generateInsightsConst(recordings: InsightRecording[]): OptionalKind<VariableStatementStructure> {
     const recsWithVisAndScenario: VisScenarioToInsight[] = recordings
-        .filter(rec => rec.hasVisAndScenarioInfo())
-        .map(rec => [rec.getVisName(), rec.getScenarioName(), rec]);
+        .filter((rec) => rec.hasVisAndScenarioInfo())
+        .map((rec) => [rec.getVisName(), rec.getScenarioName(), rec]);
 
     const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
 
@@ -83,5 +83,8 @@ export function generateConstantsForInsights(
     recordings: InsightRecording[],
     targetDir: string,
 ): Array<OptionalKind<VariableStatementStructure>> {
-    return [...recordings.map(r => generateRecordingConst(r, targetDir)), generateInsightsConst(recordings)];
+    return [
+        ...recordings.map((r) => generateRecordingConst(r, targetDir)),
+        generateInsightsConst(recordings),
+    ];
 }

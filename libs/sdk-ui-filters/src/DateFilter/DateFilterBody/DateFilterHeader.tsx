@@ -11,7 +11,7 @@ export const DateFilterHeader: React.FC<{
             className="gd-extended-date-filter-header s-do-not-close-dropdown-on-click"
             onClick={
                 // tslint:disable-next-line:jsx-no-lambda
-                e => {
+                (e) => {
                     e.preventDefault();
                     changeRoute(null);
                 }

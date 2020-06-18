@@ -9,7 +9,7 @@ import { FormattedNumber } from "../FormattedNumber";
 import { Kpi } from "../Kpi";
 
 const testCustomFormat = "$#,#.##";
-const testMeasure = newMeasure("m1", m => m.localId("m1").format(testCustomFormat));
+const testMeasure = newMeasure("m1", (m) => m.localId("m1").format(testCustomFormat));
 const testWorkspace = "dummyWorkspace";
 
 describe("Kpi", () => {

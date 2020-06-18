@@ -88,10 +88,7 @@ describe("AggregationsSubMenu", () => {
         const onAggregationSelect = jest.fn();
         const wrapper = render({ onAggregationSelect });
 
-        wrapper
-            .find(".gd-aggregation-menu-item-inner")
-            .at(1)
-            .simulate("click");
+        wrapper.find(".gd-aggregation-menu-item-inner").at(1).simulate("click");
 
         expect(onAggregationSelect).toHaveBeenCalledTimes(1);
         expect(onAggregationSelect).toHaveBeenCalledWith({

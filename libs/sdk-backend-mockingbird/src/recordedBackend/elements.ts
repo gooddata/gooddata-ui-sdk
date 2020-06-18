@@ -53,7 +53,7 @@ class RecordedElements implements IElementQuery {
         const { filter } = this.options;
 
         if (filter !== undefined) {
-            elements = elements.filter(item => item.title.toLowerCase().includes(filter.toLowerCase()));
+            elements = elements.filter((item) => item.title.toLowerCase().includes(filter.toLowerCase()));
         }
 
         return Promise.resolve(new RecordingPager<IAttributeElement>(elements, this.limit, this.offset));

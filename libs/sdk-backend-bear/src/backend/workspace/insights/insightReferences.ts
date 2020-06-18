@@ -119,7 +119,7 @@ export class InsightReferencesQuery {
      */
     private findReferencedObjects = async (): Promise<GdcMetadata.IObjectXrefEntry[]> => {
         const categories = this.typesForXref.map(objectTypeToObjectCategory);
-        const { entries: allDirectObjects } = await this.authCall(sdk =>
+        const { entries: allDirectObjects } = await this.authCall((sdk) =>
             sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
                 `/gdc/md/${this.workspace}/using2/${this.objectId}?types=${categories.join(",")}`,
             ),
@@ -137,8 +137,10 @@ export class InsightReferencesQuery {
     ): Promise<GdcMetadata.IObjectXrefEntry[]> => {
         // only some object types will have a reference to a dataSet, so no need to load other object types
         const uris = objects
-            .filter(i => objectCategoriesWithLinkToDataset.includes(i.category as GdcMetadata.ObjectCategory))
-            .map(i => i.link);
+            .filter((i) =>
+                objectCategoriesWithLinkToDataset.includes(i.category as GdcMetadata.ObjectCategory),
+            )
+            .map((i) => i.link);
 
         const usedByPayload = {
             inUseMany: {
@@ -148,7 +150,7 @@ export class InsightReferencesQuery {
             },
         };
 
-        const datasetResponses = await this.authCall(sdk => {
+        const datasetResponses = await this.authCall((sdk) => {
             return sdk.xhr.postParsed<BulkUsedByResponse>(`/gdc/md/${this.workspace}/usedby2`, {
                 body: usedByPayload,
             });
@@ -168,10 +170,10 @@ export class InsightReferencesQuery {
     ): Promise<GdcMetadataObject.WrappedObject[]> => {
         const categories = this.typesForLoad.map(objectTypeToObjectCategory);
         const objectUrisToObtain = xrefs
-            .filter(i => categories.includes(i.category as GdcMetadata.ObjectCategory))
-            .map(meta => meta.link);
+            .filter((i) => categories.includes(i.category as GdcMetadata.ObjectCategory))
+            .map((meta) => meta.link);
 
-        return this.authCall(sdk => sdk.md.getObjects(this.workspace, objectUrisToObtain));
+        return this.authCall((sdk) => sdk.md.getObjects(this.workspace, objectUrisToObtain));
     };
 
     //
@@ -191,11 +193,11 @@ export class InsightReferencesQuery {
             };
         }
 
-        const objectsByUri = keyBy(unwrappedObjects, obj => (obj as any).meta.uri);
+        const objectsByUri = keyBy(unwrappedObjects, (obj) => (obj as any).meta.uri);
         const catalogItems: CatalogItem[] = [];
         const dataSetMeta: IMetadataObject[] = [];
 
-        convertedObjects.forEach(obj => {
+        convertedObjects.forEach((obj) => {
             const fullObject = objectsByUri[obj.uri];
 
             switch (obj.type) {

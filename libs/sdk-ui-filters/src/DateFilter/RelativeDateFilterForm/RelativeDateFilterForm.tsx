@@ -23,7 +23,7 @@ export const RelativeDateFilterForm: React.FC<IRelativeDateFilterFormProps> = ({
             availableGranularities={availableGranularities}
             selectedGranularity={selectedFilterOption.granularity}
             // tslint:disable-next-line: jsx-no-lambda
-            onSelectedGranularityChange={granularity =>
+            onSelectedGranularityChange={(granularity) =>
                 onSelectedFilterOptionChange({
                     ...selectedFilterOption,
                     ...(selectedFilterOption.granularity !== granularity && {

@@ -29,7 +29,7 @@ export class MultipleDomainsExample extends Component {
                 this.setState({ sdk2LoginError: "" });
                 this.setState({ sdk2, sdk2Config: formValues });
             })
-            .catch(error => {
+            .catch((error) => {
                 this.setState({ sdk2LoginError: error.toString() });
                 console.log(error);
             });

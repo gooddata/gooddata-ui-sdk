@@ -92,7 +92,7 @@ export class GeoPushpinChartConfigurationPointsSizeExample extends Component<any
         <span style={{ display: "inline-block", minWidth: "10em", verticalAlign: "middle" }}>
             {`${label}: `}
             <select id={id} onChange={this.onPointSizeChange}>
-                {POINT_SIZE_OPTIONS.map(size => (
+                {POINT_SIZE_OPTIONS.map((size) => (
                     <option key={size} value={size}>
                         {size}
                     </option>

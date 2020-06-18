@@ -122,16 +122,17 @@ const convertPreviousPeriodMeasure = (
     definition: IPreviousPeriodMeasureDefinition,
 ) => {
     const builder = getBuilder("m => m", baseMeasureDotAdders(measure));
-    return `newPreviousPeriodMeasure("${definition.previousPeriodMeasure.measureIdentifier}", [${definition
-        .previousPeriodMeasure.dateDataSets &&
+    return `newPreviousPeriodMeasure("${definition.previousPeriodMeasure.measureIdentifier}", [${
+        definition.previousPeriodMeasure.dateDataSets &&
         definition.previousPeriodMeasure.dateDataSets
-            .map(s =>
+            .map((s) =>
                 stringify({
                     dataSet: getObjQualifierValue(s.dataSet),
                     periodsAgo: s.periodsAgo,
                 }),
             )
-            .join(ARRAY_JOINER)}], ${builder})`;
+            .join(ARRAY_JOINER)
+    }], ${builder})`;
 };
 
 const convertMeasure: Converter<IMeasure> = ({ measure }) => {
@@ -155,8 +156,8 @@ const convertAttributeSortItem: Converter<IAttributeSortItem> = ({ attributeSort
 
 const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }) => {
     const locators = measureSortItem.locators || [];
-    const measureLocator = locators.find(l => isMeasureLocator(l)) as IMeasureLocatorItem;
-    const attributeLocators = locators.filter(l => !isMeasureLocator(l)) as IAttributeLocatorItem[];
+    const measureLocator = locators.find((l) => isMeasureLocator(l)) as IMeasureLocatorItem;
+    const attributeLocators = locators.filter((l) => !isMeasureLocator(l)) as IAttributeLocatorItem[];
 
     return `newMeasureSort("${measureLocator.measureLocatorItem.measureIdentifier}", "${
         measureSortItem.direction

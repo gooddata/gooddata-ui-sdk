@@ -14,7 +14,7 @@ import { withChart } from "../_base/withChart";
 const bubbleChartDefinition: IChartDefinition<IBubbleChartBucketProps, IBubbleChartProps> = {
     chartName: "BubbleChart",
     bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "size", "viewBy", "filters", "sortBy"],
-    bucketsFactory: props => {
+    bucketsFactory: (props) => {
         return [
             newBucket(BucketNames.MEASURES, props.xAxisMeasure),
             newBucket(BucketNames.SECONDARY_MEASURES, props.yAxisMeasure),

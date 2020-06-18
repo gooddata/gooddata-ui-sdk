@@ -53,7 +53,7 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
                                     <li key={locationState}>
                                         <strong>{locationState}</strong>
                                         <ul>
-                                            {_locations.map(location => (
+                                            {_locations.map((location) => (
                                                 <li key={location}>{location}</li>
                                             ))}
                                         </ul>

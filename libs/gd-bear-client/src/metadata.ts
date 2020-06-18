@@ -71,7 +71,7 @@ export class MetadataModule {
         }
 
         return (
-            object.attribute.content.displayForms.find(displayForm => displayForm.content.default === 1) ||
+            object.attribute.content.displayForms.find((displayForm) => displayForm.content.default === 1) ||
             object.attribute.content.displayForms[0]
         );
     }
@@ -97,7 +97,7 @@ export class MetadataModule {
         T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject
     >(projectId: string, identifiers: string[]) {
         const uriIdentifierPairs = await this.getUrisFromIdentifiers(projectId, identifiers);
-        const uris = uriIdentifierPairs.map(pair => pair.uri);
+        const uris = uriIdentifierPairs.map((pair) => pair.uri);
         const objects: T[] = await this.getObjects(projectId, uris);
         return objects;
     }
@@ -120,7 +120,7 @@ export class MetadataModule {
 
         const objectsUrisChunks = chunk(objectUris, LIMIT);
 
-        const promises = objectsUrisChunks.map(objectUrisChunk => {
+        const promises = objectsUrisChunks.map((objectUrisChunk) => {
             const body = {
                 get: {
                     items: objectUrisChunk,
@@ -256,7 +256,7 @@ export class MetadataModule {
 
                 return r.getData();
             })
-            .then(result => result.entries);
+            .then((result) => result.entries);
     }
 
     /**
@@ -332,7 +332,7 @@ export class MetadataModule {
 
         return this.xhr
             .postParsed<GdcMetadata.IGetObjectUsedBy>(`/gdc/md/${projectId}/usedby2`, { body })
-            .then(result => result.entries);
+            .then((result) => result.entries);
     }
 
     /**
@@ -370,7 +370,7 @@ export class MetadataModule {
             .postParsed<{
                 useMany: GdcMetadata.IGetObjectsUsedByManyEntry[];
             }>(uri, { body })
-            .then(result => result.useMany);
+            .then((result) => result.useMany);
     }
 
     /**
@@ -438,7 +438,7 @@ export class MetadataModule {
 
             return this.xhr
                 .get(`/gdc/md/${pId}/query/folders${typeURL}`)
-                .then(r => r.getData())
+                .then((r) => r.getData())
                 .then(getIn("query.entries"));
         };
 
@@ -503,8 +503,8 @@ export class MetadataModule {
             .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
                 `/gdc/md/${projectId}/query/projectdashboards`,
             )
-            .then(dashboardsQuery => {
-                const dashboardLinks = dashboardsQuery.query.entries.map(dashboard => dashboard.link);
+            .then((dashboardsQuery) => {
+                const dashboardLinks = dashboardsQuery.query.entries.map((dashboard) => dashboard.link);
                 return this.getObjects<GdcProjectDashboard.IWrappedProjectDashboard>(
                     projectId,
                     dashboardLinks,
@@ -524,7 +524,7 @@ export class MetadataModule {
             .getParsed<{ query: { entries: GdcMetadata.IObjectLink[] } }>(
                 `/gdc/md/${projectId}/query/analyticaldashboard`,
             )
-            .then(dashboardsQuery => {
+            .then((dashboardsQuery) => {
                 return dashboardsQuery.query.entries;
             });
     }
@@ -565,7 +565,7 @@ export class MetadataModule {
     public getAvailableAttributes(projectId: string, metrics: string[] = []): Promise<any> {
         return this.xhr
             .post(`/gdc/md/${projectId}/drillcrosspaths`, { body: metrics })
-            .then(apiResponse => (apiResponse.response.ok ? apiResponse.getData() : apiResponse.response))
+            .then((apiResponse) => (apiResponse.response.ok ? apiResponse.getData() : apiResponse.response))
             .then((r: any) => r.drillcrosspath.links);
     }
 
@@ -612,12 +612,12 @@ export class MetadataModule {
      */
     public getFoldersWithItems(projectId: string, type: string) {
         // fetch all folders of given type and process them
-        return this.getFolders(projectId, type).then(folders => {
+        return this.getFolders(projectId, type).then((folders) => {
             // Helper public to get details for each metric in the given
             // array of links to the metadata objects representing the metrics.
             // @return the array of promises
             const getMetricItemsDetails = (array: any[]) => {
-                return Promise.all(array.map(this.getObjectDetails)).then(metricArgs => {
+                return Promise.all(array.map(this.getObjectDetails)).then((metricArgs) => {
                     return metricArgs.map((item: any) => item.metric);
                 });
             };
@@ -632,7 +632,7 @@ export class MetadataModule {
             // helper for sorting folder tree structure
             // sadly @returns void (sorting == mutating array in js)
             const sortFolderTree = (structure: any[]) => {
-                structure.forEach(folder => {
+                structure.forEach((folder) => {
                     folder.items.sort((a: any, b: any) => {
                         if (a.meta.title < b.meta.title) {
                             return -1;
@@ -658,13 +658,13 @@ export class MetadataModule {
             const foldersTitles = mapBy(folders, "title");
 
             // fetch details for each folder
-            return Promise.all(foldersLinks.map(this.getObjectDetails)).then(folderDetails => {
+            return Promise.all(foldersLinks.map(this.getObjectDetails)).then((folderDetails) => {
                 // if attribute, just parse everything from what we've received
                 // and resolve. For metrics, lookup again each metric to get its
                 // identifier. If passing unsupported type, reject immediately.
                 if (type === "attribute") {
                     // get all attributes, subtract what we have and add rest in unsorted folder
-                    return this.getAttributes(projectId).then(attributes => {
+                    return this.getAttributes(projectId).then((attributes) => {
                         // get uris of attributes which are in some dimension folders
                         const attributesInFolders: any[] = [];
                         folderDetails.forEach((fd: any) => {
@@ -678,7 +678,7 @@ export class MetadataModule {
                             .map((item: any) => item.link);
                         // now get details of attributes in no folders
                         return Promise.all(unsortedUris.map(this.getObjectDetails)).then(
-                            unsortedAttributeArgs => {
+                            (unsortedAttributeArgs) => {
                                 // TODO add map to r.json
                                 // get unsorted attribute objects
                                 const unsortedAttributes = unsortedAttributeArgs.map(
@@ -707,7 +707,7 @@ export class MetadataModule {
                         mapBy(entry.folder.content.entries, "link"),
                     );
                     // get all metrics, subtract what we have and add rest in unsorted folder
-                    return this.getMetrics(projectId).then(metrics => {
+                    return this.getMetrics(projectId).then((metrics) => {
                         // get uris of metrics which are in some dimension folders
                         const metricsInFolders: string[] = [];
                         folderDetails.forEach((fd: any) => {
@@ -725,8 +725,8 @@ export class MetadataModule {
 
                         // now get details of all metrics
                         return Promise.all(
-                            entriesLinks.map(linkArray => getMetricItemsDetails(linkArray)),
-                        ).then(tree => {
+                            entriesLinks.map((linkArray) => getMetricItemsDetails(linkArray)),
+                        ).then((tree) => {
                             // TODO add map to r.json
                             // all promises resolved, i.e. details for each metric are available
                             const structure = tree.map((treeItems, idx) => {
@@ -771,7 +771,7 @@ export class MetadataModule {
         }
 
         if (!isPlainObject(uri)) {
-            return this.getObjectDetails(uri).then(data => idFinder(data));
+            return this.getObjectDetails(uri).then((data) => idFinder(data));
         }
         return Promise.resolve(idFinder(uri));
     }
@@ -827,7 +827,7 @@ export class MetadataModule {
                 },
             })
             .then((r: ApiResponse<{ identifiers: IUriIdentifierPair[] }>) => r.getData())
-            .then(data => {
+            .then((data) => {
                 return data.identifiers;
             });
     }
@@ -848,7 +848,7 @@ export class MetadataModule {
                 },
             })
             .then((r: ApiResponse<{ identifiers: IUriIdentifierPair[] }>) => r.getData())
-            .then(data => {
+            .then((data) => {
                 return data.identifiers;
             });
     }
@@ -908,7 +908,7 @@ export class MetadataModule {
     public getValidElements(projectId: string, id: string, options: GdcMetadata.IValidElementsParams = {}) {
         const query = pickBy(
             pick(options, ["limit", "offset", "order", "filter", "prompt"]),
-            val => val !== undefined,
+            (val) => val !== undefined,
         );
         const queryParams = queryString(query);
         const pickedOptions = pick(options, [
@@ -928,8 +928,8 @@ export class MetadataModule {
                         },
                     },
                 })
-                .then(response => response.getData())
-                .then(reportDefinitionResult => ({
+                .then((response) => response.getData())
+                .then((reportDefinitionResult) => ({
                     ...pickedOptions,
                     restrictiveDefinitionContent:
                         reportDefinitionResult.reportDefinitionWithInlinedMetrics.content,
@@ -937,7 +937,7 @@ export class MetadataModule {
 
         const getOptions = afm ? getRequestBodyWithReportDefinition : () => Promise.resolve(pickedOptions);
 
-        return getOptions().then(requestBody =>
+        return getOptions().then((requestBody) =>
             this.xhr.postParsed<GdcMetadata.IValidElementsResponse>(
                 `/gdc/md/${projectId}/obj/${id}/validElements${queryParams}`.replace(/\?$/, ""),
                 {
@@ -1081,7 +1081,7 @@ export class MetadataModule {
             .post(`/gdc/internal/projects/${projectId}/convertVisualizationObject`, {
                 body: mdObject,
             })
-            .then(res => res.getData())
+            .then((res) => res.getData())
             .then(({ uri }) => uri);
     }
 

@@ -55,12 +55,12 @@ const createLookups = (
     attributeByDisplayFormUri: IAttributeByKey;
 } => {
     const [attributes, displayForms] = partition(displayFormsAndAttributes, GdcMetadata.isWrappedAttribute);
-    const unwrappedDisplayForms = displayForms.map(df => df.attributeDisplayForm);
+    const unwrappedDisplayForms = displayForms.map((df) => df.attributeDisplayForm);
 
-    const attributeByUri: IAttributeByKey = keyBy(attributes, item => item.attribute.meta.uri);
-    const attributeById: IAttributeByKey = keyBy(attributes, item => item.attribute.meta.identifier);
-    const displayFormByUri: IDisplayFormByKey = keyBy(unwrappedDisplayForms, item => item.meta.uri);
-    const displayFormById: IDisplayFormByKey = keyBy(unwrappedDisplayForms, item => item.meta.identifier);
+    const attributeByUri: IAttributeByKey = keyBy(attributes, (item) => item.attribute.meta.uri);
+    const attributeById: IAttributeByKey = keyBy(attributes, (item) => item.attribute.meta.identifier);
+    const displayFormByUri: IDisplayFormByKey = keyBy(unwrappedDisplayForms, (item) => item.meta.uri);
+    const displayFormById: IDisplayFormByKey = keyBy(unwrappedDisplayForms, (item) => item.meta.identifier);
 
     const attributeByDisplayFormUri = Object.keys(displayFormByUri).reduce(
         (acc: IAttributeByKey, displayFormUri) => {
@@ -185,17 +185,17 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const allCatalogItems = catalogWithUnlisted.concat(dateDatasets);
 
         const measureById: IMeasureByKey = keyBy(
-            catalogWithUnlisted.filter(isCatalogMeasure).map(el => el.measure),
-            el => el.id,
+            catalogWithUnlisted.filter(isCatalogMeasure).map((el) => el.measure),
+            (el) => el.id,
         );
         const factById: IFactByKey = keyBy(
-            catalogItems.filter(isCatalogFact).map(el => el.fact),
-            el => el.id,
+            catalogItems.filter(isCatalogFact).map((el) => el.fact),
+            (el) => el.id,
         );
 
         const dateAttributeById = keyBy(
-            flatMap(dateDatasets, dd => dd.dateAttributes),
-            attr => attr.attribute.id,
+            flatMap(dateDatasets, (dd) => dd.dateAttributes),
+            (attr) => attr.attribute.id,
         );
 
         return {
@@ -221,7 +221,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const { includeTagsIds, excludeTagsIds, dataSetId } = await this.getTagsAndDatasetIds();
 
-        const result = await this.authCall(sdk =>
+        const result = await this.authCall((sdk) =>
             sdk.catalogue.loadDateDataSets(this.workspace, {
                 returnAllDateDataSets: true,
                 dataSetIdentifier: dataSetId,
@@ -244,7 +244,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const { includeTagsIds, excludeTagsIds, dataSetId } = await this.getTagsAndDatasetIds();
 
         const bearItemTypes = compatibleBearItemTypes.map(convertItemType);
-        return this.authCall(sdk =>
+        return this.authCall((sdk) =>
             sdk.catalogue.loadAllItems(this.workspace, {
                 types: bearItemTypes,
                 includeWithTags: includeTagsIds.length ? includeTagsIds : undefined,
@@ -267,7 +267,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     private loadBearUnlistedMetrics = async (): Promise<ICatalogMeasure[]> => {
         const { types } = this.options;
 
-        const compatibleBearItemTypes = types.filter(item => item === "measure");
+        const compatibleBearItemTypes = types.filter((item) => item === "measure");
         if (compatibleBearItemTypes.length === 0) {
             return [];
         }
@@ -277,13 +277,13 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             limit: 50,
         };
 
-        return this.authCall(sdk =>
+        return this.authCall((sdk) =>
             sdk.md
                 .getObjectsByQuery<GdcMetadata.IWrappedMetric>(this.workspace, queryOptions)
-                .then(metrics => {
-                    return metrics.filter(metric => metric.metric.meta.unlisted).map(convertMetric);
+                .then((metrics) => {
+                    return metrics.filter((metric) => metric.metric.meta.unlisted).map(convertMetric);
                 })
-                .catch(err => {
+                .catch((err) => {
                     if (isApiResponseError(err) && err.response.status === 404) {
                         /*
                          * Mock-server (mock-js) for GD platform does not support the md query resource.
@@ -303,14 +303,14 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         bearCatalogItems: GdcCatalog.CatalogItem[],
     ): Promise<BearDisplayFormOrAttribute[]> => {
         const bearCatalogAttributes = bearCatalogItems.filter(GdcCatalog.isCatalogAttribute);
-        const attributeUris = bearCatalogAttributes.map(attr => attr.links.self);
-        const displayFormUris = flatMap(bearCatalogAttributes, attr => {
+        const attributeUris = bearCatalogAttributes.map((attr) => attr.links.self);
+        const displayFormUris = flatMap(bearCatalogAttributes, (attr) => {
             const geoPins = attr.links.geoPinDisplayForms ?? [];
 
             return [attr.links.defaultDisplayForm, ...geoPins];
         });
 
-        return this.authCall(sdk =>
+        return this.authCall((sdk) =>
             sdk.md.getObjects<BearDisplayFormOrAttribute>(
                 this.workspace,
                 uniq([...attributeUris, ...displayFormUris]),
@@ -323,7 +323,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const { includeTagsIds, excludeTagsIds, dataSetId } = await this.getTagsAndDatasetIds();
 
-        const bearCatalogGroups = await this.authCall(sdk =>
+        const bearCatalogGroups = await this.authCall((sdk) =>
             sdk.catalogue.loadGroups(this.workspace, {
                 includeWithTags: includeTagsIds.length ? includeTagsIds : undefined,
                 excludeWithTags: excludeTagsIds.length ? excludeTagsIds : undefined,
@@ -359,9 +359,9 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     ): CatalogItem[] => {
         const catalogWithUnlisted = [...catalogItems];
 
-        bearUnlistedMetrics.forEach(metric => {
+        bearUnlistedMetrics.forEach((metric) => {
             const existingMeasure = catalogItems.find(
-                item => isCatalogMeasure(item) && item.measure.uri === metric.measure.uri,
+                (item) => isCatalogMeasure(item) && item.measure.uri === metric.measure.uri,
             ) as ICatalogMeasure;
 
             if (existingMeasure) {

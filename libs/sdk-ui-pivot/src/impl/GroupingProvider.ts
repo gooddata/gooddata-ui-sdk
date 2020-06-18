@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import max = require("lodash/max");
 import { IGridRow } from "./agGridTypes";
 import { isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
@@ -76,7 +76,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
     }
 
     public processPage(pageRows: IGridRow[], rowOffset: number, columnIds: string[]) {
-        columnIds.forEach(columnId => {
+        columnIds.forEach((columnId) => {
             if (!this.itemUris[columnId]) {
                 this.itemUris[columnId] = [];
             }
@@ -98,7 +98,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
         this.maxRepetitions = 0;
         let previousColumnId: string = null;
 
-        Object.keys(this.itemUris).forEach(columnId => {
+        Object.keys(this.itemUris).forEach((columnId) => {
             const rowCount = this.itemUris[columnId].length;
             this.itemRepetitions[columnId] = Array(rowCount).fill(false);
             if (this.repetitionsCounts === null) {

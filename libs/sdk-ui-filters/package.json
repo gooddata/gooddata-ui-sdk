@@ -86,11 +86,11 @@
         "jest-junit": "^3.0.0",
         "node-sass": "^4.13.0",
         "node-sass-magic-importer": "^5.3.2",
-        "prettier": "~1.19.1",
+        "prettier": "~2.0.5",
         "raf": "^3.4.1",
         "ts-jest": "^25.2.0",
         "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",
-        "typescript": "3.8.3"
+        "typescript": "3.9.5"
     }
 }

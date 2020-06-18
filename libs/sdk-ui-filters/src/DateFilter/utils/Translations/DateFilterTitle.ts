@@ -70,7 +70,7 @@ const relativeDateRangeFormatters: Array<{
     },
     {
         // Next N days (months)
-        predicate: from => from === 0,
+        predicate: (from) => from === 0,
         formatter: (_from, to, intlGranularity, translator) =>
             translator.formatMessage(
                 { id: `filters.nextN${capitalize(intlGranularity)}s` },
@@ -131,7 +131,7 @@ const formatRelativeDateRange = (
     translator: IDateAndMessageTranslator,
 ): string => {
     const intlGranularity = granularityIntlCodes[granularity];
-    const { formatter } = relativeDateRangeFormatters.find(f => f.predicate(from, to));
+    const { formatter } = relativeDateRangeFormatters.find((f) => f.predicate(from, to));
     return formatter(from, to, intlGranularity, translator);
 };
 

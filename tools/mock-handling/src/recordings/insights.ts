@@ -58,10 +58,7 @@ export class InsightRecording implements IRecording {
     }
 
     public async makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void> {
-        const obj = await backend
-            .workspace(workspace)
-            .insights()
-            .getInsight(idRef(this.insightId));
+        const obj = await backend.workspace(workspace).insights().getInsight(idRef(this.insightId));
 
         if (!fs.existsSync(this.directory)) {
             fs.mkdirSync(this.directory, { recursive: true });

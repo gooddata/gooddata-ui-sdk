@@ -24,22 +24,22 @@ export const RelativePresetFilterItems: React.FC<{
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }> = ({ filterOption, selectedFilterOption, onSelectedFilterOptionChange, className }) => {
     const relativePresets = granularityOrder
-        .filter(granularity =>
+        .filter((granularity) =>
             Boolean(filterOption && filterOption[granularity] && filterOption[granularity].length > 0),
         )
-        .map(granularity => ({
+        .map((granularity) => ({
             granularity,
             items: filterOption[granularity] as IRelativeDateFilterPreset[],
         }));
 
     return (
         <>
-            {relativePresets.map(preset => (
+            {relativePresets.map((preset) => (
                 <React.Fragment key={preset.granularity}>
                     <ListHeading className={className}>
                         <RelativePresetTitleTranslated granularity={preset.granularity} />
                     </ListHeading>
-                    {preset.items.map(item => (
+                    {preset.items.map((item) => (
                         <ListItem
                             key={item.localIdentifier}
                             isSelected={item.localIdentifier === selectedFilterOption.localIdentifier}

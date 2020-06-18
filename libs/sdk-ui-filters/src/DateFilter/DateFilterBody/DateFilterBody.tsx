@@ -293,7 +293,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                     <DateFilterFormWrapper isMobile={isMobile}>
                         <RelativeDateFilterForm
                             // tslint:disable-next-line:jsx-no-lambda
-                            onSelectedFilterOptionChange={option => {
+                            onSelectedFilterOptionChange={(option) => {
                                 onSelectedFilterOptionChange(option);
                             }}
                             selectedFilterOption={selectedFilterOption as IUiRelativeDateFilterForm}

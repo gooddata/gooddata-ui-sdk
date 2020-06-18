@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 import * as invariant from "invariant";
@@ -12,20 +12,22 @@ import uniq = require("lodash/uniq");
 import { IColumnTotal } from "./aggregationsMenuTypes";
 
 function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {
-    return totals.filter(total => total.measureIdentifier === measureLocalIdentifier && total.type === type);
+    return totals.filter(
+        (total) => total.measureIdentifier === measureLocalIdentifier && total.type === type,
+    );
 }
 
 function getAttributeIntersection(totals: ITotal[], type: TotalType, measureLocalIdentifiers: string[]) {
     const attributeGroups: string[][] = measureLocalIdentifiers.map((measure: string) => {
         const filteredTotals = getTotalsForMeasureAndType(totals, type, measure);
-        return filteredTotals.map(total => total.attributeIdentifier);
+        return filteredTotals.map((total) => total.attributeIdentifier);
     });
     return intersection.apply(null, attributeGroups);
 }
 
 function getUniqueMeasures(totals: ITotal[], type: TotalType) {
-    const totalsOfType = totals.filter(total => total.type === type);
-    return uniq(totalsOfType.map(total => total.measureIdentifier));
+    const totalsOfType = totals.filter((total) => total.type === type);
+    return uniq(totalsOfType.map((total) => total.measureIdentifier));
 }
 
 function areMeasuresSame(measureLocalIdentifiers1: string[], measureLocalIdentifiers2: string[]) {
@@ -59,7 +61,7 @@ function getTotalsForAttributeHeader(totals: ITotal[], measureLocalIdentifiers: 
 function getTotalsForMeasureHeader(totals: ITotal[], measureLocalIdentifier: string): IColumnTotal[] {
     return totals.reduce((turnedOnAttributes: IColumnTotal[], total: ITotal) => {
         if (total.measureIdentifier === measureLocalIdentifier) {
-            const totalHeaderType = turnedOnAttributes.find(turned => turned.type === total.type);
+            const totalHeaderType = turnedOnAttributes.find((turned) => turned.type === total.type);
             if (totalHeaderType === undefined) {
                 turnedOnAttributes.push({
                     type: total.type,
@@ -87,7 +89,7 @@ function getHeaderMeasureLocalIdentifiers(
         } = measureGroupHeaderItems[lastFieldId];
         return [localIdentifier];
     } else if (lastFieldType === FIELD_TYPE_ATTRIBUTE) {
-        return measureGroupHeaderItems.map(item => item.measureHeaderItem.localIdentifier);
+        return measureGroupHeaderItems.map((item) => item.measureHeaderItem.localIdentifier);
     }
     invariant(false, `Unknown field type '${lastFieldType}' provided`);
 }
@@ -104,7 +106,7 @@ function isTotalEnabledForAttribute(
 
 function includeTotals(columnTotals: ITotal[], columnTotalsChanged: ITotal[]) {
     const columnTotalsChangedUnique = columnTotalsChanged.filter(
-        totalChanged => !columnTotals.some(total => isEqual(total, totalChanged)),
+        (totalChanged) => !columnTotals.some((total) => isEqual(total, totalChanged)),
     );
 
     return [...columnTotals, ...columnTotalsChangedUnique];
@@ -112,7 +114,7 @@ function includeTotals(columnTotals: ITotal[], columnTotalsChanged: ITotal[]) {
 
 function excludeTotals(columnTotals: ITotal[], columnTotalsChanged: ITotal[]): ITotal[] {
     return columnTotals.filter(
-        total => !columnTotalsChanged.find(totalChanged => isEqual(totalChanged, total)),
+        (total) => !columnTotalsChanged.find((totalChanged) => isEqual(totalChanged, total)),
     );
 }
 
@@ -122,7 +124,7 @@ export function getUpdatedColumnTotals(
 ): ITotal[] {
     const { type, measureIdentifiers, attributeIdentifier, include } = menuAggregationClickConfig;
 
-    const columnTotalsChanged = measureIdentifiers.map(measureIdentifier => ({
+    const columnTotalsChanged = measureIdentifiers.map((measureIdentifier) => ({
         type,
         measureIdentifier,
         attributeIdentifier,
@@ -132,7 +134,7 @@ export function getUpdatedColumnTotals(
         ? includeTotals(columnTotals, columnTotalsChanged)
         : excludeTotals(columnTotals, columnTotalsChanged);
 
-    return sortBy(updatedColumnTotals, total =>
+    return sortBy(updatedColumnTotals, (total) =>
         AVAILABLE_TOTALS.findIndex((rankedItem: string) => rankedItem === total.type),
     );
 }

@@ -30,7 +30,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
 
         const afmExecution = toAfmExecution(this.definition);
 
-        return this.authCall(sdk => sdk.execution.executeAfm(afmExecution)).then(response => {
+        return this.authCall((sdk) => sdk.execution.executeAfm(afmExecution)).then((response) => {
             return new TigerExecutionResult(this.authCall, this.definition, response, this.dateFormatter);
         });
     }

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import ReactGA from "react-ga";
 import { history } from "./history";
 
@@ -9,6 +9,6 @@ ReactGA.initialize(GA_ID, {
     testMode: !isProduction,
 });
 
-history.listen(location => {
+history.listen((location) => {
     ReactGA.pageview(location.pathname + location.search);
 });

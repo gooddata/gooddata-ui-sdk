@@ -65,7 +65,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
     // Public methods
 
     public getDashboards = async (): Promise<IListedDashboard[]> => {
-        const dashboardsObjectLinks = await this.authCall(sdk =>
+        const dashboardsObjectLinks = await this.authCall((sdk) =>
             sdk.md.getAnalyticalDashboards(this.workspace),
         );
         const dashboards = dashboardsObjectLinks.map(toSdkModel.convertListedDashboard);
@@ -174,8 +174,8 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
     ): Promise<string> => {
         const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
         const convertedFilters = filters && filters.map(fromSdkModel.convertFilterContextItem);
-        return this.authCall(sdk =>
-            sdk.dashboard.exportToPdf(this.workspace, dashboardUri, convertedFilters).then(res => res.uri),
+        return this.authCall((sdk) =>
+            sdk.dashboard.exportToPdf(this.workspace, dashboardUri, convertedFilters).then((res) => res.uri),
         );
     };
 
@@ -189,14 +189,14 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         const scheduledMailWithFilterContext = filterContext
             ? {
                   ...scheduledMailDefinition,
-                  attachments: scheduledMailDefinition.attachments.map(attachment => ({
+                  attachments: scheduledMailDefinition.attachments.map((attachment) => ({
                       ...attachment,
                       filterContext: filterContext.ref,
                   })),
               }
             : scheduledMailDefinition;
         const convertedScheduledMail = fromSdkModel.convertScheduledMail(scheduledMailWithFilterContext);
-        const createdBearScheduledMail = await this.authCall(sdk =>
+        const createdBearScheduledMail = await this.authCall((sdk) =>
             sdk.md.createObject(this.workspace, convertedScheduledMail),
         );
         return toSdkModel.convertScheduledMail(createdBearScheduledMail) as IScheduledMail;
@@ -204,7 +204,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
 
     public getScheduledMailsCountForDashboard = async (dashboardRef: ObjRef): Promise<number> => {
         const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
-        const objectLinks = await this.authCall(sdk =>
+        const objectLinks = await this.authCall((sdk) =>
             sdk.md.getObjectUsedBy(this.workspace, dashboardUri, {
                 nearest: true,
                 types: ["scheduledMail"],
@@ -219,9 +219,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         const filterContexts = await this.getBearKpiAlertsFilterContexts(alerts);
         const filterContextByUri = keyBy(
             filterContexts,
-            filterContext => filterContext.filterContext.meta.uri,
+            (filterContext) => filterContext.filterContext.meta.uri,
         );
-        const convertedAlerts = alerts.map(alert => {
+        const convertedAlerts = alerts.map((alert) => {
             const alertFilterContext = filterContextByUri[alert.kpiAlert.content.filterContext!];
             return toSdkModel.convertAlert(alert, alertFilterContext) as IWidgetAlert;
         });
@@ -231,9 +231,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
 
     public getWidgetAlertsCountForWidgets = async (refs: ObjRef[]): Promise<IWidgetAlertCount[]> => {
         const widgetUris = await Promise.all(
-            refs.map(ref => objRefToUri(ref, this.workspace, this.authCall)),
+            refs.map((ref) => objRefToUri(ref, this.workspace, this.authCall)),
         );
-        const result = await this.authCall(sdk =>
+        const result = await this.authCall((sdk) =>
             sdk.md.getObjectsUsedByMany(this.workspace, widgetUris, {
                 types: ["kpiAlert"],
                 nearest: true,
@@ -275,14 +275,14 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
     };
 
     public bulkDeleteWidgetAlerts = async (refs: ObjRef[]) => {
-        const uris = await Promise.all(refs.map(ref => objRefToUri(ref, this.workspace, this.authCall)));
-        return this.authCall(sdk => sdk.md.bulkDeleteObjects(this.workspace, uris, "cascade"));
+        const uris = await Promise.all(refs.map((ref) => objRefToUri(ref, this.workspace, this.authCall)));
+        return this.authCall((sdk) => sdk.md.bulkDeleteObjects(this.workspace, uris, "cascade"));
     };
 
     // Alerts
     private createBearWidgetAlert = async (alert: IWidgetAlertDefinition) => {
         const bearAlert = fromSdkModel.convertWidgetAlert(alert);
-        const createdBearAlert = await this.authCall(sdk => sdk.md.createObject(this.workspace, bearAlert));
+        const createdBearAlert = await this.authCall((sdk) => sdk.md.createObject(this.workspace, bearAlert));
         const convertedAlertFilterContext = fromSdkModel.convertFilterContext(
             alert.filterContext as IFilterContext, // Filter context is already saved at this point
         );
@@ -318,12 +318,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         dashboardRef: ObjRef,
     ): Promise<GdcDashboard.IWrappedAnalyticalDashboard> => {
         const uri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
-        return this.authCall(sdk => sdk.md.getObjectDetails<GdcDashboard.IWrappedAnalyticalDashboard>(uri));
+        return this.authCall((sdk) => sdk.md.getObjectDetails<GdcDashboard.IWrappedAnalyticalDashboard>(uri));
     };
 
     private createBearDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
         const bearDashboard = fromSdkModel.convertDashboard(dashboard);
-        const createdBearDashboard = await this.authCall(sdk =>
+        const createdBearDashboard = await this.authCall((sdk) =>
             sdk.md.createObject(this.workspace, bearDashboard),
         );
         const createdDashboardDependencies = await this.getBearDashboardDependencies(
@@ -359,11 +359,17 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         // Perform relevant operation (create/update) on each widget,
         // and replace widget definitions with saved widgets
         const createdAndUpdatedWidgetsWithLayoutPaths = await Promise.all([
-            ...createdWidgetsWithLayoutPaths.map(widgetWithpath =>
-                this.createBearWidget(widgetWithpath.widget).then(widget => ({ ...widgetWithpath, widget })),
+            ...createdWidgetsWithLayoutPaths.map((widgetWithpath) =>
+                this.createBearWidget(widgetWithpath.widget).then((widget) => ({
+                    ...widgetWithpath,
+                    widget,
+                })),
             ),
-            ...updatedWidgetsWithLayoutPaths.map(widgetWithpath =>
-                this.updateBearWidget(widgetWithpath.widget).then(widget => ({ ...widgetWithpath, widget })),
+            ...updatedWidgetsWithLayoutPaths.map((widgetWithpath) =>
+                this.updateBearWidget(widgetWithpath.widget).then((widget) => ({
+                    ...widgetWithpath,
+                    widget,
+                })),
             ),
         ]);
 
@@ -414,7 +420,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
             this.authCall,
         );
 
-        const exportFilterContext = await this.authCall(async sdk => {
+        const exportFilterContext = await this.authCall(async (sdk) => {
             let result:
                 | GdcFilterContext.IWrappedFilterContext
                 | GdcFilterContext.IWrappedTempFilterContext
@@ -445,7 +451,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         filterContext: IFilterContextDefinition,
     ): Promise<IFilterContext> => {
         const bearFilterContext = fromSdkModel.convertFilterContext(filterContext);
-        const savedBearFilterContext = await this.authCall(sdk =>
+        const savedBearFilterContext = await this.authCall((sdk) =>
             sdk.md.createObject(this.workspace, bearFilterContext),
         );
         const savedFilterContext = toSdkModel.convertFilterContext(savedBearFilterContext);
@@ -462,7 +468,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
 
     private createBearWidget = async (widget: IWidgetDefinition): Promise<IWidget> => {
         const bearWidget = fromSdkModel.convertWidget(widget);
-        const savedBearWidget = await this.authCall(sdk => sdk.md.createObject(this.workspace, bearWidget));
+        const savedBearWidget = await this.authCall((sdk) => sdk.md.createObject(this.workspace, bearWidget));
         const savedWidget = toSdkModel.convertWidget(savedBearWidget);
         return savedWidget;
     };
@@ -474,7 +480,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
     };
 
     private deleteBearWidgets = async (widgets: IWidget[]): Promise<void> => {
-        await Promise.all(widgets.map(widget => this.deleteBearMetadataObject(widget.ref)));
+        await Promise.all(widgets.map((widget) => this.deleteBearMetadataObject(widget.ref)));
     };
 
     private collectCreatedWidgetsWithLayoutPaths = (
@@ -501,7 +507,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
             return (
                 isWidget(widget) &&
                 originalLayoutWidgetsWithPath.some(
-                    w =>
+                    (w) =>
                         isWidget(w.widget) &&
                         areObjRefsEqual(widget.ref, w.widget.ref) &&
                         !isEqual(widget, w.widget),
@@ -518,10 +524,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
     ): IWidget[] => {
         const originalLayoutWidgets = originalLayout ? layoutWidgets(originalLayout) : [];
         const updatedLayoutWidgets = updatedLayout ? layoutWidgets(updatedLayout) : [];
-        const deletedWidgets = originalLayoutWidgets.filter(widget => {
+        const deletedWidgets = originalLayoutWidgets.filter((widget) => {
             return (
                 isWidget(widget) &&
-                updatedLayoutWidgets.every(w => isWidget(w) && !areObjRefsEqual(widget.ref, w.ref))
+                updatedLayoutWidgets.every((w) => isWidget(w) && !areObjRefsEqual(widget.ref, w.ref))
             );
         });
 
@@ -542,9 +548,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         kpiAlerts: GdcMetadata.IWrappedKpiAlert[],
     ): Promise<GdcFilterContext.IWrappedFilterContext[]> => {
         const filterContextUris = kpiAlerts
-            .map(alert => alert.kpiAlert.content.filterContext)
+            .map((alert) => alert.kpiAlert.content.filterContext)
             .filter((a): a is string => !!a);
-        return this.authCall(sdk =>
+        return this.authCall((sdk) =>
             sdk.md.getObjects<GdcFilterContext.IWrappedFilterContext>(this.workspace, filterContextUris),
         );
     };
@@ -557,18 +563,20 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
     ) => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const metadataObjectId = getObjectIdFromUri(uri);
-        await this.authCall(sdk => sdk.md.updateObject(this.workspace, metadataObjectId, bearMetadataObject));
+        await this.authCall((sdk) =>
+            sdk.md.updateObject(this.workspace, metadataObjectId, bearMetadataObject),
+        );
     };
 
     private deleteBearMetadataObject = async (ref: ObjRef) => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
-        return this.authCall(sdk => sdk.md.deleteObject(uri) as Promise<never>);
+        return this.authCall((sdk) => sdk.md.deleteObject(uri) as Promise<never>);
     };
 
     private getBearVisualizationClasses = async (): Promise<
         GdcVisualizationClass.IVisualizationClassWrapped[]
     > => {
-        return this.authCall(sdk =>
+        return this.authCall((sdk) =>
             sdk.md.getObjectsByQuery<GdcVisualizationClass.IVisualizationClassWrapped>(this.workspace, {
                 category: "visualizationClass",
             }),
@@ -579,14 +587,14 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         dashboardRef: ObjRef,
     ): Promise<toSdkModel.BearDashboardDependency[]> => {
         const uri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
-        const dependenciesObjectLinks = await this.authCall(sdk =>
+        const dependenciesObjectLinks = await this.authCall((sdk) =>
             sdk.md.getObjectUsing(this.workspace, uri, {
                 types: DASHBOARD_DEPENDENCIES_TYPES,
                 nearest: false,
             }),
         );
-        const dependenciesUris = dependenciesObjectLinks.map(objectLink => objectLink.link);
-        const dependenciesMetadataObjects = await this.authCall(sdk =>
+        const dependenciesUris = dependenciesObjectLinks.map((objectLink) => objectLink.link);
+        const dependenciesMetadataObjects = await this.authCall((sdk) =>
             sdk.md.getObjects<toSdkModel.BearDashboardDependency>(this.workspace, dependenciesUris),
         );
 

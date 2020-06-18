@@ -32,7 +32,7 @@ describe("ScenarioGroup", () => {
         });
 
         it("should override default tags", () => {
-            GroupWithDefaultTags.addScenario("scenario1", {}, b => b.withTags(...CustomTags));
+            GroupWithDefaultTags.addScenario("scenario1", {}, (b) => b.withTags(...CustomTags));
 
             const scenario = firstScenario(GroupWithDefaultTags);
 
@@ -40,7 +40,7 @@ describe("ScenarioGroup", () => {
         });
 
         it("should clear default tags", () => {
-            GroupWithDefaultTags.addScenario("scenario1", {}, b => b.withTags());
+            GroupWithDefaultTags.addScenario("scenario1", {}, (b) => b.withTags());
 
             const scenario = firstScenario(GroupWithDefaultTags);
 
@@ -88,7 +88,7 @@ describe("ScenarioGroup", () => {
         });
 
         it("should apply bulk modifications last", () => {
-            GroupWithDefaultTags.addScenarios("base", { baseProp: true }, customizer, b =>
+            GroupWithDefaultTags.addScenarios("base", { baseProp: true }, customizer, (b) =>
                 b.withTags(...CustomTags),
             );
 

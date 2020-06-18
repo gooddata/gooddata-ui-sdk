@@ -175,7 +175,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
 
         // ignore measure value filters without condition, these are not yet specified by the user and are not sent as part of the execution
         return definition.filters.some(
-            filter => isMeasureValueFilter(filter) && !!measureValueFilterCondition(filter),
+            (filter) => isMeasureValueFilter(filter) && !!measureValueFilterCondition(filter),
         );
     }
 

@@ -153,7 +153,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     private addSupportedProperties(properties: string[]) {
         const supportedPropertiesList = this.supportedPropertiesList;
         (properties || []).forEach((property: string) => {
-            if (!supportedPropertiesList.some(supportedProperty => supportedProperty === property)) {
+            if (!supportedPropertiesList.some((supportedProperty) => supportedProperty === property)) {
                 supportedPropertiesList.push(property);
             }
         });

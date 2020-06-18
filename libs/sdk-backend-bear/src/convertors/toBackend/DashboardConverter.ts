@@ -96,7 +96,7 @@ const convertLayoutRow = (
 ): GdcDashboardLayout.IFluidLayoutRow => {
     return {
         ...row,
-        columns: (row.columns as Array<IFluidLayoutColumn | IFluidLayoutColumnDefinition>).map(column =>
+        columns: (row.columns as Array<IFluidLayoutColumn | IFluidLayoutColumnDefinition>).map((column) =>
             convertLayoutColumn(column),
         ),
     };
@@ -359,7 +359,7 @@ export const convertDashboard = (
             content: {
                 dateFilterConfig,
                 filterContext: filterContextUri,
-                widgets: widgets ? widgets.filter(isWidget).map(widget => refToUri(widget.ref)) : [],
+                widgets: widgets ? widgets.filter(isWidget).map((widget) => refToUri(widget.ref)) : [],
                 layout: convertedLayout,
             },
             // tslint:disable-next-line: no-object-literal-type-assertion

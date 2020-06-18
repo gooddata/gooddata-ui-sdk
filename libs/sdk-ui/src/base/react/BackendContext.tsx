@@ -42,10 +42,10 @@ export const useBackend = () => {
  * @internal
  */
 export function withBackend<T extends { backend?: IAnalyticalBackend }>(Chart: React.ComponentType<T>) {
-    const ComponentWithInjectedBackend: React.FC<T> = props => {
+    const ComponentWithInjectedBackend: React.FC<T> = (props) => {
         return (
             <BackendContext.Consumer>
-                {backend => <Chart backend={backend} {...props} />}
+                {(backend) => <Chart backend={backend} {...props} />}
             </BackendContext.Consumer>
         );
     };

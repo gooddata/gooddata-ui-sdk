@@ -69,7 +69,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
             </style>
             <ul>
                 {validElements
-                    ? validElements.items.map(item => buildSidebarItem(item, selectedEmployeeUri))
+                    ? validElements.items.map((item) => buildSidebarItem(item, selectedEmployeeUri))
                     : null}
             </ul>
         </div>
@@ -77,7 +77,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
 
     const selectedEmployeesUris: IAttributeElementsByRef = { uris: [selectedEmployeeUri] };
     const employeeFilter = newPositiveAttributeFilter(Ldm.EmployeeName.Default, selectedEmployeesUris);
-    const selectedEmployee = validElements.items.find(item => item.uri === selectedEmployeeUri);
+    const selectedEmployee = validElements.items.find((item) => item.uri === selectedEmployeeUri);
 
     const employeeName = selectedEmployee!.title;
 

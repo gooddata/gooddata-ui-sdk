@@ -7,10 +7,10 @@ import { Ldm, LdmExt } from "../../ldm";
 const totalSalesYearAgoBucketItem = newPreviousPeriodMeasure(
     LdmExt.TotalSales1,
     [{ dataSet: LdmExt.dateDatasetIdentifier, periodsAgo: 1 }],
-    m => m.alias("$ Total Sales - year ago"),
+    (m) => m.alias("$ Total Sales - year ago"),
 );
 
-const changeMeasure = newArithmeticMeasure([LdmExt.TotalSales1, totalSalesYearAgoBucketItem], "change", m =>
+const changeMeasure = newArithmeticMeasure([LdmExt.TotalSales1, totalSalesYearAgoBucketItem], "change", (m) =>
     m.title("% Total Sales Change"),
 );
 

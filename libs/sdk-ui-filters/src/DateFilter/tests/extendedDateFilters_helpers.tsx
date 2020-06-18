@@ -18,13 +18,8 @@ export const defaultDateFilterOptions: IDateFilterOptionsByType = {
     absoluteForm: {
         localIdentifier: "ABSOLUTE_FORM",
         type: "absoluteForm",
-        from: moment()
-            .subtract(1, "month")
-            .startOf("day")
-            .format(platformDateFormat),
-        to: moment()
-            .startOf("day")
-            .format(platformDateFormat),
+        from: moment().subtract(1, "month").startOf("day").format(platformDateFormat),
+        to: moment().startOf("day").format(platformDateFormat),
         name: "",
         visible: true,
     },
@@ -295,7 +290,7 @@ export const getLocalIdentifierFromItem = (item: string) => {
 
 export const getPresetByItem = (item: string, relativePreset: any[]) => {
     const localIdentifier = getLocalIdentifierFromItem(item);
-    return relativePreset.find(x => {
+    return relativePreset.find((x) => {
         return x.localIdentifier === localIdentifier.toUpperCase();
     });
 };
@@ -320,8 +315,8 @@ export const clickStaticFilter = (wrapper: WrapperType, filter: string) => {
 export const getAllStaticItemsLabels = (wrapper: WrapperType): string[] => {
     const staticItems = wrapper
         .find("button.gd-filter-list-item")
-        .filterWhere(item => item.html().includes("s-relative-preset-"));
-    return staticItems.map(x => x.text());
+        .filterWhere((item) => item.html().includes("s-relative-preset-"));
+    return staticItems.map((x) => x.text());
 };
 
 // absolute presets

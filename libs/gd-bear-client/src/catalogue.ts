@@ -311,7 +311,7 @@ export class CatalogueModule {
 
         return this.xhr
             .postParsed<GdcDateDataSets.IDateDataSetResponse>(uri, { data: { dateDataSetsRequest } })
-            .then(data => data.dateDataSetsResponse);
+            .then((data) => data.dateDataSetsResponse);
     }
 
     private loadCatalog(projectId: string, catalogRequest: any) {
@@ -319,7 +319,7 @@ export class CatalogueModule {
 
         return this.xhr
             .post(uri, { data: { catalogRequest } })
-            .then(r => r.getData())
-            .then(data => data.catalogResponse);
+            .then((r) => r.getData())
+            .then((data) => data.catalogResponse);
     }
 }

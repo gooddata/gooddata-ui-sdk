@@ -81,7 +81,7 @@ function allRulesMet(
     buckets: IBucketOfFun[],
     filters?: IFilters,
 ): boolean {
-    return rules.every(rule => rule(buckets, filters));
+    return rules.every((rule) => rule(buckets, filters));
 }
 
 function hasDateInCategories(buckets: IBucketOfFun[]): boolean {
@@ -117,10 +117,10 @@ export function hasUsedDate(buckets: IBucketOfFun[], filters: IFilters): boolean
 
 function hasNoWeekGranularity(buckets: IBucketOfFun[]): boolean {
     if (hasDateInCategories(buckets)) {
-        return every(getAllAttributeItems(buckets), item => get(item, "granularity") !== GRANULARITY.week);
+        return every(getAllAttributeItems(buckets), (item) => get(item, "granularity") !== GRANULARITY.week);
     }
 
-    return every(getBucketItems(buckets, FILTERS), item => get(item, "granularity") !== GRANULARITY.week);
+    return every(getBucketItems(buckets, FILTERS), (item) => get(item, "granularity") !== GRANULARITY.week);
 }
 
 function hasNoMeasureDateFilter(buckets: IBucketOfFun[]): boolean {
@@ -144,7 +144,7 @@ function isShowPercentageUnselected(buckets: IBucketOfFun[]): boolean {
 
 export function noDerivedMeasurePresent(buckets: IBucketOfFun[]): boolean {
     const measures = getAllItemsByType(buckets, [METRIC]);
-    return !some(measures, measure => measure.masterLocalIdentifier);
+    return !some(measures, (measure) => measure.masterLocalIdentifier);
 }
 
 function hasFirstDate(buckets: IBucketOfFun[]): boolean {

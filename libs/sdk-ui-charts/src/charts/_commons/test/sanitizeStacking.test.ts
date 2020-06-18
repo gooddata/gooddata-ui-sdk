@@ -6,11 +6,11 @@ import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 const [M1, M2]: IMeasure[] = ["m1", "m2"].map((name: string) => {
-    return newMeasure(name, m => m.localId(name));
+    return newMeasure(name, (m) => m.localId(name));
 });
 
 function createMeasureWithRatio(name: string): IMeasure {
-    return newMeasure(name, m => m.localId(name).ratio());
+    return newMeasure(name, (m) => m.localId(name).ratio());
 }
 
 describe("sanitizeConfig", () => {

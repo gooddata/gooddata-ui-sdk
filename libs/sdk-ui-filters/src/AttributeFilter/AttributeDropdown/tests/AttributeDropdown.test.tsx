@@ -43,7 +43,7 @@ describe("AttributeDropdown", () => {
 
     // we have to wait for the debounced onSearch
     const waitForDebounce = () =>
-        new Promise(resolve => {
+        new Promise((resolve) => {
             setTimeout(() => {
                 resolve();
             }, 300);
@@ -85,10 +85,7 @@ describe("AttributeDropdown", () => {
         await waitForAsync();
         wrapper.update();
 
-        wrapper
-            .find(AttributeFilterItem)
-            .first()
-            .simulate("click");
+        wrapper.find(AttributeFilterItem).first().simulate("click");
 
         wrapper.find("button.s-apply").simulate("click");
 
@@ -118,10 +115,7 @@ describe("AttributeDropdown", () => {
         await waitForAsync();
         wrapper.update();
 
-        wrapper
-            .find(AttributeFilterItem)
-            .first()
-            .simulate("click");
+        wrapper.find(AttributeFilterItem).first().simulate("click");
 
         wrapper.find("button.s-apply").simulate("click");
 
@@ -147,10 +141,7 @@ describe("AttributeDropdown", () => {
         await waitForAsync();
         wrapper.update();
 
-        wrapper
-            .find(AttributeFilterItem)
-            .first()
-            .simulate("click");
+        wrapper.find(AttributeFilterItem).first().simulate("click");
 
         wrapper.find("button.s-cancel").simulate("click");
 
@@ -235,10 +226,7 @@ describe("AttributeDropdown", () => {
         await waitForAsync();
         wrapper.update();
 
-        wrapper
-            .find(AttributeFilterItem)
-            .first()
-            .simulate("click");
+        wrapper.find(AttributeFilterItem).first().simulate("click");
 
         wrapper.find("button.s-apply").simulate("click");
 
