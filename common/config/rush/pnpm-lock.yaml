@@ -150,8 +150,8 @@ dependencies:
   node-sass-magic-importer: 5.3.2
   ora: 4.0.4
   p-map: 3.0.0
-  prettier: 1.19.1
-  pretty-quick: 1.11.1_prettier@1.19.1
+  prettier: 2.0.5
+  pretty-quick: 2.0.1_prettier@2.0.5
   prompt: 1.0.0
   prop-types: 15.7.2
   qs: 6.9.4
@@ -3902,12 +3902,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-45sJrqne+Gao8gbiiK9jkZuuOcQ=
-  /array-differ/2.1.0:
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-KbUpJgx909ZscOc/7CLATBFam7P1Z1QRQInvgT0UztM9Q72aGKCunKASAl7WNW0tnPmPyEMeMhdsfWhfmW037w==
   /array-differ/3.0.0:
     dev: false
     engines:
@@ -6404,14 +6398,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ElYDfsufDF9549bvE14wdwGEuYI=
-  /cross-spawn/5.1.0:
-    dependencies:
-      lru-cache: 4.1.5
-      shebang-command: 1.2.0
-      which: 1.3.1
-    dev: false
-    resolution:
-      integrity: sha1-6L0O/uWPz/b4+UUQoKVUu/ojVEk=
   /cross-spawn/6.0.5:
     dependencies:
       nice-try: 1.0.5
@@ -7723,20 +7709,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-sEFIkc61v75sWeOe72qyrqg2Qg0OuLESziUDk/O/z2qgS15y2gWVFrI6f2Qn/qw/0/NCfCEsmNA4zOjkwEZT1A==
-  /execa/0.8.0:
-    dependencies:
-      cross-spawn: 5.1.0
-      get-stream: 3.0.0
-      is-stream: 1.1.0
-      npm-run-path: 2.0.2
-      p-finally: 1.0.0
-      signal-exit: 3.0.3
-      strip-eof: 1.0.0
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha1-2NdrvBtVIX7RkP1t1J08d07PyNo=
   /execa/1.0.0:
     dependencies:
       cross-spawn: 6.0.5
@@ -7751,6 +7723,22 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-adbxcyWV46qiHyvSp50TKt05tB4tK3HcmF7/nxfAdhnox83seTDbwnaqKO4sXRy7roHAIFqJP/Rw/AuEbX61LA==
+  /execa/2.1.0:
+    dependencies:
+      cross-spawn: 7.0.3
+      get-stream: 5.1.0
+      is-stream: 2.0.0
+      merge-stream: 2.0.0
+      npm-run-path: 3.1.0
+      onetime: 5.1.0
+      p-finally: 2.0.1
+      signal-exit: 3.0.3
+      strip-final-newline: 2.0.0
+    dev: false
+    engines:
+      node: ^8.12.0 || >=9.7.0
+    resolution:
+      integrity: sha512-Y/URAVapfbYy2Xp/gb6A0E7iR8xeqOCXsuuaoMn7A5PzrXUK84E1gyiEfq0wQd/GHA6GsoHWwhNq8anb0mleIw==
   /execa/3.4.0:
     dependencies:
       cross-spawn: 7.0.3
@@ -8552,12 +8540,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-uWjGsKBDhDJJAui/Gl3zJXmkUP4=
-  /get-stream/3.0.0:
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha1-jpQ9E1jcN1VQVOy+LtsFqhdO3hQ=
   /get-stream/4.1.0:
     dependencies:
       pump: 3.0.0
@@ -11904,17 +11886,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-ji6J5enbMyGRHIAkAOu3WdV8nggqviKCEKtXcOqfphZZtQrmHKycfynJ2V7eVPUA4NhJ6V7Wf4TmGbTwKE9B6g==
-  /multimatch/3.0.0:
-    dependencies:
-      array-differ: 2.1.0
-      array-union: 1.0.2
-      arrify: 1.0.1
-      minimatch: 3.0.4
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-22foS/gqQfANZ3o+W7ST2x25ueHDVNWl/b9OlGcLpy/iKxjCpvcNCM51YCenUi7Mt/jAjjqv8JwZRs8YP5sRjA==
   /multimatch/4.0.0:
     dependencies:
       '@types/minimatch': 3.0.3
@@ -12229,6 +12200,14 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-NakjLfo11wZ7TLLd8jV7GHFTbF8=
+  /npm-run-path/3.1.0:
+    dependencies:
+      path-key: 3.1.1
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-Dbl4A/VfiVGLgQv29URL9xshU8XDY1GeLy+fsaZ1AA8JDSfjvr5P5+pzRbWqRSBxk6/DW7MIh8lTM/PaGnP2kg==
   /npm-run-path/4.0.1:
     dependencies:
       path-key: 3.1.1
@@ -13156,13 +13135,13 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=
-  /prettier/1.19.1:
+  /prettier/2.0.5:
     dev: false
     engines:
-      node: '>=4'
+      node: '>=10.13.0'
     hasBin: true
     resolution:
-      integrity: sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
+      integrity: sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
   /pretty-error/2.1.1:
     dependencies:
       renderkid: 2.0.3
@@ -13187,21 +13166,23 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
-  /pretty-quick/1.11.1_prettier@1.19.1:
+  /pretty-quick/2.0.1_prettier@2.0.5:
     dependencies:
       chalk: 2.4.2
-      execa: 0.8.0
-      find-up: 2.1.0
-      ignore: 3.3.10
+      execa: 2.1.0
+      find-up: 4.1.0
+      ignore: 5.1.8
       mri: 1.1.5
-      multimatch: 3.0.0
-      prettier: 1.19.1
+      multimatch: 4.0.0
+      prettier: 2.0.5
     dev: false
+    engines:
+      node: '>=8'
     hasBin: true
     peerDependencies:
       prettier: '>=1.8.0'
     resolution:
-      integrity: sha512-kSXCkcETfak7EQXz6WOkCeCqpbC4GIzrN/vaneTGMP/fAtD8NerA9bPhCUqHAks1geo7biZNl5uEMPceeneLuA==
+      integrity: sha512-y7bJt77XadjUr+P1uKqZxFWLddvj3SKY6EU4BuQtMxmmEFSMpbN132pUWdSG1g1mtUfO0noBvn7wBf0BVeomHg==
   /prismjs/1.17.1:
     dev: false
     optionalDependencies:
@@ -17984,7 +17965,7 @@ packages:
       lodash: 4.17.15
       ora: 4.0.4
       p-map: 3.0.0
-      prettier: 1.19.1
+      prettier: 2.0.5
       prompt: 1.0.0
       strip-ansi: 5.2.0
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
@@ -17996,7 +17977,7 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-Z1pvPeTyChP29QxLz/5tPU9ciJh+LZVJOjoDm0SZrKOXUhe8EC0PnHugX+PV2RE9F74+LdfI8yZPiwD8Cr2Nuw==
+      integrity: sha512-s4QXBDPiIk1OdqhftSL3ESlN+TyFuZHe7waLA90pINHGaybIWpEk7NMUCmNgr/ntfFIptg4kKzoTqVFdpIg0bQ==
       tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/examples-workspace.tgz':
@@ -18010,7 +17991,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
@@ -18018,7 +17999,7 @@ packages:
     dev: false
     name: '@rush-temp/examples-workspace'
     resolution:
-      integrity: sha512-yaa27q/E8wiMTkHh42CbJIYndMbQTCzHB/ItlsWVQK6WKJdBeoM8e9bv4q2Ii43WCfDcC+XzZsHC0Xc6y3V2Hw==
+      integrity: sha512-tipSuJjEjYDcpwCzl12aOrTM5y3Y78i14ThkFjYNuRicrLKIEn1R37WgwHcbODnRztg10xkikyCDPrnVuJS4cA==
       tarball: 'file:projects/examples-workspace.tgz'
     version: 0.0.0
   'file:projects/gd-bear-client.tgz':
@@ -18048,7 +18029,7 @@ packages:
       lodash-webpack-plugin: 0.11.5_webpack@4.43.0
       md5: 2.2.1
       node-fetch: 1.7.3
-      prettier: 1.19.1
+      prettier: 2.0.5
       qs: 6.9.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       ts-loader: 6.2.2_typescript@3.9.5
@@ -18062,7 +18043,7 @@ packages:
     dev: false
     name: '@rush-temp/gd-bear-client'
     resolution:
-      integrity: sha512-qfg8PeGXzyPw0kfhavL91cxyPVUS/N6j+q1atuSUY3cOk2IpFMWqQn72bsvF7fq4hTQuVzkm4vDp0c1jhWx1rw==
+      integrity: sha512-lO36lSelPTq3ITYAUk6PFrHt+1eS+2M5bcEYTIlKqzTfnGRtiehGZzmfmdBjTqChK5tZ67ip8cik8JetnFKLVw==
       tarball: 'file:projects/gd-bear-client.tgz'
     version: 0.0.0
   'file:projects/gd-bear-model.tgz':
@@ -18075,7 +18056,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
@@ -18083,7 +18064,7 @@ packages:
     dev: false
     name: '@rush-temp/gd-bear-model'
     resolution:
-      integrity: sha512-eJDqMh0IiKRclmUpzqXdEbfqeHEf3GnuvJ9GboGp6yFr7HZSAXRo/+bEZZVqc1+F/e3M4McC56UPglIqDCeYDQ==
+      integrity: sha512-U/XfljzhgXpx9Fg7NKtvuesVuK6M3MsErnTzl/eLiyrkzBSS8xzTxxcEsoJ1i9dAoCoesgjorqffsjYUM9lKEw==
       tarball: 'file:projects/gd-bear-model.tgz'
     version: 0.0.0
   'file:projects/gd-tiger-client.tgz':
@@ -18102,7 +18083,7 @@ packages:
       jest-junit: 3.7.0
       lodash: 4.17.15
       mkdirp: 1.0.4
-      prettier: 1.19.1
+      prettier: 2.0.5
       qs: 6.9.4
       spark-md5: 3.0.1
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
@@ -18112,7 +18093,7 @@ packages:
     dev: false
     name: '@rush-temp/gd-tiger-client'
     resolution:
-      integrity: sha512-RrS6KDBG4d1+mWKpbWvGpjkNZJpDPq6ZpYN5BL71yjVf/WLyCdoLtsuZ6Q+h/fPhZveXAgHAEBoCWbtflIjEZw==
+      integrity: sha512-rxBl1PJMkdlklV0IL6b/INxdhXR01kuJBSNhWkeC5ATej4+RYdLqm1z2hp6cAPaJ1D4pzTJIhr+NaQwr7MloZQ==
       tarball: 'file:projects/gd-tiger-client.tgz'
     version: 0.0.0
   'file:projects/mock-handling.tgz':
@@ -18133,7 +18114,7 @@ packages:
       lodash: 4.17.15
       ora: 4.0.4
       p-map: 3.0.0
-      prettier: 1.19.1
+      prettier: 2.0.5
       prompt: 1.0.0
       rimraf: 3.0.2
       strip-ansi: 5.2.0
@@ -18146,7 +18127,7 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-ICN7/5fJR0DZ5PHE1yf9b1n9NmaLXHA4rwI1+MAL4RnTEUo5oCDs1439+LqVFMFEIFlovv/Ec+y3NxfvfWiH5g==
+      integrity: sha512-RVhUy2Us9Hac9tVIeAhUXteZGUirCYvfB9mBBjn5uMTAsyjv4P8EoFAN2fBSE2Af8dXtZYSGCdWSEzr7bNszJg==
       tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/reference-workspace-mgmt.tgz':
@@ -18158,7 +18139,7 @@ packages:
       dependency-cruiser: 8.2.0_typescript@3.9.5
       jest: 25.5.4
       jest-junit: 3.7.0
-      prettier: 1.19.1
+      prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
@@ -18166,7 +18147,7 @@ packages:
     dev: false
     name: '@rush-temp/reference-workspace-mgmt'
     resolution:
-      integrity: sha512-NDT+f8yf/zvxYAWTJ91M3MbsvbeS+tz+74UOZugxdYtd3I2kF3Cen9VUB11026S8q8LvhCEZgSXiU2i+w1/jdg==
+      integrity: sha512-IRchlqkKAFVh9InTJBMgleO+jixa48LZI7yB+H1/l7lCUW2EXHYWswZVyg0CRcrFAbNEBjX/wWBTkfkq7pdGEg==
       tarball: 'file:projects/reference-workspace-mgmt.tgz'
     version: 0.0.0
   'file:projects/reference-workspace.tgz':
@@ -18179,7 +18160,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
@@ -18187,7 +18168,7 @@ packages:
     dev: false
     name: '@rush-temp/reference-workspace'
     resolution:
-      integrity: sha512-k2rQUtLZtvWSmIGfBUhbONeoI3J16lreeSmDIHp6pqT7IGb00zaCG5FSmAraboIWpl37aHhKodQFROoXCW944g==
+      integrity: sha512-Qrh+ioRV1yx6fbv29RzayyEyfzSpCDDuz3XOZv3midRBCS7RSn82Qw6/u4JLoc1UgAx18PkDEe4Amx/VlwKckw==
       tarball: 'file:projects/reference-workspace.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-base.tgz':
@@ -18205,7 +18186,7 @@ packages:
       json-stable-stringify: 1.0.1
       lodash: 4.17.15
       lru-cache: 5.1.1
-      prettier: 1.19.1
+      prettier: 2.0.5
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
@@ -18215,7 +18196,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-base'
     resolution:
-      integrity: sha512-b+kRZZbPcSTBPIjS9SVptmH1iJmdxFAq38bkxn8WtgUGzulOODPBGJkn5vXh+N71dibLYOp3J98diwJv18CwqA==
+      integrity: sha512-pN366/k9Nn9WExQBiPd8Gqgb9O1L8McEhat7LfgwDhe0VFMVo4IJoG6H1+KcjEyVy1cZ+TSDTy6Rr7YN3CmcCQ==
       tarball: 'file:projects/sdk-backend-base.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-bear.tgz':
@@ -18234,7 +18215,7 @@ packages:
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
@@ -18245,7 +18226,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-bear'
     resolution:
-      integrity: sha512-f+8tjMV58b0ApH6e02b/M46bF2/5N/xf2EwJYzc75SRwOO6IG4aANK1SHjDMoVWJfP8Cm2U2vQxuAjQlxtEzIQ==
+      integrity: sha512-ZZZ8QbT4iwOftXJPaxh0drZYdZAm/dInrpAS4tOYJ7CjNcI2uT0JUTxHwLWRzRacbDGzZk8W3Fb5kqWZyLzJDA==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz':
@@ -18259,7 +18240,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslint: 5.20.1_typescript@3.9.5
@@ -18268,7 +18249,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-mockingbird'
     resolution:
-      integrity: sha512-NrIQirB6PrKH6TWljjalyYAO919oWrwH0F9HsmaKrW7unG0EHR5OvcdBpqY06sFx00N3Bz3+hX/qT9AnnRMSqA==
+      integrity: sha512-BwNKTwZ1j33+O8IJ91zQiLkamkL/G/SWToMWYyV1EnW69YOHf85GtnuPPNsypCEG+u2aDNm+W5D0CQ/nBJ476w==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
@@ -18282,7 +18263,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
@@ -18292,7 +18273,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-spi'
     resolution:
-      integrity: sha512-HN8zJrEad9+0ki2R6CLorx0ho+Pcsjy/ug5cPt1jVg8AQlRNoYiEMF3n8yBLvBSoMh6jvHdgZ3WPInqEO7ffrg==
+      integrity: sha512-PZfjiaSUeBx8ywFF6z6qk6gNLTyp+po4uG5WBZB3/KuG0JiLCo30U5nsPZKDQM+ye6epzTWiUvXtJPduQjSqvQ==
       tarball: 'file:projects/sdk-backend-spi.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-tiger.tgz':
@@ -18309,7 +18290,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
@@ -18321,7 +18302,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-tiger'
     resolution:
-      integrity: sha512-vxWDRWGqqSVj7lvgPSk346AdyzKRKYq78ym0VLO1CdbDhfqO1AvV230BNsX2WvQ7eMSpuWt+xj8/wYgApj1fSQ==
+      integrity: sha512-x+I31g3Ok0CLGcehZDwSc0bBMuV3sKHmvkMUEoK2NESGQj5ZYfCo+OnMnuOy4kUFNEh9az8vhebgzu++bvVtcw==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-examples.tgz_prop-types@15.7.2':
@@ -18379,7 +18360,7 @@ packages:
       lodash: 4.17.15
       moment: 2.26.0
       node-sass: 4.14.1
-      prettier: 1.19.1
+      prettier: 2.0.5
       raw-loader: 4.0.1_webpack@4.43.0
       react: 16.13.1
       react-datepicker: 2.16.0_react-dom@16.13.1+react@16.13.1
@@ -18411,7 +18392,7 @@ packages:
     peerDependencies:
       prop-types: '*'
     resolution:
-      integrity: sha512-IaeVJevk645xNEhGTRPc7yfG4eYEiTzJvoCROwai9W9HkD1KQg9QwbkBbO+QXxdVEePdxzkHqyJsjjFGr+aTKA==
+      integrity: sha512-X7GWjvbwZplAMIE6AAzqBRJ1eWm3nOgF5u3Y7DW8lYhVLg8QiOsr/7iJsmXVdgSil0TmxJMe/b4fk1kaQVyzGw==
       tarball: 'file:projects/sdk-examples.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -18429,7 +18410,7 @@ packages:
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       spark-md5: 3.0.1
       stringify-object: 2.4.0
       ts-invariant: 0.4.4
@@ -18440,7 +18421,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-model'
     resolution:
-      integrity: sha512-oL52Zp11G2IKLtiEPkTgWzuqjaCK8WUruTiMxqXTJqm4txhuY3Ddb0TwkC/yHTOu8m5nOzlsrcnwGWxOEPVByw==
+      integrity: sha512-LOXOee30FfRnOK6hbccKTx6c0dn/nfDTtl3M7JIbQbIbjQSjZtwqWebuWutmRYNI7qi6W0944DnvrVQdt/RuOg==
       tarball: 'file:projects/sdk-model.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-ts.tgz':
@@ -18453,7 +18434,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
@@ -18461,7 +18442,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-skel-ts'
     resolution:
-      integrity: sha512-y1x7A42qNsx8V8gsBfR32WEIDK6MM41xpvyLTHRchNq3WFAmqH8zt87UZNvHlUYtkDpPq5YWjFiIwxhuuhBOeQ==
+      integrity: sha512-xbMpMKoZ7eSBLcYQZ8xfC26Lf+2O/3Vf5YytJWnlZEc8cNM9ujcIokDCnkmfjzIISrWefqTjUnE82RdXaBeidQ==
       tarball: 'file:projects/sdk-skel-ts.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-tsx.tgz':
@@ -18485,7 +18466,7 @@ packages:
       lodash: 4.17.15
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
-      prettier: 1.19.1
+      prettier: 2.0.5
       prop-types: 15.7.2
       raf: 3.4.1
       react: 16.13.1
@@ -18498,7 +18479,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-skel-tsx'
     resolution:
-      integrity: sha512-n/T9glQN0Bl6e6TB+YO+JlZrG2EX4nArw6itTcrwnrCK1TwFQfWow5gMdHx0tE/9E9fV7MsJfxvrfYDqi6RlJQ==
+      integrity: sha512-HudS72TlYN0uRc9nTlcI1eM/phZPtJ9ZU6BRHf84dYUl5f+GgI0BtvBxDMoxtSbeuYTdv8HBe9hDSyELvsPPNw==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-all.tgz':
@@ -18509,7 +18490,7 @@ packages:
       dependency-cruiser: 8.2.0_typescript@3.9.5
       jest: 25.5.4
       jest-junit: 3.7.0
-      prettier: 1.19.1
+      prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
@@ -18517,7 +18498,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-all'
     resolution:
-      integrity: sha512-E0PR7Gpp1eA9ger98A58C0rJ4KhXaTcvUWfhv27rYYxabNhjTbeq6S39bqQoJphY2IQHYtpts44v29ekQBXiPw==
+      integrity: sha512-4FXHh+aKPwiI272wMokwLk5WwM62QiRmJSAPiVA0+5cgwW/vgUJUzlxClZRcN3qzheo+sRYhc8fMaUYb49Bpdw==
       tarball: 'file:projects/sdk-ui-all.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-charts.tgz':
@@ -18556,7 +18537,7 @@ packages:
       lodash: 4.17.15
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
-      prettier: 1.19.1
+      prettier: 2.0.5
       raf: 3.4.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -18569,7 +18550,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-charts'
     resolution:
-      integrity: sha512-JlKNyB7NhDRuSoCsYj3VAUNMh3kpxpj+d4MbRCEvZ0tQhvXhteplr2vh49llx7O+/14AYbmO7r7U/qcLK8U03A==
+      integrity: sha512-6wdmnAqwzy7DFvarmAZ938e+fLiaM7ZTumKh8plMo1eO7Qem7vfa5cchODNbcZoMlIPUL375G3I8bMGGF5qjcw==
       tarball: 'file:projects/sdk-ui-charts.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-ext.tgz':
@@ -18605,7 +18586,7 @@ packages:
       lodash: 4.17.15
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
-      prettier: 1.19.1
+      prettier: 2.0.5
       raf: 3.4.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -18619,7 +18600,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-ext'
     resolution:
-      integrity: sha512-WtYrUBRDIF3Z9KAZatliqW4qDYKN8UCurvZ1koZHa0Od7xQGA9MeuHTA075j/eDZG5NK02z0W5yMVofCKXWW0A==
+      integrity: sha512-noLG2uWgJnQiuA/hwM+MXUUugm/oXjCyPSPL6cq97Mf2Csq9SBUAfa4BHF/1V9Vll1C3N0t3Jqif9121wjDTCw==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz':
@@ -18659,7 +18640,7 @@ packages:
       moment: 2.26.0
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
-      prettier: 1.19.1
+      prettier: 2.0.5
       raf: 3.4.1
       react: 16.13.1
       react-day-picker: 7.3.0_react@16.13.1
@@ -18674,7 +18655,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-filters'
     resolution:
-      integrity: sha512-9TZMH0IskoPn3mD67SBO3nipXYtCEGq7Xq0aTtbOuIuAd/mF+zYDMAddKbHbACOvmVWUjKBZsJfy4zLkpeT1QQ==
+      integrity: sha512-Pleu81JhjZ3LTh8ZPfZHcZpn2K5pghzcqiLYYsRFbl9wdUnlfB8ao/5OYbkER6PTeTKk7jkalyRnakzq4+70Xg==
       tarball: 'file:projects/sdk-ui-filters.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-geo.tgz':
@@ -18706,7 +18687,7 @@ packages:
       mapbox-gl: 1.11.0_mapbox-gl@1.11.0
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
-      prettier: 1.19.1
+      prettier: 2.0.5
       prop-types: 15.7.2
       raf: 3.4.1
       react: 16.13.1
@@ -18721,7 +18702,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-geo'
     resolution:
-      integrity: sha512-bRIloQa8RgFoeybWuCuxVTf0vbogtXj/clSF4HXswwfzJpTjPWjC1K7td+eCWXw7YOlGQX1zpiS/F9f5xkrgrg==
+      integrity: sha512-mScRZUmN0RKswoGAU7fDZOzvGyYbjFMKgZUMOVhucKEIQSxaYgYMB2OJETjLrCPAPD98mX7Fy7uC94Jc6VBU+g==
       tarball: 'file:projects/sdk-ui-geo.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-pivot.tgz':
@@ -18760,7 +18741,7 @@ packages:
       lodash: 4.17.15
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
-      prettier: 1.19.1
+      prettier: 2.0.5
       raf: 3.4.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -18772,7 +18753,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-pivot'
     resolution:
-      integrity: sha512-G4ujaUGJvEFc7WE4cJIVEdfHAf6fYMcvoZaZyv6pxE1rQWdUF7QWPq2GpGFitGKupb7/vAq9W7wZWZm+zQPFww==
+      integrity: sha512-QMhccxHF81Zr76oRgRPFuIOTpRfMcDTaNJYhXlvjlyDH12/kbHlzj7sKr1UKr1qF6Fbs//aVayevgX7GkNrt+Q==
       tarball: 'file:projects/sdk-ui-pivot.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-tests.tgz_webpack@4.43.0':
@@ -18809,7 +18790,7 @@ packages:
       jest-junit: 3.7.0
       lodash: 4.17.15
       mapbox-gl: 1.11.0_mapbox-gl@1.11.0
-      prettier: 1.19.1
+      prettier: 2.0.5
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       spark-md5: 3.0.1
@@ -18826,7 +18807,7 @@ packages:
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-ltZEUhN2XYHtxu4vbtnUNwokgS4OeQEh51ad3sR4qnvl8QoAaTy/qzvYClxnl0+QmvS/9ilP+JdQzHcE5S4nOA==
+      integrity: sha512-SZMwtb17eWaCgAEmhcqKFM7LHQsFIhTyfY+TzsRN/fWkFqtQ+uuCTehzPh6EIphj+DNB2zuSkBS8R2qB0FP2AA==
       tarball: 'file:projects/sdk-ui-tests.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-vis-commons.tgz':
@@ -18856,7 +18837,7 @@ packages:
       lodash: 4.17.15
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
-      prettier: 1.19.1
+      prettier: 2.0.5
       prop-types: 15.7.2
       raf: 3.4.1
       react: 16.13.1
@@ -18870,7 +18851,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-vis-commons'
     resolution:
-      integrity: sha512-CWHC0Tq759a1t37VZWAbIM+lsxNytPdmpg6CF558bG6ivNTj3NEd0CDmt6K5L/d0/9RoZaVV2msBCwPfj4oS5w==
+      integrity: sha512-17ECAd4wVJ9OLbc4brm4qQ4W6A/gtRvV+BtO64dF+6njqvBFZvSs5dYu3mjg2ugwXaMUre519syv3IB937nWDA==
       tarball: 'file:projects/sdk-ui-vis-commons.tgz'
     version: 0.0.0
   'file:projects/sdk-ui.tgz':
@@ -18902,7 +18883,7 @@ packages:
       jest-enzyme: 7.1.2_cf42f157aab73decab4c77c6f27921b2
       jest-junit: 3.7.0
       lodash: 4.17.15
-      prettier: 1.19.1
+      prettier: 2.0.5
       raf: 3.4.1
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
@@ -18915,7 +18896,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui'
     resolution:
-      integrity: sha512-Zs1rb19aNHwfL5pxfmlriAKQas2PWStd9FfZr+KkPUg7plClJO9Vsg/r5H7GSP1Twk424GaVSeWMr4VBLFLx9Q==
+      integrity: sha512-xllOrYUR+ZlPHhUTVNjPhPokqc/tahYFrAuzfORFGJUokzsik8/m0yAsaElCnbt5d/9IQxJKhB5pWQpCX/n0gg==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
 registry: ''
@@ -19071,8 +19052,8 @@ specifiers:
   node-sass-magic-importer: ^5.3.2
   ora: ^4.0.2
   p-map: ^3.0.0
-  prettier: ~1.19.1
-  pretty-quick: ~1.11.0
+  prettier: ~2.0.5
+  pretty-quick: ~2.0.1
   prompt: ^1.0.0
   prop-types: ^15.6.0
   qs: ^6.5.1
