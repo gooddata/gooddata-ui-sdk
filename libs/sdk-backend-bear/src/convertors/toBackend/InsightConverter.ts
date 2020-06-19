@@ -23,7 +23,7 @@ import isEmpty from "lodash/isEmpty";
 import omitBy from "lodash/omitBy";
 import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
 import { serializeProperties } from "../fromBackend/PropertiesConverter";
-import { convertExtendedFilter, shouldFilterBeIncluded } from "./FilterConverter";
+import { convertExtendedFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 
 const convertAttribute = (attribute: IAttribute): GdcVisualizationObject.IAttribute => {
@@ -61,7 +61,7 @@ const convertInsightContent = (
 
     const nonEmptyProperties = omitBy(properties, (value, key) => key !== "controls" && isEmpty(value));
 
-    const filters = insightFilters(insight).filter(shouldFilterBeIncluded).map(convertExtendedFilter);
+    const filters = insightFilters(insight).map(convertExtendedFilter);
 
     return {
         buckets: insightBuckets(insight).map(convertBucket),

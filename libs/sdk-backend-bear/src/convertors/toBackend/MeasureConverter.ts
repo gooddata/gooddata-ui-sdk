@@ -29,7 +29,7 @@ import {
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { toBearRef } from "./ObjRefConverter";
-import { convertFilter, shouldFilterBeIncluded } from "./FilterConverter";
+import { convertFilter } from "./FilterConverter";
 
 const convertPreviousPeriodDataSet = (
     dataSet: IPreviousPeriodDateDataSet,
@@ -85,7 +85,7 @@ const convertSimpleMeasureDefinition = (
 
     const aggregation = measureAggregation(measure);
     const computeRatio = measureDoesComputeRatio(measure);
-    const filters = (measureFilters(measure) || []).filter(shouldFilterBeIncluded).map(convertFilter);
+    const filters = (measureFilters(measure) || []).map(convertFilter);
 
     return {
         measureDefinition: {

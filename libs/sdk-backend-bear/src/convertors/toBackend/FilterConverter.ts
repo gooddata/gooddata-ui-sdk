@@ -105,17 +105,3 @@ export const convertFilter = (filter: IMeasureFilter): GdcVisualizationObject.Fi
         return convertRelativeDateFilter(filter);
     }
 };
-
-const isSelectAllFilter = (filter: IFilter): boolean => {
-    if (isNegativeAttributeFilter(filter)) {
-        const elements = filterAttributeElements(filter);
-        const elementData = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
-        return elementData.length === 0;
-    }
-
-    return false;
-};
-
-export const shouldFilterBeIncluded = (filter: IFilter): boolean => {
-    return !isSelectAllFilter(filter);
-};
