@@ -31,7 +31,7 @@ const convertAttributeElements = (items: string[]): IAttributeElements => {
     return isUriLike(first) ? { uris: items } : { values: items };
 };
 
-const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter | null => {
+const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter => {
     if (GdcVisualizationObject.isMeasureValueFilter(filter)) {
         return {
             measureValueFilter: {
@@ -44,7 +44,7 @@ const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter |
     return convertMeasureFilter(filter);
 };
 
-const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFilter | null => {
+const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFilter => {
     if (GdcVisualizationObject.isAttributeFilter(filter)) {
         if (GdcVisualizationObject.isPositiveAttributeFilter(filter)) {
             return {
