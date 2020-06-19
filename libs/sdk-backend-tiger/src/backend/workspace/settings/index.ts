@@ -9,6 +9,7 @@ import { TigerAuthenticatedCallGuard } from "../../../types";
 const HardcodedSettings = {
     enablePushpinGeoChart: true,
     enableBulletChart: true,
+    enableComboChart: true,
     enableNewADFilterBar: true,
     enableMeasureValueFilters: true,
     enableMetricDateFilter: true,
