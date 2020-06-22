@@ -121,6 +121,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     private insight: IInsight | undefined;
     private colorPalette: IColorPalette | undefined;
     private settings: IWorkspaceSettings | undefined;
+    private containerRef = React.createRef<HTMLDivElement>();
 
     public static defaultProps: Partial<IInsightViewProps> = {
         ErrorComponent,
@@ -165,7 +166,8 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     };
 
     private updateVisualization = () => {
-        if (!this.visualization) {
+        // if the container no longer exists, update was called after unmount -> do nothing
+        if (!this.visualization || !this.containerRef.current) {
             return;
         }
 
@@ -351,7 +353,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             <>
                 {this.state.isLoading && <LoadingComponent />}
                 {this.state.error && <ErrorComponent message={this.state.error.message} />}
-                <div className="visualization-uri-root" id={this.elementId} />
+                <div className="visualization-uri-root" id={this.elementId} ref={this.containerRef} />
             </>
         );
     }
