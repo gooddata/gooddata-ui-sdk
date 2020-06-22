@@ -91,10 +91,21 @@ interface IAttributeFilterProps {
      */
     locale?: string;
 
+    /**
+     * Optionally customize attribute filter with a callback function to trigger when an error occurs while
+     * loading attribute elements.
+     */
     onError?: OnError;
 
+    /**
+     * Optionally customize attribute filter with a component to be rendered if attribute elements are loading
+     */
     FilterLoading?: React.ComponentType;
-    FilterError?: any;
+
+    /**
+     * Optionally customize attribute filter with a component to be rendered if attribute elements loading fails
+     */
+    FilterError?: React.ComponentType<{ error?: any }>;
 }
 
 interface IAttributeFilterState {
@@ -103,7 +114,7 @@ interface IAttributeFilterState {
     error?: any;
 }
 
-const DefaultFilterError = injectIntl(({ intl }) => {
+const DefaultFilterError: React.FC = injectIntl(({ intl }) => {
     const text = intl.formatMessage({ id: "gs.filter.error" });
     return <div className="gd-message error s-button-error">{text}</div>;
 });

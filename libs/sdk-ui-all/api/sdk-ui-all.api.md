@@ -11,6 +11,7 @@ export * from "@gooddata/sdk-ui";
 export * from "@gooddata/sdk-ui-charts";
 export * from "@gooddata/sdk-ui-ext";
 export * from "@gooddata/sdk-ui-filters";
+export * from "@gooddata/sdk-ui-geo";
 export * from "@gooddata/sdk-ui-pivot";
 
 // (No @packageDocumentation comment for this package)
