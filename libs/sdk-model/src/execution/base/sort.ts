@@ -275,7 +275,7 @@ export function newMeasureSort(
  * Creates a new attribute locator for an attribute element.
  *
  * @param attributeOrId - attribute, can be specified by either the attribute object or its local identifier
- * @param element - attribute element value
+ * @param element - attribute element value URI or primary label value
  * @returns new locator
  * @public
  */
