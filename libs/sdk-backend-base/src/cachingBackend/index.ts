@@ -20,7 +20,9 @@ import {
 import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog";
 import stringify from "json-stable-stringify";
 import identity = require("lodash/identity");
+import isEqual = require("lodash/isEqual");
 import invariant from "ts-invariant";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
 
 //
 // Supporting types
@@ -51,7 +53,7 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
         super(decorated);
     }
 
-    public execute = (): Promise<IExecutionResult> => {
+    public execute = async (): Promise<IExecutionResult> => {
         const cacheKey = this.fingerprint();
         const cache = this.ctx.caches.execution!;
         let cacheEntry = cache.get(cacheKey);
@@ -71,11 +73,62 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
             cache.set(cacheKey, cacheEntry);
         }
 
-        return cacheEntry.result;
+        return new DefinitionSanitizingExecutionResult(
+            await cacheEntry.result,
+            this.createNew,
+            this.definition,
+        );
     };
 
     protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
         return new WithExecutionCaching(decorated, this.ctx);
+    };
+}
+
+/**
+ * This ExecutionResult decorator makes sure that definitions used throughout the result are set
+ * to the definitionOverride provided. This is useful with caching because different definitions may yield
+ * the same cache key, but having the proper definition in the returned execution result is critical:
+ * the definitions in the result must match the one which was used to request it.
+ * This however is not always the case when using cached results, so we need to ensure it explicitly.
+ *
+ * See the usage of this class in {@link WithExecutionCaching} fro more.
+ */
+class DefinitionSanitizingExecutionResult extends DecoratedExecutionResult {
+    constructor(
+        decorated: IExecutionResult,
+        wrapper: PreparedExecutionWrapper,
+        definitionOverride: IExecutionDefinition,
+    ) {
+        super(decorated, wrapper);
+        this.definition = definitionOverride;
+    }
+
+    public readAll = async (): Promise<IDataView> => {
+        return this.withSanitizedDefinition(await super.readAll());
+    };
+
+    public readWindow = async (offset: number[], size: number[]): Promise<IDataView> => {
+        return this.withSanitizedDefinition(await super.readWindow(offset, size));
+    };
+
+    private withSanitizedDefinition = (original: IDataView): IDataView => {
+        // if definitions are already correct, return the original object to preserve referential equality where possible
+        if (
+            isEqual(original.definition, this.definition) &&
+            isEqual(original.result.definition, this.definition)
+        ) {
+            return original;
+        }
+
+        return {
+            ...original,
+            definition: this.definition,
+            result: {
+                ...original.result,
+                definition: this.definition,
+            },
+        };
     };
 }
 

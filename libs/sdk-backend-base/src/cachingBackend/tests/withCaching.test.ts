@@ -4,7 +4,7 @@ import { IAnalyticalBackend, IExecutionResult } from "@gooddata/sdk-backend-spi"
 import { withCaching } from "../index";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { IAttributeOrMeasure } from "@gooddata/sdk-model";
+import { IAttributeOrMeasure, IBucket, newInsightDefinition, newBucket } from "@gooddata/sdk-model";
 
 function createBackend(realBackend: IAnalyticalBackend = dummyBackendEmptyData()): IAnalyticalBackend {
     return withCaching(realBackend, {
@@ -19,12 +19,58 @@ function doExecution(backend: IAnalyticalBackend, items: IAttributeOrMeasure[]):
     return backend.workspace("test").execution().forItems(items).execute();
 }
 
+function doInsightExecution(backend: IAnalyticalBackend, buckets: IBucket[]): Promise<IExecutionResult> {
+    const insight = newInsightDefinition("foo", (i) => i.buckets(buckets));
+    return backend.workspace("test").execution().forInsight(insight).execute();
+}
+
 describe("withCaching", () => {
-    it("caches executions calls", () => {
+    it("caches executions calls", async () => {
         const backend = createBackend();
 
-        const first = doExecution(backend, [ReferenceLdm.Won]);
-        const second = doExecution(backend, [ReferenceLdm.Won]);
+        const first = await doExecution(backend, [ReferenceLdm.Won]);
+        const second = await doExecution(backend, [ReferenceLdm.Won]);
+
+        expect(await second.readAll()).toBe(await first.readAll());
+    });
+
+    it("caches insight executions calls with different buckets with the same measures and sanitizes the definition", async () => {
+        const backend = createBackend();
+
+        const firstBuckets = [newBucket("measures", ReferenceLdm.Won, ReferenceLdm.WinRate)];
+
+        const secondBuckets = [
+            newBucket("measures", ReferenceLdm.Won),
+            newBucket("secondary_measures", ReferenceLdm.WinRate),
+        ];
+
+        const first = await doInsightExecution(backend, firstBuckets);
+        const second = await doInsightExecution(backend, secondBuckets);
+
+        // they have the same fingerprint...
+        expect(second.equals(first)).toBe(true);
+        // ... but different definitions (as the buckets are different)...
+        expect(second.definition).not.toEqual(first.definition);
+
+        const firstAll = await first.readAll();
+        const secondAll = await second.readAll();
+
+        // ...yet still result in equal data views...
+        expect(secondAll.equals(firstAll)).toBe(true);
+        // ... with different definitions
+        expect(secondAll.definition).not.toEqual(firstAll.definition);
+        expect(firstAll.definition).toBe(first.definition);
+        expect(secondAll.definition).toBe(second.definition);
+    });
+
+    it("caches insight executions calls with same buckets with the same measures and returns the same object", async () => {
+        const backend = createBackend();
+
+        const buckets = [newBucket("measures", ReferenceLdm.Won, ReferenceLdm.WinRate)];
+        const result = await doInsightExecution(backend, buckets);
+
+        const first = await result.readWindow([0, 0], [1, 1]);
+        const second = await result.readWindow([0, 0], [1, 1]);
 
         expect(second).toBe(first);
     });
@@ -43,8 +89,8 @@ describe("withCaching", () => {
         const backend = createBackend();
 
         const result = await doExecution(backend, [ReferenceLdm.Won]);
-        const first = result.readWindow([0, 0], [1, 1]);
-        const second = result.readWindow([0, 0], [1, 1]);
+        const first = await result.readWindow([0, 0], [1, 1]);
+        const second = await result.readWindow([0, 0], [1, 1]);
 
         expect(second).toBe(first);
     });

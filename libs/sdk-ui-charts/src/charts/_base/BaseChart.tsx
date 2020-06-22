@@ -108,7 +108,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
 }
 
 /**
- * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
+ * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disappear.
  *
  * @internal
  */
