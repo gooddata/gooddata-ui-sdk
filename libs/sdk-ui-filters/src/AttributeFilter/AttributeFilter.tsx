@@ -91,9 +91,20 @@ interface IAttributeFilterProps {
      */
     locale?: string;
 
+    /**
+     * Optionally customize attribute filter with a callback function to trigger when an error occurs while
+     * loading attribute elements.
+     */
     onError?: OnError;
 
+    /**
+     * Optionally customize attribute filter with a component to be rendered if attribute elements are loading
+     */
     FilterLoading?: React.ComponentType;
+
+    /**
+     * Optionally customize attribute filter with a component to be rendered if attribute elements loading fails
+     */
     FilterError?: any;
 }
 
