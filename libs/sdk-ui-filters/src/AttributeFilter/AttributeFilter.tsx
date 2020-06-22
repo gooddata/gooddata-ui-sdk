@@ -105,7 +105,7 @@ interface IAttributeFilterProps {
     /**
      * Optionally customize attribute filter with a component to be rendered if attribute elements loading fails
      */
-    FilterError?: any;
+    FilterError?: React.ComponentType<{ error?: any }>;
 }
 
 interface IAttributeFilterState {
@@ -114,7 +114,7 @@ interface IAttributeFilterState {
     error?: any;
 }
 
-const DefaultFilterError = injectIntl(({ intl }) => {
+const DefaultFilterError: React.FC = injectIntl(({ intl }) => {
     const text = intl.formatMessage({ id: "gs.filter.error" });
     return <div className="gd-message error s-button-error">{text}</div>;
 });
