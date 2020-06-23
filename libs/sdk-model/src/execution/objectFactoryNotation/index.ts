@@ -14,6 +14,7 @@ import {
     IAttributeSortItem,
     IMeasureSortItem,
     IMeasureLocatorItem,
+    isAttributeAreaSort,
 } from "../base/sort";
 import {
     IFilter,
@@ -149,6 +150,9 @@ const convertMeasure: Converter<IMeasure> = ({ measure }) => {
     throw new Error("Unknown measure type");
 };
 
+const convertAttributeAreaSortItem: Converter<IAttributeSortItem> = ({ attributeSortItem }) =>
+    `newAttributeAreaSort("${attributeSortItem.attributeIdentifier}", "${attributeSortItem.direction}", "${attributeSortItem.aggregation}")`;
+
 const convertAttributeSortItem: Converter<IAttributeSortItem> = ({ attributeSortItem }) =>
     `newAttributeSort("${attributeSortItem.attributeIdentifier}", "${
         attributeSortItem.direction
@@ -218,6 +222,8 @@ export const factoryNotationFor = (data: any): string => {
         return convertAttribute(data);
     } else if (isMeasure(data)) {
         return convertMeasure(data);
+    } else if (isAttributeAreaSort(data)) {
+        return convertAttributeAreaSortItem(data);
     } else if (isAttributeSort(data)) {
         return convertAttributeSortItem(data);
     } else if (isMeasureSort(data)) {

@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newAttributeSort } from "@gooddata/sdk-model";
+import { newAttributeAreaSort } from "@gooddata/sdk-model";
 
 import { LdmExt, Ldm } from "../../ldm";
 
@@ -14,7 +14,7 @@ export class PivotTableSortingAggregationExample extends Component {
                     rows={[LdmExt.LocationState]}
                     columns={[Ldm.DateQuarter]}
                     pageSize={20}
-                    sortBy={[newAttributeSort(LdmExt.LocationState, "desc", true)]}
+                    sortBy={[newAttributeAreaSort(LdmExt.LocationState, "desc")]}
                 />
             </div>
         );

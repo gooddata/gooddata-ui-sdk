@@ -1,8 +1,14 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { factoryNotationFor } from "../index";
 import { IAttribute } from "../../attribute";
 import { newAttribute } from "../../attribute/factory";
-import { IAttributeSortItem, IMeasureSortItem, newAttributeSort, newMeasureSort } from "../../base/sort";
+import {
+    IAttributeSortItem,
+    IMeasureSortItem,
+    newAttributeAreaSort,
+    newAttributeSort,
+    newMeasureSort,
+} from "../../base/sort";
 import {
     IAbsoluteDateFilter,
     IMeasureValueFilter,
@@ -41,6 +47,7 @@ const factories = {
     newMeasureValueFilter,
 
     newAttributeSort,
+    newAttributeAreaSort,
     newMeasureSort,
 };
 
@@ -317,7 +324,7 @@ describe("factoryNotationFor", () => {
             const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
-        it("should handle attribute sort item with aggregation", () => {
+        it("should handle attribute area sort item", () => {
             const input: IAttributeSortItem = {
                 attributeSortItem: {
                     attributeIdentifier: "foo",

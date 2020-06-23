@@ -116,6 +116,15 @@ export function isAttributeSort(obj: any): obj is IAttributeSortItem {
 }
 
 /**
+ * Type guard checking whether an object is an attribute area sort item.
+ *
+ * @public
+ */
+export function isAttributeAreaSort(obj: any): obj is IAttributeSortItem {
+    return isAttributeSort(obj) && obj.attributeSortItem.aggregation !== undefined;
+}
+
+/**
  * Type guard checking whether an object is a measure sort item.
  *
  * @public
@@ -206,33 +215,48 @@ export function sortEntityIds(sort: ISortItem): SortEntityIds {
  *
  * @param attributeOrId - attribute to sort by
  * @param sortDirection - asc or desc, defaults to "asc"
- * @param aggregation - TODO
  * @returns always new item
  * @public
  */
 export function newAttributeSort(
     attributeOrId: IAttribute | string,
     sortDirection: SortDirection = "asc",
-    aggregation: boolean = false,
 ): IAttributeSortItem {
     invariant(attributeOrId, "attribute to create sort for must be defined");
 
     const id: string = attributeLocalId(attributeOrId);
 
-    if (!aggregation) {
-        return {
-            attributeSortItem: {
-                attributeIdentifier: id,
-                direction: sortDirection,
-            },
-        };
-    }
+    return {
+        attributeSortItem: {
+            attributeIdentifier: id,
+            direction: sortDirection,
+        },
+    };
+}
+
+/**
+ * Creates a new attribute area sort - sorting the result by aggregated measure values belonging to each
+ * attribute value included in the result.
+ *
+ * @param attributeOrId - attribute to sort by
+ * @param sortDirection - sorting direction
+ * @param aggregation - area sort aggregation function. only "sum" is supported at the moment.
+ * @public
+ */
+export function newAttributeAreaSort(
+    attributeOrId: IAttribute | string,
+    sortDirection: SortDirection = "asc",
+    aggregation: "sum" = "sum",
+): IAttributeSortItem {
+    invariant(attributeOrId, "attribute to create sort for must be defined");
+
+    const id: string = attributeLocalId(attributeOrId);
 
     return {
         attributeSortItem: {
             attributeIdentifier: id,
             direction: sortDirection,
-            aggregation: "sum",
+            aggregation,
         },
     };
 }
