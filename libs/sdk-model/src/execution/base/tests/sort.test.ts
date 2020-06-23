@@ -1,8 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     IAttributeSortItem,
     IMeasureSortItem,
+    newAttributeAreaSort,
     newAttributeLocator,
     newAttributeSort,
     newMeasureSort,
@@ -39,17 +40,16 @@ describe("sortEntityIds", () => {
 });
 
 describe("newAttributeSort", () => {
-    const Scenarios: Array<[string, any, any, any]> = [
-        ["create asc sort by default", Account.Default, undefined, undefined],
-        ["create asc sort for attribute object", Account.Default, "asc", undefined],
-        ["create desc sort for attribute object", Account.Default, "desc", undefined],
-        ["create asc sort for attribute", "localId1", "asc", undefined],
-        ["create desc sort for attribute", "localId1", "desc", undefined],
-        ["create sort with aggregation", Account.Default, "asc", true],
+    const Scenarios: Array<[string, any, any]> = [
+        ["create asc sort by default", Account.Default, undefined],
+        ["create asc sort for attribute object", Account.Default, "asc"],
+        ["create desc sort for attribute object", Account.Default, "desc"],
+        ["create asc sort for attribute", "localId1", "asc"],
+        ["create desc sort for attribute", "localId1", "desc"],
     ];
 
-    it.each(Scenarios)("should %s", (_desc, attrArg, sortArg, aggArg) => {
-        expect(newAttributeSort(attrArg, sortArg, aggArg)).toMatchSnapshot();
+    it.each(Scenarios)("should %s", (_desc, attrArg, sortArg) => {
+        expect(newAttributeSort(attrArg, sortArg)).toMatchSnapshot();
     });
 
     it("should throw if attribute input is undefined", () => {
@@ -58,6 +58,28 @@ describe("newAttributeSort", () => {
 
     it("should throw if attribute input is null", () => {
         expect(() => newAttributeSort(undefined as any, "asc")).toThrowError(InvariantError);
+    });
+});
+
+describe("newAttributeAreaSort", () => {
+    const Scenarios: Array<[string, any, any]> = [
+        ["create asc area sort by default", Account.Default, undefined],
+        ["create asc area sort for attribute object", Account.Default, "asc"],
+        ["create desc area sort for attribute object", Account.Default, "desc"],
+        ["create asc area sort for attribute", "localId1", "asc"],
+        ["create desc area sort for attribute", "localId1", "desc"],
+    ];
+
+    it.each(Scenarios)("should %s", (_desc, attrArg, sortArg) => {
+        expect(newAttributeAreaSort(attrArg, sortArg)).toMatchSnapshot();
+    });
+
+    it("should throw if attribute input is undefined", () => {
+        expect(() => newAttributeAreaSort(undefined as any, "asc")).toThrowError(InvariantError);
+    });
+
+    it("should throw if attribute input is null", () => {
+        expect(() => newAttributeAreaSort(undefined as any, "asc")).toThrowError(InvariantError);
     });
 });
 

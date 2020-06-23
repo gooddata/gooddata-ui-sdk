@@ -21,6 +21,7 @@ import {
     SortEntityIds,
     sortEntityIds,
     ISortItem,
+    newAttributeAreaSort,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { SORT_DIR_ASC, SORT_DIR_DESC } from "../constants/sort";
@@ -87,23 +88,23 @@ function getDefaultBarChartSort(
     if (viewBy.length === 2) {
         if (measures.length >= 2 && !canSortStackTotalValue) {
             return [
-                newAttributeSort(viewBy[0], SORT_DIR_DESC, true),
+                newAttributeAreaSort(viewBy[0], SORT_DIR_DESC),
                 newMeasureSort(measures[0], SORT_DIR_DESC),
             ];
         }
 
         return [
-            newAttributeSort(viewBy[0], SORT_DIR_DESC, true),
-            newAttributeSort(viewBy[1], SORT_DIR_DESC, true),
+            newAttributeAreaSort(viewBy[0], SORT_DIR_DESC),
+            newAttributeAreaSort(viewBy[1], SORT_DIR_DESC),
         ];
     }
 
     if (!isEmpty(viewBy) && !isEmpty(stackBy)) {
-        return [newAttributeSort(viewBy[0], SORT_DIR_DESC, true)];
+        return [newAttributeAreaSort(viewBy[0], SORT_DIR_DESC)];
     }
 
     if (!isEmpty(viewBy) && canSortStackTotalValue) {
-        return [newAttributeSort(viewBy[0], SORT_DIR_DESC, true)];
+        return [newAttributeAreaSort(viewBy[0], SORT_DIR_DESC)];
     }
 
     return !isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];

@@ -305,7 +305,7 @@ export function defWithSorting(definition: IExecutionDefinition, sorts: ISortIte
 export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
 
 // @public
-export type DimensionItem = Identifier | ITotal;
+export type DimensionItem = Identifier | IAttribute | ITotal;
 
 // @public
 export function dimensionSetTotals(dim: IDimension, totals?: ITotal[]): IDimension;
@@ -1023,6 +1023,9 @@ export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasu
 export function isAttribute(obj: any): obj is IAttribute;
 
 // @public
+export function isAttributeAreaSort(obj: any): obj is IAttributeSortItem;
+
+// @public
 export function isAttributeElementsByRef(obj: any): obj is IAttributeElementsByRef;
 
 // @public
@@ -1388,6 +1391,9 @@ export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocal
 export function newAttribute(displayFormRefOrId: ObjRef | Identifier, modifications?: AttributeModifications): IAttribute;
 
 // @public
+export function newAttributeAreaSort(attributeOrId: IAttribute | string, sortDirection?: SortDirection, aggregation?: "sum"): IAttributeSortItem;
+
+// @public
 export const newAttributeDisplayFormMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>) => IAttributeDisplayFormMetadataObject;
 
 // @public
@@ -1397,7 +1403,7 @@ export function newAttributeLocator(attributeOrId: IAttribute | string, element:
 export const newAttributeMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>) => IAttributeMetadataObject;
 
 // @public
-export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection?: SortDirection, aggregation?: boolean): IAttributeSortItem;
+export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection?: SortDirection): IAttributeSortItem;
 
 // @public
 export function newBucket(localId: string, ...content: Array<IAttributeOrMeasure | ITotal | undefined>): IBucket;

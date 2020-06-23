@@ -1,5 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`newAttributeAreaSort should create asc area sort by default 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "aggregation": "sum",
+    "attributeIdentifier": "a_label.account.id",
+    "direction": "asc",
+  },
+}
+`;
+
+exports[`newAttributeAreaSort should create asc area sort for attribute 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "aggregation": "sum",
+    "attributeIdentifier": "localId1",
+    "direction": "asc",
+  },
+}
+`;
+
+exports[`newAttributeAreaSort should create asc area sort for attribute object 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "aggregation": "sum",
+    "attributeIdentifier": "a_label.account.id",
+    "direction": "asc",
+  },
+}
+`;
+
+exports[`newAttributeAreaSort should create desc area sort for attribute 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "aggregation": "sum",
+    "attributeIdentifier": "localId1",
+    "direction": "desc",
+  },
+}
+`;
+
+exports[`newAttributeAreaSort should create desc area sort for attribute object 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "aggregation": "sum",
+    "attributeIdentifier": "a_label.account.id",
+    "direction": "desc",
+  },
+}
+`;
+
 exports[`newAttributeLocator should create locator for attr 1`] = `
 Object {
   "attributeLocatorItem": Object {
@@ -59,16 +109,6 @@ Object {
   "attributeSortItem": Object {
     "attributeIdentifier": "a_label.account.id",
     "direction": "desc",
-  },
-}
-`;
-
-exports[`newAttributeSort should create sort with aggregation 1`] = `
-Object {
-  "attributeSortItem": Object {
-    "aggregation": "sum",
-    "attributeIdentifier": "a_label.account.id",
-    "direction": "asc",
   },
 }
 `;

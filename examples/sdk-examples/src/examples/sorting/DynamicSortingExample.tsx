@@ -7,6 +7,7 @@ import {
     IAttributeSortItem,
     IMeasureSortItem,
     newAttributeLocator,
+    newAttributeAreaSort,
 } from "@gooddata/sdk-model";
 import { LdmExt } from "../../ldm";
 import { SortDirection } from "@gooddata/gd-bear-client";
@@ -82,7 +83,7 @@ export const DynamicSortingExample: React.FC = () => {
                 `The columns (date) are sorted by the sum of the Total Sales stacks in each column in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: (dir) => [newAttributeSort(LdmExt.monthDate, dir, true)],
+            sortBy: (dir) => [newAttributeAreaSort(LdmExt.monthDate, dir)],
         },
         {
             key: "sum-of-stacks",
@@ -91,7 +92,7 @@ export const DynamicSortingExample: React.FC = () => {
                 `The stacks (state) are sorted by the sum of the Total Sales stacks across all columns in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: (dir) => [newAttributeSort(LdmExt.LocationState, dir, true)],
+            sortBy: (dir) => [newAttributeAreaSort(LdmExt.LocationState, dir)],
         },
         {
             key: "state-element",

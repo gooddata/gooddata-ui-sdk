@@ -109,7 +109,7 @@ function getDefaultTreemapSort(buckets: IBucket[]): ISortItem[] {
         const measures = bucketsMeasures(buckets);
 
         return [
-            newAttributeSort(viewAttribute, "asc", false),
+            newAttributeSort(viewAttribute, "asc"),
             ...measures.map((measure) => newMeasureSort(measure, "desc")),
         ];
     }

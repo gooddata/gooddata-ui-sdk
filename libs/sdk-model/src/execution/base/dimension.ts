@@ -4,6 +4,7 @@ import invariant from "ts-invariant";
 import { Identifier } from "../../objRef/index";
 import { isTotal, ITotal } from "./totals";
 import isEmpty = require("lodash/isEmpty");
+import { attributeLocalId, IAttribute, isAttribute } from "../attribute";
 
 /**
  * Dimensions specify how to organize the results of an execution in a data view. Imagine an attribute in columns vs. rows.
@@ -87,11 +88,12 @@ export function dimensionSetTotals(dim: IDimension, totals: ITotal[] = []): IDim
 }
 
 /**
- * Defines union of items that can be placed into a dimension.
+ * Defines union of items that can be placed into a dimension. Identifier can be attribute localId or the
+ * special {@link MeasureGroupIdentifier}. Attribute `localId` can be also specified by value of IAttribute.
  *
  * @public
  */
-export type DimensionItem = Identifier | ITotal;
+export type DimensionItem = Identifier | IAttribute | ITotal;
 
 /**
  * Creates new two dimensional specification where each dimension will have the provided set of
@@ -128,16 +130,18 @@ type CategorizedIdAndTotal = {
 /**
  * Creates new single-dimensional specification where the dimension will have the provided set of identifiers.
  *
- * @param items - allows for mix of item identifiers and total definitions to have in the new dimension
+ * @param items - allows for mix of item identifiers, attributes and total definitions to have in the new dimension
  * @param totals - additional totals to add to the dimension
  * @returns single dimension
  * @public
  */
 export function newDimension(items: DimensionItem[] = [], totals: ITotal[] = []): IDimension {
     const input: CategorizedIdAndTotal = items.reduce(
-        (acc: CategorizedIdAndTotal, value: string | ITotal) => {
+        (acc: CategorizedIdAndTotal, value: DimensionItem) => {
             if (isTotal(value)) {
                 acc.totals.push(value);
+            } else if (isAttribute(value)) {
+                acc.ids.push(attributeLocalId(value));
             } else {
                 acc.ids.push(value);
             }
