@@ -71,8 +71,7 @@
         "ts-invariant": "^0.4.4",
         "ts-jest": "^25.2.0",
         "ts-loader": "^6.2.1",
-        "tslib": "^2.0.0",
-        "@gooddata/goodstrap": "^68.13.0"
+        "tslib": "^2.0.0"
     },
     "peerDependencies": {
         "@gooddata/sdk-ui": "^8.0.0-alpha.104",
