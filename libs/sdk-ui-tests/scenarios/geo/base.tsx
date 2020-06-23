@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { ExamplesLdm, ExamplesLdmExt } from "@gooddata/examples-workspace";
+import { ExamplesLdm, ExamplesLdmExt } from "@gooddata/live-examples-workspace";
 import { GeoPushpinChart, IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 import { MapboxToken, scenariosFor } from "../../src";
 import { IAttribute, modifyAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
@@ -14,7 +14,7 @@ const DefaultConfig: IGeoConfig = {
  *
  * See chartConfigToProperties.ts for more.
  */
-const tooltipDisplayForm: IAttribute = modifyAttribute(ExamplesLdm.City.Default, m =>
+const tooltipDisplayForm: IAttribute = modifyAttribute(ExamplesLdm.City.Default, (m) =>
     m.localId("tooltipText_df"),
 );
 
@@ -30,7 +30,7 @@ export const LocationSegmentSizeAndColorWithTooltip: IGeoPushpinChartProps = {
 };
 
 export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpinChart)
-    .withDefaultWorkspaceType("examples-workspace")
+    .withDefaultWorkspaceType("live-examples-workspace")
     .withDefaultTestTypes("api")
 
     //

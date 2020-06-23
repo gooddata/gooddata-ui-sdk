@@ -5,7 +5,7 @@ import ora from "ora";
 import { log, logError } from "../../cli/loggers";
 import { promptPassword, promptUsername } from "../../cli/prompts";
 import { clearLine } from "../../cli/clear";
-import { ITigerClient } from "@gooddata/gd-tiger-client";
+import { ITigerClient } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
 

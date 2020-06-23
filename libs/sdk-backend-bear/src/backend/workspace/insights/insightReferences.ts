@@ -3,7 +3,7 @@
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { CatalogItem, IInsight, IMetadataObject, insightUri } from "@gooddata/sdk-model";
 import { IInsightReferences, InsightReferenceTypes } from "@gooddata/sdk-backend-spi";
-import { GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
+import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import { getObjectIdFromUri } from "../../../utils/api";
 import union from "lodash/union";
 import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter";

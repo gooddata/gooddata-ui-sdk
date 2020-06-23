@@ -8,7 +8,7 @@ import {
     RecordedBackendConfig,
 } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ExamplesRecordings } from "@gooddata/examples-workspace";
+import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
 import { withNormalization } from "@gooddata/sdk-backend-base";
 
 export const ReferenceWorkspaceId = "reference-workspace";

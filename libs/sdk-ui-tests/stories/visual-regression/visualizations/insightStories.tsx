@@ -35,7 +35,7 @@ import { StorybookBackend } from "../_infra/backend";
 import groupBy = require("lodash/groupBy");
 import keyBy = require("lodash/keyBy");
 import flatten = require("lodash/flatten");
-import { ExamplesRecordings } from "@gooddata/examples-workspace";
+import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
 
 /*
  * Code in this file generates stories that render test scenarios using pluggable visualizations.

@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { factory as createSdk, SDK } from "@gooddata/gd-bear-client";
+import { factory as createSdk, SDK } from "@gooddata/api-client-bear";
 import {
     AnalyticalBackendConfig,
     AuthenticatedPrincipal,
@@ -21,7 +21,7 @@ import { BearWorkspace } from "./workspace";
 import { BearWorkspaceQueryFactory } from "./workspaces";
 import { BearUserService } from "./user";
 import { convertInsight } from "../convertors/toBackend/InsightConverter";
-import { GdcUser, GdcProjectDashboard } from "@gooddata/gd-bear-model";
+import { GdcUser, GdcProjectDashboard } from "@gooddata/api-model-bear";
 import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
 import {
     IAuthProviderCallGuard,

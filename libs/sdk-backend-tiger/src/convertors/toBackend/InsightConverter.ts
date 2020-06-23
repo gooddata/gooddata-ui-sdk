@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeepWith from "lodash/cloneDeepWith";
 import { IInsightDefinition, isIdentifierRef } from "@gooddata/sdk-model";
-import { VisualizationObject } from "@gooddata/gd-tiger-client";
+import { VisualizationObject } from "@gooddata/api-client-tiger";
 
 import { toObjQualifier } from "./ObjRefConverter";
 

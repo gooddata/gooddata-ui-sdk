@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
-import gooddata from "@gooddata/gd-bear-client";
+import gooddata from "@gooddata/api-client-bear";
 import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants";
 import * as path from "path";
 import * as fs from "fs";

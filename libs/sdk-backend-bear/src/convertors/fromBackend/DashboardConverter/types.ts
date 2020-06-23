@@ -6,7 +6,7 @@ import {
     GdcKpi,
     GdcFilterContext,
     GdcVisualizationObject,
-} from "@gooddata/gd-bear-model";
+} from "@gooddata/api-model-bear";
 
 export type DashboardDependency = IWidget | IFilterContext | ITempFilterContext;
 

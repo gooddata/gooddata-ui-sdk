@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { GdcFilterContext } from "@gooddata/gd-bear-model";
+import { GdcFilterContext } from "@gooddata/api-model-bear";
 import { uriRef } from "@gooddata/sdk-model";
 import {
     IFilterContext,

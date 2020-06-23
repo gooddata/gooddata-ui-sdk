@@ -1,0 +1,66 @@
+{
+    "name": "@gooddata/api-client-tiger",
+    "version": "8.0.0-alpha.104",
+    "author": "GoodData",
+    "description": "API Client for the Tiger backend",
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-client-tiger",
+    "license": "BSD-3-Clause",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "src",
+        "LICENSE"
+    ],
+    "config": {
+        "tslint": "./{src,test}/**/*.ts"
+    },
+    "scripts": {
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
+        "dev": "tsc -p tsconfig.dev.json --watch",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
+        "openapi-generate": "./scripts/generate.js",
+        "generate-client": "rm -rf src/generated/* && npm run openapi-generate",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
+        "test": "jest --watch",
+        "test-once": "jest",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
+        "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "validate": "npm run dep-cruiser && npm run tslint && npm run prettier-check",
+        "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
+    },
+    "dependencies": {
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.104",
+        "@gooddata/sdk-model": "^8.0.0-alpha.104",
+        "axios": "^0.19.0",
+        "lodash": "^4.17.15",
+        "qs": "^6.5.1",
+        "spark-md5": "^3.0.0",
+        "tslib": "^2.0.0"
+    },
+    "devDependencies": {
+        "@gooddata/reference-workspace": "^8.0.0-alpha.104",
+        "@gooddata/tslint-config": "1.0.0",
+        "@openapitools/openapi-generator-cli": "^1.0.10-4.2.3",
+        "@types/jest": "^25.1.2",
+        "@types/lodash": "^4.14.123",
+        "@types/qs": "^6.5.1",
+        "@types/spark-md5": "^3.0.1",
+        "commander": "^3.0.2",
+        "dependency-cruiser": "^8.0.1",
+        "dotenv": "^8.2.0",
+        "jest": "^25.1.0",
+        "jest-junit": "^3.0.0",
+        "mkdirp": "^1.0.4",
+        "prettier": "~2.0.5",
+        "ts-jest": "^25.2.0",
+        "tslint": "^5.14.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "3.9.5"
+    }
+}

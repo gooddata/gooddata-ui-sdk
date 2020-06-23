@@ -4,7 +4,7 @@ import noop = require("lodash/noop");
 import { storiesOf } from "@storybook/react";
 import { action, decorateAction } from "@storybook/addon-actions";
 import { screenshotWrap } from "@gooddata/test-storybook";
-import { Execution } from "@gooddata/gd-bear-model";
+import { Execution } from "@gooddata/api-model-bear";
 
 import { Visualization } from "../../src/highcharts";
 import * as headerPredicateFactory from "../../src/base/headerMatching/HeaderPredicateFactory";

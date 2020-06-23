@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { GdcDashboardLayout, GdcVisualizationObject, GdcVisualizationClass } from "@gooddata/gd-bear-model";
+import { GdcDashboardLayout, GdcVisualizationObject, GdcVisualizationClass } from "@gooddata/api-model-bear";
 import { uriRef, idRef, UriRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import {
     IWidget,

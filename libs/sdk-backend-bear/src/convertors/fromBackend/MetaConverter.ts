@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
+import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import {
     uriRef,
     MetadataObject,

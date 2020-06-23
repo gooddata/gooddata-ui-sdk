@@ -8,7 +8,7 @@ import {
     IMeasureDescriptor,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { Execution, AttributeGranularityResourceAttribute } from "@gooddata/gd-tiger-client";
+import { Execution, AttributeGranularityResourceAttribute } from "@gooddata/api-client-tiger";
 import isResultAttributeHeader = Execution.isResultAttributeHeader;
 import isResultMeasureHeader = Execution.isResultMeasureHeader;
 import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";

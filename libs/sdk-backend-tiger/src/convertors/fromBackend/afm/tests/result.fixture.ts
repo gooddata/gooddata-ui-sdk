@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import { IDimensionDescriptor } from "@gooddata/sdk-backend-spi";
-import { Execution } from "@gooddata/gd-tiger-client";
+import { Execution } from "@gooddata/api-client-tiger";
 
 export const mockResult: Execution.IExecutionResult = {
     data: [["20.0", "40.2"]],

@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcExecution } from "@gooddata/gd-bear-model";
+import { GdcExecution } from "@gooddata/api-model-bear";
 import {
     AnalyticalBackendConfig,
     AuthenticatedPrincipal,

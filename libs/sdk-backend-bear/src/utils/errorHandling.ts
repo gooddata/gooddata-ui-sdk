@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { ApiResponseError, ApiExecutionResponseError } from "@gooddata/gd-bear-client";
+import { ApiResponseError, ApiExecutionResponseError } from "@gooddata/api-client-bear";
 import {
     AnalyticalBackendError,
     DataTooLargeError,

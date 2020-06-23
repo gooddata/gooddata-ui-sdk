@@ -1,11 +1,11 @@
 {
     "changes": [
         {
-            "packageName": "@gooddata/gd-bear-client",
+            "packageName": "@gooddata/api-client-bear",
             "comment": "Updated used types to reflect changes in gd-bear-model, move utility code related to gd-bear-model to that library, move utilities used only by experimental-execution to its file so it can be removed together more easily in near future.",
             "type": "none"
         }
     ],
-    "packageName": "@gooddata/gd-bear-client",
+    "packageName": "@gooddata/api-client-bear",
     "email": "petr.dolejsi@gooddata.com"
 }

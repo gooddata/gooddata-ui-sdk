@@ -18,7 +18,7 @@ import SparkMD5 from "spark-md5";
 import { transformResultDimensions } from "../../../convertors/fromBackend/afm/dimensions";
 import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { Execution } from "@gooddata/gd-tiger-client";
+import { Execution } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
 import { trimToRequestedWindow } from "../../../convertors/fromBackend/afm/clientSidePaging";

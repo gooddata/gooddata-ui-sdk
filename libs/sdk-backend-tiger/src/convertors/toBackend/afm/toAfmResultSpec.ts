@@ -10,7 +10,7 @@ import {
     isAttribute,
     totalIsNative,
 } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/gd-tiger-client";
+import { ExecuteAFM } from "@gooddata/api-client-tiger";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import { toLocalIdentifier } from "../ObjRefConverter";

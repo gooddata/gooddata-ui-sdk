@@ -6,7 +6,7 @@ import {
     FactResourcesResponseSchema,
     ITigerClient,
     MetricResourcesResponseSchema,
-} from "@gooddata/gd-tiger-client";
+} from "@gooddata/api-client-tiger";
 import { convertAttribute, convertTags, createLabelMap, createTagMap } from "./tigerCommon";
 
 function convertMetrics(metrics: MetricResourcesResponseSchema): Metric[] {

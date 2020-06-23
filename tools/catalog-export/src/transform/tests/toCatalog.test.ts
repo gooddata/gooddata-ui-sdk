@@ -2,7 +2,7 @@
 import { bearLoad } from "../../loaders/bear/bearLoad";
 import { transformToCatalog } from "../toCatalog";
 
-jest.mock("@gooddata/gd-bear-client");
+jest.mock("@gooddata/api-client-bear");
 
 describe("transformToCatalog", () => {
     const projectMeta = bearLoad("test");

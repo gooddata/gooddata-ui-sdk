@@ -16,7 +16,7 @@ function mergeConfig(props: IGeoPushpinChartProps, extraConfig: Partial<IGeoConf
 }
 
 export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpinChart)
-    .withDefaultWorkspaceType("examples-workspace")
+    .withDefaultWorkspaceType("live-examples-workspace")
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withDefaultTestTypes("api")
     .addScenario(

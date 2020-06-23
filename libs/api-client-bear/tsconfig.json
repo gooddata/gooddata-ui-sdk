@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "es5",
+        "module": "commonjs",
+        "lib": ["es6", "dom"],
+        "declaration": true,
+        "outDir": "./dist",
+        "importHelpers": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "suppressExcessPropertyErrors": true,
+        "baseUrl": "..",
+        "paths": {
+            "@gooddata/api-model-bear": ["api-model-bear/src"]
+        }
+    },
+    "exclude": ["node_modules", "dist"]
+}

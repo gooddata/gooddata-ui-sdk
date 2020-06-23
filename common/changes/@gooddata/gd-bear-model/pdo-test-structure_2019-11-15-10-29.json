@@ -1,11 +1,11 @@
 {
     "changes": [
         {
-            "packageName": "@gooddata/gd-bear-model",
+            "packageName": "@gooddata/api-model-bear",
             "comment": "Unify unit test names and structure.",
             "type": "none"
         }
     ],
-    "packageName": "@gooddata/gd-bear-model",
+    "packageName": "@gooddata/api-model-bear",
     "email": "petr.dolejsi@gooddata.com"
 }

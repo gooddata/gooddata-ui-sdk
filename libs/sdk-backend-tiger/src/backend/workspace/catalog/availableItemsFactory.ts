@@ -24,7 +24,7 @@ import {
     isMeasureValueFilter,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
-import { AfmValidObjectsQueryTypesEnum } from "@gooddata/gd-tiger-client";
+import { AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
 import compact = require("lodash/compact");
 import intersectionWith = require("lodash/intersectionWith");
 

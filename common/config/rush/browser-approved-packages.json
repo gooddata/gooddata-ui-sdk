@@ -87,11 +87,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@gooddata/examples-workspace",
+      "name": "@gooddata/live-examples-workspace",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@gooddata/gd-bear-client",
+      "name": "@gooddata/api-client-bear",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -99,11 +99,11 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "@gooddata/gd-bear-model",
+      "name": "@gooddata/api-model-bear",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/gd-tiger-client",
+      "name": "@gooddata/api-client-tiger",
       "allowedCategories": [ "production", "tools" ]
     },
     {

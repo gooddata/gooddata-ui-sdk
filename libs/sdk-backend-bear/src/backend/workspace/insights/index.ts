@@ -10,7 +10,7 @@ import {
     IWorkspaceInsights,
     SupportedInsightReferenceTypes,
 } from "@gooddata/sdk-backend-spi";
-import { GdcVisualizationClass, GdcVisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcVisualizationClass, GdcVisualizationObject } from "@gooddata/api-model-bear";
 import {
     IInsight,
     IInsightDefinition,

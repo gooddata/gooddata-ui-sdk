@@ -9,7 +9,7 @@ import PushpinViewportControl from "../../configurationControls/PushpinViewportC
 import LegendSection from "../../configurationControls/legend/LegendSection";
 import ColorsSection from "../../configurationControls/colors/ColorsSection";
 import { BucketNames, DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
-import { ExamplesLdm } from "@gooddata/examples-workspace";
+import { ExamplesLdm } from "@gooddata/live-examples-workspace";
 import { IInsightDefinition, modifyMeasure, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
 
 const Location = ExamplesLdm.City.Location;

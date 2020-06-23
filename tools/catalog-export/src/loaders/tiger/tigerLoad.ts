@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { CatalogExportError, ProjectMetadata } from "../../base/types";
-import { ITigerClient } from "@gooddata/gd-tiger-client";
+import { ITigerClient } from "@gooddata/api-client-tiger";
 import ora from "ora";
 import { logError } from "../../cli/loggers";
 import { loadCatalog } from "./tigerCatalog";

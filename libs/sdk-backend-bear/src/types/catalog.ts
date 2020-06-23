@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcMetadata } from "@gooddata/gd-bear-model";
+import { GdcMetadata } from "@gooddata/api-model-bear";
 import { ICatalogDateAttribute, IFactMetadataObject, IMeasureMetadataObject } from "@gooddata/sdk-model";
 
 /**

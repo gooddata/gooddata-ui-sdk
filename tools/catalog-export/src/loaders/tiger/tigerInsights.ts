@@ -3,7 +3,7 @@
 // @ts-ignore
 import { ObjectMeta } from "../../base/types";
 import { DefaultGetOptions } from "./tigerClient";
-import { ITigerClient } from "@gooddata/gd-tiger-client";
+import { ITigerClient } from "@gooddata/api-client-tiger";
 import { convertTags, createTagMap } from "./tigerCommon";
 
 /**

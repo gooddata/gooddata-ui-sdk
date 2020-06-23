@@ -21,7 +21,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/gd-bear-model";
+import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/api-model-bear";
 import { IDisplayFormByKey } from "../../types/catalog";
 
 export type CompatibleCatalogItemType = Exclude<CatalogItemType, "dateDataset">;

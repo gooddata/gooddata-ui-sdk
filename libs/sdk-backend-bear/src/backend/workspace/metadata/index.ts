@@ -5,7 +5,7 @@ import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
 import invariant from "ts-invariant";
 import { IWorkspaceMetadata } from "@gooddata/sdk-backend-spi";
-import { GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
+import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import {
     IAttributeDisplayFormMetadataObject,
     IMeasureExpressionToken,

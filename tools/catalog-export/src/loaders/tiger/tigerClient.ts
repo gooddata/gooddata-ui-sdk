@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 
-import { ITigerClient, newAxios, tigerClientFactory } from "@gooddata/gd-tiger-client";
+import { ITigerClient, newAxios, tigerClientFactory } from "@gooddata/api-client-tiger";
 
 export const DefaultGetOptions = {
     contentType: "application/json" as "application/json",
