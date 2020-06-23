@@ -156,14 +156,53 @@ export const convertWrappedFact = (fact: GdcMetadata.IWrappedFact): ICatalogFact
     return newCatalogFact((catalogFact) =>
         catalogFact.fact(factRef, (f) =>
             f
-                .id(meta.identifier)
-                .uri(meta.uri)
-                .title(meta.title)
-                .description(meta.summary)
+                .modify(commonMetadataModifications(meta))
                 .production(meta.isProduction === 1)
                 .unlisted(meta.unlisted === 1),
         ),
     );
+};
+
+export const convertWrappedAttribute = (attribute: GdcMetadata.IWrappedAttribute): ICatalogAttribute => {
+    const { content, meta } = attribute.attribute;
+    const attrRef = uriRef(meta.uri);
+
+    const displayForms = content.displayForms ?? [];
+    const defaultDisplayForm = displayForms.find((df) => df.content.default === 1) ?? displayForms[0];
+    const geoPinDisplayForms = displayForms.filter((df) => df.content.type === "GDC.geo.pin");
+
+    return newCatalogAttribute((catalogAttr) => {
+        let result = catalogAttr
+            .attribute(attrRef, (a) =>
+                a
+                    .modify(commonMetadataModifications(meta))
+                    .production(meta.isProduction === 1)
+                    .unlisted(meta.unlisted === 1),
+            )
+            .geoPinDisplayForms(
+                geoPinDisplayForms.map((geoDisplayForm) =>
+                    newAttributeDisplayFormMetadataObject(uriRef(geoDisplayForm.meta.uri), (df) =>
+                        df
+                            .modify(commonMetadataModifications(geoDisplayForm.meta))
+                            .attribute(attrRef)
+                            .production(geoDisplayForm.meta.isProduction === 1)
+                            .unlisted(geoDisplayForm.meta.unlisted === 1),
+                    ),
+                ),
+            );
+
+        if (defaultDisplayForm) {
+            result = result.defaultDisplayForm(uriRef(defaultDisplayForm.meta.uri), (df) =>
+                df
+                    .modify(commonMetadataModifications(defaultDisplayForm.meta))
+                    .attribute(attrRef)
+                    .production(defaultDisplayForm.meta.isProduction === 1)
+                    .unlisted(defaultDisplayForm.meta.unlisted === 1),
+            );
+        }
+
+        return result;
+    });
 };
 
 export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasure => {
@@ -173,12 +212,9 @@ export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasu
     return newCatalogMeasure((catalogMeasure) =>
         catalogMeasure.measure(measureRef, (m) =>
             m
+                .modify(commonMetadataModifications(meta))
                 .expression(content.expression)
                 .format(content.format ?? "#,#.##")
-                .id(meta.identifier)
-                .uri(meta.uri)
-                .title(meta.title)
-                .description(meta.summary)
                 .unlisted(meta.unlisted === 1),
         ),
     );
