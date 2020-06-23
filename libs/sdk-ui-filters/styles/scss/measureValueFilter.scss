@@ -15,6 +15,7 @@ $dialog_width: 250px;
 
 .gd-mvf-dropdown-body {
     width: $dialog_width;
+    padding: 0px !important;
 
     .gd-mvf-dropdown-section {
         padding: 10px 10px 0;
@@ -95,9 +96,4 @@ $dialog_width: 250px;
     &.hidden {
         display: none;
     }
-}
-
-.gd-dialog,
-.overlay.gd-dialog {
-    padding: 0px;
 }
