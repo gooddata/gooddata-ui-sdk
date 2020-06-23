@@ -16,6 +16,7 @@ import {
     DecoratedExecutionResult,
     DecoratedPreparedExecution,
     PreparedExecutionWrapper,
+    DecoratedDataView,
 } from "../decoratedBackend/execution";
 import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog";
 import stringify from "json-stable-stringify";
@@ -86,13 +87,25 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
 }
 
 /**
+ * This DataView decorator makes sure that definition used in it is the same as the definition in the result.
+ *
+ * See the usage of this class in {@link DefinitionSanitizingExecutionResult} for more.
+ */
+class DefinitionSanitizingDataView extends DecoratedDataView {
+    constructor(decorated: IDataView, result: IExecutionResult) {
+        super(decorated, result);
+        this.definition = result.definition;
+    }
+}
+
+/**
  * This ExecutionResult decorator makes sure that definitions used throughout the result are set
  * to the definitionOverride provided. This is useful with caching because different definitions may yield
  * the same cache key, but having the proper definition in the returned execution result is critical:
  * the definitions in the result must match the one which was used to request it.
  * This however is not always the case when using cached results, so we need to ensure it explicitly.
  *
- * See the usage of this class in {@link WithExecutionCaching} fro more.
+ * See the usage of this class in {@link WithExecutionCaching} for more.
  */
 class DefinitionSanitizingExecutionResult extends DecoratedExecutionResult {
     constructor(
@@ -121,14 +134,7 @@ class DefinitionSanitizingExecutionResult extends DecoratedExecutionResult {
             return original;
         }
 
-        return {
-            ...original,
-            definition: this.definition,
-            result: {
-                ...original.result,
-                definition: this.definition,
-            },
-        };
+        return new DefinitionSanitizingDataView(original, this);
     };
 }
 

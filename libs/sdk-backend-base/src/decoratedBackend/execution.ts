@@ -7,6 +7,8 @@ import {
     IExportConfig,
     IExportResult,
     IPreparedExecution,
+    IResultHeader,
+    DataValue,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -154,6 +156,43 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     }
 
     public equals(other: IExecutionResult): boolean {
+        return this.decorated.equals(other);
+    }
+
+    public fingerprint(): string {
+        return this.decorated.fingerprint();
+    }
+}
+
+/**
+ * Abstract base class for data view decorators. Implements delegates to decorated data view. Concrete
+ * implementations can override just the functions they are interested in.
+ *
+ * @alpha
+ */
+export abstract class DecoratedDataView implements IDataView {
+    public offset: number[];
+    public count: number[];
+    public totalCount: number[];
+    public headerItems: IResultHeader[][][];
+    public data: DataValue[] | DataValue[][];
+    public totals?: DataValue[][][];
+    public definition: IExecutionDefinition;
+    public result: IExecutionResult;
+
+    constructor(private readonly decorated: IDataView, result?: IExecutionResult) {
+        this.result = result ?? decorated.result;
+
+        this.count = decorated.count;
+        this.data = decorated.data;
+        this.definition = decorated.definition;
+        this.headerItems = decorated.headerItems;
+        this.offset = decorated.offset;
+        this.totalCount = decorated.totalCount;
+        this.totals = decorated.totals;
+    }
+
+    public equals(other: IDataView): boolean {
         return this.decorated.equals(other);
     }
 

@@ -75,6 +75,27 @@ describe("withCaching", () => {
         expect(second).toBe(first);
     });
 
+    it("keeps the cached data views' methods intact", async () => {
+        const backend = createBackend();
+
+        const firstBuckets = [newBucket("measures", ReferenceLdm.Won, ReferenceLdm.WinRate)];
+
+        const secondBuckets = [
+            newBucket("measures", ReferenceLdm.Won),
+            newBucket("secondary_measures", ReferenceLdm.WinRate),
+        ];
+
+        const first = await doInsightExecution(backend, firstBuckets);
+        const second = await doInsightExecution(backend, secondBuckets);
+
+        const firstAll = await first.readAll();
+        // the secondAll object is from cache but has an altered definition, let's check the methods are still there and work
+        const secondAll = await second.readAll();
+
+        expect(secondAll.fingerprint).toBeDefined();
+        expect(secondAll.equals(firstAll)).toBe(true);
+    });
+
     it("evicts when execution cache limit hit", () => {
         const backend = createBackend();
 
