@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import sdk from "@gooddata/gd-bear-client";
+import sdk from "@gooddata/api-client-bear";
 import { IAuthenticationProvider } from "@gooddata/sdk-backend-spi";
 
 export class GoodDataAuthProvider implements IAuthenticationProvider {

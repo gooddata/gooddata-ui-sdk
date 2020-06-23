@@ -1,7 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 const express = require("express");
 const request = require("supertest");
-const gdjs = require("@gooddata/gd-bear-client");
+const gdjs = require("@gooddata/api-client-bear");
 
 const assignProject = require("../assignProject");
 
@@ -37,17 +37,11 @@ function createApp(sdk = createSdk()) {
 
 describe("assignProject", () => {
     it("should return 400 for request without body", () => {
-        return request(createApp())
-            .post("/api/assign-project")
-            .send()
-            .expect(400);
+        return request(createApp()).post("/api/assign-project").send().expect(400);
     });
 
     it("should return 400 if user is not provided", () => {
-        return request(createApp())
-            .post("/api/assign-project")
-            .send({ foo: "bar" })
-            .expect(400);
+        return request(createApp()).post("/api/assign-project").send({ foo: "bar" }).expect(400);
     });
 
     it("should call sdk.user.login and post user to project", () => {

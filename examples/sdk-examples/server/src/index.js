@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 /* eslint-disable no-console */
-const { factory } = require("@gooddata/gd-bear-client");
+const { factory } = require("@gooddata/api-client-bear");
 const https = require("https");
 const fs = require("fs");
 const express = require("express");
@@ -31,7 +31,7 @@ const endpoints = [redirectToHttps, register, assignProject, proxy, staticFiles]
 const sdk = factory({ domain: config.domain });
 
 const app = express();
-endpoints.forEach(handler => handler(app, sdk, config));
+endpoints.forEach((handler) => handler(app, sdk, config));
 
 if (config.https) {
     console.log(

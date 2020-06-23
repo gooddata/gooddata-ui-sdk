@@ -1,7 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { bearLoad } from "../bearLoad";
 
-jest.mock("@gooddata/gd-bear-client");
+jest.mock("@gooddata/api-client-bear");
 
 describe("loadProjectMetadata", () => {
     it("should transfer project ID", async () => {

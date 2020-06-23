@@ -49,7 +49,7 @@ import {
     GdcMetadata,
     GdcFilterContext,
     GdcScheduledMail,
-} from "@gooddata/gd-bear-model";
+} from "@gooddata/api-model-bear";
 import { ObjRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 

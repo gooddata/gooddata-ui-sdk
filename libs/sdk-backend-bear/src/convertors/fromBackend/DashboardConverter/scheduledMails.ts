@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcScheduledMail } from "@gooddata/gd-bear-model";
+import { GdcScheduledMail } from "@gooddata/api-model-bear";
 import {
     IScheduledMail,
     IScheduledMailDefinition,

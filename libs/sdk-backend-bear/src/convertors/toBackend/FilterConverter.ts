@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import {
     IFilter,
     isPositiveAttributeFilter,

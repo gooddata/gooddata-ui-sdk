@@ -14,7 +14,7 @@ import compact = require("lodash/compact");
 import isEmpty = require("lodash/isEmpty");
 import isNil = require("lodash/isNil");
 import omit = require("lodash/omit");
-import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import { convertReferencesToUris } from "./ReferenceConverter";
 import { deserializeProperties, serializeProperties } from "./PropertiesConverter";
 

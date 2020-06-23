@@ -17,8 +17,8 @@
             "@gooddata/sdk-model": ["sdk-model/src"],
             "@gooddata/sdk-backend-base": ["sdk-backend-base/src"],
             "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
-            "@gooddata/gd-bear-client": ["gd-bear-client/src"],
-            "@gooddata/gd-bear-model": ["gd-bear-model/src"]
+            "@gooddata/api-client-bear": ["api-client-bear/src"],
+            "@gooddata/api-model-bear": ["api-model-bear/src"]
         }
     },
     "exclude": ["node_modules", "dist"]

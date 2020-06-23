@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { useState, useEffect } from "react";
-import sdk from "@gooddata/gd-bear-client";
+import sdk from "@gooddata/api-client-bear";
 
 import { workspace } from "../../constants/fixtures";
 import { useAuth, AuthStatus } from "../../context/auth";

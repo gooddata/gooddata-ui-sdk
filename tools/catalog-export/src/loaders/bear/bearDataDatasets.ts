@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import gooddata from "@gooddata/gd-bear-client";
-import { GdcDataSets } from "@gooddata/gd-bear-model";
+import gooddata from "@gooddata/api-client-bear";
+import { GdcDataSets } from "@gooddata/api-model-bear";
 import { get } from "lodash";
 import { Attribute, DateDataSet, DisplayForm } from "../../base/types";
 

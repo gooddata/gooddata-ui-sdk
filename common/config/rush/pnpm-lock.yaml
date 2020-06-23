@@ -22,10 +22,10 @@ dependencies:
   '@microsoft/api-documenter': 7.8.13
   '@microsoft/api-extractor': 7.8.1
   '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
+  '@rush-temp/api-client-bear': 'file:projects/api-client-bear.tgz'
   '@rush-temp/api-client-tiger': 'file:projects/api-client-tiger.tgz'
+  '@rush-temp/api-model-bear': 'file:projects/api-model-bear.tgz'
   '@rush-temp/catalog-export': 'file:projects/catalog-export.tgz'
-  '@rush-temp/gd-bear-client': 'file:projects/gd-bear-client.tgz'
-  '@rush-temp/gd-bear-model': 'file:projects/gd-bear-model.tgz'
   '@rush-temp/live-examples-workspace': 'file:projects/live-examples-workspace.tgz'
   '@rush-temp/mock-handling': 'file:projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:projects/reference-workspace.tgz'
@@ -17951,72 +17951,7 @@ packages:
       commander: 2.20.3
     resolution:
       integrity: sha512-DUOKC/IhbkdLKKiV89gw9DUauTV8U/8yJl1sjf6MtDmzevLKOF2duNJ495S3MFVjqZarr+qNGCPbkg4mu4PpLw==
-  'file:projects/api-client-tiger.tgz':
-    dependencies:
-      '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
-      '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
-      '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
-      '@types/qs': 6.9.3
-      '@types/spark-md5': 3.0.2
-      axios: 0.19.2
-      commander: 3.0.2
-      dependency-cruiser: 8.2.0_typescript@3.9.5
-      dotenv: 8.2.0
-      jest: 25.5.4
-      jest-junit: 3.7.0
-      lodash: 4.17.15
-      mkdirp: 1.0.4
-      prettier: 2.0.5
-      qs: 6.9.4
-      spark-md5: 3.0.1
-      ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
-      tslib: 2.0.0
-      tslint: 5.20.1_typescript@3.9.5
-      tslint-config-prettier: 1.18.0
-      typescript: 3.9.5
-    dev: false
-    name: '@rush-temp/api-client-tiger'
-    resolution:
-      integrity: sha512-DxuT0YQjIhtcQbds5maDbjJIdzKBer+alVebyarzqTI8V4Q2MsTPWRFblUqN7sdFeXY0PyYtsDPo60g6QYheeg==
-      tarball: 'file:projects/api-client-tiger.tgz'
-    version: 0.0.0
-  'file:projects/catalog-export.tgz':
-    dependencies:
-      '@babel/core': 7.10.2
-      '@babel/plugin-transform-typescript': 7.10.1_@babel+core@7.10.2
-      '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
-      '@types/inquirer': 6.5.0
-      '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
-      '@types/node': 12.12.47
-      '@types/prettier': 1.18.4
-      chalk: 2.4.2
-      commander: 3.0.2
-      dependency-cruiser: 8.2.0_typescript@3.9.5
-      inquirer: 6.5.2
-      jest: 25.5.4
-      jest-junit: 3.7.0
-      lodash: 4.17.15
-      ora: 4.0.4
-      p-map: 3.0.0
-      prettier: 2.0.5
-      prompt: 1.0.0
-      strip-ansi: 5.2.0
-      ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
-      ts-morph: 4.3.3
-      ts-node: 8.10.2_typescript@3.9.5
-      tslib: 2.0.0
-      tslint: 5.20.1_typescript@3.9.5
-      tslint-config-prettier: 1.18.0
-      typescript: 3.9.5
-    dev: false
-    name: '@rush-temp/catalog-export'
-    resolution:
-      integrity: sha512-SqEy6v42kzXDwpdKEUreDXyaW3BkMGzgrigBPuFMv0Csd/XqTTfw1CIlL/nv2HiSZvSHV18MWgrG5kg0BiNzHg==
-      tarball: 'file:projects/catalog-export.tgz'
-    version: 0.0.0
-  'file:projects/gd-bear-client.tgz':
+  'file:projects/api-client-bear.tgz':
     dependencies:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@types/fast-levenshtein': 0.0.1
@@ -18056,12 +17991,42 @@ packages:
       webpack-cli: 3.3.11_webpack@4.43.0
       webpack-dev-server: 3.11.0_6bb071789035dbb53b131cf2ad63510b
     dev: false
-    name: '@rush-temp/gd-bear-client'
+    name: '@rush-temp/api-client-bear'
     resolution:
-      integrity: sha512-9Hqisir0kLVOtq3SReE1L8qOTjeiO0zKMvm9yhbpKYQGWYxM6LKt+QWFOkUvm1HC5akC1E6tSmI/2/JXnwPQ6Q==
-      tarball: 'file:projects/gd-bear-client.tgz'
+      integrity: sha512-AFQolgNKFZ7VkbtQCJBeZRHmOONr8W/YvfJj2UQl6Lf1hXtO/hwKlo5eFdIkaWL/y7YHui7+/PJPmlfkOs3vYw==
+      tarball: 'file:projects/api-client-bear.tgz'
     version: 0.0.0
-  'file:projects/gd-bear-model.tgz':
+  'file:projects/api-client-tiger.tgz':
+    dependencies:
+      '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
+      '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
+      '@types/jest': 25.2.3
+      '@types/lodash': 4.14.155
+      '@types/qs': 6.9.3
+      '@types/spark-md5': 3.0.2
+      axios: 0.19.2
+      commander: 3.0.2
+      dependency-cruiser: 8.2.0_typescript@3.9.5
+      dotenv: 8.2.0
+      jest: 25.5.4
+      jest-junit: 3.7.0
+      lodash: 4.17.15
+      mkdirp: 1.0.4
+      prettier: 2.0.5
+      qs: 6.9.4
+      spark-md5: 3.0.1
+      ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
+      tslint: 5.20.1_typescript@3.9.5
+      tslint-config-prettier: 1.18.0
+      typescript: 3.9.5
+    dev: false
+    name: '@rush-temp/api-client-tiger'
+    resolution:
+      integrity: sha512-DxuT0YQjIhtcQbds5maDbjJIdzKBer+alVebyarzqTI8V4Q2MsTPWRFblUqN7sdFeXY0PyYtsDPo60g6QYheeg==
+      tarball: 'file:projects/api-client-tiger.tgz'
+    version: 0.0.0
+  'file:projects/api-model-bear.tgz':
     dependencies:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@microsoft/api-extractor': 7.8.1
@@ -18078,10 +18043,45 @@ packages:
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
-    name: '@rush-temp/gd-bear-model'
+    name: '@rush-temp/api-model-bear'
     resolution:
-      integrity: sha512-VZhIss8i8rzKhBQTo83cXSqrORZpMCyKTR0w3I3JBBD+q3XuF52v82Kr7pIN5Dyxde1ednDLNyYpNMNnR2+/gw==
-      tarball: 'file:projects/gd-bear-model.tgz'
+      integrity: sha512-BTkhoVRs2lc+ExcQD5pd7RSGUV9COSSbxdDnVGuMtkoIamoZIv50sQbMzXMTSOQmP3VT2EZp1K3Qb9WzAvZ2uA==
+      tarball: 'file:projects/api-model-bear.tgz'
+    version: 0.0.0
+  'file:projects/catalog-export.tgz':
+    dependencies:
+      '@babel/core': 7.10.2
+      '@babel/plugin-transform-typescript': 7.10.1_@babel+core@7.10.2
+      '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
+      '@types/inquirer': 6.5.0
+      '@types/jest': 25.2.3
+      '@types/lodash': 4.14.155
+      '@types/node': 12.12.47
+      '@types/prettier': 1.18.4
+      chalk: 2.4.2
+      commander: 3.0.2
+      dependency-cruiser: 8.2.0_typescript@3.9.5
+      inquirer: 6.5.2
+      jest: 25.5.4
+      jest-junit: 3.7.0
+      lodash: 4.17.15
+      ora: 4.0.4
+      p-map: 3.0.0
+      prettier: 2.0.5
+      prompt: 1.0.0
+      strip-ansi: 5.2.0
+      ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      ts-morph: 4.3.3
+      ts-node: 8.10.2_typescript@3.9.5
+      tslib: 2.0.0
+      tslint: 5.20.1_typescript@3.9.5
+      tslint-config-prettier: 1.18.0
+      typescript: 3.9.5
+    dev: false
+    name: '@rush-temp/catalog-export'
+    resolution:
+      integrity: sha512-bPup9YwSSn7i6Q3EDz94oRwrGVXsEvMWQNDj196liBldDm0vOaI+lV/zjjvdWdczxv1yQQ4lGaj/Cdz3gb1lGw==
+      tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/live-examples-workspace.tgz':
     dependencies:
@@ -18138,7 +18138,7 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-IJsvFE3jOi4zTU3AhVYXbCUTOVm/5aH49sjtUCpWmTsuSYX3lXfSeG6n55YyTeK/la8AvXC8wa2X1PJQBRfGgA==
+      integrity: sha512-I9JReddqxtjhhoFzqKN8f5ineZCZaNuRxQqOqIu7gVt5Ykd5h6bvYzDyQUPlfx0AuPRQ7ViBQTAMguYLXw9oqQ==
       tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/reference-workspace-mgmt.tgz':
@@ -18241,7 +18241,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-bear'
     resolution:
-      integrity: sha512-vKZWYb5nbTLGoQIBZ1sH7MFzSV7RUZvACX2o39xKDOmy+y/n+BV9lG2uegumRMj2dHsPfDg+lsPaaP0RFWUazw==
+      integrity: sha512-AIRSDBr1Gn/FeVC1G/q42U/mEIpj/cNDCoMgeG4X5LYSeyButz8iTJrtdoYC3eXkD9gmuktSUuUGteALOEQ2FA==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz':
@@ -18265,7 +18265,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-mockingbird'
     resolution:
-      integrity: sha512-e1njrDGgYh8gLqIiH5CLvZjjqmnQDEhLQ96zYbmJlchR2dQIG2FKH0rullPARKDtKCwEK1YY3aQQhAgtTZGG/g==
+      integrity: sha512-kdCd/plOxNzAb8u838e2FTj/s/9vDFTnYzngB06L6EmDKAGvMUhdF+NziB6rAG71phRF2q4935BujKX+fpH5aA==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
@@ -18411,7 +18411,7 @@ packages:
     peerDependencies:
       prop-types: '*'
     resolution:
-      integrity: sha512-cP+Qsj7XVbj/5bCZjupaSFvVP6lQJNfDrIFlvK+1cgHkboW4Itq6GiD4NJ5CuXMChpZWne3GKNpAkbchBsZ6og==
+      integrity: sha512-qXXrYinyM7yeYu4ZVxHUIj5Y32pdL58IM9ID1mcyiT1t2ejhOvP2BEjyscJ+ESJuKtBuDic7jzBcXGfctTMlWQ==
       tarball: 'file:projects/sdk-examples.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -18955,10 +18955,10 @@ specifiers:
   '@microsoft/api-documenter': ^7.3.16
   '@microsoft/api-extractor': 7.8.1
   '@openapitools/openapi-generator-cli': ^1.0.10-4.2.3
+  '@rush-temp/api-client-bear': 'file:./projects/api-client-bear.tgz'
   '@rush-temp/api-client-tiger': 'file:./projects/api-client-tiger.tgz'
+  '@rush-temp/api-model-bear': 'file:./projects/api-model-bear.tgz'
   '@rush-temp/catalog-export': 'file:./projects/catalog-export.tgz'
-  '@rush-temp/gd-bear-client': 'file:./projects/gd-bear-client.tgz'
-  '@rush-temp/gd-bear-model': 'file:./projects/gd-bear-model.tgz'
   '@rush-temp/live-examples-workspace': 'file:./projects/live-examples-workspace.tgz'
   '@rush-temp/mock-handling': 'file:./projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:./projects/reference-workspace.tgz'

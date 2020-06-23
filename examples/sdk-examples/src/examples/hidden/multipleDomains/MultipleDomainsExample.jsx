@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { keyBy, mapValues } from "lodash";
 import { Kpi } from "@gooddata/sdk-ui";
-import { factory } from "@gooddata/gd-bear-client";
+import { factory } from "@gooddata/api-client-bear";
 import { Ldm } from "../../../ldm";
 
 export class MultipleDomainsExample extends Component {

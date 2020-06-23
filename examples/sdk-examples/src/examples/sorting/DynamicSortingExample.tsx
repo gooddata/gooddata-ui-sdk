@@ -10,7 +10,7 @@ import {
     newAttributeAreaSort,
 } from "@gooddata/sdk-model";
 import { LdmExt } from "../../ldm";
-import { SortDirection } from "@gooddata/gd-bear-client";
+import { SortDirection } from "@gooddata/api-client-bear";
 
 interface ISortOption {
     key: string;

@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { GdcExecution } from "@gooddata/gd-bear-model";
-import { IExportConfig as GdcExportConfig } from "@gooddata/gd-bear-client";
+import { GdcExecution } from "@gooddata/api-model-bear";
+import { IExportConfig as GdcExportConfig } from "@gooddata/api-client-bear";
 import {
     DataValue,
     IDataView,

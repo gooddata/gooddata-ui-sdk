@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { IUriIdentifierPair } from "@gooddata/gd-bear-client";
+import { IUriIdentifierPair } from "@gooddata/api-client-bear";
 import { IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 import compact = require("lodash/compact");
 import includes = require("lodash/includes");

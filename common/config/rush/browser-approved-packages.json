@@ -91,7 +91,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@gooddata/gd-bear-client",
+      "name": "@gooddata/api-client-bear",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -99,7 +99,7 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "@gooddata/gd-bear-model",
+      "name": "@gooddata/api-model-bear",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {

@@ -1,11 +1,11 @@
 {
     "changes": [
         {
-            "packageName": "@gooddata/gd-bear-model",
+            "packageName": "@gooddata/api-model-bear",
             "comment": "",
             "type": "none"
         }
     ],
-    "packageName": "@gooddata/gd-bear-model",
+    "packageName": "@gooddata/api-model-bear",
     "email": "dan.homola@gooddata.com"
 }

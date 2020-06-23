@@ -8,7 +8,7 @@ import {
     GdcKpi,
     GdcVisualizationObject,
     GdcVisualizationClass,
-} from "@gooddata/gd-bear-model";
+} from "@gooddata/api-model-bear";
 import { BearDashboardDependency } from "../DashboardConverter";
 
 const createObjectMeta = (id: string): GdcMetadata.IObjectMeta => ({

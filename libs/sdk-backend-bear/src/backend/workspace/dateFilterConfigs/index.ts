@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IWorkspaceDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
-import { GdcExtendedDateFilters } from "@gooddata/gd-bear-model";
+import { GdcExtendedDateFilters } from "@gooddata/api-model-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertDateFilterConfig } from "../../../convertors/fromBackend/DateFilterConfigConverter";
 

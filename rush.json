@@ -439,15 +439,15 @@
             "shouldPublish": true
         },
         {
-            "packageName": "@gooddata/gd-bear-client",
-            "projectFolder": "libs/gd-bear-client",
+            "packageName": "@gooddata/api-client-bear",
+            "projectFolder": "libs/api-client-bear",
             "reviewCategory": "production",
             "versionPolicyName": "sdk",
             "shouldPublish": true
         },
         {
-            "packageName": "@gooddata/gd-bear-model",
-            "projectFolder": "libs/gd-bear-model",
+            "packageName": "@gooddata/api-model-bear",
+            "projectFolder": "libs/api-model-bear",
             "reviewCategory": "production",
             "versionPolicyName": "sdk",
             "shouldPublish": true

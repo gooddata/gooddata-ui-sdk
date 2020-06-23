@@ -8,7 +8,7 @@ import {
     GdcKpi,
     GdcVisualizationObject,
     GdcVisualizationClass,
-} from "@gooddata/gd-bear-model";
+} from "@gooddata/api-model-bear";
 import { uriRef } from "@gooddata/sdk-model";
 import keyBy from "lodash/keyBy";
 import {

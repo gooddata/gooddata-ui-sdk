@@ -15,7 +15,7 @@ import {
     isCatalogFact,
     ICatalogMeasure,
 } from "@gooddata/sdk-model";
-import { GdcMetadata, GdcCatalog } from "@gooddata/gd-bear-model";
+import { GdcMetadata, GdcCatalog } from "@gooddata/api-model-bear";
 import {
     convertItemType,
     convertDateDataset,
@@ -30,7 +30,7 @@ import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "../../../types/catalog";
 import { BearWorkspaceCatalog } from "./catalog";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api";
-import { IGetObjectsByQueryOptions } from "@gooddata/gd-bear-client";
+import { IGetObjectsByQueryOptions } from "@gooddata/api-client-bear";
 import { isApiResponseError } from "../../../utils/errorHandling";
 
 type BearDisplayFormOrAttribute = GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute;

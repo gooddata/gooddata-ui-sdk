@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { GdcVisualizationWidget, GdcKpi } from "@gooddata/gd-bear-model";
+import { GdcVisualizationWidget, GdcKpi } from "@gooddata/api-model-bear";
 import { uriRef, idRef, localIdRef } from "@gooddata/sdk-model";
 import {
     IDrillToLegacyDashboard,

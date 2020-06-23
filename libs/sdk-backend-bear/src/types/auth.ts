@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { SDK } from "@gooddata/gd-bear-client";
+import { SDK } from "@gooddata/api-client-bear";
 import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 
 /**

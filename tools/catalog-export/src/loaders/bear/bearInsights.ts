@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import gooddata from "@gooddata/gd-bear-client";
+// (C) 2007-2020 GoodData Corporation
+import gooddata from "@gooddata/api-client-bear";
 import { ObjectMeta } from "../../base/types";
 
 /**

@@ -39,7 +39,7 @@ import {
     isCompatibleCatalogItemType,
 } from "../../../convertors/fromBackend/CatalogConverter";
 import { convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter";
-import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import { IUriMappings } from "../../../types/catalog";
 import { BearWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";

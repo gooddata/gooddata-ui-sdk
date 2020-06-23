@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import gooddata from "@gooddata/gd-bear-client";
+import gooddata from "@gooddata/api-client-bear";
 import pmap from "p-map";
 import { flatMap, range } from "lodash";
 import { isAttribute, isMetric, Catalog, Attribute, Metric, Fact } from "../../base/types";

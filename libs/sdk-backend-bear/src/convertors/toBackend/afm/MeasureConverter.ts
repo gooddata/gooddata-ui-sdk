@@ -11,7 +11,7 @@ import {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
 } from "@gooddata/sdk-model";
-import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { convertMeasureFilter } from "./FilterConverter";
 import { toBearRef } from "../ObjRefConverter";
 import compact = require("lodash/compact");

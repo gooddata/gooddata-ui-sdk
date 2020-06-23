@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcExtendedDateFilters } from "@gooddata/gd-bear-model";
+import { GdcExtendedDateFilters } from "@gooddata/api-model-bear";
 import {
     IDateFilterConfig,
     IAllTimeDateFilter,
