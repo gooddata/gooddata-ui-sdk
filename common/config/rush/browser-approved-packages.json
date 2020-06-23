@@ -87,7 +87,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@gooddata/examples-workspace",
+      "name": "@gooddata/live-examples-workspace",
       "allowedCategories": [ "production" ]
     },
     {

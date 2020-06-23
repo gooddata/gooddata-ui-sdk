@@ -23,10 +23,10 @@ dependencies:
   '@microsoft/api-extractor': 7.8.1
   '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
   '@rush-temp/catalog-export': 'file:projects/catalog-export.tgz'
-  '@rush-temp/examples-workspace': 'file:projects/examples-workspace.tgz'
   '@rush-temp/gd-bear-client': 'file:projects/gd-bear-client.tgz'
   '@rush-temp/gd-bear-model': 'file:projects/gd-bear-model.tgz'
   '@rush-temp/gd-tiger-client': 'file:projects/gd-tiger-client.tgz'
+  '@rush-temp/live-examples-workspace': 'file:projects/live-examples-workspace.tgz'
   '@rush-temp/mock-handling': 'file:projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:projects/reference-workspace.tgz'
   '@rush-temp/reference-workspace-mgmt': 'file:projects/reference-workspace-mgmt.tgz'
@@ -17976,36 +17976,15 @@ packages:
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       ts-morph: 4.3.3
       ts-node: 8.10.2_typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-NsWTSvxM9W7bnQstcXufS6vAfDbSCedynkdUDwytEWCLmXSyaEgpOcqsRGr+UBPmsnj2pxz1QHFt1S3UDx+jdg==
+      integrity: sha512-iECnNyXPhufl8AlKYrJcP7tlx6zhVyCGhB0wAQkhtM00ORihzdcDR708OD6ev+U5uc1SYsKSKIzFr43Te3UMtA==
       tarball: 'file:projects/catalog-export.tgz'
-    version: 0.0.0
-  'file:projects/examples-workspace.tgz':
-    dependencies:
-      '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
-      '@microsoft/api-extractor': 7.8.1
-      '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
-      '@types/node': 12.12.47
-      dependency-cruiser: 8.2.0_typescript@3.9.5
-      jest: 25.5.4
-      jest-junit: 3.7.0
-      lodash: 4.17.15
-      prettier: 2.0.5
-      ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
-      tslint: 5.20.1_typescript@3.9.5
-      tslint-config-prettier: 1.18.0
-      typescript: 3.9.5
-    dev: false
-    name: '@rush-temp/examples-workspace'
-    resolution:
-      integrity: sha512-gcf1W9m/357I1/RQwp3arR3LA3W3iK00UmOXV1CJcHw/teARTUIOIL8eiAcmZY5gafVXjZjzC9FEZMzCZZLlvw==
-      tarball: 'file:projects/examples-workspace.tgz'
     version: 0.0.0
   'file:projects/gd-bear-client.tgz':
     dependencies:
@@ -18049,7 +18028,7 @@ packages:
     dev: false
     name: '@rush-temp/gd-bear-client'
     resolution:
-      integrity: sha512-aKIAI2auQ8qsKy1o3PMD3nvwMuDq5/P0+Bx6NPR8v5PMxcBvIP8ED1uphG5Bq9xurg5U2m9UYrBRIu01wmy2/A==
+      integrity: sha512-9Hqisir0kLVOtq3SReE1L8qOTjeiO0zKMvm9yhbpKYQGWYxM6LKt+QWFOkUvm1HC5akC1E6tSmI/2/JXnwPQ6Q==
       tarball: 'file:projects/gd-bear-client.tgz'
     version: 0.0.0
   'file:projects/gd-bear-model.tgz':
@@ -18064,13 +18043,14 @@ packages:
       lodash: 4.17.15
       prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/gd-bear-model'
     resolution:
-      integrity: sha512-U/XfljzhgXpx9Fg7NKtvuesVuK6M3MsErnTzl/eLiyrkzBSS8xzTxxcEsoJ1i9dAoCoesgjorqffsjYUM9lKEw==
+      integrity: sha512-VZhIss8i8rzKhBQTo83cXSqrORZpMCyKTR0w3I3JBBD+q3XuF52v82Kr7pIN5Dyxde1ednDLNyYpNMNnR2+/gw==
       tarball: 'file:projects/gd-bear-model.tgz'
     version: 0.0.0
   'file:projects/gd-tiger-client.tgz':
@@ -18093,14 +18073,38 @@ packages:
       qs: 6.9.4
       spark-md5: 3.0.1
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/gd-tiger-client'
     resolution:
-      integrity: sha512-3XfblRZaA5Ye32+F506zqT9E6NyKTPuvraMh3aYXupwpNNkXZ02CYohLpWpmbdmFMdLdRavcUQcQS4LZKT+Gxg==
+      integrity: sha512-zrRc8GIDeTYg3GxpF1235OQxUOHLT89sjec8Efmomd+8KTGvgCwok9fFXFKTij0gyvfDVc9Jy0sZREDAZTOnFg==
       tarball: 'file:projects/gd-tiger-client.tgz'
+    version: 0.0.0
+  'file:projects/live-examples-workspace.tgz':
+    dependencies:
+      '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
+      '@microsoft/api-extractor': 7.8.1
+      '@types/jest': 25.2.3
+      '@types/lodash': 4.14.155
+      '@types/node': 12.12.47
+      dependency-cruiser: 8.2.0_typescript@3.9.5
+      jest: 25.5.4
+      jest-junit: 3.7.0
+      lodash: 4.17.15
+      prettier: 2.0.5
+      ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
+      tslint: 5.20.1_typescript@3.9.5
+      tslint-config-prettier: 1.18.0
+      typescript: 3.9.5
+    dev: false
+    name: '@rush-temp/live-examples-workspace'
+    resolution:
+      integrity: sha512-scvrBX46Mi/C5xbKBfT2DNki306z+yKmwV6iwWh1jaxm/oP7nARhqVZjOjn2Duut2k2FYB4y1ydOTRCxIjswBw==
+      tarball: 'file:projects/live-examples-workspace.tgz'
     version: 0.0.0
   'file:projects/mock-handling.tgz':
     dependencies:
@@ -18127,13 +18131,14 @@ packages:
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       ts-morph: 4.3.3
       ts-node: 8.10.2_typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-5W0LLWJkB+ccUEVKcmv6CUGdruNHoXhuKrrF73LZja50X9IzFWtJr1sI615pGA1V4HiOVode3djPE4nbq57Xqw==
+      integrity: sha512-IJsvFE3jOi4zTU3AhVYXbCUTOVm/5aH49sjtUCpWmTsuSYX3lXfSeG6n55YyTeK/la8AvXC8wa2X1PJQBRfGgA==
       tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/reference-workspace-mgmt.tgz':
@@ -18147,13 +18152,14 @@ packages:
       jest-junit: 3.7.0
       prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/reference-workspace-mgmt'
     resolution:
-      integrity: sha512-1QeebANkHo36snZIh6fm70MNsbFry8NgZcGB8AKPfpLMq3atWsNF+DegHDLAQMKwnJkMs5jSi0ESlJe5J7r21g==
+      integrity: sha512-5lCf0sqBuKdz+l7hmvemC0AjeOaQjackhcr6LBbPSV4fIDHK80wdBhVetnboRX9+63Ewr/D9PAz655WfwtOQqw==
       tarball: 'file:projects/reference-workspace-mgmt.tgz'
     version: 0.0.0
   'file:projects/reference-workspace.tgz':
@@ -18168,13 +18174,14 @@ packages:
       lodash: 4.17.15
       prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/reference-workspace'
     resolution:
-      integrity: sha512-GhMgB8NBYm8piRMGgWgfagmbAl2sa49/dFmWxuRwjE3NUiM3SYlEfc3ZCiragzoCmOL4U1zvy4HysazVRM1zEA==
+      integrity: sha512-A6J2OUmOGffqPf3ElSon9W9rQsylNoF22zPhRZ4ak0sgYL02eIvNcm5pIJptWU4A6eMlkcf5kvvDg2fmQybnoQ==
       tarball: 'file:projects/reference-workspace.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-base.tgz':
@@ -18196,13 +18203,14 @@ packages:
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-backend-base'
     resolution:
-      integrity: sha512-wqQdTvj7HtdUeWcTt73oOWgB9pifim8uyTfEUczQybCFPvy2+mJVMZ5dl+OWdn4kf174XNseM1dSwLvsvXu/cA==
+      integrity: sha512-MyH3KFFt4UgfkVvv/uBhQ/aOVxdLhIjxkCvHhUovlwlCoIRvtqFXLl08lRmWHNDv9SohdRBIJZa0vjLPOxiqwA==
       tarball: 'file:projects/sdk-backend-base.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-bear.tgz':
@@ -18225,6 +18233,7 @@ packages:
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
@@ -18232,7 +18241,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-bear'
     resolution:
-      integrity: sha512-HkF8qaQJBcJlode65ZpSEuwcvlQgVrc3SwCbBse17TA/OIDZ+QBxB79YhGJC3I6OKt2JOJiciwAX3C9/hVYcOw==
+      integrity: sha512-vKZWYb5nbTLGoQIBZ1sH7MFzSV7RUZvACX2o39xKDOmy+y/n+BV9lG2uegumRMj2dHsPfDg+lsPaaP0RFWUazw==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz':
@@ -18249,13 +18258,14 @@ packages:
       prettier: 2.0.5
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-backend-mockingbird'
     resolution:
-      integrity: sha512-XxZ6D0pt5Gi4GZfxZ1//OkwC9cGjF+K4sZKpO/BBJdywfYfItw5/t8geOnVyzUvOVsArt3XJIY1dnE5G5r6zZQ==
+      integrity: sha512-e1njrDGgYh8gLqIiH5CLvZjjqmnQDEhLQ96zYbmJlchR2dQIG2FKH0rullPARKDtKCwEK1YY3aQQhAgtTZGG/g==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
@@ -18273,13 +18283,14 @@ packages:
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-backend-spi'
     resolution:
-      integrity: sha512-btjm4xtFDQnMqypfIOm82D0bEOPs5MxBDp3cuLrCIcowCvPXcP6mxLo/UsA5uOt861/5AeH13IjbDUAD8a+LVA==
+      integrity: sha512-N14x3oClxIZB6m8aH3iBkwpWaOAktwFoYWGuPXGQqZCL+m+K0sqvyZnfl9v/as0dsPfOqYcGH82UzojPn55nvA==
       tarball: 'file:projects/sdk-backend-spi.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-tiger.tgz':
@@ -18300,6 +18311,7 @@ packages:
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
@@ -18308,7 +18320,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-tiger'
     resolution:
-      integrity: sha512-SoZbUywltem8DeV9KeM8mjNRuonfBndQ0W8CikRk75jsL5RG32kDn1PFUXvejVsYXR0emslOzKxF9ra9YZEMfQ==
+      integrity: sha512-qXJCpeeQZULopFjX6FTrAZ0oow0YLs8ALGavDEktAWC5ySMpHUy3oyGib5hzZ4TahJ/GiJsAu6t0hFQqRNwkIg==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-examples.tgz_prop-types@15.7.2':
@@ -18385,6 +18397,7 @@ packages:
       styled-jsx: 3.3.0_react@16.13.1
       supertest: 4.0.2
       testcafe: 1.8.6
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
@@ -18398,7 +18411,7 @@ packages:
     peerDependencies:
       prop-types: '*'
     resolution:
-      integrity: sha512-WNNQCNn3YD5/H09kkbjqwLSTX71BStDlv5CZXbF1wzfqQPobHA5S2tq9gvzXV/HTdcCHt0//4URQSxLvwelN9w==
+      integrity: sha512-cP+Qsj7XVbj/5bCZjupaSFvVP6lQJNfDrIFlvK+1cgHkboW4Itq6GiD4NJ5CuXMChpZWne3GKNpAkbchBsZ6og==
       tarball: 'file:projects/sdk-examples.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -18421,13 +18434,14 @@ packages:
       stringify-object: 2.4.0
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-model'
     resolution:
-      integrity: sha512-LOXOee30FfRnOK6hbccKTx6c0dn/nfDTtl3M7JIbQbIbjQSjZtwqWebuWutmRYNI7qi6W0944DnvrVQdt/RuOg==
+      integrity: sha512-eM7RQeFRN9RKKok1AKyQ+eyvGxZEVoUwLt78nwwK2ACx1GQhUt/OJBifD1Xf+ChNjKF+9k59IkjBH57eOMpTAA==
       tarball: 'file:projects/sdk-model.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-ts.tgz':
@@ -18442,13 +18456,14 @@ packages:
       lodash: 4.17.15
       prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-skel-ts'
     resolution:
-      integrity: sha512-xbMpMKoZ7eSBLcYQZ8xfC26Lf+2O/3Vf5YytJWnlZEc8cNM9ujcIokDCnkmfjzIISrWefqTjUnE82RdXaBeidQ==
+      integrity: sha512-BITkzcuYEzMmVsznS/mJMpJMRB2qzYmLopMHfUSUzrcxefTymBgrhecf9SLvOMGXQVoVOqc08utPOJW6hkgCGA==
       tarball: 'file:projects/sdk-skel-ts.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-tsx.tgz':
@@ -18479,13 +18494,14 @@ packages:
       react-dom: 16.13.1_react@16.13.1
       react-intl: 3.12.1_react@16.13.1
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-skel-tsx'
     resolution:
-      integrity: sha512-HudS72TlYN0uRc9nTlcI1eM/phZPtJ9ZU6BRHf84dYUl5f+GgI0BtvBxDMoxtSbeuYTdv8HBe9hDSyELvsPPNw==
+      integrity: sha512-b934NcNssJxSqn16RWDUqYQ/Cc5DUeCx49X0fHuKWiAmNm5p6TKw0e715EXGXIIpzv5mOEZyvY+O7JmUTI376g==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-all.tgz':
@@ -18498,13 +18514,14 @@ packages:
       jest-junit: 3.7.0
       prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-ui-all'
     resolution:
-      integrity: sha512-HwBrqY21DLx7ir9Cg3O2V2EVlLsDmjVe71+j83fHWgUlJV6sdT48DCzEdZR4UgMCQn7gfgvGda467OiLBl422A==
+      integrity: sha512-kub/guPeae9HOe4rCRU6OcWi1LitLGAGHc01pTEdidzQlflUe2hWrMl6YGPWJdATx5vVCnHDQPQhLEA9caNY1w==
       tarball: 'file:projects/sdk-ui-all.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-charts.tgz':
@@ -18550,13 +18567,14 @@ packages:
       react-intl: 3.12.1_react@16.13.1
       react-measure: 2.3.0_react-dom@16.13.1+react@16.13.1
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-ui-charts'
     resolution:
-      integrity: sha512-zjFdlzGVhgeGQhVIMmhhhR03OMTnlQGCw3FYUxIdqORCnezyrmiVj8Lm31jhQyTgmRiEvVxpKiH1niZsT/pw0A==
+      integrity: sha512-PZzc4KSFWHJnnLWzGAzxMYa+ikK9di0NlpGZy1eI2aYTEDDlzV2MJMMZGeCtb2I4o2mpU9gqIvOc21kBdMKSgQ==
       tarball: 'file:projects/sdk-ui-charts.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-ext.tgz':
@@ -18599,6 +18617,7 @@ packages:
       react-intl: 3.12.1_react@16.13.1
       react-measure: 2.3.0_react-dom@16.13.1+react@16.13.1
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
@@ -18606,7 +18625,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-ext'
     resolution:
-      integrity: sha512-od/3Fthvh8zyhdBBRQ2oj0/g6sgwpwzQXw6X8Czd9iXkrvcAjnSWCdf/FvLB/c40cZpbkzlQV3TRsScHbDoIIw==
+      integrity: sha512-JNnbwFmTVTh/3dwVeQwCMDHtzmB6vQ42PXEWoJYgfEE2VwHINFe+Mo42Mp7Hr39R654FuQBf3rSyKuuiHwO+eg==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz':
@@ -18655,13 +18674,14 @@ packages:
       react-responsive: 8.1.0_react@16.13.1
       react-window: 1.8.5_react-dom@16.13.1+react@16.13.1
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-ui-filters'
     resolution:
-      integrity: sha512-6A2ePZGcKphYHhiZQAHBznlPgDCjWK6dZqZ67f9vHHTWI2/ic8zJ9Xxgw2Qtfw8QdVFZd4T89G6B/YxKKROPyA==
+      integrity: sha512-be1XsFMil50h3qAGCfewb8HEWkJLJU759LQY1/r+cCf57+MxDN+WDqb2ZpbjZz0c/iW8CYV6oCv+MccHY+c3JQ==
       tarball: 'file:projects/sdk-ui-filters.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-geo.tgz':
@@ -18702,13 +18722,14 @@ packages:
       react-measure: 2.3.0_react-dom@16.13.1+react@16.13.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-ui-geo'
     resolution:
-      integrity: sha512-5x5Z5nfRxmzs6W4Ubjnr+jeLHqoHYR1AO7Rd8/0V9FD2CVaRKHY83IC71RDSavod8YsKgg26XFIm3i5oPHAMYA==
+      integrity: sha512-bee2NgdFEdD9n4EJwCDXsOvo9rl1EDbIt7dh2AxWheSsqpYck98FcWEuDbH8UfGDylHGM6dIHmOLgk6eWQYEDg==
       tarball: 'file:projects/sdk-ui-geo.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-pivot.tgz':
@@ -18753,13 +18774,14 @@ packages:
       react-dom: 16.13.1_react@16.13.1
       react-intl: 3.12.1_react@16.13.1
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-ui-pivot'
     resolution:
-      integrity: sha512-66HSgrQrcvJnn9KaHBcXjtPQfh6Dpd+lZksTmiC3FOfAJe0eDzRf4f836y58Onbr3IEfnf3z8KsUJ0O1qGBEIQ==
+      integrity: sha512-IT6uuYp/hz8Rzt4/ilIhYe7zqjY1eU6moTu+JicxZX0UvCAC9sup63VSPPEdJdkH154l15RxDUjO9I3dtn5wew==
       tarball: 'file:projects/sdk-ui-pivot.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-tests.tgz_webpack@4.43.0':
@@ -18804,6 +18826,7 @@ packages:
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       ts-loader: 6.2.2_typescript@3.9.5
       ts-node: 8.10.2_typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
@@ -18813,7 +18836,7 @@ packages:
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-Uurv9bc/UoKPjrWp/kP3MCPvD6brsEIRfk1dbo/ncJ8U/I+4EqRifnJJjodoHDD9wxNcda3mfOlP26v8xX3EBA==
+      integrity: sha512-uhHXc/3e2wURcw8eYsTxyak+gpU2ew5VHLLyqj1zYt/ARCznY9/Ub2jyjLyalc9aoESVE5bZHaI6IVhMjFa+bg==
       tarball: 'file:projects/sdk-ui-tests.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-vis-commons.tgz':
@@ -18851,13 +18874,14 @@ packages:
       react-intl: 3.12.1_react@16.13.1
       react-measure: 2.3.0_react-dom@16.13.1+react@16.13.1
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-ui-vis-commons'
     resolution:
-      integrity: sha512-udzLas93x48qDER299YW7Uh4mVFO6dETevLyxDjOlOWq3BNVhz5/wnBfep4NWZ9+3oTiemmw315XA5RAwhgsQA==
+      integrity: sha512-1mHMGN8rVV2oBdhJW1NDpiAwassS6960CWvcQfIdX4R4XgsnGTEuwSXXYHSttm4TsTdKDzM6IzhCPo37+b0otw==
       tarball: 'file:projects/sdk-ui-vis-commons.tgz'
     version: 0.0.0
   'file:projects/sdk-ui.tgz':
@@ -18896,13 +18920,14 @@ packages:
       react-intl: 3.12.1_react@16.13.1
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.9.5
       tslint-config-prettier: 1.18.0
       typescript: 3.9.5
     dev: false
     name: '@rush-temp/sdk-ui'
     resolution:
-      integrity: sha512-fHECe0qkfq1jfbHAmfcwHZul9/dtM/PH5Va652LviI1NvWLrO7WGZwkU/SEwbei406aZ3ulFMXJXBGLyzh5t8g==
+      integrity: sha512-JkhuhTjVbQNmhhITpQUtv+7JH8KflLV5QSnNceSR+WF8vP2FOJJQhTpKhQiNsS6BgizEJK60E58gMg7zAscXDw==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
 registry: ''
@@ -18931,10 +18956,10 @@ specifiers:
   '@microsoft/api-extractor': 7.8.1
   '@openapitools/openapi-generator-cli': ^1.0.10-4.2.3
   '@rush-temp/catalog-export': 'file:./projects/catalog-export.tgz'
-  '@rush-temp/examples-workspace': 'file:./projects/examples-workspace.tgz'
   '@rush-temp/gd-bear-client': 'file:./projects/gd-bear-client.tgz'
   '@rush-temp/gd-bear-model': 'file:./projects/gd-bear-model.tgz'
   '@rush-temp/gd-tiger-client': 'file:./projects/gd-tiger-client.tgz'
+  '@rush-temp/live-examples-workspace': 'file:./projects/live-examples-workspace.tgz'
   '@rush-temp/mock-handling': 'file:./projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:./projects/reference-workspace.tgz'
   '@rush-temp/reference-workspace-mgmt': 'file:./projects/reference-workspace-mgmt.tgz'
@@ -19093,7 +19118,7 @@ specifiers:
   ts-loader: ^6.2.1
   ts-morph: ^4.2.0
   ts-node: ^8.4.1
-  tslib: ~2.0.0
+  tslib: ^2.0.0
   tslint: ^5.14.0
   tslint-config-prettier: ^1.18.0
   typescript: 3.9.5

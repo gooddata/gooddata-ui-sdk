@@ -1,5 +1,5 @@
 {
-    "name": "@gooddata/examples-workspace",
+    "name": "@gooddata/live-examples-workspace",
     "version": "8.0.0-alpha.104",
     "author": "GoodData",
     "description": "GoodData SDK TypeScript skeleton",

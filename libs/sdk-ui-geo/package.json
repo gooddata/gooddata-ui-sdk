@@ -56,7 +56,7 @@
         "react-dom": "^16.5.2"
     },
     "devDependencies": {
-        "@gooddata/examples-workspace": "^8.0.0-alpha.104",
+        "@gooddata/live-examples-workspace": "^8.0.0-alpha.104",
         "@gooddata/sdk-backend-mockingbird": "^8.0.0-alpha.104",
         "@gooddata/tslint-config": "1.0.0",
         "@microsoft/api-extractor": "^7.3.8",

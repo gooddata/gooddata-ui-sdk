@@ -301,8 +301,8 @@
      */
     "projects": [
         {
-            "packageName": "@gooddata/examples-workspace",
-            "projectFolder": "tools/examples-workspace",
+            "packageName": "@gooddata/live-examples-workspace",
+            "projectFolder": "tools/live-examples-workspace",
             "reviewCategory": "tools",
             "versionPolicyName": "sdk",
             "shouldPublish": true

@@ -163,7 +163,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -382,7 +382,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -526,7 +526,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -681,7 +681,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -804,7 +804,7 @@ Object {
   "filters": Array [],
   "measures": Array [],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -942,7 +942,7 @@ Object {
   "filters": Array [],
   "measures": Array [],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -1106,7 +1106,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -1246,7 +1246,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -1340,7 +1340,7 @@ Object {
   "filters": Array [],
   "measures": Array [],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -1458,7 +1458,7 @@ Object {
   "filters": Array [],
   "measures": Array [],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -1618,7 +1618,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -1769,7 +1769,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -1944,7 +1944,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -2135,7 +2135,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -2357,7 +2357,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -2572,7 +2572,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -2756,7 +2756,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -2927,7 +2927,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 
@@ -3113,7 +3113,7 @@ Object {
     },
   ],
   "sortBy": Array [],
-  "workspace": "examples-workspace",
+  "workspace": "live-examples-workspace",
 }
 `;
 

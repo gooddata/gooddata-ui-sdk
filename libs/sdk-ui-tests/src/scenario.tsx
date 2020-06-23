@@ -39,7 +39,7 @@ export type TestTypes = "api" | "visual";
 export type SignificantTags = "vis-config-only" | "mock-no-scenario-meta" | "mock-no-insight";
 export type ScenarioTag = SignificantTags | string;
 
-export type WorkspaceType = "reference-workspace" | "examples-workspace";
+export type WorkspaceType = "reference-workspace" | "live-examples-workspace";
 
 /**
  * Fully describes a test scenario for particular visualization.

@@ -30,11 +30,11 @@ function initializeStores(): DefinitionStores | undefined {
 
     return {
         executions: {
-            "examples-workspace": initializeStore(rootDir, "examples-workspace", "executions"),
+            "live-examples-workspace": initializeStore(rootDir, "live-examples-workspace", "executions"),
             "reference-workspace": initializeStore(rootDir, "reference-workspace", "executions"),
         },
         insights: {
-            "examples-workspace": initializeStore(rootDir, "examples-workspace", "insights"),
+            "live-examples-workspace": initializeStore(rootDir, "live-examples-workspace", "insights"),
             "reference-workspace": initializeStore(rootDir, "reference-workspace", "insights"),
         },
     };
