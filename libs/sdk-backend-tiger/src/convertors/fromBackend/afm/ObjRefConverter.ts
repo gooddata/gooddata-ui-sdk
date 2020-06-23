@@ -2,7 +2,7 @@
 import isEmpty = require("lodash/isEmpty");
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { isUriRef, ObjRef, ObjectType } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/gd-tiger-client";
+import { ExecuteAFM } from "@gooddata/api-client-tiger";
 import ObjQualifier = ExecuteAFM.ObjQualifier;
 import { TigerAfmType } from "../../../types";
 

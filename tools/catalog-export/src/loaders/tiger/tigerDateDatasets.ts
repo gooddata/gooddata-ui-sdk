@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 
 import { Attribute, DateDataSet } from "../../base/types";
-import { AttributeResourceSchema, DatasetResourceSchema, ITigerClient } from "@gooddata/gd-tiger-client";
+import { AttributeResourceSchema, DatasetResourceSchema, ITigerClient } from "@gooddata/api-client-tiger";
 import { DefaultGetOptions } from "./tigerClient";
 import {
     convertAttribute,

@@ -26,7 +26,7 @@ import {
     MetricResourceSchema,
     TagResourceReference,
     TagResourceSchema,
-} from "@gooddata/gd-tiger-client";
+} from "@gooddata/api-client-tiger";
 import { toSdkGranularity } from "./dateGranularityConversions";
 
 type MetadataObjectResourceSchema =

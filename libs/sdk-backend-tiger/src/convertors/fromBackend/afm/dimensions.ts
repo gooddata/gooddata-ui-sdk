@@ -5,7 +5,7 @@ import {
     IMeasureDescriptor,
     IDimensionDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { Execution } from "@gooddata/gd-tiger-client";
+import { Execution } from "@gooddata/api-client-tiger";
 
 import isAttributeHeader = Execution.isAttributeHeader;
 

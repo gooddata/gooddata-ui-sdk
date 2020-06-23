@@ -1,9 +1,9 @@
 {
-    "name": "@gooddata/gd-tiger-client",
+    "name": "@gooddata/api-client-tiger",
     "version": "8.0.0-alpha.104",
     "author": "GoodData",
-    "description": "GoodData client for the Tiger platform",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/gd-tiger-client",
+    "description": "API Client for the Tiger backend",
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-client-tiger",
     "license": "BSD-3-Clause",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",

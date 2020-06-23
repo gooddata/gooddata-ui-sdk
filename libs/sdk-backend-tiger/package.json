@@ -33,7 +33,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/gd-tiger-client": "^8.0.0-alpha.104",
+        "@gooddata/api-client-tiger": "^8.0.0-alpha.104",
         "@gooddata/sdk-backend-base": "^8.0.0-alpha.104",
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.104",
         "@gooddata/sdk-model": "^8.0.0-alpha.104",

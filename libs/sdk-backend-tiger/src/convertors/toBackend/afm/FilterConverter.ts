@@ -18,7 +18,7 @@ import {
     isComparisonCondition,
     isRangeCondition,
 } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/gd-tiger-client";
+import { ExecuteAFM } from "@gooddata/api-client-tiger";
 import {
     toDateDataSetQualifier,
     toDisplayFormQualifier,

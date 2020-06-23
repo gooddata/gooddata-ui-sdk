@@ -70,7 +70,7 @@ const main = async () => {
         };
         axios.defaults.baseURL = baseUrl;
 
-        await Promise.all(specs.map(spec => downloadAndGenerate(spec, outputDir, outputFile)));
+        await Promise.all(specs.map((spec) => downloadAndGenerate(spec, outputDir, outputFile)));
 
         console.error("DONE");
     } catch (e) {

@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { ITigerClient } from "@gooddata/gd-tiger-client";
+import { ITigerClient } from "@gooddata/api-client-tiger";
 import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 
 /**

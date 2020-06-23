@@ -16,7 +16,7 @@ import {
     insightTitle,
     insightId,
 } from "@gooddata/sdk-model";
-import { VisualizationObject } from "@gooddata/gd-tiger-client";
+import { VisualizationObject } from "@gooddata/api-client-tiger";
 import uuid4 from "uuid/v4";
 
 import { TigerAuthenticatedCallGuard } from "../../../types";

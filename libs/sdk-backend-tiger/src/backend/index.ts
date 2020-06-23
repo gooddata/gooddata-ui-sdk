@@ -14,7 +14,7 @@ import {
     NotAuthenticated,
     AuthenticationContext,
 } from "@gooddata/sdk-backend-spi";
-import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/gd-tiger-client";
+import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
 import isEmpty = require("lodash/isEmpty");
 import isString = require("lodash/isString");
 

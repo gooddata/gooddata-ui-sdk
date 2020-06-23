@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { AttributeGranularityResourceAttribute } from "@gooddata/gd-tiger-client";
+import { AttributeGranularityResourceAttribute } from "@gooddata/api-client-tiger";
 import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 

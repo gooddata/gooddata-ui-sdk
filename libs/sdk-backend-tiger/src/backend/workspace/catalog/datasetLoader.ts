@@ -8,7 +8,7 @@ import {
     LabelResourceReference,
     LabelResourceSchema,
     SuccessIncluded,
-} from "@gooddata/gd-tiger-client";
+} from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
 import {
     convertAttribute,

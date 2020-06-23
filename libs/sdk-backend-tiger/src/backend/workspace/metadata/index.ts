@@ -7,7 +7,7 @@ import {
     FactResourceSchema,
     LabelResourceSchema,
     SuccessIncluded,
-} from "@gooddata/gd-tiger-client";
+} from "@gooddata/api-client-tiger";
 import { AxiosResponse } from "axios";
 import {
     IAttributeDisplayFormMetadataObject,

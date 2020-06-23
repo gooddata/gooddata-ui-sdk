@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { Execution } from "@gooddata/gd-tiger-client";
+import { Execution } from "@gooddata/api-client-tiger";
 import isEqual = require("lodash/isEqual");
 import IDimensionHeader = Execution.IDimensionHeader;
 

@@ -22,10 +22,10 @@ dependencies:
   '@microsoft/api-documenter': 7.8.13
   '@microsoft/api-extractor': 7.8.1
   '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
+  '@rush-temp/api-client-tiger': 'file:projects/api-client-tiger.tgz'
   '@rush-temp/catalog-export': 'file:projects/catalog-export.tgz'
   '@rush-temp/gd-bear-client': 'file:projects/gd-bear-client.tgz'
   '@rush-temp/gd-bear-model': 'file:projects/gd-bear-model.tgz'
-  '@rush-temp/gd-tiger-client': 'file:projects/gd-tiger-client.tgz'
   '@rush-temp/live-examples-workspace': 'file:projects/live-examples-workspace.tgz'
   '@rush-temp/mock-handling': 'file:projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:projects/reference-workspace.tgz'
@@ -17951,6 +17951,36 @@ packages:
       commander: 2.20.3
     resolution:
       integrity: sha512-DUOKC/IhbkdLKKiV89gw9DUauTV8U/8yJl1sjf6MtDmzevLKOF2duNJ495S3MFVjqZarr+qNGCPbkg4mu4PpLw==
+  'file:projects/api-client-tiger.tgz':
+    dependencies:
+      '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
+      '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
+      '@types/jest': 25.2.3
+      '@types/lodash': 4.14.155
+      '@types/qs': 6.9.3
+      '@types/spark-md5': 3.0.2
+      axios: 0.19.2
+      commander: 3.0.2
+      dependency-cruiser: 8.2.0_typescript@3.9.5
+      dotenv: 8.2.0
+      jest: 25.5.4
+      jest-junit: 3.7.0
+      lodash: 4.17.15
+      mkdirp: 1.0.4
+      prettier: 2.0.5
+      qs: 6.9.4
+      spark-md5: 3.0.1
+      ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
+      tslib: 2.0.0
+      tslint: 5.20.1_typescript@3.9.5
+      tslint-config-prettier: 1.18.0
+      typescript: 3.9.5
+    dev: false
+    name: '@rush-temp/api-client-tiger'
+    resolution:
+      integrity: sha512-DxuT0YQjIhtcQbds5maDbjJIdzKBer+alVebyarzqTI8V4Q2MsTPWRFblUqN7sdFeXY0PyYtsDPo60g6QYheeg==
+      tarball: 'file:projects/api-client-tiger.tgz'
+    version: 0.0.0
   'file:projects/catalog-export.tgz':
     dependencies:
       '@babel/core': 7.10.2
@@ -17983,7 +18013,7 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-iECnNyXPhufl8AlKYrJcP7tlx6zhVyCGhB0wAQkhtM00ORihzdcDR708OD6ev+U5uc1SYsKSKIzFr43Te3UMtA==
+      integrity: sha512-SqEy6v42kzXDwpdKEUreDXyaW3BkMGzgrigBPuFMv0Csd/XqTTfw1CIlL/nv2HiSZvSHV18MWgrG5kg0BiNzHg==
       tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/gd-bear-client.tgz':
@@ -18052,36 +18082,6 @@ packages:
     resolution:
       integrity: sha512-VZhIss8i8rzKhBQTo83cXSqrORZpMCyKTR0w3I3JBBD+q3XuF52v82Kr7pIN5Dyxde1ednDLNyYpNMNnR2+/gw==
       tarball: 'file:projects/gd-bear-model.tgz'
-    version: 0.0.0
-  'file:projects/gd-tiger-client.tgz':
-    dependencies:
-      '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
-      '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
-      '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
-      '@types/qs': 6.9.3
-      '@types/spark-md5': 3.0.2
-      axios: 0.19.2
-      commander: 3.0.2
-      dependency-cruiser: 8.2.0_typescript@3.9.5
-      dotenv: 8.2.0
-      jest: 25.5.4
-      jest-junit: 3.7.0
-      lodash: 4.17.15
-      mkdirp: 1.0.4
-      prettier: 2.0.5
-      qs: 6.9.4
-      spark-md5: 3.0.1
-      ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
-      tslib: 2.0.0
-      tslint: 5.20.1_typescript@3.9.5
-      tslint-config-prettier: 1.18.0
-      typescript: 3.9.5
-    dev: false
-    name: '@rush-temp/gd-tiger-client'
-    resolution:
-      integrity: sha512-zrRc8GIDeTYg3GxpF1235OQxUOHLT89sjec8Efmomd+8KTGvgCwok9fFXFKTij0gyvfDVc9Jy0sZREDAZTOnFg==
-      tarball: 'file:projects/gd-tiger-client.tgz'
     version: 0.0.0
   'file:projects/live-examples-workspace.tgz':
     dependencies:
@@ -18320,7 +18320,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-tiger'
     resolution:
-      integrity: sha512-qXJCpeeQZULopFjX6FTrAZ0oow0YLs8ALGavDEktAWC5ySMpHUy3oyGib5hzZ4TahJ/GiJsAu6t0hFQqRNwkIg==
+      integrity: sha512-vfUkg35oMLAKjJb7BUZIrarlTBMNsY9KrmpucWq/qmehEbJCrAHy7UDYSdI7mAB22MD/RUnsmXAIxdtyXVDz2w==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-examples.tgz_prop-types@15.7.2':
@@ -18955,10 +18955,10 @@ specifiers:
   '@microsoft/api-documenter': ^7.3.16
   '@microsoft/api-extractor': 7.8.1
   '@openapitools/openapi-generator-cli': ^1.0.10-4.2.3
+  '@rush-temp/api-client-tiger': 'file:./projects/api-client-tiger.tgz'
   '@rush-temp/catalog-export': 'file:./projects/catalog-export.tgz'
   '@rush-temp/gd-bear-client': 'file:./projects/gd-bear-client.tgz'
   '@rush-temp/gd-bear-model': 'file:./projects/gd-bear-model.tgz'
-  '@rush-temp/gd-tiger-client': 'file:./projects/gd-tiger-client.tgz'
   '@rush-temp/live-examples-workspace': 'file:./projects/live-examples-workspace.tgz'
   '@rush-temp/mock-handling': 'file:./projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:./projects/reference-workspace.tgz'

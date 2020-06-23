@@ -8,7 +8,7 @@ import {
     TagResourceSchema,
     LabelResourceReference,
     AttributeResourceSchema,
-} from "@gooddata/gd-tiger-client";
+} from "@gooddata/api-client-tiger";
 import { keyBy } from "lodash";
 import { Attribute, DisplayForm } from "../../base/types";
 

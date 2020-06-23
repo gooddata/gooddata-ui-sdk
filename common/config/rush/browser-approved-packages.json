@@ -103,7 +103,7 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/gd-tiger-client",
+      "name": "@gooddata/api-client-tiger",
       "allowedCategories": [ "production", "tools" ]
     },
     {
