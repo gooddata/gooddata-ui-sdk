@@ -525,12 +525,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private autoresizeColumns = (event: AgGridEvent) => {
-        if (
-            event.api.getRenderedNodes().length === 0 ||
-            event.api.getCacheBlockState()[0].pageStatus !== "loaded" ||
+        const skipResizing =
             this.state.resized ||
-            this.resizing
-        ) {
+            this.resizing ||
+            event.api.getRenderedNodes().length === 0 ||
+            event.api.getCacheBlockState()[0].pageStatus !== "loaded";
+
+        if (skipResizing) {
             return;
         }
 
