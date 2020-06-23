@@ -22,6 +22,15 @@ import { WrappedComponentProps } from 'react-intl';
 // @internal (undocumented)
 export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
 
+// @public (undocumented)
+export type DefaultColumnWidth = "viewport" | "unset";
+
+// @public (undocumented)
+export interface IColumnSizing {
+    // (undocumented)
+    defaultWidth: DefaultColumnWidth;
+}
+
 // Warning: (ae-internal-missing-underscore) The name "ICorePivotTableProps" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
@@ -55,6 +64,7 @@ export interface IPivotTableBucketProps {
 
 // @public (undocumented)
 export interface IPivotTableConfig {
+    columnSizing?: IColumnSizing;
     maxHeight?: number;
     menu?: IMenu;
     separators?: ISeparators;

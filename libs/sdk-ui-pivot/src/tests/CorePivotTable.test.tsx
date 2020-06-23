@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { mount } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import noop = require("lodash/noop");
 
@@ -18,6 +18,31 @@ import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 const intl = createIntlMock();
+
+const waitForDataLoaded = (wrapper: ReactWrapper<any, Readonly<{}>, React.Component<{}, {}>>) => () => {
+    wrapper.update();
+    const table = wrapper.find(CorePivotTablePure);
+    return table.prop("currentResult") !== null;
+};
+
+export function waitFor(test: () => any, maxDelay = 1000, delayOffset = 0, increment = 100) {
+    const start = Date.now();
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const intervalRef = setInterval(() => {
+                const testResult = test();
+                if (testResult) {
+                    clearInterval(intervalRef);
+                    return resolve(testResult);
+                }
+                if (Date.now() - start >= maxDelay) {
+                    clearInterval(intervalRef);
+                    reject(testResult);
+                }
+            }, increment);
+        }, delayOffset);
+    });
+}
 
 describe("CorePivotTable", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);
@@ -38,6 +63,38 @@ describe("CorePivotTable", () => {
         const table = wrapper.find(CorePivotTablePure);
         return table.instance() as any;
     }
+
+    function getTableInstanceFromWrapper(wrapper: ReactWrapper) {
+        const table = wrapper.find(CorePivotTablePure);
+        return table.instance() as any;
+    }
+
+    describe("column sizing", () => {
+        it("should auto-resize columns if executing and default width should fit the viewport", (done) => {
+            const wrapper = renderComponent({
+                config: { columnSizing: { defaultWidth: "viewport" } },
+            });
+            const table = getTableInstanceFromWrapper(wrapper);
+            const autoresizeColumns = jest.spyOn(table, "autoresizeVisibleColumns");
+            autoresizeColumns.mockImplementation(() => {
+                expect(autoresizeColumns).toHaveBeenCalledTimes(1);
+                done();
+            });
+            wrapper.update();
+        });
+
+        it("should not auto-resize columns it the column sizing is not configured", async () => {
+            const wrapper = renderComponent({
+                config: { columnSizing: undefined },
+            });
+            const table = getTableInstanceFromWrapper(wrapper);
+            const autoresizeColumns = jest.spyOn(table, "autoresizeVisibleColumns");
+            autoresizeColumns.mockImplementation(noop);
+
+            await waitFor(waitForDataLoaded(wrapper));
+            expect(autoresizeColumns).toHaveBeenCalledTimes(0);
+        });
+    });
 
     describe("onModelUpdated", () => {
         let updateStickyRowPosition: jest.SpyInstance;

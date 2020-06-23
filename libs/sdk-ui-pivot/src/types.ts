@@ -23,7 +23,24 @@ export interface IMenu {
 /**
  * @public
  */
+export type DefaultColumnWidth = "viewport" | "unset"; // | "auto"  | number; can be added later see ONE-4276
+
+/**
+ * @public
+ */
+export interface IColumnSizing {
+    defaultWidth: DefaultColumnWidth;
+}
+
+/**
+ * @public
+ */
 export interface IPivotTableConfig {
+    /**
+     * Optionally customize column sizing strategy
+     */
+    columnSizing?: IColumnSizing;
+
     /**
      * Optionally customize number segment separators (thousands, decimals)
      */

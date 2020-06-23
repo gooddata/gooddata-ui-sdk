@@ -8,7 +8,7 @@ import { modifyMeasure } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { PivotTableWithTwoMeasuresAndTotals } from "./totals";
 
-const MeasureWithCustomFormat = modifyMeasure(ReferenceLdm.Amount, m =>
+const MeasureWithCustomFormat = modifyMeasure(ReferenceLdm.Amount, (m) =>
     m.format("[backgroundColor=ffff00][green]#,##0.00 €").defaultLocalId(),
 );
 
@@ -44,7 +44,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             measures: [MeasureWithCustomFormat],
             groupRows: false,
         },
-        m => {
+        (m) => {
             // measure formatting needs to be looped through backend.. thus clearing up the vis-config-only flag to
             // make sure recording will be captured
             return m.withTags("mock-no-scenario-meta");
