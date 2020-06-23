@@ -151,6 +151,15 @@ Object {
 }
 `;
 
+exports[`newDimension should create a valid dimension when using attribute objects and localIds 1`] = `
+Object {
+  "itemIdentifiers": Array [
+    "a_label.account.id.name",
+    "explicitLocalId1",
+  ],
+}
+`;
+
 exports[`newDimension should create a valid dimension without totals when totals arg empty 1`] = `
 Object {
   "itemIdentifiers": Array [
@@ -213,6 +222,23 @@ Array [
   },
   Object {
     "itemIdentifiers": Array [
+      "localId2",
+    ],
+  },
+]
+`;
+
+exports[`newTwoDimensional should create both dimensions with correct ids when mixing attribute and localId 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "localId1",
+      "a_label.account.id.name",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a_label.activity.id.subject",
       "localId2",
     ],
   },

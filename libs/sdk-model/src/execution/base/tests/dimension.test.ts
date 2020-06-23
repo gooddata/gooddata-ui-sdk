@@ -10,6 +10,7 @@ import {
     newTwoDimensional,
 } from "../dimension";
 import { ITotal } from "../totals";
+import { Account, Activity } from "../../../../__mocks__/model";
 
 const Total1: ITotal = {
     type: "avg",
@@ -34,6 +35,11 @@ describe("newDimension", () => {
         ],
         ["create a valid dimension without totals when totals arg empty", ["localId1", "localId2"], []],
         [
+            "create a valid dimension when using attribute objects and localIds",
+            [Account.Name, "explicitLocalId1"],
+            [],
+        ],
+        [
             "create a valid dimension when input arg is mix of identifiers and totals",
             ["localId1", Total1],
             [],
@@ -53,6 +59,11 @@ describe("newTwoDimensional", () => {
         ["create first dimension empty", [], ["localId1"]],
         ["create second dimension empty", ["localId1"], []],
         ["create both dimensions with correct ids", ["localId1"], ["localId2"]],
+        [
+            "create both dimensions with correct ids when mixing attribute and localId",
+            ["localId1", Account.Name],
+            [Activity.Subject, "localId2"],
+        ],
         ["create first dimension with totals", ["localId1", Total1], ["localId2"]],
         ["create second dimension with totals", ["localId1"], ["localId2", Total1]],
         ["create both dimension with totals", ["localId1", Total1], ["localId2", Total2]],
