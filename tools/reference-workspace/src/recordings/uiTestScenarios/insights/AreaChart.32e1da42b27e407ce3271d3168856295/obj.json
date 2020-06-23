@@ -54,10 +54,8 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "stackMeasuresToPercent": true
-                }
+            "controls": {
+                "stackMeasuresToPercent": true
             }
         }
     }

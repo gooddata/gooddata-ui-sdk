@@ -84,11 +84,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "primaryChartType": "area",
-                    "stackMeasures": true
-                }
+            "controls": {
+                "primaryChartType": "area",
+                "stackMeasures": true
             }
         }
     }

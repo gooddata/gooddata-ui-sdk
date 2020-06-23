@@ -83,15 +83,13 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "xaxis": {
-                        "rotation": "-90"
-                    },
-                    "secondary_xaxis": {
-                        "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"],
-                        "rotation": "-90"
-                    }
+            "controls": {
+                "xaxis": {
+                    "rotation": "-90"
+                },
+                "secondary_xaxis": {
+                    "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"],
+                    "rotation": "-90"
                 }
             }
         }

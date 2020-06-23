@@ -65,11 +65,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "secondary_xaxis": {
-                        "measures": ["m_aangOxLSeztu", "m_acugFHNJgsBy"]
-                    }
+            "controls": {
+                "secondary_xaxis": {
+                    "measures": ["m_aangOxLSeztu", "m_acugFHNJgsBy"]
                 }
             }
         }

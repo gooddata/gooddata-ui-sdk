@@ -54,22 +54,19 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "colorMapping": [
-                        {
-                            "id": "m_aangOxLSeztu",
-                            "color": {
-                                "type": "rgb",
-                                "value": {
-                                    "r": 0,
-                                    "g": 0,
-                                    "b": 0
-                                }
+            "controls": {
+                "colorMapping": [
+                    {
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
                             }
                         }
-                    ]
-                }
+                    }
+                ]
             }
         }
     }

@@ -83,18 +83,16 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "stackMeasuresToPercent": true,
-                    "xaxis": {
-                        "min": "0.1",
-                        "max": "0.9"
-                    },
-                    "secondary_xaxis": {
-                        "min": "1",
-                        "max": "2",
-                        "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"]
-                    }
+            "controls": {
+                "stackMeasuresToPercent": true,
+                "xaxis": {
+                    "min": "0.1",
+                    "max": "0.9"
+                },
+                "secondary_xaxis": {
+                    "min": "1",
+                    "max": "2",
+                    "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"]
                 }
             }
         }

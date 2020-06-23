@@ -72,10 +72,8 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "maxHeight": 200
-                }
+            "controls": {
+                "maxHeight": 200
             }
         }
     }

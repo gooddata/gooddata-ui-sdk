@@ -75,10 +75,8 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "tooltipText": "label.uscities.city"
-                }
+            "controls": {
+                "tooltipText": "label.uscities.city"
             }
         }
     }

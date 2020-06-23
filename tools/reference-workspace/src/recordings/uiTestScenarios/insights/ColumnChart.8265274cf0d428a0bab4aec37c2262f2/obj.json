@@ -83,28 +83,26 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "secondary_yaxis": {
-                        "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"],
-                        "name": {
-                            "position": "center"
-                        }
-                    },
-                    "xaxis": {
-                        "name": {
-                            "position": "center"
-                        }
-                    },
-                    "yaxis": {
-                        "name": {
-                            "position": "center"
-                        }
-                    },
-                    "secondary_xaxis": {
-                        "name": {
-                            "position": "center"
-                        }
+            "controls": {
+                "secondary_yaxis": {
+                    "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"],
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "xaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "center"
                     }
                 }
             }

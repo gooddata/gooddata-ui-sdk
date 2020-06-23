@@ -46,9 +46,7 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {}
-            }
+            "controls": {}
         }
     }
 }

@@ -65,12 +65,10 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "stackMeasures": true,
-                    "secondary_xaxis": {
-                        "measures": ["m_aangOxLSeztu"]
-                    }
+            "controls": {
+                "stackMeasures": true,
+                "secondary_xaxis": {
+                    "measures": ["m_aangOxLSeztu"]
                 }
             }
         }

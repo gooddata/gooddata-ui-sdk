@@ -79,8 +79,7 @@ export function getSupportedProperties(
     visualizationProperties: IVisualizationProperties,
     supportedPropertiesList: string[],
 ): IVisualizationProperties {
-    // TODO: remove the need to have properties content wrapper in yet another 'properties' object
-    const controls = get(visualizationProperties, "properties.controls", {});
+    const controls = get(visualizationProperties, "controls", {});
     const supportedControls = getSupportedPropertiesControls(controls, supportedPropertiesList);
 
     return isEmpty(supportedControls)

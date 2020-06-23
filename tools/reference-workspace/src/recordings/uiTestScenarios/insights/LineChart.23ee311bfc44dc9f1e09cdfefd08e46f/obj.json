@@ -56,11 +56,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "secondary_yaxis": {
-                        "measures": ["m_aangOxLSeztu", "m_acugFHNJgsBy"]
-                    }
+            "controls": {
+                "secondary_yaxis": {
+                    "measures": ["m_aangOxLSeztu", "m_acugFHNJgsBy"]
                 }
             }
         }

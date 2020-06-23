@@ -84,29 +84,25 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "colorMapping": [
-                        {
-                            "id": "m_aangOxLSeztu",
-                            "color": {
-                                "type": "rgb",
-                                "value": {
-                                    "r": 0,
-                                    "g": 0,
-                                    "b": 0
-                                }
-                            }
-                        },
-                        {
-                            "id": "m_acugFHNJgsBy",
-                            "color": {
-                                "type": "guid",
-                                "value": "05"
+            "controls": {
+                "colorMapping": [
+                    {
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
                             }
                         }
-                    ]
-                }
+                    },
+                    {
+                        "color": {
+                            "type": "guid",
+                            "value": "05"
+                        }
+                    }
+                ]
             }
         }
     }

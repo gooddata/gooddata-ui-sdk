@@ -73,9 +73,7 @@
             }
         ],
         "properties": {
-            "properties": {
-                "controls": {}
-            }
+            "controls": {}
         }
     }
 }

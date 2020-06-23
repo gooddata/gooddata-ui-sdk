@@ -65,11 +65,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "xaxis": {
-                        "rotation": "45"
-                    }
+            "controls": {
+                "xaxis": {
+                    "rotation": "45"
                 }
             }
         }

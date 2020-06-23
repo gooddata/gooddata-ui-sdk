@@ -148,10 +148,8 @@ describe("PluggableAreaChart", () => {
             const visualizationProperties =
                 stackMeasures !== null
                     ? {
-                          properties: {
-                              controls: {
-                                  stackMeasures,
-                              },
+                          controls: {
+                              stackMeasures,
                           },
                       }
                     : {};
@@ -206,11 +204,9 @@ describe("PluggableAreaChart", () => {
             const areaChart = createComponent({ ...defaultProps, renderFun: mockRenderFun });
 
             const visualizationProperties = {
-                properties: {
-                    controls: {
-                        stackMeasures: true,
-                        stackMeasuresToPercent: true,
-                    },
+                controls: {
+                    stackMeasures: true,
+                    stackMeasuresToPercent: true,
                 },
             };
             areaChart.setCustomControlsProperties({

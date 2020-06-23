@@ -278,10 +278,8 @@ describe("PluggableColumnBarCharts", () => {
 
             // stackMeasures property
             visualizationProperties = {
-                properties: {
-                    controls: {
-                        stackMeasures: true,
-                    },
+                controls: {
+                    stackMeasures: true,
                 },
             };
             const testInsight = insightSetProperties(
@@ -301,10 +299,8 @@ describe("PluggableColumnBarCharts", () => {
 
             // stackMeasuresToPercent property
             visualizationProperties = {
-                properties: {
-                    controls: {
-                        stackMeasuresToPercent: true,
-                    },
+                controls: {
+                    stackMeasuresToPercent: true,
                 },
             };
             const testInsight = insightSetProperties(

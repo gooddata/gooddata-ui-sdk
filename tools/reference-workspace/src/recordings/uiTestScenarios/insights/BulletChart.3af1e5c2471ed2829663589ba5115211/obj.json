@@ -74,11 +74,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "legend": {
-                        "enabled": false
-                    }
+            "controls": {
+                "legend": {
+                    "enabled": false
                 }
             }
         }

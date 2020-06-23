@@ -83,11 +83,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "secondary_yaxis": {
-                        "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"]
-                    }
+            "controls": {
+                "secondary_yaxis": {
+                    "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"]
                 }
             }
         }

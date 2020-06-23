@@ -74,11 +74,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "xaxis": {
-                        "max": "15000000"
-                    }
+            "controls": {
+                "xaxis": {
+                    "max": "15000000"
                 }
             }
         }

@@ -56,11 +56,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "grid": {
-                        "enabled": false
-                    }
+            "controls": {
+                "grid": {
+                    "enabled": false
                 }
             }
         }

@@ -84,13 +84,11 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "primaryChartType": "column",
-                    "secondaryChartType": "column",
-                    "stackMeasures": true,
-                    "stackMeasuresToPercent": true
-                }
+            "controls": {
+                "primaryChartType": "column",
+                "secondaryChartType": "column",
+                "stackMeasures": true,
+                "stackMeasuresToPercent": true
             }
         }
     }

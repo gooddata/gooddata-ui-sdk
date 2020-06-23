@@ -54,27 +54,25 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "xaxis": {
-                        "name": {
-                            "position": "center"
-                        }
-                    },
-                    "yaxis": {
-                        "name": {
-                            "position": "center"
-                        }
-                    },
-                    "secondary_xaxis": {
-                        "name": {
-                            "position": "center"
-                        }
-                    },
-                    "secondary_yaxis": {
-                        "name": {
-                            "position": "center"
-                        }
+            "controls": {
+                "xaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "position": "center"
                     }
                 }
             }

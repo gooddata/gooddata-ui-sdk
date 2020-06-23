@@ -74,16 +74,14 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "xaxis": {
-                        "min": "5000000",
-                        "max": "25000000"
-                    },
-                    "yaxis": {
-                        "min": ".54",
-                        "max": ".70"
-                    }
+            "controls": {
+                "xaxis": {
+                    "min": "5000000",
+                    "max": "25000000"
+                },
+                "yaxis": {
+                    "min": ".54",
+                    "max": ".70"
                 }
             }
         }

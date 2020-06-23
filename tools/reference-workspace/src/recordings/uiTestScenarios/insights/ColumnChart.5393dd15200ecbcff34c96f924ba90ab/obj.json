@@ -54,33 +54,29 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "colorMapping": [
-                        {
-                            "id": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488",
-                            "color": {
-                                "type": "rgb",
-                                "value": {
-                                    "r": 0,
-                                    "g": 0,
-                                    "b": 0
-                                }
-                            }
-                        },
-                        {
-                            "id": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460489",
-                            "color": {
-                                "type": "rgb",
-                                "value": {
-                                    "r": 255,
-                                    "g": 0,
-                                    "b": 0
-                                }
+            "controls": {
+                "colorMapping": [
+                    {
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
                             }
                         }
-                    ]
-                }
+                    },
+                    {
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 255,
+                                "g": 0,
+                                "b": 0
+                            }
+                        }
+                    }
+                ]
             }
         }
     }

@@ -54,12 +54,10 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "stackMeasuresToPercent": true,
-                    "dataLabels": {
-                        "visible": true
-                    }
+            "controls": {
+                "stackMeasuresToPercent": true,
+                "dataLabels": {
+                    "visible": true
                 }
             }
         }

@@ -84,11 +84,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "primaryChartType": "area",
-                    "secondaryChartType": "column"
-                }
+            "controls": {
+                "primaryChartType": "area",
+                "secondaryChartType": "column"
             }
         }
     }
