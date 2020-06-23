@@ -40,7 +40,7 @@
         "@ag-grid-community/all-modules": "22.1.1",
         "@ag-grid-community/react": "22.1.2",
         "@formatjs/intl-pluralrules": "~1.3.7",
-        "@gooddata/goodstrap": "^68.11.0",
+        "@gooddata/goodstrap": "^68.12.0",
         "@gooddata/js-utils": "^3.4.0",
         "@gooddata/numberjs": "^3.2.4",
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.103",
