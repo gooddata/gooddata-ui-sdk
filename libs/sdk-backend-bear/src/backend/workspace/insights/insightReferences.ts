@@ -13,7 +13,11 @@ import keyBy from "lodash/keyBy";
 import flatMap from "lodash/fp/flatMap";
 import uniqBy from "lodash/fp/uniqBy";
 
-import { convertMetric, convertWrappedFact } from "../../../convertors/fromBackend/CatalogConverter";
+import {
+    convertMetric,
+    convertWrappedFact,
+    convertWrappedAttribute,
+} from "../../../convertors/fromBackend/CatalogConverter";
 
 const objectTypeToObjectCategory = (type: InsightReferenceTypes): GdcMetadata.ObjectCategory => {
     switch (type) {
@@ -201,14 +205,18 @@ export class InsightReferencesQuery {
             const fullObject = objectsByUri[obj.uri];
 
             switch (obj.type) {
-                case "attribute":
                 case "displayForm":
                 case "variable":
                     /*
                      * TODO: implement conversions in order to support these additional types;
-                     *  attribute&Df -> catalog item
+                     *  attributeDf -> catalog item? or tis this reliably covered by "attribute" objects
                      *  variable -> ?? not catalog item, probably something else..
                      */
+                    break;
+                case "attribute":
+                    catalogItems.push(
+                        convertWrappedAttribute({ attribute: fullObject as GdcMetadata.IAttribute }),
+                    );
                     break;
                 case "fact":
                     catalogItems.push(convertWrappedFact({ fact: fullObject as GdcMetadata.IFact }));

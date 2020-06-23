@@ -95,10 +95,7 @@ export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
  * List of currently supported types of references that can be retrieved using getReferencedObjects()
  * @public
  */
-export type SupportedInsightReferenceTypes = Exclude<
-    InsightReferenceTypes,
-    "attribute" | "displayForm" | "variable"
->;
+export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
 /**
  * Contains information about objects that may be referenced by an insight. The contents of this object

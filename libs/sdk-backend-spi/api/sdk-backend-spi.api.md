@@ -1228,7 +1228,7 @@ export enum SettingCatalog {
 }
 
 // @public
-export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "attribute" | "displayForm" | "variable">;
+export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
 // @public
 export class UnexpectedError extends AnalyticalBackendError {
