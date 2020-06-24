@@ -967,6 +967,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return headerHeight + bodyHeight + footerHeight;
     }
 
+    private scrollBarExists(): boolean {
+        const { scrollWidth, clientWidth } = document.getElementsByClassName(
+            "ag-body-horizontal-scroll-viewport",
+        )[0];
+        return scrollWidth > clientWidth ? true : false;
+    }
+
     private getScrollBarPadding(): number {
         if (!this.gridApi) {
             return 0;
@@ -976,8 +983,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             return 0;
         }
 
-        // see: https://stackoverflow.com/questions/4880381/check-whether-html-element-has-scrollbars
-        return this.containerRef.scrollWidth > this.containerRef.clientWidth ? getScrollbarWidth() : 0;
+        // check for scrollbar presence
+        return this.scrollBarExists() ? getScrollbarWidth() : 0;
     }
 
     private calculateDesiredHeight(dv: DataViewFacade): number {
