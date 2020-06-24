@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-bear",
-    "version": "8.0.0-alpha.104",
+    "version": "8.0.0-alpha.105",
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
     "license": "BSD-3-Clause",
@@ -37,7 +37,7 @@
     },
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-client-bear",
     "dependencies": {
-        "@gooddata/api-model-bear": "^8.0.0-alpha.104",
+        "@gooddata/api-model-bear": "^8.0.0-alpha.105",
         "fetch-cookie": "^0.7.0",
         "invariant": "^2.2.2",
         "isomorphic-fetch": "^2.2.1",
