@@ -5,12 +5,7 @@ import { render } from "react-dom";
 import noop = require("lodash/noop");
 import isEqual = require("lodash/isEqual");
 
-import {
-    IAnalyticalBackend,
-    IAnalyticalWorkspace,
-    IExportResult,
-    IWorkspaceSettings,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExportResult, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
     IFilter,
@@ -40,6 +35,7 @@ import {
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
+import { IInsightViewDataLoader, getInsightViewDataLoader } from "./dataLoaders";
 
 /**
  * @public
@@ -263,10 +259,10 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     };
 
     private getRemoteResource = async <T extends {}>(
-        resourceObtainer: (workspace: IAnalyticalWorkspace) => Promise<T>,
+        resourceObtainer: (loader: IInsightViewDataLoader) => Promise<T>,
     ) => {
         try {
-            return await resourceObtainer(this.props.backend.workspace(this.props.workspace));
+            return await resourceObtainer(getInsightViewDataLoader(this.props.workspace));
         } catch (e) {
             this.setError(new GoodDataSdkError(e.message, e));
             this.stopLoading();
@@ -274,21 +270,21 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
         }
     };
 
-    private getInsight = () => {
+    private getInsight = (): Promise<IInsight> => {
         const ref =
             typeof this.props.insight === "string"
                 ? idRef(this.props.insight, "insight")
                 : this.props.insight;
 
-        return this.getRemoteResource<IInsight>((workspace) => workspace.insights().getInsight(ref));
+        return this.getRemoteResource((loader) => loader.getInsight(this.props.backend, ref));
     };
 
-    private getColorPaletteFromProject = () => {
-        return this.getRemoteResource<IColorPalette>((workspace) => workspace.styling().colorPalette());
+    private getColorPalette = (): Promise<IColorPalette> => {
+        return this.getRemoteResource((loader) => loader.getColorPalette(this.props.backend));
     };
 
-    private getWorkspaceSettings = () => {
-        return this.getRemoteResource<IWorkspaceSettings>((workspace) => workspace.settings().query());
+    private getWorkspaceSettings = (): Promise<IWorkspaceSettings> => {
+        return this.getRemoteResource((loader) => loader.getWorkspaceSettings(this.props.backend));
     };
 
     private updateWorkspaceSettings = async () => {
@@ -302,7 +298,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             return;
         }
 
-        this.colorPalette = await this.getColorPaletteFromProject();
+        this.colorPalette = await this.getColorPalette();
     };
 
     private getExecutionFactory = () => {
