@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createPivotTableConfig should create valid config with auto-resize if feature flag on 1`] = `
+Object {
+  "columnSizing": Object {
+    "defaultWidth": "viewport",
+  },
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with menus for non-dashboard env 1`] = `
+Object {
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with menus for undefined env 1`] = `
+Object {
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with separators 1`] = `
+Object {
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": Object {
+    "decimal": ".",
+    "thousand": "-",
+  },
+}
+`;
+
+exports[`createPivotTableConfig should create valid config without menus for dashboard env 1`] = `
+Object {
+  "separators": undefined,
+}
+`;

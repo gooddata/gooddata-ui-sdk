@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition, insightProperties, IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
 import * as React from "react";
 import { render } from "react-dom";
@@ -15,7 +15,6 @@ import {
 import {
     ConfigPanelClassName,
     IBucketItem,
-    IFeatureFlags,
     IGdcConfig,
     IReferencePoint,
     IVisCallbacks,
@@ -44,7 +43,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     locale?: ILocale;
     drillableItems: IDrillableItem[];
     totalsEditAllowed?: boolean;
-    featureFlags?: IFeatureFlags;
+    featureFlags?: ISettings;
     visualizationCatalog?: IVisualizationCatalog;
     newDerivedBucketItems?: IBucketItem[];
     referencePoint?: IReferencePoint;

@@ -41,6 +41,7 @@ import {
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
+    IGdcConfig,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
@@ -244,6 +245,7 @@ export function addDefaultSort(
 }
 
 export class PluggablePivotTable extends AbstractPluggableVisualization {
+    private featureFlags: ISettings;
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
     private readonly settings?: ISettings;
@@ -339,28 +341,14 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, custom, dimensions, config, customVisualizationConfig = {} } = options;
+        const { locale, custom, dimensions, config = {}, customVisualizationConfig = {} } = options;
         const height = dimensions?.height;
         const { drillableItems } = custom;
 
         const execution = executionFactory.forInsight(insight).withDimensions(...this.getDimensions(insight));
 
-        let configUpdated = config;
-        if (this.environment !== DASHBOARDS_ENVIRONMENT) {
-            // Menu aggregations turned off in KD
-            configUpdated = merge(
-                {
-                    menu: {
-                        aggregations: true,
-                        aggregationsSubMenu: true,
-                    },
-                },
-                configUpdated,
-            );
-        }
-
-        configUpdated = {
-            ...configUpdated,
+        const tableConfig: IPivotTableConfig = {
+            ...createPivotTableConfig(config, this.environment, this.featureFlags),
             ...customVisualizationConfig,
         };
 
@@ -368,7 +356,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             execution,
             drillableItems,
             onDrill: this.onDrill,
-            config: configUpdated,
+            config: tableConfig,
             locale,
             afterRender: this.afterRender,
             onLoadingChanged: this.onLoadingChanged,
@@ -399,7 +387,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         };
 
                         const configWithMaxHeight: IPivotTableConfig = {
-                            ...config,
+                            ...tableConfig,
                             maxHeight: clientHeight,
                             ...customVisualizationConfig,
                         };
@@ -455,4 +443,40 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     protected getDimensions(insight: IInsightDefinition): IDimension[] {
         return generateDimensions(insight, VisualizationTypes.TABLE);
     }
+}
+
+/**
+ * Given plug viz GDC config, current environment and platform settings, this creates pivot table config.
+ *
+ * @internal
+ */
+export function createPivotTableConfig(
+    config: IGdcConfig,
+    environment: VisualizationEnvironment,
+    settings: ISettings,
+) {
+    let tableConfig: IPivotTableConfig = {
+        separators: config.separators,
+    };
+
+    if (environment !== "dashboards") {
+        tableConfig = {
+            ...tableConfig,
+            menu: {
+                aggregations: true,
+                aggregationsSubMenu: true,
+            },
+        };
+    }
+
+    if (settings[SettingCatalog.enableTableColumnsAutoResizing]) {
+        tableConfig = {
+            ...tableConfig,
+            columnSizing: {
+                defaultWidth: "viewport",
+            },
+        };
+    }
+
+    return tableConfig;
 }

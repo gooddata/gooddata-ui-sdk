@@ -18,6 +18,12 @@ export enum SettingCatalog {
     enableAxisNameConfiguration = "enableAxisNameConfiguration",
 
     /**
+     * Indicates whether PivotTable columns should be auto-resized to fit viewport before
+     * the table is shown to the user.
+     */
+    enableTableColumnsAutoResizing = "enableTableColumnsAutoResizing",
+
+    /**
      * Indicates whether the Bullet Chart is available in AD.
      */
     enableBulletChart = "enableBulletChart",

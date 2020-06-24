@@ -9,6 +9,7 @@ import {
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
     isSortItemVisible,
+    createPivotTableConfig,
 } from "../PluggablePivotTable";
 import * as testMocks from "../../../../tests/mocks/testMocks";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
@@ -23,13 +24,15 @@ import {
     IFiltersBucketItem,
     IBucketFilter,
     IBucketFilterElement,
+    IGdcConfig,
 } from "../../../../interfaces/Visualization";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
-import { IDrillableItem, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
+import { IDrillableItem, DefaultLocale, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
 import { CorePivotTable } from "@gooddata/sdk-ui-pivot";
 import { ISortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { ISettings } from "@gooddata/sdk-backend-spi";
 
 const getMockReferencePoint = (
     measures: IBucketItem[] = [],
@@ -1055,5 +1058,19 @@ describe("isSortItemVisible", () => {
             const actual = isSortItemVisible(sortItem, [measureValueFilter]);
             expect(actual).toEqual(true);
         });
+    });
+});
+
+describe("createPivotTableConfig", () => {
+    const Scenarios: Array<[string, IGdcConfig, VisualizationEnvironment | undefined, ISettings]> = [
+        ["config without menus for dashboard env", {}, "dashboards", {}],
+        ["config with menus for non-dashboard env", {}, "none", {}],
+        ["config with menus for undefined env", {}, "none", {}],
+        ["config with separators", { separators: { decimal: ".", thousand: "-" } }, "none", {}],
+        ["config with auto-resize if feature flag on", {}, "none", { enableTableColumnsAutoResizing: true }],
+    ];
+
+    it.each(Scenarios)("should create valid %s", (_desc, config, env, settings) => {
+        expect(createPivotTableConfig(config, env, settings)).toMatchSnapshot();
     });
 });
