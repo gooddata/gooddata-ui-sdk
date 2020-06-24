@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import md5 from "md5";
-import invariant from "invariant";
+import invariant from "ts-invariant";
 import cloneDeep from "lodash/cloneDeep";
 import compact from "lodash/compact";
 import filter from "lodash/filter";
@@ -473,7 +473,7 @@ rules.addRule([isCalculatedMeasure], createPureMetric);
 function getMetricFactory(measure: any, mdObj: any) {
     const factory = rules.match(measure, mdObj);
 
-    invariant(factory, `Unknown factory for: ${measure}`);
+    invariant(factory, `Unknown metric factory for: ${measure}`);
 
     return factory;
 }

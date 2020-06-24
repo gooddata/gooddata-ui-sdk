@@ -63,7 +63,7 @@ export function isDimension(obj: any): obj is IDimension {
  * @public
  */
 export function dimensionTotals(dim: IDimension): ITotal[] {
-    invariant(dim, "dimension must be defined");
+    invariant(dim, "dimension must be specified");
 
     return dim.totals ? dim.totals : [];
 }
@@ -77,7 +77,7 @@ export function dimensionTotals(dim: IDimension): ITotal[] {
  * @public
  */
 export function dimensionSetTotals(dim: IDimension, totals: ITotal[] = []): IDimension {
-    invariant(dim, "dimension must be defined");
+    invariant(dim, "dimension must be specified");
 
     const totalsProp = !isEmpty(totals) ? { totals } : {};
 

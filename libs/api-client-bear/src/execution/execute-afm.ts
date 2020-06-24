@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import invariant from "invariant";
+import invariant from "ts-invariant";
 import qs from "qs";
 import range from "lodash/range";
 import get from "lodash/get";

@@ -39,12 +39,12 @@
     "dependencies": {
         "@gooddata/api-model-bear": "^8.0.0-alpha.106",
         "fetch-cookie": "^0.7.0",
-        "invariant": "^2.2.2",
         "isomorphic-fetch": "^2.2.1",
         "lodash": "^4.17.15",
         "md5": "^2.2.1",
         "node-fetch": "^1.7.3",
         "qs": "^6.5.1",
+        "ts-invariant": "^0.4.4",
         "tslib": "^2.0.0",
         "uuid": "^3.3.3"
     },
@@ -52,7 +52,6 @@
         "@gooddata/tslint-config": "1.0.0",
         "@types/fast-levenshtein": "0.0.1",
         "@types/fetch-mock": "^5.*",
-        "@types/invariant": "^2.2.29",
         "@types/isomorphic-fetch": "^0.0.34",
         "@types/jest": "^25.1.2",
         "@types/lodash": "^4.14.123",

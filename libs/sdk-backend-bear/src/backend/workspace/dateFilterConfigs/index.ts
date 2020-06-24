@@ -12,7 +12,7 @@ export class BearWorkspaceDateFilterConfigsQuery implements IWorkspaceDateFilter
     constructor(private readonly authCall: BearAuthenticatedCallGuard, private readonly workspace: string) {}
 
     public withLimit(limit: number): IWorkspaceDateFilterConfigsQuery {
-        invariant(limit > 0, "limit must be a positive number");
+        invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 
         this.limit = limit;
 

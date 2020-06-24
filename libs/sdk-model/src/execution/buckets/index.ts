@@ -13,6 +13,7 @@ import {
 import { isTotal, ITotal } from "../base/totals";
 import invariant from "ts-invariant";
 import { modifySimpleMeasure } from "../measure/factory";
+import isArray = require("lodash/isArray");
 
 /**
  * Type representing bucket items - which can be either measure or an attribute.
@@ -126,6 +127,14 @@ export function newBucket(
             items.push(i);
         } else if (isTotal(i)) {
             totals.push(i);
+        } else if (isArray(i)) {
+            invariant(
+                false,
+                `newBucket called with an array of length ${
+                    (i as any).length
+                } as one of the items for bucket ${localId}.` +
+                    "Please make sure that you are not trying to put an array of items into a bucket that only accepts single item.",
+            );
         } else {
             invariant(false, `Contents of a bucket must be either attribute, measure or total. Got: ${i}`);
         }

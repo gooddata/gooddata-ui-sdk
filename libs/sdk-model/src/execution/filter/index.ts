@@ -476,7 +476,7 @@ export interface IAbsoluteDateFilterValues {
  * @public
  */
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues {
-    invariant(filter, "filter must not be undefined");
+    invariant(filter, "filter must be specified");
 
     return {
         from: filter.absoluteDateFilter.from,
@@ -503,7 +503,7 @@ export interface IRelativeDateFilterValues {
  * @public
  */
 export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues {
-    invariant(filter, "filter must not be undefined");
+    invariant(filter, "filter must be specified");
 
     return {
         from: filter.relativeDateFilter.from,
@@ -519,7 +519,7 @@ export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelative
  * @public
  */
 export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefInScope {
-    invariant(filter, "filter must not be undefined");
+    invariant(filter, "filter must be specified");
 
     return filter.measureValueFilter.measure;
 }
@@ -533,7 +533,7 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 export function measureValueFilterCondition(
     filter: IMeasureValueFilter,
 ): MeasureValueFilterCondition | undefined {
-    invariant(filter, "filter must not be undefined");
+    invariant(filter, "filter must be specified");
 
     return filter.measureValueFilter.condition;
 }
@@ -548,7 +548,7 @@ export function measureValueFilterCondition(
 export function measureValueFilterOperator(
     filter: IMeasureValueFilter,
 ): ComparisonConditionOperator | RangeConditionOperator | undefined {
-    invariant(filter, "filter must not be undefined");
+    invariant(filter, "filter must be specified");
 
     if (isComparisonCondition(filter.measureValueFilter.condition)) {
         return filter.measureValueFilter.condition.comparison.operator;

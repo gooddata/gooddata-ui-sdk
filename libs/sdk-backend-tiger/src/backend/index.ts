@@ -134,7 +134,7 @@ export class TigerBackend implements IAnalyticalBackend {
     }
 
     public workspace(id: string): IAnalyticalWorkspace {
-        invariant(isString(id), `Invalid workspaceId: ${id}`);
+        invariant(isString(id), `Invalid workspaceId, expected a string, got: ${id}`);
         return new TigerWorkspace(this.authApiCall, id, this.dateFormatter);
     }
 

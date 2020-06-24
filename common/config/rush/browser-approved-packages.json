@@ -255,10 +255,6 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "@types/invariant",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
       "name": "@types/isomorphic-fetch",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -585,10 +581,6 @@
     {
       "name": "inquirer",
       "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "invariant",
-      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "isomorphic-fetch",

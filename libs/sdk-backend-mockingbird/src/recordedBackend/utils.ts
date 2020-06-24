@@ -20,8 +20,8 @@ export class RecordingPager<T> implements IPagedResource<T> {
     public readonly totalCount: number;
 
     constructor(private readonly all: T[], limit: number = 50, offset: number = 0) {
-        invariant(offset >= 0, "paging offset must be non-negative");
-        invariant(limit > 0, "limit must be a positive number");
+        invariant(offset >= 0, `paging offset must be non-negative, got: ${offset}`);
+        invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 
         // this will naturally return empty items if at the end of data; limit will always be positive
         this.items = all.slice(offset, offset + limit);

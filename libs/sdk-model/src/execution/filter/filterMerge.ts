@@ -79,7 +79,7 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
  * @internal
  */
 export function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[] | undefined): IFilter[] {
-    invariant(originalFilters, "original filters must be defined");
+    invariant(originalFilters, "original filters must be specified");
 
     if (!addedFilters || !addedFilters.length) {
         return originalFilters;

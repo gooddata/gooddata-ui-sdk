@@ -4,7 +4,7 @@ import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
 import isNumber = require("lodash/isNumber");
 import { DataValue, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import * as invariant from "invariant";
+import invariant from "ts-invariant";
 import { IntlShape } from "react-intl";
 import {
     DataViewFacade,

@@ -29,7 +29,7 @@ import {
     isResultTotalHeader,
 } from "@gooddata/sdk-backend-spi";
 import { getMinimalRowData } from "./agGridHeaders";
-import invariant = require("invariant");
+import invariant from "ts-invariant";
 import zipObject = require("lodash/zipObject");
 
 /*
