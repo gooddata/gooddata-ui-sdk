@@ -51,6 +51,11 @@ describe("CorePivotTable", () => {
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes.execution.definition,
     );
 
+    const columnOnlyExec = prepareExecution(
+        backend,
+        ReferenceRecordings.Scenarios.PivotTable.SingleColumn.execution.definition,
+    );
+
     function renderComponent(
         customProps: Partial<ICorePivotTableProps> = {},
         execution: IPreparedExecution = singleMeasureExec,
@@ -93,6 +98,22 @@ describe("CorePivotTable", () => {
 
             await waitFor(waitForDataLoaded(wrapper));
             expect(autoresizeColumns).toHaveBeenCalledTimes(0);
+        });
+
+        it("should auto-resize columns for a table with no measures", (done) => {
+            const wrapper = renderComponent(
+                {
+                    config: { columnSizing: { defaultWidth: "viewport" } },
+                },
+                columnOnlyExec,
+            );
+            const table = getTableInstanceFromWrapper(wrapper);
+            const autoresizeColumns = jest.spyOn(table, "autoresizeVisibleColumns");
+            autoresizeColumns.mockImplementation(() => {
+                expect(autoresizeColumns).toHaveBeenCalledTimes(1);
+                done();
+            });
+            wrapper.update();
         });
     });
 

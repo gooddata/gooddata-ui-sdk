@@ -525,13 +525,21 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private autoresizeColumns = (event: AgGridEvent) => {
-        const skipResizing =
-            this.state.resized ||
-            this.resizing ||
-            event.api.getRenderedNodes().length === 0 ||
+        if (this.state.resized || this.resizing) {
+            /*
+             * Short-circuit if the table is already resized or is in process of resizing.
+             * Double-trigger would have disastrous consequences.
+             */
+            return;
+        }
+
+        const dataNotRendered =
+            !this.visibleData.rawData().isEmpty() && event.api.getRenderedNodes().length === 0;
+        const tablePageNotLoaded =
+            event.api.getCacheBlockState()[0] === undefined ||
             event.api.getCacheBlockState()[0].pageStatus !== "loaded";
 
-        if (skipResizing) {
+        if (dataNotRendered || tablePageNotLoaded) {
             return;
         }
 
@@ -628,7 +636,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
          * measure, let's throw in a mild timeout. I have observed different results (slightly less space used)
          * when the timeout was not in place.
          */
-        const shouldAutoresizeColumns = this.isColumnAutoresizeEnabled() && this.currentResult;
+        const shouldAutoresizeColumns = this.isColumnAutoresizeEnabled();
 
         if (shouldAutoresizeColumns) {
             setTimeout(() => {

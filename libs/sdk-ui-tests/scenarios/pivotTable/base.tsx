@@ -4,6 +4,10 @@ import { scenariosFor } from "../../src";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
+export const PivotTableWithSingleColumn = {
+    columns: [ReferenceLdm.Product.Name],
+};
+
 export const PivotTableWithTwoMeasuresAndSingleRowAttr = {
     measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
     rows: [ReferenceLdm.Product.Name],
@@ -36,9 +40,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario("single attribute", {
         rows: [ReferenceLdm.Product.Name],
     })
-    .addScenario("single column", {
-        columns: [ReferenceLdm.Product.Name],
-    })
+    .addScenario("single column", PivotTableWithSingleColumn)
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],
     })

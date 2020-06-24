@@ -10,6 +10,11 @@ import isArray = require("lodash/isArray");
  */
 export interface IResultDataMethods {
     /**
+     * @returns true if the data is empty
+     */
+    isEmpty(): boolean;
+
+    /**
      * @returns size for first dimension of the data view
      */
     firstDimSize(): number;
@@ -62,6 +67,10 @@ export interface IResultDataMethods {
 
 class ResultDataMethods implements IResultDataMethods {
     constructor(private readonly dataView: IDataView) {}
+
+    public isEmpty(): boolean {
+        return this.dataView.data.length === 0;
+    }
 
     public firstDimSize(): number {
         return this.dataView.totalCount[0];
