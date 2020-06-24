@@ -31,12 +31,14 @@ export const PivotTableWithTwoMeasuresGrandTotalsAndSubtotals = {
     ],
 };
 
+export const PivotTableWithSingleMeasureAndGrandTotal = {
+    ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
+    totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name)],
+};
+
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
-    .addScenario("single measure and single grand total", {
-        ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
-        totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name)],
-    })
+    .addScenario("single measure and single grand total", PivotTableWithSingleMeasureAndGrandTotal)
     .addScenario("single measure and multiple grand totals", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         totals: [

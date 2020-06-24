@@ -27,10 +27,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
-import { CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { CorePivotTable, ICorePivotTableProps, IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
 import * as React from "react";
 import { render } from "react-dom";
-import Measure from "react-measure";
+import ReactMeasure from "react-measure";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
@@ -244,8 +244,6 @@ export function addDefaultSort(
 }
 
 export class PluggablePivotTable extends AbstractPluggableVisualization {
-    // @ts-ignore
-    private projectId: string;
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
     private readonly settings?: ISettings;
@@ -253,7 +251,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     constructor(props: IVisConstruct) {
         super(props);
 
-        this.projectId = props.projectId;
         this.environment = props.environment;
         this.renderFun = props.renderFun;
         this.settings = props.featureFlags;
@@ -382,52 +379,42 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             intl: this.intl,
         };
 
-        // TODO: SDK8: check the height handling; previously, code was passing height prop down to core
-        //  pivot table; now.. this component had this prop but it seems to me that it was never taken
-        //  into account (it had the prop because it inherited from same base as charts). Checked the history
-        //  and it seems that CorePivotTable never used the 'height' prop
-
         if (this.environment === DASHBOARDS_ENVIRONMENT) {
-            if (isNil(height)) {
-                this.renderFun(
-                    <Measure client={true}>
-                        {({ measureRef, contentRect }: any) => {
-                            const usedHeight = Math.floor(contentRect.client.height || 0);
-                            const pivotWrapperStyle: React.CSSProperties = {
-                                height: "100%",
-                                textAlign: "left",
-                            };
-
-                            // TODO: SDK8: height={usedHeight} was passed here but seems it was never taken
-                            //  into account by core pivot table (see above)
-                            return (
-                                <div
-                                    ref={measureRef}
-                                    style={pivotWrapperStyle}
-                                    className="gd-table-dashboard-wrapper"
-                                >
-                                    <CorePivotTable
-                                        {...pivotTableProps}
-                                        config={{
-                                            ...config,
-                                            maxHeight: usedHeight,
-                                            ...customVisualizationConfig,
-                                        }}
-                                    />
-                                </div>
-                            );
-                        }}
-                    </Measure>,
-                    document.querySelector(this.element),
-                );
-
-                return;
-            }
-
             this.renderFun(
-                <div style={{ height: 328, textAlign: "left" }} className="gd-table-dashboard-wrapper">
-                    <CorePivotTable {...pivotTableProps} />
-                </div>,
+                <ReactMeasure client={true}>
+                    {({ measureRef, contentRect }: any) => {
+                        const clientHeight = contentRect.client.height;
+
+                        /*
+                         * For some reason (unknown to me), there was a big if; nil height meant that
+                         * the wrapper was to 100%; non-nil height ment fixed size header with the 328 magic
+                         * number.
+                         *
+                         * For a while, there were more differences between the two branches, however after
+                         * ONE-4322 the essential difference was reduced to just the wrapper size.
+                         */
+                        const pivotWrapperStyle: React.CSSProperties = {
+                            height: isNil(height) ? "100%" : 328,
+                            textAlign: "left",
+                        };
+
+                        const configWithMaxHeight: IPivotTableConfig = {
+                            ...config,
+                            maxHeight: clientHeight,
+                            ...customVisualizationConfig,
+                        };
+
+                        return (
+                            <div
+                                ref={measureRef}
+                                style={pivotWrapperStyle}
+                                className="gd-table-dashboard-wrapper"
+                            >
+                                <CorePivotTable {...pivotTableProps} config={configWithMaxHeight} />
+                            </div>
+                        );
+                    }}
+                </ReactMeasure>,
                 document.querySelector(this.element),
             );
         } else {

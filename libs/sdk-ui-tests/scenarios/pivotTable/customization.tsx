@@ -6,7 +6,7 @@ import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base";
 import { GermanNumberFormat } from "../_infra/formatting";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { PivotTableWithTwoMeasuresAndTotals } from "./totals";
+import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals";
 
 const MeasureWithCustomFormat = modifyMeasure(ReferenceLdm.Amount, (m) =>
     m.format("[backgroundColor=ffff00][green]#,##0.00 €").defaultLocalId(),
@@ -60,5 +60,11 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresAndTotals,
         config: {
             maxHeight: 300,
+        },
+    })
+    .addScenario("totals and max height 800", {
+        ...PivotTableWithSingleMeasureAndGrandTotal,
+        config: {
+            maxHeight: 800,
         },
     });
