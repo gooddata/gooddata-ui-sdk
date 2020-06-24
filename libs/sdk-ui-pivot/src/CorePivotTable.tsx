@@ -536,15 +536,18 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         previouslyResizedColumnIds: string[] = [],
     ) => {
         const alreadyResized = () => this.state.resized || this.resizing;
+        const noRowHeadersOrRows = () => {
+            return this.visibleData.rawData().isEmpty() && this.visibleData.meta().hasNoHeadersInDim(0);
+        };
         const dataRendered = () => {
-            return this.visibleData.rawData().isEmpty() || event.api.getRenderedNodes().length > 0;
+            return noRowHeadersOrRows() || event.api.getRenderedNodes().length > 0;
         };
         const tablePagesLoaded = () => {
             const pages = event.api.getCacheBlockState();
             return Object.keys(pages).every((pageId: string) => pages[pageId].pageStatus === "loaded");
         };
 
-        if (force || (!alreadyResized() && dataRendered() && tablePagesLoaded())) {
+        if (tablePagesLoaded() && dataRendered() && (!alreadyResized() || (alreadyResized() && force))) {
             this.resizing = true;
 
             setTimeout(() => {

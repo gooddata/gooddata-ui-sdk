@@ -59,6 +59,13 @@ export interface IResultMetaMethods {
     measureDescriptor(localId: string): IMeasureDescriptor | undefined;
 
     /**
+     * Tests whether there are any headers in the dimension with the provided index.
+     *
+     * @param dim - dimension index.
+     */
+    hasNoHeadersInDim(dim: number): boolean;
+
+    /**
      * @returns all headers describing the data included in the data view
      */
     allHeaders(): IResultHeader[][][];
@@ -155,6 +162,10 @@ class ResultMetaMethods implements IResultMetaMethods {
 
     public measureDescriptor(localId: string): IMeasureDescriptor | undefined {
         return this._measureDescriptorByLocalId[localId];
+    }
+
+    public hasNoHeadersInDim(dim: number): boolean {
+        return this.dataView.headerItems[dim] && this.dataView.headerItems[dim].length === 0;
     }
 
     public allHeaders(): IResultHeader[][][] {
