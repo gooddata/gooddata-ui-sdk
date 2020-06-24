@@ -92,6 +92,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                 opened={isMenuOpened}
                 onOpenedChange={onMenuOpenedChange}
                 openAction={"click"}
+                closeOnScroll={true}
             >
                 <ItemsWrapper>
                     <div className="s-table-header-menu-content">
