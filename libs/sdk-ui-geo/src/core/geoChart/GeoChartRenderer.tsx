@@ -453,6 +453,7 @@ export default class GeoChartRenderer extends React.Component<IGeoChartRendererP
             geoData,
             properties,
             coordinates,
+            originalEvent.target,
         );
     };
 
