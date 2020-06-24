@@ -631,7 +631,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const tablePagesLoaded = () => {
             const pages = event.api.getCacheBlockState();
             return (
-                pages && Object.keys(pages).every((pageId: string) => pages[pageId].pageStatus === "loaded")
+                pages &&
+                Object.keys(pages).every(
+                    (pageId: string) =>
+                        pages[pageId].pageStatus === "loaded" || pages[pageId].pageStatus === "failed",
+                )
             );
         };
 
