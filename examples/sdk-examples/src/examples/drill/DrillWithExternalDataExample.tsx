@@ -99,32 +99,44 @@ export const DrillWithExternalDataExample: React.FC = () => {
                     `https://randomuser.me/api/?nat=us&inc=dob,cell,registered,location&gender=${gender}&seed=gooddata-${employee.id}`,
                 )
                     .then((res) => res.json())
-                    .then(
-                        ({ results }) => {
-                            setState((oldState) => ({
-                                ...oldState,
-                                employee3rdPartyData: {
-                                    isLoading: false,
-                                    error: null,
-                                    data: {
-                                        ...results[0],
-                                        id: employee.id,
-                                        gender,
+                    .then(({ results }) => {
+                        setState((oldState) => ({
+                            ...oldState,
+                            employee3rdPartyData: {
+                                isLoading: false,
+                                error: null,
+                                data: {
+                                    ...results[0],
+                                    id: employee.id,
+                                    gender,
+                                },
+                            },
+                        }));
+                    })
+                    .catch(() => {
+                        setState((oldState) => ({
+                            ...oldState,
+                            employee3rdPartyData: {
+                                isLoading: false,
+                                error: null,
+                                data: {
+                                    dob: {
+                                        date: new Date(),
                                     },
+                                    registered: {
+                                        date: new Date(),
+                                    },
+                                    cell: "123456",
+                                    location: {
+                                        city: "Sample City",
+                                        state: "Sample State (load failed)",
+                                    },
+                                    id: employee.id,
+                                    gender,
                                 },
-                            }));
-                        },
-                        (error) => {
-                            setState((oldState) => ({
-                                ...oldState,
-                                employee3rdPartyData: {
-                                    error,
-                                    isLoading: false,
-                                    data: null,
-                                },
-                            }));
-                        },
-                    );
+                            },
+                        }));
+                    });
             });
     };
 
