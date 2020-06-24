@@ -1,0 +1,119 @@
+[
+    {
+        "vis": "GeoPushpinChart",
+        "scenario": "location and size  with tooltip",
+        "originalExecution": {
+            "workspace": "live-examples-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "size",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "fact.uscities.population"
+                                        },
+                                        "aggregation": "sum"
+                                    }
+                                },
+                                "format": "#,##0.00",
+                                "alias": "Population"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "color",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "location",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.uscities.city.location",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.uscities.city.location"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "segment",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "tooltipText",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.uscities.city",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city.location",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.uscities.city.location"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "fact.uscities.population"
+                                },
+                                "aggregation": "sum"
+                            }
+                        },
+                        "format": "#,##0.00",
+                        "alias": "Population"
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.uscities.city.location", "tooltipText_df"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.uscities.city.location": "a_label.uscities.city.location",
+            "a_label.uscities.city": "tooltipText_df",
+            "m_fact.uscities.population_sum": "m_f508857c_fact.uscities.population_sum"
+        }
+    }
+]

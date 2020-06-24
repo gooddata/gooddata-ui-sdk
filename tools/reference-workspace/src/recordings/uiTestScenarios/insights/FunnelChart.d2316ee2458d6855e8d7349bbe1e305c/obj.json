@@ -57,6 +57,7 @@
             "controls": {
                 "colorMapping": [
                     {
+                        "id": "m_aangOxLSeztu",
                         "color": {
                             "type": "rgb",
                             "value": {
@@ -67,6 +68,7 @@
                         }
                     },
                     {
+                        "id": "m_acugFHNJgsBy",
                         "color": {
                             "type": "guid",
                             "value": "05"
