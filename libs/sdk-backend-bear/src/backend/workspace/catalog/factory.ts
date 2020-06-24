@@ -212,7 +212,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadDateDatasets = async (attributesMap: IAttributeByKey): Promise<ICatalogDateDataset[]> => {
-        const { types } = this.options;
+        const { types, production } = this.options;
 
         const includeDateDatasets = types.includes("dateDataset");
         if (!includeDateDatasets) {
@@ -221,9 +221,12 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const { includeTagsIds, excludeTagsIds, dataSetId } = await this.getTagsAndDatasetIds();
 
+        // only return all the date datasets ignoring production or custom datasets if neither of those were specified by the user
+        const shouldReturnAllDateDataSets = !production && !dataSetId;
+
         const result = await this.authCall((sdk) =>
             sdk.catalogue.loadDateDataSets(this.workspace, {
-                returnAllDateDataSets: true,
+                returnAllDateDataSets: shouldReturnAllDateDataSets,
                 dataSetIdentifier: dataSetId,
                 attributesMap,
                 excludeObjectsWithTags: excludeTagsIds.length ? excludeTagsIds : undefined,
