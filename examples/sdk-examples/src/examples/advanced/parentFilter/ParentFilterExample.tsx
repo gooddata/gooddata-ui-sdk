@@ -105,7 +105,8 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
             <AttributeElements key={key} displayForm={displayForm} options={options}>
                 {({ validElements, isLoading, error }) => {
                     if (error) {
-                        return <div>{error}</div>;
+                        // tslint:disable-next-line: no-console
+                        console.error("Loading attribute elements failed!", error);
                     }
                     const selectOptions = validElements
                         ? validElements.items.map((item) => ({
@@ -130,6 +131,15 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
                                 placeholder={placeholder}
                                 value={filterValues}
                             />
+                            {error && (
+                                <span
+                                    style={{
+                                        color: "#e54d42",
+                                    }}
+                                >
+                                    Loading failed!
+                                </span>
+                            )}
                         </span>
                     );
                 }}
