@@ -121,6 +121,36 @@ describe("CorePivotTable", () => {
             });
             wrapper.update();
         });
+
+        it("should grow to fit columns if executing and default width should fit the viewport", (done) => {
+            expect.assertions(1);
+            const wrapper = renderComponent({
+                config: { growToFit: true },
+            });
+            const table = getTableInstanceFromWrapper(wrapper);
+            const growToFit = jest.spyOn(table, "growToFit");
+            try {
+                growToFit.mockImplementation(() => {
+                    expect(growToFit).toHaveBeenCalledTimes(1);
+                    done();
+                });
+            } catch (e) {
+                done.fail(e);
+            }
+            wrapper.update();
+        });
+
+        it("should not grow to fit columns if the growToFit is not configured", async () => {
+            const wrapper = renderComponent({
+                config: { growToFit: false },
+            });
+            const table = getTableInstanceFromWrapper(wrapper);
+            const growToFit = jest.spyOn(table, "growToFit");
+            growToFit.mockImplementation(noop);
+
+            await waitFor(waitForDataLoaded(wrapper));
+            expect(growToFit).toHaveBeenCalledTimes(0);
+        });
     });
 
     describe("onModelUpdated", () => {

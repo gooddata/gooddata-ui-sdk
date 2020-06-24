@@ -1231,6 +1231,7 @@ export enum SettingCatalog {
     enableCustomColorPicker = "enableCustomColorPicker",
     enablePushpinGeoChart = "enablePushpinGeoChart",
     enableTableColumnsAutoResizing = "enableTableColumnsAutoResizing",
+    enableTableColumnsGrowToFit = "enableTableColumnsGrowToFit",
     enableWeekFilters = "enableWeekFilters"
 }
 

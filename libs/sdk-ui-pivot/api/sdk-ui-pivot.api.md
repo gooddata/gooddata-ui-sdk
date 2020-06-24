@@ -65,6 +65,7 @@ export interface IPivotTableBucketProps {
 // @public (undocumented)
 export interface IPivotTableConfig {
     columnSizing?: IColumnSizing;
+    growToFit?: boolean;
     maxHeight?: number;
     menu?: IMenu;
     separators?: ISeparators;

@@ -478,5 +478,12 @@ export function createPivotTableConfig(
         };
     }
 
+    if (settings[SettingCatalog.enableTableColumnsGrowToFit]) {
+        tableConfig = {
+            ...tableConfig,
+            growToFit: true,
+        };
+    }
+
     return tableConfig;
 }

@@ -37,7 +37,16 @@ export interface IColumnSizing {
  */
 export interface IPivotTableConfig {
     /**
-     * Optionally customize column sizing strategy
+     * Optionally indicate that the table should grow to fit into the allocated space.
+     *
+     * Default: false
+     */
+    growToFit?: boolean;
+
+    /**
+     * Optionally customize column sizing strategy.
+     *
+     * Default: none
      */
     columnSizing?: IColumnSizing;
 

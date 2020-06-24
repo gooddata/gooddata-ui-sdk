@@ -33,11 +33,29 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             },
         },
     })
+    .addScenario("with two measures and row attribute with auto-resizing and grow to fit", {
+        ...PivotTableWithTwoMeasuresAndSingleRowAttr,
+        config: {
+            columnSizing: {
+                defaultWidth: "viewport",
+            },
+            growToFit: true,
+        },
+    })
     .addScenario("with two measures, grand totals and subtotals with auto-resizing", {
         ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
         config: {
             columnSizing: {
                 defaultWidth: "viewport",
             },
+        },
+    })
+    .addScenario("with two measures, grand totals and subtotals with auto-resizing and grow to fit", {
+        ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
+        config: {
+            columnSizing: {
+                defaultWidth: "viewport",
+            },
+            growToFit: true,
         },
     });
