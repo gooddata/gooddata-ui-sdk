@@ -21,6 +21,7 @@ import {
     GridReadyEvent,
     IDatasource,
     SortChangedEvent,
+    ColDef,
 } from "@ag-grid-community/all-modules";
 import { AgGridReact } from "@ag-grid-community/react";
 import * as classNames from "classnames";
@@ -1222,8 +1223,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return target.classList.contains("ag-header-cell-resize");
     }
 
-    private getColumnIdentifier(columnDef: IGridHeader): string {
-        return columnDef.field || columnDef.colId;
+    private getColumnIdentifier(column: IGridHeader | ColDef): string {
+        // field should be always present, fallback to colId could happen for empty columns
+        return column.field || column.colId;
     }
 
     private enrichColumnDefinitionsWithWidths(
