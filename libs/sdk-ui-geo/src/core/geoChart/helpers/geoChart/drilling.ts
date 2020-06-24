@@ -14,6 +14,7 @@ import { AttributeInfo, findGeoAttributesInDimension, parseGeoProperties } from 
 import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import without = require("lodash/without");
 import omit = require("lodash/omit");
+import * as CustomEvent from "custom-event";
 
 function getDrillIntersectionForGeoChart(
     drillableItems: IHeaderPredicate[],
@@ -93,7 +94,6 @@ function getAttributeHeader(
     };
 }
 
-// (C) 2019-2020 GoodData Corporation
 export function handleGeoPushpinDrillEvent(
     drillableItems: IHeaderPredicate[],
     drillConfig: IDrillConfig,
@@ -101,6 +101,7 @@ export function handleGeoPushpinDrillEvent(
     geoData: IGeoData,
     pinProperties: GeoJSON.GeoJsonProperties,
     pinCoordinates: number[],
+    target: EventTarget,
 ): void {
     const { locationIndex } = pinProperties || {};
     const drillIntersection: IDrillEventIntersectionElement[] | undefined = getDrillIntersectionForGeoChart(
@@ -139,6 +140,14 @@ export function handleGeoPushpinDrillEvent(
     };
 
     if (onDrill) {
-        onDrill(drillEventExtended);
+        const shouldFireEvent = onDrill(drillEventExtended);
+        // if user-specified onDrill fn returns false, do not fire default DOM event
+        if (shouldFireEvent !== false) {
+            const event = new CustomEvent("drill", {
+                detail: drillEventExtended,
+                bubbles: true,
+            });
+            target.dispatchEvent(event);
+        }
     }
 }
