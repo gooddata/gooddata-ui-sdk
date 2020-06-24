@@ -195,6 +195,28 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.errorMap = newErrorMapping(props.intl);
     }
 
+    private cleanupNonReactState = () => {
+        this.gridApi = null;
+        this.gridOptions = null;
+        this.tableHeaders = null;
+        this.agGridDataSource = null;
+        this.currentResult = null;
+        this.visibleData = null;
+        this.currentFingerprint = null;
+        this.firstDataRendered = false;
+        this.resizedColumns = {};
+
+        if (this.watchingIntervalId) {
+            clearTimeout(this.watchingIntervalId);
+            this.watchingIntervalId = null;
+        }
+
+        if (this.watchingTimeoutId) {
+            clearTimeout(this.watchingTimeoutId);
+            this.watchingTimeoutId = null;
+        }
+    };
+
     private reinitialize = (execution: IPreparedExecution): void => {
         this.setState(
             {
@@ -205,16 +227,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 resized: false,
             },
             () => {
-                this.gridApi = null;
-                this.gridOptions = null;
-                this.tableHeaders = null;
-                this.agGridDataSource = null;
-                this.currentResult = null;
-                this.visibleData = null;
-                this.currentFingerprint = null;
-                this.firstDataRendered = false;
-                this.resizedColumns = {};
-
+                this.cleanupNonReactState();
                 this.initialize(execution);
             },
         );
@@ -621,22 +634,31 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private onFirstDataRendered = (event: AgGridEvent) => {
+        if (this.firstDataRendered) {
+            // tslint:disable-next-line:no-console
+            console.error("onFirstDataRendered called multiple times");
+        }
+
         this.firstDataRendered = true;
 
         // Since issue here is not resolved, https://github.com/ag-grid/ag-grid/issues/3263,
         // work-around by using 'setInterval'
-        this.watchingIntervalId = window.setInterval(
-            this.startWatchingTableRendered,
-            WATCHING_TABLE_RENDERED_INTERVAL,
-        );
+        if (!this.watchingIntervalId) {
+            this.watchingIntervalId = window.setInterval(
+                this.startWatchingTableRendered,
+                WATCHING_TABLE_RENDERED_INTERVAL,
+            );
+        }
 
         // after 15s, this table might or not (due to long backend execution) be rendered
         // either way, 'afterRender' should be called to notify to KPI dashboard
         // if KPI dashboard is in export mode, its content could be exported as much as possible even without this table
-        this.watchingTimeoutId = window.setTimeout(
-            this.stopWatchingTableRendered,
-            WATCHING_TABLE_RENDERED_MAX_TIME,
-        );
+        if (!this.watchingTimeoutId) {
+            this.watchingTimeoutId = window.setTimeout(
+                this.stopWatchingTableRendered,
+                WATCHING_TABLE_RENDERED_MAX_TIME,
+            );
+        }
 
         /*
          * At this point data from backend is available, some of it is rendered and auto-resize can be done.
