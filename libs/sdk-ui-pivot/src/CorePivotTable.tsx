@@ -546,7 +546,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         if (force || (!alreadyResized() && dataRendered() && tablePagesLoaded())) {
             this.resizing = true;
-            this.autoresizeVisibleColumns(event.columnApi, previouslyResizedColumnIds);
+
+            setTimeout(() => {
+                this.autoresizeVisibleColumns(event.columnApi, previouslyResizedColumnIds);
+            }, COLUMN_AUTORESIZE_TIMEOUT);
         }
     };
 
@@ -644,9 +647,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const shouldAutoresizeColumns = this.isColumnAutoresizeEnabled();
 
         if (shouldAutoresizeColumns) {
-            setTimeout(() => {
-                this.autoresizeColumns(event);
-            }, COLUMN_AUTORESIZE_TIMEOUT);
+            this.autoresizeColumns(event);
         }
     };
 
@@ -1206,7 +1207,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 } else if (isResultAttributeHeader(item)) {
                     return item.attributeHeaderItem.uri;
                 } else if (isMeasureDescriptor(item)) {
-                    return item.measureHeaderItem.uri;
+                    return item.measureHeaderItem.uri ?? item.measureHeaderItem.localIdentifier;
                 }
 
                 return undefined;
