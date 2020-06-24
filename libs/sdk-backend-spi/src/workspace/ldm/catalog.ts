@@ -231,7 +231,7 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
      * @param options - catalog options
      * @returns catalog factory
      */
-    withOptions(options: TOptions): TFactory;
+    withOptions(options: Partial<TOptions>): TFactory;
 }
 
 /**

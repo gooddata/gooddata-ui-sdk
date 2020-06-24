@@ -976,7 +976,7 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
     forDataset(dataset: ObjRef): TFactory;
     forTypes(types: CatalogItemType[]): TFactory;
     includeTags(tags: ObjRef[]): TFactory;
-    withOptions(options: TOptions): TFactory;
+    withOptions(options: Partial<TOptions>): TFactory;
 }
 
 // @public
