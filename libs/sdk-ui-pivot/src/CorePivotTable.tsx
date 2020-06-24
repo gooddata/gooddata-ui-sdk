@@ -5,24 +5,22 @@ import {
     IMeasureDescriptor,
     IPreparedExecution,
     isAttributeDescriptor,
-    isMeasureDescriptor,
     isNoDataError,
-    isResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
 import { defFingerprint, defTotals, ITotal, SortDirection } from "@gooddata/sdk-model";
 import {
+    AgGridEvent,
     AllCommunityModules,
     BodyScrollEvent,
     CellClassParams,
+    Column,
+    ColumnApi,
     ColumnResizedEvent,
     GridApi,
+    GridColumnsChangedEvent,
     GridReadyEvent,
     IDatasource,
     SortChangedEvent,
-    AgGridEvent,
-    ColumnApi,
-    Column,
-    GridColumnsChangedEvent,
 } from "@ag-grid-community/all-modules";
 import { AgGridReact } from "@ag-grid-community/react";
 import * as classNames from "classnames";
@@ -1225,20 +1223,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private getColumnIdentifier(columnDef: IGridHeader): string {
-        return (columnDef.drillItems || [])
-            .map((item: IMappingHeader) => {
-                if (isAttributeDescriptor(item)) {
-                    return item.attributeHeader.uri;
-                } else if (isResultAttributeHeader(item)) {
-                    return item.attributeHeaderItem.uri;
-                } else if (isMeasureDescriptor(item)) {
-                    return item.measureHeaderItem.uri ?? item.measureHeaderItem.localIdentifier;
-                }
-
-                return undefined;
-            })
-            .filter((item: string) => item)
-            .join(".");
+        return columnDef.field || columnDef.colId;
     }
 
     private enrichColumnDefinitionsWithWidths(
