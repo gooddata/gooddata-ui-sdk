@@ -1,5 +1,7 @@
 # GoodData.UI SDK
 
+test
+
 ## Status
 
 This repo is currently in pre-release quality:
