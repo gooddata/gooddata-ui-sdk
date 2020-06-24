@@ -1,11 +1,14 @@
-// // (C) 2007-2019 GoodData Corporation
+// // (C) 2007-2020 GoodData Corporation
 // import { Selector } from "testcafe";
 // import { config } from "./utils/config";
-// import { loginUsingLoginForm, checkRenderChart, checkDrill } from "./utils/helpers";
+// import { loginUserAndNavigate, checkRenderChart, checkDrill } from "./utils/helpers";
 // import {
 //     barOnDrillExtendedParams,
 //     headlineOnDrillExtendedParams,
 //     visualizationOnDrillExtendedParams,
+//     bulletPrimaryMeasureOnDrillExtendedParams,
+//     bulletComparativeMeasureOnDrillExtendedParams,
+//     bulletTargetMeasureOnDrillExtendedParams,
 // } from "./OnDrillHandlingFixtures.js";
 
 // const haywardBarSelector = Selector(".highcharts-series.highcharts-series-0 .highcharts-point").nth(4);
@@ -15,9 +18,19 @@
 //     ".s-visualization-chart .highcharts-series.highcharts-series-0 .highcharts-point",
 // ).nth(0);
 
-// fixture("New drill handling by onDrill") // eslint-disable-line no-undef
-//     .page(config.url)
-//     .beforeEach(loginUsingLoginForm(`${config.url}/hidden/on-drill-drilling`));
+// const bulletPrimaryMeasureSelector = Selector(
+//     ".s-bullet-chart .highcharts-series.highcharts-series-0 .highcharts-point",
+// ).nth(2);
+// const bulletComparativeMeasureSelector = Selector(
+//     ".s-bullet-chart .highcharts-series.highcharts-series-2 .highcharts-point",
+// ).nth(2);
+// const bulletTargetMeasureSelector = Selector(
+//     ".s-bullet-chart .highcharts-series.highcharts-series-1 .highcharts-bullet-target",
+// ).nth(2);
+
+// fixture("New drill handling by onDrill").beforeEach(
+//     loginUserAndNavigate(`${config.url}/hidden/on-drill-drilling`),
+// );
 
 // test("OnDrill on Bar chart should work", async t => {
 //     await checkRenderChart(".s-bar-chart", t);
@@ -35,4 +48,14 @@
 //     await checkRenderChart(".s-visualization-chart", t);
 //     await t.click(firstColumnSelector);
 //     await checkDrill(t, visualizationOnDrillExtendedParams, ".s-visualization-on-drill .s-output");
+// });
+
+// test("OnDrill on Bullet chart should work", async t => {
+//     await checkRenderChart(".s-bullet-chart", t);
+//     await t.click(bulletPrimaryMeasureSelector);
+//     await checkDrill(t, bulletPrimaryMeasureOnDrillExtendedParams, ".s-bullet-chart-on-drill .s-output");
+//     await t.click(bulletTargetMeasureSelector);
+//     await checkDrill(t, bulletTargetMeasureOnDrillExtendedParams, ".s-bullet-chart-on-drill .s-output");
+//     await t.click(bulletComparativeMeasureSelector, { offsetY: 1 });
+//     await checkDrill(t, bulletComparativeMeasureOnDrillExtendedParams, ".s-bullet-chart-on-drill .s-output");
 // });
