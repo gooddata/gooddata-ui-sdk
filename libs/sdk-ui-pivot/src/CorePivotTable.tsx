@@ -535,11 +535,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const dataNotRendered =
             !this.visibleData.rawData().isEmpty() && event.api.getRenderedNodes().length === 0;
-        const tablePageNotLoaded =
-            event.api.getCacheBlockState()[0] === undefined ||
-            event.api.getCacheBlockState()[0].pageStatus !== "loaded";
 
-        if (dataNotRendered || tablePageNotLoaded) {
+        const tablePagesNotLoaded = () => {
+            const pages = event.api.getCacheBlockState();
+            const pageIds = Object.keys(pages);
+            return (
+                pageIds.length <= 0 || pageIds.some((pageId: string) => pages[pageId].pageStatus !== "loaded")
+            );
+        };
+
+        if (dataNotRendered || tablePagesNotLoaded()) {
             return;
         }
 

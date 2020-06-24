@@ -16,6 +16,15 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             },
         },
     })
+    .addScenario("with small page and auto-resizing", {
+        ...PivotTableWithSingleColumn,
+        config: {
+            columnSizing: {
+                defaultWidth: "viewport",
+            },
+        },
+        pageSize: 3,
+    })
     .addScenario("with two measures and row attribute with auto-resizing", {
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
         config: {
