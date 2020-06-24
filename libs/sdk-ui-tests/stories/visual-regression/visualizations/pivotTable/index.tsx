@@ -36,6 +36,9 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("table with resizing", () 
                         aggregations: true,
                         aggregationsSubMenu: true,
                     },
+                    columnSizing: {
+                        defaultWidth: "viewport",
+                    },
                 }}
             />
         </div>,
