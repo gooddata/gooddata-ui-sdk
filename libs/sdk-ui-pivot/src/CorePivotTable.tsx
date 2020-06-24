@@ -105,6 +105,7 @@ import noop = require("lodash/noop");
 import sumBy = require("lodash/sumBy");
 import difference = require("lodash/difference");
 import debounce = require("lodash/debounce");
+import { setColumnMaxWidth } from "./impl/agGridColumnWrapper";
 
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
@@ -189,6 +190,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private growToFittedColumns: IGrowToFittedColumns = {};
     private resizedColumns: IResizedColumns = {};
     private resizing: boolean = false;
+    private lastResizedWidth = 0;
+    private lastResizedHeight = 0;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -220,6 +223,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.currentFingerprint = null;
         this.firstDataRendered = false;
         this.resizedColumns = {};
+        this.lastResizedWidth = 0;
+        this.lastResizedHeight = 0;
         this.clearFittedColumns();
 
         if (this.watchingIntervalId) {
@@ -572,7 +577,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const displayedVirtualColumns = columnApi.getAllDisplayedVirtualColumns();
         const autoWidthColumnIds: string[] = this.getColumnIds(displayedVirtualColumns);
-        if (previouslyResizedColumnIds.length >= autoWidthColumnIds.length) {
+        const newColumnIds = difference(autoWidthColumnIds, previouslyResizedColumnIds);
+
+        if (newColumnIds.length === 0) {
             this.resizedColumns = this.getResizedColumns(
                 columnApi.getAllDisplayedVirtualColumns(),
                 ColumnEventSourceType.AUTOSIZE_COLUMNS,
@@ -583,12 +590,21 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return new Promise(async (resolve) => {
             const newColumnIds = difference(autoWidthColumnIds, previouslyResizedColumnIds);
 
-            columnApi.autoSizeColumns(newColumnIds);
+            this.autoresizeColumnsByColumnId(columnApi, newColumnIds);
 
             await sleep(COLUMN_AUTORESIZE_TIMEOUT);
             resolve(this.autoresizeVisibleColumns(columnApi, autoWidthColumnIds, false));
         });
     };
+
+    private async autoresizeColumnsByColumnId(columnApi: ColumnApi, columnIds: string[]) {
+        setColumnMaxWidth(columnApi, columnIds, AUTO_SIZED_MAX_WIDTH);
+
+        columnApi.autoSizeColumns(columnIds);
+        await sleep(COLUMN_AUTORESIZE_TIMEOUT);
+
+        setColumnMaxWidth(columnApi, columnIds, undefined);
+    }
 
     private shouldPerformAutoresize() {
         const tableIsNotScrolled = () => {
@@ -694,9 +710,28 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     }
 
-    private gridSizeChanged = async (columnEvent: ColumnResizedEvent) => {
-        if (!this.resizing) {
-            this.autoresizeColumns(columnEvent, true, Object.keys(this.resizedColumns));
+    private mapFieldIdToGridId(columnApi: ColumnApi, fieldIds: string[]) {
+        const columns = columnApi.getAllColumns();
+
+        return columns
+            .filter((d) => fieldIds.includes(this.getColumnIdentifier(d.getColDef())))
+            .map((d) => d.getColId());
+    }
+
+    private gridSizeChanged = async (gridSizeChangedEvent: any) => {
+        if (
+            !this.resizing &&
+            (this.lastResizedWidth !== gridSizeChangedEvent.clientWidth ||
+                this.lastResizedHeight !== gridSizeChangedEvent.clientHeight)
+        ) {
+            this.lastResizedWidth = gridSizeChangedEvent.clientWidth;
+            this.lastResizedHeight = gridSizeChangedEvent.clientHeight;
+
+            const resizedColumnsGridIds = this.mapFieldIdToGridId(
+                gridSizeChangedEvent.columnApi,
+                Object.keys(this.resizedColumns),
+            );
+            this.autoresizeColumns(gridSizeChangedEvent, true, resizedColumnsGridIds);
         }
     };
 
@@ -1016,13 +1051,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             intl: this.props.intl,
         };
 
-        let maxWidthProp = {};
         if (this.isColumnAutoresizeEnabled()) {
             this.enrichColumnDefinitionsWithWidths(
                 getTreeLeaves(tableHeaders.allHeaders),
                 this.resizedColumns,
             );
-            maxWidthProp = { maxWidth: AUTO_SIZED_MAX_WIDTH };
         }
 
         if (this.isGrowToFitEnabled()) {
@@ -1030,7 +1063,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 getTreeLeaves(tableHeaders.allHeaders),
                 this.growToFittedColumns,
             );
-            maxWidthProp = {};
         }
 
         return {
@@ -1046,7 +1078,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     ...commonHeaderComponentParams,
                 },
                 minWidth: 60,
-                ...maxWidthProp,
                 sortable: true,
                 resizable: true,
             },
@@ -1349,6 +1380,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
                 if (resizedColumn) {
                     columnDefinition.width = resizedColumn.width;
+
+                    if (resizedColumn.source === ColumnEventSourceType.UI_DRAGGED) {
+                        columnDefinition.suppressSizeToFit = true;
+                    }
                 }
             }
         });
