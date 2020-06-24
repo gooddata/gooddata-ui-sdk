@@ -3,7 +3,16 @@ import { getIdsFromUri, getParsedFields } from "./agGridUtils";
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE, ID_SEPARATOR } from "./agGridConst";
 import { assortDimensionDescriptors } from "./agGridHeaders";
 import { ISortModelItem } from "./agGridTypes";
-import { IAttributeSortItem, IMeasureSortItem, SortDirection, ISortItem } from "@gooddata/sdk-model";
+import {
+    IAttributeSortItem,
+    IMeasureSortItem,
+    SortDirection,
+    ISortItem,
+    isAttributeSort,
+    isAttributeAreaSort,
+    newAttributeAreaSort,
+    newAttributeSort,
+} from "@gooddata/sdk-model";
 import { IAttributeDescriptor, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 
@@ -15,6 +24,7 @@ export const getSortItemByColId = (
     result: IExecutionResult,
     colId: string,
     direction: SortDirection,
+    originalSorts: ISortItem[] = [],
 ): IMeasureSortItem | IAttributeSortItem => {
     const { dimensions } = result;
 
@@ -31,12 +41,17 @@ export const getSortItemByColId = (
     if (lastFieldType === FIELD_TYPE_ATTRIBUTE) {
         for (const header of attributeDescriptors) {
             if (getIdsFromUri(header.attributeHeader.uri)[0] === lastFieldId) {
-                return {
-                    attributeSortItem: {
-                        direction,
-                        attributeIdentifier: header.attributeHeader.localIdentifier,
-                    },
-                };
+                const attributeLocalId = header.attributeHeader.localIdentifier;
+
+                // try to find the original sort item in case it had an aggregation set so we can keep it in (RAIL-1992)
+                // we intentionally ignore the direction to make sure the UX is predictable
+                const matchingOriginalSortItem = originalSorts.find(
+                    (s) => isAttributeSort(s) && s.attributeSortItem.attributeIdentifier === attributeLocalId,
+                ) as IAttributeSortItem;
+
+                return isAttributeAreaSort(matchingOriginalSortItem)
+                    ? newAttributeAreaSort(attributeLocalId, direction)
+                    : newAttributeSort(attributeLocalId, direction);
             }
         }
         invariant(false, `could not find attribute header matching ${colId}`);
@@ -79,9 +94,11 @@ export const getSortItemByColId = (
 };
 
 export function getSortsFromModel(sortModel: ISortModelItem[], result: IExecutionResult): ISortItem[] {
+    const originalSorts = result.definition.sortBy;
+
     return sortModel.map((sortModelItem: ISortModelItem) => {
         const { colId, sort } = sortModelItem;
-        const sortHeader = getSortItemByColId(result, colId, sort);
+        const sortHeader = getSortItemByColId(result, colId, sort, originalSorts);
         invariant(sortHeader, `unable to find sort item by field ${colId}`);
         return sortHeader;
     });

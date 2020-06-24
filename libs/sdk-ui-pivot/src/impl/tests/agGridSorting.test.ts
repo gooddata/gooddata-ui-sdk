@@ -2,8 +2,9 @@
 
 import { getSortItemByColId, getSortsFromModel } from "../agGridSorting";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../__mocks__/recordings";
+import { newAttributeAreaSort } from "@gooddata/sdk-model";
 
 describe("getSortItemByColId", () => {
     const fixture = recordedDataFacade(
@@ -14,6 +15,22 @@ describe("getSortItemByColId", () => {
     it("should return an attributeSortItem", () => {
         expect(getSortItemByColId(fixture.result(), "a_1055", "asc")).toMatchSnapshot();
     });
+
+    it("should return an attributeSortItem with aggregation", () => {
+        const originalSorts = [newAttributeAreaSort(ReferenceLdm.Product.Name, "desc")];
+
+        expect(getSortItemByColId(fixture.result(), "a_1055", "desc", originalSorts)).toEqual(
+            newAttributeAreaSort(ReferenceLdm.Product.Name, "desc"),
+        );
+    });
+    it("should return an attributeSortItem with aggregation with different direction", () => {
+        const originalSorts = [newAttributeAreaSort(ReferenceLdm.Product.Name, "asc")];
+
+        expect(getSortItemByColId(fixture.result(), "a_1055", "desc", originalSorts)).toEqual(
+            newAttributeAreaSort(ReferenceLdm.Product.Name, "desc"),
+        );
+    });
+
     it("should return a measureSortItem", () => {
         expect(getSortItemByColId(fixture.result(), "a_1086_460488-m_0", "asc")).toMatchSnapshot();
     });
