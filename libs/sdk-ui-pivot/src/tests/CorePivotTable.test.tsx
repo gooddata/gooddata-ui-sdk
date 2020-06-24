@@ -125,7 +125,7 @@ describe("CorePivotTable", () => {
         it("should grow to fit columns if executing and default width should fit the viewport", (done) => {
             expect.assertions(1);
             const wrapper = renderComponent({
-                config: { growToFit: true },
+                config: { columnSizing: { growToFit: true } },
             });
             const table = getTableInstanceFromWrapper(wrapper);
             const growToFit = jest.spyOn(table, "growToFit");
@@ -142,7 +142,7 @@ describe("CorePivotTable", () => {
 
         it("should not grow to fit columns if the growToFit is not configured", async () => {
             const wrapper = renderComponent({
-                config: { growToFit: false },
+                config: { columnSizing: { growToFit: false } },
             });
             const table = getTableInstanceFromWrapper(wrapper);
             const growToFit = jest.spyOn(table, "growToFit");

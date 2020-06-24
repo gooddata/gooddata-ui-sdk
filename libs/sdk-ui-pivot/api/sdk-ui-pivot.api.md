@@ -27,8 +27,8 @@ export type DefaultColumnWidth = "viewport" | "unset";
 
 // @public (undocumented)
 export interface IColumnSizing {
-    // (undocumented)
-    defaultWidth: DefaultColumnWidth;
+    defaultWidth?: DefaultColumnWidth;
+    growToFit?: boolean;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "ICorePivotTableProps" should be prefixed with an underscore because the declaration is marked as @internal
@@ -65,7 +65,6 @@ export interface IPivotTableBucketProps {
 // @public (undocumented)
 export interface IPivotTableConfig {
     columnSizing?: IColumnSizing;
-    growToFit?: boolean;
     maxHeight?: number;
     menu?: IMenu;
     separators?: ISeparators;

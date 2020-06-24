@@ -29,13 +29,6 @@ export type DefaultColumnWidth = "viewport" | "unset"; // | "auto"  | number; ca
  * @public
  */
 export interface IColumnSizing {
-    defaultWidth: DefaultColumnWidth;
-}
-
-/**
- * @public
- */
-export interface IPivotTableConfig {
     /**
      * Optionally indicate that the table should grow to fit into the allocated space.
      *
@@ -43,6 +36,18 @@ export interface IPivotTableConfig {
      */
     growToFit?: boolean;
 
+    /**
+     * Optionally specify whether columns should be resized to fill the entire viewport.
+     *
+     * Default: unset
+     */
+    defaultWidth?: DefaultColumnWidth;
+}
+
+/**
+ * @public
+ */
+export interface IPivotTableConfig {
     /**
      * Optionally customize column sizing strategy.
      *

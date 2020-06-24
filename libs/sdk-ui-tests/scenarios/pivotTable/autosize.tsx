@@ -38,8 +38,8 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         config: {
             columnSizing: {
                 defaultWidth: "viewport",
+                growToFit: true,
             },
-            growToFit: true,
         },
     })
     .addScenario("with two measures, grand totals and subtotals with auto-resizing", {
@@ -55,7 +55,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         config: {
             columnSizing: {
                 defaultWidth: "viewport",
+                growToFit: true,
             },
-            growToFit: true,
         },
     });

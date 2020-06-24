@@ -519,10 +519,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     }
 
-    private isColumnAutoresizeEnabled = () =>
-        this.props.config.columnSizing ? this.props.config.columnSizing.defaultWidth === "viewport" : false;
+    private isColumnAutoresizeEnabled = () => this.props.config?.columnSizing?.defaultWidth === "viewport";
 
-    private isGrowToFitEnabled = () => !!this.props.config.growToFit;
+    private isGrowToFitEnabled = () => this.props.config?.columnSizing?.growToFit === true;
 
     //
     // column resizing stuff

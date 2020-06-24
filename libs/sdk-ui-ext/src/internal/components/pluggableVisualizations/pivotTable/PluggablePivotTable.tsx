@@ -469,21 +469,24 @@ export function createPivotTableConfig(
         };
     }
 
-    if (settings[SettingCatalog.enableTableColumnsAutoResizing]) {
-        tableConfig = {
-            ...tableConfig,
-            columnSizing: {
-                defaultWidth: "viewport",
-            },
+    const autoSize = settings[SettingCatalog.enableTableColumnsAutoResizing];
+    const growToFit = settings[SettingCatalog.enableTableColumnsGrowToFit];
+
+    let columnSizing = {};
+    if (autoSize) {
+        columnSizing = {
+            defaultWidth: "viewPort",
         };
     }
-
-    if (settings[SettingCatalog.enableTableColumnsGrowToFit]) {
-        tableConfig = {
-            ...tableConfig,
+    if (growToFit) {
+        columnSizing = {
+            ...columnSizing,
             growToFit: true,
         };
     }
 
-    return tableConfig;
+    return {
+        ...tableConfig,
+        columnSizing,
+    };
 }
