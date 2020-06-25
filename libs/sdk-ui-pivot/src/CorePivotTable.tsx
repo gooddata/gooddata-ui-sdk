@@ -6,6 +6,7 @@ import {
     IPreparedExecution,
     isAttributeDescriptor,
     isNoDataError,
+    IDataView,
 } from "@gooddata/sdk-backend-spi";
 import { defFingerprint, defTotals, ITotal, SortDirection } from "@gooddata/sdk-model";
 import {
@@ -13,7 +14,6 @@ import {
     AllCommunityModules,
     BodyScrollEvent,
     CellClassParams,
-    ColDef,
     Column,
     ColumnApi,
     ColumnResizedEvent,
@@ -77,6 +77,7 @@ import {
 } from "./impl/agGridTypes";
 import {
     cellRenderer,
+    getColumnIdentifier,
     getMeasureFormat,
     getRowNodeId,
     getTreeLeaves,
@@ -97,26 +98,47 @@ import {
 
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
 
-import { ICorePivotTableProps, IMenu, IMenuAggregationClickConfig } from "./types";
+import {
+    ColumnEventSourceType,
+    DefaultColumnWidth,
+    ICorePivotTableProps,
+    IMenu,
+    IMenuAggregationClickConfig,
+    IResizedColumns,
+    UIClick,
+} from "./types";
+import { setColumnMaxWidth, setColumnMaxWidthIf } from "./impl/agGridColumnWrapper";
+import { ColumnWidthItem } from "./columnWidths";
+import {
+    convertColumnWidthsToMap,
+    getColumnWidthsFromMap,
+    isColumnAutoResized,
+    isColumnManuallyResized,
+    MANUALLY_SIZED_MAX_WIDTH,
+    MIN_WIDTH,
+    resetColumnsWidthToDefault,
+    syncSuppressSizeToFitOnColumns,
+    updateColumnDefinitionsWithWidths,
+} from "./impl/agGridColumnSizing";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import sumBy = require("lodash/sumBy");
 import difference = require("lodash/difference");
+import omit = require("lodash/omit");
 import debounce = require("lodash/debounce");
-import { setColumnMaxWidth } from "./impl/agGridColumnWrapper";
 
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 const DEFAULT_ROW_HEIGHT = 28;
-const DEFAULT_AUTOSIZE_PADDING = 10;
-const COLUMN_AUTORESIZE_TIMEOUT = 100;
 
+const DEFAULT_AUTOSIZE_PADDING = 10;
+const COLUMN_RESIZE_TIMEOUT = 100;
 const AGGRID_ON_RESIZE_TIMEOUT = 300;
-const DEFAULT_COLUMN_WIDTH = 200;
 const AUTO_SIZED_MAX_WIDTH = 500;
 
+export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
 export const WATCHING_TABLE_RENDERED_MAX_TIME = 15000;
 
@@ -126,20 +148,6 @@ export interface ICorePivotTableState {
     desiredHeight: number | undefined;
     error?: string;
     resized: boolean;
-}
-
-export interface IResizedColumns {
-    [columnIdentifier: string]: { width: number; source: ColumnEventSourceType };
-}
-
-export interface IGrowToFittedColumns {
-    [columnIdentifier: string]: { width: number };
-}
-
-export enum ColumnEventSourceType {
-    AUTOSIZE_COLUMNS = "autosizeColumns",
-    UI_DRAGGED = "uiColumnDragged",
-    FIT_GROW = "growToFit",
 }
 
 /**
@@ -161,6 +169,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         pageSize: 100,
         config: {},
         groupRows: true,
+        onColumnResized: noop,
     };
 
     private readonly errorMap: IErrorDescriptors;
@@ -170,6 +179,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private unmounted: boolean = false;
 
     private gridApi: GridApi = null;
+    private columnApi: ColumnApi = null;
     private gridOptions: ICustomGridOptions = null;
     private tableHeaders: TableHeaders = null;
     private agGridDataSource: AgGridDatasource = null;
@@ -187,11 +197,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private watchingIntervalId: number | null;
     private watchingTimeoutId: number | null;
 
-    private growToFittedColumns: IGrowToFittedColumns = {};
-    private resizedColumns: IResizedColumns = {};
+    private manuallyResizedColumns: IResizedColumns = {};
+    private autoResizedColumns: IResizedColumns = {};
+    private growToFittedColumns: IResizedColumns = {};
     private resizing: boolean = false;
     private lastResizedWidth = 0;
     private lastResizedHeight = 0;
+    private numberOfColumnResizedCalls = 0;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -222,10 +234,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.visibleData = null;
         this.currentFingerprint = null;
         this.firstDataRendered = false;
-        this.resizedColumns = {};
+        this.autoResizedColumns = {};
         this.lastResizedWidth = 0;
         this.lastResizedHeight = 0;
         this.clearFittedColumns();
+
+        this.lastScrollPosition = {
+            top: 0,
+            left: 0,
+        };
 
         if (this.watchingIntervalId) {
             clearTimeout(this.watchingIntervalId);
@@ -254,7 +271,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         );
     };
 
-    private getSupportedDrillableItems(dv: DataViewFacade): IDrillableItemPushData[] {
+    private getSupportedDrillableItems = (dv: DataViewFacade): IDrillableItemPushData[] => {
         return dv
             .meta()
             .measureDescriptors()
@@ -266,13 +283,49 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     attributes: dv.meta().attributeDescriptors(),
                 }),
             );
-    }
+    };
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
         const { onLoadingChanged } = this.props;
         if (onLoadingChanged) {
             onLoadingChanged(loadingState);
         }
+    };
+
+    private initializeNonReactState = (result: IExecutionResult, dataView: IDataView) => {
+        /*
+         * Initialize table headers from first page of data, then update the initialized
+         * headers according to column sizing rules.
+         *
+         * NOTE: it would be better to have this all orchestrated in a single call.
+         */
+        this.tableHeaders = createTableHeaders(dataView);
+        updateColumnDefinitionsWithWidths(
+            this.tableHeaders.allHeaders,
+            this.manuallyResizedColumns,
+            this.autoResizedColumns,
+            this.getDefaultWidth(),
+            this.isGrowToFitEnabled(),
+            this.growToFittedColumns,
+        );
+
+        this.currentResult = result;
+        this.visibleData = DataViewFacade.for(dataView);
+        this.currentFingerprint = defFingerprint(this.currentResult.definition);
+
+        this.agGridDataSource = createAgGridDatasource(
+            {
+                headers: this.tableHeaders,
+                getGroupRows: () => this.props.groupRows,
+                getColumnTotals: this.getColumnTotals,
+                onPageLoaded: this.onPageLoaded,
+            },
+            this.visibleData,
+            this.getGridApi,
+            this.props.intl,
+        );
+
+        this.setGridDataSource(this.agGridDataSource);
     };
 
     private initialize(execution: IPreparedExecution): void {
@@ -291,24 +344,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                             return;
                         }
 
-                        this.tableHeaders = createTableHeaders(dataView);
-                        this.currentResult = result;
-                        this.visibleData = DataViewFacade.for(dataView);
-                        this.currentFingerprint = defFingerprint(this.currentResult.definition);
+                        this.initializeNonReactState(result, dataView);
 
-                        this.agGridDataSource = createAgGridDatasource(
-                            {
-                                headers: this.tableHeaders,
-                                getGroupRows: () => this.props.groupRows,
-                                getColumnTotals: this.getColumnTotals,
-                                onPageLoaded: this.onPageLoaded,
-                            },
-                            this.visibleData,
-                            this.getGridApi,
-                            this.props.intl,
-                        );
-
-                        this.setGridDataSource(this.agGridDataSource);
                         this.onLoadingChanged({ isLoading: false });
                         this.props.onExportReady(
                             createExportFunction(this.currentResult, this.props.exportTitle),
@@ -365,9 +402,56 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     public componentDidUpdate(prevProps: ICorePivotTableProps) {
         if (this.isReinitNeeded(prevProps)) {
+            /*
+             * This triggers when execution changes (new measures / attributes). In that case,
+             * a complete re-init of the table is in order.
+             *
+             * Everything is thrown out of the window including all the ag-grid data sources and instances and
+             * a completely new table will be initialized to the current props.
+             *
+             * Note: compared to v7 version of the table, this only happens if someone actually changes the
+             * execution-related props of the table. This branch will not hit any other time.
+             */
             this.reinitialize(this.props.execution);
-        } else if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
-            this.gridApi.refreshHeader();
+        } else {
+            /*
+             * When in this branch, the ag-grid instance is up and running and is already showing some data and
+             * it _should_ be possible to normally use the ag-grid APIs.
+             *
+             * The currentResult and visibleData _will_ be available at this point because the component is definitely
+             * after a successful execution and initialization.
+             */
+
+            if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
+                this.gridApi.refreshHeader();
+            }
+
+            if (this.isGrowToFitEnabled() && !this.isGrowToFitEnabled(prevProps)) {
+                this.growToFit(this.columnApi);
+            }
+
+            const prevColumnWidths = this.getColumnWidths(prevProps);
+            const columnWidths = this.getColumnWidths(this.props);
+
+            if (!isEqual(prevColumnWidths, columnWidths)) {
+                this.applyColumnSizes(columnWidths);
+            }
+        }
+    }
+
+    private applyColumnSizes(columnWidths: ColumnWidthItem[]) {
+        if (this.columnApi) {
+            const columnWidthsByField = convertColumnWidthsToMap(columnWidths, this.visibleData);
+
+            syncSuppressSizeToFitOnColumns(this.manuallyResizedColumns, columnWidthsByField, this.columnApi);
+
+            this.manuallyResizedColumns = columnWidthsByField;
+            if (this.isGrowToFitEnabled()) {
+                this.growToFit(this.columnApi); // calls resetColumnsWidthToDefault internally too
+            } else {
+                const columns = this.columnApi.getAllColumns();
+                this.resetColumnsWidthToDefault(this.columnApi, columns);
+            }
         }
     }
 
@@ -416,6 +500,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             this.gridOptions = this.createGridOptions();
         }
 
+        /*
+         * Show loading overlay until all the resizing is done. This is because the various resizing operations
+         * have to happen asynchronously - they must wait until ag-grid fires onFirstDataRendered, before our code
+         * can start reliably interfacing with the autosizing features.
+         */
         const shouldRenderLoadingOverlay =
             (this.isColumnAutoresizeEnabled() || this.isGrowToFitEnabled()) && !this.state.resized;
 
@@ -524,19 +613,37 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     }
 
-    private isColumnAutoresizeEnabled = () => this.props.config?.columnSizing?.defaultWidth === "viewport";
-
-    private isGrowToFitEnabled = () => this.props.config?.columnSizing?.growToFit === true;
-
     //
     // column resizing stuff
     //
-    private getColumnIds = (columns: Column[]): string[] =>
-        columns.map((column: Column) => column.getColId());
 
-    private getResizedColumns = (columns: Column[], source: ColumnEventSourceType): IResizedColumns => {
+    private isColumnAutoresizeEnabled = (props: ICorePivotTableProps = this.props) => {
+        return this.getDefaultWidthFromProps(props) === "viewport";
+    };
+
+    private isGrowToFitEnabled = (props: ICorePivotTableProps = this.props) => {
+        return props.config?.columnSizing?.growToFit === true;
+    };
+
+    private getColumnWidths = (props: ICorePivotTableProps): ColumnWidthItem[] | undefined => {
+        return props.config?.columnSizing?.columnWidths;
+    };
+
+    private hasColumnWidths = () => {
+        return !!this.getColumnWidths(this.props);
+    };
+
+    private getDefaultWidthFromProps = (props: ICorePivotTableProps): DefaultColumnWidth => {
+        return props.config?.columnSizing?.defaultWidth ?? "unset";
+    };
+
+    private getColumnIds = (columns: Column[]): string[] => {
+        return columns.map((column: Column) => column.getColId());
+    };
+
+    private getAutoResizedColumns = (columns: Column[]): IResizedColumns => {
         return columns.reduce((acc, col) => {
-            const columnId = this.getColumnIdentifier(col.getDefinition() as IGridHeader);
+            const columnId = getColumnIdentifier(col);
             const resizedColumn = acc[columnId];
             if (resizedColumn) {
                 return acc;
@@ -545,17 +652,28 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 ...acc,
                 [columnId]: {
                     width: col.getActualWidth(),
-                    source,
+                    source: ColumnEventSourceType.AUTOSIZE_COLUMNS,
                 },
             };
-        }, this.resizedColumns);
+        }, this.autoResizedColumns);
     };
 
-    private addToResizeColumn = (column: Column, source: ColumnEventSourceType): void => {
-        this.resizedColumns[this.getColumnIdentifier(column.getDefinition() as IGridHeader)] = {
+    private addToManuallyResizedColumn = (column: Column): void => {
+        this.manuallyResizedColumns[getColumnIdentifier(column)] = {
             width: column.getActualWidth(),
-            source,
+            source: ColumnEventSourceType.UI_DRAGGED,
         };
+
+        column.getColDef().suppressSizeToFit = true;
+    };
+
+    private removeFromManuallyResizedColumn = (column: Column): void => {
+        const colId = getColumnIdentifier(column);
+
+        if (this.manuallyResizedColumns[colId]) {
+            this.manuallyResizedColumns = omit(this.manuallyResizedColumns, colId);
+            column.getColDef().suppressSizeToFit = false;
+        }
     };
 
     private autoresizeVisibleColumns = async (
@@ -572,18 +690,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
 
         if (firstCall) {
-            await sleep(COLUMN_AUTORESIZE_TIMEOUT);
+            await sleep(COLUMN_RESIZE_TIMEOUT);
         }
 
         const displayedVirtualColumns = columnApi.getAllDisplayedVirtualColumns();
         const autoWidthColumnIds: string[] = this.getColumnIds(displayedVirtualColumns);
-        const newColumnIds = difference(autoWidthColumnIds, previouslyResizedColumnIds);
 
-        if (newColumnIds.length === 0) {
-            this.resizedColumns = this.getResizedColumns(
-                columnApi.getAllDisplayedVirtualColumns(),
-                ColumnEventSourceType.AUTOSIZE_COLUMNS,
-            );
+        if (previouslyResizedColumnIds.length >= autoWidthColumnIds.length) {
+            this.autoResizedColumns = this.getAutoResizedColumns(columnApi.getAllDisplayedVirtualColumns());
             return Promise.resolve();
         }
 
@@ -592,7 +706,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
             this.autoresizeColumnsByColumnId(columnApi, newColumnIds);
 
-            await sleep(COLUMN_AUTORESIZE_TIMEOUT);
+            await sleep(COLUMN_RESIZE_TIMEOUT);
             resolve(this.autoresizeVisibleColumns(columnApi, autoWidthColumnIds, false));
         });
     };
@@ -601,9 +715,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         setColumnMaxWidth(columnApi, columnIds, AUTO_SIZED_MAX_WIDTH);
 
         columnApi.autoSizeColumns(columnIds);
-        await sleep(COLUMN_AUTORESIZE_TIMEOUT);
+        await sleep(COLUMN_RESIZE_TIMEOUT);
 
-        setColumnMaxWidth(columnApi, columnIds, undefined);
+        setColumnMaxWidth(columnApi, columnIds, MANUALLY_SIZED_MAX_WIDTH);
     }
 
     private shouldPerformAutoresize() {
@@ -641,52 +755,49 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         if (tablePagesLoaded() && dataRendered() && (!alreadyResized() || (alreadyResized() && force))) {
             this.resizing = true;
-
+            // we need to know autosize width for each column, even manually resized ones, to support removal of columnWidth def from props
             await this.autoresizeVisibleColumns(event.columnApi, previouslyResizedColumnIds);
-            this.growToFit(event.columnApi);
+            // after that we need to reset manually resized columns back to its manually set width by growToFit or by helper. See UT resetColumnsWidthToDefault for width priorities
+            if (this.isGrowToFitEnabled()) {
+                this.growToFit(event.columnApi);
+            } else if (this.shouldPerformAutoresize() && this.isColumnAutoresizeEnabled()) {
+                const columns = this.columnApi.getAllColumns();
+                this.resetColumnsWidthToDefault(this.columnApi, columns);
+            }
             this.resizing = false;
-
             this.setState({
                 resized: true,
             });
         }
     };
 
-    private isColumAutoResized(resizedColumnId: string) {
-        return (
-            resizedColumnId &&
-            this.resizedColumns[resizedColumnId] &&
-            this.resizedColumns[resizedColumnId].source === ColumnEventSourceType.AUTOSIZE_COLUMNS
-        );
+    private isColumnAutoResized(resizedColumnId: string) {
+        return isColumnAutoResized(this.autoResizedColumns, resizedColumnId);
     }
 
-    private resetColumnsWidthToDefault(
-        columnApi: ColumnApi,
-        columns: Column[],
-        previouslyResizedColumnIds: string[] = [],
-    ) {
-        columns.forEach((col) => {
-            const id = this.getColumnIdentifier(col.getDefinition() as IGridHeader);
-            const resizedColumnId = previouslyResizedColumnIds.find((i) => i === id);
+    private isColumnManuallyResized(resizedColumnId: string) {
+        return isColumnManuallyResized(this.manuallyResizedColumns, resizedColumnId);
+    }
 
-            if (resizedColumnId) {
-                if (this.isColumAutoResized(resizedColumnId)) {
-                    columnApi.setColumnWidth(col, this.resizedColumns[resizedColumnId].width);
-                }
-            } else {
-                columnApi.setColumnWidth(col, DEFAULT_COLUMN_WIDTH);
-            }
-        });
+    private resetColumnsWidthToDefault(columnApi: ColumnApi, columns: Column[]) {
+        resetColumnsWidthToDefault(
+            columnApi,
+            columns,
+            this.manuallyResizedColumns,
+            this.autoResizedColumns,
+            this.getDefaultWidth(),
+        );
     }
 
     private setFittedColumns(columnApi: ColumnApi) {
         const columns = columnApi.getAllColumns();
 
         columns.forEach((col) => {
-            const id = this.getColumnIdentifier(col.getDefinition() as IGridHeader);
+            const id = getColumnIdentifier(col);
 
             this.growToFittedColumns[id] = {
                 width: col.getActualWidth(),
+                source: ColumnEventSourceType.FIT_GROW,
             };
         });
     }
@@ -702,14 +813,22 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
 
         const columns = columnApi.getAllColumns();
-        this.resetColumnsWidthToDefault(columnApi, columns, Object.keys(this.resizedColumns));
+        this.resetColumnsWidthToDefault(columnApi, columns);
         this.clearFittedColumns();
 
         const widths = columns.map((column) => column.getActualWidth());
         const sumOfWidths = widths.reduce((a, b) => a + b, 0);
 
         if (sumOfWidths < clientWidth) {
+            const columnIds = this.getColumnIds(columns);
+            setColumnMaxWidth(columnApi, columnIds, undefined);
             this.gridApi.sizeColumnsToFit();
+            setColumnMaxWidthIf(
+                columnApi,
+                columnIds,
+                MANUALLY_SIZED_MAX_WIDTH,
+                (column: Column) => column.getActualWidth() <= MANUALLY_SIZED_MAX_WIDTH,
+            );
             this.setFittedColumns(columnApi);
         }
     }
@@ -717,9 +836,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private mapFieldIdToGridId(columnApi: ColumnApi, fieldIds: string[]) {
         const columns = columnApi.getAllColumns();
 
-        return columns
-            .filter((d) => fieldIds.includes(this.getColumnIdentifier(d.getColDef())))
-            .map((d) => d.getColId());
+        return columns.filter((d) => fieldIds.includes(getColumnIdentifier(d))).map((d) => d.getColId());
     }
 
     private gridSizeChanged = async (gridSizeChangedEvent: any) => {
@@ -733,7 +850,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
             const resizedColumnsGridIds = this.mapFieldIdToGridId(
                 gridSizeChangedEvent.columnApi,
-                Object.keys(this.resizedColumns),
+                Object.keys(this.autoResizedColumns),
             );
             this.autoresizeColumns(gridSizeChangedEvent, true, resizedColumnsGridIds);
         }
@@ -795,6 +912,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private onGridReady = (event: GridReadyEvent) => {
         this.gridApi = event.api;
+        this.columnApi = event.columnApi;
         this.setGridDataSource(this.agGridDataSource);
         this.updateDesiredHeight(this.visibleData);
 
@@ -803,7 +921,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     };
 
-    private onFirstDataRendered = (event: AgGridEvent) => {
+    private onFirstDataRendered = async (event: AgGridEvent) => {
         if (this.firstDataRendered) {
             // tslint:disable-next-line:no-console
             console.error("onFirstDataRendered called multiple times");
@@ -843,11 +961,21 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const growToFit = this.isGrowToFitEnabled();
 
         if (shouldAutoresizeColumns || growToFit) {
-            this.autoresizeColumns(event);
+            await this.autoresizeColumns(event);
         }
+
+        // TODO: perhaps add this here? :)
+        // this.updateStickyRow();
+    };
+
+    private gridColumnsChanged = () => {
+        this.updateStickyRow();
     };
 
     private onModelUpdated = () => {
+        // TODO: check this one out. v7 has some interplay of auto-sizing and sticky header.
+        //  the auto-sizing must not be triggered here - see onFirstDataRendered above. perhaps
+        //  this update sticky should be there as well?
         this.updateStickyRow();
     };
 
@@ -966,22 +1094,75 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return false;
     };
 
-    private columnResized = (columnEvent: ColumnResizedEvent) => {
+    private isManualResizing(columnEvent: ColumnResizedEvent) {
+        return columnEvent && columnEvent.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns;
+    }
+
+    private getDefaultWidth = () => {
+        return DEFAULT_COLUMN_WIDTH;
+    };
+
+    private async resetResizedColumn(column: Column) {
+        const id = getColumnIdentifier(column);
+
+        if (this.isColumnManuallyResized(id)) {
+            this.removeFromManuallyResizedColumn(column);
+        }
+
+        if (this.isColumnAutoResized(id)) {
+            this.columnApi.setColumnWidth(column, this.autoResizedColumns[id].width);
+        } else {
+            await this.autoresizeColumnsByColumnId(this.columnApi, this.getColumnIds([column]));
+            this.addToManuallyResizedColumn(column);
+        }
+    }
+
+    private onGridColumnResized = async (columnEvent: ColumnResizedEvent) => {
         if (!columnEvent.finished) {
             return; // only update the height once the user is done setting the column size
         }
 
         this.updateDesiredHeight(this.visibleData);
 
-        if (columnEvent && columnEvent.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns) {
-            columnEvent.columns.forEach((column) => {
-                this.addToResizeColumn(column, ColumnEventSourceType.UI_DRAGGED);
-                column.getColDef().suppressSizeToFit = true;
-            });
+        if (this.isManualResizing(columnEvent)) {
+            if (this.hasColumnWidths()) {
+                this.numberOfColumnResizedCalls++;
+                await sleep(COLUMN_RESIZE_TIMEOUT);
 
-            this.growToFit(columnEvent.columnApi);
+                if (this.numberOfColumnResizedCalls === UIClick.DOUBLE_CLICK) {
+                    this.numberOfColumnResizedCalls = 0;
+                    await this.onColumnsManualReset(columnEvent.columns);
+                } else if (this.numberOfColumnResizedCalls === UIClick.CLICK) {
+                    this.numberOfColumnResizedCalls = 0;
+                    this.onColumnsManualResized(columnEvent.columns);
+                }
+            } else {
+                this.onColumnsManualResized(columnEvent.columns);
+            }
         }
     };
+
+    private onColumnsManualReset = async (columns: Column[]) => {
+        for (const column of columns) {
+            await this.resetResizedColumn(column);
+        }
+
+        this.afterOnResizeColumns();
+    };
+
+    private onColumnsManualResized = (columns: Column[]) => {
+        columns.forEach((column) => {
+            this.addToManuallyResizedColumn(column);
+        });
+
+        this.afterOnResizeColumns();
+    };
+
+    private afterOnResizeColumns() {
+        this.growToFit(this.columnApi);
+        const columnWidths = getColumnWidthsFromMap(this.manuallyResizedColumns, this.visibleData);
+        this.props.onColumnResized(columnWidths);
+    }
 
     private sortChanged = (event: SortChangedEvent): void => {
         if (!this.currentResult) {
@@ -1055,20 +1236,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             intl: this.props.intl,
         };
 
-        if (this.isColumnAutoresizeEnabled()) {
-            this.enrichColumnDefinitionsWithWidths(
-                getTreeLeaves(tableHeaders.allHeaders),
-                this.resizedColumns,
-            );
-        }
-
-        if (this.isGrowToFitEnabled()) {
-            this.enrichColumnDefinitionsWithGrowToFitWidths(
-                getTreeLeaves(tableHeaders.allHeaders),
-                this.growToFittedColumns,
-            );
-        }
-
         return {
             // Initial data
             columnDefs: tableHeaders.allHeaders,
@@ -1081,7 +1248,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     enableSorting: true,
                     ...commonHeaderComponentParams,
                 },
-                minWidth: 60,
+                minWidth: MIN_WIDTH,
                 sortable: true,
                 resizable: true,
             },
@@ -1096,12 +1263,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             },
             onCellClicked: this.cellClicked,
             onSortChanged: this.sortChanged,
-            onColumnResized: this.columnResized,
+            onColumnResized: this.onGridColumnResized,
             onGridSizeChanged: this.gridSizeChanged,
+            onGridColumnsChanged: this.gridColumnsChanged,
 
             // Basic options
             suppressMovableColumns: true,
             suppressCellSelection: true,
+            suppressAutoSize: this.hasColumnWidths(),
             enableFilter: false,
 
             // infinite scrolling model
@@ -1367,45 +1536,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private isHeaderResizer(target: HTMLElement) {
         return target.classList.contains("ag-header-cell-resize");
-    }
-
-    private getColumnIdentifier(column: IGridHeader | ColDef): string {
-        // field should be always present, fallback to colId could happen for empty columns
-        return column.field || column.colId;
-    }
-
-    private enrichColumnDefinitionsWithWidths(
-        columnDefinitions: IGridHeader[],
-        resizedColumns: IResizedColumns,
-    ) {
-        columnDefinitions.forEach((columnDefinition: IGridHeader) => {
-            if (columnDefinition) {
-                const resizedColumn = resizedColumns[this.getColumnIdentifier(columnDefinition)];
-
-                if (resizedColumn) {
-                    columnDefinition.width = resizedColumn.width;
-
-                    if (resizedColumn.source === ColumnEventSourceType.UI_DRAGGED) {
-                        columnDefinition.suppressSizeToFit = true;
-                    }
-                }
-            }
-        });
-    }
-
-    private enrichColumnDefinitionsWithGrowToFitWidths(
-        columnDefinitions: IGridHeader[],
-        growToFittedColumns: IGrowToFittedColumns,
-    ) {
-        columnDefinitions.forEach((columnDefinition: IGridHeader) => {
-            if (columnDefinition) {
-                const resizedColumn = growToFittedColumns[this.getColumnIdentifier(columnDefinition)];
-
-                if (resizedColumn) {
-                    columnDefinition.width = resizedColumn.width;
-                }
-            }
-        });
     }
 }
 

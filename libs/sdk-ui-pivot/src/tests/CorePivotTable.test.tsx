@@ -12,10 +12,11 @@ import {
 import { getParsedFields } from "../impl/agGridUtils";
 import * as stickyRowHandler from "../impl/stickyRowHandler";
 import agGridApiWrapper from "../impl/agGridApiWrapper";
-import { ICorePivotTableProps } from "../types";
+import { ColumnEventSourceType, ICorePivotTableProps } from "../types";
 import { IPreparedExecution, prepareExecution } from "@gooddata/sdk-backend-spi";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
+import { measureLocalId } from "@gooddata/sdk-model";
 
 const intl = createIntlMock();
 
@@ -73,6 +74,115 @@ describe("CorePivotTable", () => {
         const table = wrapper.find(CorePivotTablePure);
         return table.instance() as any;
     }
+
+    const columnWidths = [
+        {
+            measureColumnWidthItem: {
+                width: 350,
+                locators: [
+                    {
+                        measureLocatorItem: {
+                            measureIdentifier: measureLocalId(ReferenceLdm.Amount),
+                        },
+                    },
+                ],
+            },
+        },
+    ];
+
+    // this describe block needs to be first, otherwise random tests fail
+    describe("componentDidUpdate", () => {
+        it("should grow to fit when this prop is set", async (done) => {
+            expect.assertions(1);
+            const wrapper = renderComponent();
+            await waitFor(waitForDataLoaded(wrapper));
+
+            const table = getTableInstanceFromWrapper(wrapper);
+            const growToFit = jest.spyOn(table, "growToFit");
+            try {
+                growToFit.mockImplementation(() => {
+                    expect(growToFit).toHaveBeenCalledTimes(1);
+                    done();
+                });
+            } catch (e) {
+                done.fail(e);
+            }
+
+            wrapper.setProps({
+                config: {
+                    columnSizing: {
+                        growToFit: true,
+                    },
+                },
+            });
+            wrapper.update();
+        });
+
+        it("should grow to fit when columnWidths prop is set", async (done) => {
+            expect.assertions(1);
+            const wrapper = renderComponent({
+                config: {
+                    columnSizing: {
+                        growToFit: true,
+                    },
+                },
+            });
+            await waitFor(waitForDataLoaded(wrapper));
+
+            const table = getTableInstanceFromWrapper(wrapper);
+            const growToFit = jest.spyOn(table, "growToFit");
+            try {
+                growToFit.mockImplementation(() => {
+                    expect(growToFit).toHaveBeenCalledTimes(1);
+                    done();
+                });
+            } catch (e) {
+                done.fail(e);
+            }
+
+            wrapper.setProps({
+                config: {
+                    columnSizing: {
+                        columnWidths,
+                        growToFit: true,
+                    },
+                },
+            });
+            wrapper.update();
+        });
+
+        it("should set inner manuallyResizedColumns according columnWidths prop", async (done) => {
+            expect.assertions(1);
+            const wrapper = renderComponent();
+            await waitFor(waitForDataLoaded(wrapper));
+
+            const table = getTableInstanceFromWrapper(wrapper);
+            // didUpdate is async in PivotTable so expect needs to be async too
+            const resetColumnsWidthToDefault = jest.spyOn(table, "resetColumnsWidthToDefault");
+            try {
+                resetColumnsWidthToDefault.mockImplementation(() => {
+                    expect(table.manuallyResizedColumns).toEqual({
+                        m_0: {
+                            width: 350,
+                            source: ColumnEventSourceType.UI_DRAGGED,
+                        },
+                    });
+                    done();
+                });
+            } catch (e) {
+                done.fail(e);
+            }
+
+            wrapper.setProps({
+                config: {
+                    columnSizing: {
+                        columnWidths,
+                    },
+                },
+            });
+            wrapper.update();
+        });
+    });
 
     describe("column sizing", () => {
         it("should auto-resize columns if executing and default width should fit the viewport", (done) => {

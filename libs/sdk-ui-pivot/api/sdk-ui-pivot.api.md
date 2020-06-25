@@ -7,7 +7,9 @@
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { Identifier } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
+import { IMeasureLocatorItem } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -27,6 +29,8 @@ export type DefaultColumnWidth = "viewport" | "unset";
 
 // @public (undocumented)
 export interface IColumnSizing {
+    // Warning: (ae-forgotten-export) The symbol "ColumnWidthItem" needs to be exported by the entry point index.d.ts
+    columnWidths?: ColumnWidthItem[];
     defaultWidth?: DefaultColumnWidth;
     growToFit?: boolean;
 }
@@ -49,6 +53,8 @@ export interface IMenu {
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     config?: IPivotTableConfig;
     groupRows?: boolean;
+    // (undocumented)
+    onColumnResized?: (columnWidths: ColumnWidthItem[]) => void;
     pageSize?: number;
 }
 

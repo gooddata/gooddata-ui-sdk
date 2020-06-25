@@ -1,20 +1,26 @@
 // (C) 2007-2020 GoodData Corporation
-import { getIdsFromUri, getParsedFields } from "./agGridUtils";
-import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE, ID_SEPARATOR } from "./agGridConst";
+import {
+    getAttributeLocators,
+    getIdsFromUri,
+    getLastFieldId,
+    getLastFieldType,
+    getParsedFields,
+} from "./agGridUtils";
+import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "./agGridConst";
 import { assortDimensionDescriptors } from "./agGridHeaders";
 import { ISortModelItem } from "./agGridTypes";
 import {
     IAttributeSortItem,
     IMeasureSortItem,
-    SortDirection,
-    ISortItem,
-    isAttributeSort,
     isAttributeAreaSort,
+    isAttributeSort,
+    ISortItem,
     newAttributeAreaSort,
     newAttributeSort,
+    SortDirection,
 } from "@gooddata/sdk-model";
-import { IAttributeDescriptor, IExecutionResult } from "@gooddata/sdk-backend-spi";
-import invariant from "ts-invariant";
+import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import invariant = require("invariant");
 
 /*
  * All code related to sorting the ag-grid backed Pivot Table is concentrated here
@@ -29,7 +35,8 @@ export const getSortItemByColId = (
     const { dimensions } = result;
 
     const fields = getParsedFields(colId);
-    const [lastFieldType, lastFieldId] = fields[fields.length - 1];
+    const lastFieldType = getLastFieldType(fields);
+    const lastFieldId = getLastFieldId(fields);
 
     // search columns first when sorting in columns to use the proper header
     // in case the same attribute is in both rows and columns
@@ -57,25 +64,8 @@ export const getSortItemByColId = (
         invariant(false, `could not find attribute header matching ${colId}`);
     } else if (lastFieldType === FIELD_TYPE_MEASURE) {
         const headerItem = measureDescriptors[parseInt(lastFieldId, 10)];
-        const attributeLocators = fields.slice(0, -1).map((field: string[]) => {
-            // first item is type which should be always 'a'
-            const [, fieldId, fieldValueId] = field;
-            const attributeDescriptorMatch = attributeDescriptors.find(
-                (attributeHeader: IAttributeDescriptor) => {
-                    return getIdsFromUri(attributeHeader.attributeHeader.formOf.uri)[0] === fieldId;
-                },
-            );
-            invariant(
-                attributeDescriptorMatch,
-                `Could not find matching attribute header to field ${field.join(ID_SEPARATOR)}`,
-            );
-            return {
-                attributeLocatorItem: {
-                    attributeIdentifier: attributeDescriptorMatch.attributeHeader.localIdentifier,
-                    element: `${attributeDescriptorMatch.attributeHeader.formOf.uri}/elements?id=${fieldValueId}`,
-                },
-            };
-        });
+        const attributeLocators = getAttributeLocators(fields, attributeDescriptors);
+
         return {
             measureSortItem: {
                 direction,

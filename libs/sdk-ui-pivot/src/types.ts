@@ -4,6 +4,7 @@ import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-sp
 import { IAttributeOrMeasure, IAttribute, IFilter, ITotal, ISortItem, TotalType } from "@gooddata/sdk-model";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
+import { ColumnWidthItem } from "./columnWidths";
 
 /**
  * @public
@@ -42,6 +43,13 @@ export interface IColumnSizing {
      * Default: unset
      */
     defaultWidth?: DefaultColumnWidth;
+
+    /**
+     * Optionally specify custom column widths to apply.
+     *
+     * Default: none
+     */
+    columnWidths?: ColumnWidthItem[];
 }
 
 /**
@@ -201,4 +209,21 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
      * Default: true
      */
     groupRows?: boolean;
+
+    onColumnResized?: (columnWidths: ColumnWidthItem[]) => void;
+}
+
+export enum ColumnEventSourceType {
+    AUTOSIZE_COLUMNS = "autosizeColumns",
+    UI_DRAGGED = "uiColumnDragged",
+    FIT_GROW = "growToFit",
+}
+
+export enum UIClick {
+    CLICK = 1,
+    DOUBLE_CLICK = 2,
+}
+
+export interface IResizedColumns {
+    [columnIdentifier: string]: { width: number; source: ColumnEventSourceType };
 }

@@ -39,6 +39,14 @@ export interface IResultMetaMethods {
     attributeDescriptors(): IAttributeDescriptor[];
 
     /**
+     * Returns attribute descriptors from particular dimension.
+     *
+     * @param dim - dimension index
+     * @returns attribute descriptors, empty if none or if no such dimension
+     */
+    attributeDescriptorsForDim(dim: number): IAttributeDescriptor[];
+
+    /**
      * @returns measure group descriptor, regardless of dimension in which it is located
      */
     measureGroupDescriptor(): IMeasureGroupDescriptor | undefined;
@@ -148,6 +156,10 @@ class ResultMetaMethods implements IResultMetaMethods {
         return flatMap(this.dataView.result.dimensions, (dim) => {
             return dim.headers.filter(isAttributeDescriptor);
         });
+    }
+
+    public attributeDescriptorsForDim(dim: number): IAttributeDescriptor[] {
+        return (this.dataView.result.dimensions[dim]?.headers ?? []).filter(isAttributeDescriptor);
     }
 
     public measureGroupDescriptor(): IMeasureGroupDescriptor | undefined {

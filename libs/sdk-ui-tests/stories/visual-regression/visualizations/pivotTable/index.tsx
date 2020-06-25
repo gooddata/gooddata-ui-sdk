@@ -9,6 +9,7 @@ import { CustomStories } from "../../_infra/storyGroups";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../_infra/backend";
+import { action } from "@storybook/addon-actions";
 
 const backend = StorybookBackend();
 
@@ -40,6 +41,7 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("table with resizing", () 
                         defaultWidth: "viewport",
                     },
                 }}
+                onColumnResized={action("columnResized")}
             />
         </div>,
     ),
