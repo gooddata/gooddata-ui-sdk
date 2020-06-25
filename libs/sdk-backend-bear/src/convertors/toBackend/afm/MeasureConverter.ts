@@ -15,7 +15,6 @@ import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { convertMeasureFilter } from "./FilterConverter";
 import { toBearRef } from "../ObjRefConverter";
 import compact = require("lodash/compact");
-import get = require("lodash/get");
 
 export function convertMeasure(measure: IMeasure): GdcExecuteAFM.IMeasure {
     const {
@@ -117,27 +116,29 @@ function convertArithmeticMeasureDefinition(
 
 function getFormat(measure: IMeasure): string | undefined {
     const {
-        measure: { definition },
+        measure: { definition, format },
     } = measure;
-    const measureFormat = get(measure.measure, "format");
 
-    if (isArithmeticMeasureDefinition(definition)) {
-        if (definition.arithmeticMeasure.operator === "change") {
+    if (format) {
+        return format;
+    }
+
+    const isArithmeticMeasureChange =
+        isArithmeticMeasureDefinition(definition) && definition.arithmeticMeasure.operator === "change";
+
+    if (isArithmeticMeasureChange) {
+        return "#,##0.00%";
+    }
+
+    if (isMeasureDefinition(definition)) {
+        const { measureDefinition } = definition;
+        if (measureDefinition.computeRatio) {
             return "#,##0.00%";
+        }
+        if (measureDefinition.aggregation === "count") {
+            return "#,##0";
         }
     }
 
-    const predefinedFormat = isMeasureDefinition(definition) ? getPredefinedFormat(definition) : undefined;
-
-    return predefinedFormat || measureFormat;
-}
-
-function getPredefinedFormat(definition: IMeasureDefinition): string | null {
-    const { measureDefinition } = definition;
-    // should we prefer format defined on measure? If so, fix computeRatio format in AD
-    return measureDefinition.computeRatio
-        ? "#,##0.00%"
-        : measureDefinition.aggregation === "count"
-        ? "#,##0"
-        : null;
+    return undefined;
 }
