@@ -5,19 +5,35 @@ import { Identifier, IMeasureLocatorItem } from "@gooddata/sdk-model";
 /**
  * @public
  */
-export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem;
+export type ColumnWidthItem =
+    | IAttributeColumnWidthItem
+    | IMeasureColumnWidthItem
+    | IAllMeasureColumnWidthItem;
 
 /**
  * @public
  */
-export type ColumnWidth = number;
+export type AbsoluteColumnWidth = number;
+
+/**
+ * @public
+ */
+export type ColumnWidth = AbsoluteColumnWidth | "auto";
+
+export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is AbsoluteColumnWidth {
+    return Number(columnWidth) === columnWidth;
+}
+
+export function isColumnWidthAuto(columnWidth: ColumnWidth): boolean {
+    return columnWidth === "auto";
+}
 
 /**
  * @public
  */
 export interface IAttributeColumnWidthItem {
     attributeColumnWidthItem: {
-        width: ColumnWidth;
+        width: AbsoluteColumnWidth;
         attributeIdentifier: Identifier;
     };
 }
@@ -29,6 +45,15 @@ export interface IMeasureColumnWidthItem {
     measureColumnWidthItem: {
         width: ColumnWidth;
         locators: LocatorItem[];
+    };
+}
+
+/**
+ * @public
+ */
+export interface IAllMeasureColumnWidthItem {
+    measureColumnWidthItem: {
+        width: AbsoluteColumnWidth;
     };
 }
 
@@ -61,7 +86,21 @@ export function isMeasureColumnWidthItem(
 ): columnWidthItem is IMeasureColumnWidthItem {
     return (
         !isEmpty(columnWidthItem) &&
-        (columnWidthItem as IMeasureColumnWidthItem).measureColumnWidthItem !== undefined
+        (columnWidthItem as IMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
+        (columnWidthItem as IMeasureColumnWidthItem).measureColumnWidthItem.locators !== undefined
+    );
+}
+
+/**
+ * @public
+ */
+export function isAllMeasureColumnWidthItem(
+    columnWidthItem: ColumnWidthItem,
+): columnWidthItem is IAllMeasureColumnWidthItem {
+    return (
+        !isEmpty(columnWidthItem) &&
+        (columnWidthItem as IAllMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
+        (columnWidthItem as IMeasureColumnWidthItem).measureColumnWidthItem.locators === undefined
     );
 }
 

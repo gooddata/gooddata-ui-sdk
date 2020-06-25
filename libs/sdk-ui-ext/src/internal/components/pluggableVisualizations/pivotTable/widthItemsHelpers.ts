@@ -1,22 +1,15 @@
 // (C) 2020 GoodData Corporation
 import includes = require("lodash/includes");
-
 import {
     ColumnWidthItem,
     IMeasureColumnWidthItem,
-    IAttributeColumnWidthItem,
-    isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
+    isAttributeColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization";
 import { isMeasureLocator } from "@gooddata/sdk-model";
 import { isAttributeFilter } from "../../../utils/bucketHelper";
-
-const matchesAttributeColumnWidthItemFilters = (
-    _widthItem: IAttributeColumnWidthItem,
-    _filters: IBucketFilter[],
-): boolean => true;
 
 const isMeasureWidthItemMatchedByFilter = (
     widthItem: IMeasureColumnWidthItem,
@@ -41,10 +34,12 @@ const matchesMeasureColumnWidthItemFilters = (
         return isMatching;
     }, true);
 
-const matchesWidthItemFilters = (widthItem: ColumnWidthItem, filters: IBucketFilter[]): boolean =>
-    isAttributeColumnWidthItem(widthItem)
-        ? matchesAttributeColumnWidthItemFilters(widthItem, filters)
-        : matchesMeasureColumnWidthItemFilters(widthItem, filters);
+const matchesWidthItemFilters = (widthItem: ColumnWidthItem, filters: IBucketFilter[]): boolean => {
+    if (isMeasureColumnWidthItem(widthItem)) {
+        return matchesMeasureColumnWidthItemFilters(widthItem, filters);
+    }
+    return true;
+};
 
 const containsMeasureLocator = (widthItem: IMeasureColumnWidthItem): boolean =>
     widthItem.measureColumnWidthItem.locators.some((locator) => isMeasureLocator(locator));
@@ -107,9 +102,6 @@ function adaptWidthItemsToPivotTable(
                 },
             };
 
-            // check the attribute elements vs filters
-            // and proper locators length
-            // TODO: ONE-4449 - which will create widthItems with empty locators
             if (
                 matchesWidthItemFilters(filteredMeasureColumnWidthItem, filters) &&
                 widthItemLocatorsHaveProperLength(
@@ -120,7 +112,7 @@ function adaptWidthItemsToPivotTable(
             ) {
                 return [...columnWidths, filteredMeasureColumnWidthItem];
             }
-        } else {
+        } else if (isAttributeColumnWidthItem(columnWidth)) {
             if (
                 includes(attributeLocalIdentifiers, columnWidth.attributeColumnWidthItem.attributeIdentifier)
             ) {

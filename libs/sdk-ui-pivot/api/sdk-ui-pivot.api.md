@@ -19,11 +19,15 @@ import { IVisualizationProps } from '@gooddata/sdk-ui';
 import * as React_2 from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
+// Warning: (ae-forgotten-export) The symbol "AbsoluteColumnWidth" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export type ColumnWidth = number;
+export type ColumnWidth = AbsoluteColumnWidth | "auto";
 
+// Warning: (ae-forgotten-export) The symbol "IAllMeasureColumnWidthItem" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem;
+export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | IAllMeasureColumnWidthItem;
 
 // Warning: (ae-internal-missing-underscore) The name "CorePivotTable" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -37,7 +41,7 @@ export type DefaultColumnWidth = "viewport" | "unset";
 export interface IAttributeColumnWidthItem {
     // (undocumented)
     attributeColumnWidthItem: {
-        width: ColumnWidth;
+        width: AbsoluteColumnWidth;
         attributeIdentifier: Identifier;
     };
 }
@@ -116,7 +120,7 @@ export const PivotTable: React_2.ComponentType<IPivotTableProps>;
 
 // Warnings were encountered during analysis:
 //
-// dist/columnWidths.d.ts:25:9 - (ae-forgotten-export) The symbol "LocatorItem" needs to be exported by the entry point index.d.ts
+// dist/columnWidths.d.ts:31:9 - (ae-forgotten-export) The symbol "LocatorItem" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

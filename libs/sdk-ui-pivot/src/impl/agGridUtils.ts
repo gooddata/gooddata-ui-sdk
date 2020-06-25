@@ -9,6 +9,7 @@ import {
     ID_SEPARATOR_PLACEHOLDER,
     ROW_SUBTOTAL,
     ROW_TOTAL,
+    MEASURE_COLUMN,
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
 import escape = require("lodash/escape");
@@ -209,6 +210,20 @@ export const getColumnIdentifierFromDef = (colDef: IGridHeader | ColDef): string
     return colDef.field || colDef.colId;
 };
 
-export const getColumnIdentifier = (column: Column): string => {
-    return getColumnIdentifierFromDef(column.getColDef());
+export const getColumnIdentifier = (item: Column | IGridHeader | ColDef): string => {
+    if (isColumn(item)) {
+        return getColumnIdentifierFromDef(item.getColDef());
+    }
+    return getColumnIdentifierFromDef(item);
+};
+
+export function isColumn(item: Column | ColDef): item is Column {
+    return !!(item as Column).getColDef;
+}
+
+export const isMeasureColumn = (item: Column | ColDef) => {
+    if (isColumn(item)) {
+        return item.getColDef().type === MEASURE_COLUMN;
+    }
+    return item.type === MEASURE_COLUMN;
 };

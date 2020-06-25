@@ -229,6 +229,11 @@ export enum UIClick {
     DOUBLE_CLICK = 2,
 }
 
+export interface IResizedColumnsItem {
+    width: number;
+    source: ColumnEventSourceType;
+}
+
 export interface IResizedColumns {
-    [columnIdentifier: string]: { width: number; source: ColumnEventSourceType };
+    [columnIdentifier: string]: IResizedColumnsItem;
 }
