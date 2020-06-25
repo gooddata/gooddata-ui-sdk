@@ -178,22 +178,29 @@ export function isShowInPercentAllowed(
     );
 }
 
-export function isComparisonOverTimeAllowed(buckets: IBucketOfFun[], filters: IFilters) {
-    const rules = [hasNoStacks, hasNoWeekGranularity];
+export function isComparisonOverTimeAllowed(
+    buckets: IBucketOfFun[],
+    filters: IFilters,
+    weekFiltersEnabled: boolean,
+) {
+    const rules = weekFiltersEnabled ? [hasNoStacks] : [hasNoStacks, hasNoWeekGranularity];
 
     return allRulesMet(rules, buckets, filters) && hasGlobalDateFilter(filters);
 }
 
-export function overTimeComparisonRecommendationEnabled(referencePoint: IReferencePoint) {
-    const rules = [
+export function overTimeComparisonRecommendationEnabled(
+    referencePoint: IReferencePoint,
+    weekFiltersEnabled: boolean,
+) {
+    const baseRules = [
         noDerivedMeasurePresent,
         hasOneMeasure,
         hasFirstDate,
         hasNoStacks,
         hasOneCategory,
-        hasNoWeekGranularity,
         hasNoMeasureDateFilter,
     ];
+    const rules = weekFiltersEnabled ? baseRules : [...baseRules, hasNoWeekGranularity];
 
     return (
         allRulesMet(rules, get(referencePoint, BUCKETS, [])) &&

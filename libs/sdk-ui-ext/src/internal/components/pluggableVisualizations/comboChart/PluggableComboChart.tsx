@@ -109,7 +109,10 @@ export class PluggableComboChart extends PluggableBaseChart {
 
         newReferencePoint = setComboChartUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, this.isPercentDisabled(newReferencePoint));
-        newReferencePoint = configureOverTimeComparison(newReferencePoint);
+        newReferencePoint = configureOverTimeComparison(
+            newReferencePoint,
+            !!this.featureFlags.enableWeekFilters,
+        );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,

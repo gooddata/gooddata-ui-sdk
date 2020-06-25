@@ -102,7 +102,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         }
 
         configurePercent(newReferencePoint, true);
-        configureOverTimeComparison(newReferencePoint);
+        configureOverTimeComparison(newReferencePoint, !!this.settings?.enableWeekFilters);
 
         newReferencePoint.uiConfig = getHeadlineUiConfig(newReferencePoint, this.intl);
         newReferencePoint = getReferencePointWithSupportedProperties(

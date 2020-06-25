@@ -29,6 +29,7 @@ function getTypeOfDerivedToKeep(
 
 export function configureOverTimeComparison(
     extendedReferencePoint: IExtendedReferencePoint,
+    weekFiltersEnabled: boolean,
 ): IExtendedReferencePoint {
     const { buckets, filters, uiConfig } = extendedReferencePoint;
     const { supportedOverTimeComparisonTypes } = uiConfig;
@@ -42,7 +43,7 @@ export function configureOverTimeComparison(
         supportedOverTimeComparisonTypes,
         appliedComparisonType,
     );
-    const comparisonOverTimeAllowed = isComparisonOverTimeAllowed(buckets, filters);
+    const comparisonOverTimeAllowed = isComparisonOverTimeAllowed(buckets, filters, weekFiltersEnabled);
     const originalBuckets = cloneDeep(buckets);
 
     forEach(buckets, (bucket) => {

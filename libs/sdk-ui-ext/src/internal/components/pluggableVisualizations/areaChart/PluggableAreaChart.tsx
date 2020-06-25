@@ -80,7 +80,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
 
         newReferencePoint = setAreaChartUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, false);
-        newReferencePoint = configureOverTimeComparison(newReferencePoint);
+        newReferencePoint = configureOverTimeComparison(
+            newReferencePoint,
+            !!this.featureFlags.enableWeekFilters,
+        );
 
         this.supportedPropertiesList = removeImmutableOptionalStackingProperties(
             newReferencePoint,

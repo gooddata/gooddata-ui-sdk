@@ -85,7 +85,10 @@ export class PluggableHeatmap extends PluggableBaseChart {
 
         newReferencePoint = setHeatmapUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, true);
-        newReferencePoint = configureOverTimeComparison(newReferencePoint);
+        newReferencePoint = configureOverTimeComparison(
+            newReferencePoint,
+            !!this.featureFlags.enableWeekFilters,
+        );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,
