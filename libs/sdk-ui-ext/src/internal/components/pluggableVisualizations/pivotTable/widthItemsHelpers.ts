@@ -5,6 +5,7 @@ import {
     IMeasureColumnWidthItem,
     isMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
+    isAllMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization";
@@ -118,6 +119,8 @@ function adaptWidthItemsToPivotTable(
             ) {
                 return [...columnWidths, columnWidth];
             }
+        } else if (isAllMeasureColumnWidthItem(columnWidth)) {
+            return [...columnWidths, columnWidth];
         }
 
         return columnWidths;

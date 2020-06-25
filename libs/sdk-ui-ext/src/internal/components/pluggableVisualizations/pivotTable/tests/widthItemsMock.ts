@@ -1,6 +1,10 @@
 // (C) 2020 GoodData Corporation
 
-import { IMeasureColumnWidthItem, IAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import {
+    IMeasureColumnWidthItem,
+    IAttributeColumnWidthItem,
+    IAllMeasureColumnWidthItem,
+} from "@gooddata/sdk-ui-pivot";
 
 export const validMeasureColumnWidthItem: IMeasureColumnWidthItem = {
     measureColumnWidthItem: {
@@ -18,6 +22,12 @@ export const validMeasureColumnWidthItem: IMeasureColumnWidthItem = {
                 },
             },
         ],
+    },
+};
+
+export const validAllMeasureColumnWidthItem: IAllMeasureColumnWidthItem = {
+    measureColumnWidthItem: {
+        width: 400,
     },
 };
 
