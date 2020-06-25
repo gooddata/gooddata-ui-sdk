@@ -94,7 +94,7 @@ export class ResizedColumnsStore {
         if (item) {
             this.manuallyResizedColumns = omit(this.manuallyResizedColumns, colId);
 
-            if (!this.isAllMeasureColumWidthUsed()) {
+            if (!this.isAllMeasureColumWidthUsed() || !isMeasureColumn(column)) {
                 column.getColDef().suppressSizeToFit = false;
             }
         }

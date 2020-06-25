@@ -19,15 +19,14 @@ import { IVisualizationProps } from '@gooddata/sdk-ui';
 import * as React_2 from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
-// Warning: (ae-forgotten-export) The symbol "AbsoluteColumnWidth" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export type AbsoluteColumnWidth = number;
+
 // @public (undocumented)
 export type ColumnWidth = AbsoluteColumnWidth | "auto";
 
-// Warning: (ae-forgotten-export) The symbol "IAllMeasureColumnWidthItem" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
-export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | IAllMeasureColumnWidthItem;
+export type ColumnWidthItem = IAttributeColumnWidthItem | IAllMeasureColumnWidthItem | IMeasureColumnWidthItem;
 
 // Warning: (ae-internal-missing-underscore) The name "CorePivotTable" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -36,6 +35,14 @@ export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
 
 // @public (undocumented)
 export type DefaultColumnWidth = "viewport" | "unset";
+
+// @public (undocumented)
+export interface IAllMeasureColumnWidthItem {
+    // (undocumented)
+    measureColumnWidthItem: {
+        width: AbsoluteColumnWidth;
+    };
+}
 
 // @public (undocumented)
 export interface IAttributeColumnWidthItem {
@@ -108,8 +115,17 @@ export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucke
     workspace?: string;
 }
 
+// @public
+export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is AbsoluteColumnWidth;
+
+// @public (undocumented)
+export function isAllMeasureColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IAllMeasureColumnWidthItem;
+
 // @public (undocumented)
 export function isAttributeColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IAttributeColumnWidthItem;
+
+// @public
+export function isColumnWidthAuto(columnWidth: ColumnWidth): boolean;
 
 // @public (undocumented)
 export function isMeasureColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IMeasureColumnWidthItem;
@@ -120,7 +136,7 @@ export const PivotTable: React_2.ComponentType<IPivotTableProps>;
 
 // Warnings were encountered during analysis:
 //
-// dist/columnWidths.d.ts:31:9 - (ae-forgotten-export) The symbol "LocatorItem" needs to be exported by the entry point index.d.ts
+// dist/columnWidths.d.ts:41:9 - (ae-forgotten-export) The symbol "LocatorItem" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

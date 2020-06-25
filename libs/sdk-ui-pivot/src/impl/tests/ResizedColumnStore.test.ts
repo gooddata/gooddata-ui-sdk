@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { ResizedColumnsStore } from "../ResizedColumnsStore";
 import { ColDef, Column } from "@ag-grid-community/all-modules";
-import { MEASURE_COLUMN } from "../agGridConst";
+import { MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../agGridConst";
 import { MANUALLY_SIZED_MAX_WIDTH, MIN_WIDTH } from "../agGridColumnSizing";
 import { ColumnWidthItem } from "../../columnWidths";
 import { ColumnEventSourceType } from "../../types";
@@ -79,7 +79,7 @@ describe("ResizedColumnsStore", () => {
             const resizedColumnsStore: any = new ResizedColumnsStore();
             resizedColumnsStore.manuallyResizedColumns = {
                 m_0: { width: 400, source: "uiColumnDragged" },
-                a_4DOTdf: { width: 200, source: "uiColumnDragged" },
+                a_1055: { width: 200, source: "uiColumnDragged" },
             };
             const columnMock = getFakeColumn({
                 colId: "m_0",
@@ -104,7 +104,7 @@ describe("ResizedColumnsStore", () => {
             const resizedColumnsStore: any = new ResizedColumnsStore();
             resizedColumnsStore.manuallyResizedColumns = {
                 m_0: { width: 400, source: "uiColumnDragged" },
-                a_4DOTdf: { width: 200, source: "uiColumnDragged" },
+                a_1055: { width: 200, source: "uiColumnDragged" },
             };
             resizedColumnsStore.allMeasureColumnWidth = 42;
 
@@ -192,7 +192,7 @@ describe("ResizedColumnsStore", () => {
             const resizedColumnsStore: any = new ResizedColumnsStore();
             resizedColumnsStore.manuallyResizedColumns = {
                 m_0: { width: 400, source: "uiColumnDragged" },
-                a_4DOTdf: { width: 200, source: "uiColumnDragged" },
+                a_1055: { width: 200, source: "uiColumnDragged" },
             };
             const columnsMock = [
                 getFakeColumn({
@@ -204,7 +204,7 @@ describe("ResizedColumnsStore", () => {
                 }),
             ];
             resizedColumnsStore.addAllMeasureColumns(42, columnsMock);
-            const result = resizedColumnsStore.manuallyResizedColumns.a_4DOTdf.width;
+            const result = resizedColumnsStore.manuallyResizedColumns.a_1055.width;
             const correctWidth = 200;
             expect(result).toEqual(correctWidth);
         });
@@ -232,30 +232,53 @@ describe("ResizedColumnsStore", () => {
             const resizedColumnsStore: any = new ResizedColumnsStore();
             resizedColumnsStore.manuallyResizedColumns = {
                 m_0: { width: "auto", source: "uiColumnDragged" },
-                a_4DOTdf: { width: 200, source: "uiColumnDragged" },
+                a_1055: { width: 200, source: "uiColumnDragged" },
             };
             resizedColumnsStore.removeAllMeasureColumns();
-            const result = resizedColumnsStore.manuallyResizedColumns.a_4DOTdf.width;
+            const result = resizedColumnsStore.manuallyResizedColumns.a_1055.width;
             const correctWidth = 200;
             expect(result).toEqual(correctWidth);
         });
     });
 
     describe("removeFromManuallyResizedColumn", () => {
-        it("should remove from manually resized column map by colId", () => {
+        it("should remove measure from manually resized column map by colId", () => {
             const resizedColumnsStore: any = new ResizedColumnsStore();
             resizedColumnsStore.manuallyResizedColumns = {
                 m_0: { width: 200, source: "uiColumnDragged" },
-                a_4DOTdf: { width: 200, source: "uiColumnDragged" },
+                a_1055: { width: 200, source: "uiColumnDragged" },
             };
             const columnMock = getFakeColumn({
                 colId: "m_0",
                 type: MEASURE_COLUMN,
+                suppressSizeToFit: true,
             });
             resizedColumnsStore.removeFromManuallyResizedColumn(columnMock);
             const result = resizedColumnsStore.manuallyResizedColumns.m_0;
             expect(result).toBeUndefined();
+            expect(columnMock.getColDef().suppressSizeToFit).toBeFalsy();
         });
+
+        it.each([[null], [150]])(
+            "should remove row attribute from manually resized column map by colId when allMeasuresWidth set %d",
+            (allMeasuresWidth: number) => {
+                const resizedColumnsStore: any = new ResizedColumnsStore();
+                resizedColumnsStore.manuallyResizedColumns = {
+                    m_0: { width: 200, source: "uiColumnDragged" },
+                    a_1055: { width: 200, source: "uiColumnDragged" },
+                };
+                resizedColumnsStore.allMeasureColumnWidth = allMeasuresWidth;
+                const columnMock = getFakeColumn({
+                    colId: "a_1055",
+                    type: ROW_ATTRIBUTE_COLUMN,
+                    suppressSizeToFit: true,
+                });
+                resizedColumnsStore.removeFromManuallyResizedColumn(columnMock);
+                const result = resizedColumnsStore.manuallyResizedColumns.a_1055;
+                expect(result).toBeUndefined();
+                expect(columnMock.getColDef().suppressSizeToFit).toBeFalsy();
+            },
+        );
 
         it("should set auto width when colId does not exists and all measure is used", () => {
             const resizedColumnsStore: any = new ResizedColumnsStore();

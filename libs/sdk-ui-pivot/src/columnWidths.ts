@@ -20,10 +20,20 @@ export type AbsoluteColumnWidth = number;
  */
 export type ColumnWidth = AbsoluteColumnWidth | "auto";
 
+/**
+ * Type guard testing whether the provided column width is absolute.
+ *
+ * @public
+ */
 export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is AbsoluteColumnWidth {
     return Number(columnWidth) === columnWidth;
 }
 
+/**
+ * Tests whether the provided column width represents an 'auto'-matic width spec.
+ *
+ * @public
+ */
 export function isColumnWidthAuto(columnWidth: ColumnWidth): boolean {
     return columnWidth === "auto";
 }
