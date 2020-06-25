@@ -82,7 +82,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
         expect(result).toEqual(expectedColumnWidthItems);
     });
 
-    it("should keep allMeasureColumnWidthItem", () => {
+    it("should keep allMeasureColumnWidthItem when some measures left", () => {
         const sourceColumnWidthsWithAllMeasure: ColumnWidthItem[] = [validAllMeasureColumnWidthItem];
 
         const expectedColumnWidthItems: ColumnWidthItem[] = [validAllMeasureColumnWidthItem];
@@ -90,6 +90,24 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
         const result = adaptReferencePointWidthItemsToPivotTable(
             sourceColumnWidthsWithAllMeasure,
             measures,
+            [],
+            [],
+            [],
+            [],
+            [],
+        );
+
+        expect(result).toEqual(expectedColumnWidthItems);
+    });
+
+    it("should remove allMeasureColumnWidthItem when no measures left", () => {
+        const sourceColumnWidthsWithAllMeasure: ColumnWidthItem[] = [validAllMeasureColumnWidthItem];
+
+        const expectedColumnWidthItems: ColumnWidthItem[] = [];
+
+        const result = adaptReferencePointWidthItemsToPivotTable(
+            sourceColumnWidthsWithAllMeasure,
+            [],
             [],
             [],
             [],

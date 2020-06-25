@@ -119,7 +119,7 @@ function adaptWidthItemsToPivotTable(
             ) {
                 return [...columnWidths, columnWidth];
             }
-        } else if (isAllMeasureColumnWidthItem(columnWidth)) {
+        } else if (isAllMeasureColumnWidthItem(columnWidth) && measureLocalIdentifiers.length > 0) {
             return [...columnWidths, columnWidth];
         }
 
