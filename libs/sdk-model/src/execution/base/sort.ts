@@ -222,7 +222,7 @@ export function newAttributeSort(
     attributeOrId: IAttribute | string,
     sortDirection: SortDirection = "asc",
 ): IAttributeSortItem {
-    invariant(attributeOrId, "attribute to create sort for must be defined");
+    invariant(attributeOrId, "attribute to create sort for must be specified");
 
     const id: string = attributeLocalId(attributeOrId);
 
@@ -248,7 +248,7 @@ export function newAttributeAreaSort(
     sortDirection: SortDirection = "asc",
     aggregation: "sum" = "sum",
 ): IAttributeSortItem {
-    invariant(attributeOrId, "attribute to create sort for must be defined");
+    invariant(attributeOrId, "attribute to create sort for must be specified");
 
     const id: string = attributeLocalId(attributeOrId);
 
@@ -276,7 +276,7 @@ export function newMeasureSort(
     sortDirection: SortDirection = "asc",
     attributeLocators: IAttributeLocatorItem[] = [],
 ): IMeasureSortItem {
-    invariant(measureOrId, "measure to create sort for must be defined");
+    invariant(measureOrId, "measure to create sort for must be specified");
 
     const id: string = measureLocalId(measureOrId);
 
@@ -307,8 +307,8 @@ export function newAttributeLocator(
     attributeOrId: IAttribute | string,
     element: string,
 ): IAttributeLocatorItem {
-    invariant(attributeOrId, "attribute to create sort locator for must be defined");
-    invariant(element, "attribute element must be defined");
+    invariant(attributeOrId, "attribute to create sort locator for must be specified");
+    invariant(element, "attribute element must be specified");
 
     const localId: string = attributeLocalId(attributeOrId);
 

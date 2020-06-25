@@ -402,7 +402,7 @@ export function insightProperties(insight: IInsightDefinition): VisualizationPro
  * @alpha
  */
 export function insightVisualizationUrl(insight: IInsightDefinition): string {
-    invariant(insight, "insight to get vis class URI from must be defined");
+    invariant(insight, "insight to get vis class URI from must be specified");
 
     return insight.insight.visualizationUrl;
 }
@@ -415,7 +415,7 @@ export function insightVisualizationUrl(insight: IInsightDefinition): string {
  * @public
  */
 export function insightTitle(insight: IInsightDefinition): string {
-    invariant(insight, "insight to get title from must be defined");
+    invariant(insight, "insight to get title from must be specified");
 
     return insight.insight.title;
 }
@@ -428,7 +428,7 @@ export function insightTitle(insight: IInsightDefinition): string {
  * @public
  */
 export function insightId(insight: IInsight): string {
-    invariant(insight, "insight to get id of must be defined");
+    invariant(insight, "insight to get id of must be specified");
 
     return insight.insight.identifier;
 }
@@ -441,7 +441,7 @@ export function insightId(insight: IInsight): string {
  * @public
  */
 export function insightUri(insight: IInsight): string {
-    invariant(insight, "insight to get uri of must be defined");
+    invariant(insight, "insight to get uri of must be specified");
 
     return insight.insight.uri;
 }
@@ -550,7 +550,7 @@ export function insightSetFilters<T extends IInsightDefinition>(insight: T, filt
  * @public
  */
 export function visClassUrl(vc: IVisualizationClass): string {
-    invariant(vc, "vis class to get URL from must be defined");
+    invariant(vc, "vis class to get URL from must be specified");
 
     return vc.visualizationClass.url;
 }
@@ -563,7 +563,7 @@ export function visClassUrl(vc: IVisualizationClass): string {
  * @public
  */
 export function visClassUri(vc: IVisualizationClass): string {
-    invariant(vc, "vis class to get URI from must be defined");
+    invariant(vc, "vis class to get URI from must be specified");
 
     return vc.visualizationClass.uri;
 }
@@ -576,7 +576,7 @@ export function visClassUri(vc: IVisualizationClass): string {
  * @public
  */
 export function visClassId(vc: IVisualizationClass): string {
-    invariant(vc, "vis class to get URI from must be defined");
+    invariant(vc, "vis class to get URI from must be specified");
 
     return vc.visualizationClass.identifier;
 }

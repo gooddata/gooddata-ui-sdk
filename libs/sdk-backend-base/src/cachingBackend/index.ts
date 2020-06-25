@@ -354,7 +354,7 @@ export function withCaching(
 ): IAnalyticalBackend {
     invariant(
         config.maxCatalogOptions === undefined || config.maxCatalogOptions > 0,
-        "maxCatalogOptions to cache must be positive or undefined",
+        `maxCatalogOptions to cache must be positive or undefined, got: ${config.maxCatalogOptions}`,
     );
 
     const execCaching = cachingEnabled(config.maxExecutions);

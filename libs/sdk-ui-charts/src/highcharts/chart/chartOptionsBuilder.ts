@@ -9,7 +9,7 @@ import {
     IResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
 import * as cx from "classnames";
-import * as invariant from "invariant";
+import invariant from "ts-invariant";
 
 import {
     DataViewFacade,
@@ -1524,7 +1524,9 @@ export function getChartOptions(
 
     invariant(
         config && isChartSupported(config.type),
-        `config.type must be defined and match one of supported chart types: ${stringifyChartTypes()}`,
+        `config.type must be defined and match one of supported chart types: ${stringifyChartTypes()}, got: ${
+            config.type
+        }`,
     );
 
     const { type } = config;

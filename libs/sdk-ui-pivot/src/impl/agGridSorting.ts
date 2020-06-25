@@ -5,7 +5,7 @@ import { assortDimensionDescriptors } from "./agGridHeaders";
 import { ISortModelItem } from "./agGridTypes";
 import { IAttributeSortItem, IMeasureSortItem, SortDirection, ISortItem } from "@gooddata/sdk-model";
 import { IAttributeDescriptor, IExecutionResult } from "@gooddata/sdk-backend-spi";
-import invariant = require("invariant");
+import invariant from "ts-invariant";
 
 /*
  * All code related to sorting the ag-grid backed Pivot Table is concentrated here

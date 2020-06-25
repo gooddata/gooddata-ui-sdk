@@ -35,7 +35,7 @@ import {
 import { ColDef } from "@ag-grid-community/all-modules";
 import range = require("lodash/range");
 import clone = require("lodash/clone");
-import invariant = require("invariant");
+import invariant from "ts-invariant";
 
 /*
  * All code related to transforming headers from our backend to ag-grid specific data structures

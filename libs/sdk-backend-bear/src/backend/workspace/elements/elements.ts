@@ -34,7 +34,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
     ) {}
 
     public withLimit(limit: number): IElementQuery {
-        invariant(limit > 0, "limit must be a positive number");
+        invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 
         this.limit = limit;
 

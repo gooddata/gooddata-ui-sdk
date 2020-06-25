@@ -91,7 +91,7 @@ export const idMatchAttribute: (id: string) => AttributePredicate = (id) => (att
  * @public
  */
 export function attributeLocalId(attributeOrId: IAttribute | Identifier): string {
-    invariant(attributeOrId, "attribute must not be undefined");
+    invariant(attributeOrId, "attribute must be specified");
 
     return typeof attributeOrId === "string" ? attributeOrId : attributeOrId.attribute.localIdentifier;
 }
@@ -104,7 +104,7 @@ export function attributeLocalId(attributeOrId: IAttribute | Identifier): string
  * @public
  */
 export function attributeUri(attribute: IAttribute): string | undefined {
-    invariant(attribute, "attribute must not be undefined");
+    invariant(attribute, "attribute must be specified");
 
     return isUriRef(attribute.attribute.displayForm) ? attribute.attribute.displayForm.uri : undefined;
 }
@@ -117,7 +117,7 @@ export function attributeUri(attribute: IAttribute): string | undefined {
  * @public
  */
 export function attributeIdentifier(attribute: IAttribute): string | undefined {
-    invariant(attribute, "attribute must not be undefined");
+    invariant(attribute, "attribute must be specified");
 
     return isIdentifierRef(attribute.attribute.displayForm)
         ? attribute.attribute.displayForm.identifier
@@ -132,7 +132,7 @@ export function attributeIdentifier(attribute: IAttribute): string | undefined {
  * @public
  */
 export function attributeAlias(attribute: IAttribute): string | undefined {
-    invariant(attribute, "attribute must not be undefined");
+    invariant(attribute, "attribute must be specified");
 
     return attribute.attribute.alias;
 }
@@ -145,7 +145,7 @@ export function attributeAlias(attribute: IAttribute): string | undefined {
  * @public
  */
 export function attributeDisplayFormRef(attribute: IAttribute): ObjRef {
-    invariant(attribute, "attribute must not be undefined");
+    invariant(attribute, "attribute must be specified");
 
     return attribute.attribute.displayForm;
 }
@@ -167,7 +167,7 @@ export function attributesFind(
     attributes: IAttribute[],
     idOrFun: string | AttributePredicate = anyAttribute,
 ): IAttribute | undefined {
-    invariant(attributes, "attributes must not be undefined");
+    invariant(attributes, "attributes must be specified");
 
     if (!attributes.length) {
         return;

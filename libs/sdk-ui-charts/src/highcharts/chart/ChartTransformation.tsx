@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import * as invariant from "invariant";
+import invariant from "ts-invariant";
 import * as React from "react";
 
 import {

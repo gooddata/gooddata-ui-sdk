@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import invariant from "invariant";
+import invariant from "ts-invariant";
 import find from "lodash/find";
 import every from "lodash/every";
 
@@ -21,7 +21,7 @@ export class Rules {
     public match(subject: any, params: any) {
         const [, callback] = find(this.rules, ([tests]) => every(tests, (test) => test(subject, params)));
 
-        invariant(callback, "Callback not found :-(");
+        invariant(callback, "No suitable rule to handle the parameters found.");
 
         return callback;
     }

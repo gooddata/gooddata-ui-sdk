@@ -24,7 +24,7 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
  * @public
  */
 export function attributeDisplayFormRef(displayForm: IAttributeDisplayFormMetadataObject): ObjRef {
-    invariant(displayForm, "displayForm must not be undefined");
+    invariant(displayForm, "displayForm must be specified");
 
     return displayForm.ref;
 }
@@ -36,7 +36,7 @@ export function attributeDisplayFormRef(displayForm: IAttributeDisplayFormMetada
  * @public
  */
 export function attributeDisplayFormTitle(displayForm: IAttributeDisplayFormMetadataObject): string {
-    invariant(displayForm, "displayForm must not be undefined");
+    invariant(displayForm, "displayForm must be specified");
 
     return displayForm.title;
 }
@@ -49,7 +49,7 @@ export function attributeDisplayFormTitle(displayForm: IAttributeDisplayFormMeta
  * @public
  */
 export function attributeDisplayFormAttributeRef(displayForm: IAttributeDisplayFormMetadataObject): ObjRef {
-    invariant(displayForm, "displayForm must not be undefined");
+    invariant(displayForm, "displayForm must be specified");
 
     return displayForm.attribute;
 }

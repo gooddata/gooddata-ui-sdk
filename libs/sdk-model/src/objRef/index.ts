@@ -150,7 +150,7 @@ export function isLocalIdRef(obj: any): obj is LocalIdRef {
  * @internal
  */
 export function objRefToString(objRef: ObjRef | ObjRefInScope): string {
-    invariant(objRef, "object reference must not be undefined");
+    invariant(objRef, "object reference must be specified");
 
     if (isIdentifierRef(objRef)) {
         return `${objRef.identifier}`;

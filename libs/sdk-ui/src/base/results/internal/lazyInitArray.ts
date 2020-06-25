@@ -14,7 +14,7 @@ export class LazyInitArray<T> implements Iterable<T> {
     private readonly initializer: LazyArrayInitializer<T>;
 
     constructor(size: number, initializer: LazyArrayInitializer<T>) {
-        invariant(size >= 0, "array size must be non-negative");
+        invariant(size >= 0, `array size must be non-negative, got: ${size}`);
 
         this.data = new Array(size);
         this.initializer = initializer;

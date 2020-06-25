@@ -2,7 +2,7 @@
 import debounce = require("lodash/debounce");
 import get = require("lodash/get");
 import * as CustomEvent from "custom-event";
-import * as invariant from "invariant";
+import invariant from "ts-invariant";
 import {
     ChartElementType,
     ChartType,
