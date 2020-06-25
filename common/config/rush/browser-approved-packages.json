@@ -79,6 +79,18 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/api-client-bear",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/api-client-tiger",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/api-model-bear",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "@gooddata/catalog-export",
       "allowedCategories": [ "examples", "tools" ]
     },
@@ -87,24 +99,8 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@gooddata/live-examples-workspace",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/api-client-bear",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@gooddata/gd-bear-filters",
       "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@gooddata/api-model-bear",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/api-client-tiger",
-      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/gd-ui-filters",
@@ -116,6 +112,10 @@
     },
     {
       "name": "@gooddata/js-utils",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/live-examples-workspace",
       "allowedCategories": [ "production" ]
     },
     {
@@ -312,7 +312,7 @@
     },
     {
       "name": "@types/raf",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@types/react",
@@ -604,7 +604,7 @@
     },
     {
       "name": "jest-enzyme",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "jest-junit",

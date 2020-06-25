@@ -1,7 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2020 GoodData Corporation
 
-/*
- *
- */
-
-export { ISdkComponentProps, SdkComponent } from "./sdkComponent/SdkComponent";
+export * from "./typings/positioning";
+export * from "./measureNumberFormat";

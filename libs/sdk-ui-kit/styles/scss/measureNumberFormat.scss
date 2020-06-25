@@ -1,0 +1,185 @@
+// (C) 2020 GoodData Corporation
+@import "./variables.scss";
+
+.gd-measure-number-format-dropdown-body {
+    padding: 5px 0;
+
+    .gd-format-preset {
+        width: 200px;
+        padding: 2.5px 10px;
+
+        & > .gd-format-preset-name {
+            margin-left: 5px;
+        }
+
+        & > .gd-format-preset-preview {
+            color: $gd-color-text-dimmed;
+            font-weight: normal;
+            margin-right: 5px;
+            text-align: right;
+        }
+    }
+}
+
+$measure_number_format_custom_format_dialog_width: 250px;
+$measure_number_format_custom_format_dialog_textarea_height: 100px;
+
+.gd-measure-custom-format-dialog-body {
+    display: flex;
+    flex-direction: column;
+    width: $measure_number_format_custom_format_dialog_width;
+    height: inherit;
+
+    .gd-measure-custom-format-dialog-header {
+        flex: 0 0 auto;
+        padding: 10px;
+        background-color: $is-focused-background;
+        border-bottom: 1px solid $border-color;
+
+        & > span {
+            color: $gd-color-link;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    }
+
+    .gd-measure-custom-format-dialog-content {
+        flex: 0 0 auto;
+        padding: 4px 12px 10px;
+
+        .gd-measure-custom-format-dialog-section {
+            margin-top: 4px;
+        }
+
+        .gd-measure-custom-format-dialog-section-title {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 4px;
+        }
+
+        .gd-measure-custom-format-dialog-section-help {
+            > a {
+                text-decoration: initial;
+            }
+        }
+
+        .gd-measure-custom-format-dialog-section-preview {
+            margin-top: 12px;
+        }
+
+        .gd-measure-custom-format-dialog-preview {
+            display: flex;
+            flex-flow: row;
+            line-height: 28px;
+
+            .gd-measure-custom-format-dialog-preview-input {
+                flex: 0 0 40%;
+            }
+
+            .gd-measure-custom-format-dialog-preview-string {
+                box-sizing: border-box;
+                flex: 0 0 60%;
+                padding-left: 8px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-weight: bold;
+            }
+        }
+
+        .gd-measure-format-button {
+            display: flex;
+            outline: none;
+            color: $gd-color-label;
+            cursor: pointer;
+            user-select: none;
+
+            .gd-measure-format-button-icon-left {
+                margin-right: 4px;
+            }
+            .gd-measure-format-button-icon-right {
+                margin-left: 4px;
+            }
+
+            &.gd-measure-format-button-templates {
+                color: $gd-color-highlight;
+            }
+
+            &.hidden {
+                display: none;
+            }
+        }
+
+        .gd-measure-format-template-preview {
+            position: relative;
+            .gd-measure-format-template-preview-bubble {
+                position: absolute;
+            }
+        }
+
+        textarea {
+            overflow: hidden;
+            height: $measure_number_format_custom_format_dialog_textarea_height;
+            border: 1px solid $border-color;
+            outline: none;
+            resize: none;
+        }
+    }
+
+    .gd-measure-format-extended-preview {
+        margin-top: 10px;
+    }
+
+    .gd-measure-custom-format-dialog-footer {
+        flex: 0 0 auto;
+        margin: 0 10px;
+        padding: 10px 0;
+        border-top: 1px solid $border-color;
+        text-align: right;
+    }
+}
+
+.gd-measure-format-extended-preview-row {
+    display: flex;
+}
+
+.gd-measure-format-extended-preview-number,
+.gd-measure-format-extended-preview-formatted {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gd-measure-format-extended-preview-number {
+    flex: 0 0 40%;
+}
+
+.gd-measure-format-extended-preview-formatted {
+    flex: 0 0 60%;
+    padding-left: 8px;
+    font-weight: bold;
+}
+
+.gd-measure-format-template-preview-bubble {
+    width: 160px;
+
+    .gd-measure-format-template-preview-bubble-title {
+        text-transform: uppercase;
+        color: $gd-color-label;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+}
+
+.gd-format-template {
+    .gd-format-template-help {
+        display: none;
+        line-height: 10px;
+        color: $gd-color-label;
+    }
+
+    &:hover {
+        .gd-format-template-help {
+            display: block;
+        }
+    }
+}

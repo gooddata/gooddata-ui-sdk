@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 _build_styles() {
-    echo
+    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
 }
 
 _clean() {
     rm -rf dist
+    rm -rf styles/css
 }
 
 _common-build() {
