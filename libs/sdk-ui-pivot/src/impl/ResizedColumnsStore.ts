@@ -4,7 +4,11 @@ import { ColDef, Column } from "@ag-grid-community/all-modules";
 import omit = require("lodash/omit");
 
 import { getColumnIdentifier, isMeasureColumn } from "./agGridUtils";
-import { getColumnWidthsFromMap, convertColumnWidthsToMap } from "./agGridColumnSizing";
+import {
+    getColumnWidthsFromMap,
+    convertColumnWidthsToMap,
+    defaultWidthValidator,
+} from "./agGridColumnSizing";
 import {
     ColumnWidth,
     isColumnWidthAuto,
@@ -117,7 +121,8 @@ export class ResizedColumnsStore {
         const allMeasureWidthItem = allMeasureColumnWidthItems[0];
 
         if (isAllMeasureColumnWidthItem(allMeasureWidthItem)) {
-            this.allMeasureColumnWidth = allMeasureWidthItem.measureColumnWidthItem.width;
+            const validatedWidth = defaultWidthValidator(allMeasureWidthItem.measureColumnWidthItem.width);
+            this.allMeasureColumnWidth = isAbsoluteColumnWidth(validatedWidth) ? validatedWidth : null;
         } else {
             this.allMeasureColumnWidth = null;
         }
@@ -159,6 +164,7 @@ export class ResizedColumnsStore {
     private getAutoSizeItem(): IResizedColumnsCollectionItem {
         return { width: "auto", source: ColumnEventSourceType.UI_DRAGGED };
     }
+
     private getAllMeasureColumMapItem(): IResizedColumnsItem {
         return { width: this.allMeasureColumnWidth, source: ColumnEventSourceType.UI_DRAGGED };
     }

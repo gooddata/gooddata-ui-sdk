@@ -7,8 +7,8 @@ import { Identifier, IMeasureLocatorItem } from "@gooddata/sdk-model";
  */
 export type ColumnWidthItem =
     | IAttributeColumnWidthItem
-    | IMeasureColumnWidthItem
-    | IAllMeasureColumnWidthItem;
+    | IAllMeasureColumnWidthItem
+    | IMeasureColumnWidthItem;
 
 /**
  * @public
