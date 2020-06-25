@@ -97,11 +97,11 @@ export class ResizedColumnsStore {
             if (!this.isAllMeasureColumWidthUsed()) {
                 column.getColDef().suppressSizeToFit = false;
             }
-        } else {
-            if (this.isAllMeasureColumWidthUsed() && isMeasureColumn(column)) {
-                this.manuallyResizedColumns[colId] = this.getAutoSizeItem();
-                column.getColDef().suppressSizeToFit = false;
-            }
+        }
+
+        if (this.isAllMeasureColumWidthUsed() && isMeasureColumn(column)) {
+            this.manuallyResizedColumns[colId] = this.getAutoSizeItem();
+            column.getColDef().suppressSizeToFit = false;
         }
     }
 

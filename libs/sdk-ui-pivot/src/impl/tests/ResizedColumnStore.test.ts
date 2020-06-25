@@ -269,6 +269,22 @@ describe("ResizedColumnsStore", () => {
             const result = resizedColumnsStore.manuallyResizedColumns.m_0;
             expect(result).toEqual(expectedResult);
         });
+
+        it("should set auto width when colId does exists and all measure is used", () => {
+            const resizedColumnsStore: any = new ResizedColumnsStore();
+            resizedColumnsStore.allMeasureColumnWidth = 200;
+            resizedColumnsStore.manuallyResizedColumns = {
+                m_0: { width: 200, source: "uiColumnDragged" },
+            };
+            const columnMock = getFakeColumn({
+                colId: "m_0",
+                type: MEASURE_COLUMN,
+            });
+            resizedColumnsStore.removeFromManuallyResizedColumn(columnMock);
+            const expectedResult = { width: "auto", source: "uiColumnDragged" };
+            const result = resizedColumnsStore.manuallyResizedColumns.m_0;
+            expect(result).toEqual(expectedResult);
+        });
     });
 
     describe("getColumnWidthsFromMap", () => {
