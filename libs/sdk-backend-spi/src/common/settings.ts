@@ -29,6 +29,11 @@ export enum SettingCatalog {
     enableTableColumnsGrowToFit = "enableTableColumnsGrowToFit",
 
     /**
+     * Indicates whether PivotTable manual resizing should be persisted or not.
+     */
+    enableTableColumnsManualResizing = "enableTableColumnsManualResizing",
+
+    /**
      * Indicates whether the Bullet Chart is available in AD.
      */
     enableBulletChart = "enableBulletChart",

@@ -1232,6 +1232,7 @@ export enum SettingCatalog {
     enablePushpinGeoChart = "enablePushpinGeoChart",
     enableTableColumnsAutoResizing = "enableTableColumnsAutoResizing",
     enableTableColumnsGrowToFit = "enableTableColumnsGrowToFit",
+    enableTableColumnsManualResizing = "enableTableColumnsManualResizing",
     enableWeekFilters = "enableWeekFilters"
 }
 

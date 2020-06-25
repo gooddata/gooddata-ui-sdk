@@ -210,6 +210,11 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
      */
     groupRows?: boolean;
 
+    /**
+     * Optionally specify function to call when user manually resizes a table column.
+     *
+     * @param columnWidths - new width of the column
+     */
     onColumnResized?: (columnWidths: ColumnWidthItem[]) => void;
 }
 

@@ -223,3 +223,5 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "viewport.area",
     "colorMapping",
 ];
+
+export const PIVOT_TABLE_SUPPORTED_PROPERTIES = ["columnWidths"];

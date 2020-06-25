@@ -2,8 +2,19 @@
 import isEmpty = require("lodash/isEmpty");
 import { Identifier, IMeasureLocatorItem } from "@gooddata/sdk-model";
 
+/**
+ * @public
+ */
 export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem;
+
+/**
+ * @public
+ */
 export type ColumnWidth = number;
+
+/**
+ * @public
+ */
 export interface IAttributeColumnWidthItem {
     attributeColumnWidthItem: {
         width: ColumnWidth;
@@ -11,6 +22,9 @@ export interface IAttributeColumnWidthItem {
     };
 }
 
+/**
+ * @public
+ */
 export interface IMeasureColumnWidthItem {
     measureColumnWidthItem: {
         width: ColumnWidth;
@@ -27,6 +41,9 @@ interface IAttributeLocatorItem {
     };
 }
 
+/**
+ * @public
+ */
 export function isAttributeColumnWidthItem(
     columnWidthItem: ColumnWidthItem,
 ): columnWidthItem is IAttributeColumnWidthItem {
@@ -36,6 +53,9 @@ export function isAttributeColumnWidthItem(
     );
 }
 
+/**
+ * @public
+ */
 export function isMeasureColumnWidthItem(
     columnWidthItem: ColumnWidthItem,
 ): columnWidthItem is IMeasureColumnWidthItem {

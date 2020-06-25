@@ -12,3 +12,12 @@ export {
     ICorePivotTableProps,
     IMenu,
 } from "./types";
+
+export {
+    ColumnWidthItem,
+    ColumnWidth,
+    IAttributeColumnWidthItem,
+    IMeasureColumnWidthItem,
+    isAttributeColumnWidthItem,
+    isMeasureColumnWidthItem,
+} from "./columnWidths";
