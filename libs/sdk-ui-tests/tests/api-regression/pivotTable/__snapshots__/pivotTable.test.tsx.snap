@@ -176,6 +176,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -334,6 +335,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -497,6 +499,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -657,6 +660,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": false,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -817,6 +821,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -977,6 +982,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -1135,6 +1141,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": false,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -1207,6 +1214,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -1279,6 +1287,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -1481,6 +1490,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -1653,6 +1663,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -1818,6 +1829,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -1983,6 +1995,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -2061,6 +2074,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -2160,6 +2174,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -2280,6 +2295,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -2380,6 +2396,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -2519,6 +2536,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -2677,6 +2695,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -2885,6 +2904,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -3093,6 +3113,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -3267,6 +3288,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -3533,6 +3555,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -3759,6 +3782,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -3985,6 +4009,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -4191,6 +4216,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -4293,6 +4319,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -4416,6 +4443,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -4560,6 +4588,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -4684,6 +4713,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -4821,6 +4851,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -4958,6 +4989,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -5121,6 +5153,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -5303,6 +5336,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -5379,6 +5413,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -5455,10 +5490,141 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
   "pageSize": 3,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with with two measures and row attribute with auto-resizing and grow to fit should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`PivotTable with with two measures and row attribute with auto-resizing and grow to fit should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {
+    "columnSizing": Object {
+      "defaultWidth": "viewport",
+      "growToFit": true,
+    },
+  },
+  "drillableItems": Array [],
+  "exportTitle": "PivotTable",
+  "groupRows": true,
+  "locale": "en-US",
+  "onColumnResized": [Function],
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
   "pushData": [Function],
 }
 `;
@@ -5583,6 +5749,279 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with with two measures, grand totals and subtotals with auto-resizing and grow to fit should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+      "totals": Array [
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "min",
+        },
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "max",
+        },
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "nat",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "med",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "med",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "nat",
+        },
+      ],
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
+      "totals": Array [
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "min",
+        },
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "max",
+        },
+        Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "nat",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "sum",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_aangOxLSeztu",
+          "type": "med",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "med",
+        },
+        Object {
+          "attributeIdentifier": "a_label.owner.department",
+          "measureIdentifier": "m_acugFHNJgsBy",
+          "type": "nat",
+        },
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.opportunitysnapshot.forecastcategory",
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`PivotTable with with two measures, grand totals and subtotals with auto-resizing and grow to fit should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {
+    "columnSizing": Object {
+      "defaultWidth": "viewport",
+      "growToFit": true,
+    },
+  },
+  "drillableItems": Array [],
+  "exportTitle": "PivotTable",
+  "groupRows": true,
+  "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
@@ -5853,6 +6292,7 @@ Object {
   "exportTitle": "PivotTable",
   "groupRows": true,
   "locale": "en-US",
+  "onColumnResized": [Function],
   "onDrill": [Function],
   "onExportReady": [Function],
   "onLoadingChanged": [Function],
