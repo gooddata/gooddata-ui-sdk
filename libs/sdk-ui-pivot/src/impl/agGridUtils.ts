@@ -20,7 +20,7 @@ import {
     IAttributeDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { IDimension } from "@gooddata/sdk-model";
-import invariant = require("invariant");
+import invariant from "ts-invariant";
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.

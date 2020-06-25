@@ -20,7 +20,7 @@ import {
     SortDirection,
 } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import invariant = require("invariant");
+import invariant from "ts-invariant";
 
 /*
  * All code related to sorting the ag-grid backed Pivot Table is concentrated here

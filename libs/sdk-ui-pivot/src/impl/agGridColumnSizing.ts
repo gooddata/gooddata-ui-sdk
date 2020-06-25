@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import invariant = require("invariant");
+import invariant from "ts-invariant";
 import {
     getAttributeLocators,
     getColumnIdentifier,
