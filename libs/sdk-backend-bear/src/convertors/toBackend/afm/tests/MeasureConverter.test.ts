@@ -10,6 +10,7 @@ import {
     newMeasure,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
+import { DEFAULT_DECIMAL_FORMAT, DEFAULT_INTEGER_FORMAT } from "../constants";
 
 describe("measure converter", () => {
     const Scenarios: Array<[string, any]> = [
@@ -45,6 +46,14 @@ describe("measure converter", () => {
             newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }], (m) =>
                 m.format("custom #,##0,00"),
             ),
+        ],
+        [
+            "custom format: sum measure override",
+            newMeasure("foo", (m) => m.format(DEFAULT_DECIMAL_FORMAT).ratio().aggregation("sum")),
+        ],
+        [
+            "custom format: count measure override",
+            newMeasure("foo", (m) => m.format(DEFAULT_INTEGER_FORMAT).ratio().aggregation("count")),
         ],
     ];
     it.each(Scenarios)("should return %s", (_disc, input) => {
