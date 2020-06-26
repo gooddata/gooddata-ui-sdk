@@ -36,7 +36,9 @@ export class ExtendedPreview extends React.Component<IExtendedPreviewProps, IExt
                     onClick={this.openExtendedPreview}
                 >
                     <div className="icon-navigateright gd-measure-format-button-icon-left" />
-                    <FormattedMessage id="measureNumberCustomFormatDialog.extendedPreview.button" />
+                    <span>
+                        <FormattedMessage id="measureNumberCustomFormatDialog.extendedPreview.button" />
+                    </span>
                 </div>
                 {expanded && <PreviewRows format={format} separators={separators} />}
             </div>

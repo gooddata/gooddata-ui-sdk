@@ -13,8 +13,10 @@ const DropdownToggleButton = ({ toggleDropdown, isOpened }: IDropdownToggleButto
         className="gd-measure-format-button gd-measure-format-button-templates s-measure-format-templates-toggle-button"
         onClick={toggleDropdown}
     >
-        <FormattedMessage id="measureNumberCustomFormatDialog.template.title" />
-        <span
+        <span>
+            <FormattedMessage id="measureNumberCustomFormatDialog.template.title" />
+        </span>
+        <div
             className={classNames(
                 "gd-measure-format-button-icon-right",
                 isOpened ? "icon-navigateup" : "icon-navigatedown",

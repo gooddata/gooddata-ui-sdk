@@ -42,9 +42,9 @@ export default class DropdownItem extends React.Component<
                     )}`}
                     onClick={this.onClick}
                 >
-                    <div title={template.name} className="gd-format-preset-name gd-list-item-shortened">
+                    <span title={template.name} className="gd-format-preset-name gd-list-item-shortened">
                         {template.name}
-                    </div>
+                    </span>
                     <div
                         className="gd-format-template-help icon-circle-question s-measure-format-template-help-toggle-icon"
                         onMouseEnter={this.toggleHelp}
@@ -59,15 +59,16 @@ export default class DropdownItem extends React.Component<
                         )}`}
                         alignPoints={[{ align: "cr cl" }]}
                     >
+                        <h3 className={"gd-measure-format-template-preview-bubble-title"}>{template.name}</h3>
                         <div
-                            className={`gd-measure-format-template-preview-bubble-title s-measure-format-template-help-preview-${stringUtils.simplifyText(
+                            className={`gd-measure-format-template-preview-bubble-subtitle s-measure-format-template-help-preview-${stringUtils.simplifyText(
                                 template.name,
                             )}`}
                         >
                             <FormattedMessage id="measureNumberCustomFormatDialog.template.preview.title" />
                         </div>
                         <PreviewRows
-                            previewNumbers={[-1234.567, -1.234, 0, 1.234, 1234.567]}
+                            previewNumbers={[-1234567.89, -1234.567, -1.234, 0, 1.234, 1234.567, 1234567.89]}
                             format={template.format}
                             separators={separators}
                         />

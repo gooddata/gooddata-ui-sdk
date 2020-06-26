@@ -12,7 +12,9 @@ interface IPreviewNumberRowProps {
 
 const PreviewNumberRow: React.FC<IPreviewNumberRowProps> = ({ previewNumber, format, separators }) => (
     <div className="gd-measure-format-extended-preview-row">
-        <div className="gd-measure-format-extended-preview-number">{previewNumber}</div>
+        <div className="gd-measure-format-extended-preview-number">
+            <span>{previewNumber}</span>
+        </div>
         <div className="s-number-format-preview-formatted gd-measure-format-extended-preview-formatted">
             <FormattedPreview previewNumber={previewNumber} format={format} separators={separators} />
         </div>
@@ -26,7 +28,7 @@ export interface IPreviewNumberRowsProps {
 }
 
 const PreviewRows: React.FC<IPreviewNumberRowsProps> = ({
-    previewNumbers = [0, 1.234, 1234.567],
+    previewNumbers = [0, 1.234, 1234.567, 1234567.89],
     format,
     separators,
 }) => (

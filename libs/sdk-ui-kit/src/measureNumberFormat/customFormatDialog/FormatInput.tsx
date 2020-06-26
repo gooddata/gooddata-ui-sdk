@@ -21,7 +21,7 @@ class FormatInput extends React.PureComponent<IFormatInputProps> {
         return (
             <div className={"gd-measure-custom-format-dialog-section"}>
                 <div className={"gd-measure-custom-format-dialog-section-title"}>
-                    <div>{intl.formatMessage({ id: "measureNumberCustomFormatDialog.definition" })}</div>
+                    <span>{intl.formatMessage({ id: "measureNumberCustomFormatDialog.definition" })}</span>
                     {templates && (
                         <FormatTemplatesDropdown
                             onChange={onFormatChange}

@@ -29,18 +29,30 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
     flex-direction: column;
     width: $measure_number_format_custom_format_dialog_width;
     height: inherit;
+    font-size: 12px;
 
     .gd-measure-custom-format-dialog-header {
         flex: 0 0 auto;
-        padding: 10px;
+        padding: 10px 12px;
         background-color: $is-focused-background;
         border-bottom: 1px solid $border-color;
 
         & > span {
-            color: $gd-color-link;
+            flex: 1 0 auto;
+            line-height: 23px;
+            color: $gd-color-state-blank;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
+        }
+
+        .gd-dialog-close {
+            flex: 0 0 auto;
+
+            > button {
+                width: 21px;
+                height: 21px;
+            }
         }
     }
 
@@ -55,7 +67,6 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
         .gd-measure-custom-format-dialog-section-title {
             display: flex;
             justify-content: space-between;
-            padding-bottom: 4px;
         }
 
         .gd-measure-custom-format-dialog-section-help {
@@ -65,7 +76,7 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
         }
 
         .gd-measure-custom-format-dialog-section-preview {
-            margin-top: 12px;
+            margin-top: 5px;
         }
 
         .gd-measure-custom-format-dialog-preview {
@@ -90,9 +101,17 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
         .gd-measure-format-button {
             display: flex;
             outline: none;
-            color: $gd-color-label;
+            color: $gd-color-state-blank;
             cursor: pointer;
             user-select: none;
+
+            &:hover {
+                color: $gd-color-text;
+            }
+
+            &:hover > span {
+                text-decoration: underline;
+            }
 
             .gd-measure-format-button-icon-left {
                 margin-right: 4px;
@@ -101,12 +120,16 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
                 margin-left: 4px;
             }
 
-            &.gd-measure-format-button-templates {
-                color: $gd-color-highlight;
-            }
-
             &.hidden {
                 display: none;
+            }
+        }
+
+        .gd-measure-format-button-templates {
+            color: $gd-color-highlight;
+
+            &:hover {
+                color: darken($gd-color-highlight, 20%);
             }
         }
 
@@ -118,16 +141,13 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
         }
 
         textarea {
-            overflow: hidden;
             height: $measure_number_format_custom_format_dialog_textarea_height;
-            border: 1px solid $border-color;
-            outline: none;
             resize: none;
         }
     }
 
     .gd-measure-format-extended-preview {
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     .gd-measure-custom-format-dialog-footer {
@@ -141,6 +161,11 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
 
 .gd-measure-format-extended-preview-row {
     display: flex;
+    line-height: 20px;
+
+    span {
+        white-space: nowrap;
+    }
 }
 
 .gd-measure-format-extended-preview-number,
@@ -163,13 +188,25 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
 }
 
 .gd-measure-format-template-preview-bubble {
-    width: 160px;
+    width: 210px;
 
-    .gd-measure-format-template-preview-bubble-title {
-        text-transform: uppercase;
-        color: $gd-color-label;
-        font-size: 12px;
-        margin-bottom: 5px;
+    .content {
+        padding: 5px;
+
+        .gd-measure-format-template-preview-bubble-title {
+            margin: 0 0 10px;
+            font-size: 14px;
+            color: $gd-color-text;
+            font-weight: normal;
+        }
+
+        .gd-measure-format-template-preview-bubble-subtitle {
+            margin: 0 0 5px;
+            font-size: 10px;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: $gd-color-state-blank;
+        }
     }
 }
 
@@ -185,8 +222,4 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
             display: block;
         }
     }
-}
-
-.gd-measure-format-preview-formatted {
-    white-space: nowrap;
 }
