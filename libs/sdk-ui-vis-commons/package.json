@@ -35,7 +35,7 @@
     },
     "typings": "dist/index.d.ts",
     "dependencies": {
-        "@gooddata/goodstrap": "68.11.0-alpha-tulean-master-2020-06-26T12-57-47-924Z",
+        "@gooddata/goodstrap": "^68.15.0",
         "@gooddata/numberjs": "^3.2.4",
         "@gooddata/sdk-backend-spi": "^8.0.0-beta.1",
         "@gooddata/sdk-model": "^8.0.0-beta.1",
