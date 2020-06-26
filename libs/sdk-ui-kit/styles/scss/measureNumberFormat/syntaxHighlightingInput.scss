@@ -1,0 +1,93 @@
+// (C) 2020 GoodData Corporation
+@import "../mixins";
+
+$cm-color-matching-bracket: #000;
+$cm-color-matching-bracket-bg: #fef9d3;
+$cm-color-non-matching-bracket: #e54d42;
+$cm-color-variable-brackets: #94a1ad;
+$cm-color-variable-4: #13b1e2;
+$cm-color-variable-5: #00c18e;
+$cm-color-keyword: #ab55a3;
+
+.gd-input-syntax-highlighting-input {
+    .CodeMirror {
+        // start of gd-input-base mixin body
+        box-sizing: border-box;
+        margin: 0;
+        padding: 6px 7px 5px;
+        border: 1px solid $gd-input-text-border;
+        line-height: normal;
+        vertical-align: middle;
+        color: $gd-color-text;
+        background: #fff;
+        font-size: 14px;
+        font-family: $gd-font-primary;
+        font-weight: 200;
+
+        @include transition(all, 0.25s, ease-in-out);
+        // end of gd-input-base mixin body
+
+        @include border-radius(3px);
+        @include box-shadow(inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.85));
+
+        @include placeholder {
+            color: transparentize($gd-color-link, 0.25);
+
+            @include transition(color, 0.25s, ease-in-out);
+        }
+
+        font-family: monospace;
+        height: 100px;
+        padding: 2px 2px 0 3px;
+
+        &:hover {
+            border-color: $gd-input-text-hover-border;
+
+            @include placeholder {
+                color: $gd-color-link;
+            }
+        }
+
+        &.CodeMirror-focused {
+            border-color: $gd-color-highlight;
+            @include box-shadow(inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.85));
+        }
+    }
+
+    .CodeMirror-vscrollbar {
+        &:focus {
+            outline: 0;
+        }
+    }
+
+    .CodeMirror-code {
+        .CodeMirror-matchingbracket {
+            font-weight: bold;
+            color: $cm-color-matching-bracket;
+            background-color: $cm-color-matching-bracket-bg;
+        }
+
+        .CodeMirror-nonmatchingbracket {
+            color: $cm-color-non-matching-bracket;
+        }
+
+        .cm-variable-brackets {
+            color: $cm-color-variable-brackets;
+        }
+
+        .cm-variable-4 {
+            font-weight: bold;
+            color: $cm-color-variable-4;
+        }
+
+        .cm-variable-5 {
+            font-weight: bold;
+            color: $cm-color-variable-5;
+        }
+
+        .cm-keyword {
+            font-weight: bold;
+            color: $cm-color-keyword;
+        }
+    }
+}

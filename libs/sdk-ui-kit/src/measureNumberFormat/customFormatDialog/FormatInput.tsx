@@ -4,6 +4,7 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown";
+import { SyntaxHighlightingInput } from "./SyntaxHighlightingInput";
 import { IFormatTemplate } from "../typings";
 
 interface IFormatInputOwnProps {
@@ -30,17 +31,17 @@ class FormatInput extends React.PureComponent<IFormatInputProps> {
                         />
                     )}
                 </div>
-                <textarea
-                    className={"s-custom-format-input gd-input-field"}
-                    onChange={this.handleInputChange}
+                <SyntaxHighlightingInput
                     value={format}
+                    onChangeHandler={this.handleInputChange}
+                    className={"s-custom-format-input gd-input-syntax-highlighting-input"}
                 />
             </div>
         );
     }
 
-    private handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        this.props.onFormatChange(e.target.value);
+    private handleInputChange = (value: string) => {
+        this.props.onFormatChange(value);
     };
 }
 

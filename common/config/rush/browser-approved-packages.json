@@ -227,6 +227,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@types/codemirror",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/enzyme",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -465,6 +469,10 @@
     {
       "name": "clean-webpack-plugin",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "codemirror",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "commander",
@@ -725,6 +733,10 @@
     {
       "name": "react",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "react-codemirror2",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "react-datepicker",
