@@ -23,16 +23,29 @@ import identity = require("lodash/identity");
 
 export interface IScenarioGroup<T extends VisProps> {
     /**
-     * Human readable name of the visualization for which there are scenarios
+     * Human readable name of the visualization for which there are scenarios.
      */
     readonly vis: string;
+
+    /**
+     * Human readable name of this group of scenarios. The name may be composite and consist of multiple
+     * parts. Look at each part as a node in hierarchy.
+     */
+    readonly groupNames: string[];
 
     /**
      * React component that realizes the visualization.
      */
     readonly component: React.ComponentType<T>;
 
+    /**
+     * List of available test scenarios
+     */
     readonly scenarioList: ReadonlyArray<IScenario<T>>;
+
+    /**
+     * Test configuration specifics / overrides.
+     */
     readonly testConfig: TestConfiguration;
 }
 
@@ -42,6 +55,7 @@ export interface IScenarioGroup<T extends VisProps> {
  * input to jest parameterized tests.
  */
 export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
+    public groupNames: string[] = [];
     public scenarioList: Array<IScenario<T>> = [];
     public testConfig: TestConfiguration = { visual: {} };
     private scenarioIndex: ScenarioSet<T> = {};
@@ -50,6 +64,18 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     private defaultWorkspaceType: WorkspaceType = "reference-workspace";
 
     constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
+
+    /**
+     * Sets this scenario group's name. The name may be composite and consist of multiple
+     * parts. Look at each part as a node in hierarchy.
+     *
+     * @param groupNames - group name(s)
+     */
+    public withGroupNames(...groupNames: string[]): ScenarioGroup<T> {
+        this.groupNames = groupNames;
+
+        return this;
+    }
 
     /**
      * Configures the scenario group to assign the provided tags to all new scenarios added
