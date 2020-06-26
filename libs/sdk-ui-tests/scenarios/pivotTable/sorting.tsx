@@ -10,6 +10,7 @@ import {
 } from "./base";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+    .withGroupNames("sorting")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .addScenario("single measure pivot sorted by first row attr", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,

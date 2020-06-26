@@ -6,8 +6,10 @@ import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import { LineChartTwoMeasuresWithTrendyBy, LineChartWithArithmeticMeasuresAndViewBy } from "./base";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const axisConfig = scenariosFor<ILineChartProps>("LineChart", LineChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("Y axis min/max configuration", {
@@ -37,11 +39,13 @@ const axisConfig = scenariosFor<ILineChartProps>("LineChart", LineChart)
     });
 
 const singleAxisNameScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "single axis name configuration" })
     .addScenarios("single axis name configuration", LineChartTwoMeasuresWithTrendyBy, axisNameCustomization);
 
 const dualAxisNameScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "dual axis name configuration" })
     .addScenarios(

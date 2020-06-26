@@ -15,8 +15,23 @@ export const ScenarioGroupNames = {
     Stacking: "stacking",
 
     /**
+     * This group should be used for test scenarios that exercise drilling.
+     */
+    Drilling: "drilling",
+
+    /**
      * This is fallback group for visualization customization scenarios. If the visualization has very rich
      * config possibilities to test, consider creating sub-groups.
      */
     ConfigurationCustomization: "customization",
+
+    /**
+     * Group for axes customization scenarios
+     */
+    Axes: ["customization", "axes"],
+
+    /**
+     * Group for coloring customization scenarios
+     */
+    Coloring: ["customization", "color"],
 };

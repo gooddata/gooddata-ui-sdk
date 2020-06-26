@@ -6,6 +6,7 @@ import { PivotTableWithSingleColumn, PivotTableWithTwoMeasuresAndSingleRowAttr }
 import { PivotTableWithTwoMeasuresGrandTotalsAndSubtotals } from "./totals";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+    .withGroupNames("auto-resizing")
     .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("with column attributes only and auto-resizing", {

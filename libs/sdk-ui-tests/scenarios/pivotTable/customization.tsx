@@ -7,12 +7,14 @@ import { GermanNumberFormat } from "../_infra/formatting";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals";
+import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 
 const MeasureWithCustomFormat = modifyMeasure(ReferenceLdm.Amount, (m) =>
     m.format("[backgroundColor=ffff00][green]#,##0.00 €").defaultLocalId(),
 );
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("german number format", {

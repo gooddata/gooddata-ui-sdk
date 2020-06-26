@@ -8,13 +8,16 @@ import { FunnelChartWithArithmeticMeasures, FunnelChartWithMeasureAndViewBy } fr
 import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { Product } from "../../_infra/data";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", FunnelChartWithMeasureAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to measures",
@@ -34,7 +37,7 @@ const colorAssignment = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelCha
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
     )
     .addScenario(
         "assign color to attributes",
@@ -54,7 +57,7 @@ const colorAssignment = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelCha
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(Product.WonderKid, Product.Explorer)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(Product.WonderKid, Product.Explorer)),
     );
 
 export default [colorsAndPalette, colorAssignment];

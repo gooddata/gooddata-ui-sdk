@@ -7,6 +7,7 @@ import {
     ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
     ComboChartWithTwoSecondaryMeasures,
 } from "./base";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 /*
  * TODO: there was "stack primary measures with same chart type and custom width style" story
@@ -15,6 +16,7 @@ import {
  */
 
 const stackMeasuresDiffCharts = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "stack primary measures with different chart type" })
     .addScenario("stack primary measures with different chart type - column", {
@@ -33,6 +35,7 @@ const stackMeasuresDiffCharts = scenariosFor<IComboChartProps>("ComboChart", Com
     });
 
 const stackMeasuresToPercentDiffCharts = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "stack primary measures to 100% with different chart type" })
     .addScenario("stack primary measures to 100% with different chart type - column", {
@@ -51,6 +54,7 @@ const stackMeasuresToPercentDiffCharts = scenariosFor<IComboChartProps>("ComboCh
     });
 
 const stackMeasuresBothChartsColumn = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "stack primary measures when both column chart" })
     .addScenario("stack primary measures when both column chart - normal stacking", {
@@ -72,6 +76,7 @@ const stackMeasuresBothChartsColumn = scenariosFor<IComboChartProps>("ComboChart
     });
 
 const discardStacking = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "discard stacking when primary measures are on line chart" })
     .addScenario("discard stacking when primary measures are on line chart - secondary is column", {
@@ -92,6 +97,7 @@ const discardStacking = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     });
 
 const discardStackingWhenNoPrimary = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "discard stacking when primary measures are not specified" })
     .addScenario("discard stacking when primary measures are not specified - secondary is column", {
@@ -112,6 +118,7 @@ const discardStackingWhenNoPrimary = scenariosFor<IComboChartProps>("ComboChart"
     });
 
 const stackingWithoutDualAxis = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "stacking without dual axis" })
     .addScenario("'Stack Measures' off and 'Stack to 100%' on", {

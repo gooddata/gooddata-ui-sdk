@@ -3,6 +3,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
 import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const AreaChartWithViewBy = {
     measures: [ReferenceLdm.Amount],
@@ -26,6 +27,7 @@ export const AreaChartViewByDate = {
 };
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],
     })

@@ -3,6 +3,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { newAttributeSort } from "@gooddata/sdk-model";
 import { FunnelChart, IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const FunnelChartWithMeasureAndViewBy = {
     measures: [ReferenceLdm.Amount],
@@ -14,6 +15,7 @@ export const FunnelChartWithArithmeticMeasures = {
 };
 
 export default scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],
     })

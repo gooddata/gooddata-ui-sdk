@@ -7,13 +7,16 @@ import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { BulletChartWithAllMeasuresAndViewBy } from "./base";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", BulletChartWithAllMeasuresAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to attribute bubbles",
@@ -33,7 +36,7 @@ const colorAssignment = scenariosFor<IBulletChartProps>("BulletChart", BulletCha
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Won, ReferenceLdm.Amount)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Won, ReferenceLdm.Amount)),
     );
 
 export default [colorsAndPalette, colorAssignment];

@@ -3,6 +3,7 @@
 import { scenariosFor } from "../../src";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 
 export const PivotTableWithSingleColumn = {
     columns: [ReferenceLdm.Product.Name],
@@ -36,6 +37,7 @@ export const PivotTableWithArithmeticMeasures = {
 };
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .addScenario("single attribute", {
         rows: [ReferenceLdm.Product.Name],

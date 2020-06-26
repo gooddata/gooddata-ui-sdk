@@ -2,6 +2,7 @@
 import { scenariosFor } from "../../src";
 import { GeoPushpinChart, IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 import { LocationSegmentSizeAndColorWithTooltip } from "./base";
+import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 
 function mergeConfig(props: IGeoPushpinChartProps, extraConfig: Partial<IGeoConfig>): IGeoPushpinChartProps {
     const defaultConfig = props.config!;
@@ -16,6 +17,7 @@ function mergeConfig(props: IGeoPushpinChartProps, extraConfig: Partial<IGeoConf
 }
 
 export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpinChart)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
     .withDefaultWorkspaceType("live-examples-workspace")
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withDefaultTestTypes("api")

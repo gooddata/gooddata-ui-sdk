@@ -3,6 +3,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const LineChartTwoMeasuresWithTrendyBy = {
     measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
@@ -20,6 +21,7 @@ export const LineChartWithArithmeticMeasuresAndViewBy = {
 };
 
 export default scenariosFor<ILineChartProps>("LineChart", LineChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],
     })

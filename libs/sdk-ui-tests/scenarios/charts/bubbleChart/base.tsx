@@ -3,6 +3,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort } from "@gooddata/sdk-model";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const BubbleChartWithAllMeasuresAndAttribute = {
     xAxisMeasure: ReferenceLdm.Amount,
@@ -12,6 +13,7 @@ export const BubbleChartWithAllMeasuresAndAttribute = {
 };
 
 export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("x axis measure", {
         xAxisMeasure: ReferenceLdm.Amount,
     })

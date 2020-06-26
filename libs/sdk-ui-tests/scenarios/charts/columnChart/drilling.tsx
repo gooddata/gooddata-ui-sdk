@@ -10,8 +10,10 @@ import {
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { AttributeElements } from "../../_infra/predicates";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+    .withGroupNames(ScenarioGroupNames.Drilling)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("single measure and viewBy with drilling on bars", {

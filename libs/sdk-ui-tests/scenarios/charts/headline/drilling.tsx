@@ -3,8 +3,10 @@ import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
+    .withGroupNames(ScenarioGroupNames.Drilling)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("drilling on single measure", {
         primaryMeasure: ReferenceLdm.Won,

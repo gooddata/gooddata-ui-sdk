@@ -3,6 +3,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const ColumnChartWithSingleMeasureAndViewBy = {
     measures: [ReferenceLdm.Amount],
@@ -52,6 +53,7 @@ export const ColumnChartViewByDateAndPop = {
  *  all charts?
  */
 export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],

@@ -7,13 +7,16 @@ import { coloringCustomizer } from "../_infra/coloringVariants";
 import { ScatterPlotWithMeasuresAndAttribute } from "./base";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", ScatterPlotWithMeasuresAndAttribute, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to measures",
@@ -29,7 +32,7 @@ const colorAssignment = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPl
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount)),
     );
 
 export default [colorsAndPalette, colorAssignment];

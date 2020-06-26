@@ -7,13 +7,16 @@ import { BubbleChartWithAllMeasuresAndAttribute } from "./base";
 import { AttributeElements } from "../../_infra/predicates";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { Product } from "../../_infra/data";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", BubbleChartWithAllMeasuresAndAttribute, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to attribute bubbles",
@@ -33,7 +36,7 @@ const colorAssignment = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleCha
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(Product.Explorer, Product.WonderKid)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(Product.Explorer, Product.WonderKid)),
     );
 
 export default [colorsAndPalette, colorAssignment];

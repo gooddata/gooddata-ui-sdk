@@ -37,6 +37,7 @@ export const PivotTableWithSingleMeasureAndGrandTotal = {
 };
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+    .withGroupNames("totals")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
     .addScenario("single measure and single grand total", PivotTableWithSingleMeasureAndGrandTotal)
     .addScenario("single measure and multiple grand totals", {
