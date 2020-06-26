@@ -28,7 +28,7 @@ export interface IPreviewNumberRowsProps {
 }
 
 const PreviewRows: React.FC<IPreviewNumberRowsProps> = ({
-    previewNumbers = [0, 1.234, 1234.567, 1234567.89],
+    previewNumbers = [0, 1.234, 1234.567, 1234567.891],
     format,
     separators,
 }) => (

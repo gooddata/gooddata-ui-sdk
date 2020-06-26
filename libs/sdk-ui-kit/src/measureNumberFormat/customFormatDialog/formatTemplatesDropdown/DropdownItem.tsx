@@ -68,7 +68,15 @@ export default class DropdownItem extends React.Component<
                             <FormattedMessage id="measureNumberCustomFormatDialog.template.preview.title" />
                         </div>
                         <PreviewRows
-                            previewNumbers={[-1234567.89, -1234.567, -1.234, 0, 1.234, 1234.567, 1234567.89]}
+                            previewNumbers={[
+                                -1234567.891,
+                                -1234.567,
+                                -1.234,
+                                0,
+                                1.234,
+                                1234.567,
+                                1234567.891,
+                            ]}
                             format={template.format}
                             separators={separators}
                         />

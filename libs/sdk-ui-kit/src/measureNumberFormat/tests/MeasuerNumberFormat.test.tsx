@@ -148,7 +148,7 @@ describe("Measure number format", () => {
                 expect(component.getShowExtendedPreviewButton().hasClass("hidden")).toEqual(true);
 
                 const extendedPreviewFormattedValues = component.getExtendedPreviewFormattedValues();
-                const expectedPreviewFormattedValues = ["", "1,234", "1234,567", "1234567,89"];
+                const expectedPreviewFormattedValues = ["", "1,234", "1234,567", "1234567,891"];
                 expect(extendedPreviewFormattedValues).toEqual(expectedPreviewFormattedValues);
             });
         });
