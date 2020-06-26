@@ -68,6 +68,8 @@ export interface ISyntaxHighlightingInputProps {
     // (undocumented)
     onChange: (value: string) => void;
     // (undocumented)
+    onCursor?: (from: number, to: number) => void;
+    // (undocumented)
     value: string;
 }
 
