@@ -169,6 +169,15 @@
     "mvf.operator.notBetween.tooltip.bubble": "Start- und Endwerte sind nicht enthalten.",
     "mvf.treatNullValuesAsZeroLabel": "Blindwerte als 0 betrachten",
     "mvf.treatNullValuesAsZeroTooltip": "Wenn die Filterbedingung 0 einschließt, werden Blindwerte als 0 betrachtet und in die Berechnungen einbezogen.",
+    "measureNumberFormat.custom.optionLabel": "Benutzerdefiniert",
+    "measureNumberFormat.buttonLabel": "Format: {selectedFormatPresetName} ",
+    "measureNumberCustomFormatDialog.title": "Benutzerdefiniertes Format",
+    "measureNumberCustomFormatDialog.template.preview.title": "Formatvorschau",
+    "measureNumberCustomFormatDialog.template.title": "Vorlagen",
+    "measureNumberCustomFormatDialog.extendedPreview.button": "Mehr anzeigen",
+    "measureNumberCustomFormatDialog.howToFormat": "Wie formatiere ich?",
+    "measureNumberCustomFormatDialog.definition": "Definition",
+    "measureNumberCustomFormatDialog.preview": "Vorschau",
     "attrf.all": "Alle ",
     "attrf.all_except": "Alle außer"
 }

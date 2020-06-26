@@ -169,6 +169,15 @@
     "mvf.operator.notBetween.tooltip.bubble": "不包含开始值和结束值。",
     "mvf.treatNullValuesAsZeroLabel": "将空白值视为0",
     "mvf.treatNullValuesAsZeroTooltip": "如果筛选条件包括 0，则空白值将被视为 0 并被纳入计算中。",
+    "measureNumberFormat.custom.optionLabel": "自定义",
+    "measureNumberFormat.buttonLabel": "格式：{selectedFormatPresetName}",
+    "measureNumberCustomFormatDialog.title": "自定义格式",
+    "measureNumberCustomFormatDialog.template.preview.title": "格式预览",
+    "measureNumberCustomFormatDialog.template.title": "模板",
+    "measureNumberCustomFormatDialog.extendedPreview.button": "显示更多",
+    "measureNumberCustomFormatDialog.howToFormat": "如何格式化？",
+    "measureNumberCustomFormatDialog.definition": "定义",
+    "measureNumberCustomFormatDialog.preview": "预览",
     "attrf.all": "全部",
     "attrf.all_except": "除了"
 }

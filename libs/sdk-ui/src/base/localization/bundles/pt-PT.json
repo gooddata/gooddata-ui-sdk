@@ -169,6 +169,15 @@
     "mvf.operator.notBetween.tooltip.bubble": "Os valores inicial e final não estão incluídos.",
     "mvf.treatNullValuesAsZeroLabel": "Tratar valores em branco como 0",
     "mvf.treatNullValuesAsZeroTooltip": "Se a condição de filtro incluir 0, os valores em branco serão tratados como 0 e incluídos nos cálculos.",
+    "measureNumberFormat.custom.optionLabel": "Personalizado",
+    "measureNumberFormat.buttonLabel": "Formato: {selectedFormatPresetName}",
+    "measureNumberCustomFormatDialog.title": "Formato personalizado",
+    "measureNumberCustomFormatDialog.template.preview.title": "Pré-visualização do formato",
+    "measureNumberCustomFormatDialog.template.title": "Modelos",
+    "measureNumberCustomFormatDialog.extendedPreview.button": "Mostrar mais",
+    "measureNumberCustomFormatDialog.howToFormat": "Como formatar?",
+    "measureNumberCustomFormatDialog.definition": "Definição",
+    "measureNumberCustomFormatDialog.preview": "Pré-visualizar",
     "attrf.all": "Todos",
     "attrf.all_except": "Todos exceto"
 }
