@@ -97,7 +97,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -262,7 +269,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -396,7 +410,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -530,7 +551,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -664,7 +692,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -798,7 +833,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -915,7 +957,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -1074,7 +1123,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -1226,7 +1282,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -1335,7 +1398,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -1448,7 +1518,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -1557,7 +1634,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -1670,7 +1754,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -1787,7 +1878,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -1900,7 +1998,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -2013,7 +2118,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -2126,7 +2238,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -2239,7 +2358,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -2352,7 +2478,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -2465,7 +2598,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -2645,7 +2785,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -2819,7 +2966,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;
@@ -2927,7 +3081,14 @@ Object {
       },
     },
   ],
-  "sortBy": Array [],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
   "workspace": "reference-workspace",
 }
 `;

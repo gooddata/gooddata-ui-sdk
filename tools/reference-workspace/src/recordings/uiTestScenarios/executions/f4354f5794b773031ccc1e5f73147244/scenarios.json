@@ -1,7 +1,7 @@
 [
     {
-        "vis": "PivotTable",
-        "scenario": "single measure with row and column attributes",
+        "vis": "Heatmap",
+        "scenario": "measure, rows and columns",
         "originalExecution": {
             "workspace": "reference-workspace",
             "buckets": [
@@ -23,7 +23,7 @@
                     ]
                 },
                 {
-                    "localIdentifier": "attribute",
+                    "localIdentifier": "view",
                     "items": [
                         {
                             "attribute": {
@@ -37,7 +37,7 @@
                     ]
                 },
                 {
-                    "localIdentifier": "columns",
+                    "localIdentifier": "stack",
                     "items": [
                         {
                             "attribute": {
@@ -94,7 +94,14 @@
                 }
             ],
             "filters": [],
-            "sortBy": []
+            "sortBy": [
+                {
+                    "attributeSortItem": {
+                        "attributeIdentifier": "a_label.product.id.name",
+                        "direction": "desc"
+                    }
+                }
+            ]
         },
         "n2oMap": {
             "a_label.product.id.name": "a_label.product.id.name",

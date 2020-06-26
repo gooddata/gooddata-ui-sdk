@@ -1,37 +1,19 @@
 {
     "data": [
-        ["5237799.51", "8447186.43", "12594390.99", "939878.71", null, null, "3644"],
-        ["4881614.4", "10027521.44", "7678216.32", "359543.31", null, null, null],
-        ["4031202.38", "22624838.5", "9823157.39", "2098929.01", "18067.58", null, null],
-        ["1274306.03", "4057609.27", "2181051.93", "529064.69", null, null, null],
+        ["2333876.94", "4041040.95", "3590450.75", "317648.1", "8560", null, null],
         ["1180991.26", "4490467.16", "3781098.76", "73300.73", null, null, null],
-        ["2333876.94", "4041040.95", "3590450.75", "317648.1", "8560", null, null]
+        ["1274306.03", "4057609.27", "2181051.93", "529064.69", null, null, null],
+        ["4031202.38", "22624838.5", "9823157.39", "2098929.01", "18067.58", null, null],
+        ["4881614.4", "10027521.44", "7678216.32", "359543.31", null, null, null],
+        ["5237799.51", "8447186.43", "12594390.99", "939878.71", null, null, "3644"]
     ],
     "headerItems": [
         [
             [
                 {
                     "attributeHeaderItem": {
-                        "name": "CompuSci",
-                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "Educationly",
-                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165847"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "Explorer",
-                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=342345"
-                    }
-                },
-                {
-                    "attributeHeaderItem": {
-                        "name": "Grammar Plus",
-                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=168737"
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=166497"
                     }
                 },
                 {
@@ -42,8 +24,26 @@
                 },
                 {
                     "attributeHeaderItem": {
-                        "name": "WonderKid",
-                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=166497"
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678"
                     }
                 }
             ]

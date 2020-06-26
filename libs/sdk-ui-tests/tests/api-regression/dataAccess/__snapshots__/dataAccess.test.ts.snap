@@ -2066,12 +2066,12 @@ Object {
     "allSlices": 6,
     "attributes": 1,
     "sliceNames": Array [
-      "CompuSci",
-      "Educationly",
-      "Explorer",
-      "Grammar Plus",
-      "PhoenixSoft",
       "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
     ],
     "totals": 0,
   },
@@ -2112,12 +2112,12 @@ Object {
     "allSlices": 6,
     "attributes": 1,
     "sliceNames": Array [
-      "CompuSci",
-      "Educationly",
-      "Explorer",
-      "Grammar Plus",
-      "PhoenixSoft",
       "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
     ],
     "totals": 0,
   },
@@ -2144,12 +2144,12 @@ Object {
     "allSlices": 6,
     "attributes": 1,
     "sliceNames": Array [
-      "CompuSci",
-      "Educationly",
-      "Explorer",
-      "Grammar Plus",
-      "PhoenixSoft",
       "WonderKid",
+      "PhoenixSoft",
+      "Grammar Plus",
+      "Explorer",
+      "Educationly",
+      "CompuSci",
     ],
     "totals": 0,
   },
@@ -2549,33 +2549,6 @@ Object {
     "allSlices": 0,
     "attributes": 0,
     "sliceNames": Array [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess should correctly identify series and slices for: PivotTable - single measure with row and column attributes 1`] = `
-Object {
-  "seriesDigest": Object {
-    "allSeries": 2,
-    "attributes": 1,
-    "measures": 1,
-    "seriesNames": Array [
-      "East Coast > Amount",
-      "West Coast > Amount",
-    ],
-  },
-  "slicesDigest": Object {
-    "allSlices": 6,
-    "attributes": 1,
-    "sliceNames": Array [
-      "CompuSci",
-      "Educationly",
-      "Explorer",
-      "Grammar Plus",
-      "PhoenixSoft",
-      "WonderKid",
-    ],
     "totals": 0,
   },
 }

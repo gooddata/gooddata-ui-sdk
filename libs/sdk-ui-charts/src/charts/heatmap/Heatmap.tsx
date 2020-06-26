@@ -1,5 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import { IAttributeOrMeasure, IAttribute, IFilter, newBucket, ISortItem } from "@gooddata/sdk-model";
+import {
+    IAttributeOrMeasure,
+    IAttribute,
+    IFilter,
+    newBucket,
+    ISortItem,
+    bucketsFind,
+    bucketAttribute,
+    IBucket,
+    newAttributeSort,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { heatmapDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -23,12 +33,14 @@ const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = 
     },
     executionFactory: (props, buckets) => {
         const { backend, workspace } = props;
+        const sortBy = getDefaultHeatmapSort(buckets);
 
         return backend
             .withTelemetry("Heatmap", props)
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters)
+            .withSorting(...sortBy)
             .withDimensions(heatmapDimensions);
     },
 };
@@ -81,3 +93,13 @@ export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {}
  * @public
  */
 export const Heatmap = withChart(heatmapDefinition)(CoreHeatmap);
+
+function getDefaultHeatmapSort(buckets: IBucket[]): ISortItem[] {
+    const viewBucket = bucketsFind(buckets, BucketNames.VIEW);
+    const viewAttribute = viewBucket ? bucketAttribute(viewBucket) : undefined;
+    if (viewAttribute) {
+        return [newAttributeSort(viewAttribute, "desc")];
+    }
+
+    return [];
+}

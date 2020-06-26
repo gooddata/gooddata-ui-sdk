@@ -1,7 +1,7 @@
 [
     {
-        "vis": "PivotTable",
-        "scenario": "single measure with row and column attributes",
+        "vis": "Heatmap",
+        "scenario": "measure, rows and columns with null data points",
         "originalExecution": {
             "workspace": "reference-workspace",
             "buckets": [
@@ -23,7 +23,7 @@
                     ]
                 },
                 {
-                    "localIdentifier": "attribute",
+                    "localIdentifier": "view",
                     "items": [
                         {
                             "attribute": {
@@ -37,15 +37,15 @@
                     ]
                 },
                 {
-                    "localIdentifier": "columns",
+                    "localIdentifier": "stack",
                     "items": [
                         {
                             "attribute": {
                                 "displayForm": {
-                                    "identifier": "label.owner.region",
+                                    "identifier": "closed.aag81lMifn6q",
                                     "type": "displayForm"
                                 },
-                                "localIdentifier": "a_label.owner.region"
+                                "localIdentifier": "a_closed.aag81lMifn6q"
                             }
                         }
                     ]
@@ -64,10 +64,10 @@
                 {
                     "attribute": {
                         "displayForm": {
-                            "identifier": "label.owner.region",
+                            "identifier": "closed.aag81lMifn6q",
                             "type": "displayForm"
                         },
-                        "localIdentifier": "a_label.owner.region"
+                        "localIdentifier": "a_closed.aag81lMifn6q"
                     }
                 }
             ],
@@ -90,15 +90,22 @@
                     "itemIdentifiers": ["a_label.product.id.name"]
                 },
                 {
-                    "itemIdentifiers": ["a_label.owner.region", "measureGroup"]
+                    "itemIdentifiers": ["a_closed.aag81lMifn6q", "measureGroup"]
                 }
             ],
             "filters": [],
-            "sortBy": []
+            "sortBy": [
+                {
+                    "attributeSortItem": {
+                        "attributeIdentifier": "a_label.product.id.name",
+                        "direction": "desc"
+                    }
+                }
+            ]
         },
         "n2oMap": {
             "a_label.product.id.name": "a_label.product.id.name",
-            "a_label.owner.region": "a_label.owner.region",
+            "a_closed.aag81lMifn6q": "a_closed.aag81lMifn6q",
             "m_aangOxLSeztu": "m_aangOxLSeztu"
         }
     }
