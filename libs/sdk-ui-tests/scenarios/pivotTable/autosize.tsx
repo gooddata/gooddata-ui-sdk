@@ -2,7 +2,11 @@
 
 import { scenariosFor } from "../../src";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { PivotTableWithSingleColumn, PivotTableWithTwoMeasuresAndSingleRowAttr } from "./base";
+import {
+    PivotTableWithSingleColumn,
+    PivotTableWithTwoMeasuresAndSingleRowAttr,
+    PivotTableWithSingleMeasureAndTwoRowsAndCols,
+} from "./base";
 import { PivotTableWithTwoMeasuresGrandTotalsAndSubtotals } from "./totals";
 import { requestPages } from "@gooddata/mock-handling";
 
@@ -21,7 +25,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario(
         "with small page and auto-resizing",
         {
-            ...PivotTableWithSingleColumn,
+            ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
             config: {
                 columnSizing: {
                     defaultWidth: "viewport",
