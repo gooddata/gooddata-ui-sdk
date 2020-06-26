@@ -57,6 +57,7 @@ import set = require("lodash/set");
 import isEmpty = require("lodash/isEmpty");
 import includes = require("lodash/includes");
 import cloneDeep = require("lodash/cloneDeep");
+import { configurePercent } from "../../../utils/bucketConfig";
 
 const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
 
@@ -84,11 +85,12 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         return super
             .getExtendedReferencePoint(referencePoint)
             .then((extendedReferencePoint: IExtendedReferencePoint) => {
-                const newReferencePoint: IExtendedReferencePoint = setGeoPushpinUiConfig(
+                let newReferencePoint: IExtendedReferencePoint = setGeoPushpinUiConfig(
                     extendedReferencePoint,
                     this.intl,
                     this.type,
                 );
+                newReferencePoint = configurePercent(newReferencePoint, true);
                 return this.updateSupportedProperties(newReferencePoint);
             });
     }
