@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-@import "../mixins";
+@import "./mixins";
 
 $cm-color-matching-bracket: #000;
 $cm-color-matching-bracket-bg: #fef9d3;
@@ -58,6 +58,10 @@ $cm-color-keyword: #ab55a3;
         &:focus {
             outline: 0;
         }
+    }
+
+    .CodeMirror-empty {
+        color: $gd-color-disabled;
     }
 
     .CodeMirror-code {

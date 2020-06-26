@@ -2,3 +2,4 @@
 
 export * from "./typings/positioning";
 export * from "./measureNumberFormat";
+export * from "./syntaxHighlightingInput";

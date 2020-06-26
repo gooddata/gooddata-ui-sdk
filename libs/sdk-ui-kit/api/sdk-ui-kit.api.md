@@ -58,6 +58,20 @@ export interface ISnapPoints {
 }
 
 // @alpha (undocumented)
+export interface ISyntaxHighlightingInputProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    customOptions?: any;
+    // (undocumented)
+    formatting?: any;
+    // (undocumented)
+    onChange: (value: string) => void;
+    // (undocumented)
+    value: string;
+}
+
+// @alpha (undocumented)
 export interface IToggleButtonProps {
     // (undocumented)
     isOpened: boolean;
@@ -102,6 +116,9 @@ export enum SnapPoint {
     // (undocumented)
     TopRight = "tr"
 }
+
+// @alpha (undocumented)
+export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 
 
 // (No @packageDocumentation comment for this package)

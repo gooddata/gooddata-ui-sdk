@@ -4,8 +4,38 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown";
-import { SyntaxHighlightingInput } from "./SyntaxHighlightingInput";
+import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput";
 import { IFormatTemplate } from "../typings";
+
+const formattingRules = {
+    start: [
+        { regex: /"(?:[^\\]|\\.)*?"/, token: "string" },
+        { regex: /(?:black|blue|cyan|green|magenta|red|yellow|white)\b/i, token: "keyword" },
+        {
+            regex: /(backgroundColor|color)(=)([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/i,
+            token: ["variable-4", null, "keyword"],
+        },
+        {
+            regex: /(<|>|=|>=|<=)(-?)(\d*(\.|,)?\d+|Null)/i,
+            token: ["variable-5", "variable-5", "variable-5"],
+        },
+        { regex: /\/\/.*/, token: "comment" },
+        { regex: /\/(?:[^\\]|\\.)*?\//, token: "variable-3" },
+        { regex: /\/\*/, token: "comment", next: "comment" },
+        { regex: /[\{\[\(]/, indent: true, token: "variable-brackets" },
+        { regex: /[\}\]\)]/, dedent: true, token: "variable-brackets" },
+        { regex: /[a-z$][\w$]*/, token: "variable" },
+        { regex: /<</, token: "meta", mode: { spec: "xml", end: />>/ } },
+    ],
+    comment: [
+        { regex: /.*?\*\//, token: "comment", next: "start" },
+        { regex: /.*/, token: "comment" },
+    ],
+    meta: {
+        dontIndentStates: ["comment"],
+        lineComment: "//",
+    },
+};
 
 interface IFormatInputOwnProps {
     format: string;
@@ -33,8 +63,9 @@ class FormatInput extends React.PureComponent<IFormatInputProps> {
                 </div>
                 <SyntaxHighlightingInput
                     value={format}
-                    onChangeHandler={this.handleInputChange}
-                    className={"s-custom-format-input gd-input-syntax-highlighting-input"}
+                    formatting={formattingRules}
+                    onChange={this.handleInputChange}
+                    className={"s-custom-format-input"}
                 />
             </div>
         );
