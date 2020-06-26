@@ -12,7 +12,7 @@ interface IAttributeDropdownBodyProps {
     selectedItems: Array<Partial<IAttributeElement>>;
     isInverted: boolean;
     isLoading: boolean;
-    isFullWidth: boolean;
+    isFullWidth?: boolean;
     error?: any;
     applyDisabled?: boolean;
 
@@ -32,7 +32,6 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
     isLoading,
     selectedItems,
     isInverted,
-    isFullWidth,
     applyDisabled,
     onRangeChange,
     onSearch,
@@ -48,7 +47,6 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
                 isLoading={isLoading}
                 items={items}
                 isInverted={isInverted}
-                isFullWidth={isFullWidth}
                 onRangeChange={onRangeChange}
                 selectedItems={selectedItems}
                 totalCount={totalCount}
