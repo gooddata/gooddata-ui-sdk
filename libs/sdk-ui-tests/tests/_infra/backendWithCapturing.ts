@@ -4,16 +4,7 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { NormalizationState, withEventing, withNormalization } from "@gooddata/sdk-backend-base";
-
-export type DataViewRequests = {
-    allData?: boolean;
-    windows?: RequestedWindow[];
-};
-
-export type RequestedWindow = {
-    offset: number[];
-    size: number[];
-};
+import { DataViewRequests } from "@gooddata/mock-handling";
 
 /**
  * Recorded chart interactions
@@ -50,15 +41,15 @@ export function backendWithCapturing(
     };
 
     let dataRequestResolver: (interactions: ChartInteractions) => void;
-    const capturedInteractions = new Promise<ChartInteractions>(resolve => {
+    const capturedInteractions = new Promise<ChartInteractions>((resolve) => {
         dataRequestResolver = resolve;
     });
 
     let backend = withEventing(dummyBackend({ hostname: "test", raiseNoDataExceptions: true }), {
-        beforeExecute: def => {
+        beforeExecute: (def) => {
             interactions.triggeredExecution = def;
         },
-        failedResultReadAll: _ => {
+        failedResultReadAll: (_) => {
             interactions.dataViewRequests.allData = true;
 
             dataRequestResolver(interactions);

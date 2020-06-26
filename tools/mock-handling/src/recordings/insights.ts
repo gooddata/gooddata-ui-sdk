@@ -7,6 +7,7 @@ import path from "path";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
 import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
 import isEmpty = require("lodash/isEmpty");
+import { InsightRecordingSpec, RecordingFiles } from "../interface";
 
 //
 // internal constants & types
@@ -15,15 +16,6 @@ import isEmpty = require("lodash/isEmpty");
 //
 // Public API
 //
-
-export const InsightsDefinition = "insights.json";
-const InsightObj = "obj.json";
-
-type InsightRecordingSpec = {
-    comment?: string;
-    visName?: string;
-    scenarioName?: string;
-};
 
 export class InsightRecording implements IRecording {
     public readonly directory: string;
@@ -36,7 +28,7 @@ export class InsightRecording implements IRecording {
         this.insightId = id;
         this.spec = spec;
 
-        this.objFile = path.join(this.directory, InsightObj);
+        this.objFile = path.join(this.directory, RecordingFiles.Insights.Object);
     }
 
     public getRecordingType(): RecordingType {

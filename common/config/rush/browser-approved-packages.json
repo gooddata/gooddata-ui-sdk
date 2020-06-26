@@ -120,7 +120,7 @@
     },
     {
       "name": "@gooddata/mock-handling",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/mock-js",

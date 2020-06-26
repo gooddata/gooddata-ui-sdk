@@ -4,7 +4,8 @@ import * as path from "path";
 import { findFiles } from "../base/utils";
 import { logWarn } from "../cli/loggers";
 import { IRecording, isNonNullRecording, readJsonSync } from "./common";
-import { InsightRecording, InsightsDefinition } from "./insights";
+import { InsightRecording } from "./insights";
+import { RecordingFiles } from "../interface";
 
 function createRecording(directory: string, insightId: string, insightRecordingSpec: any): IRecording | null {
     try {
@@ -30,5 +31,5 @@ function loadRecordings(recordingDefinition: string): IRecording[] {
 }
 
 export async function discoverInsightRecordings(recordingDir: string): Promise<IRecording[]> {
-    return flatMap(findFiles(recordingDir, InsightsDefinition), loadRecordings);
+    return flatMap(findFiles(recordingDir, RecordingFiles.Insights.Index), loadRecordings);
 }

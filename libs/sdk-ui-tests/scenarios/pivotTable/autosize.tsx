@@ -4,6 +4,7 @@ import { scenariosFor } from "../../src";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableWithSingleColumn, PivotTableWithTwoMeasuresAndSingleRowAttr } from "./base";
 import { PivotTableWithTwoMeasuresGrandTotalsAndSubtotals } from "./totals";
+import { requestPages } from "@gooddata/mock-handling";
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("auto-resizing")
@@ -17,15 +18,19 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             },
         },
     })
-    .addScenario("with small page and auto-resizing", {
-        ...PivotTableWithSingleColumn,
-        config: {
-            columnSizing: {
-                defaultWidth: "viewport",
+    .addScenario(
+        "with small page and auto-resizing",
+        {
+            ...PivotTableWithSingleColumn,
+            config: {
+                columnSizing: {
+                    defaultWidth: "viewport",
+                },
             },
+            pageSize: 3,
         },
-        pageSize: 3,
-    })
+        (m) => m.withCustomDataCapture({ windows: requestPages([0, 0], [3, 1000], 10) }),
+    )
     .addScenario("with two measures and row attribute with auto-resizing", {
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
         config: {

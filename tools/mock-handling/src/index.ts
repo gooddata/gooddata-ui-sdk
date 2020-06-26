@@ -219,3 +219,16 @@ run().catch((err) => {
         process.exit(1);
     }
 });
+
+//
+// Type exports
+//
+
+export {
+    DataViewRequests,
+    RequestedWindow,
+    RecordingFiles,
+    ScenarioDescriptor,
+    InsightRecordingSpec,
+    requestPages,
+} from "./interface";

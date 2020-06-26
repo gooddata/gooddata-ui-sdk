@@ -9,24 +9,24 @@ import * as fs from "fs";
 import * as path from "path";
 import allScenarios from "../../scenarios";
 import { IScenario } from "../../src";
-import { ChartInteractions, DataViewRequests } from "../_infra/backendWithCapturing";
+import { ChartInteractions } from "../_infra/backendWithCapturing";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory";
 import { mountChartAndCaptureNormalized } from "../_infra/render";
 import { mountInsight } from "../_infra/renderPlugVis";
 import { storeDirectoryFor } from "./store";
 import { readJsonSync, writeAsJsonSync } from "./utils";
+import { DataViewRequests, RecordingFiles, ScenarioDescriptor } from "@gooddata/mock-handling";
 
 type AllScenariosType = [string, string, IScenario<any>];
 
-const DefinitionFileName = "definition.json";
-const RequestsFileName = "requests.json";
-const ScenariosFileName = "scenarios.json";
-const InsightIndexFileName = "insights.json";
-const InsightFileName = "obj.json";
-
-function storeRequests(interactions: ChartInteractions, recordingDir: string): void {
-    const requestsFile = path.join(recordingDir, RequestsFileName);
+function scenarioSaveDataCaptureRequests(
+    scenario: IScenario<any>,
+    recordingDir: string,
+    interactions: ChartInteractions,
+): void {
+    const requestsFile = path.join(recordingDir, RecordingFiles.Execution.Requests);
     const { dataViewRequests } = interactions;
+    const { customDataCapture } = scenario;
 
     let requests: DataViewRequests = {
         allData: false,
@@ -51,20 +51,29 @@ function storeRequests(interactions: ChartInteractions, recordingDir: string): v
         }
     }
 
-    if (dataViewRequests.allData) {
+    if (dataViewRequests.allData || customDataCapture.allData) {
         requests.allData = true;
     }
 
     if (dataViewRequests.windows) {
-        requests.windows = unionBy(dataViewRequests.windows, requests.windows, val => {
-            return `${val.offset.join(",")}-${val.size.join(",")}`;
-        });
+        requests.windows = unionBy(
+            dataViewRequests.windows,
+            requests.windows,
+            customDataCapture.windows,
+            (val) => {
+                return `${val.offset.join(",")}-${val.size.join(",")}`;
+            },
+        );
     }
 
     writeAsJsonSync(requestsFile, requests);
 }
 
-function storeDefinition(dir: string, interactions: ChartInteractions): string {
+function scenarioSaveDefinition(
+    scenario: IScenario<any>,
+    dir: string,
+    interactions: ChartInteractions,
+): string {
     const { triggeredExecution } = interactions;
     const fp = defFingerprint(triggeredExecution!);
     const recordingDir = path.join(dir, fp);
@@ -73,22 +82,24 @@ function storeDefinition(dir: string, interactions: ChartInteractions): string {
         fs.mkdirSync(recordingDir);
     }
 
-    writeAsJsonSync(path.join(recordingDir, DefinitionFileName), { ...triggeredExecution, buckets: [] });
+    writeAsJsonSync(path.join(recordingDir, RecordingFiles.Execution.Definition), {
+        ...triggeredExecution,
+        buckets: [],
+    });
 
-    storeRequests(interactions, recordingDir);
+    scenarioSaveDataCaptureRequests(scenario, recordingDir, interactions);
 
     return recordingDir;
 }
 
-function storeScenarioMetadata(
+function scenarioSaveDescriptors(
+    scenario: IScenario<any>,
     recordingDir: string,
-    vis: string,
-    scenarioName: string,
     interactions: ChartInteractions,
 ) {
-    const scenariosFile = path.join(recordingDir, ScenariosFileName);
+    const scenariosFile = path.join(recordingDir, RecordingFiles.Execution.Scenarios);
 
-    let scenarios = [];
+    let scenarioDescriptors: ScenarioDescriptor[] = [];
 
     if (fs.existsSync(scenariosFile)) {
         try {
@@ -100,7 +111,7 @@ function storeScenarioMetadata(
                     `The scenarios file ${scenariosFile} seems invalid. It should contain array of scenario metadata.`,
                 );
             } else {
-                scenarios = existingScenarios;
+                scenarioDescriptors = existingScenarios;
             }
         } catch (err) {
             // tslint:disable-next-line:no-console
@@ -108,7 +119,9 @@ function storeScenarioMetadata(
         }
     }
 
-    if (scenarios.find(s => s.vis === vis && s.scenario === scenarioName)) {
+    const { vis, name: scenarioName } = scenario;
+
+    if (scenarioDescriptors.find((s) => s.vis === vis && s.scenario === scenarioName)) {
         // scenario is already mentioned in the metadata; bail out there is nothing to do
         return;
     }
@@ -126,7 +139,7 @@ function storeScenarioMetadata(
          * The recordedDataView() is an important piece of the test support and must work predictably and without
          * caveats.
          */
-        scenarios.push({
+        scenarioDescriptors.push({
             vis,
             scenario: scenarioName,
             originalExecution: normalizationState.original,
@@ -135,10 +148,10 @@ function storeScenarioMetadata(
     } else {
         const definition = interactions.triggeredExecution;
 
-        scenarios.push({ vis, scenario: scenarioName, buckets: definition!.buckets });
+        scenarioDescriptors.push({ vis, scenario: scenarioName, buckets: definition!.buckets });
     }
 
-    writeAsJsonSync(scenariosFile, scenarios);
+    writeAsJsonSync(scenariosFile, scenarioDescriptors);
 }
 
 /**
@@ -151,7 +164,7 @@ function storeScenarioMetadata(
  * @param interactions - chart interactions with the backend
  * @param plugVizInteractions - plug viz interactions with the backend
  */
-function storeScenarioDefinition(
+function scenarioSave(
     scenario: IScenario<any>,
     interactions: ChartInteractions,
     plugVizInteractions?: ChartInteractions,
@@ -163,7 +176,7 @@ function storeScenarioDefinition(
 
     const { triggeredExecution: componentExecution } = interactions;
     const { triggeredExecution: plugVizExecution } = plugVizInteractions ?? {};
-    const recordingDir = storeDefinition(storeDir, interactions);
+    const recordingDir = scenarioSaveDefinition(scenario, storeDir, interactions);
 
     if (plugVizExecution && defFingerprint(componentExecution!) !== defFingerprint(plugVizExecution!)) {
         /*
@@ -172,15 +185,15 @@ function storeScenarioDefinition(
          * execution. if that happens, make sure the exec definition for the plug viz variant of the
          * scenario is also stored.
          */
-        storeDefinition(storeDir, plugVizInteractions!);
+        scenarioSaveDefinition(scenario, storeDir, plugVizInteractions!);
     }
 
     if (!scenario.tags.includes("mock-no-scenario-meta")) {
-        storeScenarioMetadata(recordingDir, scenario.vis, scenario.name, interactions);
+        scenarioSaveDescriptors(scenario, recordingDir, interactions);
     }
 }
 
-function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
+function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefinition) {
     const storeDir = storeDirectoryFor(scenario, "insights");
 
     if (!storeDir) {
@@ -197,9 +210,9 @@ function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
         fs.mkdirSync(insightDir);
     }
 
-    writeAsJsonSync(path.join(insightDir, InsightFileName), persistentInsight);
+    writeAsJsonSync(path.join(insightDir, RecordingFiles.Insights.Object), persistentInsight);
 
-    const insightIndexFile = path.join(storeDir, InsightIndexFileName);
+    const insightIndexFile = path.join(storeDir, RecordingFiles.Insights.Index);
     const insightIndex = fs.existsSync(insightIndexFile) ? readJsonSync(insightIndexFile) : {};
 
     /*
@@ -220,13 +233,20 @@ function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
     return;
 }
 
+/*
+ * This is useful when developing new visualization. Typically react component exists first, and then plug viz
+ * implementation appears.
+ *
+ * Add the name of the react component here and the smoke-and-capture will skip doing the 'plug-viz-stuff' for
+ * that visualization.
+ */
 const PlugVisUnsupported: string[] = [];
 
 describe("all scenarios", () => {
     const Scenarios: AllScenariosType[] = flatMap(allScenarios, (s): AllScenariosType[] => {
         const testInputs: Array<IScenario<any>> = s.asScenarioList();
 
-        return testInputs.map(t => {
+        return testInputs.map((t) => {
             return [t.vis, t.name, t];
         });
     });
@@ -252,7 +272,7 @@ describe("all scenarios", () => {
              * Some visualizations may not support plug vis yet. For those, just store scenario
              * definition and halt.
              */
-            storeScenarioDefinition(scenario, interactions);
+            scenarioSave(scenario, interactions);
         } else {
             /*
              * For others, create insight object, try to mount pluggable visualization for
@@ -266,8 +286,8 @@ describe("all scenarios", () => {
              */
             const plugVizInteractions = await mountInsight(scenario, insight, true);
 
-            storeScenarioDefinition(scenario, interactions, plugVizInteractions);
-            storeInsight(scenario, insight);
+            scenarioSave(scenario, interactions, plugVizInteractions);
+            scenarioStoreInsight(scenario, insight);
         }
     });
 });

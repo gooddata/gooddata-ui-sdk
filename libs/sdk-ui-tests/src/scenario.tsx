@@ -9,6 +9,7 @@ import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight } from "@gooddata/sdk-model";
 import { IExecuteProps } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+import { DataViewRequests } from "@gooddata/mock-handling";
 
 export type VisProps = IPivotTableProps | IBucketChartProps | IExecuteProps | IGeoPushpinChartProps;
 export type UnboundVisProps<T extends VisProps> = Omit<T, "backend" | "workspace">;
@@ -81,6 +82,18 @@ export interface IScenario<T extends VisProps> {
     readonly workspaceType: WorkspaceType;
 
     /**
+     * Customization of data capture for this scenario. While the data to capture is identified
+     * automatically in some rare cases the auto-magic fails:
+     *
+     * - Table where tests needs more than just the first page. That's because the auto-magic cannot go further than
+     * the first request at the moment.
+     *
+     * Apart from overcoming this limitation, this customization is also useful for capture of custom data for
+     * purposes of storing it in reference-workspace and using it in other projects for other types of tests.
+     */
+    readonly customDataCapture: ScenarioDataCapture;
+
+    /**
      * Props factory which transforms unbound props + backend + workspace => real component props
      */
     readonly propsFactory: PropsFactory<T>;
@@ -103,11 +116,17 @@ export interface IScenario<T extends VisProps> {
     readonly asTestInput: () => ScenarioTestInput<T>;
 }
 
+/**
+ * Type from mock-handling that is used to customize what data (all, pages etc) to load.
+ */
+export type ScenarioDataCapture = DataViewRequests;
+
 export class ScenarioBuilder<T extends VisProps> {
     private tags: ScenarioTag[] = [];
     private tests: TestTypes[] = ["api", "visual"];
     private insightConverter: InsightConverter = identity;
     private workspaceType: WorkspaceType = "reference-workspace";
+    private customDataCapture: ScenarioDataCapture = {};
 
     constructor(
         private readonly vis: string,
@@ -140,15 +159,44 @@ export class ScenarioBuilder<T extends VisProps> {
         return this;
     }
 
+    /**
+     * Optionally customize workspace against which this scenario can run. See {@link WorkspaceType}.
+     *
+     * If not specified, defaults to reference-workspace.
+     *
+     * @param type - one of supported workspace types
+     */
     public withWorkspaceType(type: WorkspaceType): ScenarioBuilder<T> {
         this.workspaceType = type;
 
         return this;
     }
 
+    /**
+     * Optionally customize data capture parameters for this scenario. Note that the essential data capture parameters
+     * are automatically sniffed by the infrastructure. This customization can be used _on top_ of the captures
+     * identified automatically.
+     *
+     * @param config - configuration, as understood by mock-handling
+     */
+    public withCustomDataCapture(config: ScenarioDataCapture): ScenarioBuilder<T> {
+        this.customDataCapture = config;
+
+        return this;
+    }
+
     public build = (): IScenario<T> => {
         const props = this.props;
-        const { vis, name, component, tags, tests, insightConverter, workspaceType } = this;
+        const {
+            vis,
+            name,
+            component,
+            tags,
+            tests,
+            insightConverter,
+            workspaceType,
+            customDataCapture,
+        } = this;
         const hasher = new SparkMD5();
         const insightId = `${this.vis}.${hasher.append(name).end()}`;
         const propsFactory: PropsFactory<T> = (backend, workspace) => {
@@ -173,6 +221,7 @@ export class ScenarioBuilder<T extends VisProps> {
             propsFactory,
             insightId,
             insightConverter,
+            customDataCapture,
 
             asTestInput: (): ScenarioTestInput<T> => {
                 return [name, component, propsFactory, tags, insightId];

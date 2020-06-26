@@ -5434,15 +5434,51 @@ Object {
         "localIdentifier": "a_label.product.id.name",
       },
     },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.stage.name.stagename",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
   ],
   "buckets": Array [
     Object {
-      "items": Array [],
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
       "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "attribute",
     },
     Object {
       "items": Array [
@@ -5455,22 +5491,72 @@ Object {
             "localIdentifier": "a_label.product.id.name",
           },
         },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.stage.name.stagename",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
       ],
       "localIdentifier": "columns",
     },
   ],
   "dimensions": Array [
     Object {
-      "itemIdentifiers": Array [],
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
     },
     Object {
       "itemIdentifiers": Array [
-        "a_label.product.id.name",
+        "a_label.stage.name.stagename",
+        "a_label.owner.region",
+        "measureGroup",
       ],
     },
   ],
   "filters": Array [],
-  "measures": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
   "sortBy": Array [],
   "workspace": "reference-workspace",
 }
