@@ -28,3 +28,12 @@ export interface IToggleButtonProps {
     isOpened: boolean;
     toggleDropdown: (e: React.SyntheticEvent) => void;
 }
+
+/**
+ * @alpha
+ */
+export interface IFormatTemplate {
+    localIdentifier: string;
+    format: string;
+    name: string;
+}

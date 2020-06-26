@@ -3,11 +3,10 @@ import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 
-import { IFormatPreset, IToggleButtonProps, PresetType } from "./typings";
+import { IFormatPreset, IFormatTemplate, IToggleButtonProps, PresetType } from "./typings";
 import { PresetsDropdown } from "./presetsDropdown/PresetsDropdown";
 import { CustomFormatDialog } from "./customFormatDialog/CustomFormatDialog";
 import { IPositioning } from "../typings/positioning";
-import { IFormatTemplate } from "./customFormatDialog/formatTemplatesDropdown/FormatTemplatesDropdown";
 
 export const CUSTOM_FORMAT_PRESET_LOCAL_IDENTIFIER = "customFormat";
 

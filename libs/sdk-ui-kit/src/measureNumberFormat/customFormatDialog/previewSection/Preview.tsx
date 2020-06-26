@@ -7,7 +7,7 @@ import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberF
 import { ExtendedPreview } from "./ExtendedPreview";
 import { FormattedPreview } from "../shared/FormattedPreview";
 
-const DEFAULT_PREVIEW_VALUE = 1234.5678;
+const DEFAULT_PREVIEW_VALUE = -1234.5678;
 
 interface ICustomFormatPreviewOwnProps {
     format: string;

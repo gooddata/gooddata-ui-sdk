@@ -4,15 +4,10 @@ import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { ISeparators } from "@gooddata/sdk-ui";
 import DropdownItem from "./DropdownItem";
 import DropdownToggleButton from "./DropdownToggleButton";
+import { IFormatTemplate } from "../../typings";
 
 interface ICustomFormatTemplatesState {
     isOpened: boolean;
-}
-
-export interface IFormatTemplate {
-    localIdentifier: string;
-    format: string;
-    name: string;
 }
 
 export type OnChange = (formatString: string) => void;

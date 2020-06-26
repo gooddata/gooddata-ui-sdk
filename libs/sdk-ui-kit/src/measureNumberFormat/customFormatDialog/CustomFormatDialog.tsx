@@ -7,7 +7,7 @@ import { ISeparators } from "@gooddata/sdk-ui";
 
 import { IPositioning, SnapPoint } from "../../typings/positioning";
 import { positioningToAlignPoints } from "../../utils/positioning";
-import { IFormatTemplate } from "./formatTemplatesDropdown/FormatTemplatesDropdown";
+import { IFormatTemplate } from "../typings";
 import Preview from "./previewSection/Preview";
 import FormatInput from "./FormatInput";
 import DocumentationLink from "./DocumentationLink";

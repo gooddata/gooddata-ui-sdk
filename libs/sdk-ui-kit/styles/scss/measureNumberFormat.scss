@@ -81,9 +81,9 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
                 box-sizing: border-box;
                 flex: 0 0 60%;
                 padding-left: 8px;
+                font-weight: bold;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                font-weight: bold;
             }
         }
 
@@ -154,9 +154,12 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
 }
 
 .gd-measure-format-extended-preview-formatted {
+    box-sizing: border-box;
     flex: 0 0 60%;
     padding-left: 8px;
+    overflow: hidden;
     font-weight: bold;
+    text-overflow: ellipsis;
 }
 
 .gd-measure-format-template-preview-bubble {
@@ -182,4 +185,8 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
             display: block;
         }
     }
+}
+
+.gd-measure-format-preview-formatted {
+    white-space: nowrap;
 }

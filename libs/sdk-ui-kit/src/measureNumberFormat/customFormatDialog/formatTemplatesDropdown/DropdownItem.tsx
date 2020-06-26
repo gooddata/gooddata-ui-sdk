@@ -6,7 +6,7 @@ import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import PreviewRows from "../shared/PreviewRows";
-import { IFormatTemplate } from "./FormatTemplatesDropdown";
+import { IFormatTemplate } from "../../typings";
 
 interface ITemplateDropdownItemProps {
     template: IFormatTemplate;
@@ -66,7 +66,11 @@ export default class DropdownItem extends React.Component<
                         >
                             <FormattedMessage id="measureNumberCustomFormatDialog.template.preview.title" />
                         </div>
-                        <PreviewRows format={template.format} separators={separators} />
+                        <PreviewRows
+                            previewNumbers={[-1234.567, -1.234, 0, 1.234, 1234.567]}
+                            format={template.format}
+                            separators={separators}
+                        />
                     </Bubble>
                 )}
             </>

@@ -24,6 +24,16 @@ export interface IFormatPreset {
 }
 
 // @alpha (undocumented)
+export interface IFormatTemplate {
+    // (undocumented)
+    format: string;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    name: string;
+}
+
+// @alpha (undocumented)
 export interface IOffset {
     // (undocumented)
     x?: number;
