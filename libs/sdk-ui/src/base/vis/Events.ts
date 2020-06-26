@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { IDataView, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
+import { IDataView, IExportConfig, IExportResult, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { IColor, IColorPalette, Identifier, ITotal, ISortItem } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
@@ -40,6 +40,7 @@ export interface IDrillableItemPushData {
     type: DrillableItemType;
     localIdentifier: Identifier;
     title: string;
+    attributes: IAttributeDescriptor[];
 }
 
 /**

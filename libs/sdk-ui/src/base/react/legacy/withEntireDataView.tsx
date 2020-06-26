@@ -6,9 +6,12 @@ import {
     IMeasureDescriptor,
     IPreparedExecution,
     isNoDataError,
+    IAttributeDescriptor,
+    isAttributeDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { injectIntl, IntlShape } from "react-intl";
+import flatten = require("lodash/flatten");
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
 import { IExportFunction, ILoadingState, IDrillableItemPushData } from "../../vis/Events";
@@ -177,6 +180,11 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onError(new GoodDataSdkError(ErrorCodes.NEGATIVE_VALUES));
         }
 
+        private getAllAttributeHeaders(result: IExecutionResult): IAttributeDescriptor[] {
+            const allHeaders = flatten(result.dimensions.map((dimension) => dimension.headers));
+            return allHeaders.filter((header) => isAttributeDescriptor(header)) as IAttributeDescriptor[];
+        }
+
         private getSupportedDrillableItems(dv: DataViewFacade): IDrillableItemPushData[] {
             return dv
                 .meta()
@@ -186,6 +194,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                         type: "measure",
                         localIdentifier: measure.measureHeaderItem.localIdentifier,
                         title: measure.measureHeaderItem.name,
+                        attributes: this.getAllAttributeHeaders(dv.result()),
                     }),
                 );
         }

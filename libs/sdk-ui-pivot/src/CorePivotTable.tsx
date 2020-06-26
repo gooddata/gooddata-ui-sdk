@@ -95,6 +95,7 @@ import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } 
 
 import { ICorePivotTableProps, IMenu, IMenuAggregationClickConfig } from "./types";
 import cloneDeep = require("lodash/cloneDeep");
+import flatten = require("lodash/flatten");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
@@ -194,6 +195,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         );
     };
 
+    private getAllAttributeHeaders(result: IExecutionResult): IAttributeDescriptor[] {
+        const allHeaders = flatten(result.dimensions.map((dimension) => dimension.headers));
+        return allHeaders.filter((header) => isAttributeDescriptor(header)) as IAttributeDescriptor[];
+    }
+
     private getSupportedDrillableItems(dv: DataViewFacade): IDrillableItemPushData[] {
         return dv
             .meta()
@@ -203,6 +209,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     type: "measure",
                     localIdentifier: measure.measureHeaderItem.localIdentifier,
                     title: measure.measureHeaderItem.name,
+                    attributes: this.getAllAttributeHeaders(dv.result()),
                 }),
             );
     }
