@@ -25,13 +25,6 @@ const stories = require("./stories");
 
 const ScenarioConfig = [
     {
-        // special case for pivot table single column story - it does not have a .s-loading-done
-        idRegex: /single column/gi,
-        config: {
-            readySelector: ".screenshot-wrapper .s-pivot-table",
-        },
-    },
-    {
         // this is for customization stories that generate multiple variants with different config; we have
         // a special ready wrapper for these
         idRegex: /.*(data labels|coloring|legend)/g,
@@ -45,10 +38,7 @@ const ScenarioConfig = [
          */
         idRegex: /(01|02).*/g,
         config: {
-            readySelector:
-                ".screenshot-target, .screenshot-wrapper .highcharts-container, " +
-                ".screenshot-wrapper .s-headline-value, " +
-                ".screenshot-wrapper .s-pivot-table .s-loading-done",
+            readySelector: ".screenshot-ready-wrapper-done",
         },
     },
     {
@@ -118,7 +108,7 @@ function scenarioGlobalConfig(kind, name) {
 }
 
 module.exports = stories
-    .map(story => {
+    .map((story) => {
         const { storyId, storyKind, storyName, scenarioName, scenarioConfig: localConfig } = story;
         const label = scenarioLabel(storyKind, storyName, scenarioName);
 
@@ -149,4 +139,4 @@ module.exports = stories
             ...scenarioConfig,
         };
     })
-    .filter(scenario => scenario !== undefined);
+    .filter((scenario) => scenario !== undefined);

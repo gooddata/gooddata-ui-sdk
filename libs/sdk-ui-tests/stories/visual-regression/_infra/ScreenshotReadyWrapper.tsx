@@ -99,17 +99,17 @@ export type ElementCountSelector = string | ElementCountSelectorFun;
 
 /**
  * This is a specialized element count selector, which returns number of pivot tables that are already
- * loaded (have at least one row of data shown).
+ * loaded == the s-loading indicator is no longer present.
  *
  * @param element
  */
 function loadedPivotTableSelector(element: HTMLElement): number {
     const tables = element.querySelectorAll<HTMLElement>(".s-pivot-table");
 
-    return sumBy(tables, (table) => (table.querySelector(".s-loading-done") !== null ? 1 : 0));
+    return sumBy(tables, (table) => (table.getElementsByClassName("s-loading").length === 0 ? 1 : 0));
 }
 
-const DefaultSelectors = ["highcharts-container", "s-headline-value", loadedPivotTableSelector];
+const DefaultSelectors = ["highcharts-container", "s-headline-value", "s-error", loadedPivotTableSelector];
 
 /**
  * Creates resolver which returns true if specified element contains at least `numOfElements` number of elements
