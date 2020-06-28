@@ -2,18 +2,20 @@
 
 ## Status
 
-This repo is currently in pre-release quality:
-
--   continuous integration is in place
--   automated checks to verify build + unit tests
--   end-to-end visual regression tests are in place but not yet run during checks
--   live examples are included in monorepo but disconnected from Rush; they may fail to build
-
-Progress and tasks are tracked in RAIL-1791.
+This repository contains the beta version of the upcoming 8.0.0 release of GoodData.UI SDK. While the beta version is
+at this point 99% feature-complete it is still undergoing testing and there are known defects. It is not suitable for
+production use.
 
 ## Getting Started
 
-TODO
+Easiest way to start developing analytical applications using GoodData.UI SDK is to use
+the [Accelerator Toolkit for v8](https://github.com/gooddata/gooddata-create-gooddata-react-app/tree/sdk8). You will
+be up and running in minutes.
+
+For detailed description of available components and capabilities see the [official documentation](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+
+You can also register to our [live examples](https://gooddata-examples.herokuapp.com/login) and then start the live examples
+[application locally](examples/sdk-examples).
 
 ## Contributing
 
@@ -35,11 +37,11 @@ TODO
 
 ### After you pull latest changes
 
-Always run `rush install`; this will make sure all the dependencies from the shrinkwrap file will be installed in all
+Always run `rush install`; this will make sure all the dependencies from the lock file will be installed in all
 the projects managed in the repository. After that run `rush build`.
 
 In case the pull brings in new projects or large bulk of changes, it is safer (albeit more time-consuming) to run
-`rush link --force && rush clean && rush rebuild`.
+`rush install && rush link --force && rush clean && rush rebuild`.
 
 ### Contributor manual / FAQ
 
@@ -50,7 +52,7 @@ read the [official documentation](https://rushjs.io/pages/intro/welcome/).
 
 Long story short here are facts and commands you need to know:
 
--   lockfile (shrinkwrap file) is stored in pnpm-lock.yaml.
+-   lock file (shrinkwrap file) is stored in pnpm-lock.yaml.
 
 -   Rush maintains internal registry of packages in common/temp; all package dependencies are symlinked; projects
     within the monorepo are also symlinked
