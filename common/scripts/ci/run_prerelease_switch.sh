@@ -9,9 +9,9 @@ version=$(get_current_version)
 is_prerelease=$(is_current_version_prerelease)
 
 if [ ! $is_prerelease -eq 0 ]; then
-  echo "You are attempting a bump to a new pre-release version. However the current version (${version}) is not a pre-release."
+  echo "You are attempting a change to a new pre-release type. However the current version (${version}) is not a pre-release."
   echo "Normally, each release actually creates a new version and then establishes the new pre-release (alpha.0) on top of "
-  echo "which this script would bump to alpha.1 and release."
+  echo "which this script would change to say beta.0 and release."
   echo
   echo "It is likely something went wrong during the previous release job or that the scripts or Rush version bumps are "
   echo "hosed. You need to correct the situation manually using the rush version command. See docs/releases.md for a "
@@ -27,7 +27,7 @@ ${_RUSH} build
 # Bump package prerelease version
 # This command will retain current prerelease type and bump the number that follows it
 # Can thus be used to bump either alpha or beta or whatever else we will have.
-${_RUSH} version --bump --override-type prerelease
+${_RUSH} version --bump --override-type prerelease --override-prerelease-id ${PRERELEASE_ID}
 bump_rc=$?
 
 if [ $bump_rc -ne 0 ]; then
