@@ -4,7 +4,7 @@
     "author": "GoodData",
     "description": "GoodData SDK TypeScript skeleton",
     "repository": "git@github.com:gooddata/gooddata-ui-sdk.git",
-    "license": "BSD-3-Clause",
+    "license": "LicenseRef-LICENSE",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "bin": {

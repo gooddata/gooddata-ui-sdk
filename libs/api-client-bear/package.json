@@ -3,7 +3,7 @@
     "version": "8.0.0-alpha.106",
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
-    "license": "BSD-3-Clause",
+    "license": "LicenseRef-LICENSE",
     "main": "dist/gooddata-node.js",
     "browser": "dist/gooddata-browser.js",
     "typings": "dist/gooddata-browser.d.ts",

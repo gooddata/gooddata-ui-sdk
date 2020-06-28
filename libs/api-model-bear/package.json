@@ -28,6 +28,7 @@
     "files": [
         "dist",
         "src/index.ts",
+        "LICENSE",
         "README.md"
     ],
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-model-bear",
@@ -37,7 +38,7 @@
         "types"
     ],
     "author": "GoodData",
-    "license": "BSD-3-Clause",
+    "license": "LicenseRef-LICENSE",
     "dependencies": {
         "lodash": "^4.17.15",
         "tslib": "^2.0.0"

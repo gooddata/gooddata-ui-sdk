@@ -1,11 +1,11 @@
 {
     "name": "@gooddata/sdk-examples",
-    "version": "7.2.0-beta.19",
-    "description": "GoodData React Components Examples",
+    "version": "1.0.0-alpha.0",
+    "description": "GoodData.UI SDK - Examples",
     "private": true,
-    "repository": "git@github.com:gooddata/gooddata-ui-sdk.git",
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-examples",
     "author": "GoodData Corporation",
-    "license": "BSD-3-Clause",
+    "license": "LicenseRef-LICENSE",
     "files": [
         "dist",
         "src",
