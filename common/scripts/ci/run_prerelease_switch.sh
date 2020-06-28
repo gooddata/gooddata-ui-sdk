@@ -1,9 +1,20 @@
 #!/bin/bash
 
+#
+# This script switched to a different prerelease type and then triggers the publication. To rush, the 'prerelease'
+# id is opaque. We can send anything we want. We currently work with 'alpha' and 'beta'
+#
+# Note the strict version checking at the start. This is in place because trying to bump prerelease version
+# while the current version _is not_ prerelease has undesired effect: creates prerelease of next patch release.
+# In our context, we never want prerelease to create next patch release.
+#
+# See docs/releases.md for more information how rush version bump behaves
+#
+
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 _RUSH="${DIR}/docker_rush.sh"
 
-source ./utils.sh
+source ${DIR}/utils.sh
 
 version=$(get_current_version)
 is_prerelease=$(is_current_version_prerelease)
@@ -24,9 +35,6 @@ fi
 ${_RUSH} install
 ${_RUSH} build
 
-# Bump package prerelease version
-# This command will retain current prerelease type and bump the number that follows it
-# Can thus be used to bump either alpha or beta or whatever else we will have.
 ${_RUSH} version --bump --override-type prerelease --override-prerelease-id ${PRERELEASE_ID}
 bump_rc=$?
 
@@ -36,41 +44,4 @@ if [ $bump_rc -ne 0 ]; then
     exit 1
 fi
 
-# Perform dry-run first
-${_RUSH} publish --include-all
-dry_run_rc=$?
-
-if [ $dry_run_rc -ne 0 ]; then
-    echo "Publish dry run has failed. Stopping."
-
-    exit 1
-fi
-
-echo "Publishing to NPM"
-
-# All good, do the real thing
-${_RUSH} publish -n "${NPM_PUBLISH_TOKEN}" -p --include-all
-publish_rc=$?
-
-if [ $publish_rc -ne 0 ]; then
-    echo "Publication has failed. Stopping."
-
-    exit 1
-else
-    LIBRARY_VERSION=$(jq -r ".version" "libs/sdk-ui/package.json")
-
-    echo "Successfully published new version ${LIBRARY_VERSION}. Creating commit to document this."
-
-    # stage all modified json files
-    git ls-files | grep '\.json' | xargs git add
-    git commit -m "Release ${LIBRARY_VERSION}"
-
-    if [ ! -z "$SLACK_VARS_FILE" ]; then
-        echo "Slack integration seems available. Going to write $SLACK_VARS_FILE with params"
-
-        echo "LIBRARY_NAME=gooddata-ui-sdk" > $SLACK_VARS_FILE
-        echo "LIBRARY_VERSION=$LIBRARY_VERSION" >> $SLACK_VARS_FILE
-        echo "MESSAGE=just released *gooddata-ui-sdk@$LIBRARY_VERSION*" >> $SLACK_VARS_FILE
-    fi
-fi
-
+${DIR}/do_publish.sh
