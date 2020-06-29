@@ -22,6 +22,7 @@ import {
     IDataView,
     NotImplemented,
 } from "@gooddata/sdk-backend-spi";
+import isEqual from "lodash/isEqual";
 import {
     CustomBackendConfig,
     CustomBackendState,
@@ -88,7 +89,7 @@ class CustomPreparedExecution implements IPreparedExecution {
     };
 
     public equals = (other: IPreparedExecution): boolean => {
-        return this._fingerprint === other.fingerprint();
+        return isEqual(this.definition, other.definition);
     };
 
     public fingerprint = (): string => {

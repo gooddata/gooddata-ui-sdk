@@ -126,6 +126,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         }
 
         public UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
+            //  we need strict equality here in case only the buckets changed (not measures or attributes)
             if (!this.props.execution.equals(nextProps.execution)) {
                 this.initDataLoading(nextProps.execution);
             }
@@ -156,7 +157,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         private onError(error: GoodDataSdkError, execution = this.props.execution) {
             const { onExportReady } = this.props;
 
-            if (this.props.execution.equals(execution)) {
+            if (this.props.execution.fingerprint() === execution.fingerprint()) {
                 this.setState({ error: error.getMessage(), dataView: null });
                 this.onLoadingChanged({ isLoading: false });
 

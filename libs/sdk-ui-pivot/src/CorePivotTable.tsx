@@ -377,7 +377,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             return true;
         }
 
-        const prepExecutionSame = this.props.execution.equals(prevProps.execution);
+        const prepExecutionSame = this.props.execution.fingerprint() === prevProps.execution.fingerprint();
         const fingerprintSame = this.currentFingerprint === this.props.execution.fingerprint();
 
         return !prepExecutionSame && !fingerprintSame;
@@ -386,7 +386,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private onError(error: GoodDataSdkError, execution = this.props.execution) {
         const { onExportReady } = this.props;
 
-        if (this.props.execution.equals(execution)) {
+        if (this.props.execution.fingerprint() === execution.fingerprint()) {
             this.setState({ error: error.getMessage() });
 
             if (onExportReady) {

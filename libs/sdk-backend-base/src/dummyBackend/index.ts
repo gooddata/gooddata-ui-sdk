@@ -42,6 +42,7 @@ import {
     ObjRef,
     ISortItem,
 } from "@gooddata/sdk-model";
+import isEqual from "lodash/isEqual";
 import { AbstractExecutionFactory } from "../toolkit/execution";
 
 /**
@@ -295,7 +296,7 @@ function dummyPreparedExecution(
             return fp;
         },
         equals(other: IPreparedExecution): boolean {
-            return fp === other.fingerprint();
+            return isEqual(this.definition, other.definition);
         },
     };
 }

@@ -10,6 +10,7 @@ import {
     IExecutionDefinition,
     ISortItem,
 } from "@gooddata/sdk-model";
+import isEqual from "lodash/isEqual";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { BearExecutionResult } from "./executionResult";
@@ -62,7 +63,7 @@ export class BearPreparedExecution implements IPreparedExecution {
     }
 
     public equals(other: IPreparedExecution): boolean {
-        return this.fingerprint() === other.fingerprint();
+        return isEqual(this.definition, other.definition);
     }
 }
 

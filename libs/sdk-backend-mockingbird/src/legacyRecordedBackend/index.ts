@@ -40,6 +40,7 @@ import {
     ISortItem,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
+import isEqual = require("lodash/isEqual");
 
 const defaultConfig = { hostname: "test" };
 
@@ -296,7 +297,7 @@ function recordedPreparedExecution(
             return fp;
         },
         equals(other: IPreparedExecution): boolean {
-            return fp === other.fingerprint();
+            return isEqual(this.definition, other.definition);
         },
     };
 }

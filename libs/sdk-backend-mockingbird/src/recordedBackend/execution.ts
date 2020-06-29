@@ -27,6 +27,7 @@ import invariant from "ts-invariant";
 import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
 import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import flatMap = require("lodash/flatMap");
+import isEqual = require("lodash/isEqual");
 
 //
 //
@@ -110,7 +111,7 @@ function recordedPreparedExecution(
             return fp;
         },
         equals(other: IPreparedExecution): boolean {
-            return fp === other.fingerprint();
+            return isEqual(this.definition, other.definition);
         },
     };
 }
