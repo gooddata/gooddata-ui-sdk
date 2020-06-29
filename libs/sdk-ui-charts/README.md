@@ -2,7 +2,7 @@
 
 ## License
 
-(C) 2007-2020 GoodData Corporation
+(C) 2017-2020 GoodData Corporation
 
 This project is dual licensed:
 

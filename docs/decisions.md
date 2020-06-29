@@ -21,3 +21,8 @@ You can read more about package managers in [this article](https://rushjs.io/pag
 
 Also from a honest pragmatic point of view, Rush really only works well with PNMP; its Yarn support is experimental and
 while it can work with NPM it needs some ancient version :)
+
+## Layered Architecture
+
+This is typical choice when the requirement is to isolate implementation detail from the domain model. We need
+that to support multiple types of backends.

@@ -22,7 +22,7 @@ The main constraints - hard rules - in the architecture are:
 
 ### Naming conventions
 
--   All platform-specific API client packages (clients, models and the like) start with `gd-` prefix => **Layer 1 packages**
+-   All platform-specific API client packages (clients, models and the like) start with `api-` prefix => **Layer 1 packages**
 -   All SDK packages have `sdk-` prefix => **Layer 2 packages**
 -   All SDK packages which implement Analytical Backend SPI have `sdk-backend-` prefix => **Layer 2 packages**
 -   All SDK React packages have `sdk-ui-` prefix => **Layer 3 packages**
@@ -44,12 +44,12 @@ the same package MUST be imported directly. In other words: never import through
 
 ### Layer 1: API Clients and platform specific data models
 
-##### @gooddata/gd-bear-client
+##### @gooddata/api-client-bear
 
 REST API Client for the GoodData 'bear' platform is implemented here. When APIs used by frontend are added or updated
 in 'bear', they SHOULD be added or updated in this package.
 
-##### @gooddata/gd-bear-model
+##### @gooddata/api-model-bear
 
 Data types fundamental to bear's domain model SHOULD be implemented here, together with any and all functions
 needed to manipulate these types.
@@ -57,17 +57,10 @@ needed to manipulate these types.
 **Rule of thumb**: if you're writing a function whose first parameter is the type defined in this package, then it
 is highly likely that the function SHOULD be located here as well.
 
-##### @gooddata/gd-tiger-client
+##### @gooddata/api-client-tiger
 
-REST API Client for the GoodData 'tiger' platform is implemented here.
-
-##### @gooddata/gd-tiger-model
-
-Data types fundamental to tiger's domain model SHOULD be implemented here, together with any and all functions
-needed to manipulate these types.
-
-**Rule of thumb**: if you're writing a function whose first parameter is the type defined in this package, then it
-is highly likely that the function SHOULD be located here as well.
+REST API Client for the GoodData 'tiger' platform is implemented here. Majority of the client is generated from
+the OpenAPI documents supplied by tiger.
 
 ### Layer 2: Platform agnostic data model and backend interfaces
 
@@ -116,16 +109,10 @@ analytical applications.
 Packages in this group MUST NOT depend on any particular backend implementation. All interfacing with backend
 is done via the platform agnostic `sdk-model` and `sdk-backend-spi`.
 
-##### @gooddata/sdk-ui-base
+##### @gooddata/sdk-ui
 
-Low level functionality, utility functions and backend SPI wiring are implemented here.
-
-##### @gooddata/sdk-ui-highcharts-wrapper
-
-React wrappers for the Highcharts library are implemented here together with a host supporting functions.
-
-**Rule of thumb**: if you are writing code that in any way directly interfaces with the Highcharts library, then
-it is highly likely that this code SHOULD be located in this package.
+The bare minimum UI SDK. Essential providers, HOCs and low level React components such as Executor are implemented
+here. This is all that developer needs to implement completely custom visualizations.
 
 ##### @gooddata/sdk-ui-pivot
 
@@ -141,18 +128,23 @@ All our charts that use the Highcharts library (via our wrapper) are implemented
 
 ##### @gooddata/sdk-ui-filters
 
-React components that can be used to define attribute or measure filters are implemented here.
+React components that can be used to define attribute, date or measure filters are implemented here.
 
-##### @gooddata/sdk-ui-support
+##### @gooddata/sdk-ui-geo
 
-Non-visual, 'supporting' components... Executor, BucketExecutor and the like.
+React components that implement Geo charts.
+
+##### @gooddata/sdk-ui-vis-commons
+
+Code and components that are intended to be shared by different types of visualizations (e.g. legends, tooltips,
+coloring strategies etc)
 
 ##### @gooddata/sdk-ui-ext
 
 GoodData.UI extensions. Components and other code where we are not yet fully done is located here. This
 can be production code but with alpha-quality API, or non-production code that we produce for 'try outs'.
 
-##### @gooddata/sdk-ui
+##### @gooddata/sdk-ui-all
 
 Umbrella for all packages.
 
@@ -234,11 +226,62 @@ Here are couple of ground rules for this package:
 
 #### Testing strategy
 
-TBD
+1.  Unit tests to verify all the non-React code. We don't have to aim for 100% coverage. Trivial code that does not
+    implement essential algorithms does not have to be tested (e.g. people should not be testing getters and
+    setters).
 
-#### Reference Workspace
+    Dev hints:
 
-In order to standardize and simplify testing, all our tests SHOULD use same GoodData LDM and even further same testing
+    -   Use Jest snapshots to save typing expected result where applicable
+
+2.  Component tests for non-React code that works with data obtained from backend. Use standardized model and real
+    data captured from backend and stored in reference workspace.
+
+    Dev hints:
+
+    -   Use sdk-ui-tests to define new test scenarios and recordings for your tests
+
+3.  Component tests with enzyme for React components. The goal of these tests is to quickly 'smoke' the component
+    before more expensive tests kick in.
+
+    Dev hints:
+
+    -   Minimize the complexity of these tests
+    -   Do not test trivial stuff using complex mechanisms (e.g. testing that props are propagated using spies etc)
+    -   If you find yourself doing complex stuff -> redesign the code under test so that it can be tested easier (extract
+        function)
+    -   If you find yourself doing complex stuff and redesign is not possible and tests are crazy and flaky -> don't
+        do the component tests. Do the end-to-end tests.
+    -   Black-box testing
+
+4.  API Regression tests for publicly available React components and pluggable visualizations. The goal of these tests
+    is to quickly verify that there are no breaking API changes and that the same API leads to the same results
+    displayed to the user.
+
+    Dev hints:
+
+    -   Describe as many scenarios as possible
+
+5.  Visual Regression tests. The goal of these tests is to verify that using public API of a React components and
+    Pluggable Visualizations leads to expected visualization rendered in the browser.
+
+    Dev hints:
+
+    -   These tests are fairly cheap to create (share same infra as api regression tests)
+    -   However, they are orders of magnitude more expensive to execute (api regression suite with 2k tests runs for
+        30 sec, visual regression suite with ~1k tests runs for 3mins)
+
+6.  End-To-End tests. The goal of these tests is to verify (complex) interactions with a rendered React component or
+    Pluggable Visualization.
+
+    Dev hints:
+
+    -   The BackstopJS is now also usable for end-to-end tests. It is possible to write stories and easily specify
+        what things to click on the rendered component before taking the snapshot
+
+#### Reference Workspaces
+
+In order to standardize and simplify testing, all our tests SHOULD use same GoodData model and even further same testing
 data. The reference workspace and the tooling surrounding it sets the foundation to enable this and automate as many
 tasks as feasible.
 

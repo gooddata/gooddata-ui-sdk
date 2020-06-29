@@ -5,7 +5,7 @@
     "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-skel-tsx",
     "author": "GoodData Corporation",
-    "license": "BSD-3-Clause",
+    "license": "LicenseRef-LICENSE",
     "files": [
         "dist",
         "src",

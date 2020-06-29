@@ -4,7 +4,7 @@
     "author": "GoodData",
     "description": "GoodData Backend SPI abstraction interfaces",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-spi",
-    "license": "BSD-3-Clause",
+    "license": "LicenseRef-LICENSE",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [
