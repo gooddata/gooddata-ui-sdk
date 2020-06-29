@@ -25,18 +25,3 @@ function is_current_version_prerelease {
 
   echo "$retval"
 }
-
-#
-# Inspects value of NPM_ACCESS_LEVEL and returns either 'restricted' or 'public'. Will return 'public' if
-# the value in the env variable is 'public'; otherwise always falls back to 'restricted'
-#
-function get_sanitized_access_level {
-  retval="restricted"
-  case "$NPM_ACCESS_LEVEL" in
-    "public")
-      retval="public"
-      ;;
-  esac
-
-  echo "$retval"
-}

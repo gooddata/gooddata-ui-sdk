@@ -22,11 +22,6 @@
 # file name where script can output information that will then land in slack channel
 # optional; nothing happens
 #
-# NPM_ACCESS_LEVEL
-# indicate what access level to set for published packages. 'public' means packages will be visible
-# to everyone in the world. anything else and the access will be 'restricted' meaning packages only visible
-# to people with access to our org
-#
 
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 _RUSH="${DIR}/docker_rush.sh"
@@ -54,20 +49,11 @@ fi
 #
 # All good, do the real thing
 #
-access_level=$(get_sanitized_access_level)
+echo "Publishing to NPM"
 
-echo "Publishing to NPM. Package access level setting to: ${access_level}"
-
-publish_rc=1
-if [ "$access_level" == "public" ]; then
-  echo "Trigger rush public with set-access-level public"
-
-  ${_RUSH} publish -n "${NPM_PUBLISH_TOKEN}" -p --include-all --set-access-level public
-  publish_rc=$?
-else
-  ${_RUSH} publish -n "${NPM_PUBLISH_TOKEN}" -p --include-all
-  publish_rc=$?
-fi
+# forcing restricted access level; switch this to public
+${_RUSH} publish -n "${NPM_PUBLISH_TOKEN}" -p --include-all --set-access-level restricted
+publish_rc=$?
 
 if [ $publish_rc -ne 0 ]; then
     echo "Publication has failed. Stopping."
@@ -87,12 +73,6 @@ else
 
         echo "LIBRARY_NAME=gooddata-ui-sdk" > $SLACK_VARS_FILE
         echo "LIBRARY_VERSION=$LIBRARY_VERSION" >> $SLACK_VARS_FILE
-
-        if [ "$access_level" == "public" ]; then
-          echo "MESSAGE=just released *publicly available* version *gooddata-ui-sdk@$LIBRARY_VERSION*" >> $SLACK_VARS_FILE
-        else
-          echo "MESSAGE=just released *gooddata-ui-sdk@$LIBRARY_VERSION*" >> $SLACK_VARS_FILE
-        fi;
-
+        echo "MESSAGE=just released *gooddata-ui-sdk@$LIBRARY_VERSION*" >> $SLACK_VARS_FILE
     fi
 fi
