@@ -227,7 +227,7 @@ Here are couple of ground rules for this package:
 #### Testing strategy
 
 1.  Unit tests to verify all the non-React code. We don't have to aim for 100% coverage. Trivial code that does not
-    implement essential algorithms does not have to be tested (e.g. like people should not be testing getters and
+    implement essential algorithms does not have to be tested (e.g. people should not be testing getters and
     setters).
 
     Dev hints:
@@ -250,7 +250,7 @@ Here are couple of ground rules for this package:
     -   Do not test trivial stuff using complex mechanisms (e.g. testing that props are propagated using spies etc)
     -   If you find yourself doing complex stuff -> redesign the code under test so that it can be tested easier (extract
         function)
-    -   If you find yourself doing complex stuff and redesign is not possible and tests are crazy and flaxy -> don't
+    -   If you find yourself doing complex stuff and redesign is not possible and tests are crazy and flaky -> don't
         do the component tests. Do the end-to-end tests.
     -   Black-box testing
 

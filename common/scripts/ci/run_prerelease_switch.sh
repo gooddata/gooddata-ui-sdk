@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# This script switched to a different prerelease type and then triggers the publication. To rush, the 'prerelease'
+# This script switches to a different prerelease type and then triggers the publication. To rush, the 'prerelease'
 # id is opaque. We can send anything we want. We currently work with 'alpha' and 'beta'
 #
 # Note the strict version checking at the start. This is in place because trying to bump prerelease version

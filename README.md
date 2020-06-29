@@ -4,11 +4,11 @@
 
 This repository contains the beta version of the upcoming 8.0.0 release of GoodData.UI SDK. While the beta version is
 at this point 99% feature-complete it is still undergoing testing and there are known defects. It is not suitable for
-production use.
+production use. The exported APIs are still subject to breaking changes even if they are marked as public.
 
 ## Getting Started
 
-Easiest way to start developing analytical applications using GoodData.UI SDK is to use
+The easiest way to start developing analytical applications using GoodData.UI SDK is to use
 the [Accelerator Toolkit for v8](https://github.com/gooddata/gooddata-create-gooddata-react-app/tree/sdk8). You will
 be up and running in minutes.
 
