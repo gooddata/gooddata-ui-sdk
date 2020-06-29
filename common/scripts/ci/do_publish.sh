@@ -43,6 +43,14 @@ dry_run_rc=$?
 if [ $dry_run_rc -ne 0 ]; then
     echo "Publish dry run has failed. Stopping."
 
+    if [ ! -z "$SLACK_VARS_FILE" ]; then
+        echo "Slack integration seems available. Going to write $SLACK_VARS_FILE with params"
+
+        echo "LIBRARY_NAME=gooddata-ui-sdk" > $SLACK_VARS_FILE
+        echo "LIBRARY_VERSION=$LIBRARY_VERSION" >> $SLACK_VARS_FILE
+        echo "MESSAGE=just failed doing dry-run of release *gooddata-ui-sdk@$LIBRARY_VERSION* - keep calm and investigate, this was just dry-run" >> $SLACK_VARS_FILE
+    fi
+
     exit 1
 fi
 
@@ -57,6 +65,14 @@ publish_rc=$?
 
 if [ $publish_rc -ne 0 ]; then
     echo "Publication has failed. Stopping."
+
+    if [ ! -z "$SLACK_VARS_FILE" ]; then
+        echo "Slack integration seems available. Going to write $SLACK_VARS_FILE with params"
+
+        echo "LIBRARY_NAME=gooddata-ui-sdk" > $SLACK_VARS_FILE
+        echo "LIBRARY_VERSION=$LIBRARY_VERSION" >> $SLACK_VARS_FILE
+        echo "MESSAGE=just *FAILED* releasing *gooddata-ui-sdk@$LIBRARY_VERSION* :hocho: ; it is highly likely that some packages were published and some were not." >> $SLACK_VARS_FILE
+    fi
 
     exit 1
 else
