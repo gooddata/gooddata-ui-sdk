@@ -31,6 +31,11 @@ if [ ! $is_prerelease -eq 0 ]; then
   exit 1
 fi
 
+if [ -z $PRERELEASE_ID ]; then
+  echo "You did not specify prerelease identifier."
+  exit 1
+fi
+
 
 ${_RUSH} install
 ${_RUSH} build
