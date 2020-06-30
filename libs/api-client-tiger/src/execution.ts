@@ -33,10 +33,10 @@ export const tigerExecutionClientFactory = (axios: AxiosInstance) => {
      */
     const executionResult = (
         resultId: string,
-        size?: number[],
         offset?: number[],
+        size?: number[],
     ): Promise<Execution.IExecutionResult> => {
-        const params = { size: size && size.join(","), offset: offset && offset.join(",") };
+        const params = { limit: size && size.join(","), offset: offset && offset.join(",") };
 
         return axios
             .get(`/api/result/${resultId}`, { params })
