@@ -4,13 +4,13 @@ import {
     DataValue,
     IDataView,
     IDimensionDescriptor,
+    IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
     IPreparedExecution,
     IResultHeader,
     NoDataError,
-    NotImplemented,
     NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
@@ -48,6 +48,7 @@ export class TigerExecutionResult implements IExecutionResult {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
+        private readonly executionFactory: IExecutionFactory,
         readonly execResponse: Execution.IExecutionResponse,
         private readonly dateFormatter: DateFormatter,
     ) {
@@ -74,7 +75,7 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public transform(): IPreparedExecution {
-        throw new NotImplemented("not yet implemented");
+        return this.executionFactory.forDefinition(this.definition);
     }
 
     public async export(_options: IExportConfig): Promise<IExportResult> {

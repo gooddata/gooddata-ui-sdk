@@ -6,6 +6,7 @@
 
 import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
+import { ISortItem } from '@gooddata/sdk-model';
 
 // @public
 export interface AFM {
@@ -8082,20 +8083,11 @@ export namespace ExecuteAFM {
         values: string[];
     }
     // (undocumented)
-    export interface IAttributeLocatorItem {
+    export interface IAttributeSortKey {
         // (undocumented)
-        attributeLocatorItem: {
-            attributeIdentifier: ILocalIdentifierQualifier;
-            element: string;
-        };
-    }
-    // (undocumented)
-    export interface IAttributeSortItem {
-        // (undocumented)
-        attributeSortItem: {
+        attribute: {
+            attributeIdentifier: string;
             direction: SortDirection;
-            attributeIdentifier: ILocalIdentifierQualifier;
-            aggregation?: "sum";
         };
     }
     // (undocumented)
@@ -8115,7 +8107,25 @@ export namespace ExecuteAFM {
         // (undocumented)
         itemIdentifiers: Identifier[];
         // (undocumented)
+        localIdentifier: string;
+        // (undocumented)
+        sorting?: SortKey[];
+        // (undocumented)
         totals?: ITotalItem[];
+    }
+    // (undocumented)
+    export interface IDimensionItemValue {
+        // (undocumented)
+        itemIdentifier: string;
+        // (undocumented)
+        itemValue: string;
+    }
+    // (undocumented)
+    export interface IDimensionLocator {
+        // (undocumented)
+        dimensionIdentifier: string;
+        // (undocumented)
+        locator: IDimensionItemValue[];
     }
     // (undocumented)
     export interface IExecution {
@@ -8146,21 +8156,6 @@ export namespace ExecuteAFM {
         format?: string;
         // (undocumented)
         localIdentifier: Identifier;
-    }
-    // (undocumented)
-    export interface IMeasureLocatorItem {
-        // (undocumented)
-        measureLocatorItem: {
-            measureIdentifier: ILocalIdentifierQualifier;
-        };
-    }
-    // (undocumented)
-    export interface IMeasureSortItem {
-        // (undocumented)
-        measureSortItem: {
-            direction: SortDirection;
-            locators: LocatorItem[];
-        };
     }
     // (undocumented)
     export interface INativeTotalItem {
@@ -8256,8 +8251,6 @@ export namespace ExecuteAFM {
     export interface IResultSpec {
         // (undocumented)
         dimensions?: IDimension[];
-        // (undocumented)
-        sorts?: SortItem[];
     }
     // (undocumented)
     export interface ISimpleMeasure {
@@ -8285,7 +8278,13 @@ export namespace ExecuteAFM {
         type: TotalType;
     }
     // (undocumented)
-    export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
+    export interface IValueSortKey {
+        // (undocumented)
+        value: {
+            direction: SortDirection;
+            dataColumnLocators: IDimensionLocator[];
+        };
+    }
     // (undocumented)
     export type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IOverPeriodMeasureDefinition | IPreviousPeriodMeasureDefinition;
     // (undocumented)
@@ -8297,9 +8296,9 @@ export namespace ExecuteAFM {
     // (undocumented)
     export type SimpleMeasureAggregation = "SUM" | "COUNT" | "AVG" | "MIN" | "MAX" | "MEDIAN" | "RUNSUM";
     // (undocumented)
-    export type SortDirection = "asc" | "desc";
+    export type SortDirection = "ASC" | "DESC";
     // (undocumented)
-    export type SortItem = IAttributeSortItem | IMeasureSortItem;
+    export type SortKey = IAttributeSortKey | IValueSortKey;
     // (undocumented)
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
     const // (undocumented)
@@ -9396,7 +9395,7 @@ export namespace VisualizationObject {
             visualizationUrl: string;
             buckets: IBucket[];
             filters: ExecuteAFM.FilterItem[];
-            sorts: ExecuteAFM.SortItem[];
+            sorts: ISortItem[];
             properties: VisualizationProperties;
         };
     }

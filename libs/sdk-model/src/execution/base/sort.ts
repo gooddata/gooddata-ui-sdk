@@ -152,13 +152,13 @@ export function isMeasureLocator(obj: any): obj is IMeasureLocatorItem {
 }
 
 //
-// Non-public functions
+// Public functions
 //
 
 /**
  * Categorized collection of entity (object) identifiers referenced by a sort item.
  *
- * @internal
+ * @public
  */
 export type SortEntityIds = {
     allIdentifiers: Identifier[];
@@ -204,10 +204,6 @@ export function sortEntityIds(sort: ISortItem): SortEntityIds {
 
     return res;
 }
-
-//
-// Public functions
-//
 
 /**
  * Creates a new attribute sort - sorting the result by values of the provided attribute's elements. The attribute
