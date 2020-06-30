@@ -23,7 +23,6 @@ start_wiremocks () {
   _WIREMOCK_START="${WIREMOCK_DIR}/start_wiremock.sh"
   _WIREMOCK_STOP="${WIREMOCK_DIR}/stop_wiremock.sh"
 
-  docker network prune -f
   docker network create ${WIREMOCK_NET} || { echo "Network creation failed" && exit 1 ; }
 
   $_WIREMOCK_START detached
