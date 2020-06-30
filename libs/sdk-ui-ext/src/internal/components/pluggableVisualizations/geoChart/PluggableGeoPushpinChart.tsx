@@ -48,6 +48,7 @@ import {
     newBucket,
     ObjRef,
     uriRef,
+    attributeAlias,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { IGeoConfig, CoreGeoChart, getGeoChartDimensions } from "@gooddata/sdk-ui-geo";
@@ -245,19 +246,23 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
             const locationBucket = insightBucket(insight, BucketNames.LOCATION);
             let ref: ObjRef = idRef(tooltipText, "displayForm");
+            let alias = "";
 
             if (locationBucket) {
                 const attribute = bucketAttribute(locationBucket);
+                if (attribute) {
+                    alias = attributeAlias(attribute);
 
-                if (attribute && isUriRef(attributeDisplayFormRef(attribute))) {
-                    ref = uriRef(tooltipText);
+                    if (isUriRef(attributeDisplayFormRef(attribute))) {
+                        ref = uriRef(tooltipText);
+                    }
                 }
             }
 
             buckets.push(
                 newBucket(
                     BucketNames.TOOLTIP_TEXT,
-                    newAttribute(ref, (m) => m.localId("tooltipText_df")),
+                    newAttribute(ref, (m) => m.localId("tooltipText_df").alias(alias)),
                 ),
             );
         }
