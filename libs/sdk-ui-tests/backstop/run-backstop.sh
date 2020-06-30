@@ -15,7 +15,6 @@ GID=$(id -g)
 
 echo "Creating docker network for the storybook & backstop to share: ${BACKSTOP_NET}"
 
-docker network prune -f
 docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && exit 1 ; }
 
 {
