@@ -10,6 +10,7 @@ import {
     IExecutionDefinition,
     ISortItem,
 } from "@gooddata/sdk-model";
+import isEqual = require("lodash/isEqual");
 import { TigerExecutionResult } from "./executionResult";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
@@ -52,7 +53,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public equals(other: IPreparedExecution): boolean {
-        return this.fingerprint() === other.fingerprint();
+        return isEqual(this.definition, other.definition);
     }
 }
 

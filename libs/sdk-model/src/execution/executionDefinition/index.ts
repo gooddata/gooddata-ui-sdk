@@ -159,7 +159,7 @@ export function defSetDimensions(
  * The contract and the approximate nature of the fingerprint can be described as follows:
  *
  * -  If two execution definitions have the same fingerprint, then they definitely are effectively the same
- *    and backend will perform the same computation for them.
+ *    from the result calculation point of view and the backend will perform the same computation for them.
  *
  * -  If two execution definition have different fingerprint, they MAY OR MAY NOT lead to different execution. Or
  *    more concrete: two executions with two different fingerprints MAY lead to the same execution and same results.

@@ -145,14 +145,18 @@ export interface IPreparedExecution {
     execute(): Promise<IExecutionResult>;
 
     /**
-     * Tests whether this execution and the other execution are the same.
+     * Tests whether this execution and the other execution are the same. This effectively means that
+     * their definitions are deeply equal.
+     *
+     * If you are only concerned with the equality from the result calculation point of view,
+     * consider comparing fingerprints instead.
      *
      * @param other - another execution
      */
     equals(other: IPreparedExecution): boolean;
 
     /**
-     * Fingerprint of this prepared execution - this is effectivelly fingerprint of the execution
+     * Fingerprint of this prepared execution - this is effectively the fingerprint of the execution
      * definition underlying this instance of Prepared Execution.
      */
     fingerprint(): string;

@@ -115,11 +115,11 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
         private isSameData(execution?: IPreparedExecution, nextExecution?: IPreparedExecution): boolean {
             if (!execution || !nextExecution) {
                 // one of data views is undefined. just test if the other one is also undefined, otherwise
-                // data is definitelly different
+                // data is definitely different
                 return execution === nextExecution;
             }
 
-            return execution.equals(nextExecution);
+            return execution.fingerprint() === nextExecution.fingerprint();
         }
     }
 
