@@ -35,7 +35,7 @@ fi
 ${_RUSH} install
 ${_RUSH} build
 
-${_RUSH} version --bump --override-type prerelease
+${_RUSH} version --bump --override-bump prerelease
 bump_rc=$?
 
 if [ $bump_rc -ne 0 ]; then
