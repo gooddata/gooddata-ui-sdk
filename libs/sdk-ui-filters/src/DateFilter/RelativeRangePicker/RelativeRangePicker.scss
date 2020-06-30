@@ -1,7 +1,5 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 @import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
-
-$gd-relative-range-picker-picker-width: 180px;
 
 .gd-relative-range-picker {
     position: relative;
@@ -9,12 +7,6 @@ $gd-relative-range-picker-picker-width: 180px;
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
-
-    .gd-dynamic-select-input-wrapper {
-        @media #{$medium-up} {
-            width: $gd-relative-range-picker-picker-width;
-        }
-    }
 
     &-picker {
         flex: 1 1 auto;

@@ -401,7 +401,6 @@ export class AttributeDropdownCore extends React.PureComponent<
             searchString,
             totalCount,
         } = this.state;
-        const { isMobile, fullscreenOnMobile } = this.props;
 
         const shouldDisableApplyButton = error || isLoading || (validElements && !validElements.items.length);
         const hasTriedToLoadData = validElements && validElements.items;
@@ -412,7 +411,6 @@ export class AttributeDropdownCore extends React.PureComponent<
                 isLoading={!hasTriedToLoadData && isLoading}
                 items={validElements ? this.emptyValueItems(validElements.items) : []}
                 isInverted={isInverted}
-                isFullWidth={fullscreenOnMobile && isMobile}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}
                 totalCount={totalCount ?? LIMIT}
