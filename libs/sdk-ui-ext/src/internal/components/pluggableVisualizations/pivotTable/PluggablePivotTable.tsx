@@ -4,7 +4,6 @@ import flatMap = require("lodash/flatMap");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
 import isNil = require("lodash/isNil");
-import merge = require("lodash/merge");
 import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import {
     attributeLocalId,
@@ -257,10 +256,9 @@ export function addDefaultSort(
 }
 
 export class PluggablePivotTable extends AbstractPluggableVisualization {
-    private featureFlags: ISettings;
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
-    private readonly settings?: ISettings;
+    private readonly settings: ISettings;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -340,7 +338,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         );
 
         const controlsObj =
-            isManualResizingEnabled(this.featureFlags) || columnWidths.length > 0
+            isManualResizingEnabled(this.settings) || columnWidths.length > 0
                 ? {
                       controls: {
                           columnWidths,
@@ -375,7 +373,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     private createCorePivotTableProps = () => {
-        const onColumnResized = isManualResizingEnabled(this.featureFlags) ? this.onColumnResized : undefined;
+        const onColumnResized = isManualResizingEnabled(this.settings) ? this.onColumnResized : undefined;
 
         return {
             intl: this.intl,
@@ -413,7 +411,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         );
 
         const tableConfig: IPivotTableConfig = {
-            ...createPivotTableConfig(config, this.environment, this.featureFlags, columnWidths),
+            ...createPivotTableConfig(config, this.environment, this.settings, columnWidths),
             ...customVisualizationConfig,
         };
 
