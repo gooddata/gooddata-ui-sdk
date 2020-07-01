@@ -2,6 +2,8 @@
     "extends": "./tsconfig.json",
     "include": ["src/index.ts"],
     "compilerOptions": {
-        "noImplicitAny": true
+        "noImplicitAny": true,
+        "baseUrl": null,
+        "paths": null
     }
 }

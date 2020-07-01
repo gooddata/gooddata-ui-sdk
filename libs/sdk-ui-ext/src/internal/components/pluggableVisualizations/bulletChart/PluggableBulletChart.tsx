@@ -29,6 +29,7 @@ import { getReferencePointWithSupportedProperties } from "../../../utils/propert
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { transformBuckets } from "./bucketHelper";
+import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableBulletChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -56,7 +57,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         newReferencePoint = configurePercent(newReferencePoint, true);
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags.enableWeekFilters,
+            !!this.featureFlags[SettingCatalog.enableWeekFilters],
         );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,

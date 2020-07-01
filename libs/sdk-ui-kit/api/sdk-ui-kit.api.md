@@ -7,7 +7,9 @@
 import { ISeparators } from '@gooddata/sdk-ui';
 import * as React_2 from 'react';
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IFormatPreset" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface IFormatPreset {
     // (undocumented)
     format: string | null;
@@ -23,7 +25,9 @@ export interface IFormatPreset {
     type?: PresetType;
 }
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IFormatTemplate" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface IFormatTemplate {
     // (undocumented)
     format: string;
@@ -33,7 +37,9 @@ export interface IFormatTemplate {
     name: string;
 }
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IOffset" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface IOffset {
     // (undocumented)
     x?: number;
@@ -41,7 +47,9 @@ export interface IOffset {
     y?: number;
 }
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IPositioning" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface IPositioning {
     // (undocumented)
     offset?: IOffset;
@@ -49,7 +57,9 @@ export interface IPositioning {
     snapPoints: ISnapPoints;
 }
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "ISnapPoints" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface ISnapPoints {
     // (undocumented)
     child: SnapPoint;
@@ -57,7 +67,9 @@ export interface ISnapPoints {
     parent: SnapPoint;
 }
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "ISyntaxHighlightingInputProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface ISyntaxHighlightingInputProps {
     // (undocumented)
     className?: string;
@@ -73,7 +85,9 @@ export interface ISyntaxHighlightingInputProps {
     value: string;
 }
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IToggleButtonProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface IToggleButtonProps {
     // (undocumented)
     isOpened: boolean;
@@ -84,20 +98,25 @@ export interface IToggleButtonProps {
 }
 
 // Warning: (ae-forgotten-export) The symbol "IMeasureNumberFormatOwnProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-internal-missing-underscore) The name "MeasureNumberFormat" should be prefixed with an underscore because the declaration is marked as @internal
 //
-// @alpha (undocumented)
+// @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
     render(): JSX.Element;
 }
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "PresetType" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
 }
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "SnapPoint" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export enum SnapPoint {
     // (undocumented)
     BottomCenter = "bc",
@@ -119,7 +138,9 @@ export enum SnapPoint {
     TopRight = "tr"
 }
 
-// @alpha (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "SyntaxHighlightingInput" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 
 

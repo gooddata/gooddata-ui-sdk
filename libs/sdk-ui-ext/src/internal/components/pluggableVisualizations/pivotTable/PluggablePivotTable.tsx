@@ -5,7 +5,7 @@ import get = require("lodash/get");
 import includes = require("lodash/includes");
 import isNil = require("lodash/isNil");
 import merge = require("lodash/merge");
-import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import {
     attributeLocalId,
     bucketAttributes,
@@ -322,7 +322,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         setPivotTableUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE);
         configurePercent(newReferencePoint, false);
-        configureOverTimeComparison(newReferencePoint, !!this.settings?.enableWeekFilters);
+        configureOverTimeComparison(newReferencePoint, !!this.settings?.[SettingCatalog.enableWeekFilters]);
         Object.assign(
             newReferencePoint,
             getReferencePointWithSupportedProperties(newReferencePoint, this.supportedPropertiesList),

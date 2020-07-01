@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2020 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
@@ -176,7 +176,7 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
 const MeasureNumberFormatWithIntl = injectIntl(WrappedMeasureNumberFormat);
 
 /**
- * @alpha
+ * @internal
  */
 export class MeasureNumberFormat extends React.PureComponent<IMeasureNumberFormatOwnProps> {
     public render() {

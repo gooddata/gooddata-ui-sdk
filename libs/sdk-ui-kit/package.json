@@ -1,14 +1,15 @@
 {
     "name": "@gooddata/sdk-ui-kit",
     "version": "8.0.0-beta.3",
-    "description": "GoodData SDK TypeScript & React skeleton",
+    "description": "GoodData SDK - UI Building Components",
     "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-kit",
     "author": "GoodData Corporation",
-    "license": "BSD-3-Clause",
+    "license": "LicenseRef-LICENSE",
     "files": [
         "dist",
         "src",
+        "styles",
         "LICENSE"
     ],
     "config": {
@@ -16,6 +17,7 @@
     },
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
+        "prepublishOnly": "npm run build",
         "build": "bash scripts/build.sh && npm run api-extractor",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build-dev": "bash scripts/build.sh --dev",
@@ -28,7 +30,7 @@
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.js --output-type err-html src/ >./ci/results/dep-cruiser.html",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "validate": "npm run dep-cruiser && npm run tslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },

@@ -2,7 +2,7 @@
 import * as React from "react";
 
 /**
- * @alpha
+ * @internal
  */
 export interface IFormatPreset {
     name: string;
@@ -14,14 +14,14 @@ export interface IFormatPreset {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export enum PresetType {
     CUSTOM_FORMAT = "customFormat",
 }
 
 /**
- * @alpha
+ * @internal
  */
 export interface IToggleButtonProps {
     text: string;
@@ -30,7 +30,7 @@ export interface IToggleButtonProps {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export interface IFormatTemplate {
     localIdentifier: string;

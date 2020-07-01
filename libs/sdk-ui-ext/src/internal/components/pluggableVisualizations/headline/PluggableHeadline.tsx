@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasDataDefined } from "@gooddata/sdk-model";
 
 import { BucketNames, GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -102,7 +102,8 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         }
 
         configurePercent(newReferencePoint, true);
-        configureOverTimeComparison(newReferencePoint, !!this.settings?.enableWeekFilters);
+
+        configureOverTimeComparison(newReferencePoint, !!this.settings?.[SettingCatalog.enableWeekFilters]);
 
         newReferencePoint.uiConfig = getHeadlineUiConfig(newReferencePoint, this.intl);
         newReferencePoint = getReferencePointWithSupportedProperties(

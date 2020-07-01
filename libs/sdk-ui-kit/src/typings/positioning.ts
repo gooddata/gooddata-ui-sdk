@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 
 /**
- * @alpha
+ * @internal
  */
 export enum SnapPoint {
     TopLeft = "tl",
@@ -16,7 +16,7 @@ export enum SnapPoint {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export interface ISnapPoints {
     parent: SnapPoint;
@@ -24,7 +24,7 @@ export interface ISnapPoints {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export interface IOffset {
     x?: number;
@@ -32,7 +32,7 @@ export interface IOffset {
 }
 
 /**
- * @alpha
+ * @internal
  */
 export interface IPositioning {
     snapPoints: ISnapPoints;

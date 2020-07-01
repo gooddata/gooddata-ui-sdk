@@ -46,6 +46,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import negate = require("lodash/negate");
 import set = require("lodash/set");
+import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableAreaChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -82,7 +83,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         newReferencePoint = configurePercent(newReferencePoint, false);
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags.enableWeekFilters,
+            !!this.featureFlags[SettingCatalog.enableWeekFilters],
         );
 
         this.supportedPropertiesList = removeImmutableOptionalStackingProperties(

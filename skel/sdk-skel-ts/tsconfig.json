@@ -1,17 +1,22 @@
 {
+    "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
     "compilerOptions": {
-        "esModuleInterop": true,
-        "target": "es5",
-        "module": "commonjs",
-        "lib": ["es6", "dom"],
-        "importHelpers": true,
         "declaration": true,
-        "outDir": "./dist",
-        "strict": true,
+        "target": "es5",
+        "jsx": "react",
+        "lib": ["es7", "dom"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "importHelpers": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noImplicitReturns": true
+        "outDir": "dist",
+        "sourceMap": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".."
     },
-    "exclude": ["node_modules", "dist"]
+    "compileOnSave": false,
+    "exclude": ["node_modules", "dist", "**/__mocks__/**/*"]
 }

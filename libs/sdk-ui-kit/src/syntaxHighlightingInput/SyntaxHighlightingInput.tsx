@@ -17,7 +17,7 @@ const defaultOptions = {
 };
 
 /**
- * @alpha
+ * @internal
  */
 export interface ISyntaxHighlightingInputProps {
     value: string;
@@ -46,7 +46,7 @@ const findCursorIndexAcrossMultipleLines = (
 };
 
 /**
- * @alpha
+ * @internal
  */
 export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = (props) => {
     const { value, onChange, onCursor, formatting, customOptions, className } = props;
