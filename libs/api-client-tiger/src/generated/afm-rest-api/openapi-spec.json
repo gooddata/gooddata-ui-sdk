@@ -6,8 +6,8 @@
     },
     "servers": [
         {
-            "url": "https://staging.anywhere.gooddata.com",
-            "description": "Generated server url"
+            "url": "/",
+            "description": "GoodData Anywhere endpoint"
         }
     ],
     "paths": {
@@ -116,8 +116,8 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "default": "ASC",
-                            "enum": ["ASC", "DESC"]
+                            "enum": ["ASC", "DESC"],
+                            "default": "ASC"
                         }
                     },
                     {
@@ -236,6 +236,28 @@
                     }
                 }
             },
+            "ArithmeticMeasureDefinition": {
+                "required": ["arithmeticMeasure"],
+                "type": "object",
+                "properties": {
+                    "arithmeticMeasure": {
+                        "required": ["measureIdentifiers", "operator"],
+                        "type": "object",
+                        "properties": {
+                            "measureIdentifiers": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/LocalIdentifier"
+                                }
+                            },
+                            "operator": {
+                                "type": "string",
+                                "enum": ["SUM", "DIFFERENCE", "MULTIPLICATION", "RATIO", "CHANGE"]
+                            }
+                        }
+                    }
+                }
+            },
             "AttributeItem": {
                 "required": ["displayForm", "localIdentifier"],
                 "type": "object",
@@ -244,7 +266,7 @@
                         "type": "string"
                     },
                     "displayForm": {
-                        "type": "string"
+                        "$ref": "#/components/schemas/ObjectIdentifier"
                     },
                     "alias": {
                         "type": "string"
@@ -264,10 +286,264 @@
                 }
             },
             "FilterDefinition": {
-                "type": "object"
+                "type": "object",
+                "description": "Abstract filter definition type",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/InlineFilterDefinition"
+                    }
+                ]
+            },
+            "AttributeFilter": {
+                "type": "object",
+                "description": "Abstract filter definition type attributes",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/PositiveAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/NegativeAttributeFilter"
+                    }
+                ]
+            },
+            "PositiveAttributeFilter": {
+                "required": ["positiveAttributeFilter"],
+                "type": "object",
+                "properties": {
+                    "positiveAttributeFilter": {
+                        "required": ["displayForm", "in"],
+                        "type": "object",
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            },
+                            "in": {
+                                "$ref": "#/components/schemas/AttributeFilterElements"
+                            }
+                        }
+                    }
+                }
+            },
+            "NegativeAttributeFilter": {
+                "required": ["negativeAttributeFilter"],
+                "type": "object",
+                "properties": {
+                    "negativeAttributeFilter": {
+                        "required": ["displayForm", "notIn"],
+                        "type": "object",
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            },
+                            "notIn": {
+                                "$ref": "#/components/schemas/AttributeFilterElements"
+                            }
+                        }
+                    }
+                }
+            },
+            "MeasureValueFilter": {
+                "type": "object",
+                "description": "Abstract filter definition type for measure values",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                    }
+                ]
+            },
+            "ComparisonMeasureValueFilter": {
+                "required": ["comparisonMeasureValueFilter"],
+                "type": "object",
+                "properties": {
+                    "comparisonMeasureValueFilter": {
+                        "required": ["measure", "operator", "value"],
+                        "type": "object",
+                        "properties": {
+                            "measure": {
+                                "$ref": "#/components/schemas/Identifier"
+                            },
+                            "operator": {
+                                "type": "string",
+                                "enum": [
+                                    "GREATER_THAN",
+                                    "GREATER_THAN_OR_EQUAL_TO",
+                                    "LESS_THAN",
+                                    "LESS_THAN_OR_EQUAL_TO",
+                                    "EQUAL_TO",
+                                    "NOT_EQUAL_TO"
+                                ]
+                            },
+                            "value": {
+                                "type": "number"
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            },
+            "RangeMeasureValueFilter": {
+                "required": ["rangeMeasureValueFilter"],
+                "type": "object",
+                "properties": {
+                    "rangeMeasureValueFilter": {
+                        "required": ["from", "measure", "operator", "to"],
+                        "type": "object",
+                        "properties": {
+                            "measure": {
+                                "$ref": "#/components/schemas/Identifier"
+                            },
+                            "operator": {
+                                "type": "string",
+                                "enum": ["BETWEEN", "NOT_BETWEEN"]
+                            },
+                            "from": {
+                                "type": "number"
+                            },
+                            "to": {
+                                "type": "number"
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            },
+            "DateFilter": {
+                "type": "object",
+                "description": "Abstract filter definition type for dates",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AbsoluteDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RelativeDateFilter"
+                    }
+                ]
+            },
+            "AbsoluteDateFilter": {
+                "required": ["absoluteDateFilter"],
+                "type": "object",
+                "properties": {
+                    "absoluteDateFilter": {
+                        "required": ["dataset", "from", "to"],
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            },
+                            "from": {
+                                "type": "string",
+                                "format": "date"
+                            },
+                            "to": {
+                                "type": "string",
+                                "format": "date"
+                            }
+                        }
+                    }
+                }
+            },
+            "RelativeDateFilter": {
+                "required": ["relativeDateFilter"],
+                "type": "object",
+                "properties": {
+                    "relativeDateFilter": {
+                        "required": ["dataset", "from", "granularity", "to"],
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            },
+                            "granularity": {
+                                "type": "string"
+                            },
+                            "from": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "to": {
+                                "type": "integer",
+                                "format": "int32"
+                            }
+                        }
+                    }
+                }
+            },
+            "InlineFilterDefinition": {
+                "required": ["inline"],
+                "type": "object",
+                "properties": {
+                    "inline": {
+                        "required": ["filter"],
+                        "type": "object",
+                        "properties": {
+                            "filter": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "FilterDefinitionForSimpleMeasure": {
+                "type": "object",
+                "description": "Abstract filter definition type for simple measure",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/DateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AttributeFilter"
+                    }
+                ]
+            },
+            "AttributeFilterElements": {
+                "required": ["values"],
+                "type": "object",
+                "properties": {
+                    "values": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
             },
             "MeasureDefinition": {
-                "type": "object"
+                "type": "object",
+                "description": "Abstract measure definition type",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/InlineMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ArithmeticMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/SimpleMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PopDateMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PopDatasetMeasureDefinition"
+                    }
+                ]
             },
             "MeasureItem": {
                 "required": ["definition", "localIdentifier"],
@@ -287,6 +563,74 @@
                     }
                 }
             },
+            "PopDataset": {
+                "required": ["dataset", "periodsAgo"],
+                "type": "object",
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/ObjectIdentifier"
+                    },
+                    "periodsAgo": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "PopDatasetMeasureDefinition": {
+                "required": ["previousPeriodMeasure"],
+                "type": "object",
+                "properties": {
+                    "previousPeriodMeasure": {
+                        "required": ["dateDatasets", "measureIdentifier"],
+                        "type": "object",
+                        "properties": {
+                            "measureIdentifier": {
+                                "$ref": "#/components/schemas/LocalIdentifier"
+                            },
+                            "dateDatasets": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/PopDataset"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PopDate": {
+                "required": ["attribute", "periodsAgo"],
+                "type": "object",
+                "properties": {
+                    "attribute": {
+                        "$ref": "#/components/schemas/ObjectIdentifier"
+                    },
+                    "periodsAgo": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "PopDateMeasureDefinition": {
+                "required": ["overPeriodMeasure"],
+                "type": "object",
+                "properties": {
+                    "overPeriodMeasure": {
+                        "required": ["dateAttributes", "measureIdentifier"],
+                        "type": "object",
+                        "properties": {
+                            "measureIdentifier": {
+                                "$ref": "#/components/schemas/LocalIdentifier"
+                            },
+                            "dateAttributes": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/PopDate"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "ResultSpec": {
                 "required": ["dimensions"],
                 "type": "object",
@@ -295,6 +639,88 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/Dimension"
+                        }
+                    }
+                }
+            },
+            "SimpleMeasureDefinition": {
+                "required": ["measure"],
+                "type": "object",
+                "properties": {
+                    "measure": {
+                        "required": ["item"],
+                        "type": "object",
+                        "properties": {
+                            "item": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            },
+                            "aggregation": {
+                                "type": "string",
+                                "enum": ["SUM", "COUNT", "AVG", "MIN", "MAX", "MEDIAN", "RUNSUM"]
+                            },
+                            "computeRatio": {
+                                "type": "boolean"
+                            },
+                            "filters": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Identifier": {
+                "type": "object",
+                "description": "Abstract identifier type",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/ObjectIdentifier"
+                    },
+                    {
+                        "$ref": "#/components/schemas/LocalIdentifier"
+                    }
+                ]
+            },
+            "ObjectIdentifier": {
+                "required": ["identifier"],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["id", "type"],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "LocalIdentifier": {
+                "required": ["localIdentifier"],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "type": "string"
+                    }
+                }
+            },
+            "InlineMeasureDefinition": {
+                "required": ["inline"],
+                "type": "object",
+                "properties": {
+                    "inline": {
+                        "required": ["maql"],
+                        "type": "object",
+                        "properties": {
+                            "maql": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
