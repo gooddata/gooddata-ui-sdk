@@ -42,7 +42,14 @@
             }
         ],
         "filters": [],
-        "sorts": [],
+        "sorts": [
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "desc"
+                }
+            }
+        ],
         "properties": {
             "properties": {
                 "controls": {}

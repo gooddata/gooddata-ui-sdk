@@ -1,7 +1,7 @@
 [
     {
         "vis": "Heatmap",
-        "scenario": "measure, rows and columns with null data points",
+        "scenario": "measure and rows",
         "originalExecution": {
             "workspace": "reference-workspace",
             "buckets": [
@@ -38,17 +38,7 @@
                 },
                 {
                     "localIdentifier": "stack",
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "closed.aag81lMifn6q",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_closed.aag81lMifn6q"
-                            }
-                        }
-                    ]
+                    "items": []
                 }
             ],
             "attributes": [
@@ -59,15 +49,6 @@
                             "type": "displayForm"
                         },
                         "localIdentifier": "a_label.product.id.name"
-                    }
-                },
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "closed.aag81lMifn6q",
-                            "type": "displayForm"
-                        },
-                        "localIdentifier": "a_closed.aag81lMifn6q"
                     }
                 }
             ],
@@ -90,15 +71,21 @@
                     "itemIdentifiers": ["a_label.product.id.name"]
                 },
                 {
-                    "itemIdentifiers": ["a_closed.aag81lMifn6q", "measureGroup"]
+                    "itemIdentifiers": ["measureGroup"]
                 }
             ],
             "filters": [],
-            "sortBy": []
+            "sortBy": [
+                {
+                    "attributeSortItem": {
+                        "attributeIdentifier": "a_label.product.id.name",
+                        "direction": "desc"
+                    }
+                }
+            ]
         },
         "n2oMap": {
             "a_label.product.id.name": "a_label.product.id.name",
-            "a_closed.aag81lMifn6q": "a_closed.aag81lMifn6q",
             "m_aangOxLSeztu": "m_aangOxLSeztu"
         }
     }

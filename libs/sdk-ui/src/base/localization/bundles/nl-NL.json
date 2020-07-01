@@ -169,6 +169,15 @@
     "mvf.operator.notBetween.tooltip.bubble": "Begin- en eindwaarden zijn niet inbegrepen.",
     "mvf.treatNullValuesAsZeroLabel": "Blanco waarden als 0 behandelen",
     "mvf.treatNullValuesAsZeroTooltip": "Als de filtervoorwaarde 0 bevat, worden blanco waarden als 0 behandeld en inbegrepen in berekeningen.",
+    "measureNumberFormat.custom.optionLabel": "Aangepast",
+    "measureNumberFormat.buttonLabel": "Opmaak: {selectedFormatPresetName}",
+    "measureNumberCustomFormatDialog.title": "Aangepaste opmaak",
+    "measureNumberCustomFormatDialog.template.preview.title": "Opmaakvoorbeeld",
+    "measureNumberCustomFormatDialog.template.title": "Sjablonen",
+    "measureNumberCustomFormatDialog.extendedPreview.button": "Meer weergeven",
+    "measureNumberCustomFormatDialog.howToFormat": "Hoe bepaal ik de opmaak?",
+    "measureNumberCustomFormatDialog.definition": "Definitie",
+    "measureNumberCustomFormatDialog.preview": "Preview",
     "attrf.all": "Alles",
     "attrf.all_except": "Alles behalve"
 }

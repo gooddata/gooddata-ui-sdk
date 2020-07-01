@@ -169,6 +169,15 @@
     "mvf.operator.notBetween.tooltip.bubble": "開始値及び終了値は含まれません。",
     "mvf.treatNullValuesAsZeroLabel": "空の値を0として扱う",
     "mvf.treatNullValuesAsZeroTooltip": "フィルターの条件に0が含まれている場合、空の値は0として扱われて計算に含まれます。",
+    "measureNumberFormat.custom.optionLabel": "カスタム",
+    "measureNumberFormat.buttonLabel": "フォーマット： {selectedFormatPresetName}",
+    "measureNumberCustomFormatDialog.title": "カスタムフォーマット",
+    "measureNumberCustomFormatDialog.template.preview.title": "フォーマットプレビュー",
+    "measureNumberCustomFormatDialog.template.title": "テンプレート",
+    "measureNumberCustomFormatDialog.extendedPreview.button": "もっと表示",
+    "measureNumberCustomFormatDialog.howToFormat": "フォーマット方法",
+    "measureNumberCustomFormatDialog.definition": "定義",
+    "measureNumberCustomFormatDialog.preview": "プレビュー",
     "attrf.all": "すべて",
     "attrf.all_except": "次を除くすべて"
 }

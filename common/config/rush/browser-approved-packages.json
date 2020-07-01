@@ -79,6 +79,18 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/api-client-bear",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/api-client-tiger",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/api-model-bear",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "@gooddata/catalog-export",
       "allowedCategories": [ "examples", "tools" ]
     },
@@ -87,24 +99,8 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@gooddata/live-examples-workspace",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/api-client-bear",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@gooddata/gd-bear-filters",
       "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@gooddata/api-model-bear",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/api-client-tiger",
-      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/gd-ui-filters",
@@ -116,6 +112,10 @@
     },
     {
       "name": "@gooddata/js-utils",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/live-examples-workspace",
       "allowedCategories": [ "production" ]
     },
     {
@@ -175,6 +175,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-kit",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-pivot",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -225,6 +229,10 @@
     {
       "name": "@types/classnames",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@types/codemirror",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/enzyme",
@@ -312,7 +320,7 @@
     },
     {
       "name": "@types/raf",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@types/react",
@@ -467,6 +475,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "codemirror",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "commander",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -604,7 +616,7 @@
     },
     {
       "name": "jest-enzyme",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "jest-junit",
@@ -725,6 +737,10 @@
     {
       "name": "react",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "react-codemirror2",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "react-datepicker",

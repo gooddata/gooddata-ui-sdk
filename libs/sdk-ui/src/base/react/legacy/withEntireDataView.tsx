@@ -186,6 +186,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                         type: "measure",
                         localIdentifier: measure.measureHeaderItem.localIdentifier,
                         title: measure.measureHeaderItem.name,
+                        attributes: dv.meta().attributeDescriptors(),
                     }),
                 );
         }

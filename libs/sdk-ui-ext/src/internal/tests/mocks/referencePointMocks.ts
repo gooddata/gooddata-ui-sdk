@@ -324,6 +324,13 @@ export const attributeItems: IBucketItem[] = [
     },
 ];
 
+export const sliceByWeekBucketItem: IBucketItem = {
+    localIdentifier: "date-week-attribute",
+    type: "date",
+    attribute: DATE_DATASET_ATTRIBUTE,
+    granularity: "GDC.time.week_us",
+};
+
 export const geoAttributeItems: IBucketItem[] = [
     {
         localIdentifier: "a1",
@@ -2183,7 +2190,7 @@ export const twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint: IReferen
         },
         {
             localIdentifier: "view",
-            items: [],
+            items: geoAttributeItems.slice(0, 1),
         },
         {
             localIdentifier: "segment",

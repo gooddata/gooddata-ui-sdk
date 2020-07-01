@@ -21,6 +21,7 @@ import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { transformBuckets } from "./bucketHelper";
 import cloneDeep = require("lodash/cloneDeep");
+import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableScatterPlot extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -44,7 +45,10 @@ export class PluggableScatterPlot extends PluggableBaseChart {
 
         newReferencePoint = setScatterPlotUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, true);
-        newReferencePoint = configureOverTimeComparison(newReferencePoint);
+        newReferencePoint = configureOverTimeComparison(
+            newReferencePoint,
+            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+        );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,

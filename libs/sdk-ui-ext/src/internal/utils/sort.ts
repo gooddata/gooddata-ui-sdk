@@ -14,6 +14,7 @@ import {
     IMeasure,
     insightBucket,
     insightMeasures,
+    insightSorts,
     newAttributeSort,
     newMeasureSort,
     SortDirection,
@@ -112,6 +113,24 @@ export function getDefaultTreemapSort(insight: IInsightDefinition): ISortItem[] 
     );
 }
 
+export function getDefaultHeatmapSortFromBuckets(viewBy: IBucket): ISortItem[] {
+    const viewAttr = viewBy ? bucketAttributes(viewBy) : [];
+    if (!isEmpty(viewAttr)) {
+        return [newAttributeSort(viewAttr[0], "desc")];
+    }
+
+    return [];
+}
+
+export function getDefaultHeatmapSort(insight: IInsightDefinition): ISortItem[] {
+    const sorts = insightSorts(insight);
+    if (sorts) {
+        return sorts;
+    }
+
+    return getDefaultHeatmapSortFromBuckets(insightBucket(insight, BucketNames.VIEW));
+}
+
 // Consider dissolving this function into individual components
 export function createSorts(
     type: string,
@@ -126,6 +145,8 @@ export function createSorts(
             return getDefaultBarChartSort(insight, canSortStackTotalValue);
         case VisualizationTypes.TREEMAP:
             return getDefaultTreemapSort(insight);
+        case VisualizationTypes.HEATMAP:
+            return getDefaultHeatmapSort(insight);
     }
     return [];
 }

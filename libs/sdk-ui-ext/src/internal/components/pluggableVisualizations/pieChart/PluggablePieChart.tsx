@@ -41,6 +41,7 @@ import get = require("lodash/get");
 import set = require("lodash/set");
 import React = require("react");
 import { IInsightDefinition } from "@gooddata/sdk-model";
+import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggablePieChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -98,7 +99,10 @@ export class PluggablePieChart extends PluggableBaseChart {
 
         newReferencePoint = setPieChartUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, false);
-        newReferencePoint = configureOverTimeComparison(newReferencePoint);
+        newReferencePoint = configureOverTimeComparison(
+            newReferencePoint,
+            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+        );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,

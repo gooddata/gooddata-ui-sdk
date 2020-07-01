@@ -169,6 +169,15 @@
     "mvf.operator.notBetween.tooltip.bubble": "Les valeurs de début et de fin ne sont pas incluses.",
     "mvf.treatNullValuesAsZeroLabel": "Traiter les valeurs vides comme 0",
     "mvf.treatNullValuesAsZeroTooltip": "Si la condition de filtre inclut 0, les valeurs vides sont traitées en tant que 0 et sont incluses dans les calculs.",
+    "measureNumberFormat.custom.optionLabel": "Personnalisé",
+    "measureNumberFormat.buttonLabel": "Format : {selectedFormatPresetName}",
+    "measureNumberCustomFormatDialog.title": "Format personnalisé",
+    "measureNumberCustomFormatDialog.template.preview.title": "Aperçu du format",
+    "measureNumberCustomFormatDialog.template.title": "Modèles",
+    "measureNumberCustomFormatDialog.extendedPreview.button": "Montrer plus",
+    "measureNumberCustomFormatDialog.howToFormat": "Instructions sur le format",
+    "measureNumberCustomFormatDialog.definition": "Définition",
+    "measureNumberCustomFormatDialog.preview": "Aperçu",
     "attrf.all": "Tout",
     "attrf.all_except": "Tout sauf"
 }

@@ -203,6 +203,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     type: "measure",
                     localIdentifier: measure.measureHeaderItem.localIdentifier,
                     title: measure.measureHeaderItem.name,
+                    attributes: dv.meta().attributeDescriptors(),
                 }),
             );
     }

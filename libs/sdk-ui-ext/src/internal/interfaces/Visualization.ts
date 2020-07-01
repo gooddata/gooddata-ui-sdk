@@ -153,6 +153,7 @@ export interface IBucketItem {
     aggregation?: boolean;
     attribute?: string;
     filters?: IBucketFilter[];
+    format?: string;
     granularity?: string;
     showInPercent?: boolean;
     showOnSecondaryAxis?: boolean;

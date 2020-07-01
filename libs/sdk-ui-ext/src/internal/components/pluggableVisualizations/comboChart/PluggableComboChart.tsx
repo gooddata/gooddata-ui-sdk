@@ -49,6 +49,7 @@ import { removeSort } from "../../../utils/sort";
 
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableComboChart extends PluggableBaseChart {
     private primaryChartType: string = VisualizationTypes.COLUMN;
@@ -109,7 +110,10 @@ export class PluggableComboChart extends PluggableBaseChart {
 
         newReferencePoint = setComboChartUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, this.isPercentDisabled(newReferencePoint));
-        newReferencePoint = configureOverTimeComparison(newReferencePoint);
+        newReferencePoint = configureOverTimeComparison(
+            newReferencePoint,
+            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+        );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,

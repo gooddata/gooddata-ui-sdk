@@ -1,0 +1,40 @@
+// (C) 2020 GoodData Corporation
+
+/**
+ * @internal
+ */
+export enum SnapPoint {
+    TopLeft = "tl",
+    TopCenter = "tc",
+    TopRight = "tr",
+    CenterLeft = "cl",
+    CenterCenter = "cc",
+    CenterRight = "cr",
+    BottomLeft = "bl",
+    BottomCenter = "bc",
+    BottomRight = "br",
+}
+
+/**
+ * @internal
+ */
+export interface ISnapPoints {
+    parent: SnapPoint;
+    child: SnapPoint;
+}
+
+/**
+ * @internal
+ */
+export interface IOffset {
+    x?: number;
+    y?: number;
+}
+
+/**
+ * @internal
+ */
+export interface IPositioning {
+    snapPoints: ISnapPoints;
+    offset?: IOffset;
+}

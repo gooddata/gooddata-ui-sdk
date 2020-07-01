@@ -29,6 +29,7 @@ import includes = require("lodash/includes");
 import set = require("lodash/set");
 import tail = require("lodash/tail");
 import { IInsightDefinition } from "@gooddata/sdk-model";
+import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableHeatmap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -85,7 +86,10 @@ export class PluggableHeatmap extends PluggableBaseChart {
 
         newReferencePoint = setHeatmapUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, true);
-        newReferencePoint = configureOverTimeComparison(newReferencePoint);
+        newReferencePoint = configureOverTimeComparison(
+            newReferencePoint,
+            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+        );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,

@@ -15,7 +15,7 @@ import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { convertMeasureFilter } from "./FilterConverter";
 import { toBearRef } from "../ObjRefConverter";
 import compact = require("lodash/compact");
-import get = require("lodash/get");
+import { DEFAULT_INTEGER_FORMAT, DEFAULT_PERCENTAGE_FORMAT, DEFAULT_DECIMAL_FORMAT } from "./constants";
 
 export function convertMeasure(measure: IMeasure): GdcExecuteAFM.IMeasure {
     const {
@@ -117,27 +117,47 @@ function convertArithmeticMeasureDefinition(
 
 function getFormat(measure: IMeasure): string | undefined {
     const {
-        measure: { definition },
+        measure: { definition, format },
     } = measure;
-    const measureFormat = get(measure.measure, "format");
 
-    if (isArithmeticMeasureDefinition(definition)) {
-        if (definition.arithmeticMeasure.operator === "change") {
-            return "#,##0.00%";
+    // Override incorrect formats of ad-hoc measures with computeRatio
+    // and use decimal percentage  instead.
+    // This code will be removed once saved viz. objects are fixed in BB-2287
+    if (isMeasureDefinition(definition)) {
+        const { measureDefinition } = definition;
+        if (measureDefinition.computeRatio && measureDefinition.aggregation) {
+            if (measureDefinition.aggregation === "count") {
+                if (format === DEFAULT_INTEGER_FORMAT) {
+                    return DEFAULT_PERCENTAGE_FORMAT;
+                }
+            } else {
+                if (format === DEFAULT_DECIMAL_FORMAT) {
+                    return DEFAULT_PERCENTAGE_FORMAT;
+                }
+            }
         }
     }
 
-    const predefinedFormat = isMeasureDefinition(definition) ? getPredefinedFormat(definition) : undefined;
+    if (format) {
+        return format;
+    }
 
-    return predefinedFormat || measureFormat;
-}
+    const isArithmeticMeasureChange =
+        isArithmeticMeasureDefinition(definition) && definition.arithmeticMeasure.operator === "change";
 
-function getPredefinedFormat(definition: IMeasureDefinition): string | null {
-    const { measureDefinition } = definition;
-    // should we prefer format defined on measure? If so, fix computeRatio format in AD
-    return measureDefinition.computeRatio
-        ? "#,##0.00%"
-        : measureDefinition.aggregation === "count"
-        ? "#,##0"
-        : null;
+    if (isArithmeticMeasureChange) {
+        return DEFAULT_PERCENTAGE_FORMAT;
+    }
+
+    if (isMeasureDefinition(definition)) {
+        const { measureDefinition } = definition;
+        if (measureDefinition.computeRatio) {
+            return DEFAULT_PERCENTAGE_FORMAT;
+        }
+        if (measureDefinition.aggregation === "count") {
+            return DEFAULT_INTEGER_FORMAT;
+        }
+    }
+
+    return undefined;
 }

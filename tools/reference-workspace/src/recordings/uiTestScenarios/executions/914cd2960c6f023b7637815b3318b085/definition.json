@@ -10,15 +10,6 @@
                 },
                 "localIdentifier": "a_label.product.id.name"
             }
-        },
-        {
-            "attribute": {
-                "displayForm": {
-                    "identifier": "closed.aag81lMifn6q",
-                    "type": "displayForm"
-                },
-                "localIdentifier": "a_closed.aag81lMifn6q"
-            }
         }
     ],
     "measures": [
@@ -40,9 +31,16 @@
             "itemIdentifiers": ["a_label.product.id.name"]
         },
         {
-            "itemIdentifiers": ["a_closed.aag81lMifn6q", "measureGroup"]
+            "itemIdentifiers": ["measureGroup"]
         }
     ],
     "filters": [],
-    "sortBy": []
+    "sortBy": [
+        {
+            "attributeSortItem": {
+                "attributeIdentifier": "a_label.product.id.name",
+                "direction": "desc"
+            }
+        }
+    ]
 }

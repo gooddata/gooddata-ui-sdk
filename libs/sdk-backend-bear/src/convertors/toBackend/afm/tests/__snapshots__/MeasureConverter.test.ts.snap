@@ -89,6 +89,103 @@ Object {
 }
 `;
 
+exports[`measure converter should return custom format: arithmetic measure 1`] = `
+Object {
+  "definition": Object {
+    "arithmeticMeasure": Object {
+      "measureIdentifiers": Array [
+        "foo",
+        "bar",
+      ],
+      "operator": "change",
+    },
+  },
+  "format": "custom #,##0,00",
+  "localIdentifier": "m_e70a9702_3858f62230ac3c915f300c664312c63f",
+}
+`;
+
+exports[`measure converter should return custom format: count measure override 1`] = `
+Object {
+  "definition": Object {
+    "measure": Object {
+      "aggregation": "count",
+      "computeRatio": true,
+      "item": Object {
+        "identifier": "foo",
+      },
+    },
+  },
+  "format": "#,##0.00%",
+  "localIdentifier": "m_061abd71_foo_count_ratio",
+}
+`;
+
+exports[`measure converter should return custom format: pop measure 1`] = `
+Object {
+  "definition": Object {
+    "popMeasure": Object {
+      "measureIdentifier": "m_acugFHNJgsBy",
+      "popAttribute": Object {
+        "identifier": "attr",
+      },
+    },
+  },
+  "format": "custom #,##0,00",
+  "localIdentifier": "m_e70a9702_m_acugFHNJgsBy_attr",
+}
+`;
+
+exports[`measure converter should return custom format: previous period measure 1`] = `
+Object {
+  "definition": Object {
+    "previousPeriodMeasure": Object {
+      "dateDataSets": Array [
+        Object {
+          "dataSet": Object {
+            "identifier": "bar",
+          },
+          "periodsAgo": 3,
+        },
+      ],
+      "measureIdentifier": "foo",
+    },
+  },
+  "format": "custom #,##0,00",
+  "localIdentifier": "m_e70a9702_foo_previous_period",
+}
+`;
+
+exports[`measure converter should return custom format: simple measure 1`] = `
+Object {
+  "definition": Object {
+    "measure": Object {
+      "item": Object {
+        "identifier": "foo",
+      },
+    },
+  },
+  "format": "custom #,##0,00",
+  "localIdentifier": "m_e70a9702_foo",
+}
+`;
+
+exports[`measure converter should return custom format: sum measure override 1`] = `
+Object {
+  "definition": Object {
+    "measure": Object {
+      "aggregation": "sum",
+      "computeRatio": true,
+      "item": Object {
+        "identifier": "foo",
+      },
+    },
+  },
+  "format": "#,##0.00%",
+  "localIdentifier": "m_a183b5ef_foo_sum_ratio",
+}
+`;
+
 exports[`measure converter should return format of measure: change 1`] = `
 Object {
   "definition": Object {
@@ -135,7 +232,7 @@ Object {
 }
 `;
 
-exports[`measure converter should return local indentifier of measure 1`] = `
+exports[`measure converter should return local identifier of measure 1`] = `
 Object {
   "definition": Object {
     "measure": Object {

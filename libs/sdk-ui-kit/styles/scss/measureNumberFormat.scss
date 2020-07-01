@@ -1,0 +1,225 @@
+// (C) 2020 GoodData Corporation
+@import "./variables.scss";
+
+.gd-measure-number-format-dropdown-body {
+    padding: 5px 0;
+
+    .gd-format-preset {
+        width: 200px;
+        padding: 2.5px 10px;
+
+        & > .gd-format-preset-name {
+            margin-left: 5px;
+        }
+
+        & > .gd-format-preset-preview {
+            color: $gd-color-text-dimmed;
+            font-weight: normal;
+            margin-right: 5px;
+            text-align: right;
+        }
+    }
+}
+
+$measure_number_format_custom_format_dialog_width: 250px;
+$measure_number_format_custom_format_dialog_textarea_height: 100px;
+
+.gd-measure-custom-format-dialog-body {
+    display: flex;
+    flex-direction: column;
+    width: $measure_number_format_custom_format_dialog_width;
+    height: inherit;
+    font-size: 12px;
+
+    .gd-measure-custom-format-dialog-header {
+        flex: 0 0 auto;
+        padding: 10px 12px;
+        background-color: $is-focused-background;
+        border-bottom: 1px solid $border-color;
+
+        & > span {
+            flex: 1 0 auto;
+            line-height: 23px;
+            color: $gd-color-state-blank;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .gd-dialog-close {
+            flex: 0 0 auto;
+
+            > button {
+                width: 21px;
+                height: 21px;
+            }
+        }
+    }
+
+    .gd-measure-custom-format-dialog-content {
+        flex: 0 0 auto;
+        padding: 4px 12px 10px;
+
+        .gd-measure-custom-format-dialog-section {
+            margin-top: 4px;
+        }
+
+        .gd-measure-custom-format-dialog-section-title {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .gd-measure-custom-format-dialog-section-help {
+            > a {
+                text-decoration: initial;
+            }
+        }
+
+        .gd-measure-custom-format-dialog-section-preview {
+            margin-top: 5px;
+        }
+
+        .gd-measure-custom-format-dialog-preview {
+            display: flex;
+            flex-flow: row;
+            line-height: 28px;
+
+            .gd-measure-custom-format-dialog-preview-input {
+                flex: 0 0 42%;
+            }
+
+            .gd-measure-custom-format-dialog-preview-string {
+                box-sizing: border-box;
+                flex: 0 0 58%;
+                padding-left: 8px;
+                font-weight: bold;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .gd-measure-format-button {
+            display: flex;
+            outline: none;
+            color: $gd-color-state-blank;
+            cursor: pointer;
+            user-select: none;
+
+            &:hover {
+                color: $gd-color-text;
+            }
+
+            &:hover > span {
+                text-decoration: underline;
+            }
+
+            .gd-measure-format-button-icon-left {
+                margin-right: 4px;
+            }
+            .gd-measure-format-button-icon-right {
+                margin-left: 4px;
+            }
+
+            &.hidden {
+                display: none;
+            }
+        }
+
+        .gd-measure-format-button-templates {
+            color: $gd-color-highlight;
+
+            &:hover {
+                color: darken($gd-color-highlight, 20%);
+            }
+        }
+
+        .gd-measure-format-template-preview {
+            position: relative;
+            .gd-measure-format-template-preview-bubble {
+                position: absolute;
+            }
+        }
+
+        textarea {
+            height: $measure_number_format_custom_format_dialog_textarea_height;
+            resize: none;
+        }
+    }
+
+    .gd-measure-format-extended-preview {
+        margin-top: 5px;
+    }
+
+    .gd-measure-custom-format-dialog-footer {
+        flex: 0 0 auto;
+        margin: 0 10px;
+        padding: 10px 0;
+        border-top: 1px solid $border-color;
+        text-align: right;
+    }
+}
+
+.gd-measure-format-extended-preview-row {
+    display: flex;
+    line-height: 20px;
+
+    span {
+        white-space: nowrap;
+    }
+}
+
+.gd-measure-format-extended-preview-number,
+.gd-measure-format-extended-preview-formatted {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gd-measure-format-extended-preview-number {
+    flex: 0 0 42%;
+}
+
+.gd-measure-format-extended-preview-formatted {
+    box-sizing: border-box;
+    flex: 0 0 58%;
+    padding-left: 8px;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
+}
+
+.gd-measure-format-template-preview-bubble {
+    width: 210px;
+
+    .content {
+        padding: 5px;
+
+        .gd-measure-format-template-preview-bubble-title {
+            margin: 0 0 10px;
+            font-size: 14px;
+            color: $gd-color-text;
+            font-weight: normal;
+        }
+
+        .gd-measure-format-template-preview-bubble-subtitle {
+            margin: 0 0 5px;
+            font-size: 10px;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: $gd-color-state-blank;
+        }
+    }
+}
+
+.gd-format-template {
+    .gd-format-template-help {
+        display: none;
+        line-height: 10px;
+        color: $gd-color-label;
+    }
+
+    &:hover {
+        .gd-format-template-help {
+            display: block;
+        }
+    }
+}

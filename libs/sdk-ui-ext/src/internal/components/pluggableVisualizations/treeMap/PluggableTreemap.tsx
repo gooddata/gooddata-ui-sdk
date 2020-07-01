@@ -36,6 +36,7 @@ import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConf
 import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { IInsightDefinition } from "@gooddata/sdk-model";
+import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableTreemap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -93,7 +94,10 @@ export class PluggableTreemap extends PluggableBaseChart {
 
         newReferencePoint = setTreemapUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = configurePercent(newReferencePoint, false);
-        newReferencePoint = configureOverTimeComparison(newReferencePoint);
+        newReferencePoint = configureOverTimeComparison(
+            newReferencePoint,
+            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+        );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,
