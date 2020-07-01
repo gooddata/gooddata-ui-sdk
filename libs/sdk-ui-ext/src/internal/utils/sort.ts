@@ -14,6 +14,7 @@ import {
     IMeasure,
     insightBucket,
     insightMeasures,
+    insightSorts,
     newAttributeSort,
     newMeasureSort,
     SortDirection,
