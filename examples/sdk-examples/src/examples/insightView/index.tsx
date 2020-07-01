@@ -18,6 +18,7 @@ import { InsightViewDonutByIdentifierExample } from "./InsightViewDonutByIdentif
 import { InsightViewTreemapByIdentifierExample } from "./InsightViewTreemapByIdentifierExample";
 import { InsightViewHeatmapByIdentifierExample } from "./InsightViewHeatmapByIdentifierExample";
 import { InsightViewGeoPushpinByIdentifierExample } from "./InsightViewGeoPushpinByIdentifierExample";
+import { InsightViewBulletByIdentifierExample } from "./InsightViewBulletByIdentifierExample";
 
 import InsightViewColumnChartByIdentifierExampleSRC from "!raw-loader!./InsightViewColumnChartByIdentifierExample";
 import InsightViewComboChartByIdentifierExampleSRC from "!raw-loader!./InsightViewComboChartByIdentifierExample";
@@ -33,6 +34,7 @@ import InsightViewDonutByIdentifierExampleSRC from "!raw-loader!./InsightViewDon
 import InsightViewTreemapByIdentifierExampleSRC from "!raw-loader!./InsightViewTreemapByIdentifierExample";
 import InsightViewHeatmapByIdentifierExampleSRC from "!raw-loader!./InsightViewHeatmapByIdentifierExample";
 import InsightViewGeoPushpinByIdentifierExampleSRC from "!raw-loader!./InsightViewGeoPushpinByIdentifierExample";
+import InsightViewBulletByIdentifierExampleSRC from "!raw-loader!./InsightViewBulletByIdentifierExample";
 
 import InsightViewColumnChartByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewColumnChartByIdentifierExample";
 import InsightViewComboChartByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewComboChartByIdentifierExample";
@@ -48,6 +50,7 @@ import InsightViewDonutByIdentifierExampleSRCJS from "!raw-loader!../../../examp
 import InsightViewTreemapByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewTreemapByIdentifierExample";
 import InsightViewHeatmapByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewHeatmapByIdentifierExample";
 import InsightViewGeoPushpinByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewGeoPushpinByIdentifierExample";
+import InsightViewBulletByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewBulletByIdentifierExample";
 import { InsightViewTableByIdentifierExample } from "./InsightViewTableByIdentifierExample";
 
 export const InsightView = () => (
@@ -128,6 +131,14 @@ export const InsightView = () => (
             for={InsightViewBubbleByIdentifierExample}
             source={InsightViewBubbleByIdentifierExampleSRC}
             sourceJS={InsightViewBubbleByIdentifierExampleSRCJS}
+        />
+
+        <hr className="separator" />
+        <h2 id="headline">Bullet Chart</h2>
+        <ExampleWithSource
+            for={InsightViewBulletByIdentifierExample}
+            source={InsightViewBulletByIdentifierExampleSRC}
+            sourceJS={InsightViewBulletByIdentifierExampleSRCJS}
         />
 
         <hr className="separator" />
