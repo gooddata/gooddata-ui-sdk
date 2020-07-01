@@ -16,24 +16,20 @@ import { SORT_DIR_ASC, SORT_DIR_DESC } from "../../constants/sort";
 import { ATTRIBUTE, FILTERS, METRIC } from "../../constants/bucket";
 import {
     emptyInsight,
-    insightWithSingleMeasure,
     insightWithSingleMeasureAndStack,
     insightWithSingleMeasureAndTwoViewBy,
     insightWithSingleMeasureAndViewBy,
     insightWithSingleMeasureAndViewByAndStack,
     insightWithTwoMeasuresAndTwoViewBy,
-    insightWithSingleMeasureAndOneAttribute,
-    insightWithNoMeasureAndOneAttribute,
-    insightWithNoMeasureAndOneColumn,
 } from "../../tests/mocks/testMocks";
 import {
     IAttributeSortItem,
     IMeasureSortItem,
     insightSetSorts,
+    ISortItem,
     newAttribute,
     newBucket,
     newMeasure,
-    ISortItem,
 } from "@gooddata/sdk-model";
 
 const attributeSort: IAttributeSortItem = {
@@ -74,55 +70,6 @@ Object.freeze(referencePoint);
 
 describe("createSorts", () => {
     describe("default sorting", () => {
-        describe("table", () => {
-            it("should sort by first row attribute ASC", () => {
-                const expectedSorts: ISortItem[] = [
-                    {
-                        attributeSortItem: {
-                            attributeIdentifier: "a1",
-                            direction: "asc",
-                        },
-                    },
-                ];
-                expect(createSorts("table", insightWithNoMeasureAndOneAttribute)).toEqual(expectedSorts);
-            });
-
-            it("should sort by first row attribute ASC if there are some measures", () => {
-                const expectedSorts: ISortItem[] = [
-                    {
-                        attributeSortItem: {
-                            attributeIdentifier: "a1",
-                            direction: "asc",
-                        },
-                    },
-                ];
-                expect(createSorts("table", insightWithSingleMeasureAndOneAttribute)).toEqual(expectedSorts);
-            });
-
-            it("should sort by first measure DESC if there are no row attributes", () => {
-                const expectedSort: ISortItem[] = [
-                    {
-                        measureSortItem: {
-                            direction: "desc",
-                            locators: [
-                                {
-                                    measureLocatorItem: {
-                                        measureIdentifier: "m1",
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                ];
-                expect(createSorts("table", insightWithSingleMeasure)).toEqual(expectedSort);
-            });
-
-            it("should not sort by column attribute", () => {
-                const expectedSorts: ISortItem[] = [];
-                expect(createSorts("table", insightWithNoMeasureAndOneColumn)).toEqual(expectedSorts);
-            });
-        });
-
         describe("bar", () => {
             it("should sort by first measure for basic bar chart", () => {
                 const expectedSort: ISortItem[] = [
@@ -245,26 +192,6 @@ describe("createSorts", () => {
                 expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
             });
         });
-    });
-
-    it("should extract sort from visualization properties", () => {
-        const sortItems: ISortItem[] = [
-            {
-                measureSortItem: {
-                    direction: "desc",
-                    locators: [
-                        {
-                            measureLocatorItem: {
-                                measureIdentifier: "m1",
-                            },
-                        },
-                    ],
-                },
-            },
-        ];
-        const testInsight = insightSetSorts(insightWithSingleMeasure, sortItems);
-
-        expect(createSorts("table", testInsight)).toEqual(sortItems);
     });
 
     it("should ignore sort from visualization properties if localIdentifier is missing in AFM", () => {
