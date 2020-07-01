@@ -1,14 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import {
-    MeasureNumberFormat,
     IFormatPreset,
-    IToggleButtonProps,
     IFormatTemplate,
+    IToggleButtonProps,
+    MeasureNumberFormat,
 } from "@gooddata/sdk-ui-kit";
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { withMultipleScreenshots } from "../../_infra/backstopWrapper";
 import { UiKit } from "../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -85,7 +84,7 @@ storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("full-featured", () => {
         </button>
     );
 
-    return withMultipleScreenshots(
+    return (
         <div style={wrapperStyle} className="screenshot-target">
             <MeasureNumberFormat
                 toggleButton={ToggleButton}
@@ -96,13 +95,16 @@ storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("full-featured", () => {
                 setFormat={action(`selected format`)}
                 documentationLink={documentationLink}
             />
-        </div>,
+        </div>
+    ); /*
         {
             closed: {},
-            opened: { clickSelector: ".s-measure-number-format-button", postInteractionWait: 200 },
+            opened: {
+                clickSelector: ".s-measure-number-format-button",
+                postInteractionWait: 2000 },
             "custom-editor": {
                 clickSelectors: [".s-measure-number-format-button", ".s-format-preset-customFormat"],
-                postInteractionWait: 200,
+                postInteractionWait: 2000,
             },
             "custom-editor-extended-preview": {
                 clickSelectors: [
@@ -110,7 +112,7 @@ storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("full-featured", () => {
                     ".s-format-preset-customFormat",
                     ".s-custom-format-dialog-extended-preview-button",
                 ],
-                postInteractionWait: 200,
+                postInteractionWait: 2000,
             },
             "custom-editor-templates": {
                 clickSelectors: [
@@ -118,7 +120,7 @@ storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("full-featured", () => {
                     ".s-format-preset-customFormat",
                     ".s-measure-format-templates-toggle-button",
                 ],
-                postInteractionWait: 200,
+                postInteractionWait: 2000,
             },
             "custom-editor-templates-selected": {
                 clickSelectors: [
@@ -127,8 +129,8 @@ storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("full-featured", () => {
                     ".s-measure-format-templates-toggle-button",
                     ".s-measure-format-template-decimal_number",
                 ],
-                postInteractionWait: 200,
+                postInteractionWait: 2000,
             },
         },
-    );
+    );*/
 });
