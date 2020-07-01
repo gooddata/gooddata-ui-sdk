@@ -50,7 +50,7 @@ In case the pull brings in new projects or large bulk of changes, it is safer (a
 Rush is an opinionated monorepo management tool that comes with batteries included. We strongly encourage you to
 read the [official documentation](https://rushjs.io/pages/intro/welcome/).
 
-Long story short here are facts and commands you need to know:
+Long story short, here are facts and commands you need to know:
 
 -   lock file (shrinkwrap file) is stored in pnpm-lock.yaml.
 
