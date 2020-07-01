@@ -10,6 +10,8 @@ export class TigerUserSettingsService implements IUserSettingsService {
             return {
                 userId: "dummy",
 
+                locale: "en-US",
+
                 activeFiltersByDefault: true,
                 enableActiveFilterContext: true,
                 cellMergedByDefault: true,

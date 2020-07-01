@@ -883,6 +883,7 @@ export interface IUserService {
 
 // @public
 export interface IUserSettings extends ISettings {
+    locale: string;
     userId: string;
 }
 

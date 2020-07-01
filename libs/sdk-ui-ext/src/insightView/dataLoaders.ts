@@ -35,6 +35,11 @@ export interface IInsightViewDataLoader {
      * @param backend - the {@link IAnalyticalBackend} instance to use to communicate with the backend
      */
     getWorkspaceSettings(backend: IAnalyticalBackend): Promise<IWorkspaceSettings>;
+    /**
+     * Obtains the locale that is set in user's account
+     * @param backend - the {@link IAnalyticalBackend} instance to use to communicate with the backend
+     */
+    getLocale(backend: IAnalyticalBackend): Promise<string>;
 }
 
 /**
@@ -45,6 +50,7 @@ export interface IInsightViewDataLoader {
 export class InsightViewDataLoader implements IInsightViewDataLoader {
     private cachedColorPalette: Promise<IColorPalette> | undefined;
     private cachedWorkspaceSettings: Promise<IWorkspaceSettings> | undefined;
+    private cachedLocale: Promise<string> | undefined;
     private insightCache: LRUCache<string, Promise<IInsight>> = new LRUCache({ max: INSIGHT_CACHE_SIZE });
 
     constructor(protected readonly workspace: string) {}
@@ -97,6 +103,21 @@ export class InsightViewDataLoader implements IInsightViewDataLoader {
         }
 
         return this.cachedWorkspaceSettings;
+    }
+
+    public getLocale(backend: IAnalyticalBackend): Promise<string> {
+        if (!this.cachedLocale) {
+            this.cachedLocale = backend
+                .currentUser()
+                .settings()
+                .query()
+                .then((settings) => settings.locale)
+                .catch((error) => {
+                    this.cachedLocale = undefined;
+                    throw error;
+                });
+        }
+        return this.cachedLocale;
     }
 }
 
