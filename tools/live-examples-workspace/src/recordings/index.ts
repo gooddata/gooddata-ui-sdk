@@ -1,7 +1,8 @@
+// (C) 2020 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-07-01T08:55:07.958Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-07-01T16:00:11.183Z; */
 
 const fp_0202f0afa9294a9f026be26f8ced8bcb = {
     definition: require("./uiTestScenarios/executions/0202f0afa9294a9f026be26f8ced8bcb/definition.json"),
