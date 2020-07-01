@@ -175,6 +175,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-kit",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-pivot",
       "allowedCategories": [ "examples", "production" ]
     },
