@@ -134,7 +134,9 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
                     afm: {
                         // TODO convertAttribute is right, the OpenAPI spec is wrong so the types are not matching for now
                         attributes: relevantItems.filter(isAttribute).map(convertAttribute) as any,
-                        measures: relevantItems.filter(isMeasure).map(convertMeasure),
+                        // TODO convertMeasure is right, the OpenAPI spec is wrong so the types are not matching for now
+                        measures: relevantItems.filter(isMeasure).map(convertMeasure) as any,
+                        // TODO convertVisualizationObjectFilter is right, the OpenAPI spec is wrong so the types are not matching for now
                         filters: compact(
                             relevantItems
                                 .filter(
@@ -143,7 +145,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
                                         isAttributeFilter(filter) ||
                                         isMeasureValueFilter(filter),
                                 )
-                                .map(convertVisualizationObjectFilter),
+                                .map(convertVisualizationObjectFilter) as any,
                         ),
                     },
                 },

@@ -9,9 +9,21 @@ import { AxiosPromise } from 'axios';
 import { ISortItem } from '@gooddata/sdk-model';
 
 // @public
+export interface AbsoluteDateFilter {
+    absoluteDateFilter: AbsoluteDateFilterAbsoluteDateFilter;
+}
+
+// @public
+export interface AbsoluteDateFilterAbsoluteDateFilter {
+    dataset: ObjectIdentifier;
+    from: string;
+    to: string;
+}
+
+// @public
 export interface AFM {
     attributes: Array<AttributeItem>;
-    filters: Array<object>;
+    filters: Array<FilterDefinition>;
     measures: Array<MeasureItem>;
 }
 
@@ -144,6 +156,39 @@ export interface ApiErrorSource {
 }
 
 // @public
+export interface ArithmeticMeasureDefinition {
+    arithmeticMeasure: ArithmeticMeasureDefinitionArithmeticMeasure;
+}
+
+// @public
+export interface ArithmeticMeasureDefinitionArithmeticMeasure {
+    measureIdentifiers: Array<LocalIdentifier>;
+    operator: ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
+}
+
+// @public
+export enum ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum {
+    // (undocumented)
+    CHANGE = "CHANGE",
+    // (undocumented)
+    DIFFERENCE = "DIFFERENCE",
+    // (undocumented)
+    MULTIPLICATION = "MULTIPLICATION",
+    // (undocumented)
+    RATIO = "RATIO",
+    // (undocumented)
+    SUM = "SUM"
+}
+
+// @public
+export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
+
+// @public
+export interface AttributeFilterElements {
+    values: Array<string>;
+}
+
+// @public
 export enum AttributeGranularityResourceAttribute {
     // (undocumented)
     Day = "day",
@@ -172,7 +217,7 @@ export enum AttributeGranularityResourceAttribute {
 // @public
 export interface AttributeItem {
     alias?: string;
-    displayForm: string;
+    displayForm: ObjectIdentifier;
     localIdentifier: string;
 }
 
@@ -312,6 +357,35 @@ export interface AttributeResourcesResponseSchema {
 // @public
 export interface AttributeResourcesResponseSchemaAllOf {
     data: Array<AttributeResourceSchema>;
+}
+
+// @public
+export interface ComparisonMeasureValueFilter {
+    comparisonMeasureValueFilter: ComparisonMeasureValueFilterComparisonMeasureValueFilter;
+}
+
+// @public
+export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
+    measure: Identifier;
+    operator: ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
+    treatNullValuesAs?: number;
+    value: number;
+}
+
+// @public
+export enum ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum {
+    // (undocumented)
+    EQUALTO = "EQUAL_TO",
+    // (undocumented)
+    GREATERTHAN = "GREATER_THAN",
+    // (undocumented)
+    GREATERTHANOREQUALTO = "GREATER_THAN_OR_EQUAL_TO",
+    // (undocumented)
+    LESSTHAN = "LESS_THAN",
+    // (undocumented)
+    LESSTHANOREQUALTO = "LESS_THAN_OR_EQUAL_TO",
+    // (undocumented)
+    NOTEQUALTO = "NOT_EQUAL_TO"
 }
 
 // @public
@@ -459,6 +533,9 @@ export enum DatasetTypeResourceAttribute {
     // (undocumented)
     NORMAL = "NORMAL"
 }
+
+// @public
+export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 
 // Warning: (ae-forgotten-export) The symbol "BaseAPI" needs to be exported by the entry point index.d.ts
 //
@@ -8596,12 +8673,41 @@ export interface Failure {
 }
 
 // @public
+export type FilterDefinition = AttributeFilter | DateFilter | InlineFilterDefinition | MeasureValueFilter;
+
+// @public
+export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
+
+// @public
+export type Identifier = LocalIdentifier | ObjectIdentifier;
+
+// @public
 export interface Info {
     jsonapi?: JsonApi;
     links?: Links;
     meta: {
         [key: string]: object;
     };
+}
+
+// @public
+export interface InlineFilterDefinition {
+    inline: InlineFilterDefinitionInline;
+}
+
+// @public
+export interface InlineFilterDefinitionInline {
+    filter: string;
+}
+
+// @public
+export interface InlineMeasureDefinition {
+    inline: InlineMeasureDefinitionInline;
+}
+
+// @public
+export interface InlineMeasureDefinitionInline {
+    maql: string;
 }
 
 // @public (undocumented)
@@ -8777,12 +8883,23 @@ export interface Links extends Pagination {
 }
 
 // @public
+export interface LocalIdentifier {
+    localIdentifier: string;
+}
+
+// @public
+export type MeasureDefinition = ArithmeticMeasureDefinition | InlineMeasureDefinition | PopDatasetMeasureDefinition | PopDateMeasureDefinition | SimpleMeasureDefinition;
+
+// @public
 export interface MeasureItem {
     alias?: string;
-    definition: object;
+    definition: MeasureDefinition;
     format?: string;
     localIdentifier: string;
 }
+
+// @public
+export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
 
 // @public
 export interface MetricPatchResource {
@@ -8934,9 +9051,31 @@ export interface MetricResourcesResponseSchemaAllOf {
 }
 
 // @public
+export interface NegativeAttributeFilter {
+    negativeAttributeFilter: NegativeAttributeFilterNegativeAttributeFilter;
+}
+
+// @public
+export interface NegativeAttributeFilterNegativeAttributeFilter {
+    displayForm: ObjectIdentifier;
+    notIn: AttributeFilterElements;
+}
+
+// @public
 export function newAxios(baseUrl?: string, headers?: {
     [name: string]: string;
 }): AxiosInstance;
+
+// @public
+export interface ObjectIdentifier {
+    identifier: ObjectIdentifierIdentifier;
+}
+
+// @public
+export interface ObjectIdentifierIdentifier {
+    id: string;
+    type: string;
+}
 
 // @public
 export interface Pagination {
@@ -8955,6 +9094,86 @@ export interface Paging {
 }
 
 // @public
+export interface PopDataset {
+    dataset: ObjectIdentifier;
+    periodsAgo: number;
+}
+
+// @public
+export interface PopDatasetMeasureDefinition {
+    previousPeriodMeasure: PopDatasetMeasureDefinitionPreviousPeriodMeasure;
+}
+
+// @public
+export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
+    dateDatasets: Array<PopDataset>;
+    measureIdentifier: LocalIdentifier;
+}
+
+// @public
+export interface PopDate {
+    attribute: ObjectIdentifier;
+    periodsAgo: number;
+}
+
+// @public
+export interface PopDateMeasureDefinition {
+    overPeriodMeasure: PopDateMeasureDefinitionOverPeriodMeasure;
+}
+
+// @public
+export interface PopDateMeasureDefinitionOverPeriodMeasure {
+    dateAttributes: Array<PopDate>;
+    measureIdentifier: LocalIdentifier;
+}
+
+// @public
+export interface PositiveAttributeFilter {
+    positiveAttributeFilter: PositiveAttributeFilterPositiveAttributeFilter;
+}
+
+// @public
+export interface PositiveAttributeFilterPositiveAttributeFilter {
+    displayForm: ObjectIdentifier;
+    _in: AttributeFilterElements;
+}
+
+// @public
+export interface RangeMeasureValueFilter {
+    rangeMeasureValueFilter: RangeMeasureValueFilterRangeMeasureValueFilter;
+}
+
+// @public
+export interface RangeMeasureValueFilterRangeMeasureValueFilter {
+    from: number;
+    measure: Identifier;
+    operator: RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    to: number;
+    treatNullValuesAs?: number;
+}
+
+// @public
+export enum RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum {
+    // (undocumented)
+    BETWEEN = "BETWEEN",
+    // (undocumented)
+    NOTBETWEEN = "NOT_BETWEEN"
+}
+
+// @public
+export interface RelativeDateFilter {
+    relativeDateFilter: RelativeDateFilterRelativeDateFilter;
+}
+
+// @public
+export interface RelativeDateFilterRelativeDateFilter {
+    dataset: ObjectIdentifier;
+    from: number;
+    granularity: string;
+    to: number;
+}
+
+// @public
 export interface ResultDimension {
     headers: Array<object>;
 }
@@ -8962,6 +9181,37 @@ export interface ResultDimension {
 // @public
 export interface ResultSpec {
     dimensions: Array<Dimension>;
+}
+
+// @public
+export interface SimpleMeasureDefinition {
+    measure: SimpleMeasureDefinitionMeasure;
+}
+
+// @public
+export interface SimpleMeasureDefinitionMeasure {
+    aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
+    computeRatio?: boolean;
+    filters?: Array<FilterDefinitionForSimpleMeasure>;
+    item: ObjectIdentifier;
+}
+
+// @public
+export enum SimpleMeasureDefinitionMeasureAggregationEnum {
+    // (undocumented)
+    AVG = "AVG",
+    // (undocumented)
+    COUNT = "COUNT",
+    // (undocumented)
+    MAX = "MAX",
+    // (undocumented)
+    MEDIAN = "MEDIAN",
+    // (undocumented)
+    MIN = "MIN",
+    // (undocumented)
+    RUNSUM = "RUNSUM",
+    // (undocumented)
+    SUM = "SUM"
 }
 
 // @public
@@ -9551,7 +9801,7 @@ export interface VisualizationObjectResourcesResponseSchemaAllOf {
 
 // Warnings were encountered during analysis:
 //
-// dist/generated/afm-rest-api/api.d.ts:341:5 - (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
+// dist/generated/afm-rest-api/api.d.ts:955:5 - (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
 // dist/generated/metadata-json-api/api.d.ts:3830:5 - (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)

@@ -22,12 +22,10 @@ import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from "./base";
 
 // utility function that adds support for nested objects in query
-const addFlattenedObjectTo = (object: any, baseName: string, target: any): void => {
-    const semiFlattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
-    const flattened = semiFlattened[Object.keys(semiFlattened)[0]] ?? {};
-
+const addFlattenedObjectTo = (object: any, target: any): void => {
+    const flattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
     Object.keys(flattened).forEach((key) => {
-        target[`${baseName}${key}`] = (flattened as any)[key];
+        target[key] = (flattened as any)[key];
     });
 };
 
@@ -45,16 +43,54 @@ export interface AFM {
     attributes: Array<AttributeItem>;
     /**
      *
-     * @type {Array<object>}
+     * @type {Array<FilterDefinition>}
      * @memberof AFM
      */
-    filters: Array<object>;
+    filters: Array<FilterDefinition>;
     /**
      *
      * @type {Array<MeasureItem>}
      * @memberof AFM
      */
     measures: Array<MeasureItem>;
+}
+/**
+ *
+ * @export
+ * @interface AbsoluteDateFilter
+ */
+export interface AbsoluteDateFilter {
+    /**
+     *
+     * @type {AbsoluteDateFilterAbsoluteDateFilter}
+     * @memberof AbsoluteDateFilter
+     */
+    absoluteDateFilter: AbsoluteDateFilterAbsoluteDateFilter;
+}
+/**
+ *
+ * @export
+ * @interface AbsoluteDateFilterAbsoluteDateFilter
+ */
+export interface AbsoluteDateFilterAbsoluteDateFilter {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    dataset: ObjectIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    from: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    to: string;
 }
 /**
  *
@@ -141,6 +177,70 @@ export interface AfmValidObjectsResponse {
 /**
  *
  * @export
+ * @interface ArithmeticMeasureDefinition
+ */
+export interface ArithmeticMeasureDefinition {
+    /**
+     *
+     * @type {ArithmeticMeasureDefinitionArithmeticMeasure}
+     * @memberof ArithmeticMeasureDefinition
+     */
+    arithmeticMeasure: ArithmeticMeasureDefinitionArithmeticMeasure;
+}
+/**
+ *
+ * @export
+ * @interface ArithmeticMeasureDefinitionArithmeticMeasure
+ */
+export interface ArithmeticMeasureDefinitionArithmeticMeasure {
+    /**
+     *
+     * @type {Array<LocalIdentifier>}
+     * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
+     */
+    measureIdentifiers: Array<LocalIdentifier>;
+    /**
+     *
+     * @type {string}
+     * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
+     */
+    operator: ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum {
+    SUM = "SUM",
+    DIFFERENCE = "DIFFERENCE",
+    MULTIPLICATION = "MULTIPLICATION",
+    RATIO = "RATIO",
+    CHANGE = "CHANGE",
+}
+
+/**
+ * @type AttributeFilter
+ * Abstract filter definition type attributes
+ * @export
+ */
+export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
+/**
+ *
+ * @export
+ * @interface AttributeFilterElements
+ */
+export interface AttributeFilterElements {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributeFilterElements
+     */
+    values: Array<string>;
+}
+/**
+ *
+ * @export
  * @interface AttributeItem
  */
 export interface AttributeItem {
@@ -152,10 +252,10 @@ export interface AttributeItem {
     localIdentifier: string;
     /**
      *
-     * @type {string}
+     * @type {ObjectIdentifier}
      * @memberof AttributeItem
      */
-    displayForm: string;
+    displayForm: ObjectIdentifier;
     /**
      *
      * @type {string}
@@ -163,6 +263,70 @@ export interface AttributeItem {
      */
     alias?: string;
 }
+/**
+ *
+ * @export
+ * @interface ComparisonMeasureValueFilter
+ */
+export interface ComparisonMeasureValueFilter {
+    /**
+     *
+     * @type {ComparisonMeasureValueFilterComparisonMeasureValueFilter}
+     * @memberof ComparisonMeasureValueFilter
+     */
+    comparisonMeasureValueFilter: ComparisonMeasureValueFilterComparisonMeasureValueFilter;
+}
+/**
+ *
+ * @export
+ * @interface ComparisonMeasureValueFilterComparisonMeasureValueFilter
+ */
+export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
+    /**
+     *
+     * @type {Identifier}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    measure: Identifier;
+    /**
+     *
+     * @type {string}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    operator: ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    value: number;
+    /**
+     *
+     * @type {number}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    treatNullValuesAs?: number;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum {
+    GREATERTHAN = "GREATER_THAN",
+    GREATERTHANOREQUALTO = "GREATER_THAN_OR_EQUAL_TO",
+    LESSTHAN = "LESS_THAN",
+    LESSTHANOREQUALTO = "LESS_THAN_OR_EQUAL_TO",
+    EQUALTO = "EQUAL_TO",
+    NOTEQUALTO = "NOT_EQUAL_TO",
+}
+
+/**
+ * @type DateFilter
+ * Abstract filter definition type for dates
+ * @export
+ */
+export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 /**
  *
  * @export
@@ -259,6 +423,100 @@ export interface ExecutionResponse {
     links: ExecutionLinks;
 }
 /**
+ * @type FilterDefinition
+ * Abstract filter definition type
+ * @export
+ */
+export type FilterDefinition = AttributeFilter | DateFilter | InlineFilterDefinition | MeasureValueFilter;
+/**
+ * @type FilterDefinitionForSimpleMeasure
+ * Abstract filter definition type for simple measure
+ * @export
+ */
+export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
+/**
+ * @type Identifier
+ * Abstract identifier type
+ * @export
+ */
+export type Identifier = LocalIdentifier | ObjectIdentifier;
+/**
+ *
+ * @export
+ * @interface InlineFilterDefinition
+ */
+export interface InlineFilterDefinition {
+    /**
+     *
+     * @type {InlineFilterDefinitionInline}
+     * @memberof InlineFilterDefinition
+     */
+    inline: InlineFilterDefinitionInline;
+}
+/**
+ *
+ * @export
+ * @interface InlineFilterDefinitionInline
+ */
+export interface InlineFilterDefinitionInline {
+    /**
+     *
+     * @type {string}
+     * @memberof InlineFilterDefinitionInline
+     */
+    filter: string;
+}
+/**
+ *
+ * @export
+ * @interface InlineMeasureDefinition
+ */
+export interface InlineMeasureDefinition {
+    /**
+     *
+     * @type {InlineMeasureDefinitionInline}
+     * @memberof InlineMeasureDefinition
+     */
+    inline: InlineMeasureDefinitionInline;
+}
+/**
+ *
+ * @export
+ * @interface InlineMeasureDefinitionInline
+ */
+export interface InlineMeasureDefinitionInline {
+    /**
+     *
+     * @type {string}
+     * @memberof InlineMeasureDefinitionInline
+     */
+    maql: string;
+}
+/**
+ *
+ * @export
+ * @interface LocalIdentifier
+ */
+export interface LocalIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof LocalIdentifier
+     */
+    localIdentifier: string;
+}
+/**
+ * @type MeasureDefinition
+ * Abstract measure definition type
+ * @export
+ */
+export type MeasureDefinition =
+    | ArithmeticMeasureDefinition
+    | InlineMeasureDefinition
+    | PopDatasetMeasureDefinition
+    | PopDateMeasureDefinition
+    | SimpleMeasureDefinition;
+/**
  *
  * @export
  * @interface MeasureItem
@@ -272,10 +530,10 @@ export interface MeasureItem {
     localIdentifier: string;
     /**
      *
-     * @type {object}
+     * @type {MeasureDefinition}
      * @memberof MeasureItem
      */
-    definition: object;
+    definition: MeasureDefinition;
     /**
      *
      * @type {string}
@@ -288,6 +546,76 @@ export interface MeasureItem {
      * @memberof MeasureItem
      */
     format?: string;
+}
+/**
+ * @type MeasureValueFilter
+ * Abstract filter definition type for measure values
+ * @export
+ */
+export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
+/**
+ *
+ * @export
+ * @interface NegativeAttributeFilter
+ */
+export interface NegativeAttributeFilter {
+    /**
+     *
+     * @type {NegativeAttributeFilterNegativeAttributeFilter}
+     * @memberof NegativeAttributeFilter
+     */
+    negativeAttributeFilter: NegativeAttributeFilterNegativeAttributeFilter;
+}
+/**
+ *
+ * @export
+ * @interface NegativeAttributeFilterNegativeAttributeFilter
+ */
+export interface NegativeAttributeFilterNegativeAttributeFilter {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    displayForm: ObjectIdentifier;
+    /**
+     *
+     * @type {AttributeFilterElements}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    notIn: AttributeFilterElements;
+}
+/**
+ *
+ * @export
+ * @interface ObjectIdentifier
+ */
+export interface ObjectIdentifier {
+    /**
+     *
+     * @type {ObjectIdentifierIdentifier}
+     * @memberof ObjectIdentifier
+     */
+    identifier: ObjectIdentifierIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface ObjectIdentifierIdentifier
+ */
+export interface ObjectIdentifierIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof ObjectIdentifierIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ObjectIdentifierIdentifier
+     */
+    type: string;
 }
 /**
  * Current page description.
@@ -323,6 +651,244 @@ export interface Paging {
 /**
  *
  * @export
+ * @interface PopDataset
+ */
+export interface PopDataset {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof PopDataset
+     */
+    dataset: ObjectIdentifier;
+    /**
+     *
+     * @type {number}
+     * @memberof PopDataset
+     */
+    periodsAgo: number;
+}
+/**
+ *
+ * @export
+ * @interface PopDatasetMeasureDefinition
+ */
+export interface PopDatasetMeasureDefinition {
+    /**
+     *
+     * @type {PopDatasetMeasureDefinitionPreviousPeriodMeasure}
+     * @memberof PopDatasetMeasureDefinition
+     */
+    previousPeriodMeasure: PopDatasetMeasureDefinitionPreviousPeriodMeasure;
+}
+/**
+ *
+ * @export
+ * @interface PopDatasetMeasureDefinitionPreviousPeriodMeasure
+ */
+export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
+    /**
+     *
+     * @type {LocalIdentifier}
+     * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
+     */
+    measureIdentifier: LocalIdentifier;
+    /**
+     *
+     * @type {Array<PopDataset>}
+     * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
+     */
+    dateDatasets: Array<PopDataset>;
+}
+/**
+ *
+ * @export
+ * @interface PopDate
+ */
+export interface PopDate {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof PopDate
+     */
+    attribute: ObjectIdentifier;
+    /**
+     *
+     * @type {number}
+     * @memberof PopDate
+     */
+    periodsAgo: number;
+}
+/**
+ *
+ * @export
+ * @interface PopDateMeasureDefinition
+ */
+export interface PopDateMeasureDefinition {
+    /**
+     *
+     * @type {PopDateMeasureDefinitionOverPeriodMeasure}
+     * @memberof PopDateMeasureDefinition
+     */
+    overPeriodMeasure: PopDateMeasureDefinitionOverPeriodMeasure;
+}
+/**
+ *
+ * @export
+ * @interface PopDateMeasureDefinitionOverPeriodMeasure
+ */
+export interface PopDateMeasureDefinitionOverPeriodMeasure {
+    /**
+     *
+     * @type {LocalIdentifier}
+     * @memberof PopDateMeasureDefinitionOverPeriodMeasure
+     */
+    measureIdentifier: LocalIdentifier;
+    /**
+     *
+     * @type {Array<PopDate>}
+     * @memberof PopDateMeasureDefinitionOverPeriodMeasure
+     */
+    dateAttributes: Array<PopDate>;
+}
+/**
+ *
+ * @export
+ * @interface PositiveAttributeFilter
+ */
+export interface PositiveAttributeFilter {
+    /**
+     *
+     * @type {PositiveAttributeFilterPositiveAttributeFilter}
+     * @memberof PositiveAttributeFilter
+     */
+    positiveAttributeFilter: PositiveAttributeFilterPositiveAttributeFilter;
+}
+/**
+ *
+ * @export
+ * @interface PositiveAttributeFilterPositiveAttributeFilter
+ */
+export interface PositiveAttributeFilterPositiveAttributeFilter {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    displayForm: ObjectIdentifier;
+    /**
+     *
+     * @type {AttributeFilterElements}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    _in: AttributeFilterElements;
+}
+/**
+ *
+ * @export
+ * @interface RangeMeasureValueFilter
+ */
+export interface RangeMeasureValueFilter {
+    /**
+     *
+     * @type {RangeMeasureValueFilterRangeMeasureValueFilter}
+     * @memberof RangeMeasureValueFilter
+     */
+    rangeMeasureValueFilter: RangeMeasureValueFilterRangeMeasureValueFilter;
+}
+/**
+ *
+ * @export
+ * @interface RangeMeasureValueFilterRangeMeasureValueFilter
+ */
+export interface RangeMeasureValueFilterRangeMeasureValueFilter {
+    /**
+     *
+     * @type {Identifier}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    measure: Identifier;
+    /**
+     *
+     * @type {string}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    operator: RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    from: number;
+    /**
+     *
+     * @type {number}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    to: number;
+    /**
+     *
+     * @type {number}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    treatNullValuesAs?: number;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum {
+    BETWEEN = "BETWEEN",
+    NOTBETWEEN = "NOT_BETWEEN",
+}
+
+/**
+ *
+ * @export
+ * @interface RelativeDateFilter
+ */
+export interface RelativeDateFilter {
+    /**
+     *
+     * @type {RelativeDateFilterRelativeDateFilter}
+     * @memberof RelativeDateFilter
+     */
+    relativeDateFilter: RelativeDateFilterRelativeDateFilter;
+}
+/**
+ *
+ * @export
+ * @interface RelativeDateFilterRelativeDateFilter
+ */
+export interface RelativeDateFilterRelativeDateFilter {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    dataset: ObjectIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    granularity: string;
+    /**
+     *
+     * @type {number}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    from: number;
+    /**
+     *
+     * @type {number}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    to: number;
+}
+/**
+ *
+ * @export
  * @interface ResultDimension
  */
 export interface ResultDimension {
@@ -345,6 +911,64 @@ export interface ResultSpec {
      * @memberof ResultSpec
      */
     dimensions: Array<Dimension>;
+}
+/**
+ *
+ * @export
+ * @interface SimpleMeasureDefinition
+ */
+export interface SimpleMeasureDefinition {
+    /**
+     *
+     * @type {SimpleMeasureDefinitionMeasure}
+     * @memberof SimpleMeasureDefinition
+     */
+    measure: SimpleMeasureDefinitionMeasure;
+}
+/**
+ *
+ * @export
+ * @interface SimpleMeasureDefinitionMeasure
+ */
+export interface SimpleMeasureDefinitionMeasure {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof SimpleMeasureDefinitionMeasure
+     */
+    item: ObjectIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof SimpleMeasureDefinitionMeasure
+     */
+    aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
+    /**
+     *
+     * @type {boolean}
+     * @memberof SimpleMeasureDefinitionMeasure
+     */
+    computeRatio?: boolean;
+    /**
+     *
+     * @type {Array<FilterDefinitionForSimpleMeasure>}
+     * @memberof SimpleMeasureDefinitionMeasure
+     */
+    filters?: Array<FilterDefinitionForSimpleMeasure>;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum SimpleMeasureDefinitionMeasureAggregationEnum {
+    SUM = "SUM",
+    COUNT = "COUNT",
+    AVG = "AVG",
+    MIN = "MIN",
+    MAX = "MAX",
+    MEDIAN = "MEDIAN",
+    RUNSUM = "RUNSUM",
 }
 
 /**
@@ -732,7 +1356,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
 
             if (workspace !== undefined) {
                 if (typeof workspace === "object") {
-                    addFlattenedObjectTo(workspace, "workspace", localVarQueryParameter);
+                    addFlattenedObjectTo(workspace, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["workspace"] = workspace;
                 }
@@ -740,7 +1364,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
 
             if (label !== undefined) {
                 if (typeof label === "object") {
-                    addFlattenedObjectTo(label, "label", localVarQueryParameter);
+                    addFlattenedObjectTo(label, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["label"] = label;
                 }
@@ -748,7 +1372,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
 
             if (sortOrder !== undefined) {
                 if (typeof sortOrder === "object") {
-                    addFlattenedObjectTo(sortOrder, "sortOrder", localVarQueryParameter);
+                    addFlattenedObjectTo(sortOrder, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sortOrder"] = sortOrder;
                 }
@@ -756,11 +1380,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
 
             if (includeTotalWithoutFilters !== undefined) {
                 if (typeof includeTotalWithoutFilters === "object") {
-                    addFlattenedObjectTo(
-                        includeTotalWithoutFilters,
-                        "includeTotalWithoutFilters",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(includeTotalWithoutFilters, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["includeTotalWithoutFilters"] = includeTotalWithoutFilters;
                 }
@@ -768,7 +1388,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
 
             if (complementFilter !== undefined) {
                 if (typeof complementFilter === "object") {
-                    addFlattenedObjectTo(complementFilter, "complementFilter", localVarQueryParameter);
+                    addFlattenedObjectTo(complementFilter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["complementFilter"] = complementFilter;
                 }
@@ -776,7 +1396,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
 
             if (patternFilter !== undefined) {
                 if (typeof patternFilter === "object") {
-                    addFlattenedObjectTo(patternFilter, "patternFilter", localVarQueryParameter);
+                    addFlattenedObjectTo(patternFilter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["patternFilter"] = patternFilter;
                 }
@@ -784,7 +1404,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
 
             if (offset !== undefined) {
                 if (typeof offset === "object") {
-                    addFlattenedObjectTo(offset, "offset", localVarQueryParameter);
+                    addFlattenedObjectTo(offset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["offset"] = offset;
                 }
@@ -792,7 +1412,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
 
             if (limit !== undefined) {
                 if (typeof limit === "object") {
-                    addFlattenedObjectTo(limit, "limit", localVarQueryParameter);
+                    addFlattenedObjectTo(limit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["limit"] = limit;
                 }

@@ -22,12 +22,10 @@ import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from "./base";
 
 // utility function that adds support for nested objects in query
-const addFlattenedObjectTo = (object: any, baseName: string, target: any): void => {
-    const semiFlattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
-    const flattened = semiFlattened[Object.keys(semiFlattened)[0]] ?? {};
-
+const addFlattenedObjectTo = (object: any, target: any): void => {
+    const flattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
     Object.keys(flattened).forEach((key) => {
-        target[`${baseName}${key}`] = (flattened as any)[key];
+        target[key] = (flattened as any)[key];
     });
 };
 
@@ -3943,7 +3941,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -3951,7 +3949,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -3959,7 +3957,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -3967,7 +3965,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGranularity !== undefined) {
                 if (typeof filterGranularity === "object") {
-                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGranularity, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[granularity]"] = filterGranularity;
                 }
@@ -3975,7 +3973,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -3983,7 +3981,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -3991,7 +3989,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -3999,7 +3997,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -4007,7 +4005,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -4015,7 +4013,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -4023,7 +4021,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sort"] = sort;
                 }
@@ -4031,7 +4029,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageLimit !== undefined) {
                 if (typeof pageLimit === "object") {
-                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageLimit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[limit]"] = pageLimit;
                 }
@@ -4039,7 +4037,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageOffset !== undefined) {
                 if (typeof pageOffset === "object") {
-                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageOffset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[offset]"] = pageOffset;
                 }
@@ -4107,7 +4105,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -4115,7 +4113,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -4180,7 +4178,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -4188,7 +4186,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -4285,7 +4283,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -4293,7 +4291,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -4301,7 +4299,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -4309,7 +4307,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttribute !== undefined) {
                 if (typeof filterAttribute === "object") {
-                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttribute, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attribute]"] = filterAttribute;
                 }
@@ -4317,7 +4315,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -4325,7 +4323,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterPrimary !== undefined) {
                 if (typeof filterPrimary === "object") {
-                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterPrimary, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[primary]"] = filterPrimary;
                 }
@@ -4333,7 +4331,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -4341,7 +4339,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -4349,7 +4347,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -4357,7 +4355,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -4425,7 +4423,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -4433,7 +4431,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -4530,7 +4528,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -4538,7 +4536,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -4546,7 +4544,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -4554,7 +4552,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttribute !== undefined) {
                 if (typeof filterAttribute === "object") {
-                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttribute, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attribute]"] = filterAttribute;
                 }
@@ -4562,7 +4560,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -4570,7 +4568,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterPrimary !== undefined) {
                 if (typeof filterPrimary === "object") {
-                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterPrimary, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[primary]"] = filterPrimary;
                 }
@@ -4578,7 +4576,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -4586,7 +4584,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -4594,7 +4592,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -4602,7 +4600,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -4702,7 +4700,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -4710,7 +4708,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -4718,7 +4716,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -4726,7 +4724,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -4734,7 +4732,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -4742,7 +4740,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -4750,7 +4748,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -4758,11 +4756,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -4770,7 +4764,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -4778,7 +4772,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -4786,7 +4780,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -4883,7 +4877,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -4891,7 +4885,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -4899,7 +4893,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -4907,7 +4901,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -4915,7 +4909,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -4923,7 +4917,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -4931,7 +4925,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -4939,11 +4933,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -4951,7 +4941,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -4959,7 +4949,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -4967,7 +4957,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -5078,7 +5068,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -5086,7 +5076,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -5094,7 +5084,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -5102,7 +5092,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterType !== undefined) {
                 if (typeof filterType === "object") {
-                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterType, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[type]"] = filterType;
                 }
@@ -5110,7 +5100,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -5118,7 +5108,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -5126,7 +5116,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -5134,7 +5124,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferences !== undefined) {
                 if (typeof filterReferences === "object") {
-                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterReferences, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[references]"] = filterReferences;
                 }
@@ -5142,7 +5132,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGrain !== undefined) {
                 if (typeof filterGrain === "object") {
-                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGrain, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[grain]"] = filterGrain;
                 }
@@ -5150,11 +5140,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferenceProperties !== undefined) {
                 if (typeof filterReferenceProperties === "object") {
-                    addFlattenedObjectTo(
-                        filterReferenceProperties,
-                        "filter[referenceProperties]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterReferenceProperties, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
                 }
@@ -5162,7 +5148,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceTable !== undefined) {
                 if (typeof filterSourceTable === "object") {
-                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceTable, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
                 }
@@ -5170,7 +5156,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitleBase !== undefined) {
                 if (typeof filterTitleBase === "object") {
-                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitleBase, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
                 }
@@ -5178,7 +5164,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitlePattern !== undefined) {
                 if (typeof filterTitlePattern === "object") {
-                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitlePattern, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
                 }
@@ -5186,7 +5172,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -5194,7 +5180,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -5202,7 +5188,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -5210,7 +5196,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sort"] = sort;
                 }
@@ -5218,7 +5204,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageLimit !== undefined) {
                 if (typeof pageLimit === "object") {
-                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageLimit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[limit]"] = pageLimit;
                 }
@@ -5226,7 +5212,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageOffset !== undefined) {
                 if (typeof pageOffset === "object") {
-                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageOffset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[offset]"] = pageOffset;
                 }
@@ -5323,7 +5309,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -5331,7 +5317,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -5339,7 +5325,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -5347,7 +5333,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGranularity !== undefined) {
                 if (typeof filterGranularity === "object") {
-                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGranularity, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[granularity]"] = filterGranularity;
                 }
@@ -5355,7 +5341,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -5363,7 +5349,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -5371,7 +5357,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -5379,7 +5365,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -5387,7 +5373,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -5395,7 +5381,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -5486,7 +5472,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -5494,7 +5480,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -5502,7 +5488,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -5510,7 +5496,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -5518,7 +5504,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -5526,7 +5512,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -5534,7 +5520,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -5542,7 +5528,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -5550,7 +5536,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -5615,7 +5601,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -5623,7 +5609,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -5738,7 +5724,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -5746,7 +5732,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -5754,7 +5740,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -5762,7 +5748,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterType !== undefined) {
                 if (typeof filterType === "object") {
-                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterType, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[type]"] = filterType;
                 }
@@ -5770,7 +5756,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -5778,7 +5764,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -5786,7 +5772,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -5794,7 +5780,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferences !== undefined) {
                 if (typeof filterReferences === "object") {
-                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterReferences, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[references]"] = filterReferences;
                 }
@@ -5802,7 +5788,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGrain !== undefined) {
                 if (typeof filterGrain === "object") {
-                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGrain, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[grain]"] = filterGrain;
                 }
@@ -5810,11 +5796,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferenceProperties !== undefined) {
                 if (typeof filterReferenceProperties === "object") {
-                    addFlattenedObjectTo(
-                        filterReferenceProperties,
-                        "filter[referenceProperties]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterReferenceProperties, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
                 }
@@ -5822,7 +5804,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceTable !== undefined) {
                 if (typeof filterSourceTable === "object") {
-                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceTable, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
                 }
@@ -5830,7 +5812,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitleBase !== undefined) {
                 if (typeof filterTitleBase === "object") {
-                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitleBase, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
                 }
@@ -5838,7 +5820,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitlePattern !== undefined) {
                 if (typeof filterTitlePattern === "object") {
-                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitlePattern, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
                 }
@@ -5846,7 +5828,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -5854,7 +5836,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -5862,7 +5844,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -5959,7 +5941,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -5967,7 +5949,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -5975,7 +5957,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -5983,7 +5965,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGranularity !== undefined) {
                 if (typeof filterGranularity === "object") {
-                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGranularity, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[granularity]"] = filterGranularity;
                 }
@@ -5991,7 +5973,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -5999,7 +5981,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -6007,7 +5989,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -6015,7 +5997,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -6023,7 +6005,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -6031,7 +6013,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -6125,7 +6107,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -6133,7 +6115,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -6141,7 +6123,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -6149,7 +6131,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -6157,7 +6139,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -6165,7 +6147,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -6173,7 +6155,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -6181,7 +6163,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -6189,7 +6171,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -6304,7 +6286,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -6312,7 +6294,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -6320,7 +6302,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -6328,7 +6310,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterType !== undefined) {
                 if (typeof filterType === "object") {
-                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterType, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[type]"] = filterType;
                 }
@@ -6336,7 +6318,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -6344,7 +6326,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -6352,7 +6334,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -6360,7 +6342,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferences !== undefined) {
                 if (typeof filterReferences === "object") {
-                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterReferences, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[references]"] = filterReferences;
                 }
@@ -6368,7 +6350,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGrain !== undefined) {
                 if (typeof filterGrain === "object") {
-                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGrain, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[grain]"] = filterGrain;
                 }
@@ -6376,11 +6358,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferenceProperties !== undefined) {
                 if (typeof filterReferenceProperties === "object") {
-                    addFlattenedObjectTo(
-                        filterReferenceProperties,
-                        "filter[referenceProperties]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterReferenceProperties, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
                 }
@@ -6388,7 +6366,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceTable !== undefined) {
                 if (typeof filterSourceTable === "object") {
-                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceTable, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
                 }
@@ -6396,7 +6374,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitleBase !== undefined) {
                 if (typeof filterTitleBase === "object") {
-                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitleBase, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
                 }
@@ -6404,7 +6382,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitlePattern !== undefined) {
                 if (typeof filterTitlePattern === "object") {
-                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitlePattern, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
                 }
@@ -6412,7 +6390,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -6420,7 +6398,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -6428,7 +6406,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -6528,7 +6506,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -6536,7 +6514,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -6544,7 +6522,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -6552,7 +6530,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -6560,7 +6538,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -6568,7 +6546,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -6576,7 +6554,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -6584,11 +6562,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -6596,7 +6570,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -6604,7 +6578,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -6612,7 +6586,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -6709,7 +6683,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -6717,7 +6691,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -6725,7 +6699,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -6733,7 +6707,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -6741,7 +6715,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -6749,7 +6723,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -6757,7 +6731,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -6765,11 +6739,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -6777,7 +6747,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -6785,7 +6755,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -6793,7 +6763,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -6883,7 +6853,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -6891,7 +6861,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -6899,7 +6869,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -6907,7 +6877,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -6915,7 +6885,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -6923,7 +6893,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -6931,7 +6901,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -6939,7 +6909,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -6947,7 +6917,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -6955,7 +6925,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sort"] = sort;
                 }
@@ -6963,7 +6933,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageLimit !== undefined) {
                 if (typeof pageLimit === "object") {
-                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageLimit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[limit]"] = pageLimit;
                 }
@@ -6971,7 +6941,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageOffset !== undefined) {
                 if (typeof pageOffset === "object") {
-                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageOffset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[offset]"] = pageOffset;
                 }
@@ -7036,7 +7006,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -7044,7 +7014,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -7109,7 +7079,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -7117,7 +7087,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -7185,7 +7155,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -7193,7 +7163,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -7293,7 +7263,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -7301,7 +7271,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -7309,7 +7279,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -7317,7 +7287,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -7325,7 +7295,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -7333,7 +7303,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -7341,7 +7311,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -7349,11 +7319,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -7361,7 +7327,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -7369,7 +7335,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -7377,7 +7343,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -7474,7 +7440,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -7482,7 +7448,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -7490,7 +7456,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -7498,7 +7464,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -7506,7 +7472,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -7514,7 +7480,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -7522,7 +7488,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -7530,11 +7496,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -7542,7 +7504,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -7550,7 +7512,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -7558,7 +7520,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -7651,7 +7613,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -7659,7 +7621,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -7667,7 +7629,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -7675,7 +7637,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttribute !== undefined) {
                 if (typeof filterAttribute === "object") {
-                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttribute, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attribute]"] = filterAttribute;
                 }
@@ -7683,7 +7645,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -7691,7 +7653,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterPrimary !== undefined) {
                 if (typeof filterPrimary === "object") {
-                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterPrimary, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[primary]"] = filterPrimary;
                 }
@@ -7699,7 +7661,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -7707,7 +7669,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -7715,7 +7677,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -7723,7 +7685,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -7731,7 +7693,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sort"] = sort;
                 }
@@ -7739,7 +7701,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageLimit !== undefined) {
                 if (typeof pageLimit === "object") {
-                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageLimit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[limit]"] = pageLimit;
                 }
@@ -7747,7 +7709,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageOffset !== undefined) {
                 if (typeof pageOffset === "object") {
-                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageOffset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[offset]"] = pageOffset;
                 }
@@ -7815,7 +7777,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -7823,7 +7785,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -7888,7 +7850,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -7896,7 +7858,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -7964,7 +7926,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -7972,7 +7934,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -8072,7 +8034,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -8080,7 +8042,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -8088,7 +8050,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -8096,7 +8058,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -8104,7 +8066,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -8112,7 +8074,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -8120,7 +8082,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -8128,11 +8090,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -8140,7 +8098,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -8148,7 +8106,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -8156,7 +8114,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -8253,7 +8211,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -8261,7 +8219,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -8269,7 +8227,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -8277,7 +8235,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -8285,7 +8243,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -8293,7 +8251,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -8301,7 +8259,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -8309,11 +8267,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -8321,7 +8275,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -8329,7 +8283,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -8337,7 +8291,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -8442,7 +8396,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -8450,7 +8404,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -8458,7 +8412,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -8466,7 +8420,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMaql !== undefined) {
                 if (typeof filterMaql === "object") {
-                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMaql, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[maql]"] = filterMaql;
                 }
@@ -8474,7 +8428,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFormat !== undefined) {
                 if (typeof filterFormat === "object") {
-                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFormat, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[format]"] = filterFormat;
                 }
@@ -8482,7 +8436,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAst !== undefined) {
                 if (typeof filterAst === "object") {
-                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAst, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[ast]"] = filterAst;
                 }
@@ -8490,7 +8444,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -8498,7 +8452,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -8506,7 +8460,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -8514,7 +8468,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -8522,7 +8476,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -8530,7 +8484,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -8538,7 +8492,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -8546,7 +8500,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -8554,7 +8508,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sort"] = sort;
                 }
@@ -8562,7 +8516,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageLimit !== undefined) {
                 if (typeof pageLimit === "object") {
-                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageLimit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[limit]"] = pageLimit;
                 }
@@ -8570,7 +8524,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageOffset !== undefined) {
                 if (typeof pageOffset === "object") {
-                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageOffset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[offset]"] = pageOffset;
                 }
@@ -8723,7 +8677,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -8731,7 +8685,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -8739,7 +8693,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -8747,7 +8701,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGranularity !== undefined) {
                 if (typeof filterGranularity === "object") {
-                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGranularity, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[granularity]"] = filterGranularity;
                 }
@@ -8755,7 +8709,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -8763,7 +8717,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -8771,7 +8725,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -8779,7 +8733,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -8787,7 +8741,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -8795,7 +8749,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -9132,7 +9086,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -9140,7 +9094,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -9148,7 +9102,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -9156,7 +9110,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -9164,7 +9118,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -9172,7 +9126,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -9180,7 +9134,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -9188,7 +9142,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -9196,7 +9150,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -9395,7 +9349,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -9403,7 +9357,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -9550,7 +9504,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -9558,7 +9512,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -9566,7 +9520,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -9574,7 +9528,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttribute !== undefined) {
                 if (typeof filterAttribute === "object") {
-                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttribute, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attribute]"] = filterAttribute;
                 }
@@ -9582,7 +9536,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -9590,7 +9544,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterPrimary !== undefined) {
                 if (typeof filterPrimary === "object") {
-                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterPrimary, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[primary]"] = filterPrimary;
                 }
@@ -9598,7 +9552,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -9606,7 +9560,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -9614,7 +9568,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -9622,7 +9576,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -9915,7 +9869,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -9923,7 +9877,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -9931,7 +9885,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -9939,7 +9893,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMaql !== undefined) {
                 if (typeof filterMaql === "object") {
-                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMaql, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[maql]"] = filterMaql;
                 }
@@ -9947,7 +9901,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFormat !== undefined) {
                 if (typeof filterFormat === "object") {
-                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFormat, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[format]"] = filterFormat;
                 }
@@ -9955,7 +9909,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAst !== undefined) {
                 if (typeof filterAst === "object") {
-                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAst, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[ast]"] = filterAst;
                 }
@@ -9963,7 +9917,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -9971,7 +9925,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -9979,7 +9933,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -9987,7 +9941,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -9995,7 +9949,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -10003,7 +9957,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -10011,7 +9965,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -10019,7 +9973,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -10369,7 +10323,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -10377,7 +10331,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -10385,7 +10339,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -10393,7 +10347,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGranularity !== undefined) {
                 if (typeof filterGranularity === "object") {
-                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGranularity, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[granularity]"] = filterGranularity;
                 }
@@ -10401,7 +10355,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -10409,7 +10363,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -10417,7 +10371,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -10425,7 +10379,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -10433,7 +10387,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -10441,7 +10395,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -10731,7 +10685,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -10739,7 +10693,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -10747,7 +10701,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -10755,7 +10709,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -10763,7 +10717,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -10771,7 +10725,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -10779,7 +10733,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -10787,7 +10741,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -10795,7 +10749,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -11088,7 +11042,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -11096,7 +11050,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -11104,7 +11058,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -11112,7 +11066,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttribute !== undefined) {
                 if (typeof filterAttribute === "object") {
-                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttribute, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attribute]"] = filterAttribute;
                 }
@@ -11120,7 +11074,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -11128,7 +11082,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterPrimary !== undefined) {
                 if (typeof filterPrimary === "object") {
-                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterPrimary, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[primary]"] = filterPrimary;
                 }
@@ -11136,7 +11090,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -11144,7 +11098,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -11152,7 +11106,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -11160,7 +11114,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -11465,7 +11419,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -11473,7 +11427,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -11481,7 +11435,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -11489,7 +11443,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMaql !== undefined) {
                 if (typeof filterMaql === "object") {
-                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMaql, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[maql]"] = filterMaql;
                 }
@@ -11497,7 +11451,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFormat !== undefined) {
                 if (typeof filterFormat === "object") {
-                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFormat, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[format]"] = filterFormat;
                 }
@@ -11505,7 +11459,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAst !== undefined) {
                 if (typeof filterAst === "object") {
-                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAst, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[ast]"] = filterAst;
                 }
@@ -11513,7 +11467,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -11521,7 +11475,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -11529,7 +11483,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -11537,7 +11491,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -11545,7 +11499,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -11553,7 +11507,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -11561,7 +11515,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -11569,7 +11523,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -11865,7 +11819,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -11873,7 +11827,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -11881,7 +11835,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -11889,7 +11843,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -11897,7 +11851,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -11905,7 +11859,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -11913,7 +11867,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -11921,11 +11875,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -11933,7 +11883,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -11941,7 +11891,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -11949,7 +11899,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -12239,7 +12189,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -12247,7 +12197,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -12255,7 +12205,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -12263,7 +12213,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -12271,7 +12221,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -12279,7 +12229,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -12287,7 +12237,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -12295,11 +12245,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -12307,7 +12253,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -12315,7 +12261,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -12323,7 +12269,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -12589,7 +12535,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -12597,7 +12543,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTables !== undefined) {
                 if (typeof filterTables === "object") {
-                    addFlattenedObjectTo(filterTables, "filter[tables]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTables, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tables]"] = filterTables;
                 }
@@ -12605,7 +12551,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -12613,7 +12559,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -12621,7 +12567,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -12629,7 +12575,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sort"] = sort;
                 }
@@ -12637,7 +12583,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageLimit !== undefined) {
                 if (typeof pageLimit === "object") {
-                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageLimit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[limit]"] = pageLimit;
                 }
@@ -12645,7 +12591,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageOffset !== undefined) {
                 if (typeof pageOffset === "object") {
-                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageOffset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[offset]"] = pageOffset;
                 }
@@ -12710,7 +12656,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -12718,7 +12664,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -12803,7 +12749,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -12811,7 +12757,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSource !== undefined) {
                 if (typeof filterSource === "object") {
-                    addFlattenedObjectTo(filterSource, "filter[source]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSource, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[source]"] = filterSource;
                 }
@@ -12819,7 +12765,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterColumns !== undefined) {
                 if (typeof filterColumns === "object") {
-                    addFlattenedObjectTo(filterColumns, "filter[columns]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterColumns, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[columns]"] = filterColumns;
                 }
@@ -12827,7 +12773,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -12835,7 +12781,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -12843,7 +12789,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -12925,7 +12871,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -12933,7 +12879,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSource !== undefined) {
                 if (typeof filterSource === "object") {
-                    addFlattenedObjectTo(filterSource, "filter[source]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSource, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[source]"] = filterSource;
                 }
@@ -12941,7 +12887,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterColumns !== undefined) {
                 if (typeof filterColumns === "object") {
-                    addFlattenedObjectTo(filterColumns, "filter[columns]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterColumns, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[columns]"] = filterColumns;
                 }
@@ -12949,7 +12895,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -12957,7 +12903,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -12965,7 +12911,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -13046,7 +12992,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -13054,7 +13000,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSource !== undefined) {
                 if (typeof filterSource === "object") {
-                    addFlattenedObjectTo(filterSource, "filter[source]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSource, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[source]"] = filterSource;
                 }
@@ -13062,7 +13008,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterColumns !== undefined) {
                 if (typeof filterColumns === "object") {
-                    addFlattenedObjectTo(filterColumns, "filter[columns]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterColumns, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[columns]"] = filterColumns;
                 }
@@ -13070,7 +13016,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -13078,7 +13024,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -13086,7 +13032,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -13094,7 +13040,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sort"] = sort;
                 }
@@ -13102,7 +13048,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageLimit !== undefined) {
                 if (typeof pageLimit === "object") {
-                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageLimit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[limit]"] = pageLimit;
                 }
@@ -13110,7 +13056,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageOffset !== undefined) {
                 if (typeof pageOffset === "object") {
-                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageOffset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[offset]"] = pageOffset;
                 }
@@ -13175,7 +13121,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -13183,7 +13129,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -13251,7 +13197,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -13259,7 +13205,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -13324,7 +13270,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -13332,7 +13278,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -13428,7 +13374,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -13436,7 +13382,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -13444,7 +13390,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -13452,7 +13398,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -13460,7 +13406,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -13468,7 +13414,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -13476,7 +13422,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -13484,11 +13430,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -13496,7 +13438,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -13504,7 +13446,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -13512,7 +13454,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -13520,7 +13462,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sort"] = sort;
                 }
@@ -13528,7 +13470,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageLimit !== undefined) {
                 if (typeof pageLimit === "object") {
-                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageLimit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[limit]"] = pageLimit;
                 }
@@ -13536,7 +13478,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageOffset !== undefined) {
                 if (typeof pageOffset === "object") {
-                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageOffset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[offset]"] = pageOffset;
                 }
@@ -13683,7 +13625,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -13691,7 +13633,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -13699,7 +13641,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -13707,7 +13649,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGranularity !== undefined) {
                 if (typeof filterGranularity === "object") {
-                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGranularity, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[granularity]"] = filterGranularity;
                 }
@@ -13715,7 +13657,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -13723,7 +13665,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -13731,7 +13673,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -13739,7 +13681,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -13747,7 +13689,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -13755,7 +13697,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -14054,7 +13996,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -14062,7 +14004,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -14070,7 +14012,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -14078,7 +14020,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterType !== undefined) {
                 if (typeof filterType === "object") {
-                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterType, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[type]"] = filterType;
                 }
@@ -14086,7 +14028,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -14094,7 +14036,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -14102,7 +14044,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -14110,7 +14052,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferences !== undefined) {
                 if (typeof filterReferences === "object") {
-                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterReferences, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[references]"] = filterReferences;
                 }
@@ -14118,7 +14060,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGrain !== undefined) {
                 if (typeof filterGrain === "object") {
-                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGrain, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[grain]"] = filterGrain;
                 }
@@ -14126,11 +14068,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferenceProperties !== undefined) {
                 if (typeof filterReferenceProperties === "object") {
-                    addFlattenedObjectTo(
-                        filterReferenceProperties,
-                        "filter[referenceProperties]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterReferenceProperties, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
                 }
@@ -14138,7 +14076,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceTable !== undefined) {
                 if (typeof filterSourceTable === "object") {
-                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceTable, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
                 }
@@ -14146,7 +14084,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitleBase !== undefined) {
                 if (typeof filterTitleBase === "object") {
-                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitleBase, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
                 }
@@ -14154,7 +14092,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitlePattern !== undefined) {
                 if (typeof filterTitlePattern === "object") {
-                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitlePattern, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
                 }
@@ -14162,7 +14100,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -14170,7 +14108,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -14178,7 +14116,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -14509,7 +14447,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -14517,7 +14455,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -14525,7 +14463,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -14533,7 +14471,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -14541,7 +14479,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -14549,7 +14487,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -14557,7 +14495,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -14565,7 +14503,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -14573,7 +14511,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -14772,7 +14710,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -14780,7 +14718,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -14927,7 +14865,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -14935,7 +14873,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -14943,7 +14881,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -14951,7 +14889,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttribute !== undefined) {
                 if (typeof filterAttribute === "object") {
-                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttribute, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attribute]"] = filterAttribute;
                 }
@@ -14959,7 +14897,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -14967,7 +14905,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterPrimary !== undefined) {
                 if (typeof filterPrimary === "object") {
-                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterPrimary, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[primary]"] = filterPrimary;
                 }
@@ -14975,7 +14913,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -14983,7 +14921,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -14991,7 +14929,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -14999,7 +14937,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -15292,7 +15230,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -15300,7 +15238,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -15308,7 +15246,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -15316,7 +15254,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMaql !== undefined) {
                 if (typeof filterMaql === "object") {
-                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMaql, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[maql]"] = filterMaql;
                 }
@@ -15324,7 +15262,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFormat !== undefined) {
                 if (typeof filterFormat === "object") {
-                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFormat, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[format]"] = filterFormat;
                 }
@@ -15332,7 +15270,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAst !== undefined) {
                 if (typeof filterAst === "object") {
-                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAst, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[ast]"] = filterAst;
                 }
@@ -15340,7 +15278,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -15348,7 +15286,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -15356,7 +15294,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -15364,7 +15302,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -15372,7 +15310,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -15380,7 +15318,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -15388,7 +15326,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -15396,7 +15334,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -15746,7 +15684,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -15754,7 +15692,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -15762,7 +15700,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -15770,7 +15708,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGranularity !== undefined) {
                 if (typeof filterGranularity === "object") {
-                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGranularity, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[granularity]"] = filterGranularity;
                 }
@@ -15778,7 +15716,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -15786,7 +15724,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -15794,7 +15732,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -15802,7 +15740,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -15810,7 +15748,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -15818,7 +15756,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -16129,7 +16067,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -16137,7 +16075,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -16145,7 +16083,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -16153,7 +16091,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterType !== undefined) {
                 if (typeof filterType === "object") {
-                    addFlattenedObjectTo(filterType, "filter[type]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterType, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[type]"] = filterType;
                 }
@@ -16161,7 +16099,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -16169,7 +16107,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -16177,7 +16115,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -16185,7 +16123,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferences !== undefined) {
                 if (typeof filterReferences === "object") {
-                    addFlattenedObjectTo(filterReferences, "filter[references]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterReferences, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[references]"] = filterReferences;
                 }
@@ -16193,7 +16131,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGrain !== undefined) {
                 if (typeof filterGrain === "object") {
-                    addFlattenedObjectTo(filterGrain, "filter[grain]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGrain, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[grain]"] = filterGrain;
                 }
@@ -16201,11 +16139,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterReferenceProperties !== undefined) {
                 if (typeof filterReferenceProperties === "object") {
-                    addFlattenedObjectTo(
-                        filterReferenceProperties,
-                        "filter[referenceProperties]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterReferenceProperties, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[referenceProperties]"] = filterReferenceProperties;
                 }
@@ -16213,7 +16147,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceTable !== undefined) {
                 if (typeof filterSourceTable === "object") {
-                    addFlattenedObjectTo(filterSourceTable, "filter[sourceTable]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceTable, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceTable]"] = filterSourceTable;
                 }
@@ -16221,7 +16155,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitleBase !== undefined) {
                 if (typeof filterTitleBase === "object") {
-                    addFlattenedObjectTo(filterTitleBase, "filter[titleBase]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitleBase, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titleBase]"] = filterTitleBase;
                 }
@@ -16229,7 +16163,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitlePattern !== undefined) {
                 if (typeof filterTitlePattern === "object") {
-                    addFlattenedObjectTo(filterTitlePattern, "filter[titlePattern]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitlePattern, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[titlePattern]"] = filterTitlePattern;
                 }
@@ -16237,7 +16171,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -16245,7 +16179,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -16253,7 +16187,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -16543,7 +16477,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -16551,7 +16485,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -16559,7 +16493,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -16567,7 +16501,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -16575,7 +16509,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -16583,7 +16517,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -16591,7 +16525,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -16599,7 +16533,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -16607,7 +16541,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -16900,7 +16834,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -16908,7 +16842,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -16916,7 +16850,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -16924,7 +16858,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttribute !== undefined) {
                 if (typeof filterAttribute === "object") {
-                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttribute, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attribute]"] = filterAttribute;
                 }
@@ -16932,7 +16866,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -16940,7 +16874,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterPrimary !== undefined) {
                 if (typeof filterPrimary === "object") {
-                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterPrimary, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[primary]"] = filterPrimary;
                 }
@@ -16948,7 +16882,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -16956,7 +16890,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -16964,7 +16898,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -16972,7 +16906,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -17277,7 +17211,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -17285,7 +17219,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -17293,7 +17227,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -17301,7 +17235,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMaql !== undefined) {
                 if (typeof filterMaql === "object") {
-                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMaql, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[maql]"] = filterMaql;
                 }
@@ -17309,7 +17243,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFormat !== undefined) {
                 if (typeof filterFormat === "object") {
-                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFormat, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[format]"] = filterFormat;
                 }
@@ -17317,7 +17251,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAst !== undefined) {
                 if (typeof filterAst === "object") {
-                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAst, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[ast]"] = filterAst;
                 }
@@ -17325,7 +17259,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -17333,7 +17267,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -17341,7 +17275,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -17349,7 +17283,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -17357,7 +17291,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -17365,7 +17299,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -17373,7 +17307,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -17381,7 +17315,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -17677,7 +17611,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -17685,7 +17619,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -17693,7 +17627,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -17701,7 +17635,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -17709,7 +17643,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -17717,7 +17651,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -17725,7 +17659,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -17733,7 +17667,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -17741,7 +17675,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -17749,7 +17683,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -17757,7 +17691,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -18053,7 +17987,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -18061,7 +17995,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -18069,7 +18003,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -18077,7 +18011,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -18085,7 +18019,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -18093,7 +18027,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -18101,7 +18035,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -18109,7 +18043,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -18117,7 +18051,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -18125,7 +18059,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -18133,7 +18067,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -18423,7 +18357,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -18431,7 +18365,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -18439,7 +18373,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -18447,7 +18381,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -18455,7 +18389,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -18463,7 +18397,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -18471,7 +18405,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -18479,7 +18413,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -18487,7 +18421,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -18495,7 +18429,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -18503,7 +18437,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -18511,7 +18445,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, "sort", localVarQueryParameter);
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["sort"] = sort;
                 }
@@ -18519,7 +18453,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageLimit !== undefined) {
                 if (typeof pageLimit === "object") {
-                    addFlattenedObjectTo(pageLimit, "page[limit]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageLimit, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[limit]"] = pageLimit;
                 }
@@ -18527,7 +18461,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageOffset !== undefined) {
                 if (typeof pageOffset === "object") {
-                    addFlattenedObjectTo(pageOffset, "page[offset]", localVarQueryParameter);
+                    addFlattenedObjectTo(pageOffset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["page[offset]"] = pageOffset;
                 }
@@ -18624,7 +18558,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -18632,7 +18566,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -18640,7 +18574,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -18648,7 +18582,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGranularity !== undefined) {
                 if (typeof filterGranularity === "object") {
-                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGranularity, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[granularity]"] = filterGranularity;
                 }
@@ -18656,7 +18590,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -18664,7 +18598,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -18672,7 +18606,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -18680,7 +18614,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -18688,7 +18622,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -18696,7 +18630,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -18846,7 +18780,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -18854,7 +18788,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -18862,7 +18796,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -18870,7 +18804,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -18878,7 +18812,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -18886,7 +18820,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -18894,7 +18828,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -18902,7 +18836,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -18910,7 +18844,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -18978,7 +18912,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -18986,7 +18920,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -19083,7 +19017,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -19091,7 +19025,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -19099,7 +19033,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -19107,7 +19041,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttribute !== undefined) {
                 if (typeof filterAttribute === "object") {
-                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttribute, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attribute]"] = filterAttribute;
                 }
@@ -19115,7 +19049,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -19123,7 +19057,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterPrimary !== undefined) {
                 if (typeof filterPrimary === "object") {
-                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterPrimary, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[primary]"] = filterPrimary;
                 }
@@ -19131,7 +19065,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -19139,7 +19073,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -19147,7 +19081,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -19155,7 +19089,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -19264,7 +19198,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -19272,7 +19206,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -19280,7 +19214,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -19288,7 +19222,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMaql !== undefined) {
                 if (typeof filterMaql === "object") {
-                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMaql, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[maql]"] = filterMaql;
                 }
@@ -19296,7 +19230,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFormat !== undefined) {
                 if (typeof filterFormat === "object") {
-                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFormat, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[format]"] = filterFormat;
                 }
@@ -19304,7 +19238,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAst !== undefined) {
                 if (typeof filterAst === "object") {
-                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAst, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[ast]"] = filterAst;
                 }
@@ -19312,7 +19246,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -19320,7 +19254,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -19328,7 +19262,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -19336,7 +19270,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -19344,7 +19278,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -19352,7 +19286,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -19360,7 +19294,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -19368,7 +19302,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -19533,7 +19467,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -19541,7 +19475,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -19549,7 +19483,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -19557,7 +19491,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterGranularity !== undefined) {
                 if (typeof filterGranularity === "object") {
-                    addFlattenedObjectTo(filterGranularity, "filter[granularity]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterGranularity, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[granularity]"] = filterGranularity;
                 }
@@ -19565,7 +19499,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -19573,7 +19507,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -19581,7 +19515,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -19589,7 +19523,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -19597,7 +19531,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -19605,7 +19539,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -19699,7 +19633,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -19707,7 +19641,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -19715,7 +19649,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -19723,7 +19657,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -19731,7 +19665,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDataset !== undefined) {
                 if (typeof filterDataset === "object") {
-                    addFlattenedObjectTo(filterDataset, "filter[dataset]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDataset, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[dataset]"] = filterDataset;
                 }
@@ -19739,7 +19673,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -19747,7 +19681,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -19755,7 +19689,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -19763,7 +19697,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -19860,7 +19794,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -19868,7 +19802,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -19876,7 +19810,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -19884,7 +19818,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttribute !== undefined) {
                 if (typeof filterAttribute === "object") {
-                    addFlattenedObjectTo(filterAttribute, "filter[attribute]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttribute, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attribute]"] = filterAttribute;
                 }
@@ -19892,7 +19826,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -19900,7 +19834,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterPrimary !== undefined) {
                 if (typeof filterPrimary === "object") {
-                    addFlattenedObjectTo(filterPrimary, "filter[primary]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterPrimary, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[primary]"] = filterPrimary;
                 }
@@ -19908,7 +19842,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterSourceColumn !== undefined) {
                 if (typeof filterSourceColumn === "object") {
-                    addFlattenedObjectTo(filterSourceColumn, "filter[sourceColumn]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterSourceColumn, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[sourceColumn]"] = filterSourceColumn;
                 }
@@ -19916,7 +19850,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -19924,7 +19858,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -19932,7 +19866,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -20041,7 +19975,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -20049,7 +19983,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -20057,7 +19991,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDescription !== undefined) {
                 if (typeof filterDescription === "object") {
-                    addFlattenedObjectTo(filterDescription, "filter[description]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDescription, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[description]"] = filterDescription;
                 }
@@ -20065,7 +19999,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMaql !== undefined) {
                 if (typeof filterMaql === "object") {
-                    addFlattenedObjectTo(filterMaql, "filter[maql]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMaql, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[maql]"] = filterMaql;
                 }
@@ -20073,7 +20007,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFormat !== undefined) {
                 if (typeof filterFormat === "object") {
-                    addFlattenedObjectTo(filterFormat, "filter[format]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFormat, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[format]"] = filterFormat;
                 }
@@ -20081,7 +20015,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAst !== undefined) {
                 if (typeof filterAst === "object") {
-                    addFlattenedObjectTo(filterAst, "filter[ast]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAst, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[ast]"] = filterAst;
                 }
@@ -20089,7 +20023,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTags !== undefined) {
                 if (typeof filterTags === "object") {
-                    addFlattenedObjectTo(filterTags, "filter[tags]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTags, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[tags]"] = filterTags;
                 }
@@ -20097,7 +20031,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -20105,7 +20039,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -20113,7 +20047,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -20121,7 +20055,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -20129,7 +20063,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -20137,7 +20071,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -20145,7 +20079,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -20301,7 +20235,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -20309,7 +20243,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -20317,7 +20251,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -20325,7 +20259,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -20333,7 +20267,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -20341,7 +20275,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -20349,7 +20283,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -20357,11 +20291,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -20369,7 +20299,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -20377,7 +20307,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -20385,7 +20315,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
@@ -20681,7 +20611,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filter !== undefined) {
                 if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, "filter", localVarQueryParameter);
+                    addFlattenedObjectTo(filter, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter"] = filter;
                 }
@@ -20689,7 +20619,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterTitle !== undefined) {
                 if (typeof filterTitle === "object") {
-                    addFlattenedObjectTo(filterTitle, "filter[title]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterTitle, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[title]"] = filterTitle;
                 }
@@ -20697,7 +20627,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterLabels !== undefined) {
                 if (typeof filterLabels === "object") {
-                    addFlattenedObjectTo(filterLabels, "filter[labels]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterLabels, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[labels]"] = filterLabels;
                 }
@@ -20705,7 +20635,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterAttributes !== undefined) {
                 if (typeof filterAttributes === "object") {
-                    addFlattenedObjectTo(filterAttributes, "filter[attributes]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterAttributes, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[attributes]"] = filterAttributes;
                 }
@@ -20713,7 +20643,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterFacts !== undefined) {
                 if (typeof filterFacts === "object") {
-                    addFlattenedObjectTo(filterFacts, "filter[facts]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterFacts, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[facts]"] = filterFacts;
                 }
@@ -20721,7 +20651,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterDatasets !== undefined) {
                 if (typeof filterDatasets === "object") {
-                    addFlattenedObjectTo(filterDatasets, "filter[datasets]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterDatasets, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[datasets]"] = filterDatasets;
                 }
@@ -20729,7 +20659,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterMetrics !== undefined) {
                 if (typeof filterMetrics === "object") {
-                    addFlattenedObjectTo(filterMetrics, "filter[metrics]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterMetrics, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[metrics]"] = filterMetrics;
                 }
@@ -20737,11 +20667,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterVisualizationObjects !== undefined) {
                 if (typeof filterVisualizationObjects === "object") {
-                    addFlattenedObjectTo(
-                        filterVisualizationObjects,
-                        "filter[visualizationObjects]",
-                        localVarQueryParameter,
-                    );
+                    addFlattenedObjectTo(filterVisualizationObjects, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[visualizationObjects]"] = filterVisualizationObjects;
                 }
@@ -20749,7 +20675,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (filterId !== undefined) {
                 if (typeof filterId === "object") {
-                    addFlattenedObjectTo(filterId, "filter[id]", localVarQueryParameter);
+                    addFlattenedObjectTo(filterId, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["filter[id]"] = filterId;
                 }
@@ -20757,7 +20683,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (fields !== undefined) {
                 if (typeof fields === "object") {
-                    addFlattenedObjectTo(fields, "fields", localVarQueryParameter);
+                    addFlattenedObjectTo(fields, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["fields"] = fields;
                 }
@@ -20765,7 +20691,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (include !== undefined) {
                 if (typeof include === "object") {
-                    addFlattenedObjectTo(include, "include", localVarQueryParameter);
+                    addFlattenedObjectTo(include, localVarQueryParameter);
                 } else {
                     localVarQueryParameter["include"] = include;
                 }
