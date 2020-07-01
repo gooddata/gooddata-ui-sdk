@@ -4,13 +4,13 @@ import {
     DataValue,
     IDataView,
     IDimensionDescriptor,
+    IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
     IPreparedExecution,
     IResultHeader,
     NoDataError,
-    NotImplemented,
     NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
@@ -21,7 +21,6 @@ import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { Execution } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
-import { trimToRequestedWindow } from "../../../convertors/fromBackend/afm/clientSidePaging";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 
@@ -49,6 +48,7 @@ export class TigerExecutionResult implements IExecutionResult {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
+        private readonly executionFactory: IExecutionFactory,
         readonly execResponse: Execution.IExecutionResponse,
         private readonly dateFormatter: DateFormatter,
     ) {
@@ -71,11 +71,11 @@ export class TigerExecutionResult implements IExecutionResult {
             sdk.execution.executionResult(this.resultId, saneOffset, saneSize),
         );
 
-        return this.asDataView(executionResultPromise, saneOffset, saneSize);
+        return this.asDataView(executionResultPromise);
     }
 
     public transform(): IPreparedExecution {
-        throw new NotImplemented("not yet implemented");
+        return this.executionFactory.forDefinition(this.definition);
     }
 
     public async export(_options: IExportConfig): Promise<IExportResult> {
@@ -92,31 +92,22 @@ export class TigerExecutionResult implements IExecutionResult {
         return this._fingerprint;
     }
 
-    private asDataView = (
-        promisedRes: Promise<Execution.IExecutionResult>,
-        requestedOffset?: number[],
-        requestedSize?: number[],
-    ): Promise<IDataView> => {
-        return promisedRes.then((res) => {
-            if (!res) {
+    private asDataView = (promisedRes: Promise<Execution.IExecutionResult>): Promise<IDataView> => {
+        return promisedRes.then((result) => {
+            if (!result) {
                 // TODO: SDK8: investigate when can this actually happen; perhaps end of data during paging?
                 //  perhaps legitimate NoDataCase?
                 throw new UnexpectedError("Server returned no data");
             }
 
-            const resultToUse =
-                requestedOffset && requestedSize
-                    ? trimToRequestedWindow(res, requestedOffset, requestedSize)
-                    : res;
-
-            if (isEmptyDataResult(resultToUse)) {
+            if (isEmptyDataResult(result)) {
                 throw new NoDataError(
                     "The execution resulted in no data to display.",
-                    new TigerDataView(this, resultToUse, this.dateFormatter),
+                    new TigerDataView(this, result, this.dateFormatter),
                 );
             }
 
-            return new TigerDataView(this, resultToUse, this.dateFormatter);
+            return new TigerDataView(this, result, this.dateFormatter);
         });
     };
 }

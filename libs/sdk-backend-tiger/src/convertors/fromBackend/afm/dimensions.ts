@@ -21,12 +21,12 @@ function transformDimension(dim: Execution.IResultDimension): IDimensionDescript
                 //  changes across public interface of the SDK (drilling etc)
                 const attrDescriptor: IAttributeDescriptor = {
                     attributeHeader: {
-                        uri: `/obj/${headerIdx}/${h.attributeHeader.identifier}`,
+                        uri: `/obj/${headerIdx}`,
                         identifier: h.attributeHeader.identifier,
                         formOf: {
                             identifier: h.attributeHeader.formOf.identifier,
                             name: h.attributeHeader.formOf.name,
-                            uri: `/obj/${666 + headerIdx}/${h.attributeHeader.formOf.identifier}`,
+                            uri: `/obj/${headerIdx}`,
                         },
                         localIdentifier: h.attributeHeader.localIdentifier,
                         name: h.attributeHeader.name,

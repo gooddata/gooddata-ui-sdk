@@ -17,7 +17,6 @@ export namespace ExecuteAFM {
 
     export interface IResultSpec {
         dimensions?: IDimension[];
-        sorts?: SortItem[];
     }
 
     export interface IAttribute {
@@ -195,42 +194,39 @@ export namespace ExecuteAFM {
         attributeIdentifiers: ILocalIdentifierQualifier[];
     }
 
+    export type SortDirection = "ASC" | "DESC";
+
+    export interface IAttributeSortKey {
+        attribute: {
+            attributeIdentifier: string;
+            direction: SortDirection;
+        };
+    }
+
+    export interface IDimensionItemValue {
+        itemIdentifier: string;
+        itemValue: string;
+    }
+
+    export interface IDimensionLocator {
+        dimensionIdentifier: string;
+        locator: IDimensionItemValue[];
+    }
+
+    export interface IValueSortKey {
+        value: {
+            direction: SortDirection;
+            dataColumnLocators: IDimensionLocator[];
+        };
+    }
+
+    export type SortKey = IAttributeSortKey | IValueSortKey;
+
     export interface IDimension {
+        localIdentifier: string;
         itemIdentifiers: Identifier[];
+        sorting?: SortKey[];
         totals?: ITotalItem[];
-    }
-
-    export type SortItem = IAttributeSortItem | IMeasureSortItem;
-    export type SortDirection = "asc" | "desc";
-
-    export interface IAttributeSortItem {
-        attributeSortItem: {
-            direction: SortDirection;
-            attributeIdentifier: ILocalIdentifierQualifier;
-            aggregation?: "sum";
-        };
-    }
-
-    export interface IMeasureSortItem {
-        measureSortItem: {
-            direction: SortDirection;
-            locators: LocatorItem[];
-        };
-    }
-
-    export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
-
-    export interface IAttributeLocatorItem {
-        attributeLocatorItem: {
-            attributeIdentifier: ILocalIdentifierQualifier;
-            element: string;
-        };
-    }
-
-    export interface IMeasureLocatorItem {
-        measureLocatorItem: {
-            measureIdentifier: ILocalIdentifierQualifier;
-        };
     }
 
     export const isObjIdentifierQualifier = (value: any): value is IObjIdentifierQualifier => {

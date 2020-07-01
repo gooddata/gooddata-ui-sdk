@@ -23,6 +23,7 @@ import {
     isMeasureSort,
     measureLocalId,
     ISortItem,
+    newAttributeSort,
 } from "@gooddata/sdk-model";
 
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -59,7 +60,6 @@ import {
 import { generateDimensions } from "../../../utils/dimensions";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { createSorts } from "../../../utils/sort";
 
 import { setPivotTableUiConfig } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
@@ -240,16 +240,7 @@ export function addDefaultSort(
         return true;
     });
 
-    return hasVisibleCustomSort
-        ? sortItems
-        : [
-              {
-                  attributeSortItem: {
-                      attributeIdentifier: firstRow.localIdentifier,
-                      direction: "asc",
-                  },
-              },
-          ];
+    return hasVisibleCustomSort ? sortItems : [newAttributeSort(firstRow.localIdentifier, "asc")];
 }
 
 export class PluggablePivotTable extends AbstractPluggableVisualization {
@@ -353,10 +344,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const height = dimensions?.height;
         const { drillableItems } = custom;
 
-        const execution = executionFactory
-            .forInsight(insight)
-            .withDimensions(...this.getDimensions(insight))
-            .withSorting(...createSorts(VisualizationTypes.TABLE, insight));
+        const execution = executionFactory.forInsight(insight).withDimensions(...this.getDimensions(insight));
 
         let configUpdated = config;
         if (this.environment !== DASHBOARDS_ENVIRONMENT) {

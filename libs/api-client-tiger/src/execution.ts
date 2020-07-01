@@ -18,8 +18,6 @@ export const tigerExecutionClientFactory = (axios: AxiosInstance) => {
      */
     const executeAfm = (execution: ExecuteAFM.IExecution): Promise<Execution.IExecutionResponse> => {
         return axios.post("/api/afm", execution).then((res: AxiosResponse<Execution.IExecutionResponse>) => {
-            // tslint:disable-next-line: no-console
-            console.log("got AFM response from backend", res);
             return res.data;
         });
     };
@@ -33,16 +31,14 @@ export const tigerExecutionClientFactory = (axios: AxiosInstance) => {
      */
     const executionResult = (
         resultId: string,
-        size?: number[],
         offset?: number[],
+        size?: number[],
     ): Promise<Execution.IExecutionResult> => {
-        const params = { size: size && size.join(","), offset: offset && offset.join(",") };
+        const params = { limit: size && size.join(","), offset: offset && offset.join(",") };
 
         return axios
             .get(`/api/result/${resultId}`, { params })
             .then((res: AxiosResponse<Execution.IExecutionResult>) => {
-                // tslint:disable-next-line: no-console
-                console.log("got AFM result from backend", res);
                 return res.data;
             });
     };

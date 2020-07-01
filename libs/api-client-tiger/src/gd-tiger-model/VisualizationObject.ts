@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { ExecuteAFM } from "./ExecuteAFM";
+import { ISortItem } from "@gooddata/sdk-model";
 
 export namespace VisualizationObject {
     export interface IVisualizationObject {
@@ -8,7 +9,7 @@ export namespace VisualizationObject {
             visualizationUrl: string;
             buckets: IBucket[];
             filters: ExecuteAFM.FilterItem[]; // TODO make sure this includes Measure value filters when they land in tiger
-            sorts: ExecuteAFM.SortItem[];
+            sorts: ISortItem[];
             properties: VisualizationProperties;
         };
     }

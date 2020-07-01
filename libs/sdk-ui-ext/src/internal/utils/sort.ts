@@ -14,7 +14,6 @@ import {
     IMeasure,
     insightBucket,
     insightMeasures,
-    insightSorts,
     newAttributeSort,
     newMeasureSort,
     SortDirection,
@@ -53,26 +52,6 @@ export function getAttributeSortItem(
     };
 
     return attributeSortItem;
-}
-
-function getDefaultTableSort(insight: IInsightDefinition): ISortItem[] {
-    const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
-    const rowAttributes = rowBucket ? bucketAttributes(rowBucket) : [];
-
-    if (rowAttributes.length > 0) {
-        return [newAttributeSort(rowAttributes[0], SORT_DIR_ASC)];
-    }
-
-    const colBucket = insightBucket(insight, BucketNames.COLUMNS);
-    const colAttributes = colBucket ? bucketAttributes(colBucket) : [];
-
-    const measures = insightMeasures(insight);
-
-    if (measures.length > 0 && colAttributes.length === 0) {
-        return [newMeasureSort(measures[0], SORT_DIR_DESC)];
-    }
-
-    return [];
 }
 
 function getDefaultBarChartSort(
@@ -140,10 +119,6 @@ export function createSorts(
     canSortStackTotalValue: boolean = false,
 ): ISortItem[] {
     switch (type) {
-        case VisualizationTypes.TABLE:
-            const sorts = insightSorts(insight);
-
-            return !isEmpty(sorts) ? sorts : getDefaultTableSort(insight);
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.LINE:
             return [];

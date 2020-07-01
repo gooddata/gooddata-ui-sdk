@@ -1542,17 +1542,13 @@ export type RgbType = "rgb";
 // @public
 export type SortDirection = "asc" | "desc";
 
-// Warning: (ae-internal-missing-underscore) The name "SortEntityIds" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @public
 export type SortEntityIds = {
     allIdentifiers: Identifier[];
     attributeIdentifiers: Identifier[];
     measureIdentifiers: Identifier[];
 };
 
-// Warning: (ae-incompatible-release-tags) The symbol "sortEntityIds" is marked as @public, but its signature references "SortEntityIds" which is marked as @internal
-//
 // @public
 export function sortEntityIds(sort: ISortItem): SortEntityIds;
 
