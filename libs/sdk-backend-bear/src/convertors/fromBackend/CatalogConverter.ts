@@ -53,7 +53,15 @@ export const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }) =
 
 const commonMetadataModifications = <T extends IMetadataObjectBuilder>(item: GdcMetadata.IObjectMeta) => (
     builder: T,
-) => builder.id(item.identifier).uri(item.uri).title(item.title).description(item.summary).unlisted(false);
+) =>
+    builder
+        .id(item.identifier)
+        .uri(item.uri)
+        .title(item.title)
+        .description(item.summary)
+        .production(item.isProduction === 1)
+        .unlisted(item.unlisted === 1)
+        .deprecated(item.deprecated === "1");
 
 const commonCatalogItemModifications = <T extends IMetadataObjectBuilder>(item: GdcCatalog.CatalogItem) => (
     builder: T,
@@ -63,7 +71,9 @@ const commonCatalogItemModifications = <T extends IMetadataObjectBuilder>(item: 
         .uri(item.links.self)
         .title(item.title)
         .description(item.summary)
-        .unlisted(false);
+        .production(item.production)
+        .unlisted(false)
+        .deprecated(false);
 
 const convertDisplayForm = (
     df: GdcMetadata.IAttributeDisplayForm,
@@ -154,12 +164,7 @@ export const convertWrappedFact = (fact: GdcMetadata.IWrappedFact): ICatalogFact
     const factRef = uriRef(meta.uri);
 
     return newCatalogFact((catalogFact) =>
-        catalogFact.fact(factRef, (f) =>
-            f
-                .modify(commonMetadataModifications(meta))
-                .production(meta.isProduction === 1)
-                .unlisted(meta.unlisted === 1),
-        ),
+        catalogFact.fact(factRef, (f) => f.modify(commonMetadataModifications(meta))),
     );
 };
 
@@ -173,31 +178,18 @@ export const convertWrappedAttribute = (attribute: GdcMetadata.IWrappedAttribute
 
     return newCatalogAttribute((catalogAttr) => {
         let result = catalogAttr
-            .attribute(attrRef, (a) =>
-                a
-                    .modify(commonMetadataModifications(meta))
-                    .production(meta.isProduction === 1)
-                    .unlisted(meta.unlisted === 1),
-            )
+            .attribute(attrRef, (a) => a.modify(commonMetadataModifications(meta)))
             .geoPinDisplayForms(
                 geoPinDisplayForms.map((geoDisplayForm) =>
                     newAttributeDisplayFormMetadataObject(uriRef(geoDisplayForm.meta.uri), (df) =>
-                        df
-                            .modify(commonMetadataModifications(geoDisplayForm.meta))
-                            .attribute(attrRef)
-                            .production(geoDisplayForm.meta.isProduction === 1)
-                            .unlisted(geoDisplayForm.meta.unlisted === 1),
+                        df.modify(commonMetadataModifications(geoDisplayForm.meta)).attribute(attrRef),
                     ),
                 ),
             );
 
         if (defaultDisplayForm) {
             result = result.defaultDisplayForm(uriRef(defaultDisplayForm.meta.uri), (df) =>
-                df
-                    .modify(commonMetadataModifications(defaultDisplayForm.meta))
-                    .attribute(attrRef)
-                    .production(defaultDisplayForm.meta.isProduction === 1)
-                    .unlisted(defaultDisplayForm.meta.unlisted === 1),
+                df.modify(commonMetadataModifications(defaultDisplayForm.meta)).attribute(attrRef),
             );
         }
 
@@ -214,8 +206,7 @@ export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasu
             m
                 .modify(commonMetadataModifications(meta))
                 .expression(content.expression)
-                .format(content.format ?? "#,#.##")
-                .unlisted(meta.unlisted === 1),
+                .format(content.format ?? "#,#.##"),
         ),
     );
 };

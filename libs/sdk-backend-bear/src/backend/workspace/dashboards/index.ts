@@ -29,6 +29,9 @@ import {
     IScheduledMailDefinition,
     IScheduledMail,
     FilterContextItem,
+    SupportedWidgetReferenceTypes,
+    IWidgetReferences,
+    widgetType,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual, uriRef, objRefToString } from "@gooddata/sdk-model";
 import {
@@ -46,6 +49,8 @@ import clone from "lodash/clone";
 import set from "lodash/set";
 import { objRefToUri, getObjectIdFromUri, userUriFromAuthenticatedPrincipal } from "../../../utils/api";
 import keyBy from "lodash/keyBy";
+import { WidgetReferencesQuery } from "./widgetReferences";
+import invariant from "ts-invariant";
 
 type DashboardDependencyCategory = Extract<
     GdcMetadata.ObjectCategory,
@@ -277,6 +282,18 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
     public bulkDeleteWidgetAlerts = async (refs: ObjRef[]) => {
         const uris = await Promise.all(refs.map((ref) => objRefToUri(ref, this.workspace, this.authCall)));
         return this.authCall((sdk) => sdk.md.bulkDeleteObjects(this.workspace, uris, "cascade"));
+    };
+
+    public getWidgetReferencedObjects = async (
+        widget: IWidget,
+        types: SupportedWidgetReferenceTypes[] = ["measure"],
+    ): Promise<IWidgetReferences> => {
+        invariant(
+            widgetType(widget) === "kpi",
+            "getWidgetReferencedObjects is currently supported for kpi widgets only",
+        );
+
+        return new WidgetReferencesQuery(this.authCall, this.workspace, widget, types).run();
     };
 
     // Alerts

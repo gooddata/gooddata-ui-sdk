@@ -205,6 +205,10 @@ export {
     WidgetType,
     isWidget,
     isWidgetDefinition,
+    IWidgetReferences,
+    SupportedWidgetReferenceTypes,
+    widgetUri,
+    widgetType,
 } from "./workspace/dashboards/widget";
 export {
     ILegacyKpi,

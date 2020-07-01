@@ -795,6 +795,7 @@ export interface IMeasureValueFilter {
 
 // @public (undocumented)
 export interface IMetadataObject {
+    deprecated: boolean;
     description: string;
     id: string;
     production: boolean;
@@ -807,6 +808,7 @@ export interface IMetadataObject {
 
 // @public
 export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends IBuilder<T> {
+    deprecated(isDeprecated: boolean): this;
     description(description: string): this;
     id(id: string): this;
     production(isProduction: boolean): this;
@@ -1352,6 +1354,8 @@ export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMet
 
 // @public
 export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends Builder<T> implements IMetadataObjectBuilder {
+    // (undocumented)
+    deprecated(isDeprecated: boolean): this;
     // (undocumented)
     description(description: string): this;
     // (undocumented)
