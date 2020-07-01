@@ -55,6 +55,14 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
      * @returns this
      */
     production(isProduction: boolean): this;
+
+    /**
+     * Set metadata object isDeprecated flag
+     *
+     * @param isDeprecated - true if deprecated
+     * @returns this
+     */
+    deprecated(isDeprecated: boolean): this;
 }
 
 /**
@@ -93,6 +101,11 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> 
 
     public production(isProduction: boolean): this {
         this.item.production = isProduction;
+        return this;
+    }
+
+    public deprecated(isDeprecated: boolean): this {
+        this.item.deprecated = isDeprecated;
         return this;
     }
 }

@@ -47,6 +47,13 @@ export interface IMetadataObject {
     production: boolean;
 
     /**
+     * Is metadata object deprecated?
+     * Deprecated metadata objects still work in created reports or insights,
+     * but you cannot select them for new ones (they are not displayed in the lists).
+     */
+    deprecated: boolean;
+
+    /**
      * Indicates whether the item is unlisted. Depending on the context, unlisted items may
      * not be shown to the users at all or may be shown with a special indicator.
      */

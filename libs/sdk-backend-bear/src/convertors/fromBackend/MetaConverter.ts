@@ -106,5 +106,6 @@ export const convertMetadataObjectXrefEntry = (
         description: entry.summary,
         production: true,
         unlisted: entry.unlisted === 1,
+        deprecated: entry.deprecated === "1",
     };
 };

@@ -944,6 +944,11 @@ export interface IWidgetDefinitionWithLayoutPath {
 export type IWidgetOrDefinitionWithLayoutPath = IWidgetWithLayoutPath | IWidgetDefinitionWithLayoutPath;
 
 // @alpha
+export interface IWidgetReferences {
+    catalogItems?: CatalogItem[];
+}
+
+// @alpha
 export interface IWidgetWithLayoutPath {
     // (undocumented)
     path: LayoutPath;
@@ -1027,6 +1032,7 @@ export interface IWorkspaceDashboards {
     getDashboards(): Promise<IListedDashboard[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
+    getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
     // (undocumented)
@@ -1230,6 +1236,9 @@ export enum SettingCatalog {
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
+// @alpha
+export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable">;
+
 // @public
 export class UnexpectedError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
@@ -1256,6 +1265,12 @@ export type Widget = ILayoutWidget;
 
 // @alpha
 export type WidgetType = "kpi" | "insight";
+
+// @alpha
+export function widgetType(widget: IWidget): WidgetType;
+
+// @alpha
+export function widgetUri(widget: IWidget): string;
 
 
 // (No @packageDocumentation comment for this package)

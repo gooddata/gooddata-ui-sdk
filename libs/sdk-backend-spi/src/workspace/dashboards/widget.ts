@@ -1,10 +1,11 @@
 // (C) 2020 GoodData Corporation
-import { ObjRef, isObjRef } from "@gooddata/sdk-model";
+import { ObjRef, isObjRef, ObjectType, CatalogItem } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { IDashboardFilterReference } from "./filterContext";
 import { DrillDefinition } from "./drills";
 import { ILegacyKpi } from "./kpi";
 import { IDashboardObjectIdentity } from "./common";
+import invariant from "ts-invariant";
 
 /**
  * Temporary type to distinguish between kpi and insight
@@ -70,6 +71,29 @@ export interface IWidgetDefinition extends IWidgetBase, Partial<IDashboardObject
 export interface IWidget extends IWidgetBase, IDashboardObjectIdentity {}
 
 /**
+ * List of currently supported types of references that can be retrieved using getWidgetReferencedObjects()
+ * @alpha
+ */
+export type SupportedWidgetReferenceTypes = Exclude<
+    ObjectType,
+    "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable"
+>;
+
+/**
+ * Contains information about objects that may be referenced by a widget. The contents of this object
+ * depend on the widget and the types requested at the time of call to getWidgetReferencedObjects.
+ *
+ * @alpha
+ */
+export interface IWidgetReferences {
+    /**
+     * If requested, measures referenced by the widget will be returned here.
+     * If none of them were requested, the catalogItems will be undefined.
+     */
+    catalogItems?: CatalogItem[];
+}
+
+/**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetDefinition}.
  * @alpha
  */
@@ -90,4 +114,30 @@ export function isWidget(obj: any): obj is IWidget {
  */
 function hasWidgetProps(obj: any): boolean {
     return !isEmpty(obj) && ((obj as IWidgetBase).type === "kpi" || (obj as IWidgetBase).type === "insight");
+}
+
+/**
+ * Gets the widget uri
+ *
+ * @param widget - widget to get uri of
+ * @returns the widget uri
+ * @alpha
+ */
+export function widgetUri(widget: IWidget): string {
+    invariant(widget, "widget to get uri of must be specified");
+
+    return widget.uri;
+}
+
+/**
+ * Gets the widget type
+ *
+ * @param widget - widget to get type of
+ * @returns the widget type
+ * @alpha
+ */
+export function widgetType(widget: IWidget): WidgetType {
+    invariant(widget, "widget to get type of must be specified");
+
+    return widget.type;
 }

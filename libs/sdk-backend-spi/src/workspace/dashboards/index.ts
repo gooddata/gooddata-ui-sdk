@@ -4,6 +4,7 @@ import { IListedDashboard, IDashboard, IDashboardDefinition } from "./dashboard"
 import { IWidgetAlert, IWidgetAlertDefinition, IWidgetAlertCount } from "./alert";
 import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
 import { IFilterContextDefinition, FilterContextItem } from "./filterContext";
+import { IWidget, SupportedWidgetReferenceTypes, IWidgetReferences } from "./widget";
 
 /**
  * Service to list, create and update analytical dashboards
@@ -133,4 +134,16 @@ export interface IWorkspaceDashboards {
      * @returns promise
      */
     bulkDeleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
+
+    /**
+     * Get all metadata objects referenced by a given widget.
+     *
+     * @param widget - widget to get referenced objects for
+     * @param types - optional array of object types to include, when not specified, all supported references will
+     *  be retrieved
+     */
+    getWidgetReferencedObjects(
+        widget: IWidget,
+        types?: SupportedWidgetReferenceTypes[],
+    ): Promise<IWidgetReferences>;
 }

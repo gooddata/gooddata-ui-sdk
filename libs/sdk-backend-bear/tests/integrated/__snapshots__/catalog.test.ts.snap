@@ -6,11 +6,13 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]
 ",
         "format": "#,##0.00",
         "id": "abxgDICQav2J",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
         },
@@ -24,10 +26,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009]",
         "format": "#,##0.00",
         "id": "abYgDBRagANw",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266",
         },
@@ -41,10 +45,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT COUNT([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066], [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "#,##0.00",
         "id": "abQgDWx4gOUu",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
         },
@@ -58,10 +64,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
         "format": "#,##0.00",
         "id": "aa4gLlQhcmLO",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
         },
@@ -74,8 +82,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.account.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
         },
@@ -88,8 +98,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.account.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
         },
@@ -104,8 +116,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.activity.activity",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110",
         },
@@ -119,8 +133,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.amount",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
         },
@@ -135,10 +151,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "$#,##0.00",
         "id": "aangOxLSeztu",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
         },
@@ -151,8 +169,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.daystoclose",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104",
         },
@@ -166,8 +186,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.owner.department",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
         },
@@ -180,8 +202,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.owner.department",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
         },
@@ -196,8 +220,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.stagehistory.duration",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107",
         },
@@ -211,8 +237,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.opportunitysnapshot.forecastcategory",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
         },
@@ -225,8 +253,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.opportunitysnapshot.forecastcategory",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
         },
@@ -241,8 +271,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.isactive",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
         },
@@ -255,8 +287,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.isactive",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
         },
@@ -271,8 +305,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
         },
@@ -285,8 +321,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
         },
@@ -301,8 +339,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.iswon",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
         },
@@ -315,8 +355,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.iswon",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
         },
@@ -331,8 +373,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunitysnapshot.closedate",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106",
         },
@@ -346,8 +390,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunity.oppcreated",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109",
         },
@@ -361,8 +407,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.opportunitysnapshot.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
         },
@@ -375,8 +423,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.opportunitysnapshot.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
         },
@@ -391,8 +441,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunitysnapshot.snapshotdate",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
         },
@@ -406,8 +458,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.opportunity.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
         },
@@ -420,8 +474,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.opportunity.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
         },
@@ -436,8 +492,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.probability",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103",
         },
@@ -452,10 +510,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT AVG([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "#,##0.0%",
         "id": "abEgMnq5hyJQ",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273",
         },
@@ -468,8 +528,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.product.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
         },
@@ -482,8 +544,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.product.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
         },
@@ -498,8 +562,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.owner.region",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
         },
@@ -512,8 +578,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.owner.region",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
         },
@@ -528,8 +596,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.owner.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
         },
@@ -542,8 +612,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.owner.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
         },
@@ -559,10 +631,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT CASE WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] BETWEEN 2018 AND 2021",
         "format": "#,##0.00",
         "id": "aadpHDMBecIy",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274",
         },
@@ -575,8 +649,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
         },
@@ -589,8 +665,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.name.stagename",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
         },
@@ -605,8 +683,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
         },
@@ -619,8 +699,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
         },
@@ -635,8 +717,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.timeline.timeline",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111",
         },
@@ -650,8 +734,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.stagehistory.velocity",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108",
         },
@@ -666,10 +752,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269] / [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268]",
         "format": "#,##0.0%",
         "id": "abZgFKGPaGYM",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270",
         },
@@ -683,10 +771,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
         "format": "$#,##0.00",
         "id": "acugFHNJgsBy",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
         },
@@ -699,8 +789,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "closed.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557",
         },
@@ -712,8 +804,10 @@ BearWorkspaceCatalogWithAvailableItems {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "closed.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497",
             },
@@ -723,8 +817,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "closed.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/515",
             },
@@ -737,8 +833,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "closed.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499",
             },
@@ -748,8 +846,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "closed.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/521",
             },
@@ -762,8 +862,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "closed.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512",
             },
@@ -773,8 +875,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "closed.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/547",
             },
@@ -787,8 +891,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "closed.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513",
             },
@@ -798,8 +904,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "closed.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/548",
             },
@@ -812,8 +920,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "closed.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514",
             },
@@ -823,8 +933,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "closed.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/553",
             },
@@ -841,8 +953,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "created.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/392",
         },
@@ -854,8 +968,10 @@ BearWorkspaceCatalogWithAvailableItems {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "created.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332",
             },
@@ -865,8 +981,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "created.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/350",
             },
@@ -879,8 +997,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "created.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334",
             },
@@ -890,8 +1010,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "created.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/356",
             },
@@ -904,8 +1026,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "created.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347",
             },
@@ -915,8 +1039,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "created.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/382",
             },
@@ -929,8 +1055,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "created.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348",
             },
@@ -940,8 +1068,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "created.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/383",
             },
@@ -954,8 +1084,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "created.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349",
             },
@@ -965,8 +1097,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "created.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/388",
             },
@@ -983,8 +1117,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "snapshot.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/722",
         },
@@ -996,8 +1132,10 @@ BearWorkspaceCatalogWithAvailableItems {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "snapshot.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662",
             },
@@ -1007,8 +1145,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "snapshot.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/680",
             },
@@ -1021,8 +1161,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "snapshot.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664",
             },
@@ -1032,8 +1174,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "snapshot.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/686",
             },
@@ -1046,8 +1190,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "snapshot.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
             },
@@ -1057,8 +1203,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "snapshot.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/712",
             },
@@ -1071,8 +1219,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "snapshot.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
             },
@@ -1082,8 +1232,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "snapshot.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713",
             },
@@ -1096,8 +1248,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "snapshot.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
             },
@@ -1107,8 +1261,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "snapshot.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
             },
@@ -1129,11 +1285,13 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]
 ",
         "format": "#,##0.00",
         "id": "abxgDICQav2J",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
         },
@@ -1147,10 +1305,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009]",
         "format": "#,##0.00",
         "id": "abYgDBRagANw",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266",
         },
@@ -1164,10 +1324,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT COUNT([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066], [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "#,##0.00",
         "id": "abQgDWx4gOUu",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
         },
@@ -1181,10 +1343,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
         "format": "#,##0.00",
         "id": "aa4gLlQhcmLO",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
         },
@@ -1197,8 +1361,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.account.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
         },
@@ -1211,8 +1377,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.account.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
         },
@@ -1227,8 +1395,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
         },
@@ -1241,8 +1411,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.id.subject",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071",
         },
@@ -1257,8 +1429,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.activity.activity",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110",
         },
@@ -1272,8 +1446,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.activitytype",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081",
         },
@@ -1286,8 +1462,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.activitytype",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082",
         },
@@ -1302,8 +1480,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.amount",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
         },
@@ -1318,10 +1498,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "$#,##0.00",
         "id": "aangOxLSeztu",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
         },
@@ -1334,8 +1516,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.daystoclose",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104",
         },
@@ -1349,8 +1533,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.owner.department",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
         },
@@ -1363,8 +1549,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.owner.department",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
         },
@@ -1379,8 +1567,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.stagehistory.duration",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107",
         },
@@ -1394,8 +1584,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.opportunitysnapshot.forecastcategory",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
         },
@@ -1408,8 +1600,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.opportunitysnapshot.forecastcategory",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
         },
@@ -1424,8 +1618,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.isactive",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
         },
@@ -1438,8 +1634,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.isactive",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
         },
@@ -1454,8 +1652,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073",
         },
@@ -1468,8 +1668,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074",
         },
@@ -1484,8 +1686,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
         },
@@ -1498,8 +1702,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
         },
@@ -1514,8 +1720,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.istask",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075",
         },
@@ -1528,8 +1736,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.istask",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076",
         },
@@ -1544,8 +1754,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.iswon",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
         },
@@ -1558,8 +1770,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.iswon",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
         },
@@ -1574,8 +1788,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunitysnapshot.closedate",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106",
         },
@@ -1589,8 +1805,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunity.oppcreated",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109",
         },
@@ -1604,8 +1822,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.opportunitysnapshot.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
         },
@@ -1618,8 +1838,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.opportunitysnapshot.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
         },
@@ -1634,8 +1856,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunitysnapshot.snapshotdate",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
         },
@@ -1649,8 +1873,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.opportunity.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
         },
@@ -1663,8 +1889,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.opportunity.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
         },
@@ -1679,8 +1907,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.priority",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079",
         },
@@ -1693,8 +1923,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.priority",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080",
         },
@@ -1709,8 +1941,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.probability",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103",
         },
@@ -1725,10 +1959,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT AVG([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "#,##0.0%",
         "id": "abEgMnq5hyJQ",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273",
         },
@@ -1741,8 +1977,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.product.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
         },
@@ -1755,8 +1993,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.product.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
         },
@@ -1771,8 +2011,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.owner.region",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
         },
@@ -1785,8 +2027,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.owner.region",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
         },
@@ -1801,8 +2045,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.owner.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
         },
@@ -1815,8 +2061,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.owner.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
         },
@@ -1832,10 +2080,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT CASE WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] BETWEEN 2018 AND 2021",
         "format": "#,##0.00",
         "id": "aadpHDMBecIy",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274",
         },
@@ -1848,8 +2098,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stagehistory.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064",
         },
@@ -1862,8 +2114,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stagehistory.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065",
         },
@@ -1878,8 +2132,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
         },
@@ -1892,8 +2148,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.name.stagename",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
         },
@@ -1908,8 +2166,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077",
         },
@@ -1922,8 +2182,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078",
         },
@@ -1938,8 +2200,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
         },
@@ -1952,8 +2216,10 @@ BearWorkspaceCatalogWithAvailableItems {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
         },
@@ -1968,8 +2234,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.timeline.timeline",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111",
         },
@@ -1983,8 +2251,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.stagehistory.velocity",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108",
         },
@@ -1999,10 +2269,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269] / [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268]",
         "format": "#,##0.0%",
         "id": "abZgFKGPaGYM",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270",
         },
@@ -2016,10 +2288,12 @@ BearWorkspaceCatalogWithAvailableItems {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
         "format": "$#,##0.00",
         "id": "acugFHNJgsBy",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
         },
@@ -2032,8 +2306,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "activity.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/887",
         },
@@ -2045,8 +2321,10 @@ BearWorkspaceCatalogWithAvailableItems {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "activity.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827",
             },
@@ -2056,8 +2334,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "activity.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/845",
             },
@@ -2070,8 +2350,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "activity.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829",
             },
@@ -2081,8 +2363,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "activity.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/851",
             },
@@ -2095,8 +2379,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "activity.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842",
             },
@@ -2106,8 +2392,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "activity.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/877",
             },
@@ -2120,8 +2408,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "activity.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843",
             },
@@ -2131,8 +2421,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "activity.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/878",
             },
@@ -2145,8 +2437,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "activity.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844",
             },
@@ -2156,8 +2450,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "activity.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/883",
             },
@@ -2174,8 +2470,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "closed.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557",
         },
@@ -2187,8 +2485,10 @@ BearWorkspaceCatalogWithAvailableItems {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "closed.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497",
             },
@@ -2198,8 +2498,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "closed.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/515",
             },
@@ -2212,8 +2514,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "closed.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499",
             },
@@ -2223,8 +2527,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "closed.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/521",
             },
@@ -2237,8 +2543,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "closed.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512",
             },
@@ -2248,8 +2556,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "closed.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/547",
             },
@@ -2262,8 +2572,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "closed.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513",
             },
@@ -2273,8 +2585,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "closed.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/548",
             },
@@ -2287,8 +2601,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "closed.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514",
             },
@@ -2298,8 +2614,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "closed.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/553",
             },
@@ -2316,8 +2634,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "created.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/392",
         },
@@ -2329,8 +2649,10 @@ BearWorkspaceCatalogWithAvailableItems {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "created.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332",
             },
@@ -2340,8 +2662,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "created.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/350",
             },
@@ -2354,8 +2678,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "created.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334",
             },
@@ -2365,8 +2691,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "created.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/356",
             },
@@ -2379,8 +2707,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "created.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347",
             },
@@ -2390,8 +2720,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "created.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/382",
             },
@@ -2404,8 +2736,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "created.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348",
             },
@@ -2415,8 +2749,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "created.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/383",
             },
@@ -2429,8 +2765,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "created.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349",
             },
@@ -2440,8 +2778,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "created.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/388",
             },
@@ -2458,8 +2798,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "snapshot.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/722",
         },
@@ -2471,8 +2813,10 @@ BearWorkspaceCatalogWithAvailableItems {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "snapshot.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662",
             },
@@ -2482,8 +2826,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "snapshot.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/680",
             },
@@ -2496,8 +2842,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "snapshot.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664",
             },
@@ -2507,8 +2855,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "snapshot.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/686",
             },
@@ -2521,8 +2871,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "snapshot.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
             },
@@ -2532,8 +2884,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "snapshot.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/712",
             },
@@ -2546,8 +2900,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "snapshot.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
             },
@@ -2557,8 +2913,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "snapshot.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713",
             },
@@ -2571,8 +2929,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "snapshot.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
             },
@@ -2582,8 +2942,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "snapshot.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
             },
@@ -2600,8 +2962,10 @@ BearWorkspaceCatalogWithAvailableItems {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "timeline.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1052",
         },
@@ -2613,8 +2977,10 @@ BearWorkspaceCatalogWithAvailableItems {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "timeline.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
             },
@@ -2624,8 +2990,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "timeline.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1010",
             },
@@ -2638,8 +3006,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "timeline.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
             },
@@ -2649,8 +3019,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "timeline.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1016",
             },
@@ -2663,8 +3035,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "timeline.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007",
             },
@@ -2674,8 +3048,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "timeline.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1042",
             },
@@ -2688,8 +3064,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "timeline.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008",
             },
@@ -2699,8 +3077,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "timeline.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043",
             },
@@ -2713,8 +3093,10 @@ BearWorkspaceCatalogWithAvailableItems {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "timeline.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
             },
@@ -2724,8 +3106,10 @@ BearWorkspaceCatalogWithAvailableItems {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "timeline.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
             },
@@ -2752,11 +3136,13 @@ BearWorkspaceCatalog {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]
 ",
         "format": "#,##0.00",
         "id": "abxgDICQav2J",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
         },
@@ -2770,10 +3156,12 @@ BearWorkspaceCatalog {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009]",
         "format": "#,##0.00",
         "id": "abYgDBRagANw",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266",
         },
@@ -2787,10 +3175,12 @@ BearWorkspaceCatalog {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT COUNT([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066], [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "#,##0.00",
         "id": "abQgDWx4gOUu",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
         },
@@ -2804,10 +3194,12 @@ BearWorkspaceCatalog {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
         "format": "#,##0.00",
         "id": "aa4gLlQhcmLO",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
         },
@@ -2820,8 +3212,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.account.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
         },
@@ -2834,8 +3228,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.account.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
         },
@@ -2850,8 +3246,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
         },
@@ -2864,8 +3262,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.id.subject",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071",
         },
@@ -2880,8 +3280,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.activity.activity",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110",
         },
@@ -2895,8 +3297,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.activitytype",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081",
         },
@@ -2909,8 +3313,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.activitytype",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082",
         },
@@ -2925,8 +3331,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.amount",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
         },
@@ -2941,10 +3349,12 @@ BearWorkspaceCatalog {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "$#,##0.00",
         "id": "aangOxLSeztu",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
         },
@@ -2957,8 +3367,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.daystoclose",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104",
         },
@@ -2972,8 +3384,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.owner.department",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
         },
@@ -2986,8 +3400,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.owner.department",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
         },
@@ -3002,8 +3418,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.stagehistory.duration",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107",
         },
@@ -3017,8 +3435,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.opportunitysnapshot.forecastcategory",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
         },
@@ -3031,8 +3451,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.opportunitysnapshot.forecastcategory",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
         },
@@ -3047,8 +3469,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.isactive",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
         },
@@ -3061,8 +3485,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.isactive",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
         },
@@ -3077,8 +3503,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073",
         },
@@ -3091,8 +3519,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074",
         },
@@ -3107,8 +3537,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
         },
@@ -3121,8 +3553,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.isclosed",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
         },
@@ -3137,8 +3571,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.istask",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075",
         },
@@ -3151,8 +3587,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.istask",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076",
         },
@@ -3167,8 +3605,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.iswon",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
         },
@@ -3181,8 +3621,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.iswon",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
         },
@@ -3197,8 +3639,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunitysnapshot.closedate",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106",
         },
@@ -3212,8 +3656,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunity.oppcreated",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109",
         },
@@ -3227,8 +3673,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.opportunitysnapshot.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
         },
@@ -3241,8 +3689,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.opportunitysnapshot.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
         },
@@ -3257,8 +3707,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunitysnapshot.snapshotdate",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
         },
@@ -3272,8 +3724,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.opportunity.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
         },
@@ -3286,8 +3740,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.opportunity.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
         },
@@ -3302,8 +3758,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.priority",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079",
         },
@@ -3316,8 +3774,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.priority",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080",
         },
@@ -3332,8 +3792,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.probability",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103",
         },
@@ -3348,10 +3810,12 @@ BearWorkspaceCatalog {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT AVG([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "#,##0.0%",
         "id": "abEgMnq5hyJQ",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273",
         },
@@ -3364,8 +3828,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.product.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
         },
@@ -3378,8 +3844,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.product.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
         },
@@ -3394,8 +3862,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.owner.region",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
         },
@@ -3408,8 +3878,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.owner.region",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
         },
@@ -3424,8 +3896,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.owner.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
         },
@@ -3438,8 +3912,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.owner.id.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
         },
@@ -3455,10 +3931,12 @@ BearWorkspaceCatalog {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT CASE WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] BETWEEN 2018 AND 2021",
         "format": "#,##0.00",
         "id": "aadpHDMBecIy",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274",
         },
@@ -3471,8 +3949,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stagehistory.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064",
         },
@@ -3485,8 +3965,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stagehistory.id",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065",
         },
@@ -3501,8 +3983,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.name",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
         },
@@ -3515,8 +3999,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.name.stagename",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
         },
@@ -3531,8 +4017,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.activity.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077",
         },
@@ -3545,8 +4033,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.activity.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078",
         },
@@ -3561,8 +4051,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "attribute": Object {
+        "deprecated": false,
         "description": "",
         "id": "attr.stage.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
         },
@@ -3575,8 +4067,10 @@ BearWorkspaceCatalog {
         "attribute": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
         },
+        "deprecated": false,
         "description": "",
         "id": "label.stage.status",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
         },
@@ -3591,8 +4085,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.timeline.timeline",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111",
         },
@@ -3606,8 +4102,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "fact": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.stagehistory.velocity",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108",
         },
@@ -3622,10 +4120,12 @@ BearWorkspaceCatalog {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269] / [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268]",
         "format": "#,##0.0%",
         "id": "abZgFKGPaGYM",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270",
         },
@@ -3639,10 +4139,12 @@ BearWorkspaceCatalog {
     Object {
       "groups": Array [],
       "measure": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
         "format": "$#,##0.00",
         "id": "acugFHNJgsBy",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
         },
@@ -3655,8 +4157,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "activity.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/887",
         },
@@ -3668,8 +4172,10 @@ BearWorkspaceCatalog {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "activity.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827",
             },
@@ -3679,8 +4185,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "activity.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/845",
             },
@@ -3693,8 +4201,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "activity.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829",
             },
@@ -3704,8 +4214,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "activity.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/851",
             },
@@ -3718,8 +4230,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "activity.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842",
             },
@@ -3729,8 +4243,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "activity.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/877",
             },
@@ -3743,8 +4259,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "activity.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843",
             },
@@ -3754,8 +4272,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "activity.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/878",
             },
@@ -3768,8 +4288,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "activity.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844",
             },
@@ -3779,8 +4301,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "activity.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/883",
             },
@@ -3797,8 +4321,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "closed.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557",
         },
@@ -3810,8 +4336,10 @@ BearWorkspaceCatalog {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "closed.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497",
             },
@@ -3821,8 +4349,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "closed.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/515",
             },
@@ -3835,8 +4365,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "closed.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499",
             },
@@ -3846,8 +4378,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "closed.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/521",
             },
@@ -3860,8 +4394,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "closed.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512",
             },
@@ -3871,8 +4407,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "closed.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/547",
             },
@@ -3885,8 +4423,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "closed.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513",
             },
@@ -3896,8 +4436,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "closed.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/548",
             },
@@ -3910,8 +4452,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "closed.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514",
             },
@@ -3921,8 +4465,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "closed.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/553",
             },
@@ -3939,8 +4485,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "created.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/392",
         },
@@ -3952,8 +4500,10 @@ BearWorkspaceCatalog {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "created.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332",
             },
@@ -3963,8 +4513,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "created.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/350",
             },
@@ -3977,8 +4529,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "created.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334",
             },
@@ -3988,8 +4542,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "created.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/356",
             },
@@ -4002,8 +4558,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "created.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347",
             },
@@ -4013,8 +4571,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "created.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/382",
             },
@@ -4027,8 +4587,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "created.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348",
             },
@@ -4038,8 +4600,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "created.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/383",
             },
@@ -4052,8 +4616,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "created.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349",
             },
@@ -4063,8 +4629,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "created.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/388",
             },
@@ -4081,8 +4649,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "snapshot.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/722",
         },
@@ -4094,8 +4664,10 @@ BearWorkspaceCatalog {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "snapshot.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662",
             },
@@ -4105,8 +4677,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "snapshot.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/680",
             },
@@ -4119,8 +4693,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "snapshot.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664",
             },
@@ -4130,8 +4706,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "snapshot.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/686",
             },
@@ -4144,8 +4722,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "snapshot.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
             },
@@ -4155,8 +4735,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "snapshot.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/712",
             },
@@ -4169,8 +4751,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "snapshot.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
             },
@@ -4180,8 +4764,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "snapshot.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713",
             },
@@ -4194,8 +4780,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "snapshot.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
             },
@@ -4205,8 +4793,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "snapshot.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
             },
@@ -4223,8 +4813,10 @@ BearWorkspaceCatalog {
     },
     Object {
       "dataSet": Object {
+        "deprecated": false,
         "description": "DataSet Date",
         "id": "timeline.dataset.dt",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1052",
         },
@@ -4236,8 +4828,10 @@ BearWorkspaceCatalog {
       "dateAttributes": Array [
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Year",
             "id": "timeline.year",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
             },
@@ -4247,8 +4841,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Year.",
             "id": "timeline.aag81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1010",
             },
@@ -4261,8 +4857,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
             "id": "timeline.week",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
             },
@@ -4272,8 +4870,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Week #/Year (W1/2010).",
             "id": "timeline.aaA81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1016",
             },
@@ -4286,8 +4886,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
             "id": "timeline.quarter",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007",
             },
@@ -4297,8 +4899,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm US Short.",
             "id": "timeline.aci81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1042",
             },
@@ -4311,8 +4915,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Month and Year",
             "id": "timeline.month",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008",
             },
@@ -4322,8 +4928,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm Short (Jan 2010).",
             "id": "timeline.act81lMifn6q",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043",
             },
@@ -4336,8 +4944,10 @@ BearWorkspaceCatalog {
         },
         Object {
           "attribute": Object {
+            "deprecated": false,
             "description": "Date",
             "id": "timeline.date",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
             },
@@ -4347,8 +4957,10 @@ BearWorkspaceCatalog {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
           },
           "defaultDisplayForm": Object {
+            "deprecated": false,
             "description": "DisplayForm mm/dd/yyyy.",
             "id": "timeline.date.mmddyyyy",
+            "production": true,
             "ref": Object {
               "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
             },
@@ -7134,8 +7746,10 @@ BearWorkspaceCatalog {
     "dateAttributeById": Object {
       "activity.date": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Date",
           "id": "activity.date",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844",
           },
@@ -7145,8 +7759,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm mm/dd/yyyy.",
           "id": "activity.date.mmddyyyy",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/883",
           },
@@ -7159,8 +7775,10 @@ BearWorkspaceCatalog {
       },
       "activity.month": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Month and Year",
           "id": "activity.month",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843",
           },
@@ -7170,8 +7788,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Short (Jan 2010).",
           "id": "activity.act81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/878",
           },
@@ -7184,8 +7804,10 @@ BearWorkspaceCatalog {
       },
       "activity.quarter": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Quarter and Year (Q1/2010)",
           "id": "activity.quarter",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842",
           },
@@ -7195,8 +7817,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm US Short.",
           "id": "activity.aci81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/877",
           },
@@ -7209,8 +7833,10 @@ BearWorkspaceCatalog {
       },
       "activity.week": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
           "id": "activity.week",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829",
           },
@@ -7220,8 +7846,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Week #/Year (W1/2010).",
           "id": "activity.aaA81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/851",
           },
@@ -7234,8 +7862,10 @@ BearWorkspaceCatalog {
       },
       "activity.year": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Year",
           "id": "activity.year",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827",
           },
@@ -7245,8 +7875,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Year.",
           "id": "activity.aag81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/845",
           },
@@ -7259,8 +7891,10 @@ BearWorkspaceCatalog {
       },
       "closed.date": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Date",
           "id": "closed.date",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514",
           },
@@ -7270,8 +7904,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm mm/dd/yyyy.",
           "id": "closed.date.mmddyyyy",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/553",
           },
@@ -7284,8 +7920,10 @@ BearWorkspaceCatalog {
       },
       "closed.month": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Month and Year",
           "id": "closed.month",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513",
           },
@@ -7295,8 +7933,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Short (Jan 2010).",
           "id": "closed.act81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/548",
           },
@@ -7309,8 +7949,10 @@ BearWorkspaceCatalog {
       },
       "closed.quarter": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Quarter and Year (Q1/2010)",
           "id": "closed.quarter",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512",
           },
@@ -7320,8 +7962,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm US Short.",
           "id": "closed.aci81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/547",
           },
@@ -7334,8 +7978,10 @@ BearWorkspaceCatalog {
       },
       "closed.week": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
           "id": "closed.week",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499",
           },
@@ -7345,8 +7991,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Week #/Year (W1/2010).",
           "id": "closed.aaA81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/521",
           },
@@ -7359,8 +8007,10 @@ BearWorkspaceCatalog {
       },
       "closed.year": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Year",
           "id": "closed.year",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497",
           },
@@ -7370,8 +8020,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Year.",
           "id": "closed.aag81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/515",
           },
@@ -7384,8 +8036,10 @@ BearWorkspaceCatalog {
       },
       "created.date": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Date",
           "id": "created.date",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349",
           },
@@ -7395,8 +8049,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm mm/dd/yyyy.",
           "id": "created.date.mmddyyyy",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/388",
           },
@@ -7409,8 +8065,10 @@ BearWorkspaceCatalog {
       },
       "created.month": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Month and Year",
           "id": "created.month",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348",
           },
@@ -7420,8 +8078,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Short (Jan 2010).",
           "id": "created.act81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/383",
           },
@@ -7434,8 +8094,10 @@ BearWorkspaceCatalog {
       },
       "created.quarter": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Quarter and Year (Q1/2010)",
           "id": "created.quarter",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347",
           },
@@ -7445,8 +8107,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm US Short.",
           "id": "created.aci81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/382",
           },
@@ -7459,8 +8123,10 @@ BearWorkspaceCatalog {
       },
       "created.week": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
           "id": "created.week",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334",
           },
@@ -7470,8 +8136,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Week #/Year (W1/2010).",
           "id": "created.aaA81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/356",
           },
@@ -7484,8 +8152,10 @@ BearWorkspaceCatalog {
       },
       "created.year": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Year",
           "id": "created.year",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332",
           },
@@ -7495,8 +8165,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Year.",
           "id": "created.aag81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/350",
           },
@@ -7509,8 +8181,10 @@ BearWorkspaceCatalog {
       },
       "snapshot.date": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Date",
           "id": "snapshot.date",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
           },
@@ -7520,8 +8194,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm mm/dd/yyyy.",
           "id": "snapshot.date.mmddyyyy",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
           },
@@ -7534,8 +8210,10 @@ BearWorkspaceCatalog {
       },
       "snapshot.month": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Month and Year",
           "id": "snapshot.month",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
           },
@@ -7545,8 +8223,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Short (Jan 2010).",
           "id": "snapshot.act81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713",
           },
@@ -7559,8 +8239,10 @@ BearWorkspaceCatalog {
       },
       "snapshot.quarter": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Quarter and Year (Q1/2010)",
           "id": "snapshot.quarter",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
           },
@@ -7570,8 +8252,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm US Short.",
           "id": "snapshot.aci81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/712",
           },
@@ -7584,8 +8268,10 @@ BearWorkspaceCatalog {
       },
       "snapshot.week": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
           "id": "snapshot.week",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664",
           },
@@ -7595,8 +8281,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Week #/Year (W1/2010).",
           "id": "snapshot.aaA81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/686",
           },
@@ -7609,8 +8297,10 @@ BearWorkspaceCatalog {
       },
       "snapshot.year": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Year",
           "id": "snapshot.year",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662",
           },
@@ -7620,8 +8310,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Year.",
           "id": "snapshot.aag81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/680",
           },
@@ -7634,8 +8326,10 @@ BearWorkspaceCatalog {
       },
       "timeline.date": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Date",
           "id": "timeline.date",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
           },
@@ -7645,8 +8339,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm mm/dd/yyyy.",
           "id": "timeline.date.mmddyyyy",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
           },
@@ -7659,8 +8355,10 @@ BearWorkspaceCatalog {
       },
       "timeline.month": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Month and Year",
           "id": "timeline.month",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008",
           },
@@ -7670,8 +8368,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Short (Jan 2010).",
           "id": "timeline.act81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043",
           },
@@ -7684,8 +8384,10 @@ BearWorkspaceCatalog {
       },
       "timeline.quarter": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Quarter and Year (Q1/2010)",
           "id": "timeline.quarter",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007",
           },
@@ -7695,8 +8397,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm US Short.",
           "id": "timeline.aci81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1042",
           },
@@ -7709,8 +8413,10 @@ BearWorkspaceCatalog {
       },
       "timeline.week": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
           "id": "timeline.week",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
           },
@@ -7720,8 +8426,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Week #/Year (W1/2010).",
           "id": "timeline.aaA81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1016",
           },
@@ -7734,8 +8442,10 @@ BearWorkspaceCatalog {
       },
       "timeline.year": Object {
         "attribute": Object {
+          "deprecated": false,
           "description": "Year",
           "id": "timeline.year",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
           },
@@ -7745,8 +8455,10 @@ BearWorkspaceCatalog {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
         },
         "defaultDisplayForm": Object {
+          "deprecated": false,
           "description": "DisplayForm Year.",
           "id": "timeline.aag81lMifn6q",
+          "production": true,
           "ref": Object {
             "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1010",
           },
@@ -8240,8 +8952,10 @@ BearWorkspaceCatalog {
     },
     "factById": Object {
       "dt.activity.activity": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.activity.activity",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110",
         },
@@ -8251,8 +8965,10 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110",
       },
       "dt.opportunity.oppcreated": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunity.oppcreated",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109",
         },
@@ -8262,8 +8978,10 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109",
       },
       "dt.opportunitysnapshot.closedate": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunitysnapshot.closedate",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106",
         },
@@ -8273,8 +8991,10 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106",
       },
       "dt.opportunitysnapshot.snapshotdate": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.opportunitysnapshot.snapshotdate",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
         },
@@ -8284,8 +9004,10 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
       },
       "dt.timeline.timeline": Object {
+        "deprecated": false,
         "description": "",
         "id": "dt.timeline.timeline",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111",
         },
@@ -8295,8 +9017,10 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111",
       },
       "fact.opportunitysnapshot.amount": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.amount",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
         },
@@ -8306,8 +9030,10 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
       },
       "fact.opportunitysnapshot.daystoclose": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.daystoclose",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104",
         },
@@ -8317,8 +9043,10 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104",
       },
       "fact.opportunitysnapshot.probability": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.opportunitysnapshot.probability",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103",
         },
@@ -8328,8 +9056,10 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103",
       },
       "fact.stagehistory.duration": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.stagehistory.duration",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107",
         },
@@ -8339,8 +9069,10 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107",
       },
       "fact.stagehistory.velocity": Object {
+        "deprecated": false,
         "description": "",
         "id": "fact.stagehistory.velocity",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108",
         },
@@ -8352,10 +9084,12 @@ BearWorkspaceCatalog {
     },
     "measureById": Object {
       "aa4gLlQhcmLO": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
         "format": "#,##0.00",
         "id": "aa4gLlQhcmLO",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
         },
@@ -8365,10 +9099,12 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
       },
       "aadpHDMBecIy": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT CASE WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] BETWEEN 2018 AND 2021",
         "format": "#,##0.00",
         "id": "aadpHDMBecIy",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274",
         },
@@ -8378,10 +9114,12 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274",
       },
       "aangOxLSeztu": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "$#,##0.00",
         "id": "aangOxLSeztu",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
         },
@@ -8391,10 +9129,12 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
       },
       "abEgMnq5hyJQ": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT AVG([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "#,##0.0%",
         "id": "abEgMnq5hyJQ",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273",
         },
@@ -8404,10 +9144,12 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273",
       },
       "abQgDWx4gOUu": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT COUNT([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066], [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
         "format": "#,##0.00",
         "id": "abQgDWx4gOUu",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
         },
@@ -8417,10 +9159,12 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
       },
       "abYgDBRagANw": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009]",
         "format": "#,##0.00",
         "id": "abYgDBRagANw",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266",
         },
@@ -8430,10 +9174,12 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266",
       },
       "abZgFKGPaGYM": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269] / [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268]",
         "format": "#,##0.0%",
         "id": "abZgFKGPaGYM",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270",
         },
@@ -8443,11 +9189,13 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270",
       },
       "abxgDICQav2J": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]
 ",
         "format": "#,##0.00",
         "id": "abxgDICQav2J",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
         },
@@ -8457,10 +9205,12 @@ BearWorkspaceCatalog {
         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
       },
       "acugFHNJgsBy": Object {
+        "deprecated": false,
         "description": "",
         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
         "format": "$#,##0.00",
         "id": "acugFHNJgsBy",
+        "production": true,
         "ref": Object {
           "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
         },
