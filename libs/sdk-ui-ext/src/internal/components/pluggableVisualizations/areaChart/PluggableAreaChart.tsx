@@ -62,8 +62,12 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return cloneDeep(DEFAULT_AREA_UICONFIG);
     }
 
-    protected updateInstanceProperties(options: IVisProps, insight: IInsightDefinition) {
-        super.updateInstanceProperties(options, insight);
+    protected updateInstanceProperties(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        insightPropertiesMeta: any,
+    ) {
+        super.updateInstanceProperties(options, insight, insightPropertiesMeta);
 
         this.updateCustomSupportedProperties(insight);
     }

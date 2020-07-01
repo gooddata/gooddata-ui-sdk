@@ -112,14 +112,16 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      *
      * @param options
      * @param insight
+     * @param visualizationPropertiesMeta
      * @param executionFactory
      */
     public update(
         options: IVisProps,
         insight: IInsightDefinition,
+        insightPropertiesMeta: any,
         executionFactory: IExecutionFactory,
     ): void {
-        this.updateInstanceProperties(options, insight);
+        this.updateInstanceProperties(options, insight, insightPropertiesMeta);
         this.hasEmptyAfm = !insightHasDataDefined(insight);
 
         let shouldRenderVisualization: boolean;
@@ -152,14 +154,13 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         // @ts-ignore
         options: IVisProps,
         insight: IInsightDefinition,
+        insightPropertiesMeta: any,
     ) {
-        const visualizationProperties = insightProperties(insight);
-
         this.visualizationProperties = getSupportedProperties(
-            visualizationProperties,
+            insightProperties(insight),
             this.supportedPropertiesList,
         );
-        this.propertiesMeta = visualizationProperties.propertiesMeta ?? null;
+        this.propertiesMeta = insightPropertiesMeta ?? null;
         this.currentInsight = insight;
     }
 

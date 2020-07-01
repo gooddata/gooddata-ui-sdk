@@ -186,6 +186,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
         this.visualization.update(
             visProps,
             fillMissingTitles(this.insight, this.getLocale()),
+            {},
             this.getExecutionFactory(),
         );
     };
