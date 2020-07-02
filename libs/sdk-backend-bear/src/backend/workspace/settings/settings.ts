@@ -25,16 +25,20 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
         return this.authCall(async (sdk, { getPrincipal }) => {
             const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
 
-            const [workspaceFeatureFlags, userFeatureFlags] = await Promise.all([
+            const [workspaceFeatureFlags, userFeatureFlags, currentProfile] = await Promise.all([
                 sdk.project.getProjectFeatureFlags(this.workspace),
                 // the getUserFeatureFlags returns all the feature flags (including the defaults)
                 // so we have to filter only the user specific values so as not to use defaults everywhere
                 sdk.user.getUserFeatureFlags(userLoginMd5, ["user"]),
+                sdk.user.getCurrentProfile(),
             ]);
+
+            const { language } = currentProfile;
 
             return {
                 userId: userLoginMd5,
                 workspace: this.workspace,
+                locale: language,
                 // the order is important here, user configs with the "user" source should override the workspace settings
                 ...workspaceFeatureFlags,
                 ...userFeatureFlags,

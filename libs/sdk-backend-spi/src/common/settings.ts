@@ -80,6 +80,11 @@ export interface IUserSettings extends ISettings {
      * User to which the settings belong.
      */
     userId: string;
+
+    /**
+     * User locale
+     */
+    locale: string;
 }
 
 /**

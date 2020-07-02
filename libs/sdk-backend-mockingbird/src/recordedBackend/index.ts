@@ -38,6 +38,7 @@ const defaultConfig: RecordedBackendConfig = {
 };
 
 const USER_ID = "recordedUser";
+const locale = "en-US";
 
 /**
  * Creates new backend that will be providing recorded results to the caller. The recorded results are provided
@@ -126,6 +127,7 @@ function recordedWorkspace(
                     return {
                         userId: USER_ID,
                         workspace,
+                        locale,
                         ...(implConfig.globalSettings ?? {}),
                     };
                 },
@@ -163,6 +165,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
             return {
                 query: async () => ({
                     userId: USER_ID,
+                    locale,
                     ...(implConfig.globalSettings ?? {}),
                 }),
             };

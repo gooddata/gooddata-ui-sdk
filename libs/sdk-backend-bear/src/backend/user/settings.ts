@@ -10,10 +10,16 @@ export class BearUserSettingsService implements IUserSettingsService {
         return this.authCall(async (sdk, { getPrincipal }) => {
             const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
 
-            const flags = await sdk.user.getUserFeatureFlags(userLoginMd5);
+            const [flags, currentProfile] = await Promise.all([
+                sdk.user.getUserFeatureFlags(userLoginMd5),
+                sdk.user.getCurrentProfile(),
+            ]);
+
+            const { language } = currentProfile;
 
             return {
                 userId: userLoginMd5,
+                locale: language,
                 ...flags,
             };
         });

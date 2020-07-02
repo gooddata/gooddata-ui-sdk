@@ -32,6 +32,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
         return this.authCall(async () => {
             return {
                 userId: "dummy",
+                locale: "en-US",
                 workspace: this.workspace,
                 ...HardcodedSettings,
             };

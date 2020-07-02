@@ -21,9 +21,9 @@ import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetF
 import {
     GoodDataSdkError,
     fillMissingTitles,
-    DefaultLocale,
     ILocale,
     withContexts,
+    DefaultLocale,
     LoadingComponent,
     ILoadingProps,
     ErrorComponent,
@@ -118,12 +118,12 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     private colorPalette: IColorPalette | undefined;
     private settings: IWorkspaceSettings | undefined;
     private containerRef = React.createRef<HTMLDivElement>();
+    private locale: string | undefined;
 
     public static defaultProps: Partial<IInsightViewProps> = {
         ErrorComponent,
         filters: [],
         drillableItems: [],
-        locale: DefaultLocale,
         LoadingComponent,
         pushData: noop,
     };
@@ -170,7 +170,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
         const { config = {} } = this.props;
 
         const visProps: IVisProps = {
-            locale: this.props.locale,
+            locale: this.getLocale(),
             custom: {
                 drillableItems: this.props.drillableItems,
             },
@@ -185,7 +185,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
 
         this.visualization.update(
             visProps,
-            fillMissingTitles(this.insight, this.props.locale),
+            fillMissingTitles(this.insight, this.getLocale()),
             this.getExecutionFactory(),
         );
     };
@@ -197,6 +197,9 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
         this.unmountVisualization();
 
         this.insight = await this.getInsight();
+        this.locale = await this.getUserProfileLocale();
+
+        [this.insight, this.locale] = await Promise.all([this.getInsight(), this.getUserProfileLocale()]);
 
         if (!this.insight) {
             return;
@@ -231,12 +234,16 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             configPanelElement: ".gd-configuration-panel-content", // this is apparently a well-know constant (see BaseVisualization)
             element: `#${this.elementId}`,
             environment: "dashboards", // TODO get rid of this
-            locale: this.props.locale,
+            locale: this.getLocale(),
             projectId: this.props.workspace,
             visualizationProperties: insightProperties(this.insight),
             featureFlags: this.settings,
             renderFun: render,
         });
+    };
+
+    private getLocale = () => {
+        return (this.props.locale || this.locale || DefaultLocale) as ILocale;
     };
 
     private onExportReadyDecorator = (exportFunction: IExportFunction): void => {
@@ -285,6 +292,10 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
 
     private getWorkspaceSettings = (): Promise<IWorkspaceSettings> => {
         return this.getRemoteResource((loader) => loader.getWorkspaceSettings(this.props.backend));
+    };
+
+    private getUserProfileLocale = (): Promise<string> => {
+        return this.getRemoteResource((loader) => loader.getLocale(this.props.backend));
     };
 
     private updateWorkspaceSettings = async () => {
