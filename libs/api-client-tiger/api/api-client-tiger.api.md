@@ -8102,7 +8102,7 @@ export interface ElementsResponse {
 // @public (undocumented)
 export namespace ExecuteAFM {
     // (undocumented)
-    export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
+    export type ArithmeticMeasureOperator = "SUM" | "DIFFERENCE" | "MULTIPLICATION" | "RATIO" | "CHANGE";
     // (undocumented)
     export type AttributeElements = string[] | IAttributeElementsByValue;
     // (undocumented)

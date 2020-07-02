@@ -63,7 +63,7 @@ export namespace ExecuteAFM {
         computeRatio?: boolean;
     }
 
-    export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
+    export type ArithmeticMeasureOperator = "SUM" | "DIFFERENCE" | "MULTIPLICATION" | "RATIO" | "CHANGE";
 
     export interface IArithmeticMeasure {
         measureIdentifiers: ILocalIdentifierQualifier[];

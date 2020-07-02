@@ -11,6 +11,7 @@ import {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
     MeasureAggregation,
+    ArithmeticMeasureOperator,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/api-client-tiger";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
@@ -22,6 +23,7 @@ import {
 } from "../ObjRefConverter";
 import compact = require("lodash/compact");
 import get = require("lodash/get");
+import { InvariantError } from "ts-invariant";
 
 export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {
     const {
@@ -151,6 +153,25 @@ function convertPreviousPeriodMeasureDefinition(
     };
 }
 
+function convertArithmeticMeasureOperator(
+    operator: ArithmeticMeasureOperator,
+): ExecuteAFM.ArithmeticMeasureOperator {
+    switch (operator) {
+        case "sum":
+            return "SUM";
+        case "difference":
+            return "DIFFERENCE";
+        case "multiplication":
+            return "MULTIPLICATION";
+        case "ratio":
+            return "RATIO";
+        case "change":
+            return "CHANGE";
+        default:
+            throw new InvariantError(`Unknown arithmetic measure operator "${operator}"`);
+    }
+}
+
 function convertArithmeticMeasureDefinition(
     definition: IArithmeticMeasureDefinition,
 ): ExecuteAFM.IArithmeticMeasureDefinition {
@@ -158,7 +179,7 @@ function convertArithmeticMeasureDefinition(
     return {
         arithmeticMeasure: {
             measureIdentifiers: arithmeticMeasure.measureIdentifiers.map(toLocalIdentifier),
-            operator: arithmeticMeasure.operator,
+            operator: convertArithmeticMeasureOperator(arithmeticMeasure.operator),
         },
     };
 }
