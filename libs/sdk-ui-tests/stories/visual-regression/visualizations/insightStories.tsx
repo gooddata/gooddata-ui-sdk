@@ -242,10 +242,12 @@ ScenarioGroupsByVis.forEach((groups) => {
             const insight = InsightById[scenario.insightId];
 
             if (!insight) {
-                // tslint:disable-next-line:no-console
-                console.warn(
-                    `Ignoring test scenario for ${scenario.vis}: ${scenario.name} - insight does not exist.`,
-                );
+                if (window.location.hostname === "localhost") {
+                    // tslint:disable-next-line:no-console
+                    console.warn(
+                        `Ignoring test scenario for ${scenario.vis}: ${scenario.name} - insight does not exist.`,
+                    );
+                }
 
                 return;
             }
