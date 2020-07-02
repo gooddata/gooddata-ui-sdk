@@ -2,6 +2,7 @@
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { DonutChart, IDonutChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const DonutChartWithTwoMeasures = {
     measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
@@ -19,6 +20,7 @@ export const DonutChartWithSingleMeasureAndViewBy = {
  */
 
 export default scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],
     })

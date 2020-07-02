@@ -3,6 +3,7 @@ import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { ScatterPlot, IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort } from "@gooddata/sdk-model";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const ScatterPlotWithMeasuresAndAttribute = {
     xAxisMeasure: ReferenceLdm.Amount,
@@ -16,6 +17,7 @@ export const ScatterPlotWithMeasuresAndAttribute = {
  */
 
 export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("x axis measure", {
         xAxisMeasure: ReferenceLdm.Amount,
     })

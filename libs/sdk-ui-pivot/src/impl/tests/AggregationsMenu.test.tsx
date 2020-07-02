@@ -156,4 +156,11 @@ describe("AggregationsMenu", () => {
         expect(wrapper.find(".is-disabled").length).toBe(1);
         expect(wrapper.find(AggregationsSubMenu).length).toBe(5);
     });
+
+    it("should close on scroll", () => {
+        const onMenuOpenedChange = jest.fn();
+        render({ onMenuOpenedChange });
+        window.dispatchEvent(new Event("scroll"));
+        expect(onMenuOpenedChange).toHaveBeenCalledWith({ opened: false, source: "SCROLL" });
+    });
 });

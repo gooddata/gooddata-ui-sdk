@@ -1230,6 +1230,9 @@ export enum SettingCatalog {
     enableBulletChart = "enableBulletChart",
     enableCustomColorPicker = "enableCustomColorPicker",
     enablePushpinGeoChart = "enablePushpinGeoChart",
+    enableTableColumnsAutoResizing = "enableTableColumnsAutoResizing",
+    enableTableColumnsGrowToFit = "enableTableColumnsGrowToFit",
+    enableTableColumnsManualResizing = "enableTableColumnsManualResizing",
     enableWeekFilters = "enableWeekFilters"
 }
 

@@ -10,8 +10,10 @@ import {
     ColumnChartWithTwoMeasuresAndTwoViewBy,
     ColumnChartWithTwoMeasuresAndViewBy,
 } from "./base";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const singleAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({
         groupUnder: "single axis name customization",
         screenshotSize: { width: 800, height: 600 },
@@ -24,6 +26,7 @@ const singleAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", Colu
     );
 
 const dualAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({
         groupUnder: "dual axis name customization",
         screenshotSize: { width: 800, height: 600 },
@@ -43,6 +46,7 @@ const dualAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", Column
     );
 
 const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("Y axis min/max configuration", {

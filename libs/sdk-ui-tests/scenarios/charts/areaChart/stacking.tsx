@@ -7,8 +7,10 @@ import {
     AreaChartWithViewAndStackBy,
     AreaChartWithViewBy,
 } from "./base";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
+    .withGroupNames(ScenarioGroupNames.Stacking)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("two measures with viewBy and disabled stacking", {
         ...AreaChartWithTwoMeasuresAndViewBy,

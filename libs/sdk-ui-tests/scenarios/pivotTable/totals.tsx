@@ -17,12 +17,29 @@ export const PivotTableWithTwoMeasuresAndTotals = {
     ],
 };
 
+export const PivotTableWithTwoMeasuresGrandTotalsAndSubtotals = {
+    ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+    totals: [
+        newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
+        newTotal("min", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
+        newTotal("max", ReferenceLdm.Won, ReferenceLdm.Product.Name),
+        newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Product.Name),
+        newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Department),
+        newTotal("med", ReferenceLdm.Amount, ReferenceLdm.Department),
+        newTotal("med", ReferenceLdm.Won, ReferenceLdm.Department),
+        newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Department),
+    ],
+};
+
+export const PivotTableWithSingleMeasureAndGrandTotal = {
+    ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
+    totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name)],
+};
+
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+    .withGroupNames("totals")
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 600 } })
-    .addScenario("single measure and single grand total", {
-        ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
-        totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name)],
-    })
+    .addScenario("single measure and single grand total", PivotTableWithSingleMeasureAndGrandTotal)
     .addScenario("single measure and multiple grand totals", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         totals: [
@@ -52,15 +69,5 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ],
     })
     .addScenario("two measures and grand totals and multiple subtotals", {
-        ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-        totals: [
-            newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-            newTotal("min", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
-            newTotal("max", ReferenceLdm.Won, ReferenceLdm.Product.Name),
-            newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Product.Name),
-            newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Department),
-            newTotal("med", ReferenceLdm.Amount, ReferenceLdm.Department),
-            newTotal("med", ReferenceLdm.Won, ReferenceLdm.Department),
-            newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Department),
-        ],
+        ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
     });

@@ -3,8 +3,10 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { GermanNumberFormat } from "../../_infra/formatting";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
         primaryMeasure: ReferenceLdm.Won,
     })

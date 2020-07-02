@@ -72,7 +72,7 @@ different SDK projects.
 This project comes with necessary infrastructure, templates and scripts to automate and hopefully simplify
 most of the mundane tasks:
 
--   `npm run write-exec-defs` inspects test scenarios and captures execution definitions
+-   `npm run populate-ref` inspects test scenarios and captures execution definitions
     that can be fed to mock handling tool to capture and store data from live backend
 
 -   unified template for Public API regression tests
@@ -153,7 +153,7 @@ When creating new test scenarios, proceed as follows:
 -   Open terminal in `tools/reference-workspace` project
 -   Add new scenarios in sdk-ui-tests, make sure new scenarios are included in barrel exports all the way to the root
     scenarios index
--   Execute `rush write-exec-defs` in terminal => writes new execution defs
+-   Execute `rush populate-ref` in terminal => writes new execution defs
 -   Execute `./bin/refresh-recordings.sh && npm run build` => captures execution recordings (if needed) and builds
     the recording index
 -   Commit
@@ -194,22 +194,19 @@ Docker installation has RAM limit set to at least 4 GiB (Settings > Advanced).
 
 Tests can be triggered as follows:
 
-1.  Build storybook app: `npm run build-storybook`
+-   Run BackstopJS in 'test' mode: `npm run backstop-test`
 
     This will create `dist-storybook` directory with build of Storybook & create or update `backstop/stories.json` file.
     This file contains listing of all stories available in storybook.
 
-2.  Run BackstopJS in 'test' mode: `npm run backstop-test`
-
 Additional BackstopJS modes are also available:
 
+-   `npm run backstop-approve` - after failed test run, approve the differences and overwrite reference screenshots
 -   `npm run backstop-reference` - build storybook and take reference screenshots for all stories
--   `npm run backstop-reference-nobuild` - take reference screenshots for all new scenarios for existing stories
--   `npm run backstop-approve` - update screenshots that differ from reference
 
-> Note: the 'backstop' commands do not trigger `build-storybook` script except for `npm run backstop-reference`.
-> Also remember: backstop can run in incremental mode and can filter test scenarios to exercise. To run specific
-> scenarios, pass a `--filter=<scenarioLabelRegex>` argument (case sensitive).
+> Note: all backstop-\* commands run build, story extraction and then the appropriate backstop command. You can
+> achieve more flexible workflows using the elementary `build-storybook` and `story-extractor` scripts combined
+> with the [run-backstop.sh](backstop/run-backstop.sh) script.
 
 It is possible to override default Backstop concurrency settings using environment variables:
 

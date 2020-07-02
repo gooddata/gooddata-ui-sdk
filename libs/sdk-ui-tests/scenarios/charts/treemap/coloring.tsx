@@ -7,13 +7,16 @@ import { TreemapWithMeasureViewByAndSegmentBy } from "./base";
 import { AttributeElements } from "../../_infra/predicates";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { Product } from "../../_infra/data";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<ITreemapProps>("Treemap", Treemap)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", TreemapWithMeasureViewByAndSegmentBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<ITreemapProps>("Treemap", Treemap)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to attributes",
@@ -33,7 +36,7 @@ const colorAssignment = scenariosFor<ITreemapProps>("Treemap", Treemap)
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(Product.WonderKid, Product.Explorer)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(Product.WonderKid, Product.Explorer)),
     );
 
 export default [colorsAndPalette, colorAssignment];

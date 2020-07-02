@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { ICellRendererParams } from "@ag-grid-community/all-modules";
+import { ICellRendererParams, ColDef, Column } from "@ag-grid-community/all-modules";
 import { getMappingHeaderUri, IMappingHeader } from "@gooddata/sdk-ui";
 import {
     DOT_PLACEHOLDER,
@@ -9,11 +9,18 @@ import {
     ID_SEPARATOR_PLACEHOLDER,
     ROW_SUBTOTAL,
     ROW_TOTAL,
+    MEASURE_COLUMN,
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
 import escape = require("lodash/escape");
-import { isTotalDescriptor, isMeasureGroupDescriptor, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import {
+    isTotalDescriptor,
+    isMeasureGroupDescriptor,
+    IExecutionResult,
+    IAttributeDescriptor,
+} from "@gooddata/sdk-backend-spi";
 import { IDimension } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.
@@ -167,3 +174,56 @@ export function getSubtotalStyles(dimension: IDimension): string[] {
     // Grand total (first) has no styles
     return [null, ...subtotalStyles];
 }
+
+export function getLastFieldType(fields: string[][]): string {
+    const [lastFieldType] = fields[fields.length - 1];
+    return lastFieldType;
+}
+
+export function getLastFieldId(fields: string[][]): string {
+    const [, lastFieldId] = fields[fields.length - 1];
+    return lastFieldId;
+}
+
+export function getAttributeLocators(fields: string[][], attributeHeaders: IAttributeDescriptor[]) {
+    return fields.slice(0, -1).map((field: string[]) => {
+        // first item is type which should be always 'a'
+        const [, fieldId, fieldValueId] = field;
+        const attributeHeaderMatch = attributeHeaders.find((attributeHeader: IAttributeDescriptor) => {
+            return getIdsFromUri(attributeHeader.attributeHeader.formOf.uri)[0] === fieldId;
+        });
+        invariant(
+            attributeHeaderMatch,
+            `Could not find matching attribute header to field ${field.join(ID_SEPARATOR)}`,
+        );
+        return {
+            attributeLocatorItem: {
+                attributeIdentifier: attributeHeaderMatch.attributeHeader.localIdentifier,
+                element: `${attributeHeaderMatch.attributeHeader.formOf.uri}/elements?id=${fieldValueId}`,
+            },
+        };
+    });
+}
+
+export const getColumnIdentifierFromDef = (colDef: IGridHeader | ColDef): string => {
+    // field should be always present, fallback to colId could happen for empty columns
+    return colDef.field || colDef.colId;
+};
+
+export const getColumnIdentifier = (item: Column | IGridHeader | ColDef): string => {
+    if (isColumn(item)) {
+        return getColumnIdentifierFromDef(item.getColDef());
+    }
+    return getColumnIdentifierFromDef(item);
+};
+
+export function isColumn(item: Column | ColDef): item is Column {
+    return !!(item as Column).getColDef;
+}
+
+export const isMeasureColumn = (item: Column | ColDef) => {
+    if (isColumn(item)) {
+        return item.getColDef().type === MEASURE_COLUMN;
+    }
+    return item.type === MEASURE_COLUMN;
+};

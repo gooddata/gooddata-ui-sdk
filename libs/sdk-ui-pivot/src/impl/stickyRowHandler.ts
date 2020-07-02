@@ -3,7 +3,7 @@ import { GridApi, RowNode } from "@ag-grid-community/all-modules";
 import { IGroupingProvider } from "./GroupingProvider";
 import { colIdIsSimpleAttribute, getGridIndex } from "./agGridUtils";
 import ApiWrapper from "./agGridApiWrapper";
-import { getScrollbarWidth } from "./domUtils";
+import { getScrollbarWidth } from "./utils";
 
 export interface IScrollPosition {
     readonly top: number;

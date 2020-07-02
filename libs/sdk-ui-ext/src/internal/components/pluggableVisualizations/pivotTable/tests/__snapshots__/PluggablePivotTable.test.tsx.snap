@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createPivotTableConfig should create valid config with auto-resize if feature flag on 1`] = `
+Object {
+  "columnSizing": Object {
+    "defaultWidth": "viewport",
+  },
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with growToFit if feature flag on 1`] = `
+Object {
+  "columnSizing": Object {
+    "growToFit": true,
+  },
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with manualResizing if feature flag off and configs are provided 1`] = `
+Object {
+  "columnSizing": Object {},
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with manualResizing if feature flag on and configs are empty 1`] = `
+Object {
+  "columnSizing": Object {},
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with manualResizing if feature flag on and configs are not defined 1`] = `
+Object {
+  "columnSizing": Object {},
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with manualResizing if feature flag on and configs are provided 1`] = `
+Object {
+  "columnSizing": Object {
+    "columnWidths": Array [
+      Object {
+        "attributeColumnWidthItem": Object {
+          "attributeIdentifier": "294512a6b2ed4be8bd3948dd14db1950",
+          "width": 740,
+        },
+      },
+    ],
+  },
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with menus for non-dashboard env 1`] = `
+Object {
+  "columnSizing": Object {},
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with menus for undefined env 1`] = `
+Object {
+  "columnSizing": Object {},
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": undefined,
+}
+`;
+
+exports[`createPivotTableConfig should create valid config with separators 1`] = `
+Object {
+  "columnSizing": Object {},
+  "menu": Object {
+    "aggregations": true,
+    "aggregationsSubMenu": true,
+  },
+  "separators": Object {
+    "decimal": ".",
+    "thousand": "-",
+  },
+}
+`;
+
+exports[`createPivotTableConfig should create valid config without menus for dashboard env 1`] = `
+Object {
+  "columnSizing": Object {},
+  "separators": undefined,
+}
+`;

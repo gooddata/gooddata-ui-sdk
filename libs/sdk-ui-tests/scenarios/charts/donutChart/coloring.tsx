@@ -8,13 +8,16 @@ import { DonutChartWithSingleMeasureAndViewBy, DonutChartWithTwoMeasures } from 
 import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { Product } from "../../_infra/data";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("", DonutChartWithSingleMeasureAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to measures",
@@ -34,7 +37,7 @@ const colorAssignment = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
     )
     .addScenario(
         "assign color to attributes",
@@ -54,7 +57,7 @@ const colorAssignment = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(Product.WonderKid, Product.Explorer)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(Product.WonderKid, Product.Explorer)),
     );
 
 export default [colorsAndPalette, colorAssignment];

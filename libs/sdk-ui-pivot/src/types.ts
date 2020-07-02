@@ -4,6 +4,7 @@ import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-sp
 import { IAttributeOrMeasure, IAttribute, IFilter, ITotal, ISortItem, TotalType } from "@gooddata/sdk-model";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
+import { ColumnWidthItem } from "./columnWidths";
 
 /**
  * @public
@@ -23,7 +24,45 @@ export interface IMenu {
 /**
  * @public
  */
+export type DefaultColumnWidth = "viewport" | "unset"; // | "auto"  | number; can be added later see ONE-4276
+
+/**
+ * @public
+ */
+export interface IColumnSizing {
+    /**
+     * Optionally indicate that the table should grow to fit into the allocated space.
+     *
+     * Default: false
+     */
+    growToFit?: boolean;
+
+    /**
+     * Optionally specify whether columns should be resized to fill the entire viewport.
+     *
+     * Default: unset
+     */
+    defaultWidth?: DefaultColumnWidth;
+
+    /**
+     * Optionally specify custom column widths to apply.
+     *
+     * Default: none
+     */
+    columnWidths?: ColumnWidthItem[];
+}
+
+/**
+ * @public
+ */
 export interface IPivotTableConfig {
+    /**
+     * Optionally customize column sizing strategy.
+     *
+     * Default: none
+     */
+    columnSizing?: IColumnSizing;
+
     /**
      * Optionally customize number segment separators (thousands, decimals)
      */
@@ -170,4 +209,31 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
      * Default: true
      */
     groupRows?: boolean;
+
+    /**
+     * Optionally specify function to call when user manually resizes a table column.
+     *
+     * @param columnWidths - new widths for columns
+     */
+    onColumnResized?: (columnWidths: ColumnWidthItem[]) => void;
+}
+
+export enum ColumnEventSourceType {
+    AUTOSIZE_COLUMNS = "autosizeColumns",
+    UI_DRAGGED = "uiColumnDragged",
+    FIT_GROW = "growToFit",
+}
+
+export enum UIClick {
+    CLICK = 1,
+    DOUBLE_CLICK = 2,
+}
+
+export interface IResizedColumnsItem {
+    width: number;
+    source: ColumnEventSourceType;
+}
+
+export interface IResizedColumns {
+    [columnIdentifier: string]: IResizedColumnsItem;
 }

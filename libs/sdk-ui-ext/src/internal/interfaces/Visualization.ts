@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
     IInsightDefinition,
@@ -18,21 +18,20 @@ import {
     VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
 
-export interface IFeatureFlags {
-    [property: string]: string | boolean | number;
-}
-
 export type RenderFunction = (component: any, target: Element) => void;
 
 export interface IVisConstruct {
     backend: IAnalyticalBackend;
+    // TODO: rename to workspace
     projectId: string;
     element: string;
     configPanelElement: string;
+
     callbacks: IVisCallbacks;
     environment?: VisualizationEnvironment;
     locale?: ILocale;
-    featureFlags?: IFeatureFlags;
+    // TODO: rename to settings
+    featureFlags?: ISettings;
     visualizationProperties: VisualizationProperties;
     renderFun: RenderFunction;
 }

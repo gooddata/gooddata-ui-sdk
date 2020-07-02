@@ -10,6 +10,7 @@ import {
     DATE_DATASET_ATTRIBUTE,
 } from "../../interfaces/Visualization";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 export const masterMeasureItems: IBucketItem[] = [
     {
@@ -479,6 +480,15 @@ const defaultSortItem = {
     },
 };
 
+const columnWidths: ColumnWidthItem[] = [
+    {
+        attributeColumnWidthItem: {
+            attributeIdentifier: "a1",
+            width: 100,
+        },
+    },
+];
+
 export const secondaryMeasuresAndAttributeReferencePoint: IReferencePoint = {
     buckets: [
         {
@@ -607,6 +617,10 @@ export const simpleStackedReferencePoint: IReferencePoint = {
     },
     properties: {
         sortItems: [defaultSortItem],
+        controls: {
+            columnWidths,
+            test: "test",
+        },
     },
 };
 

@@ -2,6 +2,7 @@
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { PieChart, IPieChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const PieChartWithTwoMeasures = {
     measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
@@ -19,6 +20,7 @@ export const PieChartWithSingleMeasureAndViewBy = {
  */
 
 export default scenariosFor<IPieChartProps>("PieChart", PieChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],
     })

@@ -1,15 +1,16 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { DefaultLocale, ChartType } from "@gooddata/sdk-ui";
+import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 
-import { IFeatureFlags, IReferences, IVisualizationProperties } from "../../interfaces/Visualization";
+import { IReferences, IVisualizationProperties } from "../../interfaces/Visualization";
 import { IColorConfiguration } from "../../interfaces/Colors";
 import ColorsSection from "../configurationControls/colors/ColorsSection";
 import LegendSection from "../configurationControls/legend/LegendSection";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 import { IInsightDefinition, insightHasMeasures } from "@gooddata/sdk-model";
-import noop = require("lodash/noop");
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper";
+import { ISettings } from "@gooddata/sdk-backend-spi";
+import noop = require("lodash/noop");
 
 export interface IConfigurationPanelContentProps {
     properties?: IVisualizationProperties;
@@ -21,7 +22,7 @@ export interface IConfigurationPanelContentProps {
     isError?: boolean;
     isLoading?: boolean;
     insight?: IInsightDefinition;
-    featureFlags?: IFeatureFlags;
+    featureFlags?: ISettings;
     axis?: string;
     pushData?(data: any): void;
 }

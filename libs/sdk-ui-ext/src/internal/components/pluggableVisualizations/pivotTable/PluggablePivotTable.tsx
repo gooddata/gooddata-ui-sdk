@@ -4,7 +4,6 @@ import flatMap = require("lodash/flatMap");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
 import isNil = require("lodash/isNil");
-import merge = require("lodash/merge");
 import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import {
     attributeLocalId,
@@ -18,19 +17,26 @@ import {
     IMeasureSortItem,
     insightBuckets,
     insightHasDataDefined,
+    insightProperties,
     isAttributeSort,
     isMeasureLocator,
     isMeasureSort,
-    measureLocalId,
     ISortItem,
     newAttributeSort,
+    measureLocalId,
 } from "@gooddata/sdk-model";
 
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
-import { CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+import {
+    ColumnWidthItem,
+    CorePivotTable,
+    IColumnSizing,
+    ICorePivotTableProps,
+    IPivotTableConfig,
+} from "@gooddata/sdk-ui-pivot";
 import * as React from "react";
 import { render } from "react-dom";
-import Measure from "react-measure";
+import ReactMeasure from "react-measure";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
@@ -41,6 +47,7 @@ import {
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
+    IGdcConfig,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
@@ -59,11 +66,16 @@ import {
 } from "../../../utils/bucketHelper";
 import { generateDimensions } from "../../../utils/dimensions";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import {
+    getColumnWidthsFromProperties,
+    getReferencePointWithSupportedProperties,
+} from "../../../utils/propertiesHelper";
 
 import { setPivotTableUiConfig } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
+import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { adaptReferencePointWidthItemsToPivotTable } from "./widthItemsHelpers";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -244,19 +256,19 @@ export function addDefaultSort(
 }
 
 export class PluggablePivotTable extends AbstractPluggableVisualization {
-    // @ts-ignore
-    private projectId: string;
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
-    private readonly settings?: ISettings;
+    private readonly settings: ISettings;
 
     constructor(props: IVisConstruct) {
         super(props);
 
-        this.projectId = props.projectId;
         this.environment = props.environment;
         this.renderFun = props.renderFun;
-        this.settings = props.featureFlags;
+        this.settings = props.featureFlags ?? {};
+        this.onColumnResized = this.onColumnResized.bind(this);
+        this.handlePushData = this.handlePushData.bind(this);
+        this.supportedPropertiesList = PIVOT_TABLE_SUPPORTED_PROPERTIES;
     }
 
     public unmount() {
@@ -280,6 +292,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             previousReferencePoint && getRowAttributes(previousReferencePoint.buckets);
 
         const columnAttributes = getColumnAttributes(buckets);
+        const previousColumnAttributes =
+            previousReferencePoint && getColumnAttributes(previousReferencePoint.buckets);
 
         const totals = getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE);
 
@@ -302,7 +316,35 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             },
         ]);
 
+        const filters: IBucketFilter[] = newReferencePoint.filters
+            ? flatMap(newReferencePoint.filters.items, (item) => item.filters)
+            : [];
+
         const originalSortItems: ISortItem[] = get(newReferencePoint.properties, "sortItems", []);
+        const originalColumnWidths: ColumnWidthItem[] = get(
+            newReferencePoint.properties,
+            "controls.columnWidths",
+            [],
+        );
+
+        const columnWidths = adaptReferencePointWidthItemsToPivotTable(
+            originalColumnWidths,
+            measures,
+            rowAttributes,
+            columnAttributes,
+            previousRowAttributes ? previousRowAttributes : [],
+            previousColumnAttributes ? previousColumnAttributes : [],
+            filters,
+        );
+
+        const controlsObj =
+            isManualResizingEnabled(this.settings) || columnWidths.length > 0
+                ? {
+                      controls: {
+                          columnWidths,
+                      },
+                  }
+                : {};
 
         newReferencePoint.properties = {
             sortItems: addDefaultSort(
@@ -312,12 +354,11 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                     rowAttributes,
                     columnAttributes,
                 ),
-                newReferencePoint.filters
-                    ? flatMap(newReferencePoint.filters.items, (item) => item.filters)
-                    : [],
+                filters,
                 rowAttributes,
                 previousRowAttributes,
             ),
+            ...controlsObj,
         };
 
         setPivotTableUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE);
@@ -331,6 +372,23 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
+    private createCorePivotTableProps = () => {
+        const onColumnResized = isManualResizingEnabled(this.settings) ? this.onColumnResized : undefined;
+
+        return {
+            intl: this.intl,
+            ErrorComponent: null as any,
+
+            onDrill: this.onDrill,
+            afterRender: this.afterRender,
+            onLoadingChanged: this.onLoadingChanged,
+            pushData: this.handlePushData,
+            onError: this.onError,
+            onExportReady: this.onExportReady,
+            onColumnResized,
+        };
+    };
+
     protected renderVisualization(
         options: IVisProps,
         insight: IInsightDefinition,
@@ -342,92 +400,65 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, custom, dimensions, config, customVisualizationConfig = {} } = options;
+        const { locale, custom, dimensions, config = {}, customVisualizationConfig = {} } = options;
         const height = dimensions?.height;
         const { drillableItems } = custom;
 
         const execution = executionFactory.forInsight(insight).withDimensions(...this.getDimensions(insight));
 
-        let configUpdated = config;
-        if (this.environment !== DASHBOARDS_ENVIRONMENT) {
-            // Menu aggregations turned off in KD
-            configUpdated = merge(
-                {
-                    menu: {
-                        aggregations: true,
-                        aggregationsSubMenu: true,
-                    },
-                },
-                configUpdated,
-            );
-        }
+        const columnWidths: ColumnWidthItem[] | undefined = getColumnWidthsFromProperties(
+            insightProperties(insight),
+        );
 
-        configUpdated = {
-            ...configUpdated,
+        const tableConfig: IPivotTableConfig = {
+            ...createPivotTableConfig(config, this.environment, this.settings, columnWidths),
             ...customVisualizationConfig,
         };
 
         const pivotTableProps: ICorePivotTableProps = {
+            ...this.createCorePivotTableProps(),
             execution,
             drillableItems,
-            onDrill: this.onDrill,
-            config: configUpdated,
+            config: tableConfig,
             locale,
-            afterRender: this.afterRender,
-            onLoadingChanged: this.onLoadingChanged,
-            pushData: this.pushData,
-            onError: this.onError,
-            onExportReady: this.onExportReady,
-            ErrorComponent: null as any,
-            intl: this.intl,
         };
 
-        // TODO: SDK8: check the height handling; previously, code was passing height prop down to core
-        //  pivot table; now.. this component had this prop but it seems to me that it was never taken
-        //  into account (it had the prop because it inherited from same base as charts). Checked the history
-        //  and it seems that CorePivotTable never used the 'height' prop
-
         if (this.environment === DASHBOARDS_ENVIRONMENT) {
-            if (isNil(height)) {
-                this.renderFun(
-                    <Measure client={true}>
-                        {({ measureRef, contentRect }: any) => {
-                            const usedHeight = Math.floor(contentRect.client.height || 0);
-                            const pivotWrapperStyle: React.CSSProperties = {
-                                height: "100%",
-                                textAlign: "left",
-                            };
-
-                            // TODO: SDK8: height={usedHeight} was passed here but seems it was never taken
-                            //  into account by core pivot table (see above)
-                            return (
-                                <div
-                                    ref={measureRef}
-                                    style={pivotWrapperStyle}
-                                    className="gd-table-dashboard-wrapper"
-                                >
-                                    <CorePivotTable
-                                        {...pivotTableProps}
-                                        config={{
-                                            ...config,
-                                            maxHeight: usedHeight,
-                                            ...customVisualizationConfig,
-                                        }}
-                                    />
-                                </div>
-                            );
-                        }}
-                    </Measure>,
-                    document.querySelector(this.element),
-                );
-
-                return;
-            }
-
             this.renderFun(
-                <div style={{ height: 328, textAlign: "left" }} className="gd-table-dashboard-wrapper">
-                    <CorePivotTable {...pivotTableProps} />
-                </div>,
+                <ReactMeasure client={true}>
+                    {({ measureRef, contentRect }: any) => {
+                        const clientHeight = contentRect.client.height;
+
+                        /*
+                         * For some reason (unknown to me), there was a big if; nil height meant that
+                         * the wrapper was to 100%; non-nil height ment fixed size header with the 328 magic
+                         * number.
+                         *
+                         * For a while, there were more differences between the two branches, however after
+                         * ONE-4322 the essential difference was reduced to just the wrapper size.
+                         */
+                        const pivotWrapperStyle: React.CSSProperties = {
+                            height: isNil(height) ? "100%" : 328,
+                            textAlign: "left",
+                        };
+
+                        const configWithMaxHeight: IPivotTableConfig = {
+                            ...tableConfig,
+                            maxHeight: clientHeight,
+                            ...customVisualizationConfig,
+                        };
+
+                        return (
+                            <div
+                                ref={measureRef}
+                                style={pivotWrapperStyle}
+                                className="gd-table-dashboard-wrapper"
+                            >
+                                <CorePivotTable {...pivotTableProps} config={configWithMaxHeight} />
+                            </div>
+                        );
+                    }}
+                </ReactMeasure>,
                 document.querySelector(this.element),
             );
         } else {
@@ -468,4 +499,99 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     protected getDimensions(insight: IInsightDefinition): IDimension[] {
         return generateDimensions(insight, VisualizationTypes.TABLE);
     }
+
+    private getMergedProperties(newProperties: any): IVisualizationProperties {
+        const properties: IVisualizationProperties = get(
+            this.visualizationProperties,
+            "properties",
+            {},
+        ) as IVisualizationProperties;
+
+        return {
+            properties: {
+                ...properties,
+                ...newProperties,
+            },
+        };
+    }
+
+    private onColumnResized(columnWidths: ColumnWidthItem[]) {
+        this.pushData(
+            this.getMergedProperties({
+                controls: {
+                    columnWidths,
+                },
+            }),
+        );
+    }
+
+    private handlePushData(data: any) {
+        if (data && data.properties && data.properties.sortItems) {
+            this.pushData(
+                this.getMergedProperties({
+                    sortItems: data.properties.sortItems,
+                }),
+            );
+        } else {
+            this.pushData(data);
+        }
+    }
+}
+
+function isManualResizingEnabled(settings: ISettings): boolean {
+    return settings[SettingCatalog.enableTableColumnsManualResizing] === true;
+}
+
+/**
+ * Given plug viz GDC config, current environment and platform settings, this creates pivot table config.
+ *
+ * @internal
+ */
+export function createPivotTableConfig(
+    config: IGdcConfig,
+    environment: VisualizationEnvironment,
+    settings: ISettings,
+    columnWidths: ColumnWidthItem[],
+): IPivotTableConfig {
+    let tableConfig: IPivotTableConfig = {
+        separators: config.separators,
+    };
+
+    if (environment !== "dashboards") {
+        tableConfig = {
+            ...tableConfig,
+            menu: {
+                aggregations: true,
+                aggregationsSubMenu: true,
+            },
+        };
+    }
+
+    const autoSize = settings[SettingCatalog.enableTableColumnsAutoResizing];
+    const growToFit = settings[SettingCatalog.enableTableColumnsGrowToFit];
+    const manualResizing = settings[SettingCatalog.enableTableColumnsManualResizing];
+
+    let columnSizing: Partial<IColumnSizing> = {};
+    if (autoSize) {
+        columnSizing = {
+            defaultWidth: "viewport",
+        };
+    }
+    if (growToFit) {
+        columnSizing = {
+            ...columnSizing,
+            growToFit: true,
+        };
+    }
+    if (manualResizing && columnWidths && columnWidths.length > 0) {
+        columnSizing = {
+            ...columnSizing,
+            columnWidths,
+        };
+    }
+
+    return {
+        ...tableConfig,
+        columnSizing,
+    };
 }

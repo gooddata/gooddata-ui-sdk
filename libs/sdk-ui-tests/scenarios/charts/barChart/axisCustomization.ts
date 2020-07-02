@@ -11,8 +11,10 @@ import {
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { axisRotationVariants } from "../_infra/axisRotationVariants";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const singleAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({
         groupUnder: "single axis name customization",
         screenshotSize: { width: 800, height: 600 },
@@ -21,6 +23,7 @@ const singleAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .addScenarios("single axis name customization", BarChartWithTwoMeasuresAndViewBy, axisNameCustomization);
 
 const dualAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({
         groupUnder: "dual axis name customization",
         screenshotSize: { width: 800, height: 600 },
@@ -40,6 +43,7 @@ const dualAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
     );
 
 const dualAxisLabelRotation = scenariosFor<IBarChartProps>("BarChart", BarChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({
         groupUnder: "dual axis label rotation",
         screenshotSize: { width: 800, height: 600 },
@@ -63,6 +67,7 @@ const dualAxisLabelRotation = scenariosFor<IBarChartProps>("BarChart", BarChart)
     );
 
 const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("X axis min/max configuration", {

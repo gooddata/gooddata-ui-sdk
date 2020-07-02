@@ -3,6 +3,7 @@ import { ExamplesLdm, ExamplesLdmExt } from "@gooddata/live-examples-workspace";
 import { GeoPushpinChart, IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 import { MapboxToken, scenariosFor } from "../../src";
 import { IAttribute, modifyAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 
 const DefaultConfig: IGeoConfig = {
     mapboxToken: MapboxToken,
@@ -30,6 +31,7 @@ export const LocationSegmentSizeAndColorWithTooltip: IGeoPushpinChartProps = {
 };
 
 export default scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", GeoPushpinChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withDefaultWorkspaceType("live-examples-workspace")
     .withDefaultTestTypes("api")
 

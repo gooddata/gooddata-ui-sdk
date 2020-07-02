@@ -13,6 +13,29 @@ BACKSTOP_NET="backstop-sdk-ui-${RANDOM}"
 UID=$(id -u)
 GID=$(id -g)
 
+#
+#
+#
+
+
+# macOS has no timeout available by default
+# https://stackoverflow.com/a/35512328/2546338
+function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
+
+wait-for-url() {
+  timeout 15 bash -c \
+  'while [[ "$(docker run --net ${0} --rm curlimages/curl:7.70.0 -s -o /dev/null -L -w ''%{http_code}'' ${1})" != "200" ]];\
+  do echo "Waiting for ${1}" && sleep 2;\
+  done' ${BACKSTOP_NET} ${1}
+
+  last=$(docker run --net ${BACKSTOP_NET} --rm curlimages/curl:7.70.0 -s -o /dev/null -L -w '%{http_code}' $1)
+  [ $last == "200" ]
+}
+
+#
+#
+#
+
 echo "Creating docker network for the storybook & backstop to share: ${BACKSTOP_NET}"
 
 docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && exit 1 ; }
@@ -28,10 +51,11 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
         --volume ${STORYBOOK_CONF}:/etc/nginx/conf.d/storybook.conf:ro,Z \
         nginx:1.17.6)
 
-    echo "nginx container started: ${NGINX_CONTAINER}"
+    echo "waiting for nginx in container: ${NGINX_CONTAINER} to start serving storybook"
 
-    # TODO Yea right.. nginx starts quite fast but this will ultimately fail on some overloaded slaves.
-    sleep 2
+    wait-for-url "http://storybook"
+
+    echo "nginx with storybook is up"
 
     echo "Starting BackstopJS in dir ${BACKSTOP_DIR} with params: $@"
 
@@ -41,7 +65,7 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
             --env BACKSTOP_COMPARE_LIMIT \
             --user $UID:$GID \
             --net ${BACKSTOP_NET} --net-alias backstop \
-            --volume ${BACKSTOP_DIR}:/src:Z backstopjs/backstopjs:4.5.1 \
+            --volume ${BACKSTOP_DIR}:/src:Z backstopjs/backstopjs:5.0.1 \
             --config=/src/backstop.config.js "$@"
 
         echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"

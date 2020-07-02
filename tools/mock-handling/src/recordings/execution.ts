@@ -1,11 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
 
-import { defFingerprint, IExecutionDefinition, IBucket } from "@gooddata/sdk-model";
+import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import * as fs from "fs";
 import * as path from "path";
 import { logWarn } from "../cli/loggers";
 import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
+import { DataViewRequests, RecordingFiles, RequestedWindow, ScenarioDescriptor } from "../interface";
 import isArray = require("lodash/isArray");
 import isEmpty = require("lodash/isEmpty");
 import isObject = require("lodash/isObject");
@@ -15,8 +16,6 @@ import pickBy = require("lodash/pickBy");
 // internal constants & types
 //
 
-const DataViewRequestsFile = "requests.json";
-const ScenariosFile = "scenarios.json";
 const ExecutionResultFile = "executionResult.json";
 const DataViewAllFile = "dataView_all.json";
 const DataViewWindowFile = (win: RequestedWindow) => `dataView_${dataViewWindowId(win)}.json`;
@@ -40,16 +39,6 @@ const DataViewPropsToSerialize: Array<keyof IDataView> = [
     "totalCount",
 ];
 
-type DataViewRequests = {
-    allData?: boolean;
-    windows?: RequestedWindow[];
-};
-
-type RequestedWindow = {
-    offset: number[];
-    size: number[];
-};
-
 type DataViewFiles = {
     [filename: string]: RequestedWindow | "all";
 };
@@ -60,7 +49,9 @@ type DataViewFiles = {
 
 function loadDefinition(directory: string): [IExecutionDefinition, string] {
     const fingerprint = path.basename(directory);
-    const definition = readJsonSync(path.join(directory, ExecutionDefinitionFile)) as IExecutionDefinition;
+    const definition = readJsonSync(
+        path.join(directory, RecordingFiles.Execution.Definition),
+    ) as IExecutionDefinition;
     const calculatedFingerprint = defFingerprint(definition);
 
     if (calculatedFingerprint !== fingerprint) {
@@ -74,7 +65,7 @@ function loadDefinition(directory: string): [IExecutionDefinition, string] {
 
 // TODO: replace these weak validations with proper json-schema validation
 function loadScenarios(directory: string): ScenarioDescriptor[] {
-    const scenariosFile = path.join(directory, ScenariosFile);
+    const scenariosFile = path.join(directory, RecordingFiles.Execution.Scenarios);
 
     if (!fs.existsSync(scenariosFile)) {
         return [];
@@ -85,7 +76,7 @@ function loadScenarios(directory: string): ScenarioDescriptor[] {
 
         if (!isArray(scenarios)) {
             logWarn(
-                `The ${ScenariosFile} in ${directory} does not contain JSON array with scenario metadata. Proceeding without scenarios - they will not be included for this particular recording. `,
+                `The ${RecordingFiles.Execution.Scenarios} in ${directory} does not contain JSON array with scenario metadata. Proceeding without scenarios - they will not be included for this particular recording. `,
             );
 
             return [];
@@ -97,14 +88,14 @@ function loadScenarios(directory: string): ScenarioDescriptor[] {
 
         if (validScenarios.length !== scenarios.length) {
             logWarn(
-                `The ${ScenariosFile} in ${directory} does not contain valid scenario metadata. Some or even all metadata have invalid shape. This comes as object with 'vis' and 'scenario' string properties. Proceeding without scenarios - they will not be included for this particular recording.`,
+                `The ${RecordingFiles.Execution.Scenarios} in ${directory} does not contain valid scenario metadata. Some or even all metadata have invalid shape. This comes as object with 'vis' and 'scenario' string properties. Proceeding without scenarios - they will not be included for this particular recording.`,
             );
         }
 
         return validScenarios;
     } catch (e) {
         logWarn(
-            `Unable to read or parse ${ScenariosFile} in ${directory}: ${e}; it is likely that the file is malformed. It should contain JSON with array of {vis, scenario} objects. Proceeding without scenarios - they will not be included for this particular recording.`,
+            `Unable to read or parse ${RecordingFiles.Execution.Scenarios} in ${directory}: ${e}; it is likely that the file is malformed. It should contain JSON with array of {vis, scenario} objects. Proceeding without scenarios - they will not be included for this particular recording.`,
         );
 
         return [];
@@ -113,7 +104,7 @@ function loadScenarios(directory: string): ScenarioDescriptor[] {
 
 // TODO: replace these weak validations with proper json-schema validation
 function loadDataViewRequests(directory: string): DataViewRequests {
-    const requestsFile = path.join(directory, DataViewRequestsFile);
+    const requestsFile = path.join(directory, RecordingFiles.Execution.Requests);
 
     if (!fs.existsSync(requestsFile)) {
         return DefaultDataViewRequests;
@@ -124,7 +115,7 @@ function loadDataViewRequests(directory: string): DataViewRequests {
 
         if (!isObject(requests) || (requests.allData === undefined && requests.windows === undefined)) {
             logWarn(
-                `The ${DataViewRequestsFile} in ${directory} does not contain valid data view request definitions. It should contain JSON with object with allData: boolean and/or windows: [{offset, size}]. Proceeding with default: getting all data.`,
+                `The ${RecordingFiles.Execution.Requests} in ${directory} does not contain valid data view request definitions. It should contain JSON with object with allData: boolean and/or windows: [{offset, size}]. Proceeding with default: getting all data.`,
             );
 
             return DefaultDataViewRequests;
@@ -134,7 +125,7 @@ function loadDataViewRequests(directory: string): DataViewRequests {
         return requests;
     } catch (e) {
         logWarn(
-            `Unable to read or parse ${DataViewRequestsFile} in ${directory}: ${e}; it is likely that the file is malformed. It should contain JSON with object with allData: boolean and/or windows: [{offset, size}]. Proceeding with default: getting all data.`,
+            `Unable to read or parse ${RecordingFiles.Execution.Requests} in ${directory}: ${e}; it is likely that the file is malformed. It should contain JSON with object with allData: boolean and/or windows: [{offset, size}]. Proceeding with default: getting all data.`,
         );
 
         return DefaultDataViewRequests;
@@ -144,14 +135,6 @@ function loadDataViewRequests(directory: string): DataViewRequests {
 //
 // Public API
 //
-
-export const ExecutionDefinitionFile = "definition.json";
-
-export type ScenarioDescriptor = {
-    vis: string;
-    scenario: string;
-    buckets: IBucket[];
-};
 
 export class ExecutionRecording implements IRecording {
     public readonly fingerprint: string;
@@ -232,12 +215,12 @@ export class ExecutionRecording implements IRecording {
         );
 
         const entry: RecordingIndexEntry = {
-            definition: path.join(this.directory, ExecutionDefinitionFile),
+            definition: path.join(this.directory, RecordingFiles.Execution.Definition),
             executionResult: path.join(this.directory, ExecutionResultFile),
             ...dataViewFiles,
         };
 
-        const scenariosFile = path.join(this.directory, ScenariosFile);
+        const scenariosFile = path.join(this.directory, RecordingFiles.Execution.Scenarios);
         if (fs.existsSync(scenariosFile)) {
             entry.scenarios = scenariosFile;
         }

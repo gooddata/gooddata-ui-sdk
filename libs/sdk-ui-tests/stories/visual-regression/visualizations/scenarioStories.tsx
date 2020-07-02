@@ -1,29 +1,32 @@
 // (C) 2007-2018 GoodData Corporation
-import { createHighChartResolver, ScreenshotReadyWrapper } from "../_infra/ScreenshotReadyWrapper";
-import { storiesOf } from "@storybook/react";
+import { createElementCountResolver, ScreenshotReadyWrapper } from "../_infra/ScreenshotReadyWrapper";
 import * as React from "react";
-import chartGroups from "../../../scenarios";
+import allScenarios from "../../../scenarios";
 import { ScenarioGroup } from "../../../src";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import { withScreenshot } from "../_infra/backstopWrapper";
-import { ScenarioStories } from "../_infra/storyGroups";
 import { StorybookBackend } from "../_infra/backend";
+import { storyGroupFor } from "./storyGroupFactory";
 import groupBy = require("lodash/groupBy");
+import sortBy = require("lodash/sortBy");
+import { ScenarioStories } from "../_infra/storyGroups";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
 
 const backend = StorybookBackend();
-const ScenarioGroupsByVis = Object.entries(groupBy<ScenarioGroup<any>>(chartGroups, (g) => g.vis));
+const ScenarioGroupsByVis = Object.values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
 
 function simpleStory(Component: React.ComponentType, props: any, wrapperStyle: any) {
     return () => {
         return withScreenshot(
-            <div style={wrapperStyle}>
-                <Component {...props} />
-            </div>,
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                <div style={wrapperStyle}>
+                    <Component {...props} />
+                </div>
+            </ScreenshotReadyWrapper>,
         );
     };
 }
@@ -33,7 +36,7 @@ function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
 
     return () => {
         return withScreenshot(
-            <ScreenshotReadyWrapper resolver={createHighChartResolver(scenarios.length)}>
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(scenarios.length)}>
                 {scenarios.map(([name, scenario], idx) => {
                     const { propsFactory, workspaceType, component: Component } = scenario;
                     const props = propsFactory(backend, workspaceType);
@@ -52,10 +55,15 @@ function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
     };
 }
 
-ScenarioGroupsByVis.forEach(([vis, groups]) => {
-    const storiesForChart = storiesOf(`${ScenarioStories}/${vis}`, module);
+ScenarioGroupsByVis.forEach((groups) => {
+    /*
+     * Sort groups; the order in which stories for the group are created is important as that is the order
+     * in which the groups appear in storybook.
+     */
+    const sortedGroups = sortBy(groups, (g) => g.groupNames.join("/"));
 
-    for (const group of groups) {
+    for (const group of sortedGroups) {
+        const storiesForChart = storyGroupFor(ScenarioStories, group);
         // only interested in scenarios for visual regression
         const visualOnly: ScenarioGroup<any> = group.forTestTypes("visual");
 

@@ -3,6 +3,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { Treemap, ITreemapProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const TreemapWithArithmeticMeasuresAndSegment = {
     measures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.CalculatedLost],
@@ -16,6 +17,7 @@ export const TreemapWithMeasureViewByAndSegmentBy = {
 };
 
 export default scenariosFor<ITreemapProps>("Treemap", Treemap)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],
     })

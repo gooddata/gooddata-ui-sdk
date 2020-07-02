@@ -7,13 +7,16 @@ import { BlackColor, CustomColorPalette, CustomPaletteColor } from "../../_infra
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", ComboChartWithArithmeticMeasuresAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to measures",
@@ -33,7 +36,7 @@ const colorAssignment = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
     );
 
 export default [colorsAndPalette, colorAssignment];

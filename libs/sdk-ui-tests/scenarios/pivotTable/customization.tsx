@@ -6,13 +6,15 @@ import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base";
 import { GermanNumberFormat } from "../_infra/formatting";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { PivotTableWithTwoMeasuresAndTotals } from "./totals";
+import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals";
+import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 
-const MeasureWithCustomFormat = modifyMeasure(ReferenceLdm.Amount, m =>
+const MeasureWithCustomFormat = modifyMeasure(ReferenceLdm.Amount, (m) =>
     m.format("[backgroundColor=ffff00][green]#,##0.00 €").defaultLocalId(),
 );
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("german number format", {
@@ -44,7 +46,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             measures: [MeasureWithCustomFormat],
             groupRows: false,
         },
-        m => {
+        (m) => {
             // measure formatting needs to be looped through backend.. thus clearing up the vis-config-only flag to
             // make sure recording will be captured
             return m.withTags("mock-no-scenario-meta");
@@ -60,5 +62,11 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresAndTotals,
         config: {
             maxHeight: 300,
+        },
+    })
+    .addScenario("totals and max height 800", {
+        ...PivotTableWithSingleMeasureAndGrandTotal,
+        config: {
+            maxHeight: 800,
         },
     });

@@ -3,33 +3,45 @@ import * as React from "react";
 import * as ReactDom from "react-dom";
 
 import {
-    PluggablePivotTable,
-    getColumnAttributes,
-    getRowAttributes,
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
+    createPivotTableConfig,
+    getColumnAttributes,
+    getRowAttributes,
     isSortItemVisible,
+    PluggablePivotTable,
 } from "../PluggablePivotTable";
 import * as testMocks from "../../../../tests/mocks/testMocks";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import {
-    IVisConstruct,
-    IBucketOfFun,
-    IVisProps,
-    IFilters,
-    IExtendedReferencePoint,
-    IBucketItem,
-    IFiltersBucketItem,
     IBucketFilter,
     IBucketFilterElement,
+    IBucketItem,
+    IBucketOfFun,
+    IExtendedReferencePoint,
+    IFilters,
+    IFiltersBucketItem,
+    IGdcConfig,
+    IVisConstruct,
+    IVisProps,
 } from "../../../../interfaces/Visualization";
+import { DefaultLocale, IDrillableItem, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
+import { ColumnWidthItem, CorePivotTable } from "@gooddata/sdk-ui-pivot";
+import { IAttributeSortItem, IMeasureSortItem, ISortItem, SortDirection } from "@gooddata/sdk-model";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { ISettings } from "@gooddata/sdk-backend-spi";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
-import { IDrillableItem, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
-import { CorePivotTable } from "@gooddata/sdk-ui-pivot";
-import { ISortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import {
+    invalidAttributeColumnWidthItem,
+    invalidMeasureColumnWidthItem,
+    invalidMeasureColumnWidthItemInvalidAttribute,
+    invalidMeasureColumnWidthItemLocatorsTooShort,
+    invalidMeasureColumnWidthItemTooManyLocators,
+    validAttributeColumnWidthItem,
+    validMeasureColumnWidthItem,
+} from "./widthItemsMock";
 
 const getMockReferencePoint = (
     measures: IBucketItem[] = [],
@@ -38,6 +50,7 @@ const getMockReferencePoint = (
     filterItems: IFiltersBucketItem[] = [],
     sortItems: ISortItem[] = [],
     measuresIsShowInPercentEnabled = false,
+    columnWidths: ColumnWidthItem[] = [],
 ): IExtendedReferencePoint => ({
     buckets: [
         {
@@ -59,6 +72,9 @@ const getMockReferencePoint = (
     },
     properties: {
         sortItems,
+        controls: {
+            columnWidths,
+        },
     },
     uiConfig: {
         buckets: {
@@ -294,6 +310,52 @@ describe("PluggablePivotTable", () => {
             renderSpy.mockRestore();
         });
 
+        it("should have onColumnResized callback when FF enableTableColumnsManualResizing is set to true", () => {
+            const renderSpy = jest.fn(noop);
+            const pivotTable = createComponent({
+                ...defaultProps,
+                featureFlags: { enableTableColumnsManualResizing: true },
+                renderFun: renderSpy,
+            });
+
+            const createElementSpy = spyOnFakeElement();
+
+            const options = getDefaultOptions();
+            pivotTable.update(options, testMocks.dummyInsight, executionFactory);
+
+            expect(createElementSpy).toHaveBeenCalledTimes(1);
+            expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
+
+            const props: any = createElementSpy.mock.calls[0][1];
+            expect(props.onColumnResized).toBeInstanceOf(Function);
+
+            createElementSpy.mockRestore();
+            renderSpy.mockRestore();
+        });
+
+        it("should not have onColumnResized callback when FF enableTableColumnsManualResizing is set to false", () => {
+            const renderSpy = jest.fn(noop);
+            const pivotTable = createComponent({
+                ...defaultProps,
+                featureFlags: { enableTableColumnsManualResizing: false },
+                renderFun: renderSpy,
+            });
+
+            const createElementSpy = spyOnFakeElement();
+
+            const options = getDefaultOptions();
+            pivotTable.update(options, testMocks.dummyInsight, executionFactory);
+
+            expect(createElementSpy).toHaveBeenCalledTimes(1);
+            expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
+
+            const props: any = createElementSpy.mock.calls[0][1];
+            expect(props.onColumnResized).toBeUndefined();
+
+            createElementSpy.mockRestore();
+            renderSpy.mockRestore();
+        });
+
         it("should render PivotTable passing down all the necessary properties", () => {
             const renderSpy = jest.fn(noop);
             const pivotTable = createComponent({ ...defaultProps, renderFun: renderSpy });
@@ -307,6 +369,9 @@ describe("PluggablePivotTable", () => {
 
             const targetNode = document.querySelector(defaultProps.element);
             expect(renderSpy).toHaveBeenCalledWith({}, targetNode);
+
+            createElementSpy.mockRestore();
+            renderSpy.mockRestore();
         });
     });
 
@@ -351,6 +416,16 @@ describe("PluggablePivotTable", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
                     const expectedSortItems: ISortItem[] = sourceReferencePoint.properties.sortItems;
                     expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
+                });
+            });
+
+            it("should return a new reference point with columnWidths", () => {
+                return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                    const expectedColumnWidths: ColumnWidthItem[] =
+                        sourceReferencePoint.properties.controls.columnWidths;
+                    expect(extendedReferencePoint.properties.controls.columnWidths).toEqual(
+                        expectedColumnWidths,
+                    );
                 });
             });
         });
@@ -421,6 +496,41 @@ describe("PluggablePivotTable", () => {
             );
             return extendedReferencePointPromise.then((extendedReferencePoint) => {
                 expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
+            });
+        });
+
+        it("should return a new reference point with invalid columnWidths removed", () => {
+            const pivotTable = createComponent();
+            const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+            const mockPivotTableReferencePoint: IExtendedReferencePoint = getMockReferencePoint(
+                sourceReferencePoint.buckets[0].items,
+                sourceReferencePoint.buckets[1].items,
+                sourceReferencePoint.buckets[2].items,
+                [],
+                [],
+                true,
+                [
+                    invalidAttributeColumnWidthItem,
+                    invalidMeasureColumnWidthItem,
+                    invalidMeasureColumnWidthItemInvalidAttribute,
+                    invalidMeasureColumnWidthItemLocatorsTooShort,
+                    invalidMeasureColumnWidthItemTooManyLocators,
+                    validAttributeColumnWidthItem,
+                    validMeasureColumnWidthItem,
+                ],
+            );
+            const expectedColumnWidthItems: ColumnWidthItem[] = [
+                validAttributeColumnWidthItem,
+                validMeasureColumnWidthItem,
+            ];
+
+            const extendedReferencePointPromise: Promise<IExtendedReferencePoint> = pivotTable.getExtendedReferencePoint(
+                mockPivotTableReferencePoint,
+            );
+            return extendedReferencePointPromise.then((extendedReferencePoint) => {
+                expect(extendedReferencePoint.properties.controls.columnWidths).toEqual(
+                    expectedColumnWidthItems,
+                );
             });
         });
 
@@ -1055,5 +1165,75 @@ describe("isSortItemVisible", () => {
             const actual = isSortItemVisible(sortItem, [measureValueFilter]);
             expect(actual).toEqual(true);
         });
+    });
+});
+
+describe("createPivotTableConfig", () => {
+    const columnWidths = [
+        {
+            attributeColumnWidthItem: {
+                width: 740,
+                attributeIdentifier: "294512a6b2ed4be8bd3948dd14db1950",
+            },
+        },
+    ];
+
+    const Scenarios: Array<[
+        string,
+        IGdcConfig,
+        VisualizationEnvironment | undefined,
+        ISettings,
+        ColumnWidthItem[],
+    ]> = [
+        ["config without menus for dashboard env", {}, "dashboards", {}, undefined],
+        ["config with menus for non-dashboard env", {}, "none", {}, undefined],
+        ["config with menus for undefined env", {}, "none", {}, undefined],
+        ["config with separators", { separators: { decimal: ".", thousand: "-" } }, "none", {}, undefined],
+        [
+            "config with auto-resize if feature flag on",
+            {},
+            "none",
+            { enableTableColumnsAutoResizing: true },
+            undefined,
+        ],
+        [
+            "config with growToFit if feature flag on",
+            {},
+            "none",
+            { enableTableColumnsGrowToFit: true },
+            undefined,
+        ],
+        [
+            "config with manualResizing if feature flag on and configs are not defined",
+            {},
+            "none",
+            { enableTableColumnsManualResizing: true },
+            undefined,
+        ],
+        [
+            "config with manualResizing if feature flag on and configs are empty",
+            {},
+            "none",
+            { enableTableColumnsManualResizing: true },
+            [],
+        ],
+        [
+            "config with manualResizing if feature flag on and configs are provided",
+            {},
+            "none",
+            { enableTableColumnsManualResizing: true },
+            columnWidths,
+        ],
+        [
+            "config with manualResizing if feature flag off and configs are provided",
+            {},
+            "none",
+            { enableTableColumnsManualResizing: false },
+            columnWidths,
+        ],
+    ];
+
+    it.each(Scenarios)("should create valid %s", (_desc, config, env, settings, columnWidths) => {
+        expect(createPivotTableConfig(config, env, settings, columnWidths)).toMatchSnapshot();
     });
 });

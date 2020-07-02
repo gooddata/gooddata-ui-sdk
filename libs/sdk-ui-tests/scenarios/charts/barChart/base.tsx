@@ -3,6 +3,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const BarChartWithSingleMeasureAndViewBy = {
     measures: [ReferenceLdm.Amount],
@@ -56,6 +57,7 @@ export const BarChartViewByDateAndPop = {
 };
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],

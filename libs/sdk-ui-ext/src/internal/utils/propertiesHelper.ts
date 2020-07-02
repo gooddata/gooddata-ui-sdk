@@ -19,6 +19,7 @@ import { PROPERTY_CONTROLS, PROPERTY_CONTROLS_DUAL_AXIS } from "../constants/pro
 import { UICONFIG_AXIS } from "../constants/uiConfig";
 import { AxisType, IAxisNameProperties } from "../interfaces/AxisType";
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties";
+import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 export function getSupportedPropertiesControls(
     visualizationControlsProperties: any,
@@ -210,4 +211,10 @@ export function getHighchartsAxisNameConfiguration(
         ...controlProperties,
         ...axisProperties,
     };
+}
+
+export function getColumnWidthsFromProperties(
+    visualizationProperties: IVisualizationProperties,
+): ColumnWidthItem[] | undefined {
+    return get(visualizationProperties, "properties.controls.columnWidths");
 }

@@ -3,6 +3,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort } from "@gooddata/sdk-model";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const BulletChartWithAllMeasuresAndViewBy = {
     primaryMeasure: ReferenceLdm.Won,
@@ -19,6 +20,7 @@ export const BulletChartWithAllMeasuresAndTwoViewBy = {
 };
 
 export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("primary measure", {
         primaryMeasure: ReferenceLdm.Won,
     })

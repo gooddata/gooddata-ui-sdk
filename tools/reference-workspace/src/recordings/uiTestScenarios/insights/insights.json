@@ -44,6 +44,12 @@
         "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario AreaChart - arithmetic measures."
     },
+    "AreaChart.b56a230469ace5c0f2ae1d72da021510": {
+        "comment": "Auto-generated insight for test scenario AreaChart - Y axis configuration."
+    },
+    "AreaChart.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario AreaChart - coloring - custom palette."
+    },
     "AreaChart.906a11baa5260d55cdac1f7cc74cd9e8": {
         "comment": "Auto-generated insight for test scenario AreaChart - legend position - auto legend."
     },
@@ -76,12 +82,6 @@
     },
     "AreaChart.7a58e4d0caf0ad13518609485152ad4f": {
         "comment": "Auto-generated insight for test scenario AreaChart - data labels - forced hidden."
-    },
-    "AreaChart.bbb607434db20df6d945549e6a8d179f": {
-        "comment": "Auto-generated insight for test scenario AreaChart - coloring - custom palette."
-    },
-    "AreaChart.b56a230469ace5c0f2ae1d72da021510": {
-        "comment": "Auto-generated insight for test scenario AreaChart - Y axis configuration."
     },
     "AreaChart.8297094ac46c630dca34716c20586b41": {
         "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy and disabled stacking."
@@ -1100,6 +1100,18 @@
         "scenarioName": "measure, rows and columns with null data points",
         "comment": "Auto-generated insight for test scenario Heatmap - measure, rows and columns with null data points."
     },
+    "Heatmap.7de6ec4bf3a6f73cad225dfd988e1bc0": {
+        "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - low."
+    },
+    "Heatmap.a28b723104e27bf86e41728ff6673c10": {
+        "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - middle."
+    },
+    "Heatmap.6b4ad2cfa5231d33a72a6c873e893155": {
+        "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - high."
+    },
+    "Heatmap.cf4f75964c20716b4de5d9a0351e88c4": {
+        "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - invisible."
+    },
     "Heatmap.bbb607434db20df6d945549e6a8d179f": {
         "comment": "Auto-generated insight for test scenario Heatmap - coloring - custom palette."
     },
@@ -1138,18 +1150,6 @@
     },
     "Heatmap.7a58e4d0caf0ad13518609485152ad4f": {
         "comment": "Auto-generated insight for test scenario Heatmap - data labels - forced hidden."
-    },
-    "Heatmap.7de6ec4bf3a6f73cad225dfd988e1bc0": {
-        "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - low."
-    },
-    "Heatmap.a28b723104e27bf86e41728ff6673c10": {
-        "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - middle."
-    },
-    "Heatmap.6b4ad2cfa5231d33a72a6c873e893155": {
-        "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - high."
-    },
-    "Heatmap.cf4f75964c20716b4de5d9a0351e88c4": {
-        "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - invisible."
     },
     "LineChart.8ef289b689ae537d4e12f480fc195396": {
         "visName": "LineChart",
@@ -1600,6 +1600,24 @@
         "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario PivotTable - arithmetic measures."
     },
+    "PivotTable.89addccca9ff75372c7c96f204b1a8ff": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with column attributes only and auto-resizing."
+    },
+    "PivotTable.2100c9879d63f4dfde566dfcba836845": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with small page and auto-resizing."
+    },
+    "PivotTable.5d4cd99081a984d6d1031d222b54f0c8": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with two measures and row attribute with auto-resizing."
+    },
+    "PivotTable.5043da273d6a18586e091b20bc352c9a": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with two measures and row attribute with auto-resizing and grow to fit."
+    },
+    "PivotTable.21a05fbdbf1ae64d361d919a4d2151ad": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with two measures, grand totals and subtotals with auto-resizing."
+    },
+    "PivotTable.e91479d0c43cb3fb0e54c5288578e436": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with two measures, grand totals and subtotals with auto-resizing and grow to fit."
+    },
     "PivotTable.af59bb647cdd7534410d0b9efdd7cf2c": {
         "comment": "Auto-generated insight for test scenario PivotTable - german number format."
     },
@@ -1620,6 +1638,9 @@
     },
     "PivotTable.498779d190e344603ded6bd442111171": {
         "comment": "Auto-generated insight for test scenario PivotTable - totals and max height 300."
+    },
+    "PivotTable.96969ae2569b10b03e384552d886bad7": {
+        "comment": "Auto-generated insight for test scenario PivotTable - totals and max height 800."
     },
     "PivotTable.7496eaf1da1fbcc70c9dc481498dfc76": {
         "visName": "PivotTable",

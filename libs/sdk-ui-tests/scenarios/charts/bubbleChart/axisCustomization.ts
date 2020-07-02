@@ -4,8 +4,10 @@ import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import { BubbleChartWithAllMeasuresAndAttribute } from "./base";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const singleAxisNameConfig = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({
         groupUnder: "axis name customization",
         screenshotSize: { width: 800, height: 600 },
@@ -18,6 +20,7 @@ const singleAxisNameConfig = scenariosFor<IBubbleChartProps>("BubbleChart", Bubb
  *  shouldn't this be in all axis customizations stories for all charts?
  */
 const axisConfig = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("X axis min/max configuration", {

@@ -13,13 +13,16 @@ import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { Region } from "../../_infra/data";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", ColumnChartWithTwoMeasuresAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario(
         "assign color to measures",
@@ -39,7 +42,7 @@ const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnCha
                 ],
             },
         },
-        m =>
+        (m) =>
             m.withInsightConverter(
                 replaceMappingPredicates(
                     measureLocalId(ReferenceLdm.Amount),
@@ -61,7 +64,7 @@ const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnCha
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(measureLocalId(ReferenceLdm.Won))),
+        (m) => m.withInsightConverter(replaceMappingPredicates(measureLocalId(ReferenceLdm.Won))),
     )
     .addScenario(
         "assign color to attribute element stack",
@@ -81,7 +84,7 @@ const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnCha
                 ],
             },
         },
-        m => m.withInsightConverter(replaceMappingPredicates(Region.EastCoast, Region.WestCoast)),
+        (m) => m.withInsightConverter(replaceMappingPredicates(Region.EastCoast, Region.WestCoast)),
     );
 
 export default [colorsAndPalette, colorAssignment];

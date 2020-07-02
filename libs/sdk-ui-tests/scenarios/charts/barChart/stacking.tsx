@@ -9,8 +9,10 @@ import {
 } from "./base";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
+    .withGroupNames(ScenarioGroupNames.Stacking)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("two measures and two viewBy with stackMeasures", {

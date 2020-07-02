@@ -3,6 +3,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export type ComboChartTypes = "area" | "column" | "line";
 
@@ -40,6 +41,7 @@ export const ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy = {
 };
 
 export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("one primary measure", {
         primaryMeasures: [ReferenceLdm.Amount],
     })

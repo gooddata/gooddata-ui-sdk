@@ -39,6 +39,14 @@ export interface IResultMetaMethods {
     attributeDescriptors(): IAttributeDescriptor[];
 
     /**
+     * Returns attribute descriptors from particular dimension.
+     *
+     * @param dim - dimension index
+     * @returns attribute descriptors, empty if none or if no such dimension
+     */
+    attributeDescriptorsForDim(dim: number): IAttributeDescriptor[];
+
+    /**
      * @returns measure group descriptor, regardless of dimension in which it is located
      */
     measureGroupDescriptor(): IMeasureGroupDescriptor | undefined;
@@ -57,6 +65,13 @@ export interface IResultMetaMethods {
      * @returns undefined if no measure group header descriptor or no measure descriptor with the provided local identifier
      */
     measureDescriptor(localId: string): IMeasureDescriptor | undefined;
+
+    /**
+     * Tests whether there are any headers in the dimension with the provided index.
+     *
+     * @param dim - dimension index.
+     */
+    hasNoHeadersInDim(dim: number): boolean;
 
     /**
      * @returns all headers describing the data included in the data view
@@ -143,6 +158,10 @@ class ResultMetaMethods implements IResultMetaMethods {
         });
     }
 
+    public attributeDescriptorsForDim(dim: number): IAttributeDescriptor[] {
+        return (this.dataView.result.dimensions[dim]?.headers ?? []).filter(isAttributeDescriptor);
+    }
+
     public measureGroupDescriptor(): IMeasureGroupDescriptor | undefined {
         return this._measureGroupHeader;
     }
@@ -155,6 +174,10 @@ class ResultMetaMethods implements IResultMetaMethods {
 
     public measureDescriptor(localId: string): IMeasureDescriptor | undefined {
         return this._measureDescriptorByLocalId[localId];
+    }
+
+    public hasNoHeadersInDim(dim: number): boolean {
+        return this.dataView.headerItems[dim] && this.dataView.headerItems[dim].length === 0;
     }
 
     public allHeaders(): IResultHeader[][][] {

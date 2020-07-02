@@ -4,8 +4,10 @@ import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import { BulletChartWithAllMeasuresAndViewBy } from "./base";
+import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const singleAxisNameConfig = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({
         groupUnder: "axis name customization",
         screenshotSize: { width: 800, height: 600 },
@@ -18,6 +20,7 @@ const singleAxisNameConfig = scenariosFor<IBulletChartProps>("BulletChart", Bull
  *  shouldn't this be in all axis customizations stories for all charts?
  */
 const axisConfig = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+    .withGroupNames(...ScenarioGroupNames.Axes)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("X axis min/max configuration", {

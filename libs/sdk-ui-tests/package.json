@@ -33,10 +33,10 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check",
         "storybook": "npm run build && start-storybook -p 9001 -c .storybook",
         "build-storybook": "npm run build && build-storybook -c .storybook -o dist-storybook",
-        "backstop-test": "npm run build-storybook && npm run story-extractor && bash backstop/run-backstop.sh test",
-        "backstop-approve": "npm run story-extractor && bash backstop/run-backstop.sh approve",
-        "backstop-reference": "npm run build-storybook && npm run story-extractor && bash backstop/run-backstop.sh reference",
-        "backstop-reference-nobuild": "npm run story-extractor && bash backstop/run-backstop.sh reference"
+        "backstop-prepare": "npm run build-storybook && npm run story-extractor ",
+        "backstop-test": "npm run backstop-prepare && bash backstop/run-backstop.sh test",
+        "backstop-approve": "bash backstop/run-backstop.sh approve",
+        "backstop-reference": "backstop-prepare && bash backstop/run-backstop.sh reference"
     },
     "typings": "dist/index.d.ts",
     "dependencies": {
@@ -47,6 +47,7 @@
         "@babel/preset-react": "^7.7.2",
         "@babel/runtime": "^7.7.2",
         "@gooddata/numberjs": "^3.2.4",
+        "@gooddata/mock-handling": "8.0.0-beta.4",
         "@gooddata/reference-workspace": "^8.0.0-beta.4",
         "@gooddata/live-examples-workspace": "^8.0.0-beta.4",
         "@gooddata/sdk-backend-base": "^8.0.0-beta.4",

@@ -7,7 +7,9 @@
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { Identifier } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
+import { IMeasureLocatorItem } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -17,10 +19,46 @@ import { IVisualizationProps } from '@gooddata/sdk-ui';
 import * as React_2 from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
+// @public (undocumented)
+export type AbsoluteColumnWidth = number;
+
+// @public (undocumented)
+export type ColumnWidth = AbsoluteColumnWidth | "auto";
+
+// @public (undocumented)
+export type ColumnWidthItem = IAttributeColumnWidthItem | IAllMeasureColumnWidthItem | IMeasureColumnWidthItem;
+
 // Warning: (ae-internal-missing-underscore) The name "CorePivotTable" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
 export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
+
+// @public (undocumented)
+export type DefaultColumnWidth = "viewport" | "unset";
+
+// @public (undocumented)
+export interface IAllMeasureColumnWidthItem {
+    // (undocumented)
+    measureColumnWidthItem: {
+        width: AbsoluteColumnWidth;
+    };
+}
+
+// @public (undocumented)
+export interface IAttributeColumnWidthItem {
+    // (undocumented)
+    attributeColumnWidthItem: {
+        width: AbsoluteColumnWidth;
+        attributeIdentifier: Identifier;
+    };
+}
+
+// @public (undocumented)
+export interface IColumnSizing {
+    columnWidths?: ColumnWidthItem[];
+    defaultWidth?: DefaultColumnWidth;
+    growToFit?: boolean;
+}
 
 // Warning: (ae-internal-missing-underscore) The name "ICorePivotTableProps" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -28,6 +66,15 @@ export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
 export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedComponentProps {
     // (undocumented)
     execution: IPreparedExecution;
+}
+
+// @public (undocumented)
+export interface IMeasureColumnWidthItem {
+    // (undocumented)
+    measureColumnWidthItem: {
+        width: ColumnWidth;
+        locators: LocatorItem[];
+    };
 }
 
 // @public (undocumented)
@@ -40,6 +87,7 @@ export interface IMenu {
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     config?: IPivotTableConfig;
     groupRows?: boolean;
+    onColumnResized?: (columnWidths: ColumnWidthItem[]) => void;
     pageSize?: number;
 }
 
@@ -55,6 +103,7 @@ export interface IPivotTableBucketProps {
 
 // @public (undocumented)
 export interface IPivotTableConfig {
+    columnSizing?: IColumnSizing;
     maxHeight?: number;
     menu?: IMenu;
     separators?: ISeparators;
@@ -67,8 +116,27 @@ export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucke
 }
 
 // @public
+export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is AbsoluteColumnWidth;
+
+// @public (undocumented)
+export function isAllMeasureColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IAllMeasureColumnWidthItem;
+
+// @public (undocumented)
+export function isAttributeColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IAttributeColumnWidthItem;
+
+// @public
+export function isColumnWidthAuto(columnWidth: ColumnWidth): boolean;
+
+// @public (undocumented)
+export function isMeasureColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IMeasureColumnWidthItem;
+
+// @public
 export const PivotTable: React_2.ComponentType<IPivotTableProps>;
 
+
+// Warnings were encountered during analysis:
+//
+// dist/columnWidths.d.ts:41:9 - (ae-forgotten-export) The symbol "LocatorItem" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

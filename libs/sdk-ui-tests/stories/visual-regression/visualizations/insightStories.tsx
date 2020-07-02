@@ -18,11 +18,9 @@ import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 import { action } from "@storybook/addon-actions";
-import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { PlugVizStories } from "../_infra/storyGroups";
 import "./insightStories.css";
-import { IScenario, MapboxToken } from "../../../src";
+import { IScenario, MapboxToken, ScenarioGroup } from "../../../src";
 import AllTestScenarioGroups from "../../../scenarios";
 import {
     andResolver,
@@ -32,10 +30,12 @@ import {
 import { withScreenshot } from "../_infra/backstopWrapper";
 import { ConfigurationPanelWrapper } from "../_infra/ConfigurationPanelWrapper";
 import { StorybookBackend } from "../_infra/backend";
+import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
+import { storyGroupFor } from "./storyGroupFactory";
 import groupBy = require("lodash/groupBy");
 import keyBy = require("lodash/keyBy");
-import flatten = require("lodash/flatten");
-import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
+import sortBy = require("lodash/sortBy");
+import { PlugVizStories } from "../_infra/storyGroups";
 
 /*
  * Code in this file generates stories that render test scenarios using pluggable visualizations.
@@ -99,16 +99,12 @@ const Insights = [
     ...getAvailableInsights(ReferenceRecordings.Recordings),
     ...getAvailableInsights(ExamplesRecordings.Recordings),
 ];
-const InsightsByVisUrl = Object.entries(groupBy(Insights, insightVisualizationUrl));
+const InsightById = keyBy(Insights, insightId);
 
-//
-// Inspect test scenarios and key them by their corresponding insight ID
-//
-
-const AllTestScenarios: Array<IScenario<any>> = flatten<IScenario<any>>(
-    AllTestScenarioGroups.map((g) => g.forTestTypes("visual").scenarioList),
+const ScenarioGroupsByVis = sortBy(
+    Object.values(groupBy<ScenarioGroup<any>>(AllTestScenarioGroups, (g) => g.vis)),
+    (groups) => groups[0].vis,
 );
-const TestScenariosByInsightId = keyBy(AllTestScenarios, (scenario) => scenario.insightId);
 
 //
 // Story creation
@@ -231,24 +227,30 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
     };
 }
 
-InsightsByVisUrl.forEach(([visUrl, insights]) => {
-    const plugVizStories = storiesOf(`${PlugVizStories}/${visUrl}`, module);
+ScenarioGroupsByVis.forEach((groups) => {
+    /*
+     * Sort groups; the order in which stories for the group are created is important as that is the order
+     * in which the groups appear in storybook.
+     */
+    const sortedGroups = sortBy(groups, (g) => g.groupNames.join("/"));
 
-    insights.forEach((insight: IInsight) => {
-        const testScenario = TestScenariosByInsightId[insightId(insight)];
+    for (const group of sortedGroups) {
+        const storiesForChart = storyGroupFor(PlugVizStories, group);
+        const visualOnly: ScenarioGroup<any> = group.forTestTypes("visual");
 
-        if (!testScenario) {
-            // tslint:disable-next-line:no-console
-            console.warn(
-                `Ignoring insight ${insightId(insight)} (${insightTitle(
-                    insight,
-                )}})} as there is no test scenario defined for the insight with this ID. `,
-            );
+        visualOnly.scenarioList.forEach((scenario) => {
+            const insight = InsightById[scenario.insightId];
 
-            // do nothing if insight does not correspond to test scenario
-            return;
-        }
+            if (!insight) {
+                // tslint:disable-next-line:no-console
+                console.warn(
+                    `Ignoring test scenario for ${scenario.vis}: ${scenario.name} - insight does not exist.`,
+                );
 
-        plugVizStories.add(insightTitle(insight), plugVizStory(insight, testScenario));
-    });
+                return;
+            }
+
+            storiesForChart.add(scenario.name, plugVizStory(insight, scenario));
+        });
+    }
 });
