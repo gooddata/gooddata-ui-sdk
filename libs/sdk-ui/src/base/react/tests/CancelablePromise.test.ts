@@ -18,7 +18,7 @@ describe("CancelablePromise", () => {
         }
 
         expect(error).toBeInstanceOf(CancelError);
-        expect(error!.message).toBe(CANCEL_REASON);
+        expect(error!.getReason()).toBe(CANCEL_REASON);
     });
 
     it("should return original promise result when cancel was invoked after promise resolution", async () => {

@@ -7,6 +7,7 @@ import {
 import * as HttpStatusCodes from "http-status-codes";
 import { IntlShape } from "react-intl";
 import { ErrorCodes, GoodDataSdkError, isGoodDataSdkError } from "./GoodDataSdkError";
+import { isCancelError } from "../react/CancelablePromise";
 
 /**
  * Mapping between error code and human readable description of the error.
@@ -99,6 +100,8 @@ export function convertError(error: any): GoodDataSdkError {
             default:
                 return new GoodDataSdkError(ErrorCodes.UNKNOWN_ERROR, error);
         }
+    } else if (isCancelError(error)) {
+        return new GoodDataSdkError(ErrorCodes.CANCELLED, error);
     }
 
     return new GoodDataSdkError(ErrorCodes.UNKNOWN_ERROR, error);
