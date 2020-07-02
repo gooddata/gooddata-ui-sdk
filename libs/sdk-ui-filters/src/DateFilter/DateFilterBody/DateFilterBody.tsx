@@ -115,66 +115,68 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         }
 
         return (
-            <div
-                className={cx(
-                    "gd-extended-date-filter-body",
-                    "s-extended-date-filters-body",
-                    isMobile && "gd-extended-date-filter-body-mobile",
-                )}
-            >
-                {route === null && isMobile && (
-                    <div
-                        // tslint:disable-next-line:jsx-no-lambda
-                        onClick={() => {
-                            onCancelClick();
-                            closeDropdown();
-                        }}
-                    >
-                        {dateFilterButton}
-                    </div>
-                )}
+            <div className="gd-extended-date-filter-container">
                 <div
-                    className={cx("gd-extended-date-filter-body-wrapper", {
-                        "gd-extended-date-filter-body-wrapper-wide": isRelativeDateFilterForm(
-                            selectedFilterOption,
-                        ),
-                    })}
-                    style={wrapperStyle}
-                >
-                    {isEditMode && !isMobile && <EditModeMessage />}
-                    {isMobile ? (
-                        this.renderMobileContent()
-                    ) : (
-                        <VisibleScrollbar
-                            className="gd-extended-date-filter-body-scrollable"
-                            style={scrollerStyle}
-                        >
-                            {this.renderDefaultContent()}
-                        </VisibleScrollbar>
+                    className={cx(
+                        "gd-extended-date-filter-body",
+                        "s-extended-date-filters-body",
+                        isMobile && "gd-extended-date-filter-body-mobile",
                     )}
-                </div>
-                {showExcludeCurrent ? this.renderExcludeCurrent() : null}
-                <div className={cx("gd-extended-date-filter-actions")}>
-                    <div className="gd-extended-date-filter-actions-buttons">
-                        <DateFilterBodyButton
-                            messageId="cancel"
-                            className="gd-button-secondary s-date-filter-cancel"
+                >
+                    {route === null && isMobile && (
+                        <div
                             // tslint:disable-next-line:jsx-no-lambda
                             onClick={() => {
                                 onCancelClick();
                                 closeDropdown();
                             }}
-                        />
-                        <DateFilterBodyButton
-                            messageId="apply"
-                            className="gd-button-action s-date-filter-apply"
-                            disabled={!isEmpty(errors)}
-                            // tslint:disable-next-line:jsx-no-lambda
-                            onClick={() => {
-                                onApplyClick();
-                                closeDropdown();
-                            }}
-                        />
+                        >
+                            {dateFilterButton}
+                        </div>
+                    )}
+                    <div
+                        className={cx("gd-extended-date-filter-body-wrapper", {
+                            "gd-extended-date-filter-body-wrapper-wide": isRelativeDateFilterForm(
+                                selectedFilterOption,
+                            ),
+                        })}
+                        style={wrapperStyle}
+                    >
+                        {isEditMode && !isMobile && <EditModeMessage />}
+                        {isMobile ? (
+                            this.renderMobileContent()
+                        ) : (
+                            <VisibleScrollbar
+                                className="gd-extended-date-filter-body-scrollable"
+                                style={scrollerStyle}
+                            >
+                                {this.renderDefaultContent()}
+                            </VisibleScrollbar>
+                        )}
+                    </div>
+                    {showExcludeCurrent ? this.renderExcludeCurrent() : null}
+                    <div className={cx("gd-extended-date-filter-actions")}>
+                        <div className="gd-extended-date-filter-actions-buttons">
+                            <DateFilterBodyButton
+                                messageId="cancel"
+                                className="gd-button-secondary s-date-filter-cancel"
+                                // tslint:disable-next-line:jsx-no-lambda
+                                onClick={() => {
+                                    onCancelClick();
+                                    closeDropdown();
+                                }}
+                            />
+                            <DateFilterBodyButton
+                                messageId="apply"
+                                className="gd-button-action s-date-filter-apply"
+                                disabled={!isEmpty(errors)}
+                                // tslint:disable-next-line:jsx-no-lambda
+                                onClick={() => {
+                                    onApplyClick();
+                                    closeDropdown();
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 @import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
 @import "~@gooddata/goodstrap/lib/Button/styles/variables.scss";
+
+.gd-extended-date-filter-container {
+    display: flex;
+    flex: 1 1 auto;
+}
 
 .gd-extended-date-filter {
     &-body {
