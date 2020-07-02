@@ -7,6 +7,7 @@ import DisabledBubbleMessage from "../DisabledBubbleMessage";
 import { getTranslation } from "../../utils/translations";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
 import { IDropdownItem } from "../../interfaces/Dropdown";
+import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 
 export interface IDropdownControlProps {
@@ -78,7 +79,11 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
 
     private onSelect(selectedItem: IDropdownItem) {
         const { valuePath, properties, pushData } = this.props;
-        const newProperties = set(properties, `controls.${valuePath}`, selectedItem.value);
+
+        // we must not change the properties at any cost, so deep clone for now.
+        // ideally we should use st. like immer with copy on write to not clone everything all the time
+        const newProperties = cloneDeep(properties);
+        set(newProperties, `controls.${valuePath}`, selectedItem.value);
 
         pushData({ properties: newProperties });
     }

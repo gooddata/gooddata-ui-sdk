@@ -125,12 +125,12 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const sizeMeasures: IBucketItem[] = (primaryMeasures.length > 0
             ? primaryMeasures
             : allMeasures.filter((measure: IBucketItem): boolean => !includes(secondaryMeasures, measure))
-        ).slice(0, this.getPreferedBucketItemLimit(BucketNames.SIZE));
+        ).slice(0, this.getPreferredBucketItemLimit(BucketNames.SIZE));
 
         const colorMeasures: IBucketItem[] = (secondaryMeasures.length > 0
             ? secondaryMeasures
             : allMeasures.filter((measure: IBucketItem): boolean => !includes(sizeMeasures, measure))
-        ).slice(0, this.getPreferedBucketItemLimit(BucketNames.COLOR));
+        ).slice(0, this.getPreferredBucketItemLimit(BucketNames.COLOR));
 
         set(newExtendedReferencePoint, BUCKETS, [
             {
@@ -327,7 +327,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                 .filter((attribute: IBucketItem): boolean => !isDateBucketItem(attribute))
                 .slice(0, 1);
         }
-        return segments.slice(0, this.getPreferedBucketItemLimit(BucketNames.SEGMENT));
+        return segments.slice(0, this.getPreferredBucketItemLimit(BucketNames.SEGMENT));
     }
 
     private getLocationItems(buckets: IBucketOfFun[]): IBucketItem[] {
@@ -337,10 +337,10 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             [ATTRIBUTE],
         ).filter((bucketItem: IBucketItem): boolean => Boolean(bucketItem.locationDisplayFormRef));
 
-        return locationItems.slice(0, this.getPreferedBucketItemLimit(BucketNames.LOCATION));
+        return locationItems.slice(0, this.getPreferredBucketItemLimit(BucketNames.LOCATION));
     }
 
-    private getPreferedBucketItemLimit(preferredBucket: string): number {
+    private getPreferredBucketItemLimit(preferredBucket: string): number {
         const { buckets: bucketsUiConfig } = this.getUiConfig();
         return bucketsUiConfig[preferredBucket].itemsLimit;
     }
