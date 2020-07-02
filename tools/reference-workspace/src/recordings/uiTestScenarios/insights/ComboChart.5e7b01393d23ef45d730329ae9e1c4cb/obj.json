@@ -1,9 +1,9 @@
 {
     "insight": {
-        "identifier": "ComboChart.a2a9cf4ae90d0382a84ffb90a1a10eb2",
-        "uri": "ComboChart.a2a9cf4ae90d0382a84ffb90a1a10eb2",
+        "identifier": "ComboChart.5e7b01393d23ef45d730329ae9e1c4cb",
+        "uri": "ComboChart.5e7b01393d23ef45d730329ae9e1c4cb",
         "visualizationUrl": "local:combo2",
-        "title": "ComboChart - dual axis two measures with slicingarea-area",
+        "title": "ComboChart - dual axis two measures without slicingline-column",
         "buckets": [
             {
                 "localIdentifier": "measures",
@@ -41,17 +41,7 @@
             },
             {
                 "localIdentifier": "view",
-                "items": [
-                    {
-                        "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
-                            "localIdentifier": "a_label.product.id.name"
-                        }
-                    }
-                ]
+                "items": []
             }
         ],
         "filters": [],
@@ -59,8 +49,8 @@
         "properties": {
             "properties": {
                 "controls": {
-                    "primaryChartType": "area",
-                    "secondaryChartType": "area"
+                    "primaryChartType": "line",
+                    "secondaryChartType": "column"
                 }
             }
         }

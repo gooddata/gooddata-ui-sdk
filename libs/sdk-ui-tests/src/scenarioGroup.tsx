@@ -16,6 +16,7 @@ import {
 } from "./scenario";
 import intersection = require("lodash/intersection");
 import identity = require("lodash/identity");
+import cloneDeep = require("lodash/cloneDeep");
 
 //
 // Scenario groups
@@ -189,6 +190,29 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     }
 
     /**
+     * Given another scenario group, this method will take all the scenarios from the other group and add
+     * them into this group. The scenario customizer & scenario modifications will be applied for each scenario.
+     *
+     * This can be used to copy & modify scenarios, or to multiply scenarios for different variants. All depends
+     * on the implementation of the customizer function.
+     *
+     * @param fromGroup
+     * @param customizer
+     * @param m
+     */
+    public addCustomizedScenarios(
+        fromGroup: ScenarioGroup<T>,
+        customizer: ScenarioCustomizer<T> = copyCustomizer,
+        m: ScenarioModification<T> = identity,
+    ): ScenarioGroup<T> {
+        fromGroup.scenarioList.forEach((scenario) => {
+            this.addScenarios(scenario.name, scenario.props, customizer, m);
+        });
+
+        return this;
+    }
+
+    /**
      * Filters scenarios by types of tests that should be run on top of them. This is immutable, the original
      * instance is left unfiltered and a copy of filtered scenarios is returned.
      *
@@ -304,3 +328,32 @@ export type ScenarioCustomizer<T extends VisProps> = (
     baseTags: ScenarioTag[],
 ) => Array<CustomizedScenario<T>>;
 export type CustomizedScenario<T extends VisProps> = [string, UnboundVisProps<T>, ScenarioTag[]?];
+
+/**
+ * Scenario customer that only creates a new copy of the input scenario.
+ *
+ * @param baseName - input scenario base name, will be kept as is
+ * @param baseProps - input scenario props, will be copied
+ * @param baseTags - input scenario base tags, will be copied
+ */
+export function copyCustomizer<T extends VisProps>(
+    baseName: string,
+    baseProps: UnboundVisProps<T>,
+    baseTags: ScenarioTag[],
+): Array<CustomizedScenario<T>> {
+    return [[baseName, cloneDeep(baseProps), cloneDeep(baseTags)]];
+}
+
+/**
+ * Creates scenario customizer, which will create 1-1 new scenario with same name and modified props
+ *
+ * @param modify - props modification function, this will receive deep copy of the original props, it is
+ *  thus no problem to mutate the props if that is simpler
+ */
+export function copyWithModifiedProps<T extends VisProps>(
+    modify: (props: UnboundVisProps<T>) => UnboundVisProps<T>,
+): ScenarioCustomizer<T> {
+    return (baseName: string, baseProps: UnboundVisProps<T>, baseTags: ScenarioTag[]) => {
+        return [[baseName, modify(cloneDeep(baseProps)), cloneDeep(baseTags)]];
+    };
+}

@@ -1691,5 +1691,68 @@
         "visName": "PivotTable",
         "scenarioName": "two measures and grand totals and multiple subtotals",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and grand totals and multiple subtotals."
+    },
+    "ComboChart.aa333547d80e1b34308652338615d3a2": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingcolumn-column."
+    },
+    "ComboChart.c23b5410b2f89c587e6234d945e95627": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingarea-area."
+    },
+    "ComboChart.6a9aaea8505ac3f2733294dff453d539": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingline-line."
+    },
+    "ComboChart.1717afe4addca9ee038f3027c49c531e": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingcolumn-line."
+    },
+    "ComboChart.5e7b01393d23ef45d730329ae9e1c4cb": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingline-column."
+    },
+    "ComboChart.28c8a8febf0c03b04e7d44d8167928cd": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingcolumn-area."
+    },
+    "ComboChart.6ab53ebb1124a6eeee0d62ba92d1e79d": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingarea-column."
+    },
+    "ComboChart.085b1d38ac175cfc03e2d552687f84b1": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingline-area."
+    },
+    "ComboChart.dd15b0e76d01ce1d3a52e2424ccb9d37": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingarea-line."
+    },
+    "ComboChart.bd3582cd61d9ce7f163785ee554eee67": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingcolumn-column."
+    },
+    "ComboChart.64b8ea9131448d8f64f76c60b57b8210": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingarea-area."
+    },
+    "ComboChart.f106ed8254c9032d6c80d4029ff03043": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingline-line."
+    },
+    "ComboChart.364e915ac7483fc7404e508da3cd24e1": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingcolumn-line."
+    },
+    "ComboChart.bb14d9facd93278780166b703f50df07": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingline-column."
+    },
+    "ComboChart.4f1c22bd93cd3b6f66e3743fd799ae8c": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingcolumn-area."
+    },
+    "ComboChart.0fdcc9d41dbd7cfc2b96841f398a5003": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingarea-column."
+    },
+    "ComboChart.d4adb8eb341c892358802111ea280c00": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingline-area."
+    },
+    "ComboChart.2eb8cf824b7d8b1f53f2b46d7c6a50b1": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures with slicingarea-line."
+    },
+    "PivotTable.1acf1c002e4fd0750b731b04be9e93e1": {
+        "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom attribute column size."
+    },
+    "PivotTable.fb09ab6d64a17b1d4af4292f79ddd50f": {
+        "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom metric column size."
+    },
+    "PivotTable.124dace1aa259c5414635dba1686c069": {
+        "comment": "Auto-generated insight for test scenario PivotTable - simple table with attribute and metric column size."
     }
 }

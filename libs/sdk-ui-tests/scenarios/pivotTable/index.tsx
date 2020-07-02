@@ -2,8 +2,9 @@
 
 import base from "./base";
 import autoresize from "./autoresize";
+import manualSizing from "./manualSizing";
 import customization from "./customization";
 import sorting from "./sorting";
 import totals from "./totals";
 
-export default [base, autoresize, customization, sorting, totals];
+export default [base, autoresize, ...manualSizing, customization, sorting, totals];

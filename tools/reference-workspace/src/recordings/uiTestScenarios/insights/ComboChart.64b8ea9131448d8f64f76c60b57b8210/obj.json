@@ -1,9 +1,9 @@
 {
     "insight": {
-        "identifier": "ComboChart.a2a9cf4ae90d0382a84ffb90a1a10eb2",
-        "uri": "ComboChart.a2a9cf4ae90d0382a84ffb90a1a10eb2",
+        "identifier": "ComboChart.64b8ea9131448d8f64f76c60b57b8210",
+        "uri": "ComboChart.64b8ea9131448d8f64f76c60b57b8210",
         "visualizationUrl": "local:combo2",
-        "title": "ComboChart - dual axis two measures with slicingarea-area",
+        "title": "ComboChart - dual axis multiple measures with slicingarea-area",
         "buckets": [
             {
                 "localIdentifier": "measures",
@@ -19,12 +19,7 @@
                                 }
                             }
                         }
-                    }
-                ]
-            },
-            {
-                "localIdentifier": "secondary_measures",
-                "items": [
+                    },
                     {
                         "measure": {
                             "localIdentifier": "m_acugFHNJgsBy",
@@ -33,6 +28,38 @@
                                     "item": {
                                         "identifier": "acugFHNJgsBy"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                            "alias": "Calculated 'Lost' measure",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+                            "alias": "Ratio of Won and Lost",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": [
+                                        "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                                        "m_acugFHNJgsBy"
+                                    ],
+                                    "operator": "ratio"
                                 }
                             }
                         }
