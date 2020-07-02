@@ -396,6 +396,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     public componentWillUnmount() {
         this.unmounted = true;
+
+        this.cleanupNonReactState();
     }
 
     public componentDidUpdate(prevProps: ICorePivotTableProps) {
@@ -703,13 +705,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private shouldPerformAutoresize() {
-        const tableIsNotScrolled = () => {
-            const horizontalPixelRange = this.gridApi.getHorizontalPixelRange();
-            const verticalPixelRange = this.gridApi.getVerticalPixelRange();
-            return horizontalPixelRange.left === 0 && verticalPixelRange.top === 0;
-        };
+        const horizontalPixelRange = this.gridApi.getHorizontalPixelRange();
+        const verticalPixelRange = this.gridApi.getVerticalPixelRange();
 
-        return tableIsNotScrolled();
+        return horizontalPixelRange.left === 0 && verticalPixelRange.top === 0;
     }
 
     private autoresizeColumns = async (

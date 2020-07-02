@@ -27,13 +27,13 @@ const matchesMeasureColumnWidthItemFilters = (
     widthItem: IMeasureColumnWidthItem,
     filters: IBucketFilter[],
 ): boolean =>
-    filters.reduce((isMatching, filter) => {
+    filters.every((filter) => {
         if (isAttributeFilter(filter)) {
             const shouldBeMatched = !filter.isInverted;
-            return isMatching && shouldBeMatched === isMeasureWidthItemMatchedByFilter(widthItem, filter);
+            return shouldBeMatched === isMeasureWidthItemMatchedByFilter(widthItem, filter);
         }
-        return isMatching;
-    }, true);
+        return true;
+    });
 
 const matchesWidthItemFilters = (widthItem: ColumnWidthItem, filters: IBucketFilter[]): boolean => {
     if (isMeasureColumnWidthItem(widthItem)) {

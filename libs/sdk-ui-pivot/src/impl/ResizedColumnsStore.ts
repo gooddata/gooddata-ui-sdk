@@ -2,6 +2,7 @@
 // tslint:disable:prefer-conditional-expression
 import { ColDef, Column } from "@ag-grid-community/all-modules";
 import omit = require("lodash/omit");
+import partition = require("lodash/partition");
 
 import { getColumnIdentifier, isMeasureColumn } from "./agGridUtils";
 import {
@@ -114,7 +115,7 @@ export class ResizedColumnsStore {
     }
 
     public updateColumnWidths(columnWidths: ColumnWidthItem[], dv: DataViewFacade) {
-        const [allMeasureColumnWidthItems, columnWidthItems] = this.partition(columnWidths, (item) =>
+        const [allMeasureColumnWidthItems, columnWidthItems] = partition(columnWidths, (item) =>
             isAllMeasureColumnWidthItem(item),
         );
 
@@ -129,22 +130,6 @@ export class ResizedColumnsStore {
 
         const columnWidthsByField = convertColumnWidthsToMap(columnWidthItems, dv);
         this.manuallyResizedColumns = columnWidthsByField;
-    }
-
-    private partition(
-        array: ColumnWidthItem[],
-        isValid: (elem: ColumnWidthItem) => boolean,
-    ): [ColumnWidthItem[], ColumnWidthItem[]] {
-        if (!array) {
-            return [[], []];
-        }
-
-        return array.reduce<[ColumnWidthItem[], ColumnWidthItem[]]>(
-            ([pass, fail], elem) => {
-                return isValid(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]];
-            },
-            [[], []],
-        );
     }
 
     private convertItem(item: IResizedColumnsCollectionItem): IResizedColumnsItem {

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import base from "./base";
-import autoresize from "./autosize";
+import autoresize from "./autoresize";
 import customization from "./customization";
 import sorting from "./sorting";
 import totals from "./totals";
