@@ -1,0 +1,69 @@
+{
+    "insight": {
+        "identifier": "GeoPushpinChart.5d8117bcf1f01b69048af8e16a0b7bba",
+        "uri": "GeoPushpinChart.5d8117bcf1f01b69048af8e16a0b7bba",
+        "visualizationUrl": "local:pushpin",
+        "title": "GeoPushpinChart - location, segment and color",
+        "buckets": [
+            {
+                "localIdentifier": "size",
+                "items": []
+            },
+            {
+                "localIdentifier": "color",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "fact.uscities.density"
+                                    },
+                                    "aggregation": "sum"
+                                }
+                            },
+                            "format": "#,##0.00",
+                            "alias": "Density"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "location",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.city.location",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.uscities.city.location"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.state_name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.uscities.state_name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

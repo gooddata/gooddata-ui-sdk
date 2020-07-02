@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "identifier": "ComboChart.996370eddd93b95e337418ef56336b46",
+        "uri": "ComboChart.996370eddd93b95e337418ef56336b46",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - dual axis two measures without slicingline-column",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "primaryChartType": "line",
+                    "secondaryChartType": "column"
+                }
+            }
+        }
+    }
+}

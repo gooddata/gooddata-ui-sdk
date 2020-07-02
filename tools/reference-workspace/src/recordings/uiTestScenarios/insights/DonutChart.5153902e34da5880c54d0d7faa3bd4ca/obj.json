@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "identifier": "DonutChart.5153902e34da5880c54d0d7faa3bd4ca",
+        "uri": "DonutChart.5153902e34da5880c54d0d7faa3bd4ca",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - two measures",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

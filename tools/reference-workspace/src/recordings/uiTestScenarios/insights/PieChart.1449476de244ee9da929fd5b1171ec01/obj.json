@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "identifier": "PieChart.1449476de244ee9da929fd5b1171ec01",
+        "uri": "PieChart.1449476de244ee9da929fd5b1171ec01",
+        "visualizationUrl": "local:pie",
+        "title": "PieChart - two measures",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,83 @@
+{
+    "insight": {
+        "identifier": "PivotTable.42bc5c37bcd179c07efd2312b65e4552",
+        "uri": "PivotTable.42bc5c37bcd179c07efd2312b65e4552",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - simple table with custom metric column size",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "columns",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "columnSizing": {
+                        "columnWidths": [
+                            {
+                                "measureColumnWidthItem": {
+                                    "width": 60,
+                                    "locators": [
+                                        {
+                                            "measureLocatorItem": {
+                                                "measureIdentifier": "m_aangOxLSeztu"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                        "defaultWidth": "unset",
+                        "growToFit": false
+                    }
+                }
+            }
+        }
+    }
+}

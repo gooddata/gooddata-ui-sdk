@@ -125,7 +125,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
 
         invariant(!exists, `contract "${name}" for ${this.vis} already exists`);
 
-        const builder = new ScenarioBuilder<T>(this.vis, this.component, name, props);
+        const builder = new ScenarioBuilder<T>(this.vis, this.component, name, props, this.groupNames);
         builder.withTags(...this.defaultTags);
         builder.withTests(...this.defaultTestTypes);
         builder.withWorkspaceType(this.defaultWorkspaceType);

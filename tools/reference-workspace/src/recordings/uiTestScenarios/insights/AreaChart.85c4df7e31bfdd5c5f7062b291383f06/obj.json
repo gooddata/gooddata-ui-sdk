@@ -1,0 +1,77 @@
+{
+    "insight": {
+        "identifier": "AreaChart.85c4df7e31bfdd5c5f7062b291383f06",
+        "uri": "AreaChart.85c4df7e31bfdd5c5f7062b291383f06",
+        "visualizationUrl": "local:area",
+        "title": "AreaChart - two measures with viewBy sorted by measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [
+            {
+                "measureSortItem": {
+                    "direction": "asc",
+                    "locators": [
+                        {
+                            "measureLocatorItem": {
+                                "measureIdentifier": "m_acugFHNJgsBy"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

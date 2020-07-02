@@ -1,0 +1,42 @@
+{
+    "insight": {
+        "identifier": "ColumnChart.08e4e6e427792d7c3626512d4c38e4cc",
+        "uri": "ColumnChart.08e4e6e427792d7c3626512d4c38e4cc",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - single measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

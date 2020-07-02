@@ -1,0 +1,59 @@
+{
+    "insight": {
+        "identifier": "GeoPushpinChart.f884b3e4f2b5f99801a54c39c06e4a4f",
+        "uri": "GeoPushpinChart.f884b3e4f2b5f99801a54c39c06e4a4f",
+        "visualizationUrl": "local:pushpin",
+        "title": "GeoPushpinChart - location only with tooltip",
+        "buckets": [
+            {
+                "localIdentifier": "size",
+                "items": []
+            },
+            {
+                "localIdentifier": "color",
+                "items": []
+            },
+            {
+                "localIdentifier": "location",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.city.location",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.uscities.city.location"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            },
+            {
+                "localIdentifier": "tooltipText",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.city",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "tooltipText_df"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "tooltipText": "label.uscities.city"
+                }
+            }
+        }
+    }
+}

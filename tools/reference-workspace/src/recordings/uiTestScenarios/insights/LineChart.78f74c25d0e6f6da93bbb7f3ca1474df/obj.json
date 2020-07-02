@@ -1,0 +1,68 @@
+{
+    "insight": {
+        "identifier": "LineChart.78f74c25d0e6f6da93bbb7f3ca1474df",
+        "uri": "LineChart.78f74c25d0e6f6da93bbb7f3ca1474df",
+        "visualizationUrl": "local:line",
+        "title": "LineChart - data labels - forced visible and german separators",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "trend",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_created.aci81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "dataLabels": {
+                        "visible": true
+                    }
+                }
+            }
+        }
+    }
+}

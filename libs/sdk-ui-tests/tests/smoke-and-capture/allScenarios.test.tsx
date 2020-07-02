@@ -17,7 +17,7 @@ import { storeDirectoryFor } from "./store";
 import { readJsonSync, writeAsJsonSync } from "./utils";
 import { DataViewRequests, RecordingFiles, ScenarioDescriptor } from "@gooddata/mock-handling";
 
-type AllScenariosType = [string, string, IScenario<any>];
+type AllScenariosType = [string, IScenario<any>];
 
 function scenarioSaveDataCaptureRequests(
     scenario: IScenario<any>,
@@ -247,11 +247,11 @@ describe("all scenarios", () => {
         const testInputs: Array<IScenario<any>> = s.asScenarioList();
 
         return testInputs.map((t) => {
-            return [t.vis, t.name, t];
+            return [t.fullyQualifiedName, t];
         });
     });
 
-    it.each(Scenarios)("%s %s should lead to execution", async (vis, scenarioName, scenario) => {
+    it.each(Scenarios)("%s should lead to execution", async (_scenarioFqn, scenario) => {
         const interactions = await mountChartAndCaptureNormalized(scenario);
 
         expect(interactions.triggeredExecution).toBeDefined();
@@ -262,12 +262,12 @@ describe("all scenarios", () => {
             interactions.dataViewRequests.allData === undefined
         ) {
             fail(
-                `Mounting ${vis} for scenario ${scenarioName} did not lead to request of data from server. The smoke-and-capture suite now does not know what to store in the recording definition as it is unclear if the scenario needs all data or some particular window of data.`,
+                `Mounting ${scenario.vis} for scenario ${scenario.name} did not lead to request of data from server. The smoke-and-capture suite now does not know what to store in the recording definition as it is unclear if the scenario needs all data or some particular window of data.`,
             );
             return;
         }
 
-        if (scenario.tags.includes("mock-no-insight") || PlugVisUnsupported.indexOf(vis) >= 0) {
+        if (scenario.tags.includes("mock-no-insight") || PlugVisUnsupported.indexOf(scenario.vis) >= 0) {
             /*
              * Some visualizations may not support plug vis yet. For those, just store scenario
              * definition and halt.
@@ -278,7 +278,7 @@ describe("all scenarios", () => {
              * For others, create insight object, try to mount pluggable visualization for
              * the respective visualization, capture execution definition and store everything.
              */
-            const insight = createInsightDefinitionForChart(vis, scenarioName, interactions);
+            const insight = createInsightDefinitionForChart(scenario.vis, scenario.name, interactions);
 
             /*
              * note: to allow PV executions and react component executions to hit the same fingerprints, this function

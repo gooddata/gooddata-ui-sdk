@@ -1,0 +1,42 @@
+{
+    "insight": {
+        "identifier": "Treemap.eb6fa806d3f977e0a1431a0e08496c8b",
+        "uri": "Treemap.eb6fa806d3f977e0a1431a0e08496c8b",
+        "visualizationUrl": "local:treemap",
+        "title": "Treemap - single measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

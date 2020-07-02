@@ -1,0 +1,52 @@
+{
+    "insight": {
+        "identifier": "DonutChart.00a15865c54d1c42c7fd63cf140e0e7a",
+        "uri": "DonutChart.00a15865c54d1c42c7fd63cf140e0e7a",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - legend position - single measure and viewBy - disabled",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "legend": {
+                        "enabled": false
+                    }
+                }
+            }
+        }
+    }
+}

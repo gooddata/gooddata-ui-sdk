@@ -1,0 +1,38 @@
+{
+    "insight": {
+        "identifier": "FunnelChart.c8c4bd66f9a92aefb66ed4231721d190",
+        "uri": "FunnelChart.c8c4bd66f9a92aefb66ed4231721d190",
+        "visualizationUrl": "local:funnel",
+        "title": "FunnelChart - single measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

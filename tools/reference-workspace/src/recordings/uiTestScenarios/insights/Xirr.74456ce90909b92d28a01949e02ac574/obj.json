@@ -1,0 +1,38 @@
+{
+    "insight": {
+        "identifier": "Xirr.74456ce90909b92d28a01949e02ac574",
+        "uri": "Xirr.74456ce90909b92d28a01949e02ac574",
+        "visualizationUrl": "local:xirr",
+        "title": "Xirr - only measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aadpHDMBecIy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aadpHDMBecIy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

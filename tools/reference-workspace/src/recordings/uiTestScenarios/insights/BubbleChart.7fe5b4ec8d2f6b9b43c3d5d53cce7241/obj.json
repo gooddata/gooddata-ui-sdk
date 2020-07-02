@@ -1,0 +1,69 @@
+{
+    "insight": {
+        "identifier": "BubbleChart.7fe5b4ec8d2f6b9b43c3d5d53cce7241",
+        "uri": "BubbleChart.7fe5b4ec8d2f6b9b43c3d5d53cce7241",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - x axis and size measures with viewBy",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "tertiary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_abEgMnq5hyJQ",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

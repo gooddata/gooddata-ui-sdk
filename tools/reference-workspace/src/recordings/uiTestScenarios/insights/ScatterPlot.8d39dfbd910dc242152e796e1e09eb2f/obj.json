@@ -1,0 +1,72 @@
+{
+    "insight": {
+        "identifier": "ScatterPlot.8d39dfbd910dc242152e796e1e09eb2f",
+        "uri": "ScatterPlot.8d39dfbd910dc242152e796e1e09eb2f",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot - x and y axis measures and attribute with attr sorting",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "desc"
+                }
+            }
+        ],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

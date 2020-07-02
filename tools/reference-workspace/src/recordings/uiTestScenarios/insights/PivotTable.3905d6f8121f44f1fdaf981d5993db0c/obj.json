@@ -1,0 +1,54 @@
+{
+    "insight": {
+        "identifier": "PivotTable.3905d6f8121f44f1fdaf981d5993db0c",
+        "uri": "PivotTable.3905d6f8121f44f1fdaf981d5993db0c",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - two measures",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            },
+            {
+                "localIdentifier": "columns",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

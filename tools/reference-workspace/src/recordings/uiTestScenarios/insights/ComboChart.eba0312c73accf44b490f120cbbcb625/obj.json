@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "identifier": "ComboChart.eba0312c73accf44b490f120cbbcb625",
+        "uri": "ComboChart.eba0312c73accf44b490f120cbbcb625",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - dual axis two measures without slicingcolumn-area",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "primaryChartType": "column",
+                    "secondaryChartType": "area"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "insight": {
+        "identifier": "ScatterPlot.1e8ea5cd5007cf4882be17f68da9b629",
+        "uri": "ScatterPlot.1e8ea5cd5007cf4882be17f68da9b629",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot - x axis measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

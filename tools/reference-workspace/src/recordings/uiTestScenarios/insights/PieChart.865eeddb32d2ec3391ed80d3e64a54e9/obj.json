@@ -1,0 +1,38 @@
+{
+    "insight": {
+        "identifier": "PieChart.865eeddb32d2ec3391ed80d3e64a54e9",
+        "uri": "PieChart.865eeddb32d2ec3391ed80d3e64a54e9",
+        "visualizationUrl": "local:pie",
+        "title": "PieChart - single measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

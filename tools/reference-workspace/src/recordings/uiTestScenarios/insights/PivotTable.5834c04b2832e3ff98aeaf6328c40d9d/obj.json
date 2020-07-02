@@ -1,0 +1,80 @@
+{
+    "insight": {
+        "identifier": "PivotTable.5834c04b2832e3ff98aeaf6328c40d9d",
+        "uri": "PivotTable.5834c04b2832e3ff98aeaf6328c40d9d",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - empty values",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.department",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.owner.department"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "columns",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.stage.name.stagename",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.stage.name.stagename"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

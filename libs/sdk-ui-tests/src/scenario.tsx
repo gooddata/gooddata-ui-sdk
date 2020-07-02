@@ -52,9 +52,20 @@ export interface IScenario<T extends VisProps> {
     readonly vis: string;
 
     /**
-     * Test scenario name
+     * Test scenario name. Note that this is just a display name and as such should not be used
+     * where for instance name uniqueness in necessary.
      */
     readonly name: string;
+
+    /**
+     * Scenario group name.
+     */
+    readonly groupName: string[];
+
+    /**
+     * Fully qualified test scenario name. This is the unique scenario name.
+     */
+    readonly fullyQualifiedName: string;
 
     /**
      * Props not yet bound to any backend or workspace (not known at test scenario creation time)
@@ -133,6 +144,7 @@ export class ScenarioBuilder<T extends VisProps> {
         private readonly component: React.ComponentType<T>,
         private readonly name: string,
         private readonly props: UnboundVisProps<T>,
+        private readonly groupName: string[],
     ) {}
 
     /**
@@ -196,9 +208,11 @@ export class ScenarioBuilder<T extends VisProps> {
             insightConverter,
             workspaceType,
             customDataCapture,
+            groupName,
         } = this;
         const hasher = new SparkMD5();
-        const insightId = `${this.vis}.${hasher.append(name).end()}`;
+        const fullyQualifiedName = `${vis} - ${groupName.join("/")} - ${name}`;
+        const insightId = `${this.vis}.${hasher.append(fullyQualifiedName).end()}`;
         const propsFactory: PropsFactory<T> = (backend, workspace) => {
             // typescript won't let this fly without explicit casts; it is safe in this circumstance. see
             // UnboundChartProps.. whatever subtype, we always omit just backend and workspace that are
@@ -222,7 +236,8 @@ export class ScenarioBuilder<T extends VisProps> {
             insightId,
             insightConverter,
             customDataCapture,
-
+            groupName,
+            fullyQualifiedName,
             asTestInput: (): ScenarioTestInput<T> => {
                 return [name, component, propsFactory, tags, insightId];
             },

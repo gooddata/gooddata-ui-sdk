@@ -1,0 +1,66 @@
+{
+    "insight": {
+        "identifier": "AreaChart.b7bbb0a42ebe89dacf595e445a617618",
+        "uri": "AreaChart.b7bbb0a42ebe89dacf595e445a617618",
+        "visualizationUrl": "local:area",
+        "title": "AreaChart - undefined values and disabled stacking",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "closed.aag81lMifn6q",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "stacking": false
+                }
+            }
+        }
+    }
+}

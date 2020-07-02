@@ -1,0 +1,78 @@
+{
+    "insight": {
+        "identifier": "ColumnChart.9316349da207566f196a6e52a855e46b",
+        "uri": "ColumnChart.9316349da207566f196a6e52a855e46b",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - two measures with dual axis and stack measures to 100%",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "stackMeasuresToPercent": true,
+                    "secondary_yaxis": {
+                        "measures": ["m_aangOxLSeztu"]
+                    }
+                }
+            }
+        }
+    }
+}
