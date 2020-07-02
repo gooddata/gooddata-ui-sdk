@@ -226,6 +226,18 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.growToFittedColumns = {};
     };
 
+    private clearTimeouts = () => {
+        if (this.watchingIntervalId) {
+            clearTimeout(this.watchingIntervalId);
+            this.watchingIntervalId = null;
+        }
+
+        if (this.watchingTimeoutId) {
+            clearTimeout(this.watchingTimeoutId);
+            this.watchingTimeoutId = null;
+        }
+    };
+
     private cleanupNonReactState = () => {
         this.gridApi = null;
         this.gridOptions = null;
@@ -246,15 +258,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             left: 0,
         };
 
-        if (this.watchingIntervalId) {
-            clearTimeout(this.watchingIntervalId);
-            this.watchingIntervalId = null;
-        }
-
-        if (this.watchingTimeoutId) {
-            clearTimeout(this.watchingTimeoutId);
-            this.watchingTimeoutId = null;
-        }
+        this.clearTimeouts();
     };
 
     private reinitialize = (execution: IPreparedExecution): void => {
@@ -397,7 +401,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     public componentWillUnmount() {
         this.unmounted = true;
 
-        this.cleanupNonReactState();
+        this.clearTimeouts();
     }
 
     public componentDidUpdate(prevProps: ICorePivotTableProps) {
@@ -487,7 +491,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
 
-        if (this.isTableReady()) {
+        if (this.isTableInitializing()) {
             return this.renderLoading();
         }
 
@@ -528,7 +532,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
     //
 
-    private isTableReady() {
+    private isTableInitializing() {
         return !this.state.tableReady;
     }
 
@@ -867,7 +871,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private startWatchingTableRendered = () => {
         const missingContainerRef = !this.containerRef; // table having no data will be unmounted, it causes ref null
-        const isTableVisible = !this.isTableReady(); // table has data and takes place of Loading icon
+        const isTableVisible = !this.isTableInitializing(); // table has data and takes place of Loading icon
         if (missingContainerRef || isTableVisible) {
             this.stopWatchingTableRendered();
         }
