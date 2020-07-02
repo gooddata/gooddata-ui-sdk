@@ -33,6 +33,9 @@ const justManualResizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTab
     .withGroupNames("manual-resizing", "no other options")
     .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultBackendSettings({
+        enableTableColumnsManualResizing: true,
+    })
     .addScenario("simple table with custom attribute column size", {
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
         config: {
@@ -63,10 +66,15 @@ const justManualResizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTab
             },
         },
     });
+
 const withColumnAutoresize = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("manual-resizing", "combined with column autoresize")
     .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultBackendSettings({
+        enableTableColumnsManualResizing: true,
+        enableTableColumnsAutoResizing: true,
+    })
     .addCustomizedScenarios(
         justManualResizing,
         copyWithModifiedProps((props) => {
@@ -79,6 +87,10 @@ const withGrowToFit = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("manual-resizing", "combined with growToFit")
     .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultBackendSettings({
+        enableTableColumnsManualResizing: true,
+        enableTableColumnsGrowToFit: true,
+    })
     .addCustomizedScenarios(
         justManualResizing,
         copyWithModifiedProps((props) => {
@@ -91,6 +103,11 @@ const withAllAutoresizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTa
     .withGroupNames("manual-resizing", "combined with growToFit and autoResize")
     .withVisualTestConfig({ screenshotSize: { width: 1200, height: 800 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultBackendSettings({
+        enableTableColumnsManualResizing: true,
+        enableTableColumnsAutoResizing: true,
+        enableTableColumnsGrowToFit: true,
+    })
     .addCustomizedScenarios(
         justManualResizing,
         copyWithModifiedProps((props) => {
