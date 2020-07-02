@@ -11,6 +11,7 @@ import {
     IExportFunction,
     createExportFunction,
     createExportErrorFunction,
+    ErrorCodes,
 } from "../base";
 
 /**
@@ -41,7 +42,7 @@ export type WithLoadingResult = {
     /**
      * The result of failed loading. If this property is undefined, then no error has occurred (yet).
      */
-    error: Error | undefined;
+    error: GoodDataSdkError | undefined;
 
     /**
      * Indicates whether loading is in progress or not. This value will be `false` when loading finished
@@ -65,7 +66,7 @@ export interface IWithLoadingEvents<TProps> {
      * @param error - an instance of error. see also GoodDataSdkError
      * @param props - props effective at the time of load
      */
-    onError?: (error: Error, props: TProps) => void;
+    onError?: (error: GoodDataSdkError, props: TProps) => void;
 
     /**
      * Called when loading starts.
@@ -159,7 +160,7 @@ export interface IWithExecutionLoading<TProps> {
 
 type WithLoadingState = {
     isLoading: boolean;
-    error: Error | undefined;
+    error: GoodDataSdkError | undefined;
     result: DataViewFacade | undefined;
 };
 
@@ -185,6 +186,7 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
         WrappedComponent: React.ComponentType<TProps & WithLoadingResult>,
     ): React.ComponentClass<TProps> => {
         class WithLoading extends React.Component<TProps, WithLoadingState> {
+            private isWithExecutionLoadingUnmounted: boolean = false;
             private cancelablePromise: ICancelablePromise<DataViewFacade> | undefined;
             private effectiveProps: TProps | undefined;
 
@@ -284,9 +286,10 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
                     const result = await this.cancelablePromise.promise;
                     this.setResult(result);
                 } catch (err) {
-                    const sdkError = convertError(err);
-
-                    this.setError(sdkError);
+                    if (!this.isWithExecutionLoadingUnmounted) {
+                        const sdkError = convertError(err);
+                        this.setError(sdkError);
+                    }
                 }
             }
 
@@ -295,6 +298,7 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
             }
 
             public componentDidMount() {
+                this.isWithExecutionLoadingUnmounted = false;
                 const _loadOnMount =
                     typeof loadOnMount === "function" ? loadOnMount(this.props) : loadOnMount;
 
@@ -310,8 +314,10 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
             }
 
             public componentWillUnmount() {
+                this.isWithExecutionLoadingUnmounted = true;
                 if (this.cancelablePromise) {
                     this.cancelablePromise.cancel();
+                    this.setError(new GoodDataSdkError(ErrorCodes.CANCELLED));
                 }
             }
 

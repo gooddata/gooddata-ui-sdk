@@ -1,4 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
+import isError = require("lodash/isError");
 
 /**
  * @internal
@@ -11,14 +12,33 @@ export interface ICancelablePromise<T> {
 /**
  * @internal
  */
+const CANCEL_ERROR_MESSAGE = "Canceled";
+
+/**
+ * @internal
+ */
 export class CancelError extends Error {
-    constructor(reason?: string) {
-        super(reason || "Canceled");
+    constructor(public reason?: string) {
+        super(CANCEL_ERROR_MESSAGE);
 
         // https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#extending-built-ins-like-error-array-and-map-may-no-longer-work
         Object.setPrototypeOf(this, CancelError.prototype);
     }
+
+    /**
+     * Underlying cause of this error (if any).
+     */
+    public getReason() {
+        return this.reason;
+    }
 }
+
+/**
+ * @internal
+ */
+export const isCancelError = (obj: any): obj is CancelError => {
+    return isError(obj) && obj.message === CANCEL_ERROR_MESSAGE;
+};
 
 /**
  * !!! USE WITH CAUTION !!! Opinionated utility to wrap promise and make it cancelable
