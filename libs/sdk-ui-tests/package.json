@@ -47,6 +47,7 @@
         "@babel/preset-react": "^7.7.2",
         "@babel/runtime": "^7.7.2",
         "@gooddata/numberjs": "^3.2.4",
+        "@gooddata/mock-handling": "8.0.0-beta.4",
         "@gooddata/reference-workspace": "^8.0.0-beta.4",
         "@gooddata/live-examples-workspace": "^8.0.0-beta.4",
         "@gooddata/sdk-backend-base": "^8.0.0-beta.4",
@@ -86,7 +87,6 @@
         "typescript": ">= 2.5.3"
     },
     "devDependencies": {
-        "@gooddata/mock-handling": "8.0.0-beta.4",
         "@gooddata/sdk-ui": "^8.0.0-beta.4",
         "@gooddata/sdk-ui-charts": "^8.0.0-beta.4",
         "@gooddata/sdk-ui-ext": "^8.0.0-beta.4",
