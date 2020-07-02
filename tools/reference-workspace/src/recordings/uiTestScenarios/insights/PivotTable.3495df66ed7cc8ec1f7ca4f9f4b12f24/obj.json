@@ -78,10 +78,6 @@
                 }
             }
         ],
-        "properties": {
-            "properties": {
-                "controls": {}
-            }
-        }
+        "properties": {}
     }
 }

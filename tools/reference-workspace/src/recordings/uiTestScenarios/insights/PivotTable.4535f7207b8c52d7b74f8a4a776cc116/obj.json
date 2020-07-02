@@ -58,18 +58,14 @@
         "properties": {
             "properties": {
                 "controls": {
-                    "columnSizing": {
-                        "columnWidths": [
-                            {
-                                "attributeColumnWidthItem": {
-                                    "width": 400,
-                                    "attributeIdentifier": "a_label.product.id.name"
-                                }
+                    "columnWidths": [
+                        {
+                            "attributeColumnWidthItem": {
+                                "width": 400,
+                                "attributeIdentifier": "a_label.product.id.name"
                             }
-                        ],
-                        "defaultWidth": "viewport",
-                        "growToFit": true
-                    }
+                        }
+                    ]
                 }
             }
         }

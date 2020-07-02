@@ -58,30 +58,26 @@
         "properties": {
             "properties": {
                 "controls": {
-                    "columnSizing": {
-                        "columnWidths": [
-                            {
-                                "attributeColumnWidthItem": {
-                                    "width": 400,
-                                    "attributeIdentifier": "a_label.product.id.name"
-                                }
-                            },
-                            {
-                                "measureColumnWidthItem": {
-                                    "width": 60,
-                                    "locators": [
-                                        {
-                                            "measureLocatorItem": {
-                                                "measureIdentifier": "m_aangOxLSeztu"
-                                            }
-                                        }
-                                    ]
-                                }
+                    "columnWidths": [
+                        {
+                            "attributeColumnWidthItem": {
+                                "width": 400,
+                                "attributeIdentifier": "a_label.product.id.name"
                             }
-                        ],
-                        "defaultWidth": "unset",
-                        "growToFit": false
-                    }
+                        },
+                        {
+                            "measureColumnWidthItem": {
+                                "width": 60,
+                                "locators": [
+                                    {
+                                        "measureLocatorItem": {
+                                            "measureIdentifier": "m_aangOxLSeztu"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
                 }
             }
         }

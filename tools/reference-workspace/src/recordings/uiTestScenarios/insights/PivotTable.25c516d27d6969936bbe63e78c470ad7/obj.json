@@ -125,15 +125,6 @@
         ],
         "filters": [],
         "sorts": [],
-        "properties": {
-            "properties": {
-                "controls": {
-                    "columnSizing": {
-                        "defaultWidth": "viewport",
-                        "growToFit": true
-                    }
-                }
-            }
-        }
+        "properties": {}
     }
 }

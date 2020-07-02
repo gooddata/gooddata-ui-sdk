@@ -58,24 +58,20 @@
         "properties": {
             "properties": {
                 "controls": {
-                    "columnSizing": {
-                        "columnWidths": [
-                            {
-                                "measureColumnWidthItem": {
-                                    "width": 60,
-                                    "locators": [
-                                        {
-                                            "measureLocatorItem": {
-                                                "measureIdentifier": "m_aangOxLSeztu"
-                                            }
+                    "columnWidths": [
+                        {
+                            "measureColumnWidthItem": {
+                                "width": 60,
+                                "locators": [
+                                    {
+                                        "measureLocatorItem": {
+                                            "measureIdentifier": "m_aangOxLSeztu"
                                         }
-                                    ]
-                                }
+                                    }
+                                ]
                             }
-                        ],
-                        "defaultWidth": "viewport",
-                        "growToFit": false
-                    }
+                        }
+                    ]
                 }
             }
         }

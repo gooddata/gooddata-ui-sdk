@@ -71,12 +71,6 @@
         ],
         "filters": [],
         "sorts": [],
-        "properties": {
-            "properties": {
-                "controls": {
-                    "maxHeight": 300
-                }
-            }
-        }
+        "properties": {}
     }
 }

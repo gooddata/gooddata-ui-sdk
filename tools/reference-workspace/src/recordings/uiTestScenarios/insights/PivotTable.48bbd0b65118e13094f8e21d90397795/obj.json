@@ -95,10 +95,6 @@
         ],
         "filters": [],
         "sorts": [],
-        "properties": {
-            "properties": {
-                "controls": {}
-            }
-        }
+        "properties": {}
     }
 }
