@@ -5,6 +5,7 @@
 ```ts
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { BackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { dummyBackend } from '@gooddata/sdk-backend-base';
 import { dummyBackendEmptyData } from '@gooddata/sdk-backend-base';
@@ -118,7 +119,7 @@ export type NamedDataView = {
 // Warning: (ae-internal-missing-underscore) The name "recordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export function recordedBackend(index: RecordingIndex, config?: RecordedBackendConfig): IAnalyticalBackend;
+export function recordedBackend(index: RecordingIndex, config?: RecordedBackendConfig, capabilities?: BackendCapabilities): IAnalyticalBackend;
 
 // Warning: (ae-internal-missing-underscore) The name "RecordedBackendConfig" should be prefixed with an underscore because the declaration is marked as @internal
 //
