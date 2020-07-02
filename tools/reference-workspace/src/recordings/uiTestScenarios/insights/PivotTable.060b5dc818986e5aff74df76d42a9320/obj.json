@@ -1,0 +1,35 @@
+{
+    "insight": {
+        "identifier": "PivotTable.060b5dc818986e5aff74df76d42a9320",
+        "uri": "PivotTable.060b5dc818986e5aff74df76d42a9320",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - with column attributes only and auto-resizing",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            },
+            {
+                "localIdentifier": "columns",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {}
+    }
+}

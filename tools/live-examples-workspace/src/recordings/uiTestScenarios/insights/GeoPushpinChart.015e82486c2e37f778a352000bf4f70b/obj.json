@@ -1,0 +1,105 @@
+{
+    "insight": {
+        "identifier": "GeoPushpinChart.015e82486c2e37f778a352000bf4f70b",
+        "uri": "GeoPushpinChart.015e82486c2e37f778a352000bf4f70b",
+        "visualizationUrl": "local:pushpin",
+        "title": "GeoPushpinChart - legend on the left",
+        "buckets": [
+            {
+                "localIdentifier": "size",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "fact.uscities.population"
+                                    },
+                                    "aggregation": "sum"
+                                }
+                            },
+                            "format": "#,##0.00",
+                            "alias": "Population"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "color",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "fact.uscities.density"
+                                    },
+                                    "aggregation": "sum"
+                                }
+                            },
+                            "format": "#,##0.00",
+                            "alias": "Density"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "location",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.city.location",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.uscities.city.location"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.state_name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.uscities.state_name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "tooltipText",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.city",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "tooltipText_df"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "tooltipText": "label.uscities.city",
+                    "legend": {
+                        "enabled": false,
+                        "position": "left"
+                    }
+                }
+            }
+        }
+    }
+}

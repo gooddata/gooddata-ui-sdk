@@ -1,0 +1,85 @@
+{
+    "insight": {
+        "identifier": "LineChart.57a5157d052ee2d68824971b542d25a8",
+        "uri": "LineChart.57a5157d052ee2d68824971b542d25a8",
+        "visualizationUrl": "local:line",
+        "title": "LineChart - single axis name configuration - high",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "trend",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_created.aci81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "xaxis": {
+                        "name": {
+                            "position": "right"
+                        }
+                    },
+                    "yaxis": {
+                        "name": {
+                            "position": "top"
+                        }
+                    },
+                    "secondary_xaxis": {
+                        "name": {
+                            "position": "right"
+                        }
+                    },
+                    "secondary_yaxis": {
+                        "name": {
+                            "position": "top"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

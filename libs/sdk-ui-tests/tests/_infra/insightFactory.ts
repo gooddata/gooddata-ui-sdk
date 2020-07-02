@@ -4,6 +4,7 @@ import { IInsightDefinition, newInsightDefinition, VisualizationProperties } fro
 import { ChartInteractions } from "./backendWithCapturing";
 import { chartConfigToVisProperties, geoChartConfigToVisProperties } from "./chartConfigToVisProps";
 import { geoExecutionToInsightBuckets } from "./executionToInsightBuckets";
+import { pivotConfigToVisProperties } from "./pivotConfigToVisProps";
 
 function visNameToUri(name: string): string {
     if (name === "PivotTable") {
@@ -14,12 +15,27 @@ function visNameToUri(name: string): string {
         return "local:pushpin";
     }
 
-    const simpleName = name
-        .replace("Chart", "")
-        .replace("Plot", "")
-        .toLowerCase();
+    const simpleName = name.replace("Chart", "").replace("Plot", "").toLowerCase();
 
     return `local:${simpleName}`;
+}
+
+/*
+ * This code is here because of flaws in design. If you find yourself in need to add another IF here to support
+ * your fancy new feature, then your design is also flawed.
+ *
+ * It would be best, if the properties worked 'simply' as a storage for the config. that the config can be
+ * stored in there as-is (unless of course it has some functions or such, which we would strip or persist
+ * in declarative form).
+ */
+function createVisProperties(visClass: string, config: any) {
+    if (visClass === "local:pushpin") {
+        return geoChartConfigToVisProperties(config);
+    } else if (visClass === "local:table") {
+        return pivotConfigToVisProperties(config);
+    } else {
+        return chartConfigToVisProperties(config);
+    }
 }
 
 export function createInsightDefinitionForChart(
@@ -31,18 +47,12 @@ export function createInsightDefinitionForChart(
     const visClassUri = visNameToUri(name);
     const execution = interactions.normalizationState?.original ?? interactions.triggeredExecution;
 
-    /*
-     * This code is here because of flaws in design. If you find yourself in need to add another IF here to support
-     * your fancy new feature, then your design is also flawed.
-     */
-    const properties: VisualizationProperties =
-        visClassUri === "local:pushpin"
-            ? geoChartConfigToVisProperties(chartConfig)
-            : chartConfigToVisProperties(chartConfig);
+    const properties: VisualizationProperties = createVisProperties(visClassUri, chartConfig);
+
     const insightBuckets =
         visClassUri === "local:pushpin" ? geoExecutionToInsightBuckets(execution) : execution?.buckets ?? [];
 
-    return newInsightDefinition(visClassUri, b => {
+    return newInsightDefinition(visClassUri, (b) => {
         return b
             .title(`${name} - ${scenario}`)
             .buckets(insightBuckets)

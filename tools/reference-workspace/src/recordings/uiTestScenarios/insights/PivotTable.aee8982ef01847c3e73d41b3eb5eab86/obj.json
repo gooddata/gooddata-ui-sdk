@@ -1,0 +1,85 @@
+{
+    "insight": {
+        "identifier": "PivotTable.aee8982ef01847c3e73d41b3eb5eab86",
+        "uri": "PivotTable.aee8982ef01847c3e73d41b3eb5eab86",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - simple table with attribute and metric column size",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "columns",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "columnWidths": [
+                        {
+                            "attributeColumnWidthItem": {
+                                "width": 400,
+                                "attributeIdentifier": "a_label.product.id.name"
+                            }
+                        },
+                        {
+                            "measureColumnWidthItem": {
+                                "width": 60,
+                                "locators": [
+                                    {
+                                        "measureLocatorItem": {
+                                            "measureIdentifier": "m_aangOxLSeztu"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

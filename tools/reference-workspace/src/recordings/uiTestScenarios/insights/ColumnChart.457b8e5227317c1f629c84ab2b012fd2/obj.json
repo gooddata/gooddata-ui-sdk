@@ -1,0 +1,54 @@
+{
+    "insight": {
+        "identifier": "ColumnChart.457b8e5227317c1f629c84ab2b012fd2",
+        "uri": "ColumnChart.457b8e5227317c1f629c84ab2b012fd2",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - single ratio measure with viewBy",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "Amount with Ratio",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    },
+                                    "computeRatio": true
+                                }
+                            },
+                            "alias": "Amount with Ratio"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

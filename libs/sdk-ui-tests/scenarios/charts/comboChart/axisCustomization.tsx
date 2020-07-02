@@ -21,14 +21,18 @@ const twoMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", ComboC
     .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "dual axis two measures without slicing" })
-    .addScenarios("dual axis two measures with slicing", ComboChartWithTwoMeasuresAndNoViewBy, comboVariants);
+    .addScenarios(
+        "dual axis two measures without slicing",
+        ComboChartWithTwoMeasuresAndNoViewBy,
+        comboVariants,
+    );
 
 const multipleMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Axes)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "dual axis multiple measures with slicing" })
     .addScenarios(
-        "dual axis two measures with slicing",
+        "dual axis multiple measures with slicing",
         ComboChartWithArithmeticMeasuresAndViewBy,
         comboVariants,
     );

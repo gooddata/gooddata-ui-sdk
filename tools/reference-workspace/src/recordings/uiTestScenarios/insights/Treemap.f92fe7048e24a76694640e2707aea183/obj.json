@@ -1,0 +1,64 @@
+{
+    "insight": {
+        "identifier": "Treemap.f92fe7048e24a76694640e2707aea183",
+        "uri": "Treemap.f92fe7048e24a76694640e2707aea183",
+        "visualizationUrl": "local:treemap",
+        "title": "Treemap - single measure and viewBy filtered to one element",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": {
+                        "identifier": "label.product.id.name",
+                        "type": "displayForm"
+                    },
+                    "in": {
+                        "values": ["CompuSci"]
+                    }
+                }
+            }
+        ],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

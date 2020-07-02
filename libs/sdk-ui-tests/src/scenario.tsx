@@ -3,7 +3,7 @@ import identity = require("lodash/identity");
 import isEmpty = require("lodash/isEmpty");
 import React from "react";
 import SparkMD5 from "spark-md5";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, ISettings } from "@gooddata/sdk-backend-spi";
 import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight } from "@gooddata/sdk-model";
@@ -52,9 +52,20 @@ export interface IScenario<T extends VisProps> {
     readonly vis: string;
 
     /**
-     * Test scenario name
+     * Test scenario name. Note that this is just a display name and as such should not be used
+     * where for instance name uniqueness in necessary.
      */
     readonly name: string;
+
+    /**
+     * Scenario group name.
+     */
+    readonly groupName: string[];
+
+    /**
+     * Fully qualified test scenario name. This is the unique scenario name.
+     */
+    readonly fullyQualifiedName: string;
 
     /**
      * Props not yet bound to any backend or workspace (not known at test scenario creation time)
@@ -75,6 +86,11 @@ export interface IScenario<T extends VisProps> {
      * React component realizing the scenario
      */
     readonly component: React.ComponentType<T>;
+
+    /**
+     * Backend settings to use when testing this scenario.
+     */
+    readonly backendSettings: ISettings;
 
     /**
      * Type of test workspace that supplies test data for this scenario.
@@ -127,12 +143,14 @@ export class ScenarioBuilder<T extends VisProps> {
     private insightConverter: InsightConverter = identity;
     private workspaceType: WorkspaceType = "reference-workspace";
     private customDataCapture: ScenarioDataCapture = {};
+    private backendSettings: ISettings = {};
 
     constructor(
         private readonly vis: string,
         private readonly component: React.ComponentType<T>,
         private readonly name: string,
         private readonly props: UnboundVisProps<T>,
+        private readonly groupName: string[],
     ) {}
 
     /**
@@ -155,6 +173,12 @@ export class ScenarioBuilder<T extends VisProps> {
 
     public withInsightConverter(converter: InsightConverter): ScenarioBuilder<T> {
         this.insightConverter = converter;
+
+        return this;
+    }
+
+    public withBackendSettings(settings: ISettings): ScenarioBuilder<T> {
+        this.backendSettings = settings;
 
         return this;
     }
@@ -196,9 +220,12 @@ export class ScenarioBuilder<T extends VisProps> {
             insightConverter,
             workspaceType,
             customDataCapture,
+            groupName,
+            backendSettings,
         } = this;
         const hasher = new SparkMD5();
-        const insightId = `${this.vis}.${hasher.append(name).end()}`;
+        const fullyQualifiedName = `${vis} - ${groupName.join("/")} - ${name}`;
+        const insightId = `${this.vis}.${hasher.append(fullyQualifiedName).end()}`;
         const propsFactory: PropsFactory<T> = (backend, workspace) => {
             // typescript won't let this fly without explicit casts; it is safe in this circumstance. see
             // UnboundChartProps.. whatever subtype, we always omit just backend and workspace that are
@@ -222,7 +249,9 @@ export class ScenarioBuilder<T extends VisProps> {
             insightId,
             insightConverter,
             customDataCapture,
-
+            groupName,
+            fullyQualifiedName,
+            backendSettings,
             asTestInput: (): ScenarioTestInput<T> => {
                 return [name, component, propsFactory, tags, insightId];
             },

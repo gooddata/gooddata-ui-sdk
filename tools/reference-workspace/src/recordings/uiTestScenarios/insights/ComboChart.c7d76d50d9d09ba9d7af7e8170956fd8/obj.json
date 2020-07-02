@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "identifier": "ComboChart.c7d76d50d9d09ba9d7af7e8170956fd8",
+        "uri": "ComboChart.c7d76d50d9d09ba9d7af7e8170956fd8",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - dual axis two measures without slicingline-line",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "primaryChartType": "line",
+                    "secondaryChartType": "line"
+                }
+            }
+        }
+    }
+}

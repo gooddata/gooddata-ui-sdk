@@ -1,0 +1,34 @@
+{
+    "insight": {
+        "identifier": "Headline.f8d7e425a7cbfce667963e56ed6ab517",
+        "uri": "Headline.f8d7e425a7cbfce667963e56ed6ab517",
+        "visualizationUrl": "local:headline",
+        "title": "Headline - single measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

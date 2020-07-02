@@ -16,6 +16,8 @@ import {
 } from "./scenario";
 import intersection = require("lodash/intersection");
 import identity = require("lodash/identity");
+import cloneDeep = require("lodash/cloneDeep");
+import { ISettings } from "@gooddata/sdk-backend-spi";
 
 //
 // Scenario groups
@@ -62,6 +64,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     private defaultTags: ScenarioTag[] = [];
     private defaultTestTypes: TestTypes[] = ["api", "visual"];
     private defaultWorkspaceType: WorkspaceType = "reference-workspace";
+    private defaultBackendSettings: ISettings = {};
 
     constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
 
@@ -107,6 +110,12 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         return this;
     }
 
+    public withDefaultBackendSettings(settings: ISettings): ScenarioGroup<T> {
+        this.defaultBackendSettings = settings;
+
+        return this;
+    }
+
     /**
      * Adds a new test scenarios for a component. The scenario specifies name and visualization props (sans backend
      * and workspace .. these will be injected by framework).
@@ -124,10 +133,11 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
 
         invariant(!exists, `contract "${name}" for ${this.vis} already exists`);
 
-        const builder = new ScenarioBuilder<T>(this.vis, this.component, name, props);
+        const builder = new ScenarioBuilder<T>(this.vis, this.component, name, props, this.groupNames);
         builder.withTags(...this.defaultTags);
         builder.withTests(...this.defaultTestTypes);
         builder.withWorkspaceType(this.defaultWorkspaceType);
+        builder.withBackendSettings(this.defaultBackendSettings);
         this.insertScenario(m(builder).build());
 
         return this;
@@ -184,6 +194,29 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      */
     public withVisualTestConfig(config: VisualTestConfiguration): ScenarioGroup<T> {
         this.testConfig.visual = config;
+
+        return this;
+    }
+
+    /**
+     * Given another scenario group, this method will take all the scenarios from the other group and add
+     * them into this group. The scenario customizer & scenario modifications will be applied for each scenario.
+     *
+     * This can be used to copy & modify scenarios, or to multiply scenarios for different variants. All depends
+     * on the implementation of the customizer function.
+     *
+     * @param fromGroup
+     * @param customizer
+     * @param m
+     */
+    public addCustomizedScenarios(
+        fromGroup: ScenarioGroup<T>,
+        customizer: ScenarioCustomizer<T> = copyCustomizer,
+        m: ScenarioModification<T> = identity,
+    ): ScenarioGroup<T> {
+        fromGroup.scenarioList.forEach((scenario) => {
+            this.addScenarios(scenario.name, scenario.props, customizer, m);
+        });
 
         return this;
     }
@@ -304,3 +337,32 @@ export type ScenarioCustomizer<T extends VisProps> = (
     baseTags: ScenarioTag[],
 ) => Array<CustomizedScenario<T>>;
 export type CustomizedScenario<T extends VisProps> = [string, UnboundVisProps<T>, ScenarioTag[]?];
+
+/**
+ * Scenario customer that only creates a new copy of the input scenario.
+ *
+ * @param baseName - input scenario base name, will be kept as is
+ * @param baseProps - input scenario props, will be copied
+ * @param baseTags - input scenario base tags, will be copied
+ */
+export function copyCustomizer<T extends VisProps>(
+    baseName: string,
+    baseProps: UnboundVisProps<T>,
+    baseTags: ScenarioTag[],
+): Array<CustomizedScenario<T>> {
+    return [[baseName, cloneDeep(baseProps), cloneDeep(baseTags)]];
+}
+
+/**
+ * Creates scenario customizer, which will create 1-1 new scenario with same name and modified props
+ *
+ * @param modify - props modification function, this will receive deep copy of the original props, it is
+ *  thus no problem to mutate the props if that is simpler
+ */
+export function copyWithModifiedProps<T extends VisProps>(
+    modify: (props: UnboundVisProps<T>) => UnboundVisProps<T>,
+): ScenarioCustomizer<T> {
+    return (baseName: string, baseProps: UnboundVisProps<T>, baseTags: ScenarioTag[]) => {
+        return [[baseName, modify(cloneDeep(baseProps)), cloneDeep(baseTags)]];
+    };
+}

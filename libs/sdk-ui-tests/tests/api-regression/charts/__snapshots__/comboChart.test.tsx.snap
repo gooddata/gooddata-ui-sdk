@@ -3561,6 +3561,1617 @@ Object {
 }
 `;
 
+exports[`ComboChart with dual axis multiple measures with slicingarea-area should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingarea-area should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "area",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingarea-column should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingarea-column should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "area",
+    "secondaryChartType": "column",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingarea-line should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingarea-line should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "area",
+    "secondaryChartType": "line",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingcolumn-area should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingcolumn-area should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "column",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingcolumn-column should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingcolumn-column should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "column",
+    "secondaryChartType": "column",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingcolumn-line should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingcolumn-line should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "column",
+    "secondaryChartType": "line",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingline-area should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingline-area should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "line",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingline-column should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingline-column should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "line",
+    "secondaryChartType": "column",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingline-line should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis multiple measures with slicingline-line should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "line",
+    "secondaryChartType": "line",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
 exports[`ComboChart with dual axis multiple measures without slicingarea-area should create expected execution definition 1`] = `
 Object {
   "attributes": Array [],
@@ -5081,283 +6692,7 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingarea-area should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingarea-area should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
-          },
-        },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
-          },
-        },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
 exports[`ComboChart with dual axis two measures with slicingarea-area should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "area",
-    "secondaryChartType": "area",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingarea-area should create expected props for core chart 2`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "area",
-    "secondaryChartType": "area",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingarea-area should create expected props for core chart 3`] = `
 Object {
   "config": Object {
     "primaryChartType": "area",
@@ -5476,283 +6811,7 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingarea-column should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingarea-column should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
-          },
-        },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
-          },
-        },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
 exports[`ComboChart with dual axis two measures with slicingarea-column should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "area",
-    "secondaryChartType": "column",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingarea-column should create expected props for core chart 2`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "area",
-    "secondaryChartType": "column",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingarea-column should create expected props for core chart 3`] = `
 Object {
   "config": Object {
     "primaryChartType": "area",
@@ -5871,283 +6930,7 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingarea-line should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingarea-line should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
-          },
-        },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
-          },
-        },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
 exports[`ComboChart with dual axis two measures with slicingarea-line should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "area",
-    "secondaryChartType": "line",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingarea-line should create expected props for core chart 2`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "area",
-    "secondaryChartType": "line",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingarea-line should create expected props for core chart 3`] = `
 Object {
   "config": Object {
     "primaryChartType": "area",
@@ -6266,283 +7049,7 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingcolumn-area should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingcolumn-area should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
-          },
-        },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
-          },
-        },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
 exports[`ComboChart with dual axis two measures with slicingcolumn-area should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "column",
-    "secondaryChartType": "area",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingcolumn-area should create expected props for core chart 2`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "column",
-    "secondaryChartType": "area",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingcolumn-area should create expected props for core chart 3`] = `
 Object {
   "config": Object {
     "primaryChartType": "column",
@@ -6661,283 +7168,7 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingcolumn-column should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingcolumn-column should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
-          },
-        },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
-          },
-        },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
 exports[`ComboChart with dual axis two measures with slicingcolumn-column should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "column",
-    "secondaryChartType": "column",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingcolumn-column should create expected props for core chart 2`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "column",
-    "secondaryChartType": "column",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingcolumn-column should create expected props for core chart 3`] = `
 Object {
   "config": Object {
     "primaryChartType": "column",
@@ -7056,283 +7287,7 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingcolumn-line should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingcolumn-line should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
-          },
-        },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
-          },
-        },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
 exports[`ComboChart with dual axis two measures with slicingcolumn-line should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "column",
-    "secondaryChartType": "line",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingcolumn-line should create expected props for core chart 2`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "column",
-    "secondaryChartType": "line",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingcolumn-line should create expected props for core chart 3`] = `
 Object {
   "config": Object {
     "primaryChartType": "column",
@@ -7451,283 +7406,7 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingline-area should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingline-area should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
-          },
-        },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
-          },
-        },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
 exports[`ComboChart with dual axis two measures with slicingline-area should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "line",
-    "secondaryChartType": "area",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingline-area should create expected props for core chart 2`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "line",
-    "secondaryChartType": "area",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingline-area should create expected props for core chart 3`] = `
 Object {
   "config": Object {
     "primaryChartType": "line",
@@ -7846,283 +7525,7 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingline-column should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingline-column should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
-      ],
-      "localIdentifier": "secondary_measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
-          },
-        },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
-          },
-        },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
 exports[`ComboChart with dual axis two measures with slicingline-column should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "line",
-    "secondaryChartType": "column",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingline-column should create expected props for core chart 2`] = `
-Object {
-  "config": Object {
-    "primaryChartType": "line",
-    "secondaryChartType": "column",
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ComboChart",
-}
-`;
-
-exports[`ComboChart with dual axis two measures with slicingline-column should create expected props for core chart 3`] = `
 Object {
   "config": Object {
     "primaryChartType": "line",
@@ -8241,7 +7644,19 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingline-line should create expected execution definition 2`] = `
+exports[`ComboChart with dual axis two measures with slicingline-line should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "line",
+    "secondaryChartType": "line",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingarea-area should create expected execution definition 1`] = `
 Object {
   "attributes": Array [],
   "buckets": Array [
@@ -8326,19 +7741,21 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingline-line should create expected execution definition 3`] = `
+exports[`ComboChart with dual axis two measures without slicingarea-area should create expected props for core chart 1`] = `
 Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
+  "config": Object {
+    "primaryChartType": "area",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingarea-column should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
   "buckets": Array [
     Object {
       "items": Array [
@@ -8354,6 +7771,11 @@ Object {
             "localIdentifier": "m_aangOxLSeztu",
           },
         },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
         Object {
           "measure": Object {
             "definition": Object {
@@ -8366,56 +7788,11 @@ Object {
             "localIdentifier": "m_acugFHNJgsBy",
           },
         },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
       ],
       "localIdentifier": "secondary_measures",
     },
     Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
+      "items": Array [],
       "localIdentifier": "view",
     },
   ],
@@ -8426,9 +7803,7 @@ Object {
       ],
     },
     Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
+      "itemIdentifiers": Array [],
     },
   ],
   "filters": Array [],
@@ -8457,34 +7832,101 @@ Object {
         "localIdentifier": "m_acugFHNJgsBy",
       },
     },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingarea-column should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "area",
+    "secondaryChartType": "column",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingarea-line should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
     Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
           },
         },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
       },
     },
     Object {
       "measure": Object {
-        "alias": "Ratio of Won and Lost",
         "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
           },
         },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+        "localIdentifier": "m_acugFHNJgsBy",
       },
     },
   ],
@@ -8493,10 +7935,10 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingline-line should create expected props for core chart 1`] = `
+exports[`ComboChart with dual axis two measures without slicingarea-line should create expected props for core chart 1`] = `
 Object {
   "config": Object {
-    "primaryChartType": "line",
+    "primaryChartType": "area",
     "secondaryChartType": "line",
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
@@ -8505,10 +7947,289 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingline-line should create expected props for core chart 2`] = `
+exports[`ComboChart with dual axis two measures without slicingcolumn-area should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingcolumn-area should create expected props for core chart 1`] = `
 Object {
   "config": Object {
-    "primaryChartType": "line",
+    "primaryChartType": "column",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingcolumn-column should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingcolumn-column should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "column",
+    "secondaryChartType": "column",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingcolumn-line should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingcolumn-line should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "column",
     "secondaryChartType": "line",
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
@@ -8517,7 +8238,286 @@ Object {
 }
 `;
 
-exports[`ComboChart with dual axis two measures with slicingline-line should create expected props for core chart 3`] = `
+exports[`ComboChart with dual axis two measures without slicingline-area should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingline-area should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "line",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingline-column should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingline-column should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "line",
+    "secondaryChartType": "column",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingline-line should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with dual axis two measures without slicingline-line should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "primaryChartType": "line",
