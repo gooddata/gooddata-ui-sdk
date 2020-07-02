@@ -1,8 +1,7 @@
 // (C) 2020 GoodData Corporation
-import { ResizedColumnsStore } from "../ResizedColumnsStore";
 import { ColDef, Column } from "@ag-grid-community/all-modules";
 import { MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../agGridConst";
-import { MANUALLY_SIZED_MAX_WIDTH, MIN_WIDTH } from "../agGridColumnSizing";
+import { MANUALLY_SIZED_MAX_WIDTH, MIN_WIDTH, ResizedColumnsStore } from "../agGridColumnSizing";
 import { ColumnWidthItem } from "../../columnWidths";
 import { ColumnEventSourceType } from "../../types";
 import { recordedDataFacade } from "../../../__mocks__/recordings";

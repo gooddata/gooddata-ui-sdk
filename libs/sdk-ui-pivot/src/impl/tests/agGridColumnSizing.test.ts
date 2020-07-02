@@ -4,6 +4,7 @@ import {
     getColumnWidthsFromMap,
     MANUALLY_SIZED_MAX_WIDTH,
     resetColumnsWidthToDefault,
+    ResizedColumnsStore,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
 } from "../agGridColumnSizing";
@@ -18,7 +19,6 @@ import { createTableHeaders } from "../agGridHeaders";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN } from "../agGridConst";
-import { ResizedColumnsStore } from "../ResizedColumnsStore";
 
 const ColumnOnlyResult = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleColumn,

@@ -116,10 +116,10 @@ import {
     MIN_WIDTH,
     resetColumnsWidthToDefault,
     resizeAllMeasuresColumns,
+    ResizedColumnsStore,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
 } from "./impl/agGridColumnSizing";
-import { ResizedColumnsStore } from "./impl/ResizedColumnsStore";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
