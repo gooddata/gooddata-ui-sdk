@@ -317,7 +317,9 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
                 this.isWithExecutionLoadingUnmounted = true;
                 if (this.cancelablePromise) {
                     this.cancelablePromise.cancel();
-                    this.setError(new GoodDataSdkError(ErrorCodes.CANCELLED));
+                    if (this.cancelablePromise && !this.cancelablePromise.getHasFulfilled()) {
+                        this.setError(new GoodDataSdkError(ErrorCodes.CANCELLED));
+                    }
                 }
             }
 
