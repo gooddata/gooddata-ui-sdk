@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { RecordedBackendConfig, RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
+import { IAnalyticalBackend, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
     IInsightDefinition,
@@ -77,12 +77,6 @@ const DefaultSettings: ISettings = {
     enableAxisNameConfiguration: true,
 };
 
-const DefaultBackendConfig: RecordedBackendConfig = {
-    globalSettings: DefaultSettings,
-};
-
-const backend = StorybookBackend(DefaultBackendConfig);
-
 //
 // Inspect recording index & prepare list of Insights to possibly create stories for
 //
@@ -127,7 +121,7 @@ function createVisualizationClass(insight: IInsightDefinition): IVisualizationCl
     };
 }
 
-function createGdcConfig(testScenario: IScenario<any>): IGdcConfig {
+function createGdcConfig(backend: IAnalyticalBackend, testScenario: IScenario<any>): IGdcConfig {
     const scenarioProps = testScenario.propsFactory(backend, testScenario.workspaceType);
 
     return {
@@ -154,8 +148,15 @@ const ReportReadyResolver = andResolver(
 );
 
 function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
+    const settings = {
+        ...DefaultSettings,
+        ...testScenario.backendSettings,
+    };
+
+    const backend = StorybookBackend({ globalSettings: settings });
+
     const visClass = createVisualizationClass(insight);
-    const gdcConfig = createGdcConfig(testScenario);
+    const gdcConfig = createGdcConfig(backend, testScenario);
 
     return () => {
         return withScreenshot(
@@ -176,7 +177,7 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             onError={action("onError")}
                             pushData={action("pushData")}
                             onLoadingChanged={action("onLoadingChanged")}
-                            featureFlags={DefaultSettings}
+                            featureFlags={settings}
                             config={gdcConfig}
                         />
                     </div>
@@ -194,7 +195,7 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             pushData={action("pushData")}
                             onLoadingChanged={action("onLoadingChanged")}
                             configPanelClassName={DoNotRenderConfigPanel}
-                            featureFlags={DefaultSettings}
+                            featureFlags={settings}
                             config={gdcConfig}
                         />
                     </div>
@@ -212,7 +213,7 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             pushData={action("pushData")}
                             onLoadingChanged={action("onLoadingChanged")}
                             configPanelClassName={DoNotRenderConfigPanel}
-                            featureFlags={DefaultSettings}
+                            featureFlags={settings}
                             config={gdcConfig}
                         />
                     </div>

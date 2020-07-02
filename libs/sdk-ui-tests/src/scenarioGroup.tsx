@@ -17,6 +17,7 @@ import {
 import intersection = require("lodash/intersection");
 import identity = require("lodash/identity");
 import cloneDeep = require("lodash/cloneDeep");
+import { ISettings } from "@gooddata/sdk-backend-spi";
 
 //
 // Scenario groups
@@ -63,6 +64,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     private defaultTags: ScenarioTag[] = [];
     private defaultTestTypes: TestTypes[] = ["api", "visual"];
     private defaultWorkspaceType: WorkspaceType = "reference-workspace";
+    private defaultBackendSettings: ISettings = {};
 
     constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
 
@@ -108,6 +110,12 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         return this;
     }
 
+    public withDefaultBackendSettings(settings: ISettings): ScenarioGroup<T> {
+        this.defaultBackendSettings = settings;
+
+        return this;
+    }
+
     /**
      * Adds a new test scenarios for a component. The scenario specifies name and visualization props (sans backend
      * and workspace .. these will be injected by framework).
@@ -129,6 +137,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         builder.withTags(...this.defaultTags);
         builder.withTests(...this.defaultTestTypes);
         builder.withWorkspaceType(this.defaultWorkspaceType);
+        builder.withBackendSettings(this.defaultBackendSettings);
         this.insertScenario(m(builder).build());
 
         return this;

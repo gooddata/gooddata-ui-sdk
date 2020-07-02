@@ -3,7 +3,7 @@ import identity = require("lodash/identity");
 import isEmpty = require("lodash/isEmpty");
 import React from "react";
 import SparkMD5 from "spark-md5";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, ISettings } from "@gooddata/sdk-backend-spi";
 import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight } from "@gooddata/sdk-model";
@@ -88,6 +88,11 @@ export interface IScenario<T extends VisProps> {
     readonly component: React.ComponentType<T>;
 
     /**
+     * Backend settings to use when testing this scenario.
+     */
+    readonly backendSettings: ISettings;
+
+    /**
      * Type of test workspace that supplies test data for this scenario.
      */
     readonly workspaceType: WorkspaceType;
@@ -138,6 +143,7 @@ export class ScenarioBuilder<T extends VisProps> {
     private insightConverter: InsightConverter = identity;
     private workspaceType: WorkspaceType = "reference-workspace";
     private customDataCapture: ScenarioDataCapture = {};
+    private backendSettings: ISettings = {};
 
     constructor(
         private readonly vis: string,
@@ -167,6 +173,12 @@ export class ScenarioBuilder<T extends VisProps> {
 
     public withInsightConverter(converter: InsightConverter): ScenarioBuilder<T> {
         this.insightConverter = converter;
+
+        return this;
+    }
+
+    public withBackendSettings(settings: ISettings): ScenarioBuilder<T> {
+        this.backendSettings = settings;
 
         return this;
     }
@@ -209,6 +221,7 @@ export class ScenarioBuilder<T extends VisProps> {
             workspaceType,
             customDataCapture,
             groupName,
+            backendSettings,
         } = this;
         const hasher = new SparkMD5();
         const fullyQualifiedName = `${vis} - ${groupName.join("/")} - ${name}`;
@@ -238,6 +251,7 @@ export class ScenarioBuilder<T extends VisProps> {
             customDataCapture,
             groupName,
             fullyQualifiedName,
+            backendSettings,
             asTestInput: (): ScenarioTestInput<T> => {
                 return [name, component, propsFactory, tags, insightId];
             },
