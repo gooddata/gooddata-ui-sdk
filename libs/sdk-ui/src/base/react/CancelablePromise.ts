@@ -7,6 +7,7 @@ import isError = require("lodash/isError");
 export interface ICancelablePromise<T> {
     promise: Promise<T>;
     cancel: (reason?: string) => void;
+    getHasFulfilled: () => boolean;
 }
 
 /**
@@ -56,11 +57,26 @@ export const isCancelError = (obj: any): obj is CancelError => {
 export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
     let cancelReason: string | undefined;
     let hasCanceled = false;
+    let hasFulfilled = false;
 
     const wrappedPromise = new Promise<T>((resolve, reject) => {
         promise.then(
-            (value) => (hasCanceled ? reject(new CancelError(cancelReason)) : resolve(value)),
-            (error) => (hasCanceled ? reject(new CancelError(cancelReason)) : reject(error)),
+            (value) => {
+                if (hasCanceled) {
+                    reject(new CancelError(cancelReason));
+                } else {
+                    hasFulfilled = true;
+                    resolve(value);
+                }
+            },
+            (error) => {
+                if (hasCanceled) {
+                    reject(new CancelError(cancelReason));
+                } else {
+                    hasFulfilled = true;
+                    reject(error);
+                }
+            },
         );
     });
 
@@ -70,5 +86,6 @@ export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
             hasCanceled = true;
             cancelReason = reason;
         },
+        getHasFulfilled: () => hasFulfilled,
     };
 }

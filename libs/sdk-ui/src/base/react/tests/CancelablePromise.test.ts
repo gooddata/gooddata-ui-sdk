@@ -35,6 +35,31 @@ describe("CancelablePromise", () => {
         expect(result).toBe(RESULT);
     });
 
+    it("getHasFulfilled should return false before promise resolution", async () => {
+        const RESULT = "RESULT";
+        const dummyPromise = createDummyPromise({
+            result: RESULT,
+            delay: 100,
+        });
+        const cancelableDummyPromise = makeCancelable(dummyPromise);
+        const hasFulfilled = cancelableDummyPromise.getHasFulfilled();
+
+        expect(hasFulfilled).toBe(false);
+    });
+
+    it("getHasFulfilled should return true after promise resolution", async () => {
+        const RESULT = "RESULT";
+        const dummyPromise = createDummyPromise({
+            result: RESULT,
+            delay: 100,
+        });
+        const cancelableDummyPromise = makeCancelable(dummyPromise);
+        await cancelableDummyPromise.promise;
+        const hasFulfilled = cancelableDummyPromise.getHasFulfilled();
+
+        expect(hasFulfilled).toBe(true);
+    });
+
     it("should throw original promise error when cancel was invoked after promise resolution", async () => {
         const ERROR = new Error("ORIGINAL ERROR");
         const dummyPromise = createDummyPromise({
