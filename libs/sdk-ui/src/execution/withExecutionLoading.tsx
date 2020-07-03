@@ -12,6 +12,7 @@ import {
     createExportFunction,
     createExportErrorFunction,
     ErrorCodes,
+    isCancelError,
 } from "../base";
 
 /**
@@ -274,6 +275,10 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
             private async fetch(): Promise<void> {
                 if (this.cancelablePromise) {
                     this.cancelablePromise.cancel();
+                    // On refetch, when cancelablePromise was not fulfilled, throw cancel error immediately
+                    if (!this.cancelablePromise.getHasFulfilled()) {
+                        this.setError(new GoodDataSdkError(ErrorCodes.CANCELLED));
+                    }
                 }
 
                 this.startLoading();
@@ -284,9 +289,14 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
 
                 try {
                     const result = await this.cancelablePromise.promise;
-                    this.setResult(result);
-                } catch (err) {
                     if (!this.isWithExecutionLoadingUnmounted) {
+                        this.setResult(result);
+                    }
+                } catch (err) {
+                    // We throw cancel error immediately on refetch, when cancelablePromise was not fulfilled,
+                    // but CancelablePromise throw cancel error after promise resolution, so here
+                    // we don't care about it anymore.
+                    if (!this.isWithExecutionLoadingUnmounted && !isCancelError(err)) {
                         const sdkError = convertError(err);
                         this.setError(sdkError);
                     }
@@ -317,7 +327,7 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
                 this.isWithExecutionLoadingUnmounted = true;
                 if (this.cancelablePromise) {
                     this.cancelablePromise.cancel();
-                    if (this.cancelablePromise && !this.cancelablePromise.getHasFulfilled()) {
+                    if (!this.cancelablePromise.getHasFulfilled()) {
                         this.setError(new GoodDataSdkError(ErrorCodes.CANCELLED));
                     }
                 }

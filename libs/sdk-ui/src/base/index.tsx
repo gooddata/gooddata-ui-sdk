@@ -29,7 +29,7 @@ export { WorkspaceProvider, useWorkspace, withWorkspace } from "./react/Workspac
 export { usePagedResource } from "./react/usePagedResource";
 export { withContexts } from "./react/withContexts";
 export { wrapDisplayName } from "./react/wrapDisplayName";
-export { CancelError, ICancelablePromise, makeCancelable } from "./react/CancelablePromise";
+export { CancelError, ICancelablePromise, makeCancelable, isCancelError } from "./react/CancelablePromise";
 export { withEntireDataView, ILoadingInjectedProps } from "./react/legacy/withEntireDataView";
 
 /*
