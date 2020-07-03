@@ -56,12 +56,10 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "primaryChartType": "line",
-                    "secondaryChartType": "column",
-                    "stackMeasures": true
-                }
+            "controls": {
+                "primaryChartType": "line",
+                "secondaryChartType": "column",
+                "stackMeasures": true
             }
         }
     }

@@ -56,11 +56,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "legend": {
-                        "position": "bottom"
-                    }
+            "controls": {
+                "legend": {
+                    "position": "bottom"
                 }
             }
         }

@@ -56,11 +56,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "dataLabels": {
-                        "visible": true
-                    }
+            "controls": {
+                "dataLabels": {
+                    "visible": true
                 }
             }
         }

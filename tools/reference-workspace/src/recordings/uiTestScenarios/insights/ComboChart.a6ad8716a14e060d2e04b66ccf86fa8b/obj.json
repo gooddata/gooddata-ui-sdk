@@ -84,12 +84,10 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "dualAxis": false,
-                    "stackMeasures": false,
-                    "stackMeasuresToPercent": true
-                }
+            "controls": {
+                "dualAxis": false,
+                "stackMeasures": false,
+                "stackMeasuresToPercent": true
             }
         }
     }

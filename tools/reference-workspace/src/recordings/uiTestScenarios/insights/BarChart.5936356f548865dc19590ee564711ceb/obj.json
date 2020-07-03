@@ -65,28 +65,26 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "secondary_xaxis": {
-                        "measures": ["m_acugFHNJgsBy"],
-                        "name": {
-                            "position": "left"
-                        }
-                    },
-                    "xaxis": {
-                        "name": {
-                            "position": "left"
-                        }
-                    },
-                    "yaxis": {
-                        "name": {
-                            "position": "bottom"
-                        }
-                    },
-                    "secondary_yaxis": {
-                        "name": {
-                            "position": "bottom"
-                        }
+            "controls": {
+                "secondary_xaxis": {
+                    "measures": ["m_acugFHNJgsBy"],
+                    "name": {
+                        "position": "left"
+                    }
+                },
+                "xaxis": {
+                    "name": {
+                        "position": "left"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "bottom"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "position": "bottom"
                     }
                 }
             }
