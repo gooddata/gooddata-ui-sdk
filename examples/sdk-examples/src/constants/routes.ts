@@ -29,6 +29,7 @@ import { GeoPushpin } from "../examples/geoPushpin";
 // import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
 import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
 import { PivotTableDynamic } from "../examples/hidden/pivotTableDynamic";
+import { PivotTableSizing } from "../examples/hidden/pivotTableSizing";
 
 import { Login } from "../components/login";
 import { Registration } from "../components/registration";
@@ -154,6 +155,11 @@ export const hiddenPaths = [
     // { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     // { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
     { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
+    {
+        path: "/hidden/pivot-table-sizing",
+        title: "Pivot Table Sizing",
+        Component: PivotTableSizing,
+    },
     // TODO BB-1694 - Add Measure Value Filter example to the menu
     // { path: "/hidden/measure-value-filter", title: "Measure Value Filter", Component: MeasureValueFilter },
     // {
