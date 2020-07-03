@@ -287,6 +287,7 @@ describe("PluggablePivotTable", () => {
                 },
             };
         }
+        const emptyPropertiesMeta = {};
 
         function spyOnFakeElement() {
             const fakeElement: any = {};
@@ -302,7 +303,7 @@ describe("PluggablePivotTable", () => {
             const createElementSpy = spyOnFakeElement();
 
             const options = getDefaultOptions();
-            pivotTable.update({ ...options }, testMocks.emptyInsight, executionFactory);
+            pivotTable.update({ ...options }, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
 
             expect(renderSpy).toHaveBeenCalledTimes(0);
 
@@ -321,7 +322,7 @@ describe("PluggablePivotTable", () => {
             const createElementSpy = spyOnFakeElement();
 
             const options = getDefaultOptions();
-            pivotTable.update(options, testMocks.dummyInsight, executionFactory);
+            pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
 
             expect(createElementSpy).toHaveBeenCalledTimes(1);
             expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
@@ -344,7 +345,7 @@ describe("PluggablePivotTable", () => {
             const createElementSpy = spyOnFakeElement();
 
             const options = getDefaultOptions();
-            pivotTable.update(options, testMocks.dummyInsight, executionFactory);
+            pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
 
             expect(createElementSpy).toHaveBeenCalledTimes(1);
             expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
@@ -362,7 +363,7 @@ describe("PluggablePivotTable", () => {
             const createElementSpy = spyOnFakeElement();
 
             const options = getDefaultOptions();
-            pivotTable.update(options, testMocks.dummyInsight, executionFactory);
+            pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
 
             expect(createElementSpy).toHaveBeenCalledTimes(1);
             expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);

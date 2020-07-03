@@ -2,12 +2,10 @@
 
 exports[`chartConfigToControls should convert secondary xaxis alignment - high 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "secondary_xaxis": Object {
-        "name": Object {
-          "position": "right",
-        },
+  "controls": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "right",
       },
     },
   },
@@ -16,12 +14,10 @@ Object {
 
 exports[`chartConfigToControls should convert secondary xaxis alignment - low 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "secondary_xaxis": Object {
-        "name": Object {
-          "position": "left",
-        },
+  "controls": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "left",
       },
     },
   },
@@ -30,12 +26,10 @@ Object {
 
 exports[`chartConfigToControls should convert secondary xaxis alignment - middle 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "secondary_xaxis": Object {
-        "name": Object {
-          "position": "center",
-        },
+  "controls": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "center",
       },
     },
   },
@@ -44,12 +38,10 @@ Object {
 
 exports[`chartConfigToControls should convert secondary yaxis alignment - high 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "secondary_yaxis": Object {
-        "name": Object {
-          "position": "top",
-        },
+  "controls": Object {
+    "secondary_yaxis": Object {
+      "name": Object {
+        "position": "top",
       },
     },
   },
@@ -58,12 +50,10 @@ Object {
 
 exports[`chartConfigToControls should convert secondary yaxis alignment - low 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "secondary_yaxis": Object {
-        "name": Object {
-          "position": "bottom",
-        },
+  "controls": Object {
+    "secondary_yaxis": Object {
+      "name": Object {
+        "position": "bottom",
       },
     },
   },
@@ -72,12 +62,10 @@ Object {
 
 exports[`chartConfigToControls should convert secondary yaxis alignment - middle 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "secondary_yaxis": Object {
-        "name": Object {
-          "position": "center",
-        },
+  "controls": Object {
+    "secondary_yaxis": Object {
+      "name": Object {
+        "position": "center",
       },
     },
   },
@@ -86,12 +74,10 @@ Object {
 
 exports[`chartConfigToControls should convert xaxis alignment - high 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "xaxis": Object {
-        "name": Object {
-          "position": "right",
-        },
+  "controls": Object {
+    "xaxis": Object {
+      "name": Object {
+        "position": "right",
       },
     },
   },
@@ -100,12 +86,10 @@ Object {
 
 exports[`chartConfigToControls should convert xaxis alignment - low 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "xaxis": Object {
-        "name": Object {
-          "position": "left",
-        },
+  "controls": Object {
+    "xaxis": Object {
+      "name": Object {
+        "position": "left",
       },
     },
   },
@@ -114,12 +98,10 @@ Object {
 
 exports[`chartConfigToControls should convert xaxis alignment - middle 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "xaxis": Object {
-        "name": Object {
-          "position": "center",
-        },
+  "controls": Object {
+    "xaxis": Object {
+      "name": Object {
+        "position": "center",
       },
     },
   },
@@ -128,12 +110,10 @@ Object {
 
 exports[`chartConfigToControls should convert yaxis alignment - high 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "yaxis": Object {
-        "name": Object {
-          "position": "top",
-        },
+  "controls": Object {
+    "yaxis": Object {
+      "name": Object {
+        "position": "top",
       },
     },
   },
@@ -142,12 +122,10 @@ Object {
 
 exports[`chartConfigToControls should convert yaxis alignment - low 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "yaxis": Object {
-        "name": Object {
-          "position": "bottom",
-        },
+  "controls": Object {
+    "yaxis": Object {
+      "name": Object {
+        "position": "bottom",
       },
     },
   },
@@ -156,12 +134,10 @@ Object {
 
 exports[`chartConfigToControls should convert yaxis alignment - middle 1`] = `
 Object {
-  "properties": Object {
-    "controls": Object {
-      "yaxis": Object {
-        "name": Object {
-          "position": "center",
-        },
+  "controls": Object {
+    "yaxis": Object {
+      "name": Object {
+        "position": "center",
       },
     },
   },

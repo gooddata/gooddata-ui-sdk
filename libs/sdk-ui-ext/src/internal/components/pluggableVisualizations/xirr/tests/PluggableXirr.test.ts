@@ -52,6 +52,8 @@ describe("PluggableXirr", () => {
     });
 
     describe("update", () => {
+        const emptyPropertiesMeta = {};
+
         function getTestOptions(): IVisProps {
             const drillableItems: IDrillableItem[] = [];
             return {
@@ -77,7 +79,7 @@ describe("PluggableXirr", () => {
             const xirr = createComponent();
             const options: IVisProps = getTestOptions();
 
-            xirr.update({ ...options }, testMocks.emptyInsight, executionFactory);
+            xirr.update({ ...options }, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
 
             expect(reactRenderSpy).toHaveBeenCalledTimes(0);
 
@@ -95,7 +97,7 @@ describe("PluggableXirr", () => {
             const xirr = createComponent({ ...defaultProps, renderFun: mockRenderFun });
             const options: IVisProps = getTestOptions();
 
-            xirr.update(options, testMocks.insightWithSingleMeasure, executionFactory);
+            xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
             expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreXirr);
             expect(mockRenderFun).toHaveBeenCalledWith(
@@ -122,7 +124,7 @@ describe("PluggableXirr", () => {
 
             const options: IVisProps = getTestOptions();
 
-            xirr.update(options, testMocks.insightWithSingleMeasure, executionFactory);
+            xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
             expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreXirr);
 

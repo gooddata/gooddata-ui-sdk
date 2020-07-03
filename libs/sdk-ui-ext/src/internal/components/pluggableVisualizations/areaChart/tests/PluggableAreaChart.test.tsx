@@ -139,6 +139,7 @@ describe("PluggableAreaChart", () => {
             locale: "en-US",
             custom: {},
         };
+        const emptyPropertiesMeta = {};
 
         const verifyStackMeasuresConfig = (
             chart: PluggableAreaChart,
@@ -148,10 +149,8 @@ describe("PluggableAreaChart", () => {
             const visualizationProperties =
                 stackMeasures !== null
                     ? {
-                          properties: {
-                              controls: {
-                                  stackMeasures,
-                              },
+                          controls: {
+                              stackMeasures,
                           },
                       }
                     : {};
@@ -160,7 +159,7 @@ describe("PluggableAreaChart", () => {
                 visualizationProperties,
             );
             const expected = stackMeasures === null ? true : stackMeasures;
-            chart.update(options, testInsight, executionFactory);
+            chart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
             const renderCallsCount = spyOnRender.mock.calls.length;
             const renderArguments = spyOnRender.mock.calls[renderCallsCount - 1][0];
             expect(renderArguments.props.config.stackMeasures).toBe(expected);
@@ -193,7 +192,7 @@ describe("PluggableAreaChart", () => {
                 visualizationProperties,
             );
 
-            areaChart.update(options, testInsight, executionFactory);
+            areaChart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
             const renderCallsCount = mockRenderFun.mock.calls.length;
             const renderArguments: any = mockRenderFun.mock.calls[renderCallsCount - 1][0];
@@ -206,11 +205,9 @@ describe("PluggableAreaChart", () => {
             const areaChart = createComponent({ ...defaultProps, renderFun: mockRenderFun });
 
             const visualizationProperties = {
-                properties: {
-                    controls: {
-                        stackMeasures: true,
-                        stackMeasuresToPercent: true,
-                    },
+                controls: {
+                    stackMeasures: true,
+                    stackMeasuresToPercent: true,
                 },
             };
             areaChart.setCustomControlsProperties({
@@ -223,7 +220,7 @@ describe("PluggableAreaChart", () => {
                 visualizationProperties,
             );
 
-            areaChart.update(options, testInsight, executionFactory);
+            areaChart.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
             const renderCallsCount = mockRenderFun.mock.calls.length;
             const renderArguments: any = mockRenderFun.mock.calls[renderCallsCount - 1][0];

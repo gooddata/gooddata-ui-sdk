@@ -39,21 +39,19 @@ describe("PluggableColumnChart", () => {
         };
 
         const visualizationProperties = {
-            properties: {
-                controls: {
-                    yaxis: {
-                        rotation: "60",
-                    },
-                    xaxis: {
-                        labelsEnabled: false,
-                    },
-                    legend: {
-                        position: "left",
-                        enabled: false,
-                    },
-                    unsupported: {
-                        foo: "bar",
-                    },
+            controls: {
+                yaxis: {
+                    rotation: "60",
+                },
+                xaxis: {
+                    labelsEnabled: false,
+                },
+                legend: {
+                    position: "left",
+                    enabled: false,
+                },
+                unsupported: {
+                    foo: "bar",
                 },
             },
         };
