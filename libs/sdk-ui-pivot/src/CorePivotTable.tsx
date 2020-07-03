@@ -474,6 +474,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     bottom: 0,
                     background: "white",
                 }}
+                className="s-loading"
             >
                 {LoadingComponent ? <LoadingComponent /> : null}
             </div>
