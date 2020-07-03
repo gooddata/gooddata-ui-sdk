@@ -293,6 +293,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
         const { onLoadingChanged } = this.props;
+
         if (onLoadingChanged) {
             onLoadingChanged(loadingState);
         }
@@ -474,7 +475,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     background: "white",
                 }}
             >
-                <LoadingComponent />
+                {LoadingComponent ? <LoadingComponent /> : null}
             </div>
         );
     }
@@ -709,6 +710,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private shouldPerformAutoresize() {
+        if (!this.gridApi) {
+            /*
+             * This is here because of the various timeouts involved in pivot table rendering. Before code
+             * gets here, the table may be in a re-init stage
+             */
+            return false;
+        }
+
         const horizontalPixelRange = this.gridApi.getHorizontalPixelRange();
         const verticalPixelRange = this.gridApi.getVerticalPixelRange();
 
@@ -945,18 +954,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             await this.autoresizeColumns(event);
         }
 
-        // TODO: perhaps add this here? :)
-        // this.updateStickyRow();
-    };
-
-    private gridColumnsChanged = () => {
         this.updateStickyRow();
     };
 
     private onModelUpdated = () => {
-        // TODO: check this one out. v7 has some interplay of auto-sizing and sticky header.
-        //  the auto-sizing must not be triggered here - see onFirstDataRendered above. perhaps
-        //  this update sticky should be there as well?
+        this.updateStickyRow();
+    };
+
+    private gridColumnsChanged = () => {
         this.updateStickyRow();
     };
 
@@ -1267,6 +1272,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             onColumnResized: this.onGridColumnResized,
             onGridSizeChanged: this.gridSizeChanged,
             onGridColumnsChanged: this.gridColumnsChanged,
+            onModelUpdated: this.onModelUpdated,
 
             // Basic options
             suppressMovableColumns: true,
@@ -1284,7 +1290,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             maxBlocksInCache: 10,
             onGridReady: this.onGridReady,
             onFirstDataRendered: this.onFirstDataRendered,
-            onModelUpdated: this.onModelUpdated,
             onBodyScroll: this.onBodyScroll,
 
             // this provides persistent row selection (if enabled)
