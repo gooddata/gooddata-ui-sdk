@@ -4,6 +4,7 @@ import flatMap = require("lodash/flatMap");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
 import isNil = require("lodash/isNil");
+import isEmpty = require("lodash/isEmpty");
 import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import {
     attributeLocalId,
@@ -24,6 +25,9 @@ import {
     ISortItem,
     newAttributeSort,
     measureLocalId,
+    insightSorts,
+    insightBucket,
+    bucketAttribute,
 } from "@gooddata/sdk-model";
 
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -378,6 +382,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         return {
             intl: this.intl,
             ErrorComponent: null as any,
+            LoadingComponent: null as any,
 
             onDrill: this.onDrill,
             afterRender: this.afterRender,
@@ -404,7 +409,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const height = dimensions?.height;
         const { drillableItems } = custom;
 
-        const execution = executionFactory.forInsight(insight).withDimensions(...this.getDimensions(insight));
+        const execution = executionFactory
+            .forInsight(insight)
+            .withDimensions(...this.getDimensions(insight))
+            .withSorting(...getPivotTableSortItems(insight));
 
         const columnWidths: ColumnWidthItem[] | undefined = getColumnWidthsFromProperties(
             insightProperties(insight),
@@ -594,4 +602,29 @@ export function createPivotTableConfig(
         ...tableConfig,
         columnSizing,
     };
+}
+
+/**
+ * This function exists to overcome AD weirdness where AD will sometimes send insight without any
+ * sorts even if the pivot table should be sorted by default by the first row attribute in ascending order. Code here
+ * fixes this symptom and ensures the default sort is in place.
+ *
+ * Note: while this may seem small thing, it's actually a messy business. When rendering / switching to the pivot
+ * table the AD will call update/render multiple times. Sometimes with sort items, sometimes without sort items. This
+ * can seriously mess up the pivot table in return: the column resizing is susceptible to race conditions and timing
+ * issues. Because of the flurry of calls, the table may not render or may render not resized at all.
+ */
+function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] {
+    const sorts = insightSorts(insight);
+
+    if (!isEmpty(sorts)) {
+        return sorts;
+    }
+
+    const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
+    const rowAttribute = rowBucket && bucketAttribute(rowBucket);
+
+    if (rowAttribute) {
+        return [newAttributeSort(rowAttribute, "asc")];
+    }
 }
