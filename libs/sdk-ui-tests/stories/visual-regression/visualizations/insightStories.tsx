@@ -26,16 +26,16 @@ import {
     andResolver,
     createElementCountResolver,
     ScreenshotReadyWrapper,
-} from "../_infra/ScreenshotReadyWrapper";
-import { withScreenshot } from "../_infra/backstopWrapper";
-import { ConfigurationPanelWrapper } from "../_infra/ConfigurationPanelWrapper";
-import { StorybookBackend } from "../_infra/backend";
+} from "../../_infra/ScreenshotReadyWrapper";
+import { withScreenshot } from "../../_infra/backstopWrapper";
+import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper";
+import { StorybookBackend } from "../../_infra/backend";
 import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
 import { storyGroupFor } from "./storyGroupFactory";
 import groupBy = require("lodash/groupBy");
 import keyBy = require("lodash/keyBy");
 import sortBy = require("lodash/sortBy");
-import { PlugVizStories } from "../_infra/storyGroups";
+import { PlugVizStories } from "../../_infra/storyGroups";
 
 /*
  * Code in this file generates stories that render test scenarios using pluggable visualizations.
