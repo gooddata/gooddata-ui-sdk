@@ -11,7 +11,7 @@ import { IMeasureColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 export const attributeColumnWidthItem = (attribute: IAttribute, width: number) => {
     return {
         attributeColumnWidthItem: {
-            width,
+            width: { value: width },
             attributeIdentifier: attributeLocalId(attribute),
         },
     };
@@ -23,7 +23,7 @@ export const measureColumnWidthItemSimple = (
     obj?: IAttributeLocatorItem[],
 ): IMeasureColumnWidthItem => {
     const measureColumnWidthItemHolder: IMeasureColumnWidthItem["measureColumnWidthItem"] = {
-        width,
+        width: { value: width },
         locators: [
             {
                 measureLocatorItem: {
@@ -49,7 +49,7 @@ export const measureColumnWidthItemSimple = (
 export const allMeasureColumnWidthItem = (width: number) => {
     return {
         measureColumnWidthItem: {
-            width,
+            width: { value: width },
         },
     };
 };

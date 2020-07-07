@@ -14,6 +14,8 @@ export {
 } from "./types";
 
 export {
+    IWeakMeasureColumnWidthItem,
+    isWeakMeasureColumnWidthItem,
     ColumnWidthItem,
     ColumnWidth,
     IAttributeColumnWidthItem,

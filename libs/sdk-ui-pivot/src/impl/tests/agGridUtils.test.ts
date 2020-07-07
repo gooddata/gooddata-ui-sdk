@@ -9,10 +9,14 @@ import {
     getSubtotalStyles,
     cellRenderer,
     getParsedFields,
+    getMappingHeaderMeasureItemLocalIdentifier,
 } from "../agGridUtils";
 import cloneDeep = require("lodash/cloneDeep");
 import identity = require("lodash/identity");
 import { IDimension } from "@gooddata/sdk-model";
+import { getFakeColumn } from "./agGridMock";
+import { IGridHeader } from "../agGridTypes";
+import { IMappingHeader } from "@gooddata/sdk-ui";
 
 describe("getIdsFromUri", () => {
     it("should return array of attribute id and attribute value id", () => {
@@ -227,5 +231,102 @@ describe("getParsedFields", () => {
             ["a", "2071", "12"],
             ["m", "3"],
         ]);
+    });
+});
+
+describe("getMappingHeaderMeasureItemLocalIdentifier", () => {
+    const getColumnDef = (type: string, drillItems: IMappingHeader[]): IGridHeader => ({
+        drillItems,
+        headerName: "Amount",
+        field: "colId",
+        colId: "colId",
+        type,
+        measureIndex: 0,
+        index: 1,
+    });
+    it("should return undefined if it is not measure column", () => {
+        const columnDef: IGridHeader = getColumnDef("ROW_ATTRIBUTE_COLUMN", [
+            {
+                measureHeaderItem: {
+                    identifier: "1",
+                    uri: "/gdc/md/storybook/obj/1",
+                    localIdentifier: "m1",
+                    format: "#,##0.00",
+                    name: "Amount",
+                },
+            },
+        ]);
+
+        expect(getMappingHeaderMeasureItemLocalIdentifier(columnDef)).toBeUndefined();
+    });
+
+    it("should return undefined if drillItems missing", () => {
+        const columnDef: IGridHeader = getColumnDef("MEASURE_COLUMN", []);
+
+        expect(getMappingHeaderMeasureItemLocalIdentifier(columnDef)).toBeUndefined();
+    });
+
+    it("should return localIdentifier of first measure", () => {
+        const columnDef: IGridHeader = getColumnDef("MEASURE_COLUMN", [
+            {
+                attributeHeaderItem: {
+                    uri: "/gdc/md/storybook/obj/5/elements?id=3",
+                    name: "high",
+                },
+            },
+            {
+                measureHeaderItem: {
+                    identifier: "1",
+                    uri: "/gdc/md/storybook/obj/1",
+                    localIdentifier: "m1",
+                    format: "#,##0.00",
+                    name: "Amount",
+                },
+            },
+            {
+                measureHeaderItem: {
+                    identifier: "2",
+                    uri: "/gdc/md/storybook/obj/2",
+                    localIdentifier: "m2",
+                    format: "#,##0.00",
+                    name: "Big Amount",
+                },
+            },
+        ]);
+
+        expect(getMappingHeaderMeasureItemLocalIdentifier(columnDef)).toBe("m1");
+    });
+
+    it("should work with column object", () => {
+        const columnDef: IGridHeader = getColumnDef("MEASURE_COLUMN", [
+            {
+                attributeHeaderItem: {
+                    uri: "/gdc/md/storybook/obj/5/elements?id=3",
+                    name: "high",
+                },
+            },
+            {
+                measureHeaderItem: {
+                    identifier: "1",
+                    uri: "/gdc/md/storybook/obj/1",
+                    localIdentifier: "m1",
+                    format: "#,##0.00",
+                    name: "Amount",
+                },
+            },
+            {
+                measureHeaderItem: {
+                    identifier: "2",
+                    uri: "/gdc/md/storybook/obj/2",
+                    localIdentifier: "m2",
+                    format: "#,##0.00",
+                    name: "Big Amount",
+                },
+            },
+        ]);
+
+        const column = getFakeColumn(columnDef);
+
+        expect(getMappingHeaderMeasureItemLocalIdentifier(column)).toBe("m1");
     });
 });

@@ -110,6 +110,7 @@ import {
     resetColumnsWidthToDefault,
     resizeAllMeasuresColumns,
     ResizedColumnsStore,
+    resizeWeakMeasureColumns,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
 } from "./impl/agGridColumnSizing";
@@ -163,7 +164,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         config: {},
         groupRows: true,
         onColumnResized: noop,
-        onError: noop,
     };
 
     private readonly errorMap: IErrorDescriptors;
@@ -199,6 +199,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private lastResizedHeight = 0;
     private numberOfColumnResizedCalls = 0;
     private isMetaOrCtrlKeyPressed = false;
+    private isAltKeyPressed = false;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -655,7 +656,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 ...acc,
                 [columnId]: {
                     width: col.getActualWidth(),
-                    source: ColumnEventSourceType.AUTOSIZE_COLUMNS,
                 },
             };
         }, this.autoResizedColumns);
@@ -783,7 +783,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
             this.growToFittedColumns[id] = {
                 width: col.getActualWidth(),
-                source: ColumnEventSourceType.FIT_GROW,
             };
         });
     }
@@ -1091,9 +1090,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             this.resizedColumnsStore.removeFromManuallyResizedColumn(column);
         }
 
+        column.getColDef().suppressSizeToFit = false;
+
         if (this.isColumnAutoResized(id)) {
             this.columnApi.setColumnWidth(column, this.autoResizedColumns[id].width);
-            column.getColDef().suppressSizeToFit = false;
             return;
         }
 
@@ -1101,7 +1101,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (isColumnDisplayed(this.columnApi.getAllDisplayedVirtualColumns(), column)) {
             // skip columns out of viewport because these can not be autoresized
             this.resizedColumnsStore.addToManuallyResizedColumn(column, true);
-            column.getColDef().suppressSizeToFit = false;
         }
     }
 
@@ -1126,12 +1125,24 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     };
 
+    private getAllMeasureColumns() {
+        return this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
+    }
+
     private onColumnsManualReset = async (columns: Column[]) => {
         let columnsToReset = columns;
 
         if (this.isAllMeasureResizeOperation(columns)) {
             this.resizedColumnsStore.removeAllMeasureColumns();
-            columnsToReset = this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
+            columnsToReset = this.getAllMeasureColumns();
+        }
+
+        if (this.isWeakMeasureResizeOperation(columns)) {
+            columnsToReset = this.resizedColumnsStore.getMatchingColumnsByMeasure(
+                columns[0],
+                this.getAllMeasureColumns(),
+            );
+            this.resizedColumnsStore.removeWeakMeasureColumn(columns[0]);
         }
 
         for (const column of columnsToReset) {
@@ -1145,9 +1156,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return this.isMetaOrCtrlKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
     }
 
+    private isWeakMeasureResizeOperation(columns: Column[]) {
+        return this.isAltKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
+    }
+
     private onColumnsManualResized = (columns: Column[]) => {
         if (this.isAllMeasureResizeOperation(columns)) {
             resizeAllMeasuresColumns(this.columnApi, this.resizedColumnsStore, columns[0]);
+        } else if (this.isWeakMeasureResizeOperation(columns)) {
+            resizeWeakMeasureColumns(this.columnApi, this.resizedColumnsStore, columns[0]);
         } else {
             columns.forEach((column) => {
                 this.resizedColumnsStore.addToManuallyResizedColumn(column);
@@ -1200,6 +1217,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             event.stopPropagation();
         }
         this.isMetaOrCtrlKeyPressed = event.metaKey || event.ctrlKey;
+        this.isAltKeyPressed = event.altKey;
     };
 
     //

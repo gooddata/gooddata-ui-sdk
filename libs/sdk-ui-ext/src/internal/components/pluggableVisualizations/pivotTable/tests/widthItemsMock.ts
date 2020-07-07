@@ -4,6 +4,7 @@ import {
     IMeasureColumnWidthItem,
     IAttributeColumnWidthItem,
     IAllMeasureColumnWidthItem,
+    IWeakMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
 export const validMeasureColumnWidthItem: IMeasureColumnWidthItem = {
@@ -28,6 +29,17 @@ export const validMeasureColumnWidthItem: IMeasureColumnWidthItem = {
 export const validAllMeasureColumnWidthItem: IAllMeasureColumnWidthItem = {
     measureColumnWidthItem: {
         width: { value: 400 },
+    },
+};
+
+export const validWeakMeasureColumnWidthItem: IWeakMeasureColumnWidthItem = {
+    measureColumnWidthItem: {
+        width: { value: 100 },
+        locator: {
+            measureLocatorItem: {
+                measureIdentifier: "m1",
+            },
+        },
     },
 };
 
@@ -118,5 +130,16 @@ export const invalidMeasureColumnWidthItemLocatorsTooShort: IMeasureColumnWidthI
                 },
             },
         ],
+    },
+};
+
+export const transformedWeakMeasureColumnWidth: IWeakMeasureColumnWidthItem = {
+    measureColumnWidthItem: {
+        width: { value: 100 },
+        locator: {
+            measureLocatorItem: {
+                measureIdentifier: "m1",
+            },
+        },
     },
 };

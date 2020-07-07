@@ -18,6 +18,8 @@ import {
     isMeasureGroupDescriptor,
     IExecutionResult,
     IAttributeDescriptor,
+    IMeasureDescriptor,
+    isMeasureDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { IDimension } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -230,4 +232,25 @@ export const isMeasureColumn = (item: Column | ColDef) => {
 
 export const isColumnDisplayed = (displayedColumns: Column[], column: Column) => {
     return displayedColumns.some((displayedColumn) => displayedColumn.getColId() === column.getColId());
+};
+
+const getMappingHeaderMeasureItem = (item: Column | ColDef): IMeasureDescriptor | undefined => {
+    if (!isMeasureColumn(item)) {
+        return;
+    }
+
+    const headers: IMappingHeader[] = isColumn(item)
+        ? (item.getColDef() as IGridHeader).drillItems
+        : (item as IGridHeader).drillItems;
+
+    if (headers) {
+        return headers.filter(isMeasureDescriptor)[0];
+    }
+};
+
+export const getMappingHeaderMeasureItemLocalIdentifier = (item: Column | ColDef): string | undefined => {
+    const measure = getMappingHeaderMeasureItem(item);
+    if (measure) {
+        return measure.measureHeaderItem.localIdentifier;
+    }
 };

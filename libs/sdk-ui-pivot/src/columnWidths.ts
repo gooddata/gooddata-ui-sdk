@@ -13,18 +13,12 @@ export enum UIClick {
     DOUBLE_CLICK = 2,
 }
 
-export interface IResizedColumnsItem {
-    width: number;
-    source: ColumnEventSourceType;
-}
-
 export interface IResizedColumns {
-    [columnIdentifier: string]: IResizedColumnsItem;
+    [columnIdentifier: string]: IManuallyResizedColumnsItem;
 }
 
 export interface IManuallyResizedColumnsItem {
     width: number;
-    source: ColumnEventSourceType;
     allowGrowToFit?: boolean;
 }
 
@@ -87,10 +81,21 @@ export interface IAllMeasureColumnWidthItem {
 /**
  * @public
  */
+export interface IWeakMeasureColumnWidthItem {
+    measureColumnWidthItem: {
+        width: IAbsoluteColumnWidth;
+        locator: IMeasureLocatorItem;
+    };
+}
+
+/**
+ * @public
+ */
 export type ColumnWidthItem =
     | IAttributeColumnWidthItem
     | IMeasureColumnWidthItem
-    | IAllMeasureColumnWidthItem;
+    | IAllMeasureColumnWidthItem
+    | IWeakMeasureColumnWidthItem;
 
 type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 interface IAttributeLocatorItem {
@@ -134,7 +139,21 @@ export function isAllMeasureColumnWidthItem(
     return (
         !isEmpty(columnWidthItem) &&
         (columnWidthItem as IAllMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
-        (columnWidthItem as IMeasureColumnWidthItem).measureColumnWidthItem.locators === undefined
+        (columnWidthItem as IMeasureColumnWidthItem).measureColumnWidthItem.locators === undefined &&
+        (columnWidthItem as IWeakMeasureColumnWidthItem).measureColumnWidthItem.locator === undefined
+    );
+}
+
+/**
+ * @public
+ */
+export function isWeakMeasureColumnWidthItem(
+    columnWidthItem: ColumnWidthItem,
+): columnWidthItem is IWeakMeasureColumnWidthItem {
+    return (
+        !isEmpty(columnWidthItem) &&
+        (columnWidthItem as IWeakMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
+        (columnWidthItem as IWeakMeasureColumnWidthItem).measureColumnWidthItem.locator !== undefined
     );
 }
 
