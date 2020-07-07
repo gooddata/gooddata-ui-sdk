@@ -162,6 +162,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         pushData: noop,
         onExportReady: noop,
         onLoadingChanged: noop,
+        onError: noop,
         onDrill: () => true,
         ErrorComponent,
         LoadingComponent,
@@ -575,7 +576,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 onExportReady(createExportErrorFunction(error));
             }
 
-            this.props.onError(error);
+            this.props.onError?.(error);
         }
     }
 
