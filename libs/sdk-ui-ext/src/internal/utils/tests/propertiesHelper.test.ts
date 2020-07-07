@@ -315,10 +315,8 @@ describe("propertiesHelper", () => {
 
         it("should return correct column widths", () => {
             const visualizationProperties: IVisualizationProperties = {
-                properties: {
-                    controls: {
-                        columnWidths,
-                    },
+                controls: {
+                    columnWidths,
                 },
             };
             const result = getColumnWidthsFromProperties(visualizationProperties);

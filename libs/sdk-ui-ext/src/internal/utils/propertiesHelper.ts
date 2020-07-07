@@ -215,5 +215,5 @@ export function getHighchartsAxisNameConfiguration(
 export function getColumnWidthsFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ColumnWidthItem[] | undefined {
-    return get(visualizationProperties, "properties.controls.columnWidths");
+    return get(visualizationProperties, "controls.columnWidths");
 }
