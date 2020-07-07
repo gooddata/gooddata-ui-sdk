@@ -19,7 +19,7 @@ import { identifyResponseHeader } from "./agGridHeaders";
 import { IGridHeader } from "./agGridTypes";
 import { ColDef, Column, ColumnApi } from "@ag-grid-community/all-modules";
 import {
-    AbsoluteColumnWidth,
+    ColumnEventSourceType,
     ColumnWidth,
     ColumnWidthItem,
     IAllMeasureColumnWidthItem,
@@ -28,10 +28,11 @@ import {
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
-    isColumnWidthAuto,
     isMeasureColumnWidthItem,
+    IResizedColumns,
+    IAbsoluteColumnWidth,
+    IManuallyResizedColumnsItem,
 } from "../columnWidths";
-import { ColumnEventSourceType, IResizedColumns, IResizedColumnsItem } from "../types";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { isMeasureLocator } from "@gooddata/sdk-model";
@@ -43,6 +44,10 @@ export const MANUALLY_SIZED_MAX_WIDTH = 2000;
 //
 //
 //
+
+export function isColumnWidthAuto(columnWidth: ColumnWidth): boolean {
+    return columnWidth.value === "auto";
+}
 
 export interface IResizedColumnsCollection {
     [columnIdentifier: string]: IResizedColumnsCollectionItem;
@@ -57,12 +62,12 @@ export class ResizedColumnsStore {
     private manuallyResizedColumns: IResizedColumnsCollection;
     private allMeasureColumnWidth: number | null;
 
-    public constructor() {
-        this.manuallyResizedColumns = {};
+    public constructor(manuallyResizedColumns: IResizedColumnsCollection = {}) {
+        this.manuallyResizedColumns = manuallyResizedColumns;
         this.allMeasureColumnWidth = null;
     }
 
-    public getManuallyResizedColumn(item: Column | ColDef): IResizedColumnsItem {
+    public getManuallyResizedColumn(item: Column | ColDef): IManuallyResizedColumnsItem {
         const colId = getColumnIdentifier(item);
 
         if (this.manuallyResizedColumns[colId]) {
@@ -78,13 +83,16 @@ export class ResizedColumnsStore {
         return !!this.getManuallyResizedColumn(item);
     }
 
-    public addToManuallyResizedColumn(column: Column): void {
+    public addToManuallyResizedColumn(column: Column, allowGrowToFit: boolean = false): void {
         this.manuallyResizedColumns[getColumnIdentifier(column)] = {
-            width: column.getActualWidth(),
+            width: {
+                value: column.getActualWidth(),
+                ...getAllowGrowToFitProp(allowGrowToFit),
+            },
             source: ColumnEventSourceType.UI_DRAGGED,
         };
 
-        column.getColDef().suppressSizeToFit = true;
+        column.getColDef().suppressSizeToFit = !allowGrowToFit;
     }
 
     public addAllMeasureColumns(columnWidth: number, allColumns: Column[]) {
@@ -146,7 +154,7 @@ export class ResizedColumnsStore {
 
         if (isAllMeasureColumnWidthItem(allMeasureWidthItem)) {
             const validatedWidth = defaultWidthValidator(allMeasureWidthItem.measureColumnWidthItem.width);
-            this.allMeasureColumnWidth = isAbsoluteColumnWidth(validatedWidth) ? validatedWidth : null;
+            this.allMeasureColumnWidth = isAbsoluteColumnWidth(validatedWidth) ? validatedWidth.value : null;
         } else {
             this.allMeasureColumnWidth = null;
         }
@@ -155,12 +163,14 @@ export class ResizedColumnsStore {
         this.manuallyResizedColumns = columnWidthsByField;
     }
 
-    private convertItem(item: IResizedColumnsCollectionItem): IResizedColumnsItem {
-        // columns with width = auto are hidden
+    private convertItem(item: IResizedColumnsCollectionItem): IManuallyResizedColumnsItem {
+        // columns with width.value = auto are hidden
         if (isAbsoluteColumnWidth(item.width)) {
+            const { width, source } = item;
             return {
-                width: item.width,
-                source: item.source,
+                width: width.value,
+                source,
+                ...getAllowGrowToFitProp(width.allowGrowToFit),
             };
         }
     }
@@ -170,17 +180,19 @@ export class ResizedColumnsStore {
     }
 
     private getAutoSizeItem(): IResizedColumnsCollectionItem {
-        return { width: "auto", source: ColumnEventSourceType.UI_DRAGGED };
+        return { width: { value: "auto" }, source: ColumnEventSourceType.UI_DRAGGED };
     }
 
-    private getAllMeasureColumMapItem(): IResizedColumnsItem {
+    private getAllMeasureColumMapItem(): IManuallyResizedColumnsItem {
         return { width: this.allMeasureColumnWidth, source: ColumnEventSourceType.UI_DRAGGED };
     }
 
     private getAllMeasureColumnWidth(): IAllMeasureColumnWidthItem {
         return {
             measureColumnWidthItem: {
-                width: this.allMeasureColumnWidth,
+                width: {
+                    value: this.allMeasureColumnWidth,
+                },
             },
         };
     }
@@ -227,7 +239,7 @@ export const convertColumnWidthsToMap = (
 const getAttributeColumnWidthItemFieldAndWidth = (
     columnWidthItem: IAttributeColumnWidthItem,
     attributeHeaders: IAttributeDescriptor[],
-): [string, AbsoluteColumnWidth] => {
+): [string, IAbsoluteColumnWidth] => {
     const localIdentifier = columnWidthItem.attributeColumnWidthItem.attributeIdentifier;
 
     const attributeHeader = attributeHeaders.find(
@@ -342,7 +354,10 @@ export const getColumnWidthsFromMap = (
 
 export const defaultWidthValidator = (width: ColumnWidth): ColumnWidth => {
     if (isAbsoluteColumnWidth(width)) {
-        return Math.min(Math.max(width, MIN_WIDTH), MANUALLY_SIZED_MAX_WIDTH);
+        return {
+            ...width,
+            value: Math.min(Math.max(width.value, MIN_WIDTH), MANUALLY_SIZED_MAX_WIDTH),
+        };
     }
     return width;
 };
@@ -354,7 +369,7 @@ export const updateColumnDefinitionsWithWidths = (
     columnDefinitions: IGridHeader[],
     resizedColumnsStore: ResizedColumnsStore,
     autoResizedColumns: IResizedColumns,
-    defaultColumnWidth: AbsoluteColumnWidth,
+    defaultColumnWidth: number,
     isGrowToFitEnabled: boolean,
     growToFittedColumns: IResizedColumns = {},
 ): void => {
@@ -370,7 +385,7 @@ export const updateColumnDefinitionsWithWidths = (
 
             if (manualSize) {
                 columnDefinition.width = manualSize.width;
-                columnDefinition.suppressSizeToFit = true;
+                columnDefinition.suppressSizeToFit = !manualSize.allowGrowToFit;
             } else {
                 columnDefinition.suppressSizeToFit = false;
                 columnDefinition.width = autoResizeSize ? autoResizeSize.width : defaultColumnWidth;
@@ -401,9 +416,9 @@ export const syncSuppressSizeToFitOnColumns = (
     const columns = columnApi.getAllColumns();
 
     columns.forEach((col) => {
-        const resizedColumn = resizedColumnsStore.isColumnManuallyResized(col);
+        const resizedColumn = resizedColumnsStore.getManuallyResizedColumn(col);
         resizedColumn
-            ? (col.getColDef().suppressSizeToFit = true)
+            ? (col.getColDef().suppressSizeToFit = !resizedColumn.allowGrowToFit)
             : (col.getColDef().suppressSizeToFit = false);
     });
 };
@@ -447,3 +462,5 @@ export const resizeAllMeasuresColumns = (
     });
     resizedColumnsStore.addAllMeasureColumns(columnWidth, allColumns);
 };
+
+export const getAllowGrowToFitProp = (allowGrowToFit: boolean) => (allowGrowToFit ? { allowGrowToFit } : {});

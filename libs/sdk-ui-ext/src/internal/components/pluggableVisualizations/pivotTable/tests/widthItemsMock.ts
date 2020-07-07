@@ -8,7 +8,7 @@ import {
 
 export const validMeasureColumnWidthItem: IMeasureColumnWidthItem = {
     measureColumnWidthItem: {
-        width: 100,
+        width: { value: 100 },
         locators: [
             {
                 attributeLocatorItem: {
@@ -27,27 +27,27 @@ export const validMeasureColumnWidthItem: IMeasureColumnWidthItem = {
 
 export const validAllMeasureColumnWidthItem: IAllMeasureColumnWidthItem = {
     measureColumnWidthItem: {
-        width: 400,
+        width: { value: 400 },
     },
 };
 
 export const validAttributeColumnWidthItem: IAttributeColumnWidthItem = {
     attributeColumnWidthItem: {
-        width: 100,
+        width: { value: 100 },
         attributeIdentifier: "a1",
     },
 };
 
 export const invalidAttributeColumnWidthItem: IAttributeColumnWidthItem = {
     attributeColumnWidthItem: {
-        width: 100,
+        width: { value: 100 },
         attributeIdentifier: "invalid",
     },
 };
 
 export const invalidMeasureColumnWidthItem: IMeasureColumnWidthItem = {
     measureColumnWidthItem: {
-        width: 100,
+        width: { value: 100 },
         locators: [
             {
                 attributeLocatorItem: {
@@ -66,7 +66,7 @@ export const invalidMeasureColumnWidthItem: IMeasureColumnWidthItem = {
 
 export const invalidMeasureColumnWidthItemInvalidAttribute: IMeasureColumnWidthItem = {
     measureColumnWidthItem: {
-        width: 100,
+        width: { value: 100 },
         locators: [
             {
                 attributeLocatorItem: {
@@ -85,7 +85,7 @@ export const invalidMeasureColumnWidthItemInvalidAttribute: IMeasureColumnWidthI
 
 export const invalidMeasureColumnWidthItemTooManyLocators: IMeasureColumnWidthItem = {
     measureColumnWidthItem: {
-        width: 100,
+        width: { value: 100 },
         locators: [
             {
                 attributeLocatorItem: {
@@ -110,7 +110,7 @@ export const invalidMeasureColumnWidthItemTooManyLocators: IMeasureColumnWidthIt
 
 export const invalidMeasureColumnWidthItemLocatorsTooShort: IMeasureColumnWidthItem = {
     measureColumnWidthItem: {
-        width: 100,
+        width: { value: 100 },
         locators: [
             {
                 measureLocatorItem: {

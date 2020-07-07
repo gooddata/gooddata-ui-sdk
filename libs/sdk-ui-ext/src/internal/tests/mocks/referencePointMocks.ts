@@ -484,7 +484,7 @@ const columnWidths: ColumnWidthItem[] = [
     {
         attributeColumnWidthItem: {
             attributeIdentifier: "a1",
-            width: 100,
+            width: { value: 100 },
         },
     },
 ];

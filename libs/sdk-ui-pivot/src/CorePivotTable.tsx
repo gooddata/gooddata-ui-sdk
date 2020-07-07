@@ -100,17 +100,9 @@ import {
 
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
 
-import {
-    ColumnEventSourceType,
-    DefaultColumnWidth,
-    ICorePivotTableProps,
-    IMenu,
-    IMenuAggregationClickConfig,
-    IResizedColumns,
-    UIClick,
-} from "./types";
+import { DefaultColumnWidth, ICorePivotTableProps, IMenu, IMenuAggregationClickConfig } from "./types";
 import { setColumnMaxWidth, setColumnMaxWidthIf } from "./impl/agGridColumnWrapper";
-import { ColumnWidthItem } from "./columnWidths";
+import { ColumnWidthItem, ColumnEventSourceType, IResizedColumns, UIClick } from "./columnWidths";
 import {
     isColumnAutoResized,
     MANUALLY_SIZED_MAX_WIDTH,
@@ -1101,13 +1093,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         if (this.isColumnAutoResized(id)) {
             this.columnApi.setColumnWidth(column, this.autoResizedColumns[id].width);
+            column.getColDef().suppressSizeToFit = false;
             return;
         }
 
         this.autoresizeColumnsByColumnId(this.columnApi, this.getColumnIds([column]));
         if (isColumnDisplayed(this.columnApi.getAllDisplayedVirtualColumns(), column)) {
             // skip columns out of viewport because these can not be autoresized
-            this.resizedColumnsStore.addToManuallyResizedColumn(column);
+            this.resizedColumnsStore.addToManuallyResizedColumn(column, true);
+            column.getColDef().suppressSizeToFit = false;
         }
     }
 
@@ -1132,14 +1126,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     };
 
-    private isAllMeasureResetOperation() {
-        return this.isMetaOrCtrlKeyPressed;
-    }
-
     private onColumnsManualReset = async (columns: Column[]) => {
         let columnsToReset = columns;
 
-        if (this.isAllMeasureResetOperation()) {
+        if (this.isAllMeasureResizeOperation(columns)) {
             this.resizedColumnsStore.removeAllMeasureColumns();
             columnsToReset = this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
         }

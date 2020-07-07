@@ -1585,7 +1585,9 @@ Object {
         Object {
           "attributeColumnWidthItem": Object {
             "attributeIdentifier": "a_label.product.id.name",
-            "width": 400,
+            "width": Object {
+              "value": 400,
+            },
           },
         },
         Object {
@@ -1597,7 +1599,9 @@ Object {
                 },
               },
             ],
-            "width": 60,
+            "width": Object {
+              "value": 60,
+            },
           },
         },
       ],
@@ -1629,7 +1633,9 @@ Object {
         Object {
           "attributeColumnWidthItem": Object {
             "attributeIdentifier": "a_label.product.id.name",
-            "width": 400,
+            "width": Object {
+              "value": 400,
+            },
           },
         },
         Object {
@@ -1641,7 +1647,9 @@ Object {
                 },
               },
             ],
-            "width": 60,
+            "width": Object {
+              "value": 60,
+            },
           },
         },
       ],
@@ -1673,7 +1681,9 @@ Object {
         Object {
           "attributeColumnWidthItem": Object {
             "attributeIdentifier": "a_label.product.id.name",
-            "width": 400,
+            "width": Object {
+              "value": 400,
+            },
           },
         },
         Object {
@@ -1685,7 +1695,9 @@ Object {
                 },
               },
             ],
-            "width": 60,
+            "width": Object {
+              "value": 60,
+            },
           },
         },
       ],
@@ -1717,7 +1729,9 @@ Object {
         Object {
           "attributeColumnWidthItem": Object {
             "attributeIdentifier": "a_label.product.id.name",
-            "width": 400,
+            "width": Object {
+              "value": 400,
+            },
           },
         },
         Object {
@@ -1729,7 +1743,9 @@ Object {
                 },
               },
             ],
-            "width": 60,
+            "width": Object {
+              "value": 60,
+            },
           },
         },
       ],
@@ -2185,7 +2201,9 @@ Object {
         Object {
           "attributeColumnWidthItem": Object {
             "attributeIdentifier": "a_label.product.id.name",
-            "width": 400,
+            "width": Object {
+              "value": 400,
+            },
           },
         },
       ],
@@ -2217,7 +2235,9 @@ Object {
         Object {
           "attributeColumnWidthItem": Object {
             "attributeIdentifier": "a_label.product.id.name",
-            "width": 400,
+            "width": Object {
+              "value": 400,
+            },
           },
         },
       ],
@@ -2249,7 +2269,9 @@ Object {
         Object {
           "attributeColumnWidthItem": Object {
             "attributeIdentifier": "a_label.product.id.name",
-            "width": 400,
+            "width": Object {
+              "value": 400,
+            },
           },
         },
       ],
@@ -2281,7 +2303,9 @@ Object {
         Object {
           "attributeColumnWidthItem": Object {
             "attributeIdentifier": "a_label.product.id.name",
-            "width": 400,
+            "width": Object {
+              "value": 400,
+            },
           },
         },
       ],
@@ -2743,7 +2767,9 @@ Object {
                 },
               },
             ],
-            "width": 60,
+            "width": Object {
+              "value": 60,
+            },
           },
         },
       ],
@@ -2781,7 +2807,9 @@ Object {
                 },
               },
             ],
-            "width": 60,
+            "width": Object {
+              "value": 60,
+            },
           },
         },
       ],
@@ -2819,7 +2847,9 @@ Object {
                 },
               },
             ],
-            "width": 60,
+            "width": Object {
+              "value": 60,
+            },
           },
         },
       ],
@@ -2857,7 +2887,9 @@ Object {
                 },
               },
             ],
-            "width": 60,
+            "width": Object {
+              "value": 60,
+            },
           },
         },
       ],

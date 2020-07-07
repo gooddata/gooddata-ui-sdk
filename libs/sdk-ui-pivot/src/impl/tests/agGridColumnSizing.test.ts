@@ -10,8 +10,12 @@ import {
 } from "../agGridColumnSizing";
 import { IGridHeader } from "../agGridTypes";
 import { Column, ColumnApi } from "@ag-grid-community/all-modules";
-import { AbsoluteColumnWidth, ColumnWidthItem } from "../../columnWidths";
-import { ColumnEventSourceType, IResizedColumns } from "../../types";
+import {
+    IAbsoluteColumnWidth,
+    ColumnEventSourceType,
+    ColumnWidthItem,
+    IResizedColumns,
+} from "../../columnWidths";
 import { DEFAULT_COLUMN_WIDTH } from "../../CorePivotTable";
 import { recordedDataFacade } from "../../../__mocks__/recordings";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -65,7 +69,7 @@ describe("agGridColumnSizing", () => {
     const columnWidths: ColumnWidthItem[] = [
         {
             measureColumnWidthItem: {
-                width: 60,
+                width: { value: 60 },
                 locators: [
                     {
                         measureLocatorItem: {
@@ -77,7 +81,7 @@ describe("agGridColumnSizing", () => {
         },
         {
             attributeColumnWidthItem: {
-                width: 400,
+                width: { value: 400 },
                 attributeIdentifier: attributeLocalId(ReferenceLdm.Product.Name),
             },
         },
@@ -86,31 +90,42 @@ describe("agGridColumnSizing", () => {
     const MIN_WIDTH = 100;
     const MAX_WIDTH = 300;
 
-    const widthValidator = (width: AbsoluteColumnWidth): AbsoluteColumnWidth => {
-        if (Number(width) === width) {
-            return Math.min(Math.max(width, MIN_WIDTH), MAX_WIDTH);
+    const widthValidator = (width: IAbsoluteColumnWidth): IAbsoluteColumnWidth => {
+        if (Number(width.value) === width.value) {
+            return {
+                ...width,
+                value: Math.min(Math.max(width.value, MIN_WIDTH), MAX_WIDTH),
+            };
         }
         return width;
     };
 
     const expectedColumnMap = {
         m_0: {
-            width: 60,
+            width: {
+                value: 60,
+            },
             source: ColumnEventSourceType.UI_DRAGGED,
         },
         a_1055: {
-            width: 400,
+            width: {
+                value: 400,
+            },
             source: ColumnEventSourceType.UI_DRAGGED,
         },
     };
 
     const expectedColumnMapValidated = {
         m_0: {
-            width: MIN_WIDTH,
+            width: {
+                value: MIN_WIDTH,
+            },
             source: ColumnEventSourceType.UI_DRAGGED,
         },
         a_1055: {
-            width: MAX_WIDTH,
+            width: {
+                value: MAX_WIDTH,
+            },
             source: ColumnEventSourceType.UI_DRAGGED,
         },
     };
@@ -140,7 +155,9 @@ describe("agGridColumnSizing", () => {
         it("should return correct ColumnWidthItem array for only column attribute", async () => {
             const columnAttributeColumnMap = {
                 a_1054_1: {
-                    width: 400,
+                    width: {
+                        value: 400,
+                    },
                     source: ColumnEventSourceType.UI_DRAGGED,
                 },
             };
@@ -148,7 +165,9 @@ describe("agGridColumnSizing", () => {
             const expectedColumnWidths: ColumnWidthItem[] = [
                 {
                     measureColumnWidthItem: {
-                        width: 400,
+                        width: {
+                            value: 400,
+                        },
                         locators: [
                             {
                                 attributeLocatorItem: {

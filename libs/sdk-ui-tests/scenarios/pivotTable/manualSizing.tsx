@@ -11,14 +11,14 @@ const MEASURE_WIDTH = 60;
 
 const attributeColumnWidthItem = {
     attributeColumnWidthItem: {
-        width: ATTRIBUTE_WIDTH,
+        width: { value: ATTRIBUTE_WIDTH },
         attributeIdentifier: attributeLocalId(ReferenceLdm.Product.Name),
     },
 };
 
 const measureColumnWidthItemSimple = {
     measureColumnWidthItem: {
-        width: MEASURE_WIDTH,
+        width: { value: MEASURE_WIDTH },
         locators: [
             {
                 measureLocatorItem: {

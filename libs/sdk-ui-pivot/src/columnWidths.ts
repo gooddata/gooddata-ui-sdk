@@ -2,48 +2,65 @@
 import isEmpty = require("lodash/isEmpty");
 import { Identifier, IMeasureLocatorItem } from "@gooddata/sdk-model";
 
-/**
- * @public
- */
-export type ColumnWidthItem =
-    | IAttributeColumnWidthItem
-    | IAllMeasureColumnWidthItem
-    | IMeasureColumnWidthItem;
+export enum ColumnEventSourceType {
+    AUTOSIZE_COLUMNS = "autosizeColumns",
+    UI_DRAGGED = "uiColumnDragged",
+    FIT_GROW = "growToFit",
+}
 
-/**
- * @public
- */
-export type AbsoluteColumnWidth = number;
+export enum UIClick {
+    CLICK = 1,
+    DOUBLE_CLICK = 2,
+}
 
-/**
- * @public
- */
-export type ColumnWidth = AbsoluteColumnWidth | "auto";
+export interface IResizedColumnsItem {
+    width: number;
+    source: ColumnEventSourceType;
+}
 
-/**
- * Type guard testing whether the provided column width is absolute.
- *
- * @public
- */
-export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is AbsoluteColumnWidth {
-    return Number(columnWidth) === columnWidth;
+export interface IResizedColumns {
+    [columnIdentifier: string]: IResizedColumnsItem;
+}
+
+export interface IManuallyResizedColumnsItem {
+    width: number;
+    source: ColumnEventSourceType;
+    allowGrowToFit?: boolean;
 }
 
 /**
- * Tests whether the provided column width represents an 'auto'-matic width spec.
- *
  * @public
  */
-export function isColumnWidthAuto(columnWidth: ColumnWidth): boolean {
-    return columnWidth === "auto";
+export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is IAbsoluteColumnWidth {
+    return Number(columnWidth.value) === columnWidth.value;
 }
+
+/**
+ * @public
+ */
+export interface IAbsoluteColumnWidth {
+    value: number;
+    allowGrowToFit?: boolean;
+}
+
+/**
+ * @public
+ */
+export interface IAutoColumnWidth {
+    value: "auto";
+}
+
+/**
+ * @public
+ */
+export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 
 /**
  * @public
  */
 export interface IAttributeColumnWidthItem {
     attributeColumnWidthItem: {
-        width: AbsoluteColumnWidth;
+        width: IAbsoluteColumnWidth;
         attributeIdentifier: Identifier;
     };
 }
@@ -63,11 +80,18 @@ export interface IMeasureColumnWidthItem {
  */
 export interface IAllMeasureColumnWidthItem {
     measureColumnWidthItem: {
-        width: AbsoluteColumnWidth;
+        width: IAbsoluteColumnWidth;
     };
 }
 
-// TODO: rename / alias types & add type guards
+/**
+ * @public
+ */
+export type ColumnWidthItem =
+    | IAttributeColumnWidthItem
+    | IMeasureColumnWidthItem
+    | IAllMeasureColumnWidthItem;
+
 type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 interface IAttributeLocatorItem {
     attributeLocatorItem: {

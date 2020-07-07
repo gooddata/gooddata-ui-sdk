@@ -20,9 +20,9 @@ export {
     IMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
-    AbsoluteColumnWidth,
+    IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
-    isColumnWidthAuto,
+    IAutoColumnWidth,
 } from "./columnWidths";
