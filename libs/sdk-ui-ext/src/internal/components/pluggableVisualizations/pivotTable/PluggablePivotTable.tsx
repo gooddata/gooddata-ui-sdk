@@ -263,6 +263,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
     private readonly settings: ISettings;
+    private supportsTotals: boolean;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -273,6 +274,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.onColumnResized = this.onColumnResized.bind(this);
         this.handlePushData = this.handlePushData.bind(this);
         this.supportedPropertiesList = PIVOT_TABLE_SUPPORTED_PROPERTIES;
+        this.supportsTotals = props.backend.capabilities.canCalculateTotals ?? false;
     }
 
     public unmount() {
@@ -420,6 +422,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         const tableConfig: IPivotTableConfig = {
             ...createPivotTableConfig(config, this.environment, this.settings, columnWidths),
+            ...(!this.supportsTotals ? { menu: {} } : {}), // suppress the menu for backends without totals
             ...customVisualizationConfig,
         };
 

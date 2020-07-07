@@ -24,6 +24,7 @@ import {
     IUserWorkspaceSettings,
     IWorkspaceUsersQuery,
     IWorkspaceDateFilterConfigsQuery,
+    BackendCapabilities,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedElementQueryFactory } from "./elements";
@@ -52,14 +53,18 @@ const locale = "en-US";
  *
  * @param index - recording index
  * @param config - backend config, for now just for compatibility sakes with the analytical backend config
+ * @param capabilities - backend capabilities to use
  * @internal
  */
 export function recordedBackend(
     index: RecordingIndex,
     config: RecordedBackendConfig = defaultConfig,
+    capabilities: BackendCapabilities = {
+        canCalculateTotals: true,
+    },
 ): IAnalyticalBackend {
     const backend: IAnalyticalBackend = {
-        capabilities: {},
+        capabilities,
         config,
         onHostname(hostname: string): IAnalyticalBackend {
             return recordedBackend(index, { ...config, hostname });
