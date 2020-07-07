@@ -46,14 +46,10 @@ export function pivotConfigToVisProperties(tableConfig: IPivotTableConfig = {}):
      *
      * For more see: getSupportedProperties in propertiesHelper.ts or the code that creates insight from
      * bear visualization object.
-     *
-     * TODO: remove this double wrap
      */
     return {
-        properties: {
-            controls: {
-                columnWidths: tableConfig.columnSizing.columnWidths,
-            },
+        controls: {
+            columnWidths: tableConfig.columnSizing.columnWidths,
         },
     };
 }

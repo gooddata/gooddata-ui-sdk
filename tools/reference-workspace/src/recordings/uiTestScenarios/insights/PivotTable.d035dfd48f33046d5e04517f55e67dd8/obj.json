@@ -56,17 +56,15 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "columnWidths": [
-                        {
-                            "attributeColumnWidthItem": {
-                                "width": 400,
-                                "attributeIdentifier": "a_label.product.id.name"
-                            }
+            "controls": {
+                "columnWidths": [
+                    {
+                        "attributeColumnWidthItem": {
+                            "width": 400,
+                            "attributeIdentifier": "a_label.product.id.name"
                         }
-                    ]
-                }
+                    }
+                ]
             }
         }
     }
