@@ -82,6 +82,7 @@ import {
     getRowNodeId,
     getTreeLeaves,
     indexOfTreeNode,
+    isColumnDisplayed,
     isMeasureColumn,
 } from "./impl/agGridUtils";
 import ColumnGroupHeader from "./impl/ColumnGroupHeader";
@@ -703,7 +704,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         });
     };
 
-    private async autoresizeColumnsByColumnId(columnApi: ColumnApi, columnIds: string[]) {
+    private autoresizeColumnsByColumnId(columnApi: ColumnApi, columnIds: string[]) {
         setColumnMaxWidth(columnApi, columnIds, AUTO_SIZED_MAX_WIDTH);
 
         columnApi.autoSizeColumns(columnIds);
@@ -1100,8 +1101,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         if (this.isColumnAutoResized(id)) {
             this.columnApi.setColumnWidth(column, this.autoResizedColumns[id].width);
-        } else {
-            await this.autoresizeColumnsByColumnId(this.columnApi, this.getColumnIds([column]));
+            return;
+        }
+
+        this.autoresizeColumnsByColumnId(this.columnApi, this.getColumnIds([column]));
+        if (isColumnDisplayed(this.columnApi.getAllDisplayedVirtualColumns(), column)) {
+            // skip columns out of viewport because these can not be autoresized
             this.resizedColumnsStore.addToManuallyResizedColumn(column);
         }
     }

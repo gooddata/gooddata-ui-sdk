@@ -227,3 +227,7 @@ export const isMeasureColumn = (item: Column | ColDef) => {
     }
     return item.type === MEASURE_COLUMN;
 };
+
+export const isColumnDisplayed = (displayedColumns: Column[], column: Column) => {
+    return displayedColumns.some((displayedColumn) => displayedColumn.getColId() === column.getColId());
+};
