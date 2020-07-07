@@ -169,6 +169,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         config: {},
         groupRows: true,
         onColumnResized: noop,
+        onError: noop,
     };
 
     private readonly errorMap: IErrorDescriptors;
