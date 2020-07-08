@@ -139,8 +139,21 @@ Object {
       "localIdentifier": "m_acugFHNJgsBy",
     },
     "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 128,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should return comparison measure value filter with treatNullValueAs 1`] = `
+Object {
+  "comparisonMeasureValueFilter": Object {
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "GREATER_THAN",
     "treatNullValuesAs": 0,
-    "value": 124,
+    "value": 128,
   },
 }
 `;
@@ -193,6 +206,34 @@ Object {
     "operator": "BETWEEN",
     "to": 128,
     "treatNullValuesAs": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should return range measure value filter with crossed boundaries 1`] = `
+Object {
+  "rangeMeasureValueFilter": Object {
+    "from": 64,
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "BETWEEN",
+    "to": 128,
+    "treatNullValuesAs": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should return range measure value filter with treatNullValueAs 1`] = `
+Object {
+  "rangeMeasureValueFilter": Object {
+    "from": 64,
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "BETWEEN",
+    "to": 128,
+    "treatNullValuesAs": 0,
   },
 }
 `;

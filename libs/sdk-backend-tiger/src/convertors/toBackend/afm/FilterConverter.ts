@@ -124,13 +124,15 @@ export function convertMeasureValueFilter(filter: IMeasureValueFilter): ExecuteA
     }
 
     if (isRangeCondition(condition)) {
-        const { operator, from, to, treatNullValuesAs } = condition.range;
+        const { operator, from: originalFrom, to: originalTo, treatNullValuesAs } = condition.range;
         return {
             rangeMeasureValueFilter: {
                 measure: toMeasureValueFilterMeasureQualifier(measureValueFilter.measure),
                 operator,
-                from,
-                to,
+                // make sure the boundaries are always from <= to, because tiger backend cannot handle from > to in a user friendly way
+                // this is effectively the same behavior as in bear
+                from: Math.min(originalFrom, originalTo),
+                to: Math.max(originalFrom, originalTo),
                 treatNullValuesAs,
             },
         };

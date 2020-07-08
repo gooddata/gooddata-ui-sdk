@@ -75,11 +75,20 @@ describe("tiger filter converter from model to AFM", () => {
                 "relative date filter",
                 newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, 20, 30),
             ],
+            ["comparison measure value filter", newMeasureValueFilter(ReferenceLdm.Won, "GREATER_THAN", 128)],
             [
-                "comparison measure value filter",
-                newMeasureValueFilter(ReferenceLdm.Won, "GREATER_THAN", 124, 0),
+                "comparison measure value filter with treatNullValueAs",
+                newMeasureValueFilter(ReferenceLdm.Won, "GREATER_THAN", 128, 0),
             ],
             ["range measure value filter", newMeasureValueFilter(ReferenceLdm.Won, "BETWEEN", 64, 128)],
+            [
+                "range measure value filter with treatNullValueAs",
+                newMeasureValueFilter(ReferenceLdm.Won, "BETWEEN", 64, 128, 0),
+            ],
+            [
+                "range measure value filter with crossed boundaries",
+                newMeasureValueFilter(ReferenceLdm.Won, "BETWEEN", 128, 64),
+            ],
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
             expect(convertVisualizationObjectFilter(input)).toMatchSnapshot();
