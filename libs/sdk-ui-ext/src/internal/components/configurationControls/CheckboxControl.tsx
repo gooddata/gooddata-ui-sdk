@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
+import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
@@ -49,9 +50,11 @@ class CheckboxControl extends React.Component<ICheckboxControlProps & WrappedCom
 
     private onValueChanged(event: React.ChangeEvent<HTMLInputElement>) {
         const { valuePath, properties, pushData } = this.props;
-        const newProperties = set(properties, `controls.${valuePath}`, event.target.checked);
 
-        pushData({ properties: newProperties });
+        const clonedProperties = cloneDeep(properties);
+        set(clonedProperties, `controls.${valuePath}`, event.target.checked);
+
+        pushData({ properties: clonedProperties });
     }
 }
 

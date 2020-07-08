@@ -2,6 +2,7 @@
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import * as classNames from "classnames";
+import cloneDeep = require("lodash/cloneDeep");
 import noop = require("lodash/noop");
 import get = require("lodash/get");
 import set = require("lodash/set");
@@ -146,9 +147,10 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
         const { valuePath, properties, pushData } = this.props;
 
         if (valuePath && properties && pushData) {
-            const newProperties = set(properties, `controls.${valuePath}`, event.target.checked);
+            const clonedProperties = cloneDeep(properties);
+            set(clonedProperties, `controls.${valuePath}`, event.target.checked);
 
-            pushData({ properties: newProperties });
+            pushData({ properties: clonedProperties });
         }
     }
 }

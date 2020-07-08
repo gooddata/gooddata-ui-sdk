@@ -14,7 +14,7 @@ export const LegendPosition: { [name: string]: PositionType } = {
 /**
  * @internal
  */
-export const SupportedLegendPositions: PositionType[] = ["auto", "left", "right", "top", "bottom"];
+export const SupportedLegendPositions: PositionType[] = ["left", "right", "top", "bottom"];
 
 /**
  * @internal
