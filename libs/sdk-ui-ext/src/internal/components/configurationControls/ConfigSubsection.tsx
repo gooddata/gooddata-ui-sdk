@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
+import cloneDeep = require("lodash/cloneDeep");
 import noop = require("lodash/noop");
 import set = require("lodash/set");
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
@@ -85,9 +86,10 @@ class ConfigSubsection extends React.Component<IConfigSubsectionProps, IConfigSu
         const { valuePath, properties, pushData } = this.props;
 
         if (valuePath && properties && pushData) {
-            const newProperties = set(properties, `controls.${valuePath}`, event.target.checked);
+            const clonedProperties = cloneDeep(properties);
+            set(clonedProperties, `controls.${valuePath}`, event.target.checked);
 
-            pushData({ properties: newProperties });
+            pushData({ properties: clonedProperties });
         }
     }
 

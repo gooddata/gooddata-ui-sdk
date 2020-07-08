@@ -82,10 +82,10 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
 
         // we must not change the properties at any cost, so deep clone for now.
         // ideally we should use st. like immer with copy on write to not clone everything all the time
-        const newProperties = cloneDeep(properties);
-        set(newProperties, `controls.${valuePath}`, selectedItem.value);
+        const clonedProperties = cloneDeep(properties);
+        set(clonedProperties, `controls.${valuePath}`, selectedItem.value);
 
-        pushData({ properties: newProperties });
+        pushData({ properties: clonedProperties });
     }
 
     private getSelectedItem(value: string): IDropdownItem {
