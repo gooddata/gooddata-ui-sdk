@@ -47,6 +47,7 @@ $header-cell-resize-width: 20px;
             .ag-react-container {
                 width: 100%;
             }
+            overflow: visible;
         }
 
         .ag-header {
@@ -107,6 +108,8 @@ $header-cell-resize-width: 20px;
         }
 
         .ag-header-row {
+            overflow: visible;
+
             &:last-child {
                 border-bottom: none;
 
@@ -131,14 +134,14 @@ $header-cell-resize-width: 20px;
             opacity: 0;
 
             &::after {
+                content: "";
+                box-sizing: content-box;
+                display: block;
                 width: $header-cell-resize-width / 2;
                 margin-right: $header-cell-resize-width / 2;
                 border-right: 1px solid $gd-color-highlight;
                 text-indent: $header-cell-resize-width / 2;
                 height: 16px;
-                content: "";
-                display: block;
-                box-sizing: content-box;
             }
         }
 
@@ -250,8 +253,8 @@ $header-cell-resize-width: 20px;
 }
 
 .gd-pivot-table-header {
-    display: flex;
     position: relative;
+    display: flex;
     margin: 0 -11px 1px;
     flex-direction: row;
     min-height: 29px;
@@ -265,10 +268,10 @@ $header-cell-resize-width: 20px;
         display: flex;
         flex: 1 1 auto;
         flex-direction: row;
-        padding: 0 11px;
-        overflow: hidden;
         justify-content: flex-start;
         align-items: flex-end;
+        overflow: hidden;
+        padding: 0 11px;
 
         &--right {
             justify-content: flex-end;
@@ -283,10 +286,10 @@ $header-cell-resize-width: 20px;
         }
 
         &-text {
-            flex: 0 1 auto;
-            white-space: nowrap;
             position: relative;
+            flex: 0 1 auto;
             overflow: hidden;
+            white-space: nowrap;
             text-overflow: ellipsis;
         }
 
@@ -326,15 +329,15 @@ $header-cell-resize-width: 20px;
 
     &-menu {
         display: inline-flex;
-        align-items: center;
-        justify-content: center;
         flex: 0 0 auto;
+        justify-content: center;
+        align-items: center;
         overflow: hidden;
         border-top: 2px solid transparent;
         background-color: $gd-color-highlight-dimmed;
         opacity: 0;
-        transition: width 200ms, opacity 100ms;
         cursor: pointer;
+        transition: width 200ms, opacity 100ms;
 
         &:hover {
             background-color: darken($gd-color-highlight-dimmed, 3%);
@@ -359,12 +362,16 @@ $header-cell-resize-width: 20px;
         &--open {
             &,
             .ag-header-cell-sortable & {
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
                 &,
                 &:hover {
                     border-color: $button-normal-border-color;
                     background-color: $button-normal-hover-bg;
                 }
 
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
                 &:active {
                     border-color: $button-normal-active-border-color;
 
