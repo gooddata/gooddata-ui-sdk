@@ -494,7 +494,11 @@ export function getStackItems(buckets: IBucketOfFun[], itemTypes: string[] = [AT
 }
 
 export function getAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
-    return getAllAttributeItemsWithPreference(buckets, [BucketNames.VIEW, BucketNames.TREND]);
+    return getAllAttributeItemsWithPreference(buckets, [
+        BucketNames.LOCATION,
+        BucketNames.VIEW,
+        BucketNames.TREND,
+    ]);
 }
 
 export function getAttributeItemsWithoutStacks(buckets: IBucketOfFun[]): IBucketItem[] {
