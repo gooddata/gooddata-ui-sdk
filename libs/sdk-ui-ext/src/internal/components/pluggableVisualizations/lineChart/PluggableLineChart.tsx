@@ -70,6 +70,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         let stacks: IBucketItem[] = getStackItems(buckets);
         const dateItems = getDateItems(buckets);
         const allAttributes = getAllAttributeItemsWithPreference(buckets, [
+            BucketNames.LOCATION,
             BucketNames.TREND,
             BucketNames.VIEW,
             BucketNames.SEGMENT,

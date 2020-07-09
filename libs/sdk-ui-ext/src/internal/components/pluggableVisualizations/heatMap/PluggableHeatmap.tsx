@@ -54,6 +54,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         const allAttributes = getAllAttributeItemsWithPreference(buckets, [
             BucketNames.VIEW,
             BucketNames.TREND,
+            BucketNames.LOCATION,
             BucketNames.STACK,
             BucketNames.SEGMENT,
         ]);
