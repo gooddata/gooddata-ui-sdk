@@ -105,8 +105,6 @@ function adaptSortItemsToPivotTable(
     rowAttributeLocalIdentifiers: string[],
     columnAttributeLocalIdentifiers: string[],
 ): ISortItem[] {
-    const attributeLocalIdentifiers = [...rowAttributeLocalIdentifiers, ...columnAttributeLocalIdentifiers];
-
     return originalSortItems.reduce((sortItems: ISortItem[], sortItem: ISortItem) => {
         if (isMeasureSort(sortItem)) {
             // filter out invalid locators
@@ -142,7 +140,22 @@ function adaptSortItemsToPivotTable(
             // otherwise just carry over previous sortItems
             return sortItems;
         }
-        if (includes(attributeLocalIdentifiers, sortItem.attributeSortItem.attributeIdentifier)) {
+        /**
+         * Keep only row attribute sorts, column sorts are not supported.
+         *
+         * This exists to overcome AD weirdness where AD will sometimes send insight with invalid sorts
+         * even if the pivot table should NOT be sorted by default by the first row attribute in ascending order since it has no row attributes.
+         * Code here fixes this symptom and ensures the default sort is in place only if relevant.
+         *
+         * Typical case is PivotTable with one measure and one row and then the user moves thee attribute from Row bucket to Column bucket.
+         * In that case AD sends insight with the irrelevant sort and then without it.
+         *
+         * Note: while this may seem small thing, it's actually a messy business. When rendering / switching to the pivot
+         * table the AD will call update/render multiple times. Sometimes with sort items, sometimes without sort items. This
+         * can seriously mess up the pivot table in return: the column resizing is susceptible to race conditions and timing
+         * issues. Because of the flurry of calls, the table may not render or load indefinitely.
+         */
+        if (includes(rowAttributeLocalIdentifiers, sortItem.attributeSortItem.attributeIdentifier)) {
             return [...sortItems, sortItem];
         }
         return sortItems;
