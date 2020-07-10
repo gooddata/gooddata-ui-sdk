@@ -124,7 +124,7 @@ export function getDefaultHeatmapSortFromBuckets(viewBy: IBucket): ISortItem[] {
 
 export function getDefaultHeatmapSort(insight: IInsightDefinition): ISortItem[] {
     const sorts = insightSorts(insight);
-    if (sorts) {
+    if (sorts && sorts.length > 0) {
         return sorts;
     }
 
