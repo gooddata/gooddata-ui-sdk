@@ -132,6 +132,9 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
         const { types } = this.options;
 
         const compatibleBearItemTypes = types.filter(isCompatibleCatalogItemType);
+        if (compatibleBearItemTypes.length === 0) {
+            return [];
+        }
 
         const bearTypes = compatibleBearItemTypes.map(convertItemType);
         const itemDescriptions = await this.authCall((sdk) =>
