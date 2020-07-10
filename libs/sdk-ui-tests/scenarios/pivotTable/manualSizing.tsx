@@ -1,8 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { copyWithModifiedProps, scenariosFor } from "../../src";
-import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
-import { PivotTableWithTwoMeasuresAndSingleRowAttr } from "./base";
+import { IPivotTableProps, IWeakMeasureColumnWidthItem, PivotTable } from "@gooddata/sdk-ui-pivot";
+import {
+    PivotTableWithTwoMeasuresAndSingleRowAttr,
+    PivotTableWithSingleMeasureAndTwoRowsAndCols,
+} from "./base";
 import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 
@@ -11,14 +14,14 @@ const MEASURE_WIDTH = 60;
 
 const attributeColumnWidthItem = {
     attributeColumnWidthItem: {
-        width: ATTRIBUTE_WIDTH,
+        width: { value: ATTRIBUTE_WIDTH },
         attributeIdentifier: attributeLocalId(ReferenceLdm.Product.Name),
     },
 };
 
 const measureColumnWidthItemSimple = {
     measureColumnWidthItem: {
-        width: MEASURE_WIDTH,
+        width: { value: MEASURE_WIDTH },
         locators: [
             {
                 measureLocatorItem: {
@@ -26,6 +29,17 @@ const measureColumnWidthItemSimple = {
                 },
             },
         ],
+    },
+};
+
+const weakMeasureColumnWidthItem: IWeakMeasureColumnWidthItem = {
+    measureColumnWidthItem: {
+        width: { value: MEASURE_WIDTH },
+        locator: {
+            measureLocatorItem: {
+                measureIdentifier: measureLocalId(ReferenceLdm.Amount),
+            },
+        },
     },
 };
 
@@ -61,6 +75,16 @@ const justManualResizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTab
         config: {
             columnSizing: {
                 columnWidths: [attributeColumnWidthItem, measureColumnWidthItemSimple],
+                defaultWidth: "unset",
+                growToFit: false,
+            },
+        },
+    })
+    .addScenario("table with multiple measure columns and weak measure size", {
+        ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
+        config: {
+            columnSizing: {
+                columnWidths: [weakMeasureColumnWidthItem],
                 defaultWidth: "unset",
                 growToFit: false,
             },

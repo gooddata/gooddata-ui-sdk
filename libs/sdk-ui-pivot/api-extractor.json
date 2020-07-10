@@ -315,6 +315,11 @@
          * DEFAULT VALUE: See api-extractor-defaults.json for the complete table of extractorMessageReporting mappings
          */
         "extractorMessageReporting": {
+            "ae-forgotten-export": {
+                "logLevel": "error",
+                "addToApiReportFile": true
+            },
+
             "default": {
                 "logLevel": "warning"
                 // "addToApiReportFile": false

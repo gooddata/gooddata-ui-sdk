@@ -8,8 +8,8 @@ import {
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { withMultipleScreenshots } from "../../_infra/backstopWrapper";
-import { FilterStories } from "../../_infra/storyGroups";
+import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 

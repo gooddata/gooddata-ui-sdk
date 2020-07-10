@@ -82,6 +82,7 @@ import {
     getRowNodeId,
     getTreeLeaves,
     indexOfTreeNode,
+    isColumnDisplayed,
     isMeasureColumn,
 } from "./impl/agGridUtils";
 import ColumnGroupHeader from "./impl/ColumnGroupHeader";
@@ -99,17 +100,9 @@ import {
 
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
 
-import {
-    ColumnEventSourceType,
-    DefaultColumnWidth,
-    ICorePivotTableProps,
-    IMenu,
-    IMenuAggregationClickConfig,
-    IResizedColumns,
-    UIClick,
-} from "./types";
+import { DefaultColumnWidth, ICorePivotTableProps, IMenu, IMenuAggregationClickConfig } from "./types";
 import { setColumnMaxWidth, setColumnMaxWidthIf } from "./impl/agGridColumnWrapper";
-import { ColumnWidthItem } from "./columnWidths";
+import { ColumnWidthItem, ColumnEventSourceType, IResizedColumns, UIClick } from "./columnWidths";
 import {
     isColumnAutoResized,
     MANUALLY_SIZED_MAX_WIDTH,
@@ -117,6 +110,7 @@ import {
     resetColumnsWidthToDefault,
     resizeAllMeasuresColumns,
     ResizedColumnsStore,
+    resizeWeakMeasureColumns,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
 } from "./impl/agGridColumnSizing";
@@ -133,7 +127,7 @@ const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 const DEFAULT_ROW_HEIGHT = 28;
 
 const DEFAULT_AUTOSIZE_PADDING = 10;
-const COLUMN_RESIZE_TIMEOUT = 100;
+const COLUMN_RESIZE_TIMEOUT = 300;
 const AGGRID_ON_RESIZE_TIMEOUT = 300;
 const AUTO_SIZED_MAX_WIDTH = 500;
 
@@ -162,6 +156,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         pushData: noop,
         onExportReady: noop,
         onLoadingChanged: noop,
+        onError: noop,
         onDrill: () => true,
         ErrorComponent,
         LoadingComponent,
@@ -169,7 +164,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         config: {},
         groupRows: true,
         onColumnResized: noop,
-        onError: noop,
     };
 
     private readonly errorMap: IErrorDescriptors;
@@ -205,6 +199,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private lastResizedHeight = 0;
     private numberOfColumnResizedCalls = 0;
     private isMetaOrCtrlKeyPressed = false;
+    private isAltKeyPressed = false;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -575,7 +570,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 onExportReady(createExportErrorFunction(error));
             }
 
-            this.props.onError(error);
+            this.props.onError?.(error);
         }
     }
 
@@ -661,7 +656,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 ...acc,
                 [columnId]: {
                     width: col.getActualWidth(),
-                    source: ColumnEventSourceType.AUTOSIZE_COLUMNS,
                 },
             };
         }, this.autoResizedColumns);
@@ -702,7 +696,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         });
     };
 
-    private async autoresizeColumnsByColumnId(columnApi: ColumnApi, columnIds: string[]) {
+    private autoresizeColumnsByColumnId(columnApi: ColumnApi, columnIds: string[]) {
         setColumnMaxWidth(columnApi, columnIds, AUTO_SIZED_MAX_WIDTH);
 
         columnApi.autoSizeColumns(columnIds);
@@ -789,7 +783,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
             this.growToFittedColumns[id] = {
                 width: col.getActualWidth(),
-                source: ColumnEventSourceType.FIT_GROW,
             };
         });
     }
@@ -1097,11 +1090,17 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             this.resizedColumnsStore.removeFromManuallyResizedColumn(column);
         }
 
+        column.getColDef().suppressSizeToFit = false;
+
         if (this.isColumnAutoResized(id)) {
             this.columnApi.setColumnWidth(column, this.autoResizedColumns[id].width);
-        } else {
-            await this.autoresizeColumnsByColumnId(this.columnApi, this.getColumnIds([column]));
-            this.resizedColumnsStore.addToManuallyResizedColumn(column);
+            return;
+        }
+
+        this.autoresizeColumnsByColumnId(this.columnApi, this.getColumnIds([column]));
+        if (isColumnDisplayed(this.columnApi.getAllDisplayedVirtualColumns(), column)) {
+            // skip columns out of viewport because these can not be autoresized
+            this.resizedColumnsStore.addToManuallyResizedColumn(column, true);
         }
     }
 
@@ -1113,33 +1112,37 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.updateDesiredHeight(this.visibleData);
 
         if (this.isManualResizing(columnEvent)) {
-            if (this.hasColumnWidths()) {
-                this.numberOfColumnResizedCalls++;
-                await sleep(COLUMN_RESIZE_TIMEOUT);
+            this.numberOfColumnResizedCalls++;
+            await sleep(COLUMN_RESIZE_TIMEOUT);
 
-                if (this.numberOfColumnResizedCalls === UIClick.DOUBLE_CLICK) {
-                    this.numberOfColumnResizedCalls = 0;
-                    await this.onColumnsManualReset(columnEvent.columns);
-                } else if (this.numberOfColumnResizedCalls === UIClick.CLICK) {
-                    this.numberOfColumnResizedCalls = 0;
-                    this.onColumnsManualResized(columnEvent.columns);
-                }
-            } else {
+            if (this.numberOfColumnResizedCalls === UIClick.DOUBLE_CLICK) {
+                this.numberOfColumnResizedCalls = 0;
+                await this.onColumnsManualReset(columnEvent.columns);
+            } else if (this.numberOfColumnResizedCalls === UIClick.CLICK) {
+                this.numberOfColumnResizedCalls = 0;
                 this.onColumnsManualResized(columnEvent.columns);
             }
         }
     };
 
-    private isAllMeasureResetOperation() {
-        return this.isMetaOrCtrlKeyPressed;
+    private getAllMeasureColumns() {
+        return this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
     }
 
     private onColumnsManualReset = async (columns: Column[]) => {
         let columnsToReset = columns;
 
-        if (this.isAllMeasureResetOperation()) {
+        if (this.isAllMeasureResizeOperation(columns)) {
             this.resizedColumnsStore.removeAllMeasureColumns();
-            columnsToReset = this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
+            columnsToReset = this.getAllMeasureColumns();
+        }
+
+        if (this.isWeakMeasureResizeOperation(columns)) {
+            columnsToReset = this.resizedColumnsStore.getMatchingColumnsByMeasure(
+                columns[0],
+                this.getAllMeasureColumns(),
+            );
+            this.resizedColumnsStore.removeWeakMeasureColumn(columns[0]);
         }
 
         for (const column of columnsToReset) {
@@ -1153,9 +1156,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return this.isMetaOrCtrlKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
     }
 
+    private isWeakMeasureResizeOperation(columns: Column[]) {
+        return this.isAltKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
+    }
+
     private onColumnsManualResized = (columns: Column[]) => {
         if (this.isAllMeasureResizeOperation(columns)) {
             resizeAllMeasuresColumns(this.columnApi, this.resizedColumnsStore, columns[0]);
+        } else if (this.isWeakMeasureResizeOperation(columns)) {
+            resizeWeakMeasureColumns(this.columnApi, this.resizedColumnsStore, columns[0]);
         } else {
             columns.forEach((column) => {
                 this.resizedColumnsStore.addToManuallyResizedColumn(column);
@@ -1208,6 +1217,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             event.stopPropagation();
         }
         this.isMetaOrCtrlKeyPressed = event.metaKey || event.ctrlKey;
+        this.isAltKeyPressed = event.altKey;
     };
 
     //

@@ -2,7 +2,7 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-07-02T11:37:36.071Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-07-10T08:44:07.811Z; */
 
 const fp_0202f0afa9294a9f026be26f8ced8bcb = {
     definition: require("./uiTestScenarios/executions/0202f0afa9294a9f026be26f8ced8bcb/definition.json"),
@@ -150,6 +150,11 @@ const fp_f958fece41c62dfbfe97c4c899332446 = {
     executionResult: require("./uiTestScenarios/executions/f958fece41c62dfbfe97c4c899332446/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/f958fece41c62dfbfe97c4c899332446/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/f958fece41c62dfbfe97c4c899332446/scenarios.json"),
+};
+const fp_46dc78bd23b184d1e627aa76c87135e6 = {
+    definition: require("./uiTestScenarios/executions/46dc78bd23b184d1e627aa76c87135e6/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/46dc78bd23b184d1e627aa76c87135e6/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/46dc78bd23b184d1e627aa76c87135e6/dataView_all.json"),
 };
 export const Scenarios = {
     GeoPushpinChart: {
@@ -358,6 +363,7 @@ export const Recordings = {
         fp_e5c89400ca5de733d4cd743df023c4f0,
         fp_f007737731e3721d6f6b4892eb27358b,
         fp_f958fece41c62dfbfe97c4c899332446,
+        fp_46dc78bd23b184d1e627aa76c87135e6,
     },
     metadata: {
         displayForms: {},

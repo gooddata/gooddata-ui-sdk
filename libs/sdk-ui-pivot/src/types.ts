@@ -217,23 +217,3 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
      */
     onColumnResized?: (columnWidths: ColumnWidthItem[]) => void;
 }
-
-export enum ColumnEventSourceType {
-    AUTOSIZE_COLUMNS = "autosizeColumns",
-    UI_DRAGGED = "uiColumnDragged",
-    FIT_GROW = "growToFit",
-}
-
-export enum UIClick {
-    CLICK = 1,
-    DOUBLE_CLICK = 2,
-}
-
-export interface IResizedColumnsItem {
-    width: number;
-    source: ColumnEventSourceType;
-}
-
-export interface IResizedColumns {
-    [columnIdentifier: string]: IResizedColumnsItem;
-}

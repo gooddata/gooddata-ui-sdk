@@ -14,15 +14,17 @@ export {
 } from "./types";
 
 export {
+    IWeakMeasureColumnWidthItem,
+    isWeakMeasureColumnWidthItem,
     ColumnWidthItem,
     ColumnWidth,
     IAttributeColumnWidthItem,
     IMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
-    AbsoluteColumnWidth,
+    IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
-    isColumnWidthAuto,
+    IAutoColumnWidth,
 } from "./columnWidths";

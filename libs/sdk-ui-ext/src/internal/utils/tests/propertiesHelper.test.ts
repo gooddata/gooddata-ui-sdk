@@ -301,7 +301,7 @@ describe("propertiesHelper", () => {
         const columnWidths: ColumnWidthItem[] = [
             {
                 measureColumnWidthItem: {
-                    width: 100,
+                    width: { value: 100 },
                     locators: [
                         {
                             attributeLocatorItem: {

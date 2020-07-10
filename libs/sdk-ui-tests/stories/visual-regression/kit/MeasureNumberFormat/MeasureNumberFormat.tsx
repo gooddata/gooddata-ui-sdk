@@ -8,7 +8,7 @@ import {
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { UiKit } from "../../_infra/storyGroups";
+import { UiKit } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { ISeparators } from "@gooddata/sdk-ui";

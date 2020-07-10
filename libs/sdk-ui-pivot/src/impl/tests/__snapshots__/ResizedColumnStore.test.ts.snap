@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResizedColumnsStore addWeekMeasureColumn should add weak column 1`] = `
+Object {
+  "m_aangOxLSeztu": Object {
+    "measureColumnWidthItem": Object {
+      "locator": Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_aangOxLSeztu",
+        },
+      },
+      "width": Object {
+        "value": 666,
+      },
+    },
+  },
+}
+`;
+
+exports[`ResizedColumnsStore addWeekMeasureColumn should add weak column and remove measure columns from manuallyResizedColumns and set suppressSizeToFit when mach measureIdentifier 1`] = `
+Object {
+  "m_aangOxLSeztu": Object {
+    "measureColumnWidthItem": Object {
+      "locator": Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_aangOxLSeztu",
+        },
+      },
+      "width": Object {
+        "value": 666,
+      },
+    },
+  },
+}
+`;
+
+exports[`ResizedColumnsStore addWeekMeasureColumn should add weak column and remove measure columns from manuallyResizedColumns and set suppressSizeToFit when mach measureIdentifier 2`] = `
+Object {
+  "a_1055": Object {
+    "width": Object {
+      "value": 200,
+    },
+  },
+}
+`;

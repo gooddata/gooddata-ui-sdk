@@ -2,7 +2,7 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-07-07T12:23:36.161Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-07-10T08:43:45.044Z; */
 
 const fp_007ba9f949d1b772cea300d67e9640d6 = {
     definition: require("./uiTestScenarios/executions/007ba9f949d1b772cea300d67e9640d6/definition.json"),
@@ -2543,6 +2543,18 @@ const i_PivotTable_3e54973168ed50cf728b3c4546bf6ecd = {
 const i_PivotTable_1762d675f07ce60e7e9e6f0025fc590d = {
     obj: require("./uiTestScenarios/insights/PivotTable.1762d675f07ce60e7e9e6f0025fc590d/obj.json"),
 };
+const i_PivotTable_f00f6d0684c10d8d6fcedb74950a95f0 = {
+    obj: require("./uiTestScenarios/insights/PivotTable.f00f6d0684c10d8d6fcedb74950a95f0/obj.json"),
+};
+const i_PivotTable_1c50ab6af2442b9206aad546e37617b0 = {
+    obj: require("./uiTestScenarios/insights/PivotTable.1c50ab6af2442b9206aad546e37617b0/obj.json"),
+};
+const i_PivotTable_7062c549b01f890a143c04b33e0c1b0a = {
+    obj: require("./uiTestScenarios/insights/PivotTable.7062c549b01f890a143c04b33e0c1b0a/obj.json"),
+};
+const i_PivotTable_ab5a2b8d16bb33e0e507930b3ab4bde1 = {
+    obj: require("./uiTestScenarios/insights/PivotTable.ab5a2b8d16bb33e0e507930b3ab4bde1/obj.json"),
+};
 export const Insights = {
     AreaChart: {
         SingleMeasure: i_AreaChart_3ed6da9a8b7176c679ab28f6498df851,
@@ -3345,6 +3357,10 @@ export const Recordings = {
             i_PivotTable_ce9ad196e0fa8ebfdf0a1da1784d0e22,
             i_PivotTable_3e54973168ed50cf728b3c4546bf6ecd,
             i_PivotTable_1762d675f07ce60e7e9e6f0025fc590d,
+            i_PivotTable_f00f6d0684c10d8d6fcedb74950a95f0,
+            i_PivotTable_1c50ab6af2442b9206aad546e37617b0,
+            i_PivotTable_7062c549b01f890a143c04b33e0c1b0a,
+            i_PivotTable_ab5a2b8d16bb33e0e507930b3ab4bde1,
         },
     },
 };

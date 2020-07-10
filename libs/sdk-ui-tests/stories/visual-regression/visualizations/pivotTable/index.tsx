@@ -3,14 +3,14 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "../../../../scenarios/pivotTable/base";
-import { withScreenshot } from "../../_infra/backstopWrapper";
-import { CustomStories } from "../../_infra/storyGroups";
+import { withScreenshot } from "../../../_infra/backstopWrapper";
+import { CustomStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
-import { StorybookBackend, ReferenceWorkspaceId } from "../../_infra/backend";
+import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend";
 import { action } from "@storybook/addon-actions";
-import { createElementCountResolver, ScreenshotReadyWrapper } from "../../_infra/ScreenshotReadyWrapper";
+import { createElementCountResolver, ScreenshotReadyWrapper } from "../../../_infra/ScreenshotReadyWrapper";
 
 const backend = StorybookBackend();
 

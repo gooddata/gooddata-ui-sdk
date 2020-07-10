@@ -60,7 +60,9 @@
                 "columnWidths": [
                     {
                         "measureColumnWidthItem": {
-                            "width": 60,
+                            "width": {
+                                "value": 60
+                            },
                             "locators": [
                                 {
                                     "measureLocatorItem": {

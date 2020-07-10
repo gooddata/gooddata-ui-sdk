@@ -60,7 +60,9 @@
                 "columnWidths": [
                     {
                         "attributeColumnWidthItem": {
-                            "width": 400,
+                            "width": {
+                                "value": 400
+                            },
                             "attributeIdentifier": "a_label.product.id.name"
                         }
                     }

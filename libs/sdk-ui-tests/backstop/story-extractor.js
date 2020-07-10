@@ -21,10 +21,10 @@ const OutputFilename = "backstop/stories.json";
 
 describe("story-extractor", () => {
     function getAvailableStories() {
-        const req = require.context("../stories", true, /\.tsx?$/);
+        const req = require.context("../stories/visual-regression", true, /\.tsx?$/);
 
         function loadStories() {
-            req.keys().forEach(filename => req(filename));
+            req.keys().forEach((filename) => req(filename));
         }
 
         configure(loadStories, module);
@@ -35,7 +35,7 @@ describe("story-extractor", () => {
         const stories = getAvailableStories();
         const storyDump = [];
 
-        stories.forEach(rawStory => {
+        stories.forEach((rawStory) => {
             const storyElement = rawStory.getOriginal()();
             let config = {};
 

@@ -3,13 +3,13 @@ import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { LongPostInteractionTimeout, withMultipleScreenshots } from "../../_infra/backstopWrapper";
-import { FilterStories } from "../../_infra/storyGroups";
+import { LongPostInteractionTimeout, withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilter.css";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
-import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
+import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend";
 
 const wrapperStyle = { width: 400, height: 600, padding: "1em 1em" };
 const backend = StorybookBackend();
