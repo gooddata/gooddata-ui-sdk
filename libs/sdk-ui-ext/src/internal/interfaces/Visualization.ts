@@ -124,6 +124,7 @@ export interface IAttributeFilter {
 }
 
 export const DATE_DATASET_ATTRIBUTE = "attr.datedataset";
+
 export interface IDateFilter {
     attribute: "attr.datedataset";
     overTimeComparisonType: OverTimeComparisonType;
@@ -301,9 +302,15 @@ export interface IVisualization {
      *
      * @param props - some runtime properties
      * @param insight - new state of insight
+     * @param insightPropertiesMeta - new state of insight properties meta
      * @param executionFactory - execution factory to use when triggering calculation on backend
      */
-    update(props: IVisProps, insight: IInsightDefinition, executionFactory: IExecutionFactory): void;
+    update(
+        props: IVisProps,
+        insight: IInsightDefinition,
+        insightPropertiesMeta: any,
+        executionFactory: IExecutionFactory,
+    ): void;
 
     unmount(): void;
 

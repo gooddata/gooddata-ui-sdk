@@ -56,23 +56,21 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "columnWidths": [
-                        {
-                            "measureColumnWidthItem": {
-                                "width": 60,
-                                "locators": [
-                                    {
-                                        "measureLocatorItem": {
-                                            "measureIdentifier": "m_aangOxLSeztu"
-                                        }
+            "controls": {
+                "columnWidths": [
+                    {
+                        "measureColumnWidthItem": {
+                            "width": 60,
+                            "locators": [
+                                {
+                                    "measureLocatorItem": {
+                                        "measureIdentifier": "m_aangOxLSeztu"
                                     }
-                                ]
-                            }
+                                }
+                            ]
                         }
-                    ]
-                }
+                    }
+                ]
             }
         }
     }

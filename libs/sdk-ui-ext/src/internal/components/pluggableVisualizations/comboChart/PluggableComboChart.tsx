@@ -61,7 +61,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         this.secondaryAxis = AXIS_NAME.SECONDARY_Y;
         this.primaryChartType = get(
             props.visualizationProperties,
-            PROPERTY_CONTROLS_PRIMARY_CHART_TYPE,
+            "controls.primaryChartType",
             VisualizationTypes.COLUMN,
         );
         this.supportedPropertiesList = this.getSupportedPropertiesList();

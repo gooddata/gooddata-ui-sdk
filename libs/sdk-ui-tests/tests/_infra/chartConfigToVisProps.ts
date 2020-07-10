@@ -57,31 +57,14 @@ export function chartConfigToVisProperties(chartConfig: IChartConfig = {}): any 
     const cleanedConfig = omit(chartConfig, ConfigNotApplicableInInsight);
     const controls = chartConfigToControls(cleanedConfig);
 
-    /*
-     * Indeed, the properties content is stored in 'properties' entry in insight AND the content itself
-     * is wrapped in another object under 'properties' entry.
-     *
-     * For more see: getSupportedProperties in propertiesHelper.ts or the code that creates insight from
-     * bear visualization object.
-     *
-     * TODO: remove this double wrap
-     */
-    return {
-        properties: {
-            controls,
-        },
-    };
+    return { controls };
 }
 
 export function geoChartConfigToVisProperties(chartConfig: IGeoConfig): any {
     const cleanedConfig = omit(chartConfig, ConfigNotApplicableInInsight);
     const controls = geoChartConfigToControls(cleanedConfig);
 
-    return {
-        properties: {
-            controls,
-        },
-    };
+    return { controls };
 }
 
 /*

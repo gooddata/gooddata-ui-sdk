@@ -74,11 +74,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "yaxis": {
-                        "rotation": "60"
-                    }
+            "controls": {
+                "yaxis": {
+                    "rotation": "60"
                 }
             }
         }

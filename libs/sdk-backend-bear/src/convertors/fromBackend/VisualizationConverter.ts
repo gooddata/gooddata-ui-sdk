@@ -191,8 +191,7 @@ export const convertVisualization = (
             filters: content.filters ? compact(content.filters.map(convertFilter)) : [],
             // we assume that identifier is always defined for visualizations
             identifier: meta.identifier!,
-            // TODO: remove the need to have properties content wrapper in yet another 'properties' object
-            properties: { properties: parsedProperties },
+            properties: parsedProperties,
             sorts: parsedProperties.sortItems || [],
             title: meta.title!,
             uri: meta.uri!,

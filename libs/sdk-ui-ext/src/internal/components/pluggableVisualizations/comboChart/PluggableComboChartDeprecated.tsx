@@ -10,7 +10,6 @@ import {
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
-    IVisualizationProperties,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -107,11 +106,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
 
     protected renderConfigurationPanel() {
         if (document.querySelector(this.configPanelElement)) {
-            const properties: IVisualizationProperties = get(
-                this.visualizationProperties,
-                "properties",
-                {},
-            ) as IVisualizationProperties;
+            const properties = this.visualizationProperties ?? {};
 
             render(
                 <UnsupportedConfigurationPanel

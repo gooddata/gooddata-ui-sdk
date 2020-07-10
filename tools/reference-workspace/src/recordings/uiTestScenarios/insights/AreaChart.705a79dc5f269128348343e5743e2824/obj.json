@@ -56,10 +56,8 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "stackMeasures": false
-                }
+            "controls": {
+                "stackMeasures": false
             }
         }
     }

@@ -35,6 +35,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;
     projectId: string;
     insight: IInsightDefinition;
+    insightPropertiesMeta: any;
     config?: IGdcConfig;
     visualizationClass: IVisualizationClass;
     environment?: VisualizationEnvironment;
@@ -209,6 +210,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 config: this.props.config,
             },
             this.props.insight,
+            this.props.insightPropertiesMeta,
             this.executionFactory,
         );
     }

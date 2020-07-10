@@ -64,7 +64,7 @@ export function replaceMappingPredicates(...valuesOrObjs: Array<string | IMeasur
 
     return (defaultInsight: IInsight): IInsight => {
         const properties = insightProperties(defaultInsight);
-        const colorMapping: IColorMapping[] = properties?.properties?.controls?.colorMapping ?? [];
+        const colorMapping: IColorMapping[] = properties?.controls?.colorMapping ?? [];
 
         if (isEmpty(colorMapping)) {
             return defaultInsight;
@@ -73,7 +73,7 @@ export function replaceMappingPredicates(...valuesOrObjs: Array<string | IMeasur
         const colorMappingItems = createColorMappingItems(defaultInsight, colorMapping, ids);
         const newProperties = cloneDeep(properties);
 
-        newProperties.properties.controls.colorMapping = colorMappingItems;
+        newProperties.controls.colorMapping = colorMappingItems;
 
         return insightSetProperties(defaultInsight, newProperties);
     };

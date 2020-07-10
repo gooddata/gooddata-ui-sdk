@@ -249,7 +249,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected initializeProperties(visualizationProperties: IVisualizationProperties) {
-        const controls = get(visualizationProperties, "properties.controls");
+        const controls = visualizationProperties?.controls;
 
         const supportedProperties = getSupportedPropertiesControls(controls, this.supportedPropertiesList);
         const initialProperties = {

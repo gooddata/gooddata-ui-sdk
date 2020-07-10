@@ -91,13 +91,11 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "tooltipText": "label.uscities.city",
-                    "legend": {
-                        "enabled": false,
-                        "position": "left"
-                    }
+            "controls": {
+                "tooltipText": "label.uscities.city",
+                "legend": {
+                    "enabled": false,
+                    "position": "left"
                 }
             }
         }

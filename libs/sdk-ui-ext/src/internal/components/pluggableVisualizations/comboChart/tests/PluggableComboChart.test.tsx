@@ -259,10 +259,8 @@ describe("PluggableComboChart", () => {
                 const mockProps = {
                     ...defaultProps,
                     visualizationProperties: {
-                        properties: {
-                            controls: {
-                                primaryChartType: chartType,
-                            },
+                        controls: {
+                            primaryChartType: chartType,
                         },
                     },
                     pushData: jest.fn(),
@@ -317,10 +315,8 @@ describe("PluggableComboChart", () => {
                 const mockProps = {
                     ...defaultProps,
                     visualizationProperties: {
-                        properties: {
-                            controls: {
-                                primaryChartType: chartType,
-                            },
+                        controls: {
+                            primaryChartType: chartType,
                         },
                     },
                     pushData: jest.fn(),

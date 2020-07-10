@@ -58,6 +58,7 @@ describe("BaseVisualization", () => {
     const defaultProps: IBaseVisualizationProps = {
         projectId: "PROJECTID",
         insight: testMocks.emptyInsight,
+        insightPropertiesMeta: {},
         visualizationClass: testMocks.dummyTableVisualizationClass,
         backend: dummyBackend(),
         referencePoint: emptyReferencePoint,

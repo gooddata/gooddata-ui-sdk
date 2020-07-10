@@ -80,8 +80,7 @@ export function getSupportedProperties(
     visualizationProperties: IVisualizationProperties,
     supportedPropertiesList: string[],
 ): IVisualizationProperties {
-    // TODO: remove the need to have properties content wrapper in yet another 'properties' object
-    const controls = get(visualizationProperties, "properties.controls", {});
+    const controls = visualizationProperties?.controls ?? {};
     const supportedControls = getSupportedPropertiesControls(controls, supportedPropertiesList);
 
     return isEmpty(supportedControls)
@@ -216,5 +215,5 @@ export function getHighchartsAxisNameConfiguration(
 export function getColumnWidthsFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ColumnWidthItem[] | undefined {
-    return get(visualizationProperties, "properties.controls.columnWidths");
+    return get(visualizationProperties, "controls.columnWidths");
 }

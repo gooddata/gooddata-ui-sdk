@@ -92,6 +92,7 @@ describe("PluggableHeadline", () => {
                 locale: "en-US",
             };
         }
+        const emptyPropertiesMeta = {};
 
         it("should not render headline when insight is empty", () => {
             const fakeElement: any = "fake element";
@@ -110,7 +111,7 @@ describe("PluggableHeadline", () => {
 
             const options: IVisProps = getTestOptions();
 
-            headline.update({ ...options }, testMocks.emptyInsight, executionFactory);
+            headline.update({ ...options }, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
 
             expect(reactRenderSpy).toHaveBeenCalledTimes(0);
             expect(onError).toHaveBeenCalled();
@@ -136,7 +137,12 @@ describe("PluggableHeadline", () => {
 
             const options: IVisProps = getTestOptions();
 
-            headline.update({ ...options }, testMocks.insightWithSingleSecondaryMeasure, executionFactory);
+            headline.update(
+                { ...options },
+                testMocks.insightWithSingleSecondaryMeasure,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
 
             expect(reactRenderSpy).toHaveBeenCalledTimes(0);
             expect(onError).toHaveBeenCalled();
@@ -155,7 +161,12 @@ describe("PluggableHeadline", () => {
             const headline = createComponent({ ...defaultProps, renderFun: mockRenderFun });
             const options: IVisProps = getTestOptions();
 
-            headline.update(options, testMocks.insightWithSingleMeasure, executionFactory);
+            headline.update(
+                options,
+                testMocks.insightWithSingleMeasure,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
 
             expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreHeadline);
             expect(mockRenderFun).toHaveBeenCalledWith(
@@ -181,7 +192,12 @@ describe("PluggableHeadline", () => {
 
             const options: IVisProps = getTestOptions();
 
-            headline.update(options, testMocks.insightWithSingleMeasure, executionFactory);
+            headline.update(
+                options,
+                testMocks.insightWithSingleMeasure,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
 
             expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreHeadline);
 

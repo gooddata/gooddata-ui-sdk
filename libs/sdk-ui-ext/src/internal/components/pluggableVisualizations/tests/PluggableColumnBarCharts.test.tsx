@@ -45,6 +45,7 @@ describe("PluggableColumnBarCharts", () => {
                 stickyHeaderOffset: 3,
             },
         };
+        const emptyPropertiesMeta = {};
 
         it("should place third attribute to stack bucket", async () => {
             const columnChart = createComponent(defaultProps);
@@ -266,7 +267,12 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should disable open as report for insight have two view items", () => {
             const visualization = createComponent(defaultProps);
-            visualization.update(options, testMocks.insightWithSingleMeasureAndTwoViewBy, executionFactory);
+            visualization.update(
+                options,
+                testMocks.insightWithSingleMeasureAndTwoViewBy,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
             const isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(false);
         });
@@ -278,10 +284,8 @@ describe("PluggableColumnBarCharts", () => {
 
             // stackMeasures property
             visualizationProperties = {
-                properties: {
-                    controls: {
-                        stackMeasures: true,
-                    },
+                controls: {
+                    stackMeasures: true,
                 },
             };
             const testInsight = insightSetProperties(
@@ -289,7 +293,7 @@ describe("PluggableColumnBarCharts", () => {
                 visualizationProperties,
             );
 
-            visualization.update(options, testInsight, executionFactory);
+            visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
             isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(false);
         });
@@ -301,10 +305,8 @@ describe("PluggableColumnBarCharts", () => {
 
             // stackMeasuresToPercent property
             visualizationProperties = {
-                properties: {
-                    controls: {
-                        stackMeasuresToPercent: true,
-                    },
+                controls: {
+                    stackMeasuresToPercent: true,
                 },
             };
             const testInsight = insightSetProperties(
@@ -312,7 +314,7 @@ describe("PluggableColumnBarCharts", () => {
                 visualizationProperties,
             );
 
-            visualization.update(options, testInsight, executionFactory);
+            visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
             isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(false);
         });
@@ -320,7 +322,12 @@ describe("PluggableColumnBarCharts", () => {
         it("should enable open as report for normal column chart", () => {
             const visualization = createComponent(defaultProps);
 
-            visualization.update(options, testMocks.insightWithTwoMeasuresAndViewBy, executionFactory);
+            visualization.update(
+                options,
+                testMocks.insightWithTwoMeasuresAndViewBy,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
             const isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(true);
         });

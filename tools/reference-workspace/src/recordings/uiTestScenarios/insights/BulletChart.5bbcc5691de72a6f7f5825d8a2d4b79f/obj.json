@@ -74,11 +74,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "yaxis": {
-                        "visible": false
-                    }
+            "controls": {
+                "yaxis": {
+                    "visible": false
                 }
             }
         }

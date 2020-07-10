@@ -18,6 +18,7 @@ describe("PluggableBaseChart", () => {
     const dummyLocale: ILocale = "en-US";
     const backend = dummyBackend();
     const executionFactory = backend.workspace("PROJECTID").execution();
+    const emptyPropertiesMeta = {};
 
     const callbacks: any = {
         afterRender: noop,
@@ -84,7 +85,7 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        visualization.update(options, testMocks.emptyInsight, executionFactory);
+        visualization.update(options, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
 
         expect(mockRenderFun).toHaveBeenCalledTimes(0);
         expect(onError).toHaveBeenCalled();
@@ -111,7 +112,12 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        visualization.update(options, testMocks.insightWithSingleAttribute, executionFactory);
+        visualization.update(
+            options,
+            testMocks.insightWithSingleAttribute,
+            emptyPropertiesMeta,
+            executionFactory,
+        );
 
         expect(mockRenderFun).toHaveBeenCalledTimes(0);
         expect(onError).toHaveBeenCalled();
@@ -131,7 +137,12 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, executionFactory);
+        visualization.update(
+            options,
+            testMocks.insightWithSingleMeasureAndViewBy,
+            emptyPropertiesMeta,
+            executionFactory,
+        );
 
         const renderCallsCount = mockRenderFun.mock.calls.length;
         expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
@@ -168,7 +179,7 @@ describe("PluggableBaseChart", () => {
             visualizationProperties,
         );
 
-        visualization.update(options, testInsight, executionFactory);
+        visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
         const renderCallsCount = mockRenderFun.mock.calls.length;
         expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
@@ -202,7 +213,7 @@ describe("PluggableBaseChart", () => {
 
         const testInsight = insightSetProperties(testMocks.insightWithStacking, visualizationProperties);
 
-        visualization.update(options, testInsight, executionFactory);
+        visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
         const renderCallsCount = mockRenderFun.mock.calls.length;
         expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
@@ -233,7 +244,7 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, executionFactory);
+        visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, null, executionFactory);
         const expectedConfigPanelElement = dummyConfigurationRenderer(
             testMocks.insightWithSingleMeasureAndViewBy,
         );
@@ -268,7 +279,7 @@ describe("PluggableBaseChart", () => {
             visualizationProperties,
         );
 
-        visualization.update(options, testInsight, executionFactory);
+        visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
         const renderCallsCount = mockRenderFun.mock.calls.length;
         expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();

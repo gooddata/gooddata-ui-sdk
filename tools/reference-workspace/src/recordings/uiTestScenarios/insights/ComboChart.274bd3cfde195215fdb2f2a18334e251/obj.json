@@ -57,10 +57,8 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "dualAxis": false
-                }
+            "controls": {
+                "dualAxis": false
             }
         }
     }

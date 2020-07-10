@@ -20,7 +20,6 @@ import {
     IReferencePoint,
     IVisConstruct,
     IVisProps,
-    IVisualizationProperties,
     RenderFunction,
 } from "../../../interfaces/Visualization";
 import {
@@ -42,7 +41,6 @@ import UnsupportedConfigurationPanel from "../../configurationPanels/Unsupported
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getXirrBuckets } from "./xirrBucketHelper";
 import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
 
 export class PluggableXirr extends AbstractPluggableVisualization {
     private settings?: ISettings;
@@ -118,11 +116,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
 
     protected renderConfigurationPanel() {
         if (document.querySelector(this.configPanelElement)) {
-            const properties: IVisualizationProperties = get(
-                this.visualizationProperties,
-                "properties",
-                {},
-            ) as IVisualizationProperties;
+            const properties = this.visualizationProperties ?? {};
 
             render(
                 <UnsupportedConfigurationPanel

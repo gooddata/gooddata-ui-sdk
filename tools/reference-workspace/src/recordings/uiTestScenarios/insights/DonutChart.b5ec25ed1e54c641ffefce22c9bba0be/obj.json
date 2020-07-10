@@ -40,11 +40,9 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "chart": {
-                        "verticalAlign": "top"
-                    }
+            "controls": {
+                "chart": {
+                    "verticalAlign": "top"
                 }
             }
         }

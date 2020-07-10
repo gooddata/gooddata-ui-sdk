@@ -85,11 +85,9 @@ describe("propertiesHelper", () => {
 
         it("should return object with only supported controls", () => {
             const properties = {
-                properties: {
-                    controls: {
-                        supported: "abc",
-                        unsupported: "xyz",
-                    },
+                controls: {
+                    supported: "abc",
+                    unsupported: "xyz",
                 },
             };
             const supported = ["supported"];
@@ -317,10 +315,8 @@ describe("propertiesHelper", () => {
 
         it("should return correct column widths", () => {
             const visualizationProperties: IVisualizationProperties = {
-                properties: {
-                    controls: {
-                        columnWidths,
-                    },
+                controls: {
+                    columnWidths,
                 },
             };
             const result = getColumnWidthsFromProperties(visualizationProperties);

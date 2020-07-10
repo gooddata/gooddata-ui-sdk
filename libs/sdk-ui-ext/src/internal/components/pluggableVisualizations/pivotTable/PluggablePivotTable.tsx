@@ -498,11 +498,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
     protected renderConfigurationPanel(insight: IInsightDefinition) {
         if (document.querySelector(this.configPanelElement)) {
-            const properties: IVisualizationProperties = get(
-                this.visualizationProperties,
-                "properties",
-                {},
-            ) as IVisualizationProperties;
+            const properties = this.visualizationProperties ?? {};
 
             // we need to handle cases when attribute previously bearing the default sort is no longer available
             const sanitizedProperties = properties.sortItems
@@ -531,37 +527,31 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     private getMergedProperties(newProperties: any): IVisualizationProperties {
-        const properties: IVisualizationProperties = get(
-            this.visualizationProperties,
-            "properties",
-            {},
-        ) as IVisualizationProperties;
+        const properties = this.visualizationProperties ?? {};
 
         return {
-            properties: {
-                ...properties,
-                ...newProperties,
-            },
+            ...properties,
+            ...newProperties,
         };
     }
 
     private onColumnResized(columnWidths: ColumnWidthItem[]) {
-        this.pushData(
-            this.getMergedProperties({
+        this.pushData({
+            properties: this.getMergedProperties({
                 controls: {
                     columnWidths,
                 },
             }),
-        );
+        });
     }
 
     private handlePushData(data: any) {
         if (data && data.properties && data.properties.sortItems) {
-            this.pushData(
-                this.getMergedProperties({
+            this.pushData({
+                properties: this.getMergedProperties({
                     sortItems: data.properties.sortItems,
                 }),
-            );
+            });
         } else {
             this.pushData(data);
         }

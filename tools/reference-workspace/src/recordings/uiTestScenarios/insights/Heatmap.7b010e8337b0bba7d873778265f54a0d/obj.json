@@ -61,11 +61,9 @@
             }
         ],
         "properties": {
-            "properties": {
-                "controls": {
-                    "dataLabels": {
-                        "visible": "auto"
-                    }
+            "controls": {
+                "dataLabels": {
+                    "visible": "auto"
                 }
             }
         }

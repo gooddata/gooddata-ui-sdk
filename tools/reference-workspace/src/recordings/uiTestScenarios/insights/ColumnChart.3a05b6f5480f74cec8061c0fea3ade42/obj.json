@@ -65,14 +65,12 @@
         "filters": [],
         "sorts": [],
         "properties": {
-            "properties": {
-                "controls": {
-                    "xaxis": {
-                        "visible": false
-                    },
-                    "yaxis": {
-                        "visible": false
-                    }
+            "controls": {
+                "xaxis": {
+                    "visible": false
+                },
+                "yaxis": {
+                    "visible": false
                 }
             }
         }
