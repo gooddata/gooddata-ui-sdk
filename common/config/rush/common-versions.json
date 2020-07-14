@@ -20,7 +20,7 @@
          */
         "@microsoft/api-extractor": "7.8.1",
         "@microsoft/api-documenter": "^7.3.16",
-        "@gooddata/frontend-npm-scripts": "1.0.1",
+        "@gooddata/frontend-npm-scripts": "1.2.0",
         "@gooddata/tslint-config": "1.0.0",
         "tslint-config-prettier": "^1.18.0",
         "prettier": "~2.0.5",

@@ -186,6 +186,10 @@ For detailed description of the release process, please see [Release process](do
 
 This might be caused by corrupted symlinks. Try running `rush link --force` to recreate them. After that, everything should work fine.
 
+#### `rush install` gives me "Error: Cannot find module '~/.rush/node-v10.16.3/rush-5.14.0/node_modules/@microsoft/rush-lib/lib/index'"
+
+Try to run the following sequence of commands `npm un -g @microsoft/rush pnpm && rm -rf ~/.rush && npm i -g @microsoft/rush pnpm` to fix the issue.
+
 ## CI jobs and gating
 
 Every pull-request can be merged by adding `merge` label. This triggers test scripts and once they pass, the pull-request is automatically merged. All related scripts run in docker, see `./common/scripts/ci/` for individual scripts being run on jenkins slaves.
