@@ -94,7 +94,7 @@ export function toMeasureValueFilterMeasureQualifier(ref: ObjRefInScope) {
     if (isLocalIdRef(ref)) {
         return toLocalIdentifier(ref.localIdentifier);
     } else if (isObjRef(ref)) {
-        return toObjQualifier(ref, "metric");
+        return toObjQualifier(ref);
     } else {
         throw new UnexpectedError(
             `The measure property of measure value filter must be either object reference or local identifier`,

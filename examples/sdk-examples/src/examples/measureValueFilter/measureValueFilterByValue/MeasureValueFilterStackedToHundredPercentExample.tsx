@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import { newMeasureValueFilter, IMeasureValueFilter, measureIdentifier, idRef } from "@gooddata/sdk-model";
+import { newMeasureValueFilter, IMeasureValueFilter } from "@gooddata/sdk-model";
 import { LdmExt } from "../../../ldm";
 import { IMeasureValueFilterState } from "./MeasureValueFilterExample";
 
@@ -9,11 +9,7 @@ const measures = [LdmExt.TotalSales2, LdmExt.numberOfChecks];
 
 const attributes = [LdmExt.LocationName];
 
-const greaterThanFilter = newMeasureValueFilter(
-    idRef(measureIdentifier(LdmExt.TotalSales2)!),
-    "GREATER_THAN",
-    7000000,
-);
+const greaterThanFilter = newMeasureValueFilter(LdmExt.TotalSales2, "GREATER_THAN", 7000000);
 
 export class MeasureValueFilterExample extends Component<{}, IMeasureValueFilterState> {
     constructor(props: any) {

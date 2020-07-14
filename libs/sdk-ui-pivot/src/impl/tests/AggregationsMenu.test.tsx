@@ -13,6 +13,7 @@ import {
     measureLocalId,
     newPositiveAttributeFilter,
     idRef,
+    localIdRef,
     newMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
@@ -146,7 +147,7 @@ describe("AggregationsMenu", () => {
 
     it("should disable native totals when there is at least one measure value filter set", () => {
         const defWithMeasureValueFilter = defWithFilters(emptyDef("testWorkspace"), [
-            newMeasureValueFilter(idRef("some-identifier"), "GREATER_THAN", 10),
+            newMeasureValueFilter(localIdRef("some-localIdentifier"), "GREATER_THAN", 10),
         ]);
 
         const wrapper = render({

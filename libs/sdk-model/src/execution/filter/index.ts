@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import invariant from "ts-invariant";
-import { ObjRef, ObjRefInScope } from "../../objRef";
+import { ObjRef, ObjRefInScope, UriRef, LocalIdRef } from "../../objRef";
 
 /**
  * Attribute elements specified by their URI.
@@ -194,7 +194,7 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
  */
 export interface IMeasureValueFilter {
     measureValueFilter: {
-        measure: ObjRefInScope;
+        measure: UriRef | LocalIdRef; // keeping UriRef for the sake of legacy code
         condition?: MeasureValueFilterCondition;
     };
 }

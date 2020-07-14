@@ -12,7 +12,7 @@ import {
     RangeConditionOperator,
 } from "./index";
 import { IAttribute, attributeDisplayFormRef } from "../attribute";
-import { ObjRefInScope, ObjRef, isObjRef, Identifier } from "../../objRef";
+import { ObjRef, isObjRef, Identifier, UriRef, LocalIdRef } from "../../objRef";
 import { IMeasure, isMeasure, measureLocalId } from "../measure";
 import { idRef, localIdRef } from "../../objRef/factory";
 
@@ -135,7 +135,7 @@ export function newRelativeDateFilter(
  * @public
  */
 export function newMeasureValueFilter(
-    measureOrRef: IMeasure | ObjRefInScope | string,
+    measureOrRef: IMeasure | UriRef | LocalIdRef | string,
     operator: ComparisonConditionOperator,
     value: number,
     treatNullValuesAs?: number,
@@ -154,7 +154,7 @@ export function newMeasureValueFilter(
  * @public
  */
 export function newMeasureValueFilter(
-    measureOrRef: IMeasure | ObjRefInScope | string,
+    measureOrRef: IMeasure | UriRef | LocalIdRef | string,
     operator: RangeConditionOperator,
     from: number,
     to: number,
@@ -174,13 +174,13 @@ export function newMeasureValueFilter(
  * @public
  */
 export function newMeasureValueFilter(
-    measureOrRef: IMeasure | ObjRefInScope | string,
+    measureOrRef: IMeasure | UriRef | LocalIdRef | string,
     operator: ComparisonConditionOperator | RangeConditionOperator,
     val1: number,
     val2OrTreatNullValuesAsInComparison?: number,
     treatNullValuesAsInRange?: number,
 ): IMeasureValueFilter {
-    const ref: ObjRefInScope = isMeasure(measureOrRef)
+    const ref: UriRef | LocalIdRef = isMeasure(measureOrRef)
         ? { localIdentifier: measureLocalId(measureOrRef) }
         : typeof measureOrRef === "string"
         ? localIdRef(measureOrRef)

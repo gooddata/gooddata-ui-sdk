@@ -3,7 +3,7 @@ import * as React from "react";
 import { mount } from "enzyme";
 import noop = require("lodash/noop");
 import { withIntl } from "@gooddata/sdk-ui";
-import { IMeasureValueFilter, newMeasureValueFilter } from "@gooddata/sdk-model";
+import { IMeasureValueFilter, newMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
 
 import { MeasureValueFilter, IMeasureValueFilterProps } from "../MeasureValueFilter";
 import { MeasureValueFilterDropdown } from "../MeasureValueFilterDropdown";
@@ -12,9 +12,7 @@ import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown";
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {
     measureValueFilter: {
-        measure: {
-            identifier: "myMeasure",
-        },
+        measure: localIdRef("myMeasure"),
     },
 };
 
@@ -64,8 +62,8 @@ describe("Measure value filter", () => {
 
     it("should call onApply when Apply button clicked", () => {
         const onApply = jest.fn();
-        const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "LESS_THAN", 100);
-        const expectedFilter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "LESS_THAN", 123);
+        const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
+        const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 123);
 
         const component = renderComponent({ onApply, filter });
 
