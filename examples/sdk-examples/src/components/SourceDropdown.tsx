@@ -1,7 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { okaidia } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { SourceContainer } from "../components/SourceContainer";
 
 interface ISourceDropdownState {
     hidden: boolean;
@@ -16,15 +15,15 @@ interface ISourceDropdownProps {
 export class SourceDropdown extends React.Component<ISourceDropdownProps, ISourceDropdownState> {
     constructor(props: ISourceDropdownProps) {
         super(props);
-        this.state = { hidden: true, viewJS: false };
+        this.state = { hidden: true, viewJS: true };
     }
 
     public toggle = () => {
         this.setState((state) => ({ ...state, hidden: !state.hidden }));
     };
 
-    public toggleTSJS = () => {
-        this.setState((state) => ({ ...state, viewJS: !state.viewJS }));
+    public switchLang = (isJS: boolean) => {
+        this.setState((state) => ({ ...state, viewJS: isJS }));
     };
 
     public render() {
@@ -54,16 +53,12 @@ export class SourceDropdown extends React.Component<ISourceDropdownProps, ISourc
                     {hidden ? (
                         ""
                     ) : (
-                        <button className={`gd-button gd-button-secondary`} onClick={this.toggleTSJS}>
-                            {viewJS ? "TS" : "JS"}
-                        </button>
-                    )}
-                    {hidden ? (
-                        ""
-                    ) : (
-                        <SyntaxHighlighter language="jsx" style={okaidia}>
-                            {viewJS ? sourceJS : source}
-                        </SyntaxHighlighter>
+                        <SourceContainer
+                            toggleIsJS={this.switchLang}
+                            isJS={viewJS}
+                            source={source}
+                            sourceJS={sourceJS}
+                        />
                     )}
                 </div>
             </div>
