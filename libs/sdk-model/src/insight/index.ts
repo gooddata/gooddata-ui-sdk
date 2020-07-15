@@ -38,6 +38,24 @@ export type IInsight = IInsightDefinition & {
          * Link to the insight.
          */
         uri: string;
+
+        /**
+         * Last update date - YYYY-MM-DD HH:mm:ss
+         *
+         */
+        created?: string;
+
+        /**
+         * Last update date - YYYY-MM-DD HH:mm:ss
+         *
+         */
+        updated?: string;
+
+        /**
+         * Insight is locked for editing & deleting
+         *
+         */
+        isLocked?: boolean;
     };
 };
 
@@ -90,20 +108,6 @@ export type IInsightDefinition = {
          * any way.
          */
         properties: VisualizationProperties;
-
-        /**
-         * Last update date - YYYY-MM-DD HH:mm:ss
-         *
-         * TODO: move to insight
-         */
-        updated?: string;
-
-        /**
-         * Insight is locked for editing & deleting
-         *
-         * TODO: move to insight
-         */
-        isLocked?: boolean;
     };
 };
 
@@ -447,13 +451,26 @@ export function insightUri(insight: IInsight): string {
 }
 
 /**
+ * Gets the date when the insight was created
+ *
+ * @param insight - insight
+ * @returns string - YYYY-MM-DD HH:mm:ss
+ * @public
+ */
+export function insightCreated(insight: IInsight): string | undefined {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.created;
+}
+
+/**
  * Gets the date of the last insight update
  *
  * @param insight - insight
  * @returns string - YYYY-MM-DD HH:mm:ss
  * @public
  */
-export function insightUpdated(insight: IInsightDefinition): string | undefined {
+export function insightUpdated(insight: IInsight): string | undefined {
     invariant(insight, "insight must be specified");
 
     return insight.insight.updated;
@@ -466,7 +483,7 @@ export function insightUpdated(insight: IInsightDefinition): string | undefined 
  * @returns boolean
  * @public
  */
-export function insightIsLocked(insight: IInsightDefinition): boolean {
+export function insightIsLocked(insight: IInsight): boolean {
     invariant(insight, "insight must be specified");
 
     return insight.insight.isLocked || false;

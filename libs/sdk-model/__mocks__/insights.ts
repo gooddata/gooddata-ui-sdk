@@ -70,6 +70,12 @@ export class InsightBuilder {
         return this;
     };
 
+    public created = (created: string): InsightBuilder => {
+        this.insight.created = created;
+
+        return this;
+    };
+
     public updated = (updated: string): InsightBuilder => {
         this.insight.updated = updated;
 

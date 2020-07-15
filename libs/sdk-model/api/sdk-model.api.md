@@ -697,6 +697,9 @@ export type IInsight = IInsightDefinition & {
     insight: {
         identifier: string;
         uri: string;
+        created?: string;
+        updated?: string;
+        isLocked?: boolean;
     };
 };
 
@@ -709,8 +712,6 @@ export type IInsightDefinition = {
         filters: IFilter[];
         sorts: ISortItem[];
         properties: VisualizationProperties;
-        updated?: string;
-        isLocked?: boolean;
     };
 };
 
@@ -835,6 +836,9 @@ export function insightBucket(insight: IInsightDefinition, idOrFun?: string | Bu
 // @public
 export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): IBucket[];
 
+// @public
+export function insightCreated(insight: IInsight): string | undefined;
+
 // Warning: (ae-internal-missing-underscore) The name "InsightDefinitionBuilder" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
@@ -870,7 +874,7 @@ export function insightHasMeasures(insight: IInsightDefinition): boolean;
 export function insightId(insight: IInsight): string;
 
 // @public
-export function insightIsLocked(insight: IInsightDefinition): boolean;
+export function insightIsLocked(insight: IInsight): boolean;
 
 // @public
 export function insightItems(insight: IInsightDefinition): IAttributeOrMeasure[];
@@ -905,7 +909,7 @@ export function insightTitle(insight: IInsightDefinition): string;
 export function insightTotals(insight: IInsightDefinition): ITotal[];
 
 // @public
-export function insightUpdated(insight: IInsightDefinition): string | undefined;
+export function insightUpdated(insight: IInsight): string | undefined;
 
 // @public
 export function insightUri(insight: IInsight): string;

@@ -27,6 +27,7 @@ import {
     insightId,
     insightUri,
     insightIsLocked,
+    insightCreated,
     insightUpdated,
     insightFilters,
     insightProperties,
@@ -345,6 +346,24 @@ describe("insightIsLocked", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightIsLocked(input)).toThrow();
+    });
+});
+
+describe("insightCreated", () => {
+    const insightCreatedDate = "2020-01-31 13:24:07";
+    const SavedInsight = newInsight(VisClassId, (m) => m.created(insightCreatedDate));
+
+    const Scenarios: Array<[string | undefined, string, any]> = [
+        [undefined, "insight that has not been saved", EmptyInsight],
+        [insightCreatedDate, "saved insight", SavedInsight],
+    ];
+
+    it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, insightArg) => {
+        expect(insightCreated(insightArg)).toBe(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightCreated(input)).toThrow();
     });
 });
 
