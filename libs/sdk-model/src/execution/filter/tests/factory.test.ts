@@ -7,6 +7,7 @@ import {
     newPositiveAttributeFilter,
     newRelativeDateFilter,
 } from "../factory";
+import { localIdRef } from "../../../objRef/factory";
 
 describe("filter factory", () => {
     describe("newPositiveAttributeFilter", () => {
@@ -59,12 +60,10 @@ describe("filter factory", () => {
             expect(newMeasureValueFilter(Won, "EQUAL_TO", 11)).toMatchSnapshot();
         });
         it("should generate comparison filter for measure identifier", () => {
-            expect(
-                newMeasureValueFilter({ identifier: "measureObjIdentifier" }, "EQUAL_TO", 11),
-            ).toMatchSnapshot();
+            expect(newMeasureValueFilter(localIdRef("measureObjLocalId"), "EQUAL_TO", 11)).toMatchSnapshot();
         });
         it("should generate comparison filter for measure local identifier", () => {
-            expect(newMeasureValueFilter("measureObjLocalId", "EQUAL_TO", 11)).toMatchSnapshot();
+            expect(newMeasureValueFilter(localIdRef("measureObjLocalId"), "EQUAL_TO", 11)).toMatchSnapshot();
         });
         it("should generate comparison filter for measure object with treatNullValuesAs", () => {
             expect(newMeasureValueFilter(Won, "EQUAL_TO", 11, 42)).toMatchSnapshot();
@@ -74,7 +73,7 @@ describe("filter factory", () => {
         });
         it("should generate ranger filter for measure identifier", () => {
             expect(
-                newMeasureValueFilter({ identifier: "measureObjIdentifier" }, "BETWEEN", 0, 100),
+                newMeasureValueFilter(localIdRef("measureObjLocalId"), "BETWEEN", 0, 100),
             ).toMatchSnapshot();
         });
         it("should generate ranger filter for measure local identifier", () => {
