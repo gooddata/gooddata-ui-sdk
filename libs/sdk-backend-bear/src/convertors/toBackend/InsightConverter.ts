@@ -18,6 +18,8 @@ import {
     insightUri,
     insightIsLocked,
     IInsight,
+    insightCreated,
+    insightUpdated,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import omitBy from "lodash/omitBy";
@@ -84,6 +86,7 @@ export const convertInsightDefinition = (
         content: convertInsightContent(insight),
         meta: {
             title: insightTitle(insight),
+            category: "visualizationObject",
         },
         // tslint:disable-next-line no-object-literal-type-assertion
     } as GdcVisualizationObject.IVisualizationObject;
@@ -102,6 +105,8 @@ export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisua
             ...convertedDefinition.meta,
             identifier: insightId(insight),
             uri: insightUri(insight),
+            created: insightCreated(insight),
+            updated: insightUpdated(insight),
             ...(locked && { locked }),
         },
     };

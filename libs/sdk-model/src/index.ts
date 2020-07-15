@@ -285,6 +285,7 @@ export {
     insightTitle,
     insightUri,
     insightIsLocked,
+    insightCreated,
     insightUpdated,
     insightTotals,
     insightFilters,
