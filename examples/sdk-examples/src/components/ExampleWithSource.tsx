@@ -1,8 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { okaidia } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { SourceContainer } from "./SourceContainer";
 
 interface IExampleWithSourceProps {
     for: React.ComponentType;
@@ -16,9 +15,9 @@ export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({
     sourceJS,
 }) => {
     const [hidden, setState] = useState<boolean>(true);
-    const [viewJS, setViewJS] = useState<boolean>(false);
+    const [viewJS, setViewJS] = useState<boolean>(true);
     const toggle = () => setState(!hidden);
-    const toggleToJSTS = () => setViewJS(!viewJS);
+    const switchLang = (switchToJS: boolean) => setViewJS(switchToJS);
     const iconClassName = hidden ? "icon-navigatedown" : "icon-navigateup";
 
     return (
@@ -60,16 +59,12 @@ export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({
                 {hidden ? (
                     ""
                 ) : (
-                    <button className={`gd-button gd-button-secondary`} onClick={toggleToJSTS}>
-                        {viewJS ? "TS" : "JS"}
-                    </button>
-                )}
-                {hidden ? (
-                    ""
-                ) : (
-                    <SyntaxHighlighter language="jsx" style={okaidia}>
-                        {viewJS ? sourceJS : source}
-                    </SyntaxHighlighter>
+                    <SourceContainer
+                        toggleIsJS={switchLang}
+                        isJS={viewJS}
+                        source={source}
+                        sourceJS={sourceJS}
+                    />
                 )}
             </div>
         </div>
