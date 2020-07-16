@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
 import {
     withExecutionLoading,
     IWithLoadingEvents,
@@ -73,11 +73,19 @@ export function withExecution<T>(params: IWithExecution<T>) {
             promiseFactory: async (props: T, window?: DataViewWindow) => {
                 const _execution = typeof execution === "function" ? execution(props) : execution;
                 const executionResult = await _execution.execute();
-                const dataView = !window
-                    ? await executionResult.readAll()
-                    : await executionResult.readWindow(window.offset, window.size);
+                try {
+                    const dataView = !window
+                        ? await executionResult.readAll()
+                        : await executionResult.readWindow(window.offset, window.size);
 
-                return DataViewFacade.for(dataView);
+                    return DataViewFacade.for(dataView);
+                } catch (err) {
+                    if (isNoDataError(err) && err.dataView) {
+                        return DataViewFacade.for(err.dataView!);
+                    }
+
+                    throw err;
+                }
             },
             exportTitle,
             loadOnMount,

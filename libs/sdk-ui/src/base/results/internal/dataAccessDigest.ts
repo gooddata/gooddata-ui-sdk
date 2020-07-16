@@ -120,7 +120,7 @@ export type ExecutionDefinitionDigest = {
 export type DataAccessDigest = {
     /**
      * Information about series. If series property is not in digest, then data view does not contain any
-     * data series - which is completely valid case..
+     * data series - which is completely valid case.
      */
     series?: DataSeriesDigest;
 
@@ -216,11 +216,12 @@ function createMeasureIndexes(
     measureDescriptors: IMeasureDescriptor[],
     measureHeaders: IResultMeasureHeader[],
 ) {
-    const measureAndIndex: Array<[string, number]> = measureHeaders.map((m, idx) => {
-        const measure = measureDescriptors[m.measureHeaderItem.order].measureHeaderItem.localIdentifier;
+    const measureAndIndex: Array<[string, number]> =
+        measureHeaders?.map((m, idx) => {
+            const measure = measureDescriptors[m.measureHeaderItem.order].measureHeaderItem.localIdentifier;
 
-        return [measure, idx];
-    });
+            return [measure, idx];
+        }) ?? [];
 
     return measureAndIndex.reduce((res, [localId, seriesIdx]) => {
         if (!res[localId]) {
@@ -245,12 +246,14 @@ function createDataSeriesDigest(
 
     const dimIdx = locations[0];
     const headerItems = dataViewHeaders(dataView, dimIdx);
-    const measureHeaders: IResultMeasureHeader[] = headerItems.find((headers) =>
-        isResultMeasureHeader(headers[0]),
-    ) as any;
-    const allAttributeHeaders: IResultAttributeHeader[][] = headerItems.filter((headers) =>
-        isResultAttributeHeader(headers[0]),
-    ) as any;
+    const measureHeaders: IResultMeasureHeader[] =
+        headerItems?.find((headers): headers is IResultMeasureHeader[] =>
+            isResultMeasureHeader(headers[0]),
+        ) ?? [];
+    const allAttributeHeaders: IResultAttributeHeader[][] =
+        headerItems?.filter((headers): headers is IResultAttributeHeader[] =>
+            isResultAttributeHeader(headers[0]),
+        ) ?? [];
     const count = measureHeaders ? measureHeaders.length : 0;
     const fromMeasures: IMeasureDescriptor[] = measureGroupItems(measureGroup);
     const fromMeasuresDef: IMeasure[] = fromMeasures.map(
@@ -290,7 +293,7 @@ function createDataSlicesDigest(
     }
 
     const headerItems = dataViewHeaders(dataView, dimIdx);
-    const count = headerItems.length > 0 ? headerItems[0].length : 0;
+    const count = headerItems?.length > 0 ? headerItems[0].length : 0;
     const descriptors: IAttributeDescriptor[] = dataViewDimensionItems(dataView, dimIdx).filter(
         isAttributeDescriptor,
     );
