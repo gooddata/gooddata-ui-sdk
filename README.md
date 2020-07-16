@@ -193,3 +193,9 @@ Try to run the following sequence of commands `npm un -g @microsoft/rush pnpm &&
 ## CI jobs and gating
 
 Every pull-request can be merged by adding `merge` label. This triggers test scripts and once they pass, the pull-request is automatically merged. All related scripts run in docker, see `./common/scripts/ci/` for individual scripts being run on jenkins slaves.
+
+## License
+
+(C) 2017-2020 GoodData Corporation
+
+This project is under commercial license. See [LICENSE](LICENSE).
