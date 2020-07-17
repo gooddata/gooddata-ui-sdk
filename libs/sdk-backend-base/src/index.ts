@@ -18,7 +18,12 @@ export {
 } from "./decoratedBackend/catalog";
 
 export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
-export { withCaching, CachingConfiguration, DefaultCachingConfiguration } from "./cachingBackend";
+export {
+    withCaching,
+    CachingConfiguration,
+    DefaultCachingConfiguration,
+    CacheControl,
+} from "./cachingBackend";
 export { withNormalization, NormalizationConfig } from "./normalizingBackend";
 export { Normalizer, Denormalizer, NormalizationState } from "./normalizingBackend/normalizer";
 

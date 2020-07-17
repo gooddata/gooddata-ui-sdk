@@ -107,11 +107,19 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
 }
 
 // @beta
+export type CacheControl = {
+    resetExecutions: () => void;
+    resetCatalogs: () => void;
+    resetAll: () => void;
+};
+
+// @beta
 export type CachingConfiguration = {
     maxExecutions: number | undefined;
     maxResultWindows: number | undefined;
     maxCatalogs: number | undefined;
     maxCatalogOptions: number | undefined;
+    onCacheReady?: (cacheControl: CacheControl) => void;
 };
 
 // @beta
