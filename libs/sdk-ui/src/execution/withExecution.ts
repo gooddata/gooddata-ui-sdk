@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
 import {
     withExecutionLoading,
     IWithLoadingEvents,
@@ -63,6 +63,8 @@ export interface IWithExecution<T> {
 /**
  * A React HOC that for driving an execution to get data view that can be visualized.
  *
+ * Note that if the resulting data is empty this will NOT throw a NoDataError.
+ *
  * @internal
  */
 export function withExecution<T>(params: IWithExecution<T>) {
@@ -73,11 +75,20 @@ export function withExecution<T>(params: IWithExecution<T>) {
             promiseFactory: async (props: T, window?: DataViewWindow) => {
                 const _execution = typeof execution === "function" ? execution(props) : execution;
                 const executionResult = await _execution.execute();
-                const dataView = !window
-                    ? await executionResult.readAll()
-                    : await executionResult.readWindow(window.offset, window.size);
+                try {
+                    const dataView = !window
+                        ? await executionResult.readAll()
+                        : await executionResult.readWindow(window.offset, window.size);
 
-                return DataViewFacade.for(dataView);
+                    return DataViewFacade.for(dataView);
+                } catch (err) {
+                    // do not treat no data as error here to give the user a chance to decide if no data is ok or not
+                    if (isNoDataError(err) && err.dataView) {
+                        return DataViewFacade.for(err.dataView!);
+                    }
+
+                    throw err;
+                }
             },
             exportTitle,
             loadOnMount,

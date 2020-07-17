@@ -12,7 +12,7 @@ import {
  * @internal
  */
 export function dataViewHeaders(dataView: IDataView, dimIdx: number): IResultHeader[][] {
-    return dataView.headerItems[dimIdx];
+    return dataView.headerItems[dimIdx] ?? [];
 }
 
 /**

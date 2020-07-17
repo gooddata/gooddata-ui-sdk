@@ -197,6 +197,8 @@ export function createExecution(props: IExecuteProps): IPreparedExecution {
  *
  * Once the executor finishes, the `DataViewFacade.data()` method will expose the data as series and
  * slices according to the specification to the executor.
+ * Note that if the resulting data is empty this will NOT throw a NoDataError. It is the responsibility
+ * of the child component to handle that if they need to.
  *
  * @remarks see `IDataAccessMethods` for additional documentation
  * @public

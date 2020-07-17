@@ -73,6 +73,8 @@ function exportTitle(props: IRawExecuteProps): string {
  *
  * The component accepts an instance of prepared execution and drives all the necessary
  * APIs and boilerplate needed to obtain a `DataViewFacade`.
+ * Note that if the resulting data is empty this will NOT throw a NoDataError. It is the responsibility
+ * of the child component to handle that if they need to.
  *
  * The rendering is delegated to a child component. This will be called every time the
  * state of the loading changes.
