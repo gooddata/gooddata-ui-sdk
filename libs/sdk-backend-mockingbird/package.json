@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-mockingbird",
-    "version": "8.0.0-beta.15",
+    "version": "8.0.0-beta.16",
     "author": "GoodData",
     "description": "Mock GoodData Backend SPI implementation",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-mockingbird",
@@ -33,16 +33,16 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-base": "^8.0.0-beta.15",
-        "@gooddata/sdk-backend-spi": "^8.0.0-beta.15",
-        "@gooddata/sdk-model": "^8.0.0-beta.15",
+        "@gooddata/sdk-backend-base": "^8.0.0-beta.16",
+        "@gooddata/sdk-backend-spi": "^8.0.0-beta.16",
+        "@gooddata/sdk-model": "^8.0.0-beta.16",
         "lodash": "^4.17.15",
         "ts-invariant": "^0.4.4",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@gooddata/api-model-bear": "^8.0.0-beta.15",
-        "@gooddata/reference-workspace": "^8.0.0-beta.15",
+        "@gooddata/api-model-bear": "^8.0.0-beta.16",
+        "@gooddata/reference-workspace": "^8.0.0-beta.16",
         "@gooddata/tslint-config": "1.0.0",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^25.1.2",
