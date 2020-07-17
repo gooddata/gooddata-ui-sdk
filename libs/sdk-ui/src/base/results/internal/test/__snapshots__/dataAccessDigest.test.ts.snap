@@ -607,7 +607,7 @@ exports[`createDataAccessDigest should find slices and series for: Execute - sco
 Object {
   "seriesCount": 4,
   "seriesIdx": 0,
-  "slicesCount": undefined,
+  "slicesCount": 0,
   "slicesIdx": undefined,
 }
 `;
@@ -625,7 +625,7 @@ exports[`createDataAccessDigest should find slices and series for: Execute - sin
 Object {
   "seriesCount": 1,
   "seriesIdx": 0,
-  "slicesCount": undefined,
+  "slicesCount": 0,
   "slicesIdx": undefined,
 }
 `;
@@ -634,7 +634,7 @@ exports[`createDataAccessDigest should find slices and series for: Execute - two
 Object {
   "seriesCount": 2,
   "seriesIdx": 0,
-  "slicesCount": undefined,
+  "slicesCount": 0,
   "slicesIdx": undefined,
 }
 `;
@@ -688,7 +688,7 @@ exports[`createDataAccessDigest should find slices and series for: Headline - si
 Object {
   "seriesCount": 1,
   "seriesIdx": 0,
-  "slicesCount": undefined,
+  "slicesCount": 0,
   "slicesIdx": undefined,
 }
 `;
@@ -697,7 +697,7 @@ exports[`createDataAccessDigest should find slices and series for: Headline - tw
 Object {
   "seriesCount": 2,
   "seriesIdx": 0,
-  "slicesCount": undefined,
+  "slicesCount": 0,
   "slicesIdx": undefined,
 }
 `;
@@ -706,7 +706,7 @@ exports[`createDataAccessDigest should find slices and series for: Headline - tw
 Object {
   "seriesCount": 2,
   "seriesIdx": 0,
-  "slicesCount": undefined,
+  "slicesCount": 0,
   "slicesIdx": undefined,
 }
 `;
@@ -715,7 +715,7 @@ exports[`createDataAccessDigest should find slices and series for: Headline - tw
 Object {
   "seriesCount": 2,
   "seriesIdx": 0,
-  "slicesCount": undefined,
+  "slicesCount": 0,
   "slicesIdx": undefined,
 }
 `;
@@ -1039,7 +1039,7 @@ exports[`createDataAccessDigest should find slices and series for: Xirr - correc
 Object {
   "seriesCount": 4,
   "seriesIdx": 0,
-  "slicesCount": undefined,
+  "slicesCount": 0,
   "slicesIdx": undefined,
 }
 `;
@@ -1048,7 +1048,7 @@ exports[`createDataAccessDigest should find slices and series for: Xirr - only m
 Object {
   "seriesCount": 1,
   "seriesIdx": 0,
-  "slicesCount": undefined,
+  "slicesCount": 0,
   "slicesIdx": undefined,
 }
 `;
@@ -1057,16 +1057,7 @@ exports[`createDataAccessDigest should find slices and series for: Xirr - semant
 Object {
   "seriesCount": 21,
   "seriesIdx": 0,
-  "slicesCount": undefined,
-  "slicesIdx": undefined,
-}
-`;
-
-exports[`createDataAccessDigest should handle empty data view with non empty result dimensions 1`] = `
-Object {
-  "seriesCount": 0,
-  "seriesIdx": 1,
   "slicesCount": 0,
-  "slicesIdx": 0,
+  "slicesIdx": undefined,
 }
 `;

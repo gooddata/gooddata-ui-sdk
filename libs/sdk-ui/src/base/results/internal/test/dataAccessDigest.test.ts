@@ -3,15 +3,15 @@
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { dummyDataView, recordedDataViews, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import { emptyDef } from "@gooddata/sdk-model";
+import flatMap = require("lodash/flatMap");
 import { createDataAccessDigest, DataAccessDigest } from "../dataAccessDigest";
 
 function digestSnapshot(digest: DataAccessDigest) {
     return {
         seriesIdx: digest.series?.dimIdx,
-        seriesCount: digest.series?.count,
+        seriesCount: digest.series?.count ?? 0,
         slicesIdx: digest.slices?.dimIdx,
-        slicesCount: digest.slices?.count,
+        slicesCount: digest.slices?.count ?? 0,
     };
 }
 
@@ -26,25 +26,17 @@ describe("createDataAccessDigest", () => {
         expect(digestSnapshot(digest)).toMatchSnapshot();
     });
 
-    it("should handle empty data view", () => {
-        const emptyDataView = dummyDataView(emptyDef("testWorkspace"));
-        const digest = createDataAccessDigest(emptyDataView);
+    const allScenarioRecordings = flatMap(Object.values(ReferenceRecordings.Scenarios), (group) =>
+        Object.entries(group),
+    );
 
-        expect(digestSnapshot(digest)).toEqual({});
-    });
+    it.each(allScenarioRecordings)(
+        "should handle empty data view with non empty result dimensions for %s",
+        (_, { execution: { definition, executionResult } }: ScenarioRecording) => {
+            const dataView = dummyDataView(definition, executionResult);
+            const digest = createDataAccessDigest(dataView);
 
-    function recordingWithEmptyData(rec: ScenarioRecording) {
-        const { definition, executionResult } = rec.execution;
-        return dummyDataView(definition, executionResult);
-    }
-
-    it("should handle empty data view with non empty result dimensions", () => {
-        const dataView = recordingWithEmptyData(
-            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithTwoRowAndOneColumnAttributes,
-        );
-
-        const digest = createDataAccessDigest(dataView);
-
-        expect(digestSnapshot(digest)).toMatchSnapshot();
-    });
+            expect(digestSnapshot(digest)).toMatchObject({ seriesCount: 0, slicesCount: 0 });
+        },
+    );
 });
