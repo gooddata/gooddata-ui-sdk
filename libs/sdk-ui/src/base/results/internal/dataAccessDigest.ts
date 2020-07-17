@@ -246,22 +246,17 @@ function createDataSeriesDigest(
 
     const dimIdx = locations[0];
     const headerItems = dataViewHeaders(dataView, dimIdx);
-    const measureHeaders: IResultMeasureHeader[] =
-        headerItems?.find((headers): headers is IResultMeasureHeader[] =>
-            isResultMeasureHeader(headers[0]),
-        ) ?? [];
-    const allAttributeHeaders: IResultAttributeHeader[][] =
-        headerItems?.filter((headers): headers is IResultAttributeHeader[] =>
+    const measureHeaders =
+        headerItems.find((headers): headers is IResultMeasureHeader[] => isResultMeasureHeader(headers[0])) ??
+        [];
+    const allAttributeHeaders =
+        headerItems.filter((headers): headers is IResultAttributeHeader[] =>
             isResultAttributeHeader(headers[0]),
         ) ?? [];
     const count = measureHeaders ? measureHeaders.length : 0;
-    const fromMeasures: IMeasureDescriptor[] = measureGroupItems(measureGroup);
-    const fromMeasuresDef: IMeasure[] = fromMeasures.map(
-        (m) => def.measuresIndex[m.measureHeaderItem.localIdentifier],
-    );
-    const scopingAttributes: IAttributeDescriptor[] = dataViewDimensionItems(dataView, dimIdx).filter(
-        isAttributeDescriptor,
-    );
+    const fromMeasures = measureGroupItems(measureGroup);
+    const fromMeasuresDef = fromMeasures.map((m) => def.measuresIndex[m.measureHeaderItem.localIdentifier]);
+    const scopingAttributes = dataViewDimensionItems(dataView, dimIdx).filter(isAttributeDescriptor);
     const scopingAttributesDef: IAttribute[] = scopingAttributes.map(
         (a) => def.attributesIndex[a.attributeHeader.localIdentifier],
     );
@@ -293,13 +288,9 @@ function createDataSlicesDigest(
     }
 
     const headerItems = dataViewHeaders(dataView, dimIdx);
-    const count = headerItems?.length > 0 ? headerItems[0].length : 0;
-    const descriptors: IAttributeDescriptor[] = dataViewDimensionItems(dataView, dimIdx).filter(
-        isAttributeDescriptor,
-    );
-    const descriptorsDef: IAttribute[] = descriptors.map(
-        (d) => def.attributesIndex[d.attributeHeader.localIdentifier],
-    );
+    const count = headerItems.length > 0 ? headerItems[0].length : 0;
+    const descriptors = dataViewDimensionItems(dataView, dimIdx).filter(isAttributeDescriptor);
+    const descriptorsDef = descriptors.map((d) => def.attributesIndex[d.attributeHeader.localIdentifier]);
 
     return {
         dimIdx,

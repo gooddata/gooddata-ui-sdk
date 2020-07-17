@@ -80,6 +80,7 @@ export function withExecution<T>(params: IWithExecution<T>) {
 
                     return DataViewFacade.for(dataView);
                 } catch (err) {
+                    // do not treat no data as error here to give the user a chance to decide if no data is ok or not
                     if (isNoDataError(err) && err.dataView) {
                         return DataViewFacade.for(err.dataView!);
                     }
