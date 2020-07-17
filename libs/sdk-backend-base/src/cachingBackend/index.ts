@@ -260,9 +260,54 @@ function cachingEnabled(desiredSize: number | undefined): boolean {
     return desiredSize === undefined || desiredSize > 0;
 }
 
+function cacheControl(ctx: CachingContext): CacheControl {
+    const control = {
+        resetExecutions: () => {
+            ctx.caches.execution?.reset();
+        },
+
+        resetCatalogs: () => {
+            ctx.caches.workspaceCatalogs?.reset();
+        },
+
+        resetAll: () => {
+            control.resetExecutions();
+            control.resetCatalogs();
+        },
+    };
+
+    return control;
+}
+
 //
 // Public interface
 //
+
+/**
+ * Cache control can be used to interact with the caching layer - at the moment to reset the contents of the
+ * different top-level caches.
+ *
+ * @beta
+ */
+export type CacheControl = {
+    /**
+     * Resets all execution caches.
+     *
+     * NOTE: this only resets the top-level caches. If your code holds onto execution results returned by
+     * caching backend, those have additional sub-caches which _will not_ be impacted by this call.
+     */
+    resetExecutions: () => void;
+
+    /**
+     * Resets all catalog caches.
+     */
+    resetCatalogs: () => void;
+
+    /**
+     * Convenience method to reset all caches (calls all the particular resets).
+     */
+    resetAll: () => void;
+};
 
 /**
  * Specifies where should the caching decorator apply and to what size should caches grow.
@@ -327,6 +372,14 @@ export type CachingConfiguration = {
      * Setting non-negative number here is invalid. If you want to turn off catalog caching, tweak the `maxCatalogs`.
      */
     maxCatalogOptions: number | undefined;
+
+    /**
+     * Optionally specify function to call once the caching is set up. If present, the function will be called
+     * with an instance of {@link CacheControl} which you can use to interact with the caches.
+     *
+     * @param cacheControl - cache control instance
+     */
+    onCacheReady?: (cacheControl: CacheControl) => void;
 };
 
 /**
@@ -370,6 +423,10 @@ export function withCaching(
 
     const execution = execCaching ? cachedExecutions(ctx) : identity;
     const catalog = catalogCaching ? cachedCatalog(ctx) : identity;
+
+    if (config.onCacheReady) {
+        config.onCacheReady(cacheControl(ctx));
+    }
 
     return decoratedBackend(realBackend, { execution, catalog });
 }
