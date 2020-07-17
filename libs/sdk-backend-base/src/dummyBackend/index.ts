@@ -12,7 +12,6 @@ import {
     IExportConfig,
     IExportResult,
     IPreparedExecution,
-    IResultHeader,
     IUserService,
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
@@ -153,14 +152,10 @@ export function dummyDataView(
 
     const fp = defFingerprint(definition) + "/emptyView";
 
-    const emptyHeaders: IResultHeader[][][] = definition.dimensions.map((dim) =>
-        dim.itemIdentifiers.map((_) => []),
-    );
-
     return {
         definition,
         result: execResult,
-        headerItems: emptyHeaders,
+        headerItems: [],
         data: [],
         offset: [0, 0],
         count: [0, 0],

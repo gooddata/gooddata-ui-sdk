@@ -63,6 +63,8 @@ export interface IWithExecution<T> {
 /**
  * A React HOC that for driving an execution to get data view that can be visualized.
  *
+ * Note that if the resulting data is empty this will NOT throw a NoDataError.
+ *
  * @internal
  */
 export function withExecution<T>(params: IWithExecution<T>) {

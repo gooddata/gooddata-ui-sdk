@@ -2,7 +2,7 @@
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { dummyDataView, recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
+import { dummyDataView, recordedDataViews, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { emptyDef } from "@gooddata/sdk-model";
 import { createDataAccessDigest, DataAccessDigest } from "../dataAccessDigest";
 
@@ -31,5 +31,20 @@ describe("createDataAccessDigest", () => {
         const digest = createDataAccessDigest(emptyDataView);
 
         expect(digestSnapshot(digest)).toEqual({});
+    });
+
+    function recordingWithEmptyData(rec: ScenarioRecording) {
+        const { definition, executionResult } = rec.execution;
+        return dummyDataView(definition, executionResult);
+    }
+
+    it("should handle empty data view with non empty result dimensions", () => {
+        const dataView = recordingWithEmptyData(
+            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithTwoRowAndOneColumnAttributes,
+        );
+
+        const digest = createDataAccessDigest(dataView);
+
+        expect(digestSnapshot(digest)).toMatchSnapshot();
     });
 });

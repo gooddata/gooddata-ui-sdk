@@ -1061,3 +1061,12 @@ Object {
   "slicesIdx": undefined,
 }
 `;
+
+exports[`createDataAccessDigest should handle empty data view with non empty result dimensions 1`] = `
+Object {
+  "seriesCount": 0,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
