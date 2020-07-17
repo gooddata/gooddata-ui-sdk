@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
 import { VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
 import LegendList, { LegendSeparator } from "../LegendList";
 import { transformToDualAxesSeries } from "../helpers";
 import LegendItem from "../LegendItem";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { LegendAxisIndicator } from "../LegendAxisIndicator";
 
 describe("LegendList", () => {

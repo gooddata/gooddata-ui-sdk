@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
-import debounce = require("lodash/debounce");
-import get = require("lodash/get");
-import * as CustomEvent from "custom-event";
+import debounce from "lodash/debounce";
+import get from "lodash/get";
+import CustomEvent from "custom-event";
 import invariant from "ts-invariant";
 import {
     ChartElementType,

@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { ScrollNotificationDiv } from "./ScrollNotificationDiv";
 
 export const SmallScrollDecorator = (width: number, height: number, components: JSX.Element): JSX.Element => {

@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
 import { getTranslation } from "../../utils/translations";

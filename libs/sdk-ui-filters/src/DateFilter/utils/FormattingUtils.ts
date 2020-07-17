@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import * as moment from "moment";
+// (C) 2019-2020 GoodData Corporation
+import moment from "moment";
 
 export const sanitizeLocaleForMoment = (intlLocale: string): string => {
     if (intlLocale === "zh-Hans") {

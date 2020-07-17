@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import invariant from "ts-invariant";
-import omit = require("lodash/omit");
-import omitBy = require("lodash/omitBy");
+import omit from "lodash/omit";
+import omitBy from "lodash/omitBy";
 import {
     getAttributeLocators,
     getColumnIdentifier,

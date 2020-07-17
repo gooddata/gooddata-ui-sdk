@@ -15,8 +15,8 @@ import {
     AuthenticationContext,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
-import isEmpty = require("lodash/isEmpty");
-import isString = require("lodash/isString");
+import isEmpty from "lodash/isEmpty";
+import isString from "lodash/isString";
 
 import { convertApiError } from "../utils/errorHandling";
 

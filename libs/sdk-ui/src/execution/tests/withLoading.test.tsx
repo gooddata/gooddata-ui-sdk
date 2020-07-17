@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { withExecutionLoading, IWithExecutionLoading, WithLoadingResult } from "../withExecutionLoading";
 import { shallow } from "enzyme";
 import { IDummyPromise, createDummyPromise } from "../../base/react/tests/toolkit";

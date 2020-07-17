@@ -14,9 +14,9 @@ import {
     WorkspaceType,
     ScenarioAndDescription,
 } from "./scenario";
-import intersection = require("lodash/intersection");
-import identity = require("lodash/identity");
-import cloneDeep = require("lodash/cloneDeep");
+import intersection from "lodash/intersection";
+import identity from "lodash/identity";
+import cloneDeep from "lodash/cloneDeep";
 import { ISettings } from "@gooddata/sdk-backend-spi";
 
 //

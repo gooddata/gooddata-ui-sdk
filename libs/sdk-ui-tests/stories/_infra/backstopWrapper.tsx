@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { BackstopConfig, IBackstopScenarioConfig } from "./backstopScenario";
 
 const SCREENSHOT_WRAPPER_CLASS = "screenshot-wrapper";

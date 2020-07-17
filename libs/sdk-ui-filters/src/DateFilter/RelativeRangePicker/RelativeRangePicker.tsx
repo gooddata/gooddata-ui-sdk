@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import cx from "classnames";
 import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect/DynamicSelect";
 import { getRelativeDateFilterItems } from "../DynamicSelect/utils";

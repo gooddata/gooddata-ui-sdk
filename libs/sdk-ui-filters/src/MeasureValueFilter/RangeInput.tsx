@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberFormat";
 import { ISeparators } from "@gooddata/sdk-ui";
-import * as React from "react";
+import React from "react";
 
 interface IRangeInputProps {
     from: number;

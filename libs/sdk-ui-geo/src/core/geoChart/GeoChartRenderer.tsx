@@ -1,9 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import cx from "classnames";
-import get = require("lodash/get");
-import isEqual = require("lodash/isEqual");
-import noop = require("lodash/noop");
+import get from "lodash/get";
+import isEqual from "lodash/isEqual";
+import noop from "lodash/noop";
 import mapboxgl = require("mapbox-gl");
 import invariant, { InvariantError } from "ts-invariant";
 import {

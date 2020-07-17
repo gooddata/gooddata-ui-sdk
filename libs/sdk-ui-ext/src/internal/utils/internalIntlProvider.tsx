@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { IntlProvider, IntlShape, createIntl } from "react-intl";
 import { translations } from "@gooddata/js-utils";
 

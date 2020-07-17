@@ -10,7 +10,7 @@ import {
     IExecutionDefinition,
     ISortItem,
 } from "@gooddata/sdk-model";
-import isEqual = require("lodash/isEqual");
+import isEqual from "lodash/isEqual";
 import { TigerExecutionResult } from "./executionResult";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";

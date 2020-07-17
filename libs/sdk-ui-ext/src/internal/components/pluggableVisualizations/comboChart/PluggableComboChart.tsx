@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import set = require("lodash/set");
-import without = require("lodash/without");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import set from "lodash/set";
+import without from "lodash/without";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";

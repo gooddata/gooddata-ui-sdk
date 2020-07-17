@@ -6,6 +6,7 @@
         "lib": ["es7", "dom"],
         "module": "commonjs",
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "importHelpers": true,
         "outDir": "./dist",
         "sourceMap": true,
@@ -15,7 +16,6 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "suppressImplicitAnyIndexErrors": true,
-        "allowSyntheticDefaultImports": true,
         "baseUrl": "..",
         "paths": {
             "@gooddata/sdk-ui": ["sdk-ui/src"],

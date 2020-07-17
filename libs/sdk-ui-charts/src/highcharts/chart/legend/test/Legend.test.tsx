@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import noop = require("lodash/noop");
+import React from "react";
+import noop from "lodash/noop";
 import { mount } from "enzyme";
 import { VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
 import Legend from "../Legend";

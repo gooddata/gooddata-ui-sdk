@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import PositionedMenuContent from "./PositionedMenuContent";
 import { IMenuPositionConfig } from "../MenuSharedTypes";
 import RenderChildrenInPortal from "../utils/RenderChildrenInPortal";

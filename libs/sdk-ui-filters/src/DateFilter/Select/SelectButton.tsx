@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import cx from "classnames";
 import { ISelectItemOption } from "./types";
 import { itemToString } from "./utils";

@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
-import classNames from "classnames";
-import * as numberJS from "@gooddata/numberjs";
+import React from "react";
+import cx from "classnames";
+import numberJS from "@gooddata/numberjs";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 const { stripColors, numberFormat, colors2Object }: any = numberJS;
@@ -21,7 +21,7 @@ export const FormattedPreview: React.FC<IFormattedPreviewProps> = ({
     separators,
     className: customClassName,
 }) => {
-    const className = classNames("gd-measure-format-preview-formatted", customClassName);
+    const className = cx("gd-measure-format-preview-formatted", customClassName);
 
     if (format === "") {
         return <span className={className} />;

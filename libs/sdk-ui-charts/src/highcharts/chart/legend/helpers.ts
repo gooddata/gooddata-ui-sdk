@@ -1,10 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
-import range = require("lodash/range");
-import get = require("lodash/get");
-import head = require("lodash/head");
-import last = require("lodash/last");
-import isEmpty = require("lodash/isEmpty");
-import inRange = require("lodash/inRange");
+import range from "lodash/range";
+import get from "lodash/get";
+import head from "lodash/head";
+import last from "lodash/last";
+import isEmpty from "lodash/isEmpty";
+import inRange from "lodash/inRange";
 
 import { IHeatmapLegendItem } from "../../typings/legend";
 import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";

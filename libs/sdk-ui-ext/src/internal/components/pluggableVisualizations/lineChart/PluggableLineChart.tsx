@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 
@@ -35,9 +35,9 @@ import { removeSort } from "../../../utils/sort";
 import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import set from "lodash/set";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 

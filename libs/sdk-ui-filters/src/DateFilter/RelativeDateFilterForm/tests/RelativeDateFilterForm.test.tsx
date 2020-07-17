@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";

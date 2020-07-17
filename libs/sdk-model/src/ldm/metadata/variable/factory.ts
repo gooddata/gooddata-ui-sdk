@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import identity = require("lodash/identity");
+import identity from "lodash/identity";
 import { ObjRef } from "../../../objRef";
 import { BuilderModifications, builderFactory } from "../../../base/builder";
 import { MetadataObjectBuilder } from "../factory";

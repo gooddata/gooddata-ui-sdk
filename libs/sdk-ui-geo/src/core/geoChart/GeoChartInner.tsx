@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
-import * as cx from "classnames";
-import get = require("lodash/get");
-import throttle = require("lodash/throttle");
-import noop = require("lodash/noop");
+import React from "react";
+import cx from "classnames";
+import get from "lodash/get";
+import throttle from "lodash/throttle";
+import noop from "lodash/noop";
 import invariant, { InvariantError } from "ts-invariant";
 
 import { WrappedComponentProps } from "react-intl";

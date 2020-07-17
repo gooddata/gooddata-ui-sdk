@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
-import isEqual = require("lodash/isEqual");
+import React from "react";
+import isEqual from "lodash/isEqual";
 import { injectIntl } from "react-intl";
 
 import { IGeoChartInnerProps } from "../geoChart/GeoChartInner";

@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { withIntl } from "@gooddata/sdk-ui";
 import { IMeasureValueFilter, newMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
 

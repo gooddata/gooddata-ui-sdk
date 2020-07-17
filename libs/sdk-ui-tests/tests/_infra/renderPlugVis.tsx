@@ -11,7 +11,7 @@ import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing"
 import { mount, ReactWrapper } from "enzyme";
 import React from "react";
 import { IScenario } from "../../src";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 function createVisualizationClass(insight: IInsightDefinition): IVisualizationClass {
     const visClassUri = insightVisualizationUrl(insight);

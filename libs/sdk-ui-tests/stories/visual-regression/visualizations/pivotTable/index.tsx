@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
+import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "../../../../scenarios/pivotTable/base";
 import { withScreenshot } from "../../../_infra/backstopWrapper";

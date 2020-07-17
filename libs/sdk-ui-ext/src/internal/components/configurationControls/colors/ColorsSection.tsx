@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import set = require("lodash/set");
-import get = require("lodash/get");
-import cloneDeep = require("lodash/cloneDeep");
+import React from "react";
+import set from "lodash/set";
+import get from "lodash/get";
+import cloneDeep from "lodash/cloneDeep";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IColor } from "@gooddata/sdk-model";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
-import * as classNames from "classnames";
+import cx from "classnames";
 
 import ConfigSection from "../../configurationControls/ConfigSection";
 import ColoredItemsList from "./coloredItemsList/ColoredItemsList";
@@ -69,7 +69,7 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
         const { controlsDisabled } = this.props;
         const isDisabled = controlsDisabled || this.isDefaultColorMapping();
 
-        const classes = classNames("gd-color-reset-colors-section", {
+        const classes = cx("gd-color-reset-colors-section", {
             disabled: isDisabled,
         });
 

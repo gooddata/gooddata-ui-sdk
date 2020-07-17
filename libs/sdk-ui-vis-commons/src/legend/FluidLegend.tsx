@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import * as cx from "classnames";
-import noop = require("lodash/noop");
+import React from "react";
+import cx from "classnames";
+import noop from "lodash/noop";
 import { LegendList } from "./LegendList";
 import { calculateFluidLegend } from "./helpers";
 import { IPushpinCategoryLegendItem } from "./types";

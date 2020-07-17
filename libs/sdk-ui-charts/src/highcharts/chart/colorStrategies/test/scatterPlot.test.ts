@@ -8,7 +8,7 @@ import { ColorFactory } from "../../colorFactory";
 import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";
 import { ScatterPlotColorStrategy } from "../scatterPlot";
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
-import range = require("lodash/range");
+import range from "lodash/range";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 describe("ScatterPlotColorStrategy", () => {

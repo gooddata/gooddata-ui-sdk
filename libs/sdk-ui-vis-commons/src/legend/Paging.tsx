@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
-import * as cx from "classnames";
+import cx from "classnames";
 
 /**
  * @internal

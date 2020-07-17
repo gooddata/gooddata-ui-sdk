@@ -4,7 +4,7 @@ import geoScenarios from "../../../scenarios/geo/index";
 import { ScenarioAndDescription } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
-import flatMap = require("lodash/flatMap");
+import flatMap from "lodash/flatMap";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { cleanupGeoChartProps } from "../../_infra/utils";
 import { mountInsight } from "../../_infra/renderPlugVis";
@@ -14,7 +14,7 @@ import { ReactWrapper } from "enzyme";
 const Chart = "GeoPushpinChart";
 
 describe(Chart, () => {
-    const Scenarios: Array<ScenarioAndDescription<IGeoPushpinChartProps>> = flatMap(geoScenarios, group =>
+    const Scenarios: Array<ScenarioAndDescription<IGeoPushpinChartProps>> = flatMap(geoScenarios, (group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 

@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
-import get = require("lodash/get");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
+import get from "lodash/get";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { getTranslation } from "../translations";
 

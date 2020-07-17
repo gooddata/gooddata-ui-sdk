@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps } from "react-intl";
 import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import Button from "@gooddata/goodstrap/lib/Button/Button";

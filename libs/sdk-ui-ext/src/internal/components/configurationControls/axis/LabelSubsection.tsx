@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection";
-import get = require("lodash/get");
+import get from "lodash/get";
 import { AxisType } from "../../../interfaces/AxisType";
 import LabelRotationControl from "./LabelRotationControl";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";

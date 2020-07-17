@@ -1,9 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
-import get = require("lodash/get");
-import some = require("lodash/some");
-import every = require("lodash/every");
-import isEmpty = require("lodash/isEmpty");
-import reduce = require("lodash/reduce");
+import get from "lodash/get";
+import some from "lodash/some";
+import every from "lodash/every";
+import isEmpty from "lodash/isEmpty";
+import reduce from "lodash/reduce";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 import {

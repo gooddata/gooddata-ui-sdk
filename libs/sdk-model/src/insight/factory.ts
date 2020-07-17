@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import identity = require("lodash/identity");
+import identity from "lodash/identity";
 import { IInsightDefinition, VisualizationProperties } from "./index";
 import { IBucket } from "../execution/buckets";
 import { IFilter } from "../execution/filter";

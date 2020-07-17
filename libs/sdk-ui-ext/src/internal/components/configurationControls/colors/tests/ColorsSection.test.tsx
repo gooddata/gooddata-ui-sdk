@@ -1,15 +1,15 @@
 // (C) 2019 GoodData Corporation
 import { IColor } from "@gooddata/sdk-model";
 import { mount } from "enzyme";
-import * as React from "react";
+import React from "react";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IColorConfiguration } from "../../../../interfaces/Colors";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 import ColoredItemsList from "../coloredItemsList/ColoredItemsList";
 import ColorsSection, { COLOR_MAPPING_CHANGED, IColorsSectionProps } from "../ColorsSection";
-import cloneDeep = require("lodash/cloneDeep");
-import noop = require("lodash/noop");
+import cloneDeep from "lodash/cloneDeep";
+import noop from "lodash/noop";
 
 const colors: IColorConfiguration = {
     colorPalette: DefaultColorPalette,

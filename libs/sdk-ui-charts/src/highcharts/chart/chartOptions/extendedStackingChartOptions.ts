@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import get = require("lodash/get");
+// (C) 2007-2020 GoodData Corporation
+import get from "lodash/get";
 import { IUnwrappedAttributeHeadersWithItems } from "../../utils/types";
 import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 

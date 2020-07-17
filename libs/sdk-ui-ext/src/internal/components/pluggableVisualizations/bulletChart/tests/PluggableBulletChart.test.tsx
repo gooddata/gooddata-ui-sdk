@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { PluggableBulletChart } from "../PluggableBulletChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { IBucketOfFun, IFilters, IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization";

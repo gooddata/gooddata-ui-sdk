@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import * as moment from "moment";
+import moment from "moment";
 
 import { platformDateFormat } from "../constants/Platform";
 import { IDateFilterOptionsByType } from "../interfaces";

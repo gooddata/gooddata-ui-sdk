@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     IBucket,
@@ -14,7 +14,7 @@ import {
 import { BucketNames, Subtract, withContexts } from "@gooddata/sdk-ui";
 import { ICoreChartProps, IBucketChartProps } from "../../interfaces";
 import { CoreXirr } from "./CoreXirr";
-import omit = require("lodash/omit");
+import omit from "lodash/omit";
 
 //
 // Public interface

@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
 import HeadlineTransformation, { IHeadlineTransformationProps } from "../HeadlineTransformation";
 import Headline from "../Headline";
@@ -15,7 +15,7 @@ import {
     DRILL_EVENT_DATA_BY_MEASURE_URI,
     DRILL_EVENT_DATA_FOR_SECONDARY_ITEM,
 } from "./HeadlineTransformation.fixtures";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 describe("HeadlineTransformation", () => {
     function createComponent(props: IHeadlineTransformationProps) {

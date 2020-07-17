@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import capitalize = require("lodash/capitalize");
-import isEqual = require("lodash/isEqual");
+import capitalize from "lodash/capitalize";
+import isEqual from "lodash/isEqual";
 import { ILocale, getIntl } from "@gooddata/sdk-ui";
 import { granularityIntlCodes } from "../../constants/i18n";
 import { IMessageTranslator, IDateTranslator, IDateAndMessageTranslator } from "./Translators";

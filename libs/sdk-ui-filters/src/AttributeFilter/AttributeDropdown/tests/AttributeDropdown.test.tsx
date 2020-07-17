@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
 import { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { AttributeDropdown } from "../AttributeDropdown";

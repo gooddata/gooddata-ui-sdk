@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import get = require("lodash/get");
-import * as React from "react";
+import get from "lodash/get";
+import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection";
 import NamePositionControl from "./NamePositionControl";

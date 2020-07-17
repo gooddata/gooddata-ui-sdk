@@ -3,7 +3,7 @@ import { ISortItem, VisualizationProperties } from "../src";
 import { IBucket } from "../src/execution/buckets";
 import { IInsight } from "../src/insight";
 import { IFilter } from "../src/execution/filter";
-import identity = require("lodash/identity");
+import identity from "lodash/identity";
 
 /*
  * Factory & builder for insight instances. Keeping it in test infrastructure for now, will see later on

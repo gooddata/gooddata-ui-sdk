@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForItems } from "@gooddata/sdk-model";
 import { IDrillConfig, IDrillEventIntersectionElement, VisualizationTypes } from "@gooddata/sdk-ui";

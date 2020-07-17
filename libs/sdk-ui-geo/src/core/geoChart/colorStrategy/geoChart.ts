@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import omit = require("lodash/omit");
+import omit from "lodash/omit";
 import {
     AttributeColorStrategy,
     ColorStrategy,

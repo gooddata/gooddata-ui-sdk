@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import last = require("lodash/last");
+import cloneDeep from "lodash/cloneDeep";
+import last from "lodash/last";
 import Highcharts from "./highchartsEntryPoint";
 import {
     IHighchartsAxisExtend,

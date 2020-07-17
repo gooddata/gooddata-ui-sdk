@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
-import get = require("lodash/get");
-import * as classNames from "classnames";
+import get from "lodash/get";
+import cx from "classnames";
 import NameSubsection from "../configurationControls/axis/NameSubsection";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent";
@@ -123,7 +123,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
     }
 
     private getBubbleClassNames() {
-        return classNames("bubble-primary", {
+        return cx("bubble-primary", {
             invisible: !this.isControlDisabled(),
         });
     }

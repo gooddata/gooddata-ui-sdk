@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
 import { IBucket } from "@gooddata/sdk-model";
 import { BucketNames, DefaultLocale, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 import { ATTRIBUTE, METRIC } from "../../constants/bucket";

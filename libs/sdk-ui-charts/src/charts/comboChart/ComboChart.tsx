@@ -13,8 +13,8 @@ import { defaultDimensions } from "../_commons/dimensions";
 import { IChartConfig, IBucketChartProps } from "../../interfaces";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { CoreComboChart } from "./CoreComboChart";
-import get = require("lodash/get");
-import isArray = require("lodash/isArray");
+import get from "lodash/get";
+import isArray from "lodash/isArray";
 import { withChart } from "../_base/withChart";
 import { sanitizeConfig } from "../_commons/sanitizeStacking";
 

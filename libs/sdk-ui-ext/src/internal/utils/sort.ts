@@ -1,11 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
-import every = require("lodash/every");
-import get = require("lodash/get");
-import includes = require("lodash/includes");
-import isEmpty = require("lodash/isEmpty");
-import isNil = require("lodash/isNil");
-import omitBy = require("lodash/omitBy");
-import set = require("lodash/set");
+import every from "lodash/every";
+import get from "lodash/get";
+import includes from "lodash/includes";
+import isEmpty from "lodash/isEmpty";
+import isNil from "lodash/isNil";
+import omitBy from "lodash/omitBy";
+import set from "lodash/set";
 import {
     bucketAttributes,
     IAttributeSortItem,

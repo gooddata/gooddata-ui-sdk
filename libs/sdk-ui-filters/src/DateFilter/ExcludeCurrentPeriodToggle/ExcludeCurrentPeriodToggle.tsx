@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";

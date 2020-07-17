@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { shallow } from "enzyme";
 import { PivotTable } from "../PivotTable";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

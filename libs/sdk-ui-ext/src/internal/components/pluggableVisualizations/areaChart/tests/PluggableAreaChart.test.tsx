@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
 import { PluggableAreaChart } from "../PluggableAreaChart";

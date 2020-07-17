@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import identity = require("lodash/identity");
-import isEmpty = require("lodash/isEmpty");
+import identity from "lodash/identity";
+import isEmpty from "lodash/isEmpty";
 import React from "react";
 import SparkMD5 from "spark-md5";
 import { IAnalyticalBackend, ISettings } from "@gooddata/sdk-backend-spi";

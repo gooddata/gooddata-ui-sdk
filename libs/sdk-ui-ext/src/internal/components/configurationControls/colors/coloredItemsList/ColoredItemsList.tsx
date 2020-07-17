@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import * as CustomEvent from "custom-event";
+import React from "react";
+import CustomEvent from "custom-event";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";

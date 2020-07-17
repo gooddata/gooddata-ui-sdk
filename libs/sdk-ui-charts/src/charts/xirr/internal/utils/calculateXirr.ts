@@ -1,13 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import isFunction = require("lodash/isFunction");
-import sumBy = require("lodash/sumBy");
-import * as differenceInDaysModule from "date-fns/differenceInDays";
-
-// jest is being difficult with normal imports for some reason
-// enabling esModuleInterop would probably solve this issue, but it is not feasible now
-const differenceInDays = isFunction(differenceInDaysModule)
-    ? differenceInDaysModule
-    : differenceInDaysModule.default;
+import sumBy from "lodash/sumBy";
+import differenceInDays from "date-fns/differenceInDays";
 
 type NumericFunction = (x: number) => number;
 

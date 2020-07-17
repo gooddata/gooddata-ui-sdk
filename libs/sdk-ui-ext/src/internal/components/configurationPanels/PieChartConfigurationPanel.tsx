@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import * as classNames from "classnames";
+import React from "react";
+import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
@@ -52,7 +52,7 @@ export default class PieChartConfigurationPanel extends ConfigurationPanelConten
     }
 
     private getBubbleClassNames() {
-        return classNames("bubble-primary", {
+        return cx("bubble-primary", {
             invisible: !this.isControlDisabled(),
         });
     }

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 import { BUCKETS, METRIC } from "../../../constants/bucket";
 import { BUBBLE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
@@ -22,9 +22,9 @@ import { removeSort } from "../../../utils/sort";
 import { setBubbleChartUiConfig } from "../../../utils/uiConfigHelpers/bubbleChartUiConfigHelper";
 import BubbleChartConfigurationPanel from "../../configurationPanels/BubbleChartConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import cloneDeep = require("lodash/cloneDeep");
-import includes = require("lodash/includes");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import includes from "lodash/includes";
+import set from "lodash/set";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 

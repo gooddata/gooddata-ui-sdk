@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import invariant from "ts-invariant";
 import { IGeoData, IValidationResult } from "../../GeoChart";
 import { isDataOfReasonableSize } from "./helpers/geoChart/common";

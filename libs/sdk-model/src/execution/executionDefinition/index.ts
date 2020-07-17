@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import isEmpty = require("lodash/isEmpty");
-import isString = require("lodash/isString");
+import isEmpty from "lodash/isEmpty";
+import isString from "lodash/isString";
 import SparkMD5 from "spark-md5";
 import invariant from "ts-invariant";
 import { IAttribute } from "../attribute";

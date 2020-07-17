@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
-import range = require("lodash/range");
+import range from "lodash/range";
 import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect";
 import { VirtualizedSelectMenu } from "../../Select/VirtualizedSelectMenu";
 import { SelectHeading } from "../../Select/SelectHeading";

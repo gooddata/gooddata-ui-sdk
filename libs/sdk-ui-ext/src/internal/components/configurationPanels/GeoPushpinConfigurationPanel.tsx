@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
-import classNames from "classnames";
-import get = require("lodash/get");
+import cx from "classnames";
+import get from "lodash/get";
 
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import {
@@ -109,7 +109,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
     }
 
     protected getBubbleClassNames() {
-        return classNames("bubble-primary", {
+        return cx("bubble-primary", {
             invisible: !this.isControlDisabled(),
         });
     }

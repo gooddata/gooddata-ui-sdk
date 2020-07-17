@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import compact = require("lodash/compact");
-import isEmpty = require("lodash/isEmpty");
+import compact from "lodash/compact";
+import isEmpty from "lodash/isEmpty";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { convertFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";

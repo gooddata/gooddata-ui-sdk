@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces";
 import { Visualization, getValidColorPalette } from "../../highcharts";
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 import {
     newErrorMapping,

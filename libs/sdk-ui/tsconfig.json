@@ -7,6 +7,7 @@
         "lib": ["es7", "dom"],
         "module": "commonjs",
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "importHelpers": true,
         "downlevelIteration": true,
         "strict": true,
@@ -16,7 +17,6 @@
         "outDir": "dist",
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
-        "allowSyntheticDefaultImports": true,
         "baseUrl": "..",
         "paths": {
             "@gooddata/sdk-model": ["sdk-model/src"],

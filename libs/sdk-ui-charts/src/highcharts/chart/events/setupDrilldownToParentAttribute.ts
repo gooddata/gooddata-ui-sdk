@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import partial = require("lodash/partial");
-import cloneDeep = require("lodash/cloneDeep");
+import partial from "lodash/partial";
+import cloneDeep from "lodash/cloneDeep";
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import { styleVariables } from "../../styles/variables";
 import { tickLabelClick } from "../../utils/drilldownEventing";

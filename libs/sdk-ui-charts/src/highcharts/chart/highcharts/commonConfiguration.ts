@@ -1,9 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import invoke = require("lodash/invoke");
-import isEmpty = require("lodash/isEmpty");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import invoke from "lodash/invoke";
+import isEmpty from "lodash/isEmpty";
+import set from "lodash/set";
 import { IDrillConfig, ChartType } from "@gooddata/sdk-ui";
 import { IHighchartsAxisExtend } from "../../typings/extend";
 import { styleVariables } from "../../styles/variables";

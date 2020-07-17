@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 
 /**
  * RGB Color value specification.

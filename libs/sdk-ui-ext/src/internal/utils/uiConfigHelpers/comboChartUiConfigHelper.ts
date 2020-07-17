@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
-import get = require("lodash/get");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
+import get from "lodash/get";
 import { IntlShape } from "react-intl";
 
 import { isLineChart } from "@gooddata/sdk-ui-charts";
@@ -11,17 +11,17 @@ import { BUCKETS } from "../../constants/bucket";
 import { getTranslation } from "../translations";
 import { getBucketsByNames, setBucketTitles } from "../bucketHelper";
 
-import * as columnMeasureIcon from "../../assets/combo/bucket-title-measures-column.svg";
-import * as lineMeasureIcon from "../../assets/combo/bucket-title-measures-line.svg";
-import * as areaMeasureIcon from "../../assets/combo/bucket-title-measures-area.svg";
+import columnMeasureIcon from "../../assets/combo/bucket-title-measures-column.svg";
+import lineMeasureIcon from "../../assets/combo/bucket-title-measures-line.svg";
+import areaMeasureIcon from "../../assets/combo/bucket-title-measures-area.svg";
 
-import * as columnLineIcon from "../../assets/combo/bucket-title-view-column-line.svg";
-import * as columnAreaIcon from "../../assets/combo/bucket-title-view-column-area.svg";
-import * as lineAreaIcon from "../../assets/combo/bucket-title-view-line-area.svg";
+import columnLineIcon from "../../assets/combo/bucket-title-view-column-line.svg";
+import columnAreaIcon from "../../assets/combo/bucket-title-view-column-area.svg";
+import lineAreaIcon from "../../assets/combo/bucket-title-view-line-area.svg";
 
-import * as columnViewIcon from "../../assets/column/bucket-title-view.svg";
-import * as lineViewIcon from "../../assets/combo/bucket-title-view-line-line.svg";
-import * as areaViewIcon from "../../assets/area/bucket-title-view.svg";
+import columnViewIcon from "../../assets/column/bucket-title-view.svg";
+import lineViewIcon from "../../assets/combo/bucket-title-view-line-line.svg";
+import areaViewIcon from "../../assets/area/bucket-title-view.svg";
 
 import {
     PROPERTY_CONTROLS_PRIMARY_CHART_TYPE,

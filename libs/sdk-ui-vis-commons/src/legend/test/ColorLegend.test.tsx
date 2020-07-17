@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { ColorLegend, IColorLegendProps, ColorBoxes, ColorLabels } from "../ColorLegend";
-import range = require("lodash/range");
+import range from "lodash/range";
 
 describe("ColorLegend", () => {
     function renderLegend(props: IColorLegendProps): ReactWrapper {

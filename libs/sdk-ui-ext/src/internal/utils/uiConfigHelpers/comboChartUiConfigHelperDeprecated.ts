@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
 import { IntlShape } from "react-intl";
 
 import { BucketNames, ChartType } from "@gooddata/sdk-ui";
@@ -8,11 +8,11 @@ import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles } from "../bucketHelper";
 
-import * as comboSecondaryMeasuresIcon from "../../assets/combo/bucket-title-secondary-measures.svg";
+import comboSecondaryMeasuresIcon from "../../assets/combo/bucket-title-secondary-measures.svg";
 
-import * as columnMeasureIcon from "../../assets/combo/bucket-title-measures-column.svg";
+import columnMeasureIcon from "../../assets/combo/bucket-title-measures-column.svg";
 
-import * as columnLineIcon from "../../assets/combo/bucket-title-view-column-line.svg";
+import columnLineIcon from "../../assets/combo/bucket-title-view-column-line.svg";
 
 import { UICONFIG } from "../../constants/uiConfig";
 

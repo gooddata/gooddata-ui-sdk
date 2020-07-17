@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { COLUMN_BAR_CHART_UICONFIG } from "../../../constants/uiConfig";
 import { IVisConstruct, IUiConfig } from "../../../interfaces/Visualization";

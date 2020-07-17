@@ -14,8 +14,8 @@ import { LazyInitArray } from "./lazyInitArray";
 import invariant, { InvariantError } from "ts-invariant";
 import { measureFormat, measureName } from "./utils";
 import { DataAccessConfig } from "../dataAccessConfig";
-import partial = require("lodash/partial");
-import isArray = require("lodash/isArray");
+import partial from "lodash/partial";
+import isArray from "lodash/isArray";
 
 type DataWithCoordinates = { rawValue: DataValue; coordinates: number[] };
 

@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import get = require("lodash/get");
+import get from "lodash/get";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as referencePointMock from "../../../tests/mocks/referencePointMocks";
 import { setComboChartUiConfigDeprecated } from "../comboChartUiConfigHelperDeprecated";

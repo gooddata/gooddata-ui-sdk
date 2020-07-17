@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
-import set = require("lodash/set");
-import get = require("lodash/get");
-import cloneDeep = require("lodash/cloneDeep");
+import set from "lodash/set";
+import get from "lodash/get";
+import cloneDeep from "lodash/cloneDeep";
 import { IMeasureGroupDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IBucket, IAttributeOrMeasure } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";

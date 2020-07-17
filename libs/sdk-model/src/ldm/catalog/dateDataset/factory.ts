@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import identity = require("lodash/identity");
+import identity from "lodash/identity";
 import { Builder, builderFactory, BuilderModifications } from "../../../base/builder";
 import { CatalogDateAttributeGranularity, ICatalogDateAttribute, ICatalogDateDataset } from ".";
 import { IAttributeMetadataObject, isAttributeMetadataObject } from "../../metadata/attribute";

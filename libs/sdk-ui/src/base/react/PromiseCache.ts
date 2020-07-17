@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { ICancelablePromise, makeCancelable } from "./CancelablePromise";
-import values = require("lodash/values");
+import values from "lodash/values";
 
 /**
  * Simple promise cache, that allows promise canceling

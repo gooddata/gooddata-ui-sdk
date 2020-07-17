@@ -11,8 +11,8 @@ import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@
 import { IColorMapping } from "../../../interfaces";
 import { IColorAssignment, IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
-import isEqual = require("lodash/isEqual");
-import range = require("lodash/range");
+import isEqual from "lodash/isEqual";
+import range from "lodash/range";
 import { DEFAULT_HEATMAP_BLUE_COLOR, HEATMAP_BLUE_COLOR_PALETTE } from "../../utils/color";
 
 type HighChartColorPalette = string[];

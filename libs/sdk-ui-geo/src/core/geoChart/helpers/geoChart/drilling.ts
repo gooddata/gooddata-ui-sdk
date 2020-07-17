@@ -12,9 +12,9 @@ import {
 import { IGeoData, IGeoDrillEvent } from "../../../../GeoChart";
 import { AttributeInfo, findGeoAttributesInDimension, parseGeoProperties } from "./data";
 import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import without = require("lodash/without");
-import omit = require("lodash/omit");
-import * as CustomEvent from "custom-event";
+import without from "lodash/without";
+import omit from "lodash/omit";
+import CustomEvent from "custom-event";
 
 function getDrillIntersectionForGeoChart(
     drillableItems: IHeaderPredicate[],

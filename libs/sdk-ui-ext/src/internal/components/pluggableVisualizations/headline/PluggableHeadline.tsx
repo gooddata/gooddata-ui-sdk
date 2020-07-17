@@ -5,7 +5,7 @@ import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasDataDefined
 
 import { BucketNames, GoodDataSdkError } from "@gooddata/sdk-ui";
 import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 import { METRIC } from "../../../constants/bucket";
 import {
@@ -49,7 +49,7 @@ import {
     setHeadlineRefPointBuckets,
     tryToMapForeignBuckets,
 } from "./headlineBucketHelper";
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
     // private projectId: string;

@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import classNames from "classnames";
-import capitalize = require("lodash/capitalize");
+import cx from "classnames";
+import capitalize from "lodash/capitalize";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 import { string as stringUtils } from "@gooddata/js-utils";
 
@@ -46,7 +46,7 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
 
         const title = capitalize(intl.formatMessage({ id: getOperatorTranslationKey(operator) }));
 
-        const buttonClasses = classNames(
+        const buttonClasses = cx(
             "gd-mvf-operator-dropdown-button",
             "s-mvf-operator-dropdown-button",
             `s-mvf-operator-dropdown-button-${stringUtils.simplifyText(operator)}`,

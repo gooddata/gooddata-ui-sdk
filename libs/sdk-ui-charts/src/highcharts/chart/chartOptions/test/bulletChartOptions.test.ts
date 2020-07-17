@@ -3,7 +3,7 @@ import { getBulletChartSeries } from "../bulletChartOptions";
 import { IColorPalette } from "@gooddata/sdk-model";
 import BulletChartColorStrategy from "../../colorStrategies/bulletChart";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 

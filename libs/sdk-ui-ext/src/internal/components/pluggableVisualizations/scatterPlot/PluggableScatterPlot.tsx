@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 import { BUCKETS } from "../../../constants/bucket";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
@@ -20,7 +20,7 @@ import ScatterPlotConfigurationPanel from "../../configurationPanels/ScatterPlot
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { transformBuckets } from "./bucketHelper";
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableScatterPlot extends PluggableBaseChart {

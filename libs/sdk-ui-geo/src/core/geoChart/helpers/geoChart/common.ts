@@ -3,7 +3,7 @@ import { BucketNames, DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui"
 import { IGeoData, IGeoPointsConfig } from "../../../../GeoChart";
 import { bucketIsEmpty, bucketsFind, IAttribute, IBucket } from "@gooddata/sdk-model";
 import { DataValue, IResultHeader } from "@gooddata/sdk-backend-spi";
-import isEqual = require("lodash/isEqual");
+import isEqual from "lodash/isEqual";
 
 export function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: IGeoData): IResultHeader[][] {
     const { color, size } = geoData;

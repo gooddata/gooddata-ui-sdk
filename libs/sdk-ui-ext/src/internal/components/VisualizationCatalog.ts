@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import last = require("lodash/last");
+import last from "lodash/last";
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { IVisConstruct, IVisualization } from "../interfaces/Visualization";

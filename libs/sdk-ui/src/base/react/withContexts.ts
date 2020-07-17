@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import compose = require("lodash/flowRight");
+import compose from "lodash/flowRight";
 import { withBackend } from "./BackendContext";
 import { withWorkspace } from "./WorkspaceContext";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";

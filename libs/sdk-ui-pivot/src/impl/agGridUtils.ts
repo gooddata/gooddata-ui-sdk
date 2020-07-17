@@ -12,7 +12,7 @@ import {
     MEASURE_COLUMN,
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
-import escape = require("lodash/escape");
+import escape from "lodash/escape";
 import {
     isTotalDescriptor,
     isMeasureGroupDescriptor,

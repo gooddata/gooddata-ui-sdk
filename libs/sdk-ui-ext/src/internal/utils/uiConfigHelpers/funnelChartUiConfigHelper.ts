@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
-import assign = require("lodash/assign");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
+import assign from "lodash/assign";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
@@ -9,8 +9,8 @@ import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { disabledOpenAsReportConfig, UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 
-import * as funnelMeasuresIcon from "../../assets/funnel/bucket-title-measures.svg";
-import * as funnelViewIcon from "../../assets/funnel/bucket-title-view.svg";
+import funnelMeasuresIcon from "../../assets/funnel/bucket-title-measures.svg";
+import funnelViewIcon from "../../assets/funnel/bucket-title-view.svg";
 
 export function setFunnelChartUiConfig(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);

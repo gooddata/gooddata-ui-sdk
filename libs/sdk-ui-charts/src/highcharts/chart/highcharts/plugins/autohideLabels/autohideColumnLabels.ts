@@ -1,11 +1,11 @@
 // (C) 2007-2020 GoodData Corporation
-import get = require("lodash/get");
-import map = require("lodash/map");
-import zip = require("lodash/zip");
-import values = require("lodash/values");
-import flatten = require("lodash/flatten");
-import identity = require("lodash/identity");
-import isEmpty = require("lodash/isEmpty");
+import get from "lodash/get";
+import map from "lodash/map";
+import zip from "lodash/zip";
+import values from "lodash/values";
+import flatten from "lodash/flatten";
+import identity from "lodash/identity";
+import isEmpty from "lodash/isEmpty";
 import Highcharts from "../../highchartsEntryPoint";
 
 import {

@@ -2,7 +2,7 @@
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { newMeasure } from "@gooddata/sdk-model";
 import { mount } from "enzyme";
-import * as React from "react";
+import React from "react";
 import { LoadingComponent } from "../../base/react/LoadingComponent";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { FormattedNumber } from "../FormattedNumber";

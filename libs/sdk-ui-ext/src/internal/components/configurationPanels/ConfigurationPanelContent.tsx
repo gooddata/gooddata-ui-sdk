@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 
 import { IReferences, IVisualizationProperties } from "../../interfaces/Visualization";
@@ -10,7 +10,7 @@ import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 import { IInsightDefinition, insightHasMeasures } from "@gooddata/sdk-model";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper";
 import { ISettings } from "@gooddata/sdk-backend-spi";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 export interface IConfigurationPanelContentProps {
     properties?: IVisualizationProperties;

@@ -13,7 +13,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
 import { IChartDefinition } from "../_commons/chartDefinition";
-import isNil = require("lodash/isNil");
+import isNil from "lodash/isNil";
 import { withChart } from "../_base/withChart";
 import { sanitizeConfig } from "../_commons/sanitizeStacking";
 

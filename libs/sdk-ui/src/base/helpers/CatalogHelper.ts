@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import get = require("lodash/get");
+import get from "lodash/get";
 
 /**
  * @deprecated

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
@@ -24,10 +24,10 @@ import { removeSort } from "../../../utils/sort";
 import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper";
 import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import cloneDeep = require("lodash/cloneDeep");
-import includes = require("lodash/includes");
-import set = require("lodash/set");
-import tail = require("lodash/tail");
+import cloneDeep from "lodash/cloneDeep";
+import includes from "lodash/includes";
+import set from "lodash/set";
+import tail from "lodash/tail";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 

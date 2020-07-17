@@ -13,7 +13,7 @@ import { IMetricDefinition } from "../../interfaces";
 import { pretty } from "js-object-pretty-print";
 import first from "lodash/first";
 import sortBy from "lodash/sortBy";
-import * as levenshtein from "fast-levenshtein";
+import levenshtein from "fast-levenshtein";
 import includes from "lodash/includes";
 import find from "lodash/find";
 

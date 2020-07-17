@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { ErrorComponent, LoadingComponent, defaultErrorHandler } from "@gooddata/sdk-ui";
 import { ICoreChartProps } from "../../interfaces";
 

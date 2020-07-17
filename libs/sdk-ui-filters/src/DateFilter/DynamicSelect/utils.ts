@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import range = require("lodash/range");
+import range from "lodash/range";
 import { IMessageTranslator } from "../utils/Translations/Translators";
 import { granularityIntlCodes } from "../constants/i18n";
 

@@ -7,10 +7,10 @@ import {
     IPreparedExecution,
     isNoDataError,
 } from "@gooddata/sdk-backend-spi";
-import * as React from "react";
+import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
-import noop = require("lodash/noop");
-import omit = require("lodash/omit");
+import noop from "lodash/noop";
+import omit from "lodash/omit";
 import { IExportFunction, ILoadingState, IDrillableItemPushData } from "../../vis/Events";
 import { GoodDataSdkError, ErrorCodes } from "../../errors/GoodDataSdkError";
 import { createExportErrorFunction, createExportFunction } from "../../vis/export";

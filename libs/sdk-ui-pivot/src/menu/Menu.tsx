@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import isFunction = require("lodash/isFunction");
+import React from "react";
+import isFunction from "lodash/isFunction";
 import { ISubMenuProps } from "./SubMenu";
 import MenuState from "./MenuState";
 import ControlledMenu from "./ControlledMenu";

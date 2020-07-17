@@ -5,9 +5,9 @@
         "downlevelIteration": true,
         "jsx": "react",
         "lib": ["es7", "dom"],
-        "esModuleInterop": true,
         "module": "commonjs",
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "importHelpers": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
@@ -16,7 +16,6 @@
         "outDir": "./dist",
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
-        "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
         "baseUrl": "../..",
         "paths": {

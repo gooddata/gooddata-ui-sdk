@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { IChartConfig } from "../../../interfaces";
 import {
     IDrillableItem,

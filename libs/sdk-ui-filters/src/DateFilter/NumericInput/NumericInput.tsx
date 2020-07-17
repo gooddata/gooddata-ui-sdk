@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
-import isEmpty = require("lodash/isEmpty");
-import isNumber = require("lodash/isNumber");
-import defaultTo = require("lodash/defaultTo");
-import clamp = require("lodash/clamp");
+import React from "react";
+import isEmpty from "lodash/isEmpty";
+import isNumber from "lodash/isNumber";
+import defaultTo from "lodash/defaultTo";
+import clamp from "lodash/clamp";
 
 import { ArrowButton } from "./ArrowButton";
 import { unless } from "./utils";

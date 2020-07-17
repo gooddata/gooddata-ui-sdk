@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import { FormattedPreview } from "./FormattedPreview";

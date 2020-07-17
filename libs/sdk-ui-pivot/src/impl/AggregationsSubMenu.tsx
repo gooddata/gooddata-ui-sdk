@@ -6,8 +6,8 @@ import {
     IAttributeDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { TotalType } from "@gooddata/sdk-model";
-import * as classNames from "classnames";
-import * as React from "react";
+import cx from "classnames";
+import React from "react";
 import { IntlShape } from "react-intl";
 
 import SubMenu from "../menu/SubMenu";
@@ -102,7 +102,7 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
                     <Item checked={isSelected} key={attributeLocalIdentifier}>
                         <div
                             onClick={onClick}
-                            className={classNames(
+                            className={cx(
                                 "gd-aggregation-menu-item-inner",
                                 "s-menu-aggregation-inner",
                                 this.getSubtotalNameTestClass(attributeLocalIdentifier),

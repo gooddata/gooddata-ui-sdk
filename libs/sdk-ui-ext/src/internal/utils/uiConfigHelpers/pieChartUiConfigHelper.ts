@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import set = require("lodash/set");
-import forEach = require("lodash/forEach");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import set from "lodash/set";
+import forEach from "lodash/forEach";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -21,8 +21,8 @@ import { hasMoreThanOneCategory, hasMoreThanOneMasterMeasure } from "./../bucket
 import { setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
 
-import * as pieMeasuresIcon from "../../assets/pie/bucket-title-measures.svg";
-import * as pieViewIcon from "../../assets/pie/bucket-title-view.svg";
+import pieMeasuresIcon from "../../assets/pie/bucket-title-measures.svg";
+import pieViewIcon from "../../assets/pie/bucket-title-view.svg";
 import { hasColorMapping } from "../propertiesHelper";
 
 function setPieChartBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {

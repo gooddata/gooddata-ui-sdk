@@ -8,17 +8,18 @@ import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { mountInsight } from "../../_infra/renderPlugVis";
 import { defSetSorts } from "@gooddata/sdk-model";
-import flatMap = require("lodash/flatMap");
+import flatMap from "lodash/flatMap";
 
 const Chart = "BulletChart";
 
 describe(Chart, () => {
-    const Scenarios: Array<ScenarioAndDescription<IBulletChartProps>> = flatMap(bulletChartScenarios, group =>
-        group.forTestTypes("api").asScenarioDescAndScenario(),
+    const Scenarios: Array<ScenarioAndDescription<IBulletChartProps>> = flatMap(
+        bulletChartScenarios,
+        (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario, wrapper =>
+        const promisedInteractions = mountChartAndCapture(scenario, (wrapper) =>
             wrapper.find("CoreBulletChart").props(),
         );
 

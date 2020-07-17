@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import get = require("lodash/get");
-import merge = require("lodash/merge");
+import get from "lodash/get";
+import merge from "lodash/merge";
 import invariant from "ts-invariant";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
 import { getCommonConfiguration } from "./highcharts/commonConfiguration";

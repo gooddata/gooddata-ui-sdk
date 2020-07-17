@@ -18,7 +18,7 @@ import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 import { action } from "@storybook/addon-actions";
-import * as React from "react";
+import React from "react";
 import "./insightStories.css";
 import { IScenario, MapboxToken, ScenarioGroup } from "../../../src";
 import AllTestScenarioGroups from "../../../scenarios";
@@ -32,9 +32,9 @@ import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrappe
 import { StorybookBackend } from "../../_infra/backend";
 import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
 import { storyGroupFor } from "./storyGroupFactory";
-import groupBy = require("lodash/groupBy");
-import keyBy = require("lodash/keyBy");
-import sortBy = require("lodash/sortBy");
+import groupBy from "lodash/groupBy";
+import keyBy from "lodash/keyBy";
+import sortBy from "lodash/sortBy";
 import { PlugVizStories } from "../../_infra/storyGroups";
 
 /*

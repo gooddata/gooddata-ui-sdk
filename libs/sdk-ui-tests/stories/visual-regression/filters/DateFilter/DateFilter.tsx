@@ -5,7 +5,7 @@ import {
     IUiAbsoluteDateFilterForm,
     IDateFilterOptionsByType,
 } from "@gooddata/sdk-ui-filters";
-import * as React from "react";
+import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";

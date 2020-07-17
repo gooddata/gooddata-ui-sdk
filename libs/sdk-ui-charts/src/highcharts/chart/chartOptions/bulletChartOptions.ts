@@ -5,7 +5,7 @@ import { bucketIsEmpty, IBucket, Identifier } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IPointData } from "../../typings/unsafe";
 import { DataValue, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 const SUPPORTED_MEASURE_BUCKETS: ReadonlyArray<Identifier> = [

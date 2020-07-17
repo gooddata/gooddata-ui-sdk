@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount, ReactWrapper } from "enzyme";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 import { Paging, IPagingProps } from "../Paging";
 import { withIntl } from "@gooddata/sdk-ui";

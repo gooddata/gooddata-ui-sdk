@@ -3,7 +3,7 @@ import { measureLocalId } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../interfaces";
 import { BucketNames, VisType, DataViewFacade } from "@gooddata/sdk-ui";
 import { isComboChart } from "./common";
-import get = require("lodash/get");
+import get from "lodash/get";
 
 export function setMeasuresToSecondaryAxis(config: IChartConfig = {}, dv: DataViewFacade): IChartConfig {
     const isDualAxis: boolean = get(config, "dualAxis", true);

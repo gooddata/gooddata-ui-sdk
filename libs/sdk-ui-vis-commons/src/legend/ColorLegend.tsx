@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
-import * as classNames from "classnames";
+import React from "react";
+import cx from "classnames";
 import {
     IColorLegendBox,
     IColorLegendConfig,
@@ -53,7 +53,7 @@ export function ColorBoxes(colorBoxProps: IColorBoxesProps): JSX.Element {
         <div className="boxes">
             {boxes.map(
                 (box: IColorLegendBox): JSX.Element => {
-                    const classes = classNames("box", box.class);
+                    const classes = cx("box", box.class);
                     const { key, style } = box;
                     return <span className={classes} key={key} style={style} />;
                 },
@@ -78,7 +78,7 @@ export function ColorLegend(colorLegendProps: IColorLegendProps) {
         isSmall,
         position,
     );
-    const classes = classNames(...config.classes);
+    const classes = cx(...config.classes);
     const renderLabelsFirst = config.position === TOP;
     const { boxes, labels } = config;
 

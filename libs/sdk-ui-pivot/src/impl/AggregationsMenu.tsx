@@ -8,12 +8,12 @@ import {
     TotalType,
     measureValueFilterCondition,
 } from "@gooddata/sdk-model";
-import * as classNames from "classnames";
-import * as React from "react";
+import cx from "classnames";
+import React from "react";
 import { IntlShape } from "react-intl";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 import Menu from "../menu/Menu";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
@@ -121,7 +121,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     private getTogglerClassNames() {
         const { isMenuButtonVisible, isMenuOpened } = this.props;
 
-        return classNames("s-table-header-menu", "gd-pivot-table-header-menu", {
+        return cx("s-table-header-menu", "gd-pivot-table-header-menu", {
             "gd-pivot-table-header-menu--show": isMenuButtonVisible,
             "gd-pivot-table-header-menu--hide": !isMenuButtonVisible,
             "gd-pivot-table-header-menu--open": isMenuOpened,
@@ -164,11 +164,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     }
 
     private getItemClassNames(totalType: TotalType): string {
-        return classNames(
-            "gd-aggregation-menu-item",
-            "s-menu-aggregation",
-            `s-menu-aggregation-${totalType}`,
-        );
+        return cx("gd-aggregation-menu-item", "s-menu-aggregation", `s-menu-aggregation-${totalType}`);
     }
 
     private isTableFilteredByMeasureValue(): boolean {

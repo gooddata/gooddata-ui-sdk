@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import * as cx from "classnames";
+import React from "react";
+import cx from "classnames";
 
 import LegendList from "./LegendList";
 import { calculateFluidLegend } from "./helpers";

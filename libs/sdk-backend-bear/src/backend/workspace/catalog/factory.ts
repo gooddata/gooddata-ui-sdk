@@ -3,7 +3,7 @@ import { IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions } from "@good
 import partition from "lodash/partition";
 import uniq from "lodash/uniq";
 import flatMap from "lodash/flatMap";
-import keyBy = require("lodash/keyBy");
+import keyBy from "lodash/keyBy";
 import {
     CatalogItemType,
     ICatalogGroup,

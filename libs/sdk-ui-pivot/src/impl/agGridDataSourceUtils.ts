@@ -2,7 +2,7 @@
 import { GridApi } from "@ag-grid-community/all-modules";
 import ApiWrapper from "./agGridApiWrapper";
 import { IGridTotalsRow } from "./agGridTypes";
-import isEqual = require("lodash/isEqual");
+import isEqual from "lodash/isEqual";
 
 export const areTotalsChanged = (gridApi: GridApi | undefined, newTotals: IGridTotalsRow[]) => {
     const currentTotalsCount = gridApi?.getPinnedBottomRowCount() ?? 0;

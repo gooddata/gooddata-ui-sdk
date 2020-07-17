@@ -16,7 +16,7 @@ import {
 import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
 import { anyMeasure, idMatchMeasure, IMeasure, isMeasure, MeasurePredicate } from "../measure";
 import { ITotal } from "../base/totals";
-import flatMap = require("lodash/flatMap");
+import flatMap from "lodash/flatMap";
 import invariant from "ts-invariant";
 
 /**

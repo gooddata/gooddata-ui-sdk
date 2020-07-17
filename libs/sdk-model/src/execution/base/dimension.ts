@@ -3,7 +3,7 @@
 import invariant from "ts-invariant";
 import { Identifier } from "../../objRef/index";
 import { isTotal, ITotal } from "./totals";
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import { attributeLocalId, IAttribute, isAttribute } from "../attribute";
 
 /**

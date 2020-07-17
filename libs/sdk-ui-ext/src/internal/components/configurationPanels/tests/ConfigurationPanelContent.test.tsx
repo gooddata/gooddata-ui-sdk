@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { shallow } from "enzyme";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import ConfigurationPanelContent, {

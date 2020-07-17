@@ -4,7 +4,7 @@ import { Account, Velocity, Won } from "../../../../__mocks__/model";
 import { modifySimpleMeasure } from "../factory";
 import { measureFingerprint } from "../fingerprint";
 import { IMeasure } from "../index";
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 
 describe("measureFingerprint", () => {
     describe("for simple measure", () => {

@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import * as classNames from "classnames";
-import cloneDeep = require("lodash/cloneDeep");
-import noop = require("lodash/noop");
-import get = require("lodash/get");
-import set = require("lodash/set");
+import cx from "classnames";
+import cloneDeep from "lodash/cloneDeep";
+import noop from "lodash/noop";
+import get from "lodash/get";
+import set from "lodash/set";
 
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
 
@@ -110,7 +110,7 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
     private getHeaderClassNames() {
         const { collapsed } = this.state;
 
-        return classNames(
+        return cx(
             "adi-bucket-item-header",
             "adi-configuration-section-header",
             "s-configuration-panel-item-header",
@@ -123,11 +123,11 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
     }
 
     private getToggleLabelClassNames() {
-        return classNames("input-checkbox-toggle", "s-checkbox-toggle-label");
+        return cx("input-checkbox-toggle", "s-checkbox-toggle-label");
     }
 
     private getSectionClassNames() {
-        return classNames("adi-bucket-item", `s-config-section-${this.props.id}`);
+        return cx("adi-bucket-item", `s-config-section-${this.props.id}`);
     }
 
     private toggleCollapsed() {

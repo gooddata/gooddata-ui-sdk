@@ -16,7 +16,7 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
-import * as React_2 from 'react';
+import { default as React_2 } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public (undocumented)

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import kebabCase = require("lodash/kebabCase");
+import React from "react";
+import kebabCase from "lodash/kebabCase";
 import cx from "classnames";
 import { ListItem } from "../ListItem/ListItem";
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized";

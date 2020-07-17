@@ -2,10 +2,10 @@
 import { VisualizationProperties } from "@gooddata/sdk-model";
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import { isUri } from "@gooddata/api-client-bear";
-import isArray = require("lodash/isArray");
-import isObject = require("lodash/isObject");
-import isString = require("lodash/isString");
-import * as uuid from "uuid";
+import isArray from "lodash/isArray";
+import isObject from "lodash/isObject";
+import isString from "lodash/isString";
+import uuid from "uuid";
 
 /*
  * Helpers

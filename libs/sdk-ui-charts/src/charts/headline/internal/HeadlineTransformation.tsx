@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IChartConfig } from "../../../interfaces";
 import {
@@ -16,7 +16,7 @@ import {
     buildDrillEventData,
     getHeadlineData,
 } from "./utils/HeadlineTransformationUtils";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 export interface IHeadlineTransformationProps {
     dataView: IDataView;

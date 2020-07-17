@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 import { NumericInput } from "../NumericInput";
 import { childGetter, clickOn, pressButtonOn } from "../../tests/utils";

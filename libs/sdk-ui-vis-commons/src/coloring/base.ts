@@ -3,7 +3,7 @@ import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import { IColor, IColorPalette, IColorPaletteItem, isColorFromPalette } from "@gooddata/sdk-model";
 import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB } from "./color";
-import uniqBy = require("lodash/uniqBy");
+import uniqBy from "lodash/uniqBy";
 import { IColorMapping } from "./types";
 
 /**

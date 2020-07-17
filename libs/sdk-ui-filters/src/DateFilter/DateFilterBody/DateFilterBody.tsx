@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
-import isEmpty = require("lodash/isEmpty");
+import React from "react";
+import isEmpty from "lodash/isEmpty";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 

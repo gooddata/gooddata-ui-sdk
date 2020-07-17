@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import set = require("lodash/set");
+import set from "lodash/set";
 import {
     getDataLabelAttributes,
     isLabelOverlappingItsShape,

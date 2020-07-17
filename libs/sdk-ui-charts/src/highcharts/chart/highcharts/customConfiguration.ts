@@ -1,19 +1,19 @@
 // (C) 2007-2020 GoodData Corporation
-import noop = require("lodash/noop");
-import isString = require("lodash/isString");
-import set = require("lodash/set");
-import get = require("lodash/get");
-import merge = require("lodash/merge");
-import map = require("lodash/map");
-import partial = require("lodash/partial");
-import isEmpty = require("lodash/isEmpty");
-import compact = require("lodash/compact");
-import cloneDeep = require("lodash/cloneDeep");
-import every = require("lodash/every");
-import isNil = require("lodash/isNil");
-import pickBy = require("lodash/pickBy");
-import * as numberJS from "@gooddata/numberjs";
-import * as cx from "classnames";
+import noop from "lodash/noop";
+import isString from "lodash/isString";
+import set from "lodash/set";
+import get from "lodash/get";
+import merge from "lodash/merge";
+import map from "lodash/map";
+import partial from "lodash/partial";
+import isEmpty from "lodash/isEmpty";
+import compact from "lodash/compact";
+import cloneDeep from "lodash/cloneDeep";
+import every from "lodash/every";
+import isNil from "lodash/isNil";
+import pickBy from "lodash/pickBy";
+import numberJS from "@gooddata/numberjs";
+import cx from "classnames";
 
 import { styleVariables } from "../../styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";

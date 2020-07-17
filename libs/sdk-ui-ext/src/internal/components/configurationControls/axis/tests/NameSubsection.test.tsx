@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
-import noop = require("lodash/noop");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
+import noop from "lodash/noop";
 import NameSubsection from "../NameSubsection";
 import NamePositionControl from "../NamePositionControl";
 import ConfigSubsection from "../../../configurationControls/ConfigSubsection";

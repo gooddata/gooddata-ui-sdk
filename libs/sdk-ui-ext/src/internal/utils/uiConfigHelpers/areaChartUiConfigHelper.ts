@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import set from "lodash/set";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -19,9 +19,9 @@ import { hasNoStacks, getMasterMeasuresCount } from "../bucketRules";
 
 import { getItemsCount, setBucketTitles } from "../bucketHelper";
 
-import * as areaMeasuresIcon from "../../assets/area/bucket-title-measures.svg";
-import * as areaViewIcon from "../../assets/area/bucket-title-view.svg";
-import * as areaStackIcon from "../../assets/area/bucket-title-stack.svg";
+import areaMeasuresIcon from "../../assets/area/bucket-title-measures.svg";
+import areaViewIcon from "../../assets/area/bucket-title-view.svg";
+import areaStackIcon from "../../assets/area/bucket-title-stack.svg";
 
 function getWarningMessageIdForMeasuresBucket(categoriesCount: number) {
     return categoriesCount > 1

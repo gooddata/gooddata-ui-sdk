@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import * as React from "react";
-import * as ReactDom from "react-dom";
-import cloneDeep = require("lodash/cloneDeep");
+import React from "react";
+import ReactDom from "react-dom";
+import cloneDeep from "lodash/cloneDeep";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { PluggableXirr } from "../PluggableXirr";

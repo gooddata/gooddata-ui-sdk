@@ -10,8 +10,8 @@ import {
     IMappingHeader,
 } from "@gooddata/sdk-ui";
 import { IColorMapping } from "./types";
-import isEqual = require("lodash/isEqual");
-import isEmpty = require("lodash/isEmpty");
+import isEqual from "lodash/isEqual";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * @internal

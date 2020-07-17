@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 
-import * as React from "react";
+import React from "react";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import cx from "classnames";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { SelectButton } from "./SelectButton";
 import { SelectMenu } from "./SelectMenu";
 import { ISelectItem, ISelectItemOption } from "./types";

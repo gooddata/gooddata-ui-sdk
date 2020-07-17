@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import classNames from "classnames";
-import capitalize = require("lodash/capitalize");
-import noop = require("lodash/noop");
+import cx from "classnames";
+import capitalize from "lodash/capitalize";
+import noop from "lodash/noop";
 import { string as stringUtils } from "@gooddata/js-utils";
 
 import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator";
@@ -30,7 +30,7 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
     public render() {
         const { intl, operator, selectedOperator, bubbleText } = this.props;
 
-        const className = classNames(
+        const className = cx(
             "gd-list-item",
             "gd-list-item-shortened",
             `s-mvf-operator-${stringUtils.simplifyText(operator)}`,

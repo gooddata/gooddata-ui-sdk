@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import { DefaultColorPalette } from "@gooddata/sdk-ui/dist/base";
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 
 export function getLargePalette() {
     const largePalette = cloneDeep(DefaultColorPalette);

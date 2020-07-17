@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
-import * as classNames from "classnames";
+import React from "react";
+import cx from "classnames";
 import { UnControlled as CodeMirrorInput, IDefineModeOptions } from "react-codemirror2";
-import * as CodeMirror from "codemirror";
+import CodeMirror from "codemirror";
 import "codemirror/lib/codemirror.css";
 import "codemirror/addon/mode/simple";
 import "codemirror/addon/edit/matchbrackets";
@@ -79,7 +79,7 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
 
     return (
         <CodeMirrorInput
-            className={classNames(className, "gd-input-syntax-highlighting-input")}
+            className={cx(className, "gd-input-syntax-highlighting-input")}
             value={value}
             defineMode={modeOptions}
             onChange={handleOnChange}

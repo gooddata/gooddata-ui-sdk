@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 import { IAttributeElement } from "@gooddata/sdk-model";
 import InvertableList from "@gooddata/goodstrap/lib/List/InvertableList";

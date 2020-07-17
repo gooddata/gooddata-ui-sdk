@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
-import classNames from "classnames";
+import React from "react";
+import cx from "classnames";
 import { ISeparators } from "@gooddata/sdk-ui";
 import { string as stringUtils } from "@gooddata/js-utils";
 
@@ -23,7 +23,7 @@ export class PresetsDropdownItem extends React.PureComponent<IMeasureNumberForma
         const { preset, separators, isSelected } = this.props;
         const { localIdentifier, name, previewNumber, format } = preset;
 
-        const className = classNames(
+        const className = cx(
             "gd-list-item",
             "gd-format-preset",
             `s-format-preset-${localIdentifier}`,

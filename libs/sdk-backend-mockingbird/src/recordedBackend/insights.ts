@@ -23,8 +23,8 @@ import {
 } from "@gooddata/sdk-model";
 import { InsightRecording, RecordingIndex } from "./types";
 import { identifierToRecording, RecordingPager } from "./utils";
-import isEmpty = require("lodash/isEmpty");
-import cloneDeep = require("lodash/cloneDeep");
+import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
 
 let adHocInsightCounter = 1;
 

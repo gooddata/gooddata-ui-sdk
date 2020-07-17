@@ -16,7 +16,7 @@ import { decoratedBackend } from "../decoratedBackend";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution";
 import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import { Denormalizer, NormalizationState, Normalizer } from "./normalizer";
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 
 class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
     constructor(decorated: IExecutionFactory, private readonly config: NormalizationConfig) {

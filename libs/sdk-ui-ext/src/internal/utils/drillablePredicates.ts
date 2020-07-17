@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
 import { IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
-import isArray = require("lodash/isArray");
-import uniq = require("lodash/uniq");
+import isArray from "lodash/isArray";
+import uniq from "lodash/uniq";
 
 /**
  * Converts post message with drilling specification into header predicates. Given the message with

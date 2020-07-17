@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
 /**

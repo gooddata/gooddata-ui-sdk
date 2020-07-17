@@ -1,8 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
-import range = require("lodash/range");
-import set = require("lodash/set");
-import isNil = require("lodash/isNil");
-import cloneDeep = require("lodash/cloneDeep");
+import range from "lodash/range";
+import set from "lodash/set";
+import isNil from "lodash/isNil";
+import cloneDeep from "lodash/cloneDeep";
 import { DefaultColorPalette, VisualizationTypes, HeaderPredicates, DataViewFacade } from "@gooddata/sdk-ui";
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";

@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
-import get = require("lodash/get");
-import isEmpty = require("lodash/isEmpty");
-import isFinite = require("lodash/isFinite");
-import escape = require("lodash/escape");
+import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
+import isFinite from "lodash/isFinite";
+import escape from "lodash/escape";
 import mapboxgl from "mapbox-gl";
 import { ISeparators } from "@gooddata/numberjs";
 import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "./constants/geoChart";

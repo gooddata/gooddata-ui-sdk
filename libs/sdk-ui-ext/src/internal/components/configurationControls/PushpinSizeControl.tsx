@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import get = require("lodash/get");
+import get from "lodash/get";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
 import ConfigSubsection from "./ConfigSubsection";
 import DropdownControl from "./DropdownControl";

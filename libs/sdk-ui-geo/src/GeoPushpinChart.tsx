@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import * as React from "react";
-import omit = require("lodash/omit");
-import get = require("lodash/get");
+import React from "react";
+import omit from "lodash/omit";
+import get from "lodash/get";
 import { CoreGeoChart } from "./core/CoreGeoChart";
 
 import {

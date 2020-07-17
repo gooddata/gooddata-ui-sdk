@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 import { MeasureValueFilterDropdown } from "./MeasureValueFilterDropdown";
 import MeasureValueFilterButton from "./MeasureValueFilterButton";

@@ -2,7 +2,7 @@
 
 import { IDrillableItem, OnFiredDrillEvent } from "./DrillEvents";
 import { IHeaderPredicate } from "../headerMatching/HeaderPredicate";
-import * as React from "react";
+import React from "react";
 import { IErrorProps } from "../react/ErrorComponent";
 import { ILoadingProps } from "../react/LoadingComponent";
 import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events";

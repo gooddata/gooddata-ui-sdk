@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import * as uuid from "uuid";
+import React from "react";
+import uuid from "uuid";
 import { render } from "react-dom";
-import noop = require("lodash/noop");
-import isEqual = require("lodash/isEqual");
+import noop from "lodash/noop";
+import isEqual from "lodash/isEqual";
 
 import { IAnalyticalBackend, IExportResult, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {

@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import * as React from "react";
+import React from "react";
 import { IntlShape } from "react-intl";
-import * as classNames from "classnames";
+import cx from "classnames";
 
 import { IMenu, IMenuAggregationClickConfig } from "../types";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
@@ -77,7 +77,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
 
         return (
             <div
-                className={classNames(
+                className={cx(
                     "gd-pivot-table-header",
                     {
                         "gd-pivot-table-header--open": this.state.isMenuButtonVisible,
@@ -121,7 +121,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     private renderText() {
         const { displayText, textAlign, enableSorting } = this.props;
 
-        const classes = classNames("s-header-cell-label", "gd-pivot-table-header-label", {
+        const classes = cx("s-header-cell-label", "gd-pivot-table-header-label", {
             "gd-pivot-table-header-label--right": textAlign === "right",
             "gd-pivot-table-header-label--center": textAlign === "center",
             "gd-pivot-table-header-label--clickable": enableSorting,
@@ -144,7 +144,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         const { enableSorting } = this.props;
         const { currentSortDirection } = this.state;
 
-        const sortClasses = classNames("s-sort-direction-arrow", `s-sorted-${currentSortDirection}`, {
+        const sortClasses = cx("s-sort-direction-arrow", `s-sorted-${currentSortDirection}`, {
             "gd-pivot-table-header-arrow-up": currentSortDirection === "asc",
             "gd-pivot-table-header-arrow-down": currentSortDirection === "desc",
         });

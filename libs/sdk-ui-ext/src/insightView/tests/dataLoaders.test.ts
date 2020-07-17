@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { idRef, IColorPalette, ObjRef, IInsight } from "@gooddata/sdk-model";

@@ -7,18 +7,18 @@ import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { mountChartAndCapture } from "../../_infra/render";
 import { mountInsight } from "../../_infra/renderPlugVis";
 import { cleanupCoreChartProps } from "../../_infra/utils";
-import flatMap = require("lodash/flatMap");
+import flatMap from "lodash/flatMap";
 import { ScenarioAndDescription } from "../../../src";
 
 const Chart = "Treemap";
 
 describe(Chart, () => {
-    const Scenarios: Array<ScenarioAndDescription<ITreemapProps>> = flatMap(treemapScenarios, group =>
+    const Scenarios: Array<ScenarioAndDescription<ITreemapProps>> = flatMap(treemapScenarios, (group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario, wrapper =>
+        const promisedInteractions = mountChartAndCapture(scenario, (wrapper) =>
             wrapper.find("CoreTreemap").props(),
         );
 

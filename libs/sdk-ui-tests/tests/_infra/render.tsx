@@ -6,7 +6,7 @@ import { mount, ReactWrapper } from "enzyme";
 import React from "react";
 import { IScenario, VisProps } from "../../src";
 import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
-import omit = require("lodash/omit");
+import omit from "lodash/omit";
 
 function errorHandler(error: GoodDataSdkError) {
     if (isNoDataError(error.cause)) {

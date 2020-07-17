@@ -3,7 +3,7 @@ import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mocki
 import { DataViewFacade } from "../../base/results/facade";
 import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
-import * as React from "react";
+import React from "react";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading";
 import { IWithExecution, withExecution } from "../withExecution";

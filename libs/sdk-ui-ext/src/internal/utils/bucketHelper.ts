@@ -1,17 +1,17 @@
 // (C) 2019-2020 GoodData Corporation
-import set = require("lodash/set");
-import get = require("lodash/get");
-import uniq = require("lodash/uniq");
-import uniqBy = require("lodash/uniqBy");
-import negate = require("lodash/negate");
-import includes = require("lodash/includes");
-import every = require("lodash/every");
-import forEach = require("lodash/forEach");
-import cloneDeep = require("lodash/cloneDeep");
-import isEmpty = require("lodash/isEmpty");
-import flatMap = require("lodash/flatMap");
-import compact = require("lodash/compact");
-import without = require("lodash/without");
+import set from "lodash/set";
+import get from "lodash/get";
+import uniq from "lodash/uniq";
+import uniqBy from "lodash/uniqBy";
+import negate from "lodash/negate";
+import includes from "lodash/includes";
+import every from "lodash/every";
+import forEach from "lodash/forEach";
+import cloneDeep from "lodash/cloneDeep";
+import isEmpty from "lodash/isEmpty";
+import flatMap from "lodash/flatMap";
+import compact from "lodash/compact";
+import without from "lodash/without";
 import { IntlShape } from "react-intl";
 import {
     BucketNames,

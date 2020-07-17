@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 export const DummyVisConstruct = {
     projectId: "testWorkspace",

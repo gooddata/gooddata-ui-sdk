@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import partial = require("lodash/partial");
+import partial from "lodash/partial";
 import mapboxgl from "mapbox-gl";
 import {
     DEFAULT_CLUSTER_FILTER,

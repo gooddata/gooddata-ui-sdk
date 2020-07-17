@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import {
     IAttributeOrMeasure,
     bucketItems,

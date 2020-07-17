@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import Dropdown, { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
@@ -7,8 +7,8 @@ import DisabledBubbleMessage from "../DisabledBubbleMessage";
 import { getTranslation } from "../../utils/translations";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
 import { IDropdownItem } from "../../interfaces/Dropdown";
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
 
 export interface IDropdownControlProps {
     valuePath: string;
