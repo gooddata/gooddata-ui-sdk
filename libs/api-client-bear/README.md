@@ -16,8 +16,9 @@ However, we believe and recommend that the API client should be used as a last r
 components and abstractions are insufficient: please check out the @gooddata/sdk-backend-spi and
 @gooddata/sdk-backend-bear to learn about a more convenient API to work with analytical backends.
 
-> Note: if you are using the API client to drive custom executions on GoodData platform then there is no reason to
-> use the API client directly. The
+> Note: if you are using the API client to drive custom executions on GoodData platform then you should consider
+> using the [Analytical Backend implementation](../sdk-backend-bear) for GoodData platform. The execution services
+> located therein offer more convenient APIs.
 
 ## Supported REST API versions
 
@@ -25,23 +26,23 @@ This table shows which version of the gooddata-js introduced support for a parti
 
 The REST API versions in the table are just for your information as the values are set internally and cannot be overridden.
 
-| gd-bear-client version | REST API version |
-| :--------------------: | :--------------: |
-|       \>= 8.0.0        |        4         |
+| api-client-bear version | REST API version |
+| :---------------------: | :--------------: |
+|        \>= 8.0.0        |        4         |
 
 ## Usage
 
 ### Using as a npm package
 
 1. go to your project directory and add the package: \
-   → with [yarn](https://yarnpkg.com): `yarn add @gooddata/gd-bear-client` \
-   → with [npm](npmjs.com): `npm install --save @gooddata/gd-bear-client`
+   → with [yarn](https://yarnpkg.com): `yarn add @gooddata/api-client-bear` \
+   → with [npm](npmjs.com): `npm install --save @gooddata/api-client-bear`
 
-    :heavy_exclamation_mark: **WARNING: npm package renamed from `gooddata` to `@gooddata/gd-bear-client`** :heavy_exclamation_mark:
+    :heavy_exclamation_mark: **WARNING: npm package renamed from `gooddata` to `@gooddata/api-client-bear`** :heavy_exclamation_mark:
 
 2. import the package's default export: \
-   → in transpiled browser app with ES6 modules syntax: `import { factory } from '@gooddata/gd-bear-client';` \
-   → in node.js with CommonJS syntax: `const factory = require('@gooddata/gd-bear-client').factory;`
+   → in transpiled browser app with ES6 modules syntax: `import { factory } from '@gooddata/api-client-bear';` \
+   → in node.js with CommonJS syntax: `const factory = require('@gooddata/api-client-bear').factory;`
 
 3. call the API:
 
@@ -59,16 +60,8 @@ The REST API versions in the table are just for your information as the values a
 
 You have two options:
 
--   [download `gooddata.js` or `gooddata.min.js`](https://unpkg.com/@gooddata/gd-bear-client@latest/umd/) from the latest release
--   build on your own:
-    ```bash
-    git clone https://github.com/gooddata/gooddata-js.git
-    cd gooddata-js
-    git checkout v6.0.0 # choose a version, or omit this line to use unstable code from `master` branch
-    yarn install --pure-lockfile
-    yarn build
-    # get gooddata.js and gooddata.min.js from /dist folder
-    ```
+-   [download `gooddata.js` or `gooddata.min.js`](https://unpkg.com/@gooddata/api-client-bear@latest/umd/) from the latest release
+-   build on your own; see the [main README](../../README.md) for more information
 
 Then you can import the library file and global variable `gooddata` contains all exported members:
 
