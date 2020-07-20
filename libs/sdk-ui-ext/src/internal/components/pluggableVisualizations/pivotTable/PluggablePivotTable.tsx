@@ -427,6 +427,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
 
         const { locale, custom, dimensions, config = {}, customVisualizationConfig = {} } = options;
+        const { maxHeight, maxWidth } = config;
         const height = dimensions?.height;
         const { drillableItems } = custom;
 
@@ -443,6 +444,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             ...createPivotTableConfig(config, this.environment, this.settings, columnWidths),
             ...(!this.supportsTotals ? { menu: {} } : {}), // suppress the menu for backends without totals
             ...customVisualizationConfig,
+            maxHeight,
+            maxWidth,
         };
 
         const pivotTableProps: ICorePivotTableProps = {
