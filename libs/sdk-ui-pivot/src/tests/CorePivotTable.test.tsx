@@ -13,10 +13,11 @@ import * as stickyRowHandler from "../impl/stickyRowHandler";
 import agGridApiWrapper from "../impl/agGridApiWrapper";
 import { ICorePivotTableProps } from "../types";
 import { IPreparedExecution, prepareExecution } from "@gooddata/sdk-backend-spi";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { recordedBackend, DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
+import { recordedDataFacade } from "../../__mocks__/recordings";
 
 const intl = createIntlMock();
 
@@ -308,6 +309,19 @@ describe("CorePivotTable", () => {
 
             expect(updateStickyRow).toHaveBeenCalledTimes(1);
             expect(updateStickyRowPosition).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("getAvailableDrillTargets", () => {
+        it("should return attributes and measures for pivot table", () => {
+            const table = getTableInstance();
+            const fixture = recordedDataFacade(
+                ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+                DataViewFirstPage,
+            );
+            const targets = table.getAvailableDrillTargets(fixture);
+            expect(targets.measures.length).toEqual(1);
+            expect(targets.attributes.length).toEqual(2);
         });
     });
 

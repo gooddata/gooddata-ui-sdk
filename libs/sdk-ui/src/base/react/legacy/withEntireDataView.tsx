@@ -11,7 +11,12 @@ import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import noop from "lodash/noop";
 import omit from "lodash/omit";
-import { IExportFunction, ILoadingState, IDrillableItemPushData } from "../../vis/Events";
+import {
+    IExportFunction,
+    ILoadingState,
+    IAvailableDrillTargets,
+    IAvailableDrillTargetMeasure,
+} from "../../vis/Events";
 import { GoodDataSdkError, ErrorCodes } from "../../errors/GoodDataSdkError";
 import { createExportErrorFunction, createExportFunction } from "../../vis/export";
 import { DataViewFacade } from "../../results/facade";
@@ -177,18 +182,18 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onError(new GoodDataSdkError(ErrorCodes.NEGATIVE_VALUES));
         }
 
-        private getSupportedDrillableItems(dv: DataViewFacade): IDrillableItemPushData[] {
-            return dv
-                .meta()
-                .measureDescriptors()
-                .map(
-                    (measure: IMeasureDescriptor): IDrillableItemPushData => ({
-                        type: "measure",
-                        localIdentifier: measure.measureHeaderItem.localIdentifier,
-                        title: measure.measureHeaderItem.name,
-                        attributes: dv.meta().attributeDescriptors(),
-                    }),
-                );
+        private getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
+            return {
+                measures: dv
+                    .meta()
+                    .measureDescriptors()
+                    .map(
+                        (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
+                            measure,
+                            attributes: dv.meta().attributeDescriptors(),
+                        }),
+                    ),
+            };
         }
 
         private async initDataLoading(execution: IPreparedExecution) {
@@ -217,11 +222,9 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 }
 
                 if (pushData) {
-                    const supportedDrillableItems = this.getSupportedDrillableItems(
-                        DataViewFacade.for(dataView),
-                    );
+                    const availableDrillTargets = this.getAvailableDrillTargets(DataViewFacade.for(dataView));
 
-                    pushData({ dataView, supportedDrillableItems });
+                    pushData({ dataView, availableDrillTargets });
                 }
             } catch (error) {
                 if (this.hasUnmounted) {
@@ -233,11 +236,11 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                  * metadata essential for setup of drilling. Look for that and if available push up.
                  */
                 if (isNoDataError(error) && error.dataView && pushData) {
-                    const supportedDrillableItems = this.getSupportedDrillableItems(
+                    const availableDrillTargets = this.getAvailableDrillTargets(
                         DataViewFacade.for(error.dataView),
                     );
 
-                    pushData({ supportedDrillableItems });
+                    pushData({ availableDrillTargets });
                 }
 
                 this.onError(convertError(error));

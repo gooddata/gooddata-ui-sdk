@@ -94,9 +94,10 @@ export {
     ILoadingState,
     IExportFunction,
     IExtendedExportConfig,
-    IDrillableItemPushData,
+    IAvailableDrillTargets,
+    IAvailableDrillTargetMeasure,
+    IAvailableDrillTargetAttribute,
     IColorAssignment,
-    DrillableItemType,
     IColorsData,
 } from "./vis/Events";
 export {
