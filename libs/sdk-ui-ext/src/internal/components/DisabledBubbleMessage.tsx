@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import * as classNames from "classnames";
+import cx from "classnames";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import { getTranslation } from "../utils/translations";
@@ -27,7 +27,7 @@ export class DisabledBubbleMessage extends React.PureComponent<IBubbleMessagePro
     }
 
     private getBubbleClassNames() {
-        return classNames("bubble-primary", {
+        return cx("bubble-primary", {
             invisible: !this.props.showDisabledMessage,
         });
     }

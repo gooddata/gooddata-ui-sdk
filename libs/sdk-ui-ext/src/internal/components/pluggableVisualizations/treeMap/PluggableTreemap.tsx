@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import isEmpty = require("lodash/isEmpty");
-import set = require("lodash/set");
-import tail = require("lodash/tail");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
+import set from "lodash/set";
+import tail from "lodash/tail";
 import React = require("react");
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { render } from "react-dom";

@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import flatMap = require("lodash/flatMap");
-import get = require("lodash/get");
+import flatMap from "lodash/flatMap";
+import get from "lodash/get";
 import Highcharts from "./highchartsEntryPoint";
 
 import {

@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { platformDateFormat } from "../constants/Platform";
 import moment = require("moment");
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { IDateFilterProps, DateFilter } from "../DateFilter";
 import { IDateFilterOptionsByType } from "../interfaces";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";

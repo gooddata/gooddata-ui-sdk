@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 import { IAnalyticalBackend, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition, insightProperties, IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
-import * as uuid from "uuid";
+import uuid from "uuid";
 import {
     IDrillableItem,
     ILocale,
@@ -26,10 +26,10 @@ import {
     IVisualizationCatalog,
     PluggableVisualizationFactory,
 } from "./VisualizationCatalog";
-import isEmpty = require("lodash/isEmpty");
-import isEqual = require("lodash/isEqual");
-import noop = require("lodash/noop");
-import omit = require("lodash/omit");
+import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
+import noop from "lodash/noop";
+import omit from "lodash/omit";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;

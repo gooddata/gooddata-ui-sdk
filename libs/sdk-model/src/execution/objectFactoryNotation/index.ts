@@ -1,9 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
-import flow = require("lodash/flow");
-import identity = require("lodash/identity");
-import isArray = require("lodash/isArray");
-import isObject = require("lodash/isObject");
-import isString = require("lodash/isString");
+import flow from "lodash/flow";
+import identity from "lodash/identity";
+import isArray from "lodash/isArray";
+import isObject from "lodash/isObject";
+import isString from "lodash/isString";
 import stringifyObject = require("stringify-object");
 import { ObjRef } from "../../objRef";
 import {

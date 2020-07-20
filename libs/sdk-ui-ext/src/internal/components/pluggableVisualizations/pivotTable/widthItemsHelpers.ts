@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import includes = require("lodash/includes");
+import includes from "lodash/includes";
 import {
     ColumnWidthItem,
     IMeasureColumnWidthItem,

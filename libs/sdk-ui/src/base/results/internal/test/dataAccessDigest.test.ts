@@ -3,7 +3,7 @@
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { dummyDataView, recordedDataViews, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
-import flatMap = require("lodash/flatMap");
+import flatMap from "lodash/flatMap";
 import { createDataAccessDigest, DataAccessDigest } from "../dataAccessDigest";
 
 function digestSnapshot(digest: DataAccessDigest) {

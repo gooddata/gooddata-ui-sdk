@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { ShallowWrapper, shallow } from "enzyme";
 import { GeoChartInner, IGeoChartInnerProps, IGeoChartInnerOptions } from "../GeoChartInner";
 import { RecShortcuts } from "../../../../__mocks__/recordings";

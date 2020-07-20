@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { shallow } from "enzyme";
 import { DefaultLocale } from "@gooddata/sdk-ui";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { ConfigSection, IConfigSectionOwnProps } from "../ConfigSection";
 import { createInternalIntl } from "../../../utils/internalIntlProvider";
 

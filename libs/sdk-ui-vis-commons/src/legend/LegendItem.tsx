@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import unescape = require("lodash/unescape");
+import React from "react";
+import unescape from "lodash/unescape";
 
 const VISIBLE_COLOR = "#6D7680";
 const DISABLED_COLOR = "#CCCCCC";

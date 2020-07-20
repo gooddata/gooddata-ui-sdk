@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
-import merge = require("lodash/merge");
-import get = require("lodash/get");
+// (C) 2007-2020 GoodData Corporation
+import merge from "lodash/merge";
+import get from "lodash/get";
 import { getPieConfiguration } from "./pieConfiguration";
 import { alignChart } from "./helpers";
 

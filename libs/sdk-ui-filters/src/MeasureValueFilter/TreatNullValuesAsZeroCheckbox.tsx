@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps } from "react-intl";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";

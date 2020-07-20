@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 
 export const SmallScreenDecorator = (components: JSX.Element): JSX.Element => {
     const style: React.CSSProperties = {

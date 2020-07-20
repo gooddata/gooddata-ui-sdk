@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IHeaderParams } from "@ag-grid-community/all-modules";
 import { SortDirection } from "@gooddata/sdk-model";
-import * as React from "react";
+import React from "react";
 import { IMenu } from "../types";
 import { COLUMN_ATTRIBUTE_COLUMN, FIELD_TYPE_ATTRIBUTE } from "./agGridConst";
 

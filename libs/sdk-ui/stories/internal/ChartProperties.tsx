@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { storiesOf } from "@storybook/react";
 import { screenshotWrap } from "@gooddata/test-storybook";
-import identity = require("lodash/identity");
-import cloneDeep = require("lodash/cloneDeep");
+import identity from "lodash/identity";
+import cloneDeep from "lodash/cloneDeep";
 
 import { ChartTransformation } from "../../src/highcharts";
 import { VIEW_BY_DIMENSION_INDEX } from "../../src/highcharts/constants/dimensions";

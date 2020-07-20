@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { dataViewDimensionItems, dataViewHeaders, measureGroupItems } from "./utils";
 import { attributeLocalId, IAttribute, IMeasure, measureLocalId } from "@gooddata/sdk-model";
-import keyBy = require("lodash/keyBy");
+import keyBy from "lodash/keyBy";
 //
 //
 //

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import * as classNames from "classnames";
+import React from "react";
+import cx from "classnames";
 import ColorPaletteItem from "./ColorPaletteItem";
 import { IColor, IColorPaletteItem, IColorPalette } from "@gooddata/sdk-model";
 
@@ -19,7 +19,7 @@ export default class ColorPalette extends React.PureComponent<IColorPaletteProps
 
     private getClassNames() {
         const isColorPaletteLarge = this.isColorPaletteLarge();
-        return classNames(
+        return cx(
             {
                 "gd-color-drop-down-list-large": isColorPaletteLarge,
                 "gd-color-drop-down-list": !isColorPaletteLarge,

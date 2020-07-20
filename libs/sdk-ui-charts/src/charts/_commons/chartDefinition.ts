@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket } from "@gooddata/sdk-model";
-import omit = require("lodash/omit");
+import omit from "lodash/omit";
 
 import { ICoreChartProps, IBucketChartProps } from "../../interfaces";
 

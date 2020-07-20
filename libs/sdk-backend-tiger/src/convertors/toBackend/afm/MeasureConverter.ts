@@ -21,8 +21,8 @@ import {
     toDisplayFormQualifier,
     toLocalIdentifier,
 } from "../ObjRefConverter";
-import compact = require("lodash/compact");
-import get = require("lodash/get");
+import compact from "lodash/compact";
+import get from "lodash/get";
 import { InvariantError } from "ts-invariant";
 
 export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {

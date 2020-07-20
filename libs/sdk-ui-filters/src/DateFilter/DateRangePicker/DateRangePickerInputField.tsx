@@ -1,18 +1,18 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import cx from "classnames";
-import * as DayPicker from "react-day-picker";
+import { DayPickerInputProps, InputClassNames } from "react-day-picker";
 import DayPickerInput from "react-day-picker/DayPickerInput";
-import * as moment from "moment";
+import moment from "moment";
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
 
-const getInputClassNames = (className?: string, classNameCalendar?: string): DayPicker.InputClassNames => ({
+const getInputClassNames = (className?: string, classNameCalendar?: string): InputClassNames => ({
     container: cx("gd-date-range-picker-input", className),
     overlay: cx("gd-date-range-picker-picker", classNameCalendar),
     overlayWrapper: undefined,
 });
 
-interface IDateRangePickerInputFieldProps extends DayPicker.DayPickerInputProps {
+interface IDateRangePickerInputFieldProps extends DayPickerInputProps {
     className?: string;
     classNameCalendar?: string;
 }

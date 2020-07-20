@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import isEmpty = require("lodash/isEmpty");
-import identity = require("lodash/identity");
+import cloneDeep from "lodash/cloneDeep";
+import isEmpty from "lodash/isEmpty";
+import identity from "lodash/identity";
 import {
     ArithmeticMeasureOperator,
     IArithmeticMeasureDefinition,

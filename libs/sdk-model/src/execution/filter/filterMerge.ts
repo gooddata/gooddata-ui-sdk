@@ -11,7 +11,7 @@ import {
     isMeasureValueFilter,
     isPositiveAttributeFilter,
 } from "./index";
-import unionBy = require("lodash/unionBy");
+import unionBy from "lodash/unionBy";
 import invariant from "ts-invariant";
 
 function filterObjectRef(filter: IFilter): string {

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { createElementCountResolver, ScreenshotReadyWrapper } from "../../_infra/ScreenshotReadyWrapper";
-import * as React from "react";
+import React from "react";
 import allScenarios from "../../../scenarios";
 import { ScenarioGroup } from "../../../src";
 
@@ -10,8 +10,8 @@ import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import { withScreenshot } from "../../_infra/backstopWrapper";
 import { StorybookBackend } from "../../_infra/backend";
 import { storyGroupFor } from "./storyGroupFactory";
-import groupBy = require("lodash/groupBy");
-import sortBy = require("lodash/sortBy");
+import groupBy from "lodash/groupBy";
+import sortBy from "lodash/sortBy";
 import { ScenarioStories } from "../../_infra/storyGroups";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };

@@ -1,11 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
-import get = require("lodash/get");
-import set = require("lodash/set");
-import isEqual = require("lodash/isEqual");
-import uniqBy = require("lodash/uniqBy");
-import isEmpty = require("lodash/isEmpty");
-import cloneDeep = require("lodash/cloneDeep");
-import compact = require("lodash/compact");
+import get from "lodash/get";
+import set from "lodash/set";
+import isEqual from "lodash/isEqual";
+import uniqBy from "lodash/uniqBy";
+import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
+import compact from "lodash/compact";
 
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";

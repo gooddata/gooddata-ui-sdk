@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 // Have only one entrypoint to highcharts and drill module
 // Import this reexported variable in other files instead of direct import from highcharts
-import * as Highcharts from "highcharts";
+import Highcharts from "highcharts";
 
 export type HTMLDOMElement = Highcharts.HTMLDOMElement;
 export type SVGDOMElement = Highcharts.SVGDOMElement;

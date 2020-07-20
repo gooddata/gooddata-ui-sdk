@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAttributeElement, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { string as stringUtils } from "@gooddata/js-utils";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ITranslationsComponentProps } from "@gooddata/sdk-ui";
-import * as classNames from "classnames";
-import debounce = require("lodash/debounce");
-import noop = require("lodash/noop");
+import cx from "classnames";
+import debounce from "lodash/debounce";
+import noop from "lodash/noop";
 
 import { AttributeDropdownBody } from "./AttributeDropdownBody";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdownList";
@@ -20,8 +20,8 @@ import {
     isNonEmptyListItem,
 } from "./types";
 
-import isEmpty = require("lodash/isEmpty");
-import isEqual = require("lodash/isEqual");
+import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
 
 const LIMIT = MAX_SELECTION_SIZE + 50;
 
@@ -296,7 +296,7 @@ export class AttributeDropdownCore extends React.PureComponent<
     public render() {
         const { FilterLoading } = this.props;
         const customizedTitle = this.getTitle();
-        const classes = classNames(
+        const classes = cx(
             "gd-attribute-filter",
             customizedTitle ? `gd-id-${stringUtils.simplifyText(customizedTitle)}` : "",
         );

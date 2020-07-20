@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { mount } from "enzyme";
-import * as React from "react";
+import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
 import AggregationsSubMenu from "../AggregationsSubMenu";

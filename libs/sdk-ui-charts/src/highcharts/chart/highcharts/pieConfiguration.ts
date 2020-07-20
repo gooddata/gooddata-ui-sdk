@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
+// (C) 2007-2020 GoodData Corporation
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
 import { alignChart } from "./helpers";
 
 const PIE_TEMPLATE = {

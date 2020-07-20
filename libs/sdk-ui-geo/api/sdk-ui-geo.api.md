@@ -24,7 +24,7 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { PositionType } from '@gooddata/sdk-ui-vis-commons';
-import * as React_2 from 'react';
+import { default as React_2 } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
 // Warning: (ae-internal-missing-underscore) The name "CoreGeoChart" should be prefixed with an underscore because the declaration is marked as @internal

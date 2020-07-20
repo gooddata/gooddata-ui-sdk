@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
-import * as React from "react";
+import React from "react";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../../tests/mocks/testMocks";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";

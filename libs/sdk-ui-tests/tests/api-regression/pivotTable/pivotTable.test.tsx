@@ -9,7 +9,7 @@ import { ReactWrapper } from "enzyme";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { mountInsight } from "../../_infra/renderPlugVis";
 import { defSetSorts } from "@gooddata/sdk-model";
-import flatMap = require("lodash/flatMap");
+import flatMap from "lodash/flatMap";
 
 function tablePropsExtractor(wrapper: ReactWrapper): any {
     const child = wrapper.find("CorePivotTablePure");
@@ -20,7 +20,7 @@ function tablePropsExtractor(wrapper: ReactWrapper): any {
 const Vis = "PivotTable";
 
 describe(Vis, () => {
-    const Scenarios: Array<ScenarioAndDescription<IPivotTableProps>> = flatMap(pivotTableScenarios, group =>
+    const Scenarios: Array<ScenarioAndDescription<IPivotTableProps>> = flatMap(pivotTableScenarios, (group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 

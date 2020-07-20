@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { ColGroupDef, IHeaderGroupParams } from "@ag-grid-community/all-modules";
-import * as React from "react";
+import React from "react";
 
 import { IMenu } from "../types";
 

@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as LRUCache from "lru-cache";
+import LRUCache from "lru-cache";
 import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IColorPalette, IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
 

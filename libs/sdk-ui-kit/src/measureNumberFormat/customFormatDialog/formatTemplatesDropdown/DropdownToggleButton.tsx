@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
-import classNames from "classnames";
+import cx from "classnames";
 
 interface IDropdownToggleButtonProps {
     isOpened: boolean;
@@ -17,7 +17,7 @@ const DropdownToggleButton = ({ toggleDropdown, isOpened }: IDropdownToggleButto
             <FormattedMessage id="measureNumberCustomFormatDialog.template.title" />
         </span>
         <div
-            className={classNames(
+            className={cx(
                 "gd-measure-format-button-icon-right",
                 isOpened ? "icon-navigateup" : "icon-navigatedown",
             )}

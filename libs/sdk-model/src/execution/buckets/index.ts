@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
 import { Identifier } from "../../objRef";
 import {
@@ -13,7 +13,7 @@ import {
 import { isTotal, ITotal } from "../base/totals";
 import invariant from "ts-invariant";
 import { modifySimpleMeasure } from "../measure/factory";
-import isArray = require("lodash/isArray");
+import isArray from "lodash/isArray";
 
 /**
  * Type representing bucket items - which can be either measure or an attribute.

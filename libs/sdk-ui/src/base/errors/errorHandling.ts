@@ -4,7 +4,7 @@ import {
     isAnalyticalBackendError,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
-import * as HttpStatusCodes from "http-status-codes";
+import HttpStatusCodes from "http-status-codes";
 import { IntlShape } from "react-intl";
 import { ErrorCodes, GoodDataSdkError, isGoodDataSdkError } from "./GoodDataSdkError";
 import { isCancelError } from "../react/CancelablePromise";

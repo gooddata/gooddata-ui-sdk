@@ -26,8 +26,8 @@ import {
 import invariant from "ts-invariant";
 import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
 import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
-import flatMap = require("lodash/flatMap");
-import isEqual = require("lodash/isEqual");
+import flatMap from "lodash/flatMap";
+import isEqual from "lodash/isEqual";
 
 //
 //

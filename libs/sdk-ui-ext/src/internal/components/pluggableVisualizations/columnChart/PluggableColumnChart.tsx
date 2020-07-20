@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { COLUMN_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";

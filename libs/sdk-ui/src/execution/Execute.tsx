@@ -17,8 +17,8 @@ import {
     ISortItem,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import isEmpty = require("lodash/isEmpty");
-import isEqual = require("lodash/isEqual");
+import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
 import { withContexts } from "../base";
 import { InvariantError } from "ts-invariant";
 

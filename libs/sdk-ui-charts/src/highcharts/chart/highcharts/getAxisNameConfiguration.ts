@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import get = require("lodash/get");
+import get from "lodash/get";
 import { XAxisTitleOptions, YAxisTitleOptions } from "highcharts";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 

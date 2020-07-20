@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import * as ReactDom from "react-dom";
+import React from "react";
+import ReactDom from "react-dom";
 
 import { PluggableHeadline } from "../PluggableHeadline";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
@@ -19,8 +19,8 @@ import { getMeasureItems } from "../../../../utils/bucketHelper";
 import { IDrillableItem, OverTimeComparisonTypes, BucketNames } from "@gooddata/sdk-ui";
 import { CoreHeadline } from "@gooddata/sdk-ui-charts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import cloneDeep = require("lodash/cloneDeep");
-import noop = require("lodash/noop");
+import cloneDeep from "lodash/cloneDeep";
+import noop from "lodash/noop";
 
 describe("PluggableHeadline", () => {
     const defaultProps = {

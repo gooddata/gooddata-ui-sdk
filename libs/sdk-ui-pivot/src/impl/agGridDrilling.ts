@@ -14,7 +14,7 @@ import {
     isResultAttributeHeader,
     isResultMeasureHeader,
 } from "@gooddata/sdk-backend-spi";
-import get = require("lodash/get");
+import get from "lodash/get";
 
 export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }) => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {

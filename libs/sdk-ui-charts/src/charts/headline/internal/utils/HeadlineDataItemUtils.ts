@@ -2,8 +2,8 @@
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 import { IChartConfig } from "../../../../interfaces";
 import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../../Headlines";
-import isEmpty = require("lodash/isEmpty");
-import isNaN = require("lodash/isNaN");
+import isEmpty from "lodash/isEmpty";
+import isNaN from "lodash/isNaN";
 
 const DEFAULT_VALUE_WHEN_EMPTY = "–";
 const INVALID_VALUE = "NaN";

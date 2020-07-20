@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React = require("react");
-import omit = require("lodash/omit");
+import omit from "lodash/omit";
 import ConfigurationPanelContent from "./ConfigurationPanelContent";
 import UnsupportedProperties from "../configurationControls/UnsupportedProperties";
 

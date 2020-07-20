@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { screenshotWrap } from "@gooddata/test-storybook";
@@ -15,7 +15,7 @@ import CustomLegend from "../utils/CustomLegend";
 
 import "../../../sdk-ui-charts/styles/scss/charts.scss";
 import { GERMAN_SEPARATORS } from "../data/numberFormat";
-import identity = require("lodash/identity");
+import identity from "lodash/identity";
 
 storiesOf("Internal/HighCharts/ChartTransformation", module)
     .add("Column chart with 18 measures and view by attribute", () => {

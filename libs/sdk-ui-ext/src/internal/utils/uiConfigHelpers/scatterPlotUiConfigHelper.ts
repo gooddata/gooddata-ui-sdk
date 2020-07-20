@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -9,9 +9,9 @@ import { UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles } from "./../bucketHelper";
 
-import * as scatterMeasuresXIcon from "../../assets/scatter/bucket-title-measures-x.svg";
-import * as scatterMeasuresYIcon from "../../assets/scatter/bucket-title-measures-y.svg";
-import * as scatterAttributeIcon from "../../assets/scatter/bucket-title-attribute.svg";
+import scatterMeasuresXIcon from "../../assets/scatter/bucket-title-measures-x.svg";
+import scatterMeasuresYIcon from "../../assets/scatter/bucket-title-measures-y.svg";
+import scatterAttributeIcon from "../../assets/scatter/bucket-title-attribute.svg";
 
 export function setScatterPlotUiConfig(
     referencePoint: IExtendedReferencePoint,

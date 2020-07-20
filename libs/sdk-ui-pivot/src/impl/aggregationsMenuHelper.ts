@@ -5,10 +5,10 @@ import invariant from "ts-invariant";
 import { IMenuAggregationClickConfig } from "../types";
 
 import { AVAILABLE_TOTALS, FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "./agGridConst";
-import intersection = require("lodash/intersection");
-import isEqual = require("lodash/isEqual");
-import sortBy = require("lodash/sortBy");
-import uniq = require("lodash/uniq");
+import intersection from "lodash/intersection";
+import isEqual from "lodash/isEqual";
+import sortBy from "lodash/sortBy";
+import uniq from "lodash/uniq";
 import { IColumnTotal } from "./aggregationsMenuTypes";
 
 function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {

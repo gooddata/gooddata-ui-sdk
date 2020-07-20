@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import cx from "classnames";
 
 export const VisibleScrollbar: React.FC<React.HTMLProps<HTMLDivElement>> = ({

@@ -1,2 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-export const fetch = require("fetch-cookie")(require("node-fetch")); // tslint:disable-line:no-var-requires
+// (C) 2007-2020 GoodData Corporation
+import nodeFetch from "node-fetch";
+import fetchCookie from "fetch-cookie";
+
+export const fetch = fetchCookie(nodeFetch as any);

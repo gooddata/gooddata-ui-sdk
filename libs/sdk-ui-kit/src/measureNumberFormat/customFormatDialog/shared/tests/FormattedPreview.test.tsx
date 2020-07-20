@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { shallow } from "enzyme";
 import { FormattedPreview, IFormattedPreviewProps } from "../FormattedPreview";
 

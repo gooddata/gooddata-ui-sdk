@@ -20,7 +20,7 @@ import {
     DimensionGenerator,
     IExecutionDefinition,
 } from "./index";
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 
 /**

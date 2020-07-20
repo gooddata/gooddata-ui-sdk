@@ -14,7 +14,7 @@ import {
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { convertMeasureFilter } from "./FilterConverter";
 import { toBearRef } from "../ObjRefConverter";
-import compact = require("lodash/compact");
+import compact from "lodash/compact";
 import { DEFAULT_INTEGER_FORMAT, DEFAULT_PERCENTAGE_FORMAT, DEFAULT_DECIMAL_FORMAT } from "./constants";
 
 export function convertMeasure(measure: IMeasure): GdcExecuteAFM.IMeasure {

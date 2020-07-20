@@ -17,7 +17,7 @@ import {
     VisType,
     XirrType,
 } from "./visualizationTypes";
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 
 export interface IDrillableItemUri {
     uri: string;

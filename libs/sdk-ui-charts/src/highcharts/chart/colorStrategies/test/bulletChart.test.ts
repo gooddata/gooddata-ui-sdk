@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import range = require("lodash/range");
+import range from "lodash/range";
 import { ColorFactory } from "../../colorFactory";
 import { IColorPalette, IMeasure } from "@gooddata/sdk-model";
 import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";

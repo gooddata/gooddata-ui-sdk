@@ -3,7 +3,7 @@
 import stringify from "json-stable-stringify";
 import { IMeasureFilter } from "../filter";
 import { IMeasure, IMeasureDefinition, isSimpleMeasure } from "./index";
-import merge = require("lodash/merge");
+import merge from "lodash/merge";
 import { isFilterRelevantForFingerprinting } from "../filter/fingerprint";
 
 type MeasureDefinitionPropsToDefault = Pick<

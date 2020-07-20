@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import parse from "date-fns/parse";
-import identity = require("lodash/identity");
+import identity from "lodash/identity";
 import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 

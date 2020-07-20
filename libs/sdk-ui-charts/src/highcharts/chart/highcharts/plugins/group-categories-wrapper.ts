@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import { isInvertedChartType } from "../../../utils/common";
 
 export function groupCategoriesWrapper(Highcharts: any) {

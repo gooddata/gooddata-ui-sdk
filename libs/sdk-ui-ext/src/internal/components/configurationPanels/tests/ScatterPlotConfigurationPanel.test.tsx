@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
-import * as React from "react";
+import React from "react";
 import { shallow } from "enzyme";
 import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks";
 import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel";

@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { calculateAverage } from "../helpers/geoChart/common";
 import { formatLegendLabel } from "@gooddata/sdk-ui-vis-commons";
 

@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import Measure, { Rect } from "react-measure";
-import * as cx from "classnames";
-import isEmpty = require("lodash/isEmpty");
+import cx from "classnames";
+import isEmpty from "lodash/isEmpty";
 import FluidLegend from "./FluidLegend";
 import StaticLegend from "./StaticLegend";
 import { isComboChart, isHeatmap } from "../../utils/common";

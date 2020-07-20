@@ -8,7 +8,7 @@ import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";
 import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
-import range = require("lodash/range");
+import range from "lodash/range";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 import { HEATMAP_BLUE_COLOR_PALETTE } from "../../../utils/color";
 

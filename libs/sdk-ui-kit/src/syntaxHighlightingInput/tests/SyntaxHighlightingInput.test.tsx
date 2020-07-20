@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount, ReactWrapper as MountWrapper } from "enzyme";
 import { UnControlled as CodeMirrorInput } from "react-codemirror2";
 

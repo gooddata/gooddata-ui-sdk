@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
-import noop = require("lodash/noop");
-import classNames from "classnames";
+import noop from "lodash/noop";
+import cx from "classnames";
 import { ISeparators, withIntl } from "@gooddata/sdk-ui";
 
 import { MeasureNumberFormat, IMeasureNumberFormatOwnProps } from "../MeasureNumberFormat";
@@ -24,7 +24,7 @@ import { IFormatTemplate, IToggleButtonProps } from "../typings";
 const getButtonComponent = (): React.FC<IToggleButtonProps> => ({ isOpened, text, toggleDropdown }) => {
     return (
         <div
-            className={classNames("toggle-button", {
+            className={cx("toggle-button", {
                 opened: isOpened,
                 closed: !isOpened,
             })}

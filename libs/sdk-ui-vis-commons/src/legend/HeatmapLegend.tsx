@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { IHeatmapLegendItem, IColorLegendItem } from "./types";
 import { ColorLegend } from "./ColorLegend";
 

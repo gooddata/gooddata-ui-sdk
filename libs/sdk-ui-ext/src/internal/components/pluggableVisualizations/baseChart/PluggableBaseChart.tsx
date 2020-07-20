@@ -11,7 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, ChartType, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import { BaseChart, ColorUtils, IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 
 import { BUCKETS } from "../../../constants/bucket";
@@ -65,11 +65,11 @@ import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualiza
 
 import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import isEmpty = require("lodash/isEmpty");
-import set = require("lodash/set");
-import tail = require("lodash/tail");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
+import set from "lodash/set";
+import tail from "lodash/tail";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;

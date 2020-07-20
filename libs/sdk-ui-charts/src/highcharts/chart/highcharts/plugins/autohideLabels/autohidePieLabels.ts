@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
-import get = require("lodash/get");
-import fill = require("lodash/fill");
+// (C) 2007-2020 GoodData Corporation
+import get from "lodash/get";
+import fill from "lodash/fill";
 
 import { getVisibleSeries, getDataPoints, isIntersecting, IRectBySize } from "../../helpers";
 

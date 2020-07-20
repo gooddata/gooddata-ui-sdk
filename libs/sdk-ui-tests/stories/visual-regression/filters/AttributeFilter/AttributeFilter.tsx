@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
-import * as React from "react";
+import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { LongPostInteractionTimeout, withMultipleScreenshots } from "../../../_infra/backstopWrapper";

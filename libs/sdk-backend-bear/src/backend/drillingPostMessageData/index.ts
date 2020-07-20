@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
 import { IUriIdentifierPair } from "@gooddata/api-client-bear";
 import { IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
-import compact = require("lodash/compact");
-import includes = require("lodash/includes");
-import isArray = require("lodash/isArray");
-import uniq = require("lodash/uniq");
+import compact from "lodash/compact";
+import includes from "lodash/includes";
+import isArray from "lodash/isArray";
+import uniq from "lodash/uniq";
 
 const getUriFromPairByIdentifier = (
     identifier: string,

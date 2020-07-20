@@ -11,8 +11,8 @@ import {
     getParsedFields,
     getMappingHeaderMeasureItemLocalIdentifier,
 } from "../agGridUtils";
-import cloneDeep = require("lodash/cloneDeep");
-import identity = require("lodash/identity");
+import cloneDeep from "lodash/cloneDeep";
+import identity from "lodash/identity";
 import { IDimension } from "@gooddata/sdk-model";
 import { getFakeColumn } from "./agGridMock";
 import { IGridHeader } from "../agGridTypes";

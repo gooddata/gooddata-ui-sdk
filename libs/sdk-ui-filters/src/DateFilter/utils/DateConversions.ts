@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import * as moment from "moment";
-import isString = require("lodash/isString");
-import isDate = require("lodash/isDate");
+import moment from "moment";
+import isString from "lodash/isString";
+import isDate from "lodash/isDate";
 import { platformDateFormat } from "../constants/Platform";
 
 const NUM_OF_MILISECONDS_IN_MINUTE = 60000;

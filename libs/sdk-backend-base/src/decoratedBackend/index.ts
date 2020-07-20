@@ -22,7 +22,7 @@ import {
     IWorkspaceUsersQuery,
     IWorkspaceDateFilterConfigsQuery,
 } from "@gooddata/sdk-backend-spi";
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 
 class BackendWithDecoratedServices implements IAnalyticalBackend {
     public capabilities: BackendCapabilities;

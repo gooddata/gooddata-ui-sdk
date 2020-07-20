@@ -12,8 +12,7 @@
         "noUnusedLocals": true,
         "strictNullChecks": true,
         "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "allowSyntheticDefaultImports": true
+        "noImplicitReturns": true
     },
     "include": ["src", "typings"],
     "exclude": ["node_modules", "dist"]

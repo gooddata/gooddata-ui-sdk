@@ -5,7 +5,7 @@ import {
     isResultAttributeHeader,
     isTotalDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import * as CustomEventPolyfill from "custom-event";
+import CustomEventPolyfill from "custom-event";
 import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory";
 import {
     IDrillableItem,

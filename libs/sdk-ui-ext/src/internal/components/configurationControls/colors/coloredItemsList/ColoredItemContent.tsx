@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import * as classNames from "classnames";
+import React from "react";
+import cx from "classnames";
 import { IRgbColorValue } from "@gooddata/sdk-model";
 import { ISelectableChild, IconPosition } from "../colorDropdown/ColorDropdown";
 
@@ -28,7 +28,7 @@ export default class ColoredItemContent extends React.PureComponent<IColoredItem
     }
 
     private getClassName() {
-        return classNames("gd-list-item gd-color-config-list-item s-colored-items-list-item", {
+        return cx("gd-list-item gd-color-config-list-item s-colored-items-list-item", {
             "is-active": this.props.isSelected,
         });
     }

@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { IColor, IColorFromPalette, IColorPaletteItem } from "@gooddata/sdk-model";
-import * as classNames from "classnames";
+import cx from "classnames";
 
 const ITEM_MARGIN = 5;
 
@@ -55,7 +55,7 @@ export default class ColorPaletteItem extends React.PureComponent<IColorPaletteI
     }
 
     private getClassNames() {
-        return classNames("gd-color-list-item", `s-color-list-item-${this.props.paletteItem.guid}`, {
+        return cx("gd-color-list-item", `s-color-list-item-${this.props.paletteItem.guid}`, {
             "gd-color-list-item-active": this.props.selected,
         });
     }

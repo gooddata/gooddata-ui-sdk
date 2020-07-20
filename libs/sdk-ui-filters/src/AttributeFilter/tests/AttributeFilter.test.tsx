@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { AttributeFilter } from "../AttributeFilter";
 import { AttributeDropdown } from "../AttributeDropdown/AttributeDropdown";

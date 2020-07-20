@@ -1,9 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
-import range = require("lodash/range");
-import get = require("lodash/get");
-import head = require("lodash/head");
-import last = require("lodash/last");
-import inRange = require("lodash/inRange");
+import range from "lodash/range";
+import get from "lodash/get";
+import head from "lodash/head";
+import last from "lodash/last";
+import inRange from "lodash/inRange";
 import { numberFormat } from "@gooddata/numberjs";
 import { IColorLegendItem } from "./types";
 import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";

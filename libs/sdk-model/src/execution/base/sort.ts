@@ -2,7 +2,7 @@
 import { Identifier } from "../../objRef/index";
 import { attributeLocalId, IAttribute } from "../attribute";
 import { IMeasure, measureLocalId } from "../measure";
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 
 /**

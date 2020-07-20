@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
-import range = require("lodash/range");
-import isEmpty = require("lodash/isEmpty");
-import isFinite = require("lodash/isFinite");
+import range from "lodash/range";
+import isEmpty from "lodash/isEmpty";
+import isFinite from "lodash/isFinite";
 import {
     DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
     DEFAULT_PUSHPIN_COLOR_OPACITY,

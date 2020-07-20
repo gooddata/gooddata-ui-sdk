@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
 import { BucketNames, VisualizationEnvironment, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 import { IBaseChartProps } from "@gooddata/sdk-ui-charts";
@@ -10,7 +10,7 @@ import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 describe("PluggableBaseChart", () => {
     const dashboardEnvironment: VisualizationEnvironment = "dashboards";

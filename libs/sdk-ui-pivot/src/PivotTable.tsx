@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { CorePivotTablePure } from "./CorePivotTable";
 import {
     attributeLocalId,
@@ -14,7 +14,7 @@ import {
     newBucket,
 } from "@gooddata/sdk-model";
 import { ICorePivotTableProps, IPivotTableBucketProps, IPivotTableProps } from "./types";
-import omit = require("lodash/omit");
+import omit from "lodash/omit";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,

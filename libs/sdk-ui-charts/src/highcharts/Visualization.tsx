@@ -1,17 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
-import * as React from "react";
+import React from "react";
 import { IDrillableItem, OnFiredDrillEvent, IHeaderPredicate } from "@gooddata/sdk-ui";
 import ChartTransformation, { renderHighCharts } from "./chart/ChartTransformation";
 import Highcharts from "./chart/highcharts/highchartsEntryPoint";
 import { IChartConfig } from "../interfaces";
 
 import { isChartSupported, stringifyChartTypes } from "./utils/common";
-import isEqual = require("lodash/isEqual");
-import isFunction = require("lodash/isFunction");
-import noop = require("lodash/noop");
-import omitBy = require("lodash/omitBy");
+import isEqual from "lodash/isEqual";
+import isFunction from "lodash/isFunction";
+import noop from "lodash/noop";
+import omitBy from "lodash/omitBy";
 
 export interface IVisualizationProps {
     height: number;

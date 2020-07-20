@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import flatMap = require("lodash/flatMap");
+import flatMap from "lodash/flatMap";
 import {
     IAttributeDescriptor,
     IDataView,

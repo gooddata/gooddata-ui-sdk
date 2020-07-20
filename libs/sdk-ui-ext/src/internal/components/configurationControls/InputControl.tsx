@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import noop = require("lodash/noop");
-import set = require("lodash/set");
-import cloneDeep = require("lodash/cloneDeep");
-import * as classNames from "classnames";
+import noop from "lodash/noop";
+import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep";
+import cx from "classnames";
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
 import { getTranslation } from "../../utils/translations";
@@ -101,7 +101,7 @@ export class InputControl extends React.Component<
     private getInputClassNames() {
         const { type, hasWarning } = this.props;
 
-        return classNames("gd-input-field", "gd-input-field-small", {
+        return cx("gd-input-field", "gd-input-field-small", {
             "has-warning": hasWarning,
             number: type === "number",
         });

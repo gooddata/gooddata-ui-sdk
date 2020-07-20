@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import * as ReactDom from "react-dom";
+import React from "react";
+import ReactDom from "react-dom";
 
 import {
     adaptReferencePointSortItemsToPivotTable,
@@ -31,8 +31,8 @@ import { ColumnWidthItem, CorePivotTable } from "@gooddata/sdk-ui-pivot";
 import { IAttributeSortItem, IMeasureSortItem, ISortItem, SortDirection } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ISettings } from "@gooddata/sdk-backend-spi";
-import noop = require("lodash/noop");
-import cloneDeep = require("lodash/cloneDeep");
+import noop from "lodash/noop";
+import cloneDeep from "lodash/cloneDeep";
 import {
     invalidAttributeColumnWidthItem,
     invalidMeasureColumnWidthItem,

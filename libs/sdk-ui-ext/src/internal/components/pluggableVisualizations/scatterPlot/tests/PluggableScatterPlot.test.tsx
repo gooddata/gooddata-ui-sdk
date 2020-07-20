@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { PluggableScatterPlot } from "../PluggableScatterPlot";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";

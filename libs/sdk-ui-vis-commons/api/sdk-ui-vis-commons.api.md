@@ -12,7 +12,7 @@ import { IColorPaletteItem } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IRgbColorValue } from '@gooddata/sdk-model';
-import * as React_2 from 'react';
+import { default as React_2 } from 'react';
 import { Rect } from 'react-measure';
 
 // Warning: (ae-internal-missing-underscore) The name "AttributeColorStrategy" should be prefixed with an underscore because the declaration is marked as @internal

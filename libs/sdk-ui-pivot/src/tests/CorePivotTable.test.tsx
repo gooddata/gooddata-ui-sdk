@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
@@ -16,7 +16,7 @@ import { IPreparedExecution, prepareExecution } from "@gooddata/sdk-backend-spi"
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 const intl = createIntlMock();
 

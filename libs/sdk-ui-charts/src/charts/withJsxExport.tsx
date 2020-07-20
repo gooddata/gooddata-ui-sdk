@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import isFunction = require("lodash/isFunction");
-import isString = require("lodash/isString");
-import toPairs = require("lodash/toPairs");
+import React from "react";
+import isFunction from "lodash/isFunction";
+import isString from "lodash/isString";
+import toPairs from "lodash/toPairs";
 // @ts-ignore The typings are not compatible with current react typings and upgrade is not feasible now
 import hoistNonReactStatics = require("hoist-non-react-statics");
 import { factoryNotationFor } from "@gooddata/sdk-model";

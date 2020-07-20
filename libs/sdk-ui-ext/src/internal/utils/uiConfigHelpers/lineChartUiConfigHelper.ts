@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import set = require("lodash/set");
-import forEach = require("lodash/forEach");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import set from "lodash/set";
+import forEach from "lodash/forEach";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -21,9 +21,9 @@ import { hasNoStacks, hasNoMeasures, hasOneMeasure, hasSomeSegmentByItems } from
 import { setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
 
-import * as lineMeasuresIcon from "../../assets/line/bucket-title-measures.svg";
-import * as lineTrendIcon from "../../assets/line/bucket-title-trend.svg";
-import * as lineSegmentIcon from "../../assets/line/bucket-title-segment.svg";
+import lineMeasuresIcon from "../../assets/line/bucket-title-measures.svg";
+import lineTrendIcon from "../../assets/line/bucket-title-trend.svg";
+import lineSegmentIcon from "../../assets/line/bucket-title-segment.svg";
 import { hasColorMapping } from "../propertiesHelper";
 
 function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {

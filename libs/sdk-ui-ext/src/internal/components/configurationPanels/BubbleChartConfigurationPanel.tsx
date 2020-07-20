@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
-import * as classNames from "classnames";
+import cx from "classnames";
 import NameSubsection from "../configurationControls/axis/NameSubsection";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 
@@ -162,7 +162,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
     }
 
     private getBubbleClassNames() {
-        return classNames("bubble-primary", {
+        return cx("bubble-primary", {
             invisible: !this.isControlDisabled(),
         });
     }

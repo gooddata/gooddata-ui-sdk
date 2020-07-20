@@ -13,7 +13,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 import {
     IExtendedReferencePoint,
@@ -40,7 +40,7 @@ import { getDefaultXirrUiConfig, getXirrUiConfig } from "../../../utils/uiConfig
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getXirrBuckets } from "./xirrBucketHelper";
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 
 export class PluggableXirr extends AbstractPluggableVisualization {
     private settings?: ISettings;

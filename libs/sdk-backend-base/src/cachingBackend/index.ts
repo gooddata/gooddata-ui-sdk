@@ -20,8 +20,8 @@ import {
 } from "../decoratedBackend/execution";
 import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog";
 import stringify from "json-stable-stringify";
-import identity = require("lodash/identity");
-import isEqual = require("lodash/isEqual");
+import identity from "lodash/identity";
+import isEqual from "lodash/isEqual";
 import invariant from "ts-invariant";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 

@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../../objRef";
 import { IMeasureFilter } from "../filter";

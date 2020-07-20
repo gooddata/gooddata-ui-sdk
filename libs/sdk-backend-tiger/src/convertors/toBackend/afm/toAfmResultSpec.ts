@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import compact = require("lodash/compact");
-import isEmpty = require("lodash/isEmpty");
+import compact from "lodash/compact";
+import isEmpty from "lodash/isEmpty";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/api-client-tiger";
 import { convertVisualizationObjectFilter } from "./FilterConverter";

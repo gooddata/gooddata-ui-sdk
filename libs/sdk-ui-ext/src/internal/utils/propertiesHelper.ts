@@ -1,10 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
-import get = require("lodash/get");
-import has = require("lodash/has");
-import set = require("lodash/set");
-import keys = require("lodash/keys");
-import isEmpty = require("lodash/isEmpty");
-import cloneDeep = require("lodash/cloneDeep");
+import get from "lodash/get";
+import has from "lodash/has";
+import set from "lodash/set";
+import keys from "lodash/keys";
+import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
 import { IExtendedReferencePoint, IVisualizationProperties, IBucketItem } from "../interfaces/Visualization";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { AXIS } from "../constants/axis";

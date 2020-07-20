@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import identity = require("lodash/identity");
+import identity from "lodash/identity";
 import { BuilderModifications, builderFactory, Builder, IBuilder } from "../../../base/builder";
 import { ICatalogGroup, IGroupableCatalogItemBase } from ".";
 import { ObjRef } from "../../../objRef";

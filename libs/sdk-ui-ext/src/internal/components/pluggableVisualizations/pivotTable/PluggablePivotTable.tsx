@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import flatMap = require("lodash/flatMap");
-import get = require("lodash/get");
-import includes = require("lodash/includes");
-import isNil = require("lodash/isNil");
-import isEmpty = require("lodash/isEmpty");
+import cloneDeep from "lodash/cloneDeep";
+import flatMap from "lodash/flatMap";
+import get from "lodash/get";
+import includes from "lodash/includes";
+import isNil from "lodash/isNil";
+import isEmpty from "lodash/isEmpty";
 import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import {
     attributeLocalId,
@@ -38,7 +38,7 @@ import {
     ICorePivotTableProps,
     IPivotTableConfig,
 } from "@gooddata/sdk-ui-pivot";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 import ReactMeasure from "react-measure";
 

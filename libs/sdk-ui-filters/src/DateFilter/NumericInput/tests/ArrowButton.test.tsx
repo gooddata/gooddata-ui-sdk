@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { shallow } from "enzyme";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 import { ArrowButton } from "../ArrowButton";
 import { childGetter, clickOn } from "../../tests/utils";

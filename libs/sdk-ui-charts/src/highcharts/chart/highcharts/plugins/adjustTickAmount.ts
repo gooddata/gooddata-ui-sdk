@@ -8,8 +8,8 @@
  * Modified by binh.nguyen@gooddata.com to support zero alignment
  */
 
-import isNil = require("lodash/isNil");
-import get = require("lodash/get");
+import isNil from "lodash/isNil";
+import get from "lodash/get";
 import Highcharts from "../highchartsEntryPoint";
 import { IHighchartsAxisExtend } from "../../../typings/extend";
 import { isLineChart } from "../../../utils/common";

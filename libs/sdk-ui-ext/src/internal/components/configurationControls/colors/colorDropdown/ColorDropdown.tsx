@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
-import * as uuid from "uuid";
+import uuid from "uuid";
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay";
 import ColorPalette from "./ColorPalette";
 import CustomColorButton from "./CustomColorButton";

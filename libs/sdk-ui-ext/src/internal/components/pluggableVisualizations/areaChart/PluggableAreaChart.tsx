@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { bucketsItems, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 
 import { BUCKETS } from "../../../constants/bucket";
@@ -42,10 +42,10 @@ import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUi
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import negate = require("lodash/negate");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import negate from "lodash/negate";
+import set from "lodash/set";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableAreaChart extends PluggableBaseChart {

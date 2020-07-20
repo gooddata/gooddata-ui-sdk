@@ -23,9 +23,9 @@ import {
     SortChangedEvent,
 } from "@ag-grid-community/all-modules";
 import { AgGridReact } from "@ag-grid-community/react";
-import * as classNames from "classnames";
-import * as CustomEvent from "custom-event";
-import * as React from "react";
+import cx from "classnames";
+import CustomEvent from "custom-event";
+import React from "react";
 import { injectIntl } from "react-intl";
 
 import "../styles/css/pivotTable.css";
@@ -114,13 +114,13 @@ import {
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
 } from "./impl/agGridColumnSizing";
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import isEqual = require("lodash/isEqual");
-import noop = require("lodash/noop");
-import sumBy = require("lodash/sumBy");
-import difference = require("lodash/difference");
-import debounce = require("lodash/debounce");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import isEqual from "lodash/isEqual";
+import noop from "lodash/noop";
+import sumBy from "lodash/sumBy";
+import difference from "lodash/difference";
+import debounce from "lodash/debounce";
 
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
@@ -1335,9 +1335,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     headerClass: this.getHeaderClass("gd-column-attribute-column-header"),
                 },
                 [MEASURE_COLUMN]: {
-                    cellClass: this.getCellClass(classNames(AG_NUMERIC_CELL_CLASSNAME, "gd-measure-column")),
+                    cellClass: this.getCellClass(cx(AG_NUMERIC_CELL_CLASSNAME, "gd-measure-column")),
                     headerClass: this.getHeaderClass(
-                        classNames(AG_NUMERIC_HEADER_CLASSNAME, "gd-measure-column-header"),
+                        cx(AG_NUMERIC_HEADER_CLASSNAME, "gd-measure-column-header"),
                     ),
                     // wrong params type from ag-grid, we need any
                     valueFormatter: (params: any) => {
@@ -1409,7 +1409,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const rowSeparator = !hiddenCell && this.getGroupingProvider().isGroupBoundary(rowIndex);
         const subtotalStyle = get(cellClassParams, ["data", "subtotalStyle"]);
 
-        return classNames(
+        return cx(
             classList,
             getCellClassNames(rowIndex, colDef.index, hasDrillableHeader),
             colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
@@ -1434,7 +1434,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const colGroupIndex = treeIndexes ? treeIndexes[treeIndexes.length - 1] : null;
         const isFirstColumn = treeIndexes !== null && !treeIndexes.some((index) => index !== 0);
 
-        return classNames(
+        return cx(
             classList,
             "gd-column-group-header",
             colGroupIndex !== null ? `gd-column-group-header-${colGroupIndex}` : null,

@@ -3,10 +3,8 @@ import {
     IAllTimeDateFilter,
     IAbsoluteDateFilterForm,
     IAbsoluteDateFilterPreset,
-    AbsoluteDateFilterOption,
     IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
-    RelativeDateFilterOption,
 } from "../types";
 
 export const allTimeDateFilter: IAllTimeDateFilter = {
@@ -32,7 +30,7 @@ export const absoluteDateFilterPreset: IAbsoluteDateFilterPreset = {
     to: "2020-05-05",
 };
 
-export const absoluteDateFilterOption: AbsoluteDateFilterOption = absoluteDateFilterForm;
+export const absoluteDateFilterOption = absoluteDateFilterForm;
 
 export const relativeDateFilterForm: IRelativeDateFilterForm = {
     localIdentifier: "relativeDateFilterForm",
@@ -52,4 +50,4 @@ export const relativeDateFilterPreset: IRelativeDateFilterPreset = {
     granularity: "GDC.time.year",
 };
 
-export const relativeDateFilterOption: RelativeDateFilterOption = relativeDateFilterForm;
+export const relativeDateFilterOption = relativeDateFilterForm;

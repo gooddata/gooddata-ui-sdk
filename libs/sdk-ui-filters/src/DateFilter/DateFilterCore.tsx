@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import MediaQuery from "react-responsive";

@@ -8,7 +8,7 @@ import {
     IMeasureGroupDescriptor,
     IResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
-import * as cx from "classnames";
+import cx from "classnames";
 import invariant from "ts-invariant";
 
 import {
@@ -73,18 +73,18 @@ import Highcharts from "./highcharts/highchartsEntryPoint";
 import { isDataOfReasonableSize } from "./highChartsCreators";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
 import { supportedDualAxesChartTypes } from "./chartCapabilities";
-import cloneDeep = require("lodash/cloneDeep");
-import compact = require("lodash/compact");
-import get = require("lodash/get");
-import includes = require("lodash/includes");
-import isEmpty = require("lodash/isEmpty");
-import isEqual = require("lodash/isEqual");
-import isNil = require("lodash/isNil");
-import isUndefined = require("lodash/isUndefined");
-import last = require("lodash/last");
-import range = require("lodash/range");
-import without = require("lodash/without");
-import omit = require("lodash/omit");
+import cloneDeep from "lodash/cloneDeep";
+import compact from "lodash/compact";
+import get from "lodash/get";
+import includes from "lodash/includes";
+import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
+import isNil from "lodash/isNil";
+import isUndefined from "lodash/isUndefined";
+import last from "lodash/last";
+import range from "lodash/range";
+import without from "lodash/without";
+import omit from "lodash/omit";
 import { NORMAL_STACK, PERCENT_STACK } from "../constants/stacking";
 import {
     IAxis,

@@ -10,7 +10,7 @@
  *  - Set default size for bubbles in bubble chart where size value is not provided
  *  - Fix bubbles is not rendered with min/max config
  */
-import isNil = require("lodash/isNil");
+import isNil from "lodash/isNil";
 import Highcharts from "../highchartsEntryPoint";
 import { IHighchartsAxisExtend } from "../../../typings/extend";
 export interface IBubbleAxis extends IHighchartsAxisExtend {

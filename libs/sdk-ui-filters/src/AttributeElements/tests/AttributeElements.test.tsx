@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { attributeIdentifier, idRef } from "@gooddata/sdk-model";
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 

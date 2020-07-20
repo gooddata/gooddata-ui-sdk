@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
-import * as React from "react";
+import React from "react";
 
 import {
     convertDrillableItemsToPredicates,
@@ -19,7 +19,7 @@ import HighChartsRenderer, {
     renderLegend as legendRenderer,
 } from "./HighChartsRenderer";
 import getLegend from "./legend/legendBuilder";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import { IChartOptions } from "../typings/unsafe";
 
 export function renderHighCharts(props: IHighChartsRendererProps) {

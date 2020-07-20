@@ -1,10 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
-import partial = require("lodash/partial");
-import merge = require("lodash/merge");
-import includes = require("lodash/includes");
-import isNil = require("lodash/isNil");
-import set = require("lodash/set");
-import get = require("lodash/get");
+import partial from "lodash/partial";
+import merge from "lodash/merge";
+import includes from "lodash/includes";
+import isNil from "lodash/isNil";
+import set from "lodash/set";
+import get from "lodash/get";
 import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {

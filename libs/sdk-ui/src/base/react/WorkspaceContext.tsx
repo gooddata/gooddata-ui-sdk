@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { wrapDisplayName } from "./wrapDisplayName";
 
 const WorkspaceContext = React.createContext<string | undefined>(undefined);

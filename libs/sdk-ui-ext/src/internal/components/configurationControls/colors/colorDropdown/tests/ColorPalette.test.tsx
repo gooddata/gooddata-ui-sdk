@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
-import noop = require("lodash/noop");
-import cloneDeep = require("lodash/cloneDeep");
+import noop from "lodash/noop";
+import cloneDeep from "lodash/cloneDeep";
 import ColorPalette, { IColorPaletteProps } from "../ColorPalette";
 import ColorPaletteItem from "../ColorPaletteItem";
 import { getLargePalette, colorPalette } from "../../../../../tests/mocks/testColorHelper";

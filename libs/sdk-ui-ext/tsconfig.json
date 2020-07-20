@@ -8,6 +8,7 @@
         "resolveJsonModule": true,
         "module": "commonjs",
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "importHelpers": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
@@ -15,7 +16,6 @@
         "outDir": "dist",
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
-        "allowSyntheticDefaultImports": true,
         "baseUrl": "..",
         "paths": {
             "@gooddata/sdk-ui": ["sdk-ui/src"],

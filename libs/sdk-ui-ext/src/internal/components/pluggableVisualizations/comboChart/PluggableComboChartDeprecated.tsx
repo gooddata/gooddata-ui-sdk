@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import * as React from "react";
+import React from "react";
 import { render } from "react-dom";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket";
@@ -28,10 +28,10 @@ import { removeSort } from "../../../utils/sort";
 import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelperDeprecated";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import set = require("lodash/set");
-import without = require("lodash/without");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import set from "lodash/set";
+import without from "lodash/without";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableComboChartDeprecated extends PluggableBaseChart {

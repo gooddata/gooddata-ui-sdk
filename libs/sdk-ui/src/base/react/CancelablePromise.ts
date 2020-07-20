@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import isError = require("lodash/isError");
+import isError from "lodash/isError";
 
 /**
  * @internal

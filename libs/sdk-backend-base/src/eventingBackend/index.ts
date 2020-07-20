@@ -7,7 +7,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { decoratedBackend } from "../decoratedBackend";
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import {
     DecoratedExecutionFactory,
     DecoratedExecutionResult,

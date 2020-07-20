@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "../MenuSharedTypes";
 import MenuOpenedByClick from "./MenuOpenedByClick";
 import MenuOpenedByHover from "./MenuOpenedByHover";

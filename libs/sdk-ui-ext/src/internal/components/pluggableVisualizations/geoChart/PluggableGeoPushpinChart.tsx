@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 
 import {
     IBucketItem,
@@ -52,11 +52,11 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { IGeoConfig, CoreGeoChart, getGeoChartDimensions } from "@gooddata/sdk-ui-geo";
-import get = require("lodash/get");
-import set = require("lodash/set");
-import isEmpty = require("lodash/isEmpty");
-import includes = require("lodash/includes");
-import cloneDeep = require("lodash/cloneDeep");
+import get from "lodash/get";
+import set from "lodash/set";
+import isEmpty from "lodash/isEmpty";
+import includes from "lodash/includes";
+import cloneDeep from "lodash/cloneDeep";
 import { configurePercent } from "../../../utils/bucketConfig";
 
 const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;

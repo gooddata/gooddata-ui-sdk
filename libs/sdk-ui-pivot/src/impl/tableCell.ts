@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import * as classNames from "classnames";
+import cx from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
 import { IMappingHeader } from "@gooddata/sdk-ui";
@@ -21,7 +21,7 @@ function getFormattedNumber(cellContent: MeasureCell, format: string, separators
 }
 
 export function getCellClassNames(rowIndex: number, columnIndex: number, isDrillable: boolean): string {
-    return classNames(
+    return cx(
         {
             "gd-cell-drillable": isDrillable,
         },

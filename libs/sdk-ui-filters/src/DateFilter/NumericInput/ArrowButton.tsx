@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
-import constant = require("lodash/constant");
+import React from "react";
+import constant from "lodash/constant";
 import cx from "classnames";
 import { unless } from "./utils";
 

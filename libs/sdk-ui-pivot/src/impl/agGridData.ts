@@ -30,7 +30,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { getMinimalRowData } from "./agGridHeaders";
 import invariant from "ts-invariant";
-import zipObject = require("lodash/zipObject");
+import zipObject from "lodash/zipObject";
 
 /*
  * All code related to transforming data from our backend to ag-grid structures

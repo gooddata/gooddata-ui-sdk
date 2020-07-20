@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import isEmpty = require("lodash/isEmpty");
-import intersection = require("lodash/intersection");
+import isEmpty from "lodash/isEmpty";
+import intersection from "lodash/intersection";
 import { SortEntityIds, sortEntityIds, ISortItem } from "../execution/base/sort";
 import { anyBucket, BucketPredicate, IAttributeOrMeasure, IBucket } from "../execution/buckets";
 import { IFilter } from "../execution/filter";

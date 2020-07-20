@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -11,9 +11,9 @@ import { BUCKETS } from "../../constants/bucket";
 
 import { setBucketTitles } from "../bucketHelper";
 
-import * as heatmapMeasuresIcon from "../../assets/heatmap/bucket-title-measures.svg";
-import * as heatmapViewIcon from "../../assets/heatmap/bucket-title-view.svg";
-import * as heatmapStackIcon from "../../assets/heatmap/bucket-title-stack.svg";
+import heatmapMeasuresIcon from "../../assets/heatmap/bucket-title-measures.svg";
+import heatmapViewIcon from "../../assets/heatmap/bucket-title-view.svg";
+import heatmapStackIcon from "../../assets/heatmap/bucket-title-stack.svg";
 
 export function setHeatmapUiConfig(
     referencePoint: IExtendedReferencePoint,

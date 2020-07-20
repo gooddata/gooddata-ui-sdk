@@ -8,17 +8,17 @@ import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { mountChartAndCapture } from "../../_infra/render";
 import { mountInsight } from "../../_infra/renderPlugVis";
 import { cleanupCoreChartProps } from "../../_infra/utils";
-import flatMap = require("lodash/flatMap");
+import flatMap from "lodash/flatMap";
 
 const Chart = "DonutChart";
 
 describe(Chart, () => {
-    const Scenarios: Array<ScenarioAndDescription<IDonutChartProps>> = flatMap(donutChartScenarios, group =>
+    const Scenarios: Array<ScenarioAndDescription<IDonutChartProps>> = flatMap(donutChartScenarios, (group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 
     describe.each(Scenarios)("with %s", (_desc, scenario) => {
-        const promisedInteractions = mountChartAndCapture(scenario, wrapper =>
+        const promisedInteractions = mountChartAndCapture(scenario, (wrapper) =>
             wrapper.find("CoreDonutChart").props(),
         );
 

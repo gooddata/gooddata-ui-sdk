@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { isUriRef, ObjRef, ObjectType, isLocalIdRef, ObjRefInScope, isObjRef } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/api-client-tiger";

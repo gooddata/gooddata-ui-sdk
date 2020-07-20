@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart";

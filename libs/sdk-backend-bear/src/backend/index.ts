@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IInsight, IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import { convertApiError, isApiResponseError } from "../utils/errorHandling";
 import { BearWorkspace } from "./workspace";
 import { BearWorkspaceQueryFactory } from "./workspaces";

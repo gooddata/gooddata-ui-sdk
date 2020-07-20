@@ -39,9 +39,9 @@ import {
     isResultMeasureHeader,
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
-import cloneDeep = require("lodash/cloneDeep");
-import cloneDeepWith = require("lodash/cloneDeepWith");
-import keyBy = require("lodash/keyBy");
+import cloneDeep from "lodash/cloneDeep";
+import cloneDeepWith from "lodash/cloneDeepWith";
+import keyBy from "lodash/keyBy";
 
 type LocalIdMap = { [from: string]: string };
 

@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import max = require("lodash/max");
+import max from "lodash/max";
 import { IGridRow } from "./agGridTypes";
 import { isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 

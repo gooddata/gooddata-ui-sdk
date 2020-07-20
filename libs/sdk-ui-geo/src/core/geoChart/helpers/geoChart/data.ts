@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import get = require("lodash/get");
+import get from "lodash/get";
 import { IAvailableLegends, IGeoData, IGeoLngLat } from "../../../../GeoChart";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import {

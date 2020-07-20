@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
-import pick = require("lodash/pick");
-import set = require("lodash/set");
-import get = require("lodash/get");
+import pick from "lodash/pick";
+import set from "lodash/set";
+import get from "lodash/get";
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import {
     isBubbleChart,

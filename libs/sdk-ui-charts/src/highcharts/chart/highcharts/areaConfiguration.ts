@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
+// (C) 2007-2020 GoodData Corporation
+import cloneDeep from "lodash/cloneDeep";
 
 const LINE_WIDTH = 3;
 

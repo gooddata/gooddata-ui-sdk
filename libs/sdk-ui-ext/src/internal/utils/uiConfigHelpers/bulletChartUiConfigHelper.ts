@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
 import { IntlShape } from "react-intl";
 import { IExtendedReferencePoint, IBucketOfFun } from "../../interfaces/Visualization";
 import { UICONFIG } from "../../constants/uiConfig";
@@ -8,10 +8,10 @@ import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles, getItemsCount } from "./../bucketHelper";
 import { getTranslation } from "../translations";
 
-import * as bulletPrimaryMeasureIcon from "../../assets/bullet/bucket-title-primary.svg";
-import * as bulletTargetMeasureIcon from "../../assets/bullet/bucket-title-target.svg";
-import * as bulletComparativeMeasureIcon from "../../assets/bullet/bucket-title-comparative.svg";
-import * as bulletViewByIcon from "../../assets/bullet/bucket-title-view-by.svg";
+import bulletPrimaryMeasureIcon from "../../assets/bullet/bucket-title-primary.svg";
+import bulletTargetMeasureIcon from "../../assets/bullet/bucket-title-target.svg";
+import bulletComparativeMeasureIcon from "../../assets/bullet/bucket-title-comparative.svg";
+import bulletViewByIcon from "../../assets/bullet/bucket-title-view-by.svg";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 export function getBulletChartUiConfig(

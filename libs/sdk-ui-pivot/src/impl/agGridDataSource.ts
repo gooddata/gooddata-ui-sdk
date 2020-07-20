@@ -8,7 +8,7 @@ import { DatasourceConfig, ISortModelItem, TableHeaders } from "./agGridTypes";
 import { GroupingProviderFactory, IGroupingProvider } from "./GroupingProvider";
 import { createRowData } from "./agGridData";
 import { areTotalsChanged, isInvalidGetRowsRequest } from "./agGridDataSourceUtils";
-import isEqual = require("lodash/isEqual");
+import isEqual from "lodash/isEqual";
 import { dimensionSetTotals, ITotal, ISortItem, defTotals } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 

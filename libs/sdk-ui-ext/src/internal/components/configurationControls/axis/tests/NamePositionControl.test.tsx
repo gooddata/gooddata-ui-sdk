@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
-import set = require("lodash/set");
-import noop = require("lodash/noop");
+import set from "lodash/set";
+import noop from "lodash/noop";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 import NamePositionControl from "../NamePositionControl";

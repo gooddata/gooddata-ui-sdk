@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import isEqual = require("lodash/isEqual");
+import React from "react";
+import isEqual from "lodash/isEqual";
 import { IAnalyticalBackend, IElementQueryOptions, IElementQueryResult } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { defaultErrorHandler, OnError, withContexts } from "@gooddata/sdk-ui";

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import * as classNames from "classnames";
+import React from "react";
+import cx from "classnames";
 import {
     IHeatmapLegendBox,
     IHeatmapLegendConfig,
@@ -36,7 +36,7 @@ function HeatmapBoxes(boxes: IHeatmapLegendBox[]) {
     return (
         <div className="boxes">
             {boxes.map((box: IHeatmapLegendBox) => {
-                const classes = classNames("box", box.class);
+                const classes = cx("box", box.class);
 
                 return <span className={classes} key={box.key} style={box.style} />;
             })}
@@ -55,7 +55,7 @@ export default class HeatmapLegend extends React.PureComponent<IHeatmapLegendPro
             isSmall,
             position,
         );
-        const classes = classNames(...config.classes);
+        const classes = cx(...config.classes);
 
         const renderLabelsFirst = config.position === TOP;
 

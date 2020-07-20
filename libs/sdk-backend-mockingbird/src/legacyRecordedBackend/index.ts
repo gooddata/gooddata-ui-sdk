@@ -40,7 +40,7 @@ import {
     ISortItem,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
-import isEqual = require("lodash/isEqual");
+import isEqual from "lodash/isEqual";
 
 const defaultConfig = { hostname: "test" };
 

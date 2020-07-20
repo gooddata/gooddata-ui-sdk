@@ -13,8 +13,8 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 import { IColorMapping } from "@gooddata/sdk-ui-charts";
-import isEmpty = require("lodash/isEmpty");
-import cloneDeep = require("lodash/cloneDeep");
+import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
 
 function createColorMappingItems(
     defaultInsight: IInsight,
@@ -30,7 +30,7 @@ function createColorMappingItems(
 
         if (!id) {
             // tslint:disable-next-line:no-console
-            console.warn(`For insight ${title} (${iid}): not all color mappings could be converted to vis properties format. 
+            console.warn(`For insight ${title} (${iid}): not all color mappings could be converted to vis properties format.
             Check test scenario definition - you likely have more mappings in the props than input to replaceColorMapping() converter.`);
 
             return {
@@ -54,7 +54,7 @@ function createColorMappingItems(
  *   used as test value
  */
 export function replaceMappingPredicates(...valuesOrObjs: Array<string | IMeasure>): InsightConverter {
-    const ids = valuesOrObjs.map(e => {
+    const ids = valuesOrObjs.map((e) => {
         if (isMeasure(e)) {
             return measureLocalId(e);
         }

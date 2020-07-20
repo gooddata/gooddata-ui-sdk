@@ -15,7 +15,7 @@ import {
     ICatalogMeasure,
     ObjRef,
 } from "@gooddata/sdk-model";
-import identity = require("lodash/identity");
+import identity from "lodash/identity";
 
 /**
  * @alpha

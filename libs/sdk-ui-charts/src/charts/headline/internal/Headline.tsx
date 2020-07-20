@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import ResponsiveText from "@gooddata/goodstrap/lib/ResponsiveText/ResponsiveText";
-import * as classNames from "classnames";
-import * as React from "react";
+import cx from "classnames";
+import React from "react";
 import { HeadlineElementType } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../Headlines";
 import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils";
 import { Identifier } from "@gooddata/sdk-model";
-import noop = require("lodash/noop");
+import noop from "lodash/noop";
 
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: Identifier;
@@ -68,7 +68,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     }
 
     private getPrimaryItemClasses(primaryItem: IHeadlineDataItem) {
-        return classNames([
+        return cx([
             "headline-primary-item",
             "s-headline-primary-item",
             ...this.getDrillableClasses(primaryItem.isDrillable),
@@ -76,7 +76,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     }
 
     private getSecondaryItemClasses(secondaryItem: IHeadlineDataItem) {
-        return classNames([
+        return cx([
             "gd-flex-item",
             "headline-compare-section-item",
             "headline-secondary-item",
@@ -86,7 +86,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     }
 
     private getValueWrapperClasses(formattedItem: IFormattedHeadlineDataItem) {
-        return classNames(["headline-value-wrapper", "s-headline-value-wrapper"], {
+        return cx(["headline-value-wrapper", "s-headline-value-wrapper"], {
             "headline-value--empty": formattedItem.isValueEmpty,
             "s-headline-value--empty": formattedItem.isValueEmpty,
         });
@@ -194,7 +194,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     }
 
     private renderHeadlineItemAsValue(formattedItem: IFormattedHeadlineDataItem) {
-        const valueClassNames = classNames(["headline-value", "s-headline-value"], {
+        const valueClassNames = cx(["headline-value", "s-headline-value"], {
             "headline-value--empty": formattedItem.isValueEmpty,
             "s-headline-value--empty": formattedItem.isValueEmpty,
             "headline-link-style-underline": !this.props.disableDrillUnderline,

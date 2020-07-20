@@ -1,12 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
-import clone = require("lodash/clone");
-import get = require("lodash/get");
-import includes = require("lodash/includes");
-import isNil = require("lodash/isNil");
-import setWith = require("lodash/setWith");
+import clone from "lodash/clone";
+import get from "lodash/get";
+import includes from "lodash/includes";
+import isNil from "lodash/isNil";
+import setWith from "lodash/setWith";
 import { numberFormat } from "@gooddata/numberjs";
-import escape = require("lodash/escape");
-import unescape = require("lodash/unescape");
+import escape from "lodash/escape";
+import unescape from "lodash/unescape";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartOptions, ISeriesItem } from "../typings/unsafe";
 

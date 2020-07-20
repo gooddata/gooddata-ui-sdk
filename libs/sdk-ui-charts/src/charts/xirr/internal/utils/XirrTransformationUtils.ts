@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import isEmpty = require("lodash/isEmpty");
+import cloneDeep from "lodash/cloneDeep";
+import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 import { IDataView, IMeasureDescriptor, DataValue } from "@gooddata/sdk-backend-spi";
 import { Identifier } from "@gooddata/sdk-model";

@@ -10,7 +10,7 @@ import { convertFact, convertGroup, convertMeasure } from "../../../convertors/f
 import { TigerWorkspaceCatalog } from "./catalog";
 import { objRefToIdentifier } from "../../../utils/api";
 import { loadAttributesAndDateDatasets } from "./datasetLoader";
-import flatten = require("lodash/flatten");
+import flatten from "lodash/flatten";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(

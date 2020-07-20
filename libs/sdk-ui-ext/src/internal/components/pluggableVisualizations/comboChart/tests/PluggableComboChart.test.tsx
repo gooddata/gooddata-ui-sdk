@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import noop = require("lodash/noop");
-import get = require("lodash/get");
-import cloneDeep = require("lodash/cloneDeep");
-import merge = require("lodash/merge");
+import noop from "lodash/noop";
+import get from "lodash/get";
+import cloneDeep from "lodash/cloneDeep";
+import merge from "lodash/merge";
 import { PROPERTY_CONTROLS } from "../../../../constants/properties";
 import { PluggableComboChart } from "../PluggableComboChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";

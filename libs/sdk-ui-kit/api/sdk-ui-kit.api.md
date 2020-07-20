@@ -5,7 +5,7 @@
 ```ts
 
 import { ISeparators } from '@gooddata/sdk-ui';
-import * as React_2 from 'react';
+import { default as React_2 } from 'react';
 
 // Warning: (ae-internal-missing-underscore) The name "IFormatPreset" should be prefixed with an underscore because the declaration is marked as @internal
 //

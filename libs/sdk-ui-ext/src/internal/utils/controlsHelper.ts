@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
-import get = require("lodash/get");
-import set = require("lodash/set");
+// (C) 2019-2020 GoodData Corporation
+import get from "lodash/get";
+import set from "lodash/set";
 import { WrappedComponentProps } from "react-intl";
 import { getTranslation } from "./translations";
 import { IMinMaxControlState, IMinMaxControlProps } from "../interfaces/MinMaxControl";

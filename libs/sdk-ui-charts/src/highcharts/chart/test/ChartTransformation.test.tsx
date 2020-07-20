@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { shallow, mount } from "enzyme";
-import noop = require("lodash/noop");
-import get = require("lodash/get");
+import noop from "lodash/noop";
+import get from "lodash/get";
 
 import ChartTransformation from "../ChartTransformation";
 import HighChartsRenderer from "../HighChartsRenderer";

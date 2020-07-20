@@ -4,12 +4,12 @@ import executeScenarios from "../../../scenarios/execute/base";
 import { ScenarioAndDescription } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { IExecuteProps } from "@gooddata/sdk-ui";
-import flatMap = require("lodash/flatMap");
+import flatMap from "lodash/flatMap";
 
 const Component = "Execute";
 
 describe(Component, () => {
-    const Scenarios: Array<ScenarioAndDescription<IExecuteProps>> = flatMap([executeScenarios], group =>
+    const Scenarios: Array<ScenarioAndDescription<IExecuteProps>> = flatMap([executeScenarios], (group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
 

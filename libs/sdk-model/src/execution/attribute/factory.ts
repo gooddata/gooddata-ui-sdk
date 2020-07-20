@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import identity = require("lodash/identity");
-import cloneDeep = require("lodash/cloneDeep");
-import isEmpty = require("lodash/isEmpty");
+import identity from "lodash/identity";
+import cloneDeep from "lodash/cloneDeep";
+import isEmpty from "lodash/isEmpty";
 import { IAttribute, isAttribute } from "./index";
 import { ObjRef, objRefToString, Identifier, isObjRef } from "../../objRef";
 import { idRef } from "../../objRef/factory";

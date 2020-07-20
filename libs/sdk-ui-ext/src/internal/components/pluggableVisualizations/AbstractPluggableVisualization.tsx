@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
+import cloneDeep from "lodash/cloneDeep";
 import {
     IBucketItem,
     IBucketOfFun,

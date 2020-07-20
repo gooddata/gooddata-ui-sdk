@@ -21,7 +21,7 @@ import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-backend-sp
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
-import * as React_2 from 'react';
+import { default as React_2 } from 'react';
 import { RelativeGranularityOffset } from '@gooddata/sdk-backend-spi';
 
 // @alpha

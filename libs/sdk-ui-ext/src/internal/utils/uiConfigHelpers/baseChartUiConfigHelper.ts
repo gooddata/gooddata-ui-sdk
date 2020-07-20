@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import set = require("lodash/set");
-import forEach = require("lodash/forEach");
+import cloneDeep from "lodash/cloneDeep";
+import get from "lodash/get";
+import set from "lodash/set";
+import forEach from "lodash/forEach";
 import { IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -30,13 +30,13 @@ import { setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
 import { hasColorMapping } from "./../propertiesHelper";
 
-import * as columnMeasuresIcon from "../../assets/column/bucket-title-measures.svg";
-import * as columnViewIcon from "../../assets/column/bucket-title-view.svg";
-import * as columnStackIcon from "../../assets/column/bucket-title-stack.svg";
+import columnMeasuresIcon from "../../assets/column/bucket-title-measures.svg";
+import columnViewIcon from "../../assets/column/bucket-title-view.svg";
+import columnStackIcon from "../../assets/column/bucket-title-stack.svg";
 
-import * as barMeasuresIcon from "../../assets/bar/bucket-title-measures.svg";
-import * as barViewIcon from "../../assets/bar/bucket-title-view.svg";
-import * as barStackIcon from "../../assets/bar/bucket-title-stack.svg";
+import barMeasuresIcon from "../../assets/bar/bucket-title-measures.svg";
+import barViewIcon from "../../assets/bar/bucket-title-view.svg";
+import barStackIcon from "../../assets/bar/bucket-title-stack.svg";
 
 function setBaseChartBucketWarningMessages(
     referencePoint: IExtendedReferencePoint,

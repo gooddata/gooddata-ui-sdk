@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent";

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import compose = require("lodash/flowRight");
+import React from "react";
+import compose from "lodash/flowRight";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { withContexts, wrapDisplayName } from "@gooddata/sdk-ui";

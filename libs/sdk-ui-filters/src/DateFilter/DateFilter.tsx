@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-import * as React from "react";
-import isEqual = require("lodash/isEqual");
-import noop = require("lodash/noop");
+import React from "react";
+import isEqual from "lodash/isEqual";
+import noop from "lodash/noop";
 import {
     isRelativeDateFilterForm,
     DateFilterGranularity,

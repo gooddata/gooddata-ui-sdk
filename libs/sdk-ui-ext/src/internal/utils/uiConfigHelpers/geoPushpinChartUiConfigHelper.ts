@@ -1,18 +1,18 @@
 // (C) 2019-2020 GoodData Corporation
 import { IntlShape } from "react-intl";
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
-import get = require("lodash/get");
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
+import get from "lodash/get";
 
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { UICONFIG, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles } from "../bucketHelper";
 
-import * as geoPushPinBucketLocationIcon from "../../assets/geoPushpin/bucket-title-location-icon.svg";
-import * as geoPushPinBucketSizeIcon from "../../assets/geoPushpin/bucket-title-size-icon.svg";
-import * as geoPushPinBucketColorIcon from "../../assets/geoPushpin/bucket-title-color-icon.svg";
-import * as geoPushPinBucketSegmentIcon from "../../assets/geoPushpin/bucket-title-segment-icon.svg";
+import geoPushPinBucketLocationIcon from "../../assets/geoPushpin/bucket-title-location-icon.svg";
+import geoPushPinBucketSizeIcon from "../../assets/geoPushpin/bucket-title-size-icon.svg";
+import geoPushPinBucketColorIcon from "../../assets/geoPushpin/bucket-title-color-icon.svg";
+import geoPushPinBucketSegmentIcon from "../../assets/geoPushpin/bucket-title-segment-icon.svg";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 export function setGeoPushpinUiConfig(

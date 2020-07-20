@@ -10,10 +10,10 @@ import {
     IAttribute,
     IMeasureFilter,
 } from "@gooddata/sdk-model";
-import compact = require("lodash/compact");
-import isEmpty = require("lodash/isEmpty");
-import isNil = require("lodash/isNil");
-import omit = require("lodash/omit");
+import compact from "lodash/compact";
+import isEmpty from "lodash/isEmpty";
+import isNil from "lodash/isNil";
+import omit from "lodash/omit";
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import { convertReferencesToUris } from "./ReferenceConverter";
 import { deserializeProperties, serializeProperties } from "./PropertiesConverter";

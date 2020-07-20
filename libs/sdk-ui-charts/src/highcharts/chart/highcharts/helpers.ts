@@ -1,18 +1,18 @@
 // (C) 2007-2020 GoodData Corporation
-import flatten = require("lodash/flatten");
-import get = require("lodash/get");
-import pick = require("lodash/pick");
-import map = require("lodash/map");
-import zip = require("lodash/zip");
-import unzip = require("lodash/unzip");
-import initial = require("lodash/initial");
-import tail = require("lodash/tail");
-import isEmpty = require("lodash/isEmpty");
-import maxBy = require("lodash/maxBy");
-import minBy = require("lodash/minBy");
-import min = require("lodash/min");
-import max = require("lodash/max");
-import isNil = require("lodash/isNil");
+import flatten from "lodash/flatten";
+import get from "lodash/get";
+import pick from "lodash/pick";
+import map from "lodash/map";
+import zip from "lodash/zip";
+import unzip from "lodash/unzip";
+import initial from "lodash/initial";
+import tail from "lodash/tail";
+import isEmpty from "lodash/isEmpty";
+import maxBy from "lodash/maxBy";
+import minBy from "lodash/minBy";
+import min from "lodash/min";
+import max from "lodash/max";
+import isNil from "lodash/isNil";
 
 import { VisualizationTypes, VisType } from "@gooddata/sdk-ui";
 import { isInvertedChartType } from "../../utils/common";

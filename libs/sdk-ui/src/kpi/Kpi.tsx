@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IMeasure, IFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/numberjs";
@@ -7,8 +7,8 @@ import { RawExecute, IRawExecuteProps, IWithLoadingEvents } from "../execution";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import get = require("lodash/get");
-import isNil = require("lodash/isNil");
+import get from "lodash/get";
+import isNil from "lodash/isNil";
 import {
     withContexts,
     IntlWrapper,

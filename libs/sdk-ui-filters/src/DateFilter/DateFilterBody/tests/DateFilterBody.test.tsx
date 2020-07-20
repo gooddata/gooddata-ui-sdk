@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 import { DateFilterBody, IDateFilterBodyProps } from "../DateFilterBody";
 import { ExcludeCurrentPeriodToggle } from "../../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle";
