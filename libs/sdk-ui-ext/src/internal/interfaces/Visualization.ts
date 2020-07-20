@@ -340,6 +340,8 @@ export interface IGdcConfig {
     isExportMode?: boolean;
     isInEditMode?: boolean;
     mapboxToken?: string;
+    maxWidth?: number;
+    maxHeight?: number;
 }
 
 /**
