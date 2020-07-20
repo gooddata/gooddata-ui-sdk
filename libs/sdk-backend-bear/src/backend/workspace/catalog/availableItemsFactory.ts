@@ -160,7 +160,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
     private loadAvailableDateDatasets = async (
         sanitizedVisualizationObject: GdcVisualizationObject.IVisualizationObject,
     ): Promise<ICatalogDateDataset[]> => {
-        const { types, includeTags, excludeTags, dataset } = this.options;
+        const { types, includeTags, excludeTags, dataset, production } = this.options;
 
         const includeDateDatasets = types.includes("dateDataset");
         if (!includeDateDatasets) {
@@ -173,6 +173,9 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             dataset ? objRefToIdentifier(dataset, this.authCall) : Promise.resolve(""),
         ]);
 
+        // only return all the date datasets ignoring production or custom datasets if neither of those were specified by the user
+        const shouldReturnAllDateDataSets = !production && !dataSetIdentifier;
+
         const result = await this.authCall((sdk) =>
             sdk.catalogue.loadDateDataSets(this.workspace, {
                 bucketItems: sanitizedVisualizationObject.content,
@@ -181,6 +184,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
                 attributesMap: this.mappings.attributeByDisplayFormUri,
                 includeObjectsWithTags: includeTagsIds.length ? includeTagsIds : undefined,
                 excludeObjectsWithTags: excludeTagsIds.length ? excludeTagsIds : undefined,
+                returnAllDateDataSets: shouldReturnAllDateDataSets,
             }),
         );
         return result.dateDataSets.map(convertDateDataset);

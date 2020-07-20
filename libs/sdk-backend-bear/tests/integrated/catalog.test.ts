@@ -11,11 +11,7 @@ beforeAll(async () => {
 
 describe("bear catalog", () => {
     it("should read catalog for reference workspace", async () => {
-        const result = await backend
-            .workspace(testWorkspace())
-            .catalog()
-            .load();
-
+        const result = await backend.workspace(testWorkspace()).catalog().load();
         expect(result).toMatchSnapshot();
     });
 
@@ -28,12 +24,9 @@ describe("bear catalog", () => {
          * backend responding with 400 (because the API client generates invalid MAQL).
          */
 
-        const catalog = await backend
-            .workspace(testWorkspace())
-            .catalog()
-            .load();
+        const catalog = await backend.workspace(testWorkspace()).catalog().load();
 
-        const aritmeticMeasure = newArithmeticMeasure(
+        const arithmeticMeasure = newArithmeticMeasure(
             [ReferenceLdm.Amount, ReferenceLdm.Amount_1.Sum],
             "sum",
         );
@@ -41,9 +34,9 @@ describe("bear catalog", () => {
             .availableItems()
             .forItems([
                 ReferenceLdm.Amount_1.Sum,
-                newPopMeasure(ReferenceLdm.Amount_1.Sum, "closed.year", m => m.alias("PoP measure")),
-                aritmeticMeasure,
-                newPopMeasure(aritmeticMeasure, "closed.year", m => m.alias("PoP measure")),
+                newPopMeasure(ReferenceLdm.Amount_1.Sum, "closed.year", (m) => m.alias("PoP measure")),
+                arithmeticMeasure,
+                newPopMeasure(arithmeticMeasure, "closed.year", (m) => m.alias("PoP measure")),
             ])
             .load();
 
