@@ -173,5 +173,18 @@ export const dashboardWithExtendedDateFilterConfig: IDashboard = {
         filterName: "Extended filter",
         mode: "readonly",
         hideGranularities: ["GDC.time.quarter"],
+        addPresets: {
+            relativePresets: [
+                {
+                    from: -6,
+                    granularity: "GDC.time.month",
+                    localIdentifier: "plus_minus_6_months",
+                    to: 6,
+                    type: "relativePreset",
+                    visible: true,
+                    name: "+/- 6 months",
+                },
+            ],
+        },
     },
 };

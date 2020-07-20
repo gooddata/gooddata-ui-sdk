@@ -4,7 +4,6 @@ exports[`dashboard converter convert dashboard should convert dashboard with exp
 Object {
   "analyticalDashboard": Object {
     "content": Object {
-      "dateFilterConfig": undefined,
       "filterContext": "/tempFilterContext",
       "layout": undefined,
       "widgets": Array [],
@@ -24,6 +23,18 @@ Object {
   "analyticalDashboard": Object {
     "content": Object {
       "dateFilterConfig": Object {
+        "addPresets": Object {
+          "relativePresets": Array [
+            Object {
+              "from": -6,
+              "granularity": "GDC.time.month",
+              "localIdentifier": "plus_minus_6_months",
+              "name": "+/- 6 months",
+              "to": 6,
+              "visible": true,
+            },
+          ],
+        },
         "filterName": "Extended filter",
         "hideGranularities": Array [
           "GDC.time.quarter",
@@ -48,7 +59,6 @@ exports[`dashboard converter convert dashboard should convert dashboard with fil
 Object {
   "analyticalDashboard": Object {
     "content": Object {
-      "dateFilterConfig": undefined,
       "filterContext": "/gdc/md/obj/filterContext",
       "layout": undefined,
       "widgets": Array [],
@@ -67,7 +77,6 @@ exports[`dashboard converter convert dashboard should convert dashboard with lay
 Object {
   "analyticalDashboard": Object {
     "content": Object {
-      "dateFilterConfig": undefined,
       "filterContext": undefined,
       "layout": Object {
         "fluidLayout": Object {
@@ -141,7 +150,6 @@ exports[`dashboard converter convert dashboard should convert empty dashboard 1`
 Object {
   "analyticalDashboard": Object {
     "content": Object {
-      "dateFilterConfig": undefined,
       "filterContext": undefined,
       "layout": undefined,
       "widgets": Array [],

@@ -39,6 +39,9 @@ import {
     ScheduledMailAttachment,
     IScheduledMail,
     IScheduledMailDefinition,
+    IDashboardDateFilterConfig,
+    IAbsoluteDateFilterPreset,
+    IRelativeDateFilterPreset,
 } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -345,6 +348,40 @@ export const convertWidget = (
     return visualizationWidget;
 };
 
+const convertAbsoluteDateFilterPreset = (
+    preset: IAbsoluteDateFilterPreset,
+): GdcExtendedDateFilters.IDateFilterAbsolutePreset => {
+    const { type, ...rest } = preset;
+    return rest;
+};
+
+const convertRelativeDateFilterPreset = (
+    preset: IRelativeDateFilterPreset,
+): GdcExtendedDateFilters.IDateFilterRelativePreset => {
+    const { type, ...rest } = preset;
+    return rest;
+};
+
+const convertDateFilterConfig = (
+    config: IDashboardDateFilterConfig,
+): GdcDashboard.IDashboardDateFilterConfig => {
+    const absolutePresets = config.addPresets?.absolutePresets?.map(convertAbsoluteDateFilterPreset);
+    const relativePresets = config.addPresets?.relativePresets?.map(convertRelativeDateFilterPreset);
+
+    const addPresets =
+        absolutePresets || relativePresets
+            ? {
+                  ...(absolutePresets && { absolutePresets }),
+                  ...(relativePresets && { relativePresets }),
+              }
+            : undefined;
+
+    return {
+        ...config,
+        ...(addPresets && { addPresets }),
+    };
+};
+
 export const convertDashboard = (
     dashboard: IDashboard | IDashboardDefinition,
 ): GdcDashboard.IWrappedAnalyticalDashboard => {
@@ -353,11 +390,12 @@ export const convertDashboard = (
     const widgets = layout && layoutWidgets(layout);
     const dashboardUri = ref && refToUri(ref);
     const filterContextUri = filterContext?.ref && refToUri(filterContext.ref);
+    const convertedDateFilterConfig = dateFilterConfig && convertDateFilterConfig(dateFilterConfig);
 
     const legacyDashboard: GdcDashboard.IWrappedAnalyticalDashboard = {
         analyticalDashboard: {
             content: {
-                dateFilterConfig,
+                ...(convertedDateFilterConfig && { dateFilterConfig: convertedDateFilterConfig }),
                 filterContext: filterContextUri,
                 widgets: widgets ? widgets.filter(isWidget).map((widget) => refToUri(widget.ref)) : [],
                 layout: convertedLayout,
