@@ -1,6 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { AttributeInBucket, MeasureInBucket, newBucket, IBucket, IAttributeOrMeasure } from "../index";
+import {
+    AttributeInBucket,
+    MeasureInBucket,
+    newBucket,
+    IBucket,
+    IAttributeOrMeasure,
+    BucketItemModifications,
+} from "../index";
 import { Account, Activity, Velocity, Won } from "../../../../__mocks__/model";
 import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute";
 import {
@@ -12,8 +19,9 @@ import {
     bucketsItems,
     bucketsMeasures,
     bucketsTotals,
+    bucketsModifyItem,
 } from "../bucketArray";
-import { idMatchMeasure, IMeasure, measureLocalId } from "../../measure";
+import { idMatchMeasure, IMeasure, measureLocalId, isMeasure } from "../../measure";
 import { ITotal, newTotal } from "../../base/totals";
 
 const Total1 = newTotal("sum", Won, Account.Name);
@@ -299,5 +307,36 @@ describe("bucketsIsEmpty", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => bucketsIsEmpty(input)).toThrow();
+    });
+});
+
+describe("bucketsModifyItem", () => {
+    const modifications: BucketItemModifications = (bucketItem: IAttributeOrMeasure): IAttributeOrMeasure => {
+        if (isMeasure(bucketItem)) {
+            (bucketItem as IMeasure).measure.title = "Modified measure title";
+        } else {
+            (bucketItem as IAttribute).attribute.alias = "Modified attribute alias";
+        }
+        return bucketItem;
+    };
+
+    it("should return another empty bucket for empty bucket", () => {
+        const originalBuckets: IBucket[] = [EmptyBucket];
+        const modifiedBuckets: IBucket[] = bucketsModifyItem(originalBuckets, modifications);
+        expect(modifiedBuckets !== originalBuckets).toBe(true);
+        expect(modifiedBuckets.length).toBe(1);
+        expect(modifiedBuckets[0].items.length).toBe(0);
+    });
+
+    it("should return another bucket with modified bucket items", () => {
+        const originalBuckets: IBucket[] = [MixedBucket1];
+        const modifiedBuckets: IBucket[] = bucketsModifyItem(originalBuckets, modifications);
+        expect(modifiedBuckets !== originalBuckets).toBe(true);
+        expect(modifiedBuckets.length).toBe(1);
+        expect(modifiedBuckets[0].items.length).toBe(2);
+        expect(modifiedBuckets[0].items[0] as IAttribute).toBeDefined();
+        expect((modifiedBuckets[0].items[0] as IAttribute).attribute.alias).toBe("Modified attribute alias");
+        expect(modifiedBuckets[0].items[1] as IMeasure).toBeDefined();
+        expect((modifiedBuckets[0].items[1] as IMeasure).measure.title).toBe("Modified measure title");
     });
 });

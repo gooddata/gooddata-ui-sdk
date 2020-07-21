@@ -204,6 +204,22 @@ export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition> {
 }
 
 /**
+ * Type guard for checking whether object is an adhoc measure.
+ * An adhoc measure is a measure having an aggregation, one or some filters or a computeRatio of true
+ *
+ * @public
+ */
+export function isAdhocMeasure(obj: any): obj is IMeasure<IMeasureDefinition> {
+    if (!isSimpleMeasure(obj)) return false;
+    const { measureDefinition } = obj.measure.definition;
+    return (
+        !!measureDefinition.aggregation ||
+        !!measureDefinition.computeRatio ||
+        (Array.isArray(measureDefinition.filters) && measureDefinition.filters.length > 0)
+    );
+}
+
+/**
  * Type guard for checking whether object is a period-over-period measure.
  *
  * @public

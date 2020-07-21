@@ -116,6 +116,9 @@ export function bucketAttributes(bucket: IBucket, predicate?: AttributePredicate
 export function bucketIsEmpty(bucket: IBucket): boolean;
 
 // @public
+export type BucketItemModifications = (bucketItem: IAttributeOrMeasure) => IAttributeOrMeasure;
+
+// @public
 export function bucketItems(bucket: IBucket): IAttributeOrMeasure[];
 
 // @public
@@ -126,6 +129,9 @@ export function bucketMeasureIndex(bucket: IBucket, idOrFun?: string | MeasurePr
 
 // @public
 export function bucketMeasures(bucket: IBucket, predicate?: MeasurePredicate): IMeasure[];
+
+// @public
+export function bucketModifyItems(bucket: IBucket, modifications?: BucketItemModifications): IBucket;
 
 // @public
 export type BucketPredicate = (bucket: IBucket) => boolean;
@@ -156,6 +162,9 @@ export function bucketsItems(buckets: IBucket[]): IAttributeOrMeasure[];
 
 // @public
 export function bucketsMeasures(buckets: IBucket[], predicate?: MeasurePredicate): IMeasure[];
+
+// @public
+export function bucketsModifyItem(buckets: IBucket[], modifications?: BucketItemModifications): IBucket[];
 
 // @public
 export function bucketsTotals(buckets: IBucket[]): ITotal[];
@@ -900,6 +909,9 @@ export function insightMeasures(insight: IInsightDefinition): IMeasure[];
 export type InsightModifications = (builder: InsightDefinitionBuilder) => InsightDefinitionBuilder;
 
 // @public
+export function insightModifyItems<T extends IInsightDefinition>(insight: T, modifications?: BucketItemModifications): T;
+
+// @public
 export function insightProperties(insight: IInsightDefinition): VisualizationProperties;
 
 // @public
@@ -1033,6 +1045,9 @@ export interface IRgbColorValue {
 
 // @public
 export function isAbsoluteDateFilter(obj: any): obj is IAbsoluteDateFilter;
+
+// @public
+export function isAdhocMeasure(obj: any): obj is IMeasure<IMeasureDefinition>;
 
 // @public
 export function isArithmeticMeasure(obj: any): obj is IMeasure<IArithmeticMeasureDefinition>;

@@ -1,6 +1,14 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
-import { Won, Velocity } from "../../../../__mocks__/model";
+import {
+    Won,
+    Velocity,
+    AggregateAdhoc,
+    EmptyFiltersAdhoc,
+    NonEmptyFiltersAdhoc,
+    FalseComputeRatioAdhoc,
+    TrueComputeRatioAdhoc,
+} from "../../../../__mocks__/model";
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
 import { newArithmeticMeasure, newPopMeasure, newPreviousPeriodMeasure } from "../factory";
 import {
@@ -9,6 +17,7 @@ import {
     isPreviousPeriodMeasure,
     isSimpleMeasure,
     measureLocalId,
+    isAdhocMeasure,
 } from "../index";
 
 const SimpleMeasure = Won;
@@ -28,6 +37,22 @@ describe("measure type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isSimpleMeasure(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isAdhocMeasure", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "simple measure", SimpleMeasure],
+            [true, "adhoc measure with aggregation", AggregateAdhoc],
+            [false, "adhoc measure with empty filters", EmptyFiltersAdhoc],
+            [true, "adhoc measure with non-empty filters", NonEmptyFiltersAdhoc],
+            [false, "adhoc measure with false computeRatio", FalseComputeRatioAdhoc],
+            [true, "adhoc measure with true computeRatio", TrueComputeRatioAdhoc],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isAdhocMeasure(input)).toBe(expectedResult);
         });
     });
 

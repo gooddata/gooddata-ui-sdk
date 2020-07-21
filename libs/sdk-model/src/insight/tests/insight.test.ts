@@ -14,8 +14,8 @@ import {
 import { newInsight } from "../../../__mocks__/insights";
 import { Account, Activity, Velocity, Won } from "../../../__mocks__/model";
 import { IAttribute } from "../../execution/attribute";
-import { IBucket, newBucket } from "../../execution/buckets";
-import { IMeasure } from "../../execution/measure";
+import { IBucket, newBucket, BucketItemModifications } from "../../execution/buckets";
+import { IMeasure, isMeasure } from "../../execution/measure";
 import {
     insightAttributes,
     insightBucket,
@@ -39,6 +39,8 @@ import {
     insightItems,
     VisualizationProperties,
     insightSetBuckets,
+    IInsight,
+    insightModifyItems,
 } from "../index";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);
@@ -487,5 +489,51 @@ describe("insightSetBuckets", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightSetBuckets(input)).toThrow();
+    });
+});
+
+describe("insightModifyItems", () => {
+    const modifications: BucketItemModifications = (bucketItem: IAttributeOrMeasure): IAttributeOrMeasure => {
+        if (isMeasure(bucketItem)) {
+            (bucketItem as IMeasure).measure.title = "Modified measure title";
+        } else {
+            (bucketItem as IAttribute).attribute.alias = "Modified attribute alias";
+        }
+        return bucketItem;
+    };
+
+    it("should return another insight with empty bucket", () => {
+        const modifiedInsight: IInsight = insightModifyItems(EmptyInsight, modifications);
+        expect(modifiedInsight !== EmptyInsight).toBe(true);
+        expect(modifiedInsight.insight.buckets.length).toBe(0);
+    });
+
+    it("should return another insight with modified bucket items", () => {
+        const insightWithSomeBuckets: IInsight = insightSetBuckets(EmptyInsight, [
+            AttributeBucket,
+            MeasureBucket,
+            MixedBucket,
+        ]);
+        const modifiedInsight: IInsight = insightModifyItems(insightWithSomeBuckets, modifications);
+        expect(modifiedInsight !== insightWithSomeBuckets).toBe(true);
+        expect(modifiedInsight.insight.buckets.length).toBe(3);
+        expect(modifiedInsight.insight.buckets[0].items.length).toBe(1);
+        expect((modifiedInsight.insight.buckets[0].items[0] as IAttribute).attribute.alias).toBe(
+            "Modified attribute alias",
+        );
+        expect(modifiedInsight.insight.buckets[1].items.length).toBe(2);
+        expect((modifiedInsight.insight.buckets[1].items[0] as IMeasure).measure.title).toBe(
+            "Modified measure title",
+        );
+        expect((modifiedInsight.insight.buckets[1].items[1] as IMeasure).measure.title).toBe(
+            "Modified measure title",
+        );
+        expect(modifiedInsight.insight.buckets[2].items.length).toBe(2);
+        expect((modifiedInsight.insight.buckets[2].items[0] as IAttribute).attribute.alias).toBe(
+            "Modified attribute alias",
+        );
+        expect((modifiedInsight.insight.buckets[2].items[1] as IMeasure).measure.title).toBe(
+            "Modified measure title",
+        );
     });
 });

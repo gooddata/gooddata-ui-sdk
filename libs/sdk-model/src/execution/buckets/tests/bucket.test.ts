@@ -14,12 +14,15 @@ import {
     bucketTotals,
     ComputeRatioRule,
     newBucket,
+    BucketItemModifications,
+    IBucket,
+    bucketModifyItems,
 } from "../index";
 import { Account, Activity, Velocity, Won } from "../../../../__mocks__/model";
 import { InvariantError } from "ts-invariant";
 import { ITotal, newTotal } from "../../base/totals";
 import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute";
-import { idMatchMeasure, IMeasure, measureLocalId } from "../../measure";
+import { idMatchMeasure, IMeasure, measureLocalId, isMeasure } from "../../measure";
 import { modifySimpleMeasure } from "../../../index";
 
 describe("newBucket", () => {
@@ -340,5 +343,30 @@ describe("applyRatioRule", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => bucketTotals(input)).toThrow();
+    });
+});
+
+describe("bucketModifyItems", () => {
+    const modifications: BucketItemModifications = (bucketItem: IAttributeOrMeasure): IAttributeOrMeasure => {
+        if (isMeasure(bucketItem)) {
+            (bucketItem as IMeasure).measure.title = "Modified measure title";
+        } else {
+            (bucketItem as IAttribute).attribute.alias = "Modified attribute alias";
+        }
+        return bucketItem;
+    };
+
+    it("should return another bucket with no bucket item", () => {
+        const modifiedBucket: IBucket = bucketModifyItems(EmptyBucket, modifications);
+        expect(modifiedBucket !== EmptyBucket).toBe(true);
+        expect(modifiedBucket.items.length).toBe(0);
+    });
+
+    it("should return another bucket with modified bucket items", () => {
+        const modifiedBucket: IBucket = bucketModifyItems(BucketWithMeasureAndAttr, modifications);
+        expect(modifiedBucket !== BucketWithMeasureAndAttr).toBe(true);
+        expect(modifiedBucket.items.length).toBe(2);
+        expect((modifiedBucket.items[0] as IMeasure).measure.title).toBe("Modified measure title");
+        expect((modifiedBucket.items[1] as IAttribute).attribute.alias).toBe("Modified attribute alias");
     });
 });
