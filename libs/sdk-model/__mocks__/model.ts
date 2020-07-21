@@ -1,7 +1,15 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 // THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-10-17T14:42:41.833Z;
-import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition } from "../src";
+import {
+    newAttribute,
+    newMeasure,
+    IAttribute,
+    IMeasure,
+    IMeasureDefinition,
+    modifySimpleMeasure,
+    newNegativeAttributeFilter,
+} from "../src";
 
 /*
  * Contents of this file were taken from the tools/reference-workspace project; sdk-model cannot depend on that
@@ -59,6 +67,7 @@ export const WinRate: IMeasure<IMeasureDefinition> = newMeasure("aaX0PIUzg7nF");
  * Metric Type: MAQL Metric
  */
 export const Won: IMeasure<IMeasureDefinition> = newMeasure("afSEwRwdbMeQ");
+
 /**
  * Fact Title: Duration
  * Fact ID: fact.stagehistory.duration
@@ -69,37 +78,37 @@ export const Duration = {
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.stagehistory.duration", m => m.aggregation("sum")),
+    Sum: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("sum")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.stagehistory.duration", m => m.aggregation("count")),
+     */ Count: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("count")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.stagehistory.duration", m => m.aggregation("avg")),
+     */ Avg: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("avg")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.stagehistory.duration", m => m.aggregation("min")),
+     */ Min: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("min")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.stagehistory.duration", m => m.aggregation("max")),
+     */ Max: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("max")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.stagehistory.duration", m => m.aggregation("median")),
+     */ Median: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("median")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.stagehistory.duration", m => m.aggregation("runsum")),
+     */ Runsum: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Velocity
@@ -111,37 +120,37 @@ export const Velocity = {
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.stagehistory.velocity", m => m.aggregation("sum")),
+    Sum: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("sum")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.stagehistory.velocity", m => m.aggregation("count")),
+     */ Count: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("count")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.stagehistory.velocity", m => m.aggregation("avg")),
+     */ Avg: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("avg")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.stagehistory.velocity", m => m.aggregation("min")),
+     */ Min: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("min")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.stagehistory.velocity", m => m.aggregation("max")),
+     */ Max: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("max")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.stagehistory.velocity", m => m.aggregation("median")),
+     */ Median: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("median")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.stagehistory.velocity", m => m.aggregation("runsum")),
+     */ Runsum: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("runsum")),
 };
 export const ClosedDate = {
     /**
@@ -197,3 +206,30 @@ export const SnapshotDate = {
      * Display Form ID: snapshot.date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("snapshot.date.eddmmyyyy"),
 };
+
+/**
+ * An adhoc measure with aggregation "sum"
+ */
+export const AggregateAdhoc = Duration.Sum;
+
+/**
+ * An adhoc measure with empty filters
+ */
+export const EmptyFiltersAdhoc = modifySimpleMeasure(Won, (m) => m.noFilters().defaultLocalId());
+
+/**
+ * An adhoc measure with non-empty filters
+ */
+export const NonEmptyFiltersAdhoc = modifySimpleMeasure(Won, (m) =>
+    m.filters(newNegativeAttributeFilter(Account.Name, ["value"])).defaultLocalId(),
+);
+
+/**
+ * An adhoc measure with a computeRatio of false
+ */
+export const FalseComputeRatioAdhoc = modifySimpleMeasure(Won, (m) => m.noRatio().defaultLocalId());
+
+/**
+ * An adhoc measure with a computeRatio of true
+ */
+export const TrueComputeRatioAdhoc = modifySimpleMeasure(Won, (m) => m.ratio().defaultLocalId());
