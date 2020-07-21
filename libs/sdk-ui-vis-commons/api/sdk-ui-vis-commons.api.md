@@ -9,6 +9,7 @@ import { IColor } from '@gooddata/sdk-model';
 import { IColorAssignment } from '@gooddata/sdk-ui';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteItem } from '@gooddata/sdk-model';
+import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IRgbColorValue } from '@gooddata/sdk-model';
@@ -66,6 +67,9 @@ export const DEFAULT_LEGEND_CONFIG: {
     enabled: boolean;
     position: PositionType;
 };
+
+// @public
+export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: string): void;
 
 // Warning: (ae-internal-missing-underscore) The name "FLUID_LEGEND_THRESHOLD" should be prefixed with an underscore because the declaration is marked as @internal
 //
