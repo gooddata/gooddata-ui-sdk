@@ -159,12 +159,13 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
             filterContext,
             layout,
         };
-        await this.updateBearDashboard(updatedDashboardWithSavedDependencies);
 
-        // Delete widgets after removing references to them in the dashboard
-        // or backend throws the error that we are removing the dashboard dependency
+        // Delete widgets after removing references to them in the dashboard before updating the dashboard
+        // otherwise backend will throw an error that we are removing the dashboard dependency in the update call
         const deletedWidgets = this.collectDeletedWidgets(originalDashboard.layout, updatedDashboard.layout);
         await this.deleteBearWidgets(deletedWidgets);
+
+        await this.updateBearDashboard(updatedDashboardWithSavedDependencies);
 
         return updatedDashboardWithSavedDependencies;
     };
