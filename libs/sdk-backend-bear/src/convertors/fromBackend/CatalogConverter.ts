@@ -22,7 +22,7 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/api-model-bear";
-import { IDisplayFormByKey } from "../../types/catalog";
+import { IDisplayFormByKey, IAttributeByKey } from "../../types/catalog";
 
 export type CompatibleCatalogItemType = Exclude<CatalogItemType, "dateDataset">;
 export type CompatibleCatalogItem = Exclude<CatalogItem, ICatalogDateDataset>;
@@ -89,15 +89,22 @@ const convertDisplayForm = (
 export const convertAttribute = (
     attribute: GdcCatalog.ICatalogAttribute,
     displayForms: IDisplayFormByKey,
+    attributes: IAttributeByKey,
 ): ICatalogAttribute => {
     const attrRef = bearCatalogItemToBearRef(attribute);
     const defaultDisplayForm = displayForms[attribute.links.defaultDisplayForm];
+    const attributeData = attributes[attribute.identifier];
     const geoPinDisplayForms = (attribute.links.geoPinDisplayForms ?? []).map((uri) => displayForms[uri]);
     const groups = bearGroupableCatalogItemToTagRefs(attribute);
+    const drillDownStep = attributeData.attribute.content.drillDownStepAttributeDF
+        ? uriRef(attributeData.attribute.content.drillDownStepAttributeDF)
+        : undefined;
 
     return newCatalogAttribute((catalogA) =>
         catalogA
-            .attribute(attrRef, (a) => a.modify(commonCatalogItemModifications(attribute)))
+            .attribute(attrRef, (a) => {
+                return a.modify(commonCatalogItemModifications(attribute)).drillDownStep(drillDownStep);
+            })
             .defaultDisplayForm(convertDisplayForm(defaultDisplayForm, attrRef))
             .geoPinDisplayForms(geoPinDisplayForms.map((df) => convertDisplayForm(df, attrRef)))
             .groups(groups),

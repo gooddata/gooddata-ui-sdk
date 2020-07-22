@@ -1166,6 +1166,7 @@ export namespace GdcMetadata {
             dimension?: string;
             displayForms: IAttributeDisplayForm[];
             type?: string;
+            drillDownStepAttributeDF?: Uri;
         };
     }
     // (undocumented)

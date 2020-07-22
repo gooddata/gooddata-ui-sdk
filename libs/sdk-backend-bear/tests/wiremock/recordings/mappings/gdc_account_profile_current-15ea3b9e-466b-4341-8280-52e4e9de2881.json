@@ -1,5 +1,5 @@
 {
-    "id": "1c29699c-81aa-419e-909e-2357e69e412b",
+    "id": "15ea3b9e-466b-4341-8280-52e4e9de2881",
     "name": "gdc_account_profile_current",
     "request": {
         "url": "/gdc/account/profile/current",
@@ -18,18 +18,18 @@
         "status": 307,
         "base64Body": "",
         "headers": {
-            "Location": "/gdc/account/profile/7788d42c5640f3f7366faad04721d494",
+            "Location": "/gdc/account/profile/80dfc6d5ef7c239c518705973062c99b",
             "X-GDC-LOG-HEADER": "",
             "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Date": "Mon, 25 May 2020 09:35:27 GMT",
+            "Date": "Tue, 28 Jul 2020 12:07:21 GMT",
             "Server": "GoodData WebApp",
-            "X-GDC-REQUEST-TIME": "22",
-            "X-GDC-REQUEST": "myrrTmOjPQx28iIG",
+            "X-GDC-REQUEST-TIME": "16",
+            "X-GDC-REQUEST": "jIA6tialLUBfbemt",
             "vary": "origin,X-GDC-VERSION",
             "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
         }
     },
-    "uuid": "1c29699c-81aa-419e-909e-2357e69e412b",
+    "uuid": "15ea3b9e-466b-4341-8280-52e4e9de2881",
     "persistent": true,
     "insertionIndex": 3
 }
