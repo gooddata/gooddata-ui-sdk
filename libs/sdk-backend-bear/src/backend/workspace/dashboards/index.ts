@@ -46,6 +46,7 @@ import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter"
 import * as toSdkModel from "../../../convertors/fromBackend/DashboardConverter";
 import isEqual from "lodash/isEqual";
 import clone from "lodash/clone";
+import flatten from "lodash/flatten";
 import set from "lodash/set";
 import { objRefToUri, getObjectIdFromUri, userUriFromAuthenticatedPrincipal } from "../../../utils/api";
 import keyBy from "lodash/keyBy";
@@ -160,12 +161,22 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
             layout,
         };
 
-        // Delete widgets after removing references to them in the dashboard before updating the dashboard
-        // otherwise backend will throw an error that we are removing the dashboard dependency in the update call
+        // First we need to delete any alerts referenced by the deleted widgets
         const deletedWidgets = this.collectDeletedWidgets(originalDashboard.layout, updatedDashboard.layout);
-        await this.deleteBearWidgets(deletedWidgets);
 
+        const alertsToDelete = flatten(
+            await Promise.all(deletedWidgets.map((widget) => this.getBearWidgetAlertsForWidget(widget))),
+        );
+
+        if (alertsToDelete.length) {
+            await this.bulkDeleteWidgetAlerts(alertsToDelete);
+        }
+
+        // Then update the dashboard itself
         await this.updateBearDashboard(updatedDashboardWithSavedDependencies);
+
+        // And finally delete the now orphaned widgets
+        await this.deleteBearWidgets(deletedWidgets);
 
         return updatedDashboardWithSavedDependencies;
     };
@@ -328,6 +339,14 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
             ? this.updateBearFilterContext(filterContext)
             : // Create a new filter context, or create implicit filter context, when not provided
               this.createBearFilterContext(filterContext || emptyFilterContextDefinition);
+    };
+
+    private getBearWidgetAlertsForWidget = async (widget: IWidget): Promise<ObjRef[]> => {
+        const objectLinks = await this.authCall((sdk) =>
+            sdk.md.getObjectUsedBy(this.workspace, widget.uri, { types: ["kpiAlert"], nearest: false }),
+        );
+
+        return objectLinks.map((link) => uriRef(link.link));
     };
 
     // Dashboards
