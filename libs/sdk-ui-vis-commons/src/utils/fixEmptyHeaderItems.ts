@@ -7,6 +7,7 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
  *
  * @param dataView - view to mutate
  * @param emptyHeaderString - value to use for empty strings
+ * @public
  */
 export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: string): void {
     dataView.headerItems.forEach((dim) => {

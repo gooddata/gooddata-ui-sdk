@@ -62,3 +62,5 @@ export {
     IRange,
     LegendOptionsItemType,
 } from "./legend/types";
+
+export { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems";

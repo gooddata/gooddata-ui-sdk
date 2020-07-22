@@ -114,6 +114,7 @@ import {
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
 } from "./impl/agGridColumnSizing";
+import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
@@ -350,6 +351,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                              */
                             return;
                         }
+
+                        fixEmptyHeaderItems(
+                            dataView,
+                            `(${this.props.intl.formatMessage({ id: "visualization.emptyValue" })})`,
+                        );
 
                         this.initializeNonReactState(result, dataView);
 

@@ -20,10 +20,10 @@ import {
     getValidColorPalette,
     IColorStrategy,
     IPushpinCategoryLegendItem,
+    fixEmptyHeaderItems,
 } from "@gooddata/sdk-ui-vis-commons";
 import { getColorStrategy } from "./colorStrategy/geoChart";
 import { isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { fixEmptyHeaderItems } from "./helpers/geoChart/dataSanitization";
 
 import "../../../styles/css/main.css";
 
@@ -121,7 +121,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
     private sanitizeProperties(): IGeoChartInnerProps {
         const { dataView } = this.props;
 
-        fixEmptyHeaderItems(dataView!, this.emptyHeaderString);
+        fixEmptyHeaderItems(dataView!, `(${this.emptyHeaderString})`);
 
         return {
             ...this.props,

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import { fixEmptyHeaderItems } from "../_base/fixEmptyHeaderItems";
+import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
 import {
     newErrorMapping,
     IErrorDescriptors,
@@ -55,7 +55,7 @@ export class XirrStateless extends React.Component<Props, {}> {
                 <IntlTranslationsProvider>
                     {(props: ITranslationsComponentProps) => {
                         // TODO: evil; fix this conceptually
-                        fixEmptyHeaderItems(dataView, props.emptyHeaderString);
+                        fixEmptyHeaderItems(dataView, `(${props.emptyHeaderString})`);
 
                         return (
                             <XirrTransformation
