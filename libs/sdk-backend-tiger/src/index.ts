@@ -2,6 +2,7 @@
 
 import { AnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { TigerBackend } from "./backend";
+import { withNormalization } from "@gooddata/sdk-backend-base";
 
 /**
  * Returns function which creates instances of Analytical Backend implementation which works with the 'tiger'
@@ -12,7 +13,7 @@ import { TigerBackend } from "./backend";
  * @public
  */
 function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
-    return new TigerBackend(config, implConfig);
+    return withNormalization(new TigerBackend(config, implConfig));
 }
 
 export default tigerFactory;
