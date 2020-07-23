@@ -39,7 +39,9 @@ import {
     ErrorComponent,
     getDrillIntersection,
     GoodDataSdkError,
-    IDrillableItemPushData,
+    IAvailableDrillTargets,
+    IAvailableDrillTargetMeasure,
+    IAvailableDrillTargetAttribute,
     IDrillEvent,
     IDrillEventContextTable,
     IDrillEventIntersectionElement,
@@ -274,18 +276,38 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         );
     };
 
-    private getSupportedDrillableItems = (dv: DataViewFacade): IDrillableItemPushData[] => {
+    private getAttributeItemsForDimension = (
+        dv: DataViewFacade,
+        dimension: number,
+    ): IAvailableDrillTargetAttribute[] => {
         return dv
+            .meta()
+            .attributeDescriptorsForDim(dimension)
+            .map((attribute: IAttributeDescriptor) => {
+                return {
+                    dimension,
+                    attribute,
+                };
+            });
+    };
+
+    private getAvailableDrillTargets = (dv: DataViewFacade): IAvailableDrillTargets => {
+        const measureDescriptors = dv
             .meta()
             .measureDescriptors()
             .map(
-                (measure: IMeasureDescriptor): IDrillableItemPushData => ({
-                    type: "measure",
-                    localIdentifier: measure.measureHeaderItem.localIdentifier,
-                    title: measure.measureHeaderItem.name,
+                (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
+                    measure,
                     attributes: dv.meta().attributeDescriptors(),
                 }),
             );
+
+        const rowAttributeItems = this.getAttributeItemsForDimension(dv, 0);
+        const columnAttributeItems = this.getAttributeItemsForDimension(dv, 1);
+        return {
+            measures: measureDescriptors,
+            attributes: [...rowAttributeItems, ...columnAttributeItems],
+        };
     };
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
@@ -365,8 +387,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                         );
                         this.setState({ tableReady: true });
 
-                        const supportedDrillableItems = this.getSupportedDrillableItems(this.visibleData);
-                        this.props.pushData({ dataView, supportedDrillableItems });
+                        const availableDrillTargets = this.getAvailableDrillTargets(this.visibleData);
+                        this.props.pushData({ dataView, availableDrillTargets });
                     })
                     .catch((error) => {
                         if (this.unmounted) {
@@ -378,11 +400,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                          * metadata essential for setup of drilling. Look for that and if available push up.
                          */
                         if (isNoDataError(error) && error.dataView) {
-                            const supportedDrillableItems = this.getSupportedDrillableItems(
+                            const availableDrillTargets = this.getAvailableDrillTargets(
                                 DataViewFacade.for(error.dataView),
                             );
 
-                            this.props.pushData({ supportedDrillableItems });
+                            this.props.pushData({ availableDrillTargets });
                         }
 
                         this.onError(convertError(error));

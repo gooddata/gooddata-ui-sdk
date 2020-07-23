@@ -1,6 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
-import { IDataView, IExportConfig, IExportResult, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
-import { IColor, IColorPalette, Identifier, ITotal, ISortItem } from "@gooddata/sdk-model";
+import {
+    IDataView,
+    IExportConfig,
+    IExportResult,
+    IAttributeDescriptor,
+    IMeasureDescriptor,
+} from "@gooddata/sdk-backend-spi";
+import { IColor, IColorPalette, ITotal, ISortItem } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 
@@ -34,13 +40,19 @@ export interface IColorsData {
     colorPalette: IColorPalette;
 }
 
-export type DrillableItemType = "measure";
+export interface IAvailableDrillTargets {
+    attributes?: IAvailableDrillTargetAttribute[];
+    measures?: IAvailableDrillTargetMeasure[];
+}
 
-export interface IDrillableItemPushData {
-    type: DrillableItemType;
-    localIdentifier: Identifier;
-    title: string;
+export interface IAvailableDrillTargetMeasure {
+    measure: IMeasureDescriptor;
     attributes: IAttributeDescriptor[];
+}
+
+export interface IAvailableDrillTargetAttribute {
+    dimension: number;
+    attribute: IAttributeDescriptor;
 }
 
 /**
@@ -56,5 +68,5 @@ export interface IPushData {
     propertiesMeta?: any;
     colors?: IColorsData;
     initialProperties?: any;
-    supportedDrillableItems?: IDrillableItemPushData[];
+    availableDrillTargets?: IAvailableDrillTargets;
 }
