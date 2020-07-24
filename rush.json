@@ -381,7 +381,7 @@
             "projectFolder": "libs/sdk-ui-tests",
             "reviewCategory": "production",
             "versionPolicyName": "sdk",
-            "shouldPublish": true
+            "shouldPublish": false // skipping publishing for now, the package is not ready for publication yet
         },
         {
             "packageName": "@gooddata/reference-workspace",
