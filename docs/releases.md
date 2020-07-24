@@ -1,5 +1,7 @@
 # Release process
 
+## NOTE: This document serves as a technical description, not a guide. You should never have to do this manually, always use the build jobs on CI servers.
+
 The release process consists of two steps – bumping the version and publishing the new version. Both are described below.
 
 ## Bumping the version
