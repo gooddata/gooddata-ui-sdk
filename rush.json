@@ -380,6 +380,7 @@
             "packageName": "@gooddata/sdk-ui-tests",
             "projectFolder": "libs/sdk-ui-tests",
             "reviewCategory": "production",
+            "versionPolicyName": "sdk",
             "shouldPublish": true
         },
         {
