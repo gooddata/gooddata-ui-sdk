@@ -3,11 +3,7 @@ import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
-import {
-    CorePivotTablePure,
-    WATCHING_TABLE_RENDERED_INTERVAL,
-    WATCHING_TABLE_RENDERED_MAX_TIME,
-} from "../CorePivotTable";
+import { CorePivotTablePure, WATCHING_TABLE_RENDERED_INTERVAL } from "../CorePivotTable";
 import { getParsedFields } from "../impl/agGridUtils";
 import * as stickyRowHandler from "../impl/stickyRowHandler";
 import agGridApiWrapper from "../impl/agGridApiWrapper";
@@ -72,6 +68,21 @@ describe("CorePivotTable", () => {
         const wrapper = renderComponent(customProps);
         const table = wrapper.find(CorePivotTablePure);
         return table.instance() as any;
+    }
+
+    function setMockDataForPivotTable(table: any) {
+        table.visibleData = {
+            rawData: jest.fn().mockReturnValueOnce({
+                isEmpty: jest.fn().mockReturnValueOnce(true),
+            }),
+            meta: jest.fn().mockReturnValueOnce({
+                hasNoHeadersInDim: jest.fn().mockReturnValueOnce(true),
+            }),
+        };
+        table.gridApi = {
+            getRenderedNodes: jest.fn().mockReturnValueOnce([{}]),
+            getCacheBlockState: jest.fn().mockReturnValueOnce({ pageId: { pageStatus: "loaded" } }),
+        };
     }
 
     // @ts-ignore
@@ -343,17 +354,12 @@ describe("CorePivotTable", () => {
             );
         });
 
-        it("should set timeout for watching", () => {
-            const table = getTableInstance();
-            table.onFirstDataRendered();
-            expect(setTimeout).toHaveBeenCalledWith(
-                table.stopWatchingTableRendered,
-                WATCHING_TABLE_RENDERED_MAX_TIME,
-            );
-        });
-
         it("should stop watching with unmounted table", () => {
             const table = getTableInstance();
+
+            // mock data for isPivotTableReady
+            setMockDataForPivotTable(table);
+
             table.containerRef = null;
             table.watchingIntervalId = 123;
             jest.spyOn(table, "stopWatchingTableRendered");
@@ -367,35 +373,16 @@ describe("CorePivotTable", () => {
             const afterRender = jest.fn();
 
             const table = getTableInstance({ afterRender });
-            table.isTableHidden = jest.fn().mockReturnValueOnce(false);
+
+            // mock data for isPivotTableReady
+            setMockDataForPivotTable(table);
+
             table.watchingIntervalId = 123;
-            table.watchingTimeoutId = 456;
             jest.spyOn(table, "stopWatchingTableRendered");
 
             table.startWatchingTableRendered();
-
             expect(table.stopWatchingTableRendered).toHaveBeenCalledTimes(1);
-
             expect(clearInterval).toHaveBeenNthCalledWith(1, 123);
-            expect(clearTimeout).toHaveBeenNthCalledWith(1, 456);
-
-            expect(afterRender).toHaveBeenCalledTimes(1);
-        });
-
-        it("should call afterRender after timeout", () => {
-            const afterRender = jest.fn();
-
-            const table = getTableInstance({ afterRender });
-            table.watchingIntervalId = 123;
-            table.watchingTimeoutId = 456;
-
-            table.stopWatchingTableRendered();
-
-            expect(clearInterval).toHaveBeenNthCalledWith(1, 123);
-            expect(clearTimeout).toHaveBeenNthCalledWith(1, 456);
-
-            expect(table.watchingIntervalId).toBe(null);
-            expect(table.watchingTimeoutId).toBe(null);
 
             expect(afterRender).toHaveBeenCalledTimes(1);
         });

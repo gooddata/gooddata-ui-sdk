@@ -136,7 +136,6 @@ const AUTO_SIZED_MAX_WIDTH = 500;
 
 export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
-export const WATCHING_TABLE_RENDERED_MAX_TIME = 15000;
 
 export interface ICorePivotTableState {
     tableReady: boolean;
@@ -192,7 +191,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private firstDataRendered: boolean = false;
     private watchingIntervalId: number | null;
-    private watchingTimeoutId: number | null;
 
     private resizedColumnsStore: ResizedColumnsStore;
     private autoResizedColumns: IResizedColumns = {};
@@ -229,11 +227,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (this.watchingIntervalId) {
             clearTimeout(this.watchingIntervalId);
             this.watchingIntervalId = null;
-        }
-
-        if (this.watchingTimeoutId) {
-            clearTimeout(this.watchingTimeoutId);
-            this.watchingTimeoutId = null;
         }
     };
 
@@ -748,20 +741,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return horizontalPixelRange.left === 0 && verticalPixelRange.top === 0;
     }
 
-    private autoresizeColumns = async (
-        event: AgGridEvent,
-        force: boolean = false,
-        previouslyResizedColumnIds: string[] = [],
-    ) => {
-        const alreadyResized = () => this.state.resized || this.resizing;
+    private isPivotTableReady = (api: GridApi) => {
         const noRowHeadersOrRows = () => {
             return this.visibleData.rawData().isEmpty() && this.visibleData.meta().hasNoHeadersInDim(0);
         };
         const dataRendered = () => {
-            return noRowHeadersOrRows() || event.api.getRenderedNodes().length > 0;
+            return noRowHeadersOrRows() || api.getRenderedNodes().length > 0;
         };
         const tablePagesLoaded = () => {
-            const pages = event.api.getCacheBlockState();
+            const pages = api.getCacheBlockState();
             return (
                 pages &&
                 Object.keys(pages).every(
@@ -770,8 +758,17 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 )
             );
         };
+        return tablePagesLoaded() && dataRendered();
+    };
 
-        if (tablePagesLoaded() && dataRendered() && (!alreadyResized() || (alreadyResized() && force))) {
+    private autoresizeColumns = async (
+        event: AgGridEvent,
+        force: boolean = false,
+        previouslyResizedColumnIds: string[] = [],
+    ) => {
+        const alreadyResized = () => this.state.resized || this.resizing;
+
+        if (this.isPivotTableReady(event.api) && (!alreadyResized() || (alreadyResized() && force))) {
             this.resizing = true;
             // we need to know autosize width for each column, even manually resized ones, to support removal of columnWidth def from props
             await this.autoresizeVisibleColumns(event.columnApi, previouslyResizedColumnIds);
@@ -903,8 +900,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private startWatchingTableRendered = () => {
         const missingContainerRef = !this.containerRef; // table having no data will be unmounted, it causes ref null
-        const isTableVisible = !this.isTableInitializing(); // table has data and takes place of Loading icon
-        if (missingContainerRef || isTableVisible) {
+        const isTableRendered = this.shouldAutoResizeColumns()
+            ? this.state.resized
+            : this.isPivotTableReady(this.gridApi);
+        if (missingContainerRef || isTableRendered) {
             this.stopWatchingTableRendered();
         }
     };
@@ -912,9 +911,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private stopWatchingTableRendered = () => {
         clearInterval(this.watchingIntervalId);
         this.watchingIntervalId = null;
-
-        clearTimeout(this.watchingTimeoutId);
-        this.watchingTimeoutId = null;
 
         this.props.afterRender();
     };
@@ -951,16 +947,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             );
         }
 
-        // after 15s, this table might or not (due to long backend execution) be rendered
-        // either way, 'afterRender' should be called to notify to KPI dashboard
-        // if KPI dashboard is in export mode, its content could be exported as much as possible even without this table
-        if (!this.watchingTimeoutId) {
-            this.watchingTimeoutId = window.setTimeout(
-                this.stopWatchingTableRendered,
-                WATCHING_TABLE_RENDERED_MAX_TIME,
-            );
-        }
-
         /*
          * At this point data from backend is available, some of it is rendered and auto-resize can be done.
          *
@@ -978,6 +964,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
 
         this.updateStickyRow();
+    };
+
+    private shouldAutoResizeColumns = () => {
+        const columnAutoresize = this.isColumnAutoresizeEnabled();
+        const growToFit = this.isGrowToFitEnabled();
+        return columnAutoresize || growToFit;
     };
 
     private onModelUpdated = () => {
