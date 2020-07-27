@@ -9,7 +9,7 @@ fixture("Chart configuration")
 
 const tooltipCssSelector = ".gd-viz-tooltip-item .gd-viz-tooltip-value";
 
-test("should be able to change configuration of bucket component chart and render them", async t => {
+test("should be able to change configuration of bucket component charts and render them", async t => {
     const changePaletteBtn = Selector(".s-bar-chart .s-change-palette");
     const changeLegendBtn = Selector(".s-bar-chart .s-change-legend");
     const changeSeparatorBtn = Selector(".s-bar-chart .s-change-separator");
