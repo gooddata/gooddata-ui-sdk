@@ -13,7 +13,14 @@ import { IAttributeMetadataObject } from ".";
  */
 export class AttributeMetadataObjectBuilder<
     T extends IAttributeMetadataObject = IAttributeMetadataObject
-> extends MetadataObjectBuilder<T> {}
+> extends MetadataObjectBuilder<T> {
+    public drillDownStep(ref: ObjRef | undefined): this {
+        if (ref) {
+            this.item.drillDownStep = ref;
+        }
+        return this;
+    }
+}
 
 /**
  * Attribute metadata object factory

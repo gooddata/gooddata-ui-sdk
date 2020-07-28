@@ -5,41 +5,42 @@ import uniq from "lodash/uniq";
 import flatMap from "lodash/flatMap";
 import keyBy from "lodash/keyBy";
 import {
-    CatalogItemType,
-    ICatalogGroup,
-    isCatalogMeasure,
-    ICatalogDateDataset,
     CatalogItem,
-    ObjRef,
+    CatalogItemType,
+    ICatalogDateDataset,
+    ICatalogGroup,
+    ICatalogMeasure,
     Identifier,
     isCatalogFact,
-    ICatalogMeasure,
+    isCatalogMeasure,
+    ObjRef,
+    uriRef,
 } from "@gooddata/sdk-model";
-import { GdcMetadata, GdcCatalog } from "@gooddata/api-model-bear";
+import { GdcCatalog, GdcMetadata } from "@gooddata/api-model-bear";
 import {
-    convertItemType,
-    convertDateDataset,
     convertAttribute,
-    convertMeasure,
+    convertDateDataset,
     convertFact,
     convertGroup,
-    isCompatibleCatalogItemType,
+    convertItemType,
+    convertMeasure,
     convertMetric,
+    isCompatibleCatalogItemType,
 } from "../../../convertors/fromBackend/CatalogConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { IDisplayFormByKey, IAttributeByKey, IMeasureByKey, IFactByKey } from "../../../types/catalog";
+import { IAttributeByKey, IDisplayFormByKey, IFactByKey, IMeasureByKey } from "../../../types/catalog";
 import { BearWorkspaceCatalog } from "./catalog";
-import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api";
+import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
 import { IGetObjectsByQueryOptions } from "@gooddata/api-client-bear";
 import { isApiResponseError } from "../../../utils/errorHandling";
 
 type BearDisplayFormOrAttribute = GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute;
 
-const bearCatalogItemToCatalogItem = (displayForms: IDisplayFormByKey) => (
+const bearCatalogItemToCatalogItem = (displayForms: IDisplayFormByKey, attributes: IAttributeByKey) => (
     item: GdcCatalog.CatalogItem,
 ): CatalogItem => {
     if (GdcCatalog.isCatalogAttribute(item)) {
-        return convertAttribute(item, displayForms);
+        return convertAttribute(item, displayForms, attributes);
     } else if (GdcCatalog.isCatalogMetric(item)) {
         return convertMeasure(item);
     }
@@ -164,25 +165,34 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     }
 
     private loadAllCatalogItemsAndMappings = async () => {
-        const [bearCatalogItems, bearUnlistedMetrics] = await Promise.all([
+        const [bearCatalogItems, bearUnlistedMetrics, dateDatasets] = await Promise.all([
             this.loadBearCatalogItems(),
             this.loadBearUnlistedMetrics(),
+            this.loadDateDatasets(),
         ]);
 
-        const bearDisplayFormsAndAttributes = await this.loadBearDisplayFormsAndAttributes(bearCatalogItems);
+        const dateAttributes = this.getAttributesFromDateDatasets(dateDatasets);
+
+        const bearDisplayFormsAndAttributes = await this.loadBearDisplayFormsAndAttributes([
+            ...bearCatalogItems,
+            ...dateAttributes,
+        ]);
 
         const { attributeByDisplayFormUri, displayFormById, displayFormByUri, attributeById } = createLookups(
             bearDisplayFormsAndAttributes,
         );
 
-        const catalogItems = bearCatalogItems.map(bearCatalogItemToCatalogItem(displayFormByUri));
+        const catalogItems = bearCatalogItems.map(
+            bearCatalogItemToCatalogItem(displayFormByUri, attributeById),
+        );
 
         // the catalog API does not return the unlisted flag value so we need to ask another API for it
         // and update the catalog response appropriately
         const catalogWithUnlisted = this.withUpdatedUnlistedFlag(catalogItems, bearUnlistedMetrics);
 
-        const dateDatasets = await this.loadDateDatasets(attributeByDisplayFormUri);
-        const allCatalogItems = catalogWithUnlisted.concat(dateDatasets);
+        const dateDatasetsWithDrill = this.withDrillDownStepAttribute(dateDatasets, attributeById);
+
+        const allCatalogItems = catalogWithUnlisted.concat(dateDatasetsWithDrill);
 
         const measureById: IMeasureByKey = keyBy(
             catalogWithUnlisted.filter(isCatalogMeasure).map((el) => el.measure),
@@ -194,7 +204,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         );
 
         const dateAttributeById = keyBy(
-            flatMap(dateDatasets, (dd) => dd.dateAttributes),
+            flatMap(dateDatasetsWithDrill, (dd) => dd.dateAttributes),
             (attr) => attr.attribute.id,
         );
 
@@ -211,7 +221,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         };
     };
 
-    private loadDateDatasets = async (attributesMap: IAttributeByKey): Promise<ICatalogDateDataset[]> => {
+    private loadDateDatasets = async (): Promise<ICatalogDateDataset[]> => {
         const { types, production } = this.options;
 
         const includeDateDatasets = types.includes("dateDataset");
@@ -228,7 +238,6 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             sdk.catalogue.loadDateDataSets(this.workspace, {
                 returnAllDateDataSets: shouldReturnAllDateDataSets,
                 dataSetIdentifier: dataSetId,
-                attributesMap,
                 excludeObjectsWithTags: excludeTagsIds.length ? excludeTagsIds : undefined,
                 includeObjectsWithTags: includeTagsIds.length ? includeTagsIds : undefined,
             }),
@@ -374,4 +383,43 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         return catalogWithUnlisted;
     };
+
+    private withDrillDownStepAttribute(
+        dateDatasets: ICatalogDateDataset[],
+        attributes: IAttributeByKey,
+    ): ICatalogDateDataset[] {
+        const dateDatasetWithDrillDownStep = [...dateDatasets];
+
+        dateDatasetWithDrillDownStep.forEach((d) =>
+            d.dateAttributes.forEach((dateAttribute) => {
+                const attributeId = dateAttribute.attribute.id;
+                const attribute = attributes[attributeId];
+                const drillDownStep = attribute.attribute.content.drillDownStepAttributeDF
+                    ? uriRef(attribute.attribute.content.drillDownStepAttributeDF)
+                    : undefined;
+
+                if (drillDownStep) {
+                    dateAttribute.attribute.drillDownStep = drillDownStep;
+                }
+            }),
+        );
+
+        return dateDatasetWithDrillDownStep;
+    }
+
+    private getAttributesFromDateDatasets(
+        dateDatasets: ICatalogDateDataset[],
+    ): GdcCatalog.ICatalogAttribute[] {
+        return flatMap(dateDatasets, (d) => d.dateAttributes).map((d) => ({
+            type: "attribute",
+            title: d.attribute.title,
+            identifier: d.attribute.id,
+            summary: d.attribute.description,
+            production: d.attribute.production,
+            links: {
+                self: d.attribute.uri,
+                defaultDisplayForm: d.defaultDisplayForm.uri,
+            },
+        }));
+    }
 }

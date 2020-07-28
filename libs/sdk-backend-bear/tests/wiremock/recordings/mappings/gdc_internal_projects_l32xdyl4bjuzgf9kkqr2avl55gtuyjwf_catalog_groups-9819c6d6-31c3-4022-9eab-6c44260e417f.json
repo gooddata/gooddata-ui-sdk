@@ -1,5 +1,5 @@
 {
-    "id": "3e1f9248-b2b8-4dcc-9074-dd87e0b08e6c",
+    "id": "9819c6d6-31c3-4022-9eab-6c44260e417f",
     "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_groups",
     "request": {
         "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/groups",
@@ -18,19 +18,19 @@
         "status": 200,
         "body": "{\"catalogGroups\":[]}",
         "headers": {
-            "Date": "Mon, 25 May 2020 09:35:27 GMT",
+            "Date": "Tue, 28 Jul 2020 12:07:22 GMT",
             "Server": "GoodData WebApp",
-            "Keep-Alive": "timeout=5, max=66",
+            "Keep-Alive": "timeout=5, max=90",
             "X-GDC-LOG-HEADER": "",
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Content-Type": "application/json;charset=UTF-8",
-            "X-GDC-REQUEST-TIME": "38",
-            "X-GDC-REQUEST": "YiHaEU0OOSKWZtQX",
+            "X-GDC-REQUEST-TIME": "171",
+            "X-GDC-REQUEST": "riGBNwPlfg5bpuuu",
             "vary": "origin,X-GDC-VERSION",
             "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
         }
     },
-    "uuid": "3e1f9248-b2b8-4dcc-9074-dd87e0b08e6c",
+    "uuid": "9819c6d6-31c3-4022-9eab-6c44260e417f",
     "persistent": true,
     "insertionIndex": 5
 }
