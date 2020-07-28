@@ -38,6 +38,7 @@ import {
     insightTotals,
     insightItems,
     VisualizationProperties,
+    insightSetBuckets,
 } from "../index";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);
@@ -455,7 +456,7 @@ describe("insightSetProperties", () => {
         );
     });
 
-    it("should clear sorts if called without parameter", () => {
+    it("should clear properties if called without parameter", () => {
         const InsightWithSomeProperties = insightSetProperties(EmptyInsight, SampleProperties1);
 
         expect(insightSetProperties(InsightWithSomeProperties).insight.properties).toEqual({});
@@ -463,5 +464,28 @@ describe("insightSetProperties", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightSetProperties(input)).toThrow();
+    });
+});
+
+describe("insightSetBuckets", () => {
+    const SampleBuckets1: IBucket[] = [newBucket("foo", Activity.Default)];
+    const SampleBuckets2: IBucket[] = [newBucket("bar", Account.Default)];
+
+    it("should overwrite bucket in an insight", () => {
+        const InsightWithSomeBuckets = insightSetBuckets(EmptyInsight, SampleBuckets1);
+
+        expect(insightSetBuckets(InsightWithSomeBuckets, SampleBuckets2).insight.buckets).toEqual(
+            SampleBuckets2,
+        );
+    });
+
+    it("should clear buckets if called without parameter", () => {
+        const InsightWithSomeBuckets = insightSetBuckets(EmptyInsight, SampleBuckets1);
+
+        expect(insightSetBuckets(InsightWithSomeBuckets).insight.buckets).toEqual([]);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightSetBuckets(input)).toThrow();
     });
 });

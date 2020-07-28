@@ -555,6 +555,30 @@ export function insightSetFilters<T extends IInsightDefinition>(insight: T, filt
     } as T;
 }
 
+/**
+ * Gets a new insight that 'inherits' all data from the provided insight but has different buckets. New
+ * buckets will be used in the new insight as-is, no merging with existing buckets.
+ *
+ * @param insight - insight to work with
+ * @param buckets - new buckets to apply
+ * @returns always new instance
+ * @public
+ */
+export function insightSetBuckets<T extends IInsightDefinition>(
+    insight: T,
+    buckets: IBucket[] | undefined = [],
+): T {
+    invariant(insight, "insight must be specified");
+
+    // tslint:disable-next-line: no-object-literal-type-assertion
+    return {
+        insight: {
+            ...insight.insight,
+            buckets,
+        },
+    } as T;
+}
+
 //
 // Visualization class functions
 //
