@@ -207,9 +207,12 @@ export {
     bucketIsEmpty,
     bucketAttributes,
     bucketAttribute,
+    bucketAttributeIndex,
     bucketMeasure,
+    bucketMeasureIndex,
     bucketMeasures,
     bucketTotals,
+    bucketSetTotals,
     bucketItems,
     BucketPredicate,
     applyRatioRule,
@@ -299,6 +302,8 @@ export {
 } from "./insight";
 
 export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory";
+
+export { insightSanitize } from "./insight/sanitization";
 
 export {
     CatalogItemType,

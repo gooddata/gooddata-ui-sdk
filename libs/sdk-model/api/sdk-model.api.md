@@ -107,6 +107,9 @@ export function attributeUri(attribute: IAttribute): string | undefined;
 export function bucketAttribute(bucket: IBucket, idOrFun?: string | AttributePredicate): IAttribute | undefined;
 
 // @public
+export function bucketAttributeIndex(bucket: IBucket, idOrFun?: string | AttributePredicate): number;
+
+// @public
 export function bucketAttributes(bucket: IBucket, predicate?: AttributePredicate): IAttribute[];
 
 // @public
@@ -119,6 +122,9 @@ export function bucketItems(bucket: IBucket): IAttributeOrMeasure[];
 export function bucketMeasure(bucket: IBucket, idOrFun?: string | MeasurePredicate): IMeasure | undefined;
 
 // @public
+export function bucketMeasureIndex(bucket: IBucket, idOrFun?: string | MeasurePredicate): number;
+
+// @public
 export function bucketMeasures(bucket: IBucket, predicate?: MeasurePredicate): IMeasure[];
 
 // @public
@@ -129,6 +135,9 @@ export function bucketsAttributes(buckets: IBucket[], predicate?: AttributePredi
 
 // @public
 export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[];
+
+// @public
+export function bucketSetTotals(bucket: IBucket, totals?: ITotal[]): IBucket;
 
 // @public
 export function bucketsFind(buckets: IBucket[], idOrFun?: string | BucketPredicate): IBucket | undefined;
@@ -892,6 +901,9 @@ export type InsightModifications = (builder: InsightDefinitionBuilder) => Insigh
 
 // @public
 export function insightProperties(insight: IInsightDefinition): VisualizationProperties;
+
+// @public
+export function insightSanitize<T extends IInsightDefinition>(insight: T): T;
 
 // @public
 export function insightSetFilters<T extends IInsightDefinition>(insight: T, filters?: IFilter[]): T;

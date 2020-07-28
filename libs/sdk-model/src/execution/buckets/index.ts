@@ -163,6 +163,34 @@ export function bucketIsEmpty(bucket: IBucket): boolean {
 }
 
 /**
+ * Gets the index of the first attribute matching the provided predicate from the bucket.
+ *
+ * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning first found attribute
+ * will be returned.
+ *
+ * This function also provides convenience to find attribute by its local identifier - if you pass predicate as
+ * string the function will automatically create idMatchAttribute predicate.
+ *
+ * @param bucket - bucket to to search in
+ * @param idOrFun - attribute identifier or instance of AttributePredicate; {@link anyAttribute} predicate is default
+ * @returns -1 if no matching attribute is found
+ * @public
+ */
+export function bucketAttributeIndex(
+    bucket: IBucket,
+    idOrFun: string | AttributePredicate = anyAttribute,
+): number {
+    invariant(bucket, "bucket must be specified");
+
+    const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
+    const compositeGuard = (obj: any): obj is IAttribute => {
+        return isAttribute(obj) && predicate(obj);
+    };
+
+    return bucket.items.findIndex(compositeGuard);
+}
+
+/**
  * Gets first attribute matching the provided predicate from the bucket.
  *
  * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning first found attribute
@@ -180,14 +208,8 @@ export function bucketAttribute(
     bucket: IBucket,
     idOrFun: string | AttributePredicate = anyAttribute,
 ): IAttribute | undefined {
-    invariant(bucket, "bucket must be specified");
-
-    const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
-    const compositeGuard = (obj: any): obj is IAttribute => {
-        return isAttribute(obj) && predicate(obj);
-    };
-
-    return bucket.items.find(compositeGuard);
+    const index = bucketAttributeIndex(bucket, idOrFun);
+    return index >= 0 ? (bucket.items[index] as IAttribute) : undefined;
 }
 
 /**
@@ -216,6 +238,31 @@ export function bucketAttributes(
 }
 
 /**
+ * Gets the index of the first measure matching the provided predicate from the bucket.
+ *
+ * If no predicate is provided, then the function defaults to anyMeasure predicate - meaning first found measure
+ * will be returned.
+ *
+ * This function also provides convenience to find measure by its local identifier - if you pass predicate as
+ * string the function will automatically create idMatchMeasure predicate.
+ *
+ * @param bucket - bucket to to search in
+ * @param idOrFun - measure identifier or instance of MeasurePredicate; {@link anyMeasure} predicate is default
+ * @returns -1 if no matching measure is found
+ * @public
+ */
+export function bucketMeasureIndex(bucket: IBucket, idOrFun: string | MeasurePredicate = anyMeasure): number {
+    invariant(bucket, "bucket must be specified");
+
+    const predicate = typeof idOrFun === "string" ? idMatchMeasure(idOrFun) : idOrFun;
+    const compositeGuard = (obj: any): obj is IMeasure => {
+        return isMeasure(obj) && predicate(obj);
+    };
+
+    return bucket.items.findIndex(compositeGuard);
+}
+
+/**
  * Gets first measure matching the provided predicate from the bucket.
  *
  * If no predicate is provided, then the function defaults to anyMeasure predicate - meaning first found measure
@@ -233,14 +280,8 @@ export function bucketMeasure(
     bucket: IBucket,
     idOrFun: string | MeasurePredicate = anyMeasure,
 ): IMeasure | undefined {
-    invariant(bucket, "bucket must be specified");
-
-    const predicate = typeof idOrFun === "string" ? idMatchMeasure(idOrFun) : idOrFun;
-    const compositeGuard = (obj: any): obj is IMeasure => {
-        return isMeasure(obj) && predicate(obj);
-    };
-
-    return bucket.items.find(compositeGuard);
+    const index = bucketMeasureIndex(bucket, idOrFun);
+    return index >= 0 ? (bucket.items[index] as IMeasure) : undefined;
 }
 
 /**
@@ -293,6 +334,24 @@ export function bucketTotals(bucket: IBucket): ITotal[] {
     }
 
     return bucket.totals;
+}
+
+/**
+ * Gets a new bucket that 'inherits' all data from the provided bucket but has different totals. New
+ * totals will be used in the new bucket as-is, no merging with existing totals.
+ *
+ * @param bucket - bucket to work with
+ * @param totals - new totals to apply
+ * @returns new bucket
+ * @public
+ */
+export function bucketSetTotals(bucket: IBucket, totals: ITotal[] = []): IBucket {
+    invariant(bucket, "bucket must be specified");
+
+    return {
+        ...bucket,
+        totals,
+    };
 }
 
 /**

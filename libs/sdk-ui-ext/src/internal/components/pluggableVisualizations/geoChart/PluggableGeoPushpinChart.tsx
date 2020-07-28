@@ -261,12 +261,15 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                 }
             }
 
-            buckets.push(
-                newBucket(
-                    BucketNames.TOOLTIP_TEXT,
-                    newAttribute(ref, (m) => m.localId("tooltipText_df").alias(alias)),
-                ),
-            );
+            const existingTooltipTextBucket = insightBucket(insight, BucketNames.TOOLTIP_TEXT);
+            if (!existingTooltipTextBucket) {
+                buckets.push(
+                    newBucket(
+                        BucketNames.TOOLTIP_TEXT,
+                        newAttribute(ref, (m) => m.localId("tooltipText_df").alias(alias)),
+                    ),
+                );
+            }
         }
 
         const execution = executionFactory

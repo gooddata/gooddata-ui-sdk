@@ -3,10 +3,12 @@
 import {
     applyRatioRule,
     IAttributeOrMeasure,
+    bucketAttributeIndex,
     bucketAttribute,
     bucketAttributes,
     bucketIsEmpty,
     bucketItems,
+    bucketMeasureIndex,
     bucketMeasure,
     bucketMeasures,
     bucketTotals,
@@ -82,6 +84,32 @@ describe("bucketIsEmpty", () => {
     });
 });
 
+describe("bucketAttributeIndex", () => {
+    const Scenarios: Array<[string, any, any, number]> = [
+        ["no attribute in empty bucket", EmptyBucket, undefined, -1],
+        ["no attribute in measure-only bucket", BucketWithManyMeasures, undefined, -1],
+        ["no attribute if localId empty", BucketWithManyAttrs, "", -1],
+        ["no attribute if localId matches nothing", BucketWithManyAttrs, "noSuchLocalId", -1],
+        ["first attribute when no predicate provided", BucketWithManyAttrs, undefined, 0],
+        ["first attribute in mixed attr & measure bucket", BucketWithMeasureAndAttr, undefined, 1],
+        [
+            "attribute by local id if predicate is a string",
+            BucketWithManyAttrs,
+            attributeLocalId(Account.Default),
+            1,
+        ],
+        ["no attribute if no predicate match", BucketWithManyAttrs, () => false, -1],
+    ];
+
+    it.each(Scenarios)("should find %s", (_desc, bucketArg, predicateArg, expectedResult) => {
+        expect(bucketAttributeIndex(bucketArg, predicateArg)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketAttributeIndex(input)).toThrow();
+    });
+});
+
 describe("bucketAttribute", () => {
     const Scenarios: Array<[string, any, any, IAttribute | undefined]> = [
         ["no attribute in empty bucket", EmptyBucket, undefined, undefined],
@@ -135,6 +163,32 @@ describe("bucketAttributes", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => bucketAttributes(input)).toThrow();
+    });
+});
+
+describe("bucketMeasureIndex", () => {
+    const Scenarios: Array<[string, any, any, number]> = [
+        ["no measure in empty bucket", EmptyBucket, undefined, -1],
+        ["no measure in attr-only bucket", BucketWithManyAttrs, undefined, -1],
+        ["no measure if localId empty", BucketWithManyMeasures, "", -1],
+        ["no measure if localId matches nothing", BucketWithManyMeasures, "noSuchLocalId", -1],
+        ["first measure when no predicate provided", BucketWithManyMeasures, undefined, 0],
+        ["first measure in mixed attr & measure bucket", BucketWithMeasureAndAttr, undefined, 0],
+        [
+            "measure by local id if predicate is a string",
+            BucketWithManyMeasures,
+            measureLocalId(Velocity.Sum),
+            1,
+        ],
+        ["no measure if no predicate match", BucketWithManyMeasures, () => false, -1],
+    ];
+
+    it.each(Scenarios)("should find %s", (_desc, bucketArg, predicateArg, expectedResult) => {
+        expect(bucketMeasureIndex(bucketArg, predicateArg)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketMeasureIndex(input)).toThrow();
     });
 });
 
