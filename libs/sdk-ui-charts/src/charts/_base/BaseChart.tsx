@@ -82,7 +82,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
                 <IntlTranslationsProvider>
                     {(translationProps: ITranslationsComponentProps) => {
                         // TODO: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
-                        fixEmptyHeaderItems(dataView, `(${translationProps.emptyHeaderString})`);
+                        fixEmptyHeaderItems(dataView, translationProps.emptyHeaderString);
 
                         return (
                             <this.props.visualizationComponent
