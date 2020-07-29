@@ -17,15 +17,7 @@ Supported PR commands:
 
 # PR Checklist
 
-TBD
-
--   [ ]
-
-# Related Jira tasks
-
-<!-- Optional
-
-Example:
-- FET-236: https://jira.intgdc.com/browse/FET-236
-
- -->
+-   [ ] commit messages adhere to the [commit message guidelines](docs/contributing.md#what-should-the-commits-look-like)
+-   [ ] `check` passes
+-   [ ] `check-extended` passes
+-   [ ] `rush change` [was run if applicable](docs/contributing.md#how-do-i-describe-my-changes-for-the-changelog)
