@@ -112,6 +112,62 @@ rushx build
 
 > Hint: starting package.json **scripts** using npm/yarn/pnpm also works and there is nothing wrong with it.
 
+### What should the commits look like?
+
+You should write imperative commit messages with well-defined title and body (for more context, please see t[this blog post](https://chris.beams.io/posts/git-commit/)).
+
+To give some examples of commit messages we'd like to see from this repo:
+
+-   [e3d400e](https://github.com/gooddata/gooddata-ui-sdk/commit/e3d400e):
+
+```
+Clarify attribute area sort
+
+-  the attribute sort aggregation switches the attribute sort into
+   area sort
+-  having a 'flag' or 'aggregation' on a newAttributeSort factory seemed
+   confusing while I tried to explain this in docs
+-  it is more clear if the area sort has separate factory - even if it
+   creates the same type.
+-  but this way, the intent is cleaner
+-  also, the aggregation: boolean was not good. this is indeed a function that may one day support more.
+
+JIRA: RAIL-2175
+```
+
+-   [a19eade](https://github.com/gooddata/gooddata-ui-sdk/commit/a19eade):
+
+```
+Improve dashboard updating logic
+
+The order of operations matters here:
+
+1. delete any alerts for to-be-deleted widgets
+2. update dashboard
+3. delete to-be-deleted widgets
+
+If we do it in any other order, the backend will complain
+that we are removing an object referenced by something else.
+
+JIRA: RAIL-2537
+```
+
+Note the imperative, present tense voice in the title. A good rule of thumb is to imagine the commit title as the ending to "If applied, this commit will [commit title]".
+
+Also note how to add JIRA ticket reference: using a "JIRA: [ticket-id]" to the end of the commit body. We do not include the JIRA ticket in the first line because it wastes valuable space (the first line is visible in git log etc.) and the name of the change is more immediately useful.
+
+### What should the pull requests look like?
+
+The PR title should follow this general template:
+
+```
+RELATED: RAIL-1234 add [feature name] to [package]
+```
+
+This is to keep the PR title structure in line with our other frontend repositories.
+
+In the PR body, please follow the checklist and really try to explain the changes happening in the PR (for single commit PR this will be pre-filled from your well described commit already). All the communication about the PR should happen in the PR via comments so that the process is transparent and traceable.
+
 ### How do I describe my changes for the CHANGELOG?
 
 Run `rush change` and follow the instructions. Run this after any significant block of work (one or more commits) that you want to mention in the changelog. Think of this as a condensed commit message. You should probably run this after you have your PR ready for review and you have squashed your commits. Run the `rush change` and amend your final commit with the results. This will create files in `common/changes`. Commit these files, they will be used during release to generate CHANGELOG automatically.
