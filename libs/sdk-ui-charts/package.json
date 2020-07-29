@@ -46,7 +46,7 @@
         "custom-event": "^1.0.1",
         "date-fns": "^2.8.1",
         "highcharts": "7.1.1",
-        "highcharts-grouped-categories": "^1.1.3",
+        "highcharts-grouped-categories": "^1.1.6",
         "hoist-non-react-statics": "^3.3.0",
         "lodash": "^4.17.15",
         "react-intl": "^3.6.0",
