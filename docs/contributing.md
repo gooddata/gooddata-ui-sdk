@@ -112,6 +112,23 @@ rushx build
 
 > Hint: starting package.json **scripts** using npm/yarn/pnpm also works and there is nothing wrong with it.
 
+### What should the commits look like?
+
+The commit messages should follow this general template:
+
+```
+Add [feature name] to [package]
+
+More verbose description of the changes made so that both the future PR reviewer and anyone else looking at the commit know what is going on and *why*.
+
+JIRA: RAIL-1234 (if you have some ticket for this change, this is mandatory for internal GoodData developers, unless the change falls into the TRIVIAL category)
+
+```
+
+Note the imperative, present tense voice in the title. A good rule of thumb is to imagine the commit title as the ending to "If applied, this commit will [commit title]".
+
+We do not include the JIRA ticket in the first line because it wastes valuable space (the first line is visible in git log etc.) and the name of the change is more immediately useful.
+
 ### How do I describe my changes for the CHANGELOG?
 
 Run `rush change` and follow the instructions. Run this after any significant block of work (one or more commits) that you want to mention in the changelog. Think of this as a condensed commit message. You should probably run this after you have your PR ready for review and you have squashed your commits. Run the `rush change` and amend your final commit with the results. This will create files in `common/changes`. Commit these files, they will be used during release to generate CHANGELOG automatically.
