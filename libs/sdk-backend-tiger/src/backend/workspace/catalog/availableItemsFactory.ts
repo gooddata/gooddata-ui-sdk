@@ -27,6 +27,7 @@ import {
 import { AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
 import compact from "lodash/compact";
 import intersectionWith from "lodash/intersectionWith";
+import uniq from "lodash/uniq";
 
 import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
 import { TigerAuthenticatedCallGuard } from "../../../types";
@@ -43,11 +44,27 @@ const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypes
     // dateDatasets are not supported by tiger in this context
 };
 
-const mapType = (type: CatalogItemType): AfmValidObjectsQueryTypesEnum => {
+const mapToTigerType = (type: CatalogItemType): AfmValidObjectsQueryTypesEnum => {
     return typesMatching[type] ?? AfmValidObjectsQueryTypesEnum.UNRECOGNIZED;
 };
 
-const isSupportedType = (type: CatalogItemType): boolean => Object.keys(typesMatching).includes(type);
+/**
+ * Converts a type T to type U that affects availability of items of type T in tiger.
+ * @param type - type to convert
+ */
+const mapToTigerRestrictingType = (type: CatalogItemType): CatalogItemType => {
+    switch (type) {
+        // date datasets' availability is restricted by their attributes' availability in tiger
+        case "dateDataset":
+            return "attribute";
+        default:
+            return type;
+    }
+};
+
+const getRestrictingTypes = (requested: CatalogItemType[]): CatalogItemType[] => {
+    return uniq(requested.map(mapToTigerRestrictingType));
+};
 
 const catalogItemRefs = (item: CatalogItem): ObjRef[] => {
     return isCatalogAttribute(item)
@@ -115,14 +132,10 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
     public async load() {
         const { items = [], insight, types } = this.options;
         if (items.length === 0 && !insight) {
-            throw new Error("No items or insight was specified!");
+            throw new InvariantError("No items or insight was specified!");
         }
 
-        const relevantTypes = types.filter(isSupportedType);
-        if (!relevantTypes.length) {
-            // if no relevant types are queried, everything is available (because the backend cannot limit the availability anyway)
-            return new TigerWorkspaceCatalogWithAvailableItems(this.groups, this.items, this.items);
-        }
+        const relevantRestrictingTypes = getRestrictingTypes(types);
 
         const relevantItems = insight
             ? [...insightMeasures(insight), ...insightAttributes(insight), ...insightFilters(insight)]
@@ -130,10 +143,9 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const availableItemsResponse = await this.authCall((sdk) =>
             sdk.validObjects.processAfmValidObjectsQuery({
                 afmValidObjectsQuery: {
-                    types: relevantTypes.map(mapType),
+                    types: relevantRestrictingTypes.map(mapToTigerType),
                     afm: {
-                        // TODO convertAttribute is right, the OpenAPI spec is wrong so the types are not matching for now
-                        attributes: relevantItems.filter(isAttribute).map(convertAttribute) as any,
+                        attributes: relevantItems.filter(isAttribute).map(convertAttribute),
                         // TODO convertMeasure is right, the OpenAPI spec is wrong so the types are not matching for now
                         measures: relevantItems.filter(isMeasure).map(convertMeasure) as any,
                         // TODO convertVisualizationObjectFilter is right, the OpenAPI spec is wrong so the types are not matching for now
