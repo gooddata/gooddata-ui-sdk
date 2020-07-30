@@ -806,6 +806,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Year",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/547",
+            },
             "id": "closed.year",
             "production": true,
             "ref": Object {
@@ -835,6 +838,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/553",
+            },
             "id": "closed.week",
             "production": true,
             "ref": Object {
@@ -864,6 +870,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/548",
+            },
             "id": "closed.quarter",
             "production": true,
             "ref": Object {
@@ -893,6 +902,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Month and Year",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/553",
+            },
             "id": "closed.month",
             "production": true,
             "ref": Object {
@@ -970,6 +982,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Year",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/382",
+            },
             "id": "created.year",
             "production": true,
             "ref": Object {
@@ -999,6 +1014,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/388",
+            },
             "id": "created.week",
             "production": true,
             "ref": Object {
@@ -1028,6 +1046,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/383",
+            },
             "id": "created.quarter",
             "production": true,
             "ref": Object {
@@ -1057,6 +1078,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Month and Year",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/388",
+            },
             "id": "created.month",
             "production": true,
             "ref": Object {
@@ -1134,6 +1158,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Year",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/712",
+            },
             "id": "snapshot.year",
             "production": true,
             "ref": Object {
@@ -1163,6 +1190,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \\"Continuous\\" show both weeks (W53/2009 - W1/2010).",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
+            },
             "id": "snapshot.week",
             "production": true,
             "ref": Object {
@@ -1192,6 +1222,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Quarter and Year (Q1/2010)",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713",
+            },
             "id": "snapshot.quarter",
             "production": true,
             "ref": Object {
@@ -1221,6 +1254,9 @@ BearWorkspaceCatalogWithAvailableItems {
           "attribute": Object {
             "deprecated": false,
             "description": "Month and Year",
+            "drillDownStep": Object {
+              "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
+            },
             "id": "snapshot.month",
             "production": true,
             "ref": Object {

@@ -1,0 +1,35 @@
+{
+    "id": "20f0d74b-0f68-484b-9775-9d2b5c0f99e5",
+    "name": "gdc_account_profile_80dfc6d5ef7c239c518705973062c99b",
+    "request": {
+        "url": "/gdc/account/profile/80dfc6d5ef7c239c518705973062c99b",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"accountSetting\":{\"links\":{\"self\":\"/gdc/account/profile/80dfc6d5ef7c239c518705973062c99b\",\"projects\":\"/gdc/account/profile/80dfc6d5ef7c239c518705973062c99b/projects\",\"auditEvents\":\"/gdc/account/profile/80dfc6d5ef7c239c518705973062c99b/auditEvents\",\"domain\":\"/gdc/domains/default\"},\"firstName\":\"Ivan\",\"lastName\":\"Mjartan\",\"companyName\":\"GoodData s.r.o\",\"position\":null,\"created\":\"2020-07-27 14:37:47\",\"updated\":\"2020-07-28 14:52:11\",\"country\":\"\",\"phoneNumber\":\"123456789\",\"authenticationModes\":[],\"login\":\"ivan.mjartan@gooddata.com\",\"timezone\":null,\"ssoProvider\":null,\"email\":\"ivan.mjartan@gooddata.com\",\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null}}",
+        "headers": {
+            "X-GDC-LOG-HEADER": "",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json;charset=utf-8",
+            "Date": "Thu, 30 Jul 2020 09:30:31 GMT",
+            "Server": "GoodData WebApp",
+            "X-GDC-REQUEST-TIME": "11",
+            "X-GDC-REQUEST": "Bpzuk14rHPcyxmDR",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "20f0d74b-0f68-484b-9775-9d2b5c0f99e5",
+    "persistent": true,
+    "insertionIndex": 4
+}

@@ -138,14 +138,21 @@ export const convertFact = (fact: GdcCatalog.ICatalogFact): ICatalogFact => {
 
 const convertDateDataSetAttribute = (
     dateDatasetAttribute: GdcDateDataSets.IDateDataSetAttribute,
+    attributeById: IAttributeByKey,
 ): ICatalogDateAttribute => {
     const { attributeMeta, defaultDisplayFormMeta } = dateDatasetAttribute;
     const attributeRef = bearObjectMetaToBearRef(attributeMeta);
     const displayFormRef = bearObjectMetaToBearRef(defaultDisplayFormMeta);
+    const attributeData = attributeById[attributeMeta.identifier];
+    const drillDownStep = attributeData.attribute.content.drillDownStepAttributeDF
+        ? uriRef(attributeData.attribute.content.drillDownStepAttributeDF)
+        : undefined;
 
     return newCatalogDateAttribute((catalogDa) =>
         catalogDa
-            .attribute(attributeRef, (a) => a.modify(commonMetadataModifications(attributeMeta)))
+            .attribute(attributeRef, (a) =>
+                a.modify(commonMetadataModifications(attributeMeta)).drillDownStep(drillDownStep),
+            )
             .defaultDisplayForm(displayFormRef, (df) =>
                 df.modify(commonMetadataModifications(defaultDisplayFormMeta)),
             )
@@ -153,10 +160,15 @@ const convertDateDataSetAttribute = (
     );
 };
 
-export const convertDateDataset = (dateDataset: GdcDateDataSets.IDateDataSet): ICatalogDateDataset => {
+export const convertDateDataset = (
+    dateDataset: GdcDateDataSets.IDateDataSet,
+    attributeById: IAttributeByKey,
+): ICatalogDateDataset => {
     const { availableDateAttributes = [] } = dateDataset;
     const dateDatasetRef = bearObjectMetaToBearRef(dateDataset.meta);
-    const dateAttributes = availableDateAttributes.map(convertDateDataSetAttribute);
+    const dateAttributes = availableDateAttributes.map((attribute) =>
+        convertDateDataSetAttribute(attribute, attributeById),
+    );
 
     return newCatalogDateDataset((catalogDs) =>
         catalogDs
