@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
-import hoistNonReactStatics = require("hoist-non-react-statics");
+import hoistNonReactStatics from "hoist-non-react-statics";
 import {
     DataViewFacade,
     makeCancelable,

@@ -4,7 +4,7 @@ import cx from "classnames";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
-import mapboxgl = require("mapbox-gl");
+import mapboxgl from "mapbox-gl";
 import invariant, { InvariantError } from "ts-invariant";
 import {
     createClusterLabels,

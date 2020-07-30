@@ -3,8 +3,7 @@ import React from "react";
 import isFunction from "lodash/isFunction";
 import isString from "lodash/isString";
 import toPairs from "lodash/toPairs";
-// @ts-ignore The typings are not compatible with current react typings and upgrade is not feasible now
-import hoistNonReactStatics = require("hoist-non-react-statics");
+import hoistNonReactStatics from "hoist-non-react-statics";
 import { factoryNotationFor } from "@gooddata/sdk-model";
 
 const getDisplayName = (WrappedComponent: React.ComponentType): string =>
