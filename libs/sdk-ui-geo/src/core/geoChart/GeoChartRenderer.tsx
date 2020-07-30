@@ -291,12 +291,32 @@ export default class GeoChartRenderer extends React.Component<IGeoChartRendererP
         }
 
         chart.on("click", DEFAULT_LAYER_NAME, this.handleMapClick);
+        chart.on("idle", this.handleMapIdle);
         chart.on("load", this.setupMap);
         chart.on("load", this.adjustChartHeight);
         chart.on("mouseenter", DEFAULT_LAYER_NAME, this.handlePushpinMouseEnter);
         chart.on("mouseleave", DEFAULT_LAYER_NAME, this.handlePushpinMouseLeave);
         chart.on("moveend", this.handlePushpinMoveEnd);
         chart.on("zoomend", this.handlePushpinZoomEnd);
+    };
+
+    /*
+    Fired after the last frame rendered before the map enters an "idle" state:
+        - No camera transitions are in progress
+        - All currently requested tiles have loaded
+        - All fade/transition animations have completed
+    This is called one time only
+    */
+    private handleMapIdle = (): void => {
+        const {
+            chart,
+            props: { afterRender },
+        } = this;
+        if (!chart) {
+            return;
+        }
+        chart.off("idle", this.handleMapIdle);
+        afterRender();
     };
 
     private setupMap = (): void => {
@@ -362,8 +382,6 @@ export default class GeoChartRenderer extends React.Component<IGeoChartRendererP
         }
 
         chart.off("data", this.handleLayerLoaded);
-
-        this.props.afterRender();
     };
 
     private createTooltip = () => {
