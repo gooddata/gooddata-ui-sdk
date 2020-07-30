@@ -187,7 +187,9 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
                 returnAllDateDataSets: shouldReturnAllDateDataSets,
             }),
         );
-        return result.dateDataSets.map(convertDateDataset);
+        return result.dateDataSets.map((dateDataSet) =>
+            convertDateDataset(dateDataSet, this.mappings.attributeById),
+        );
     };
 }
 
