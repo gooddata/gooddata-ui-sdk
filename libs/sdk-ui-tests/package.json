@@ -7,9 +7,7 @@
     "author": "GoodData Corporation",
     "license": "LicenseRef-LICENSE",
     "files": [
-        "dist",
-        "src",
-        "LICENSE"
+        "dist"
     ],
     "config": {
         "tslint": "./{__mocks__,src,stories}/{,**/}*.{ts,tsx}"
