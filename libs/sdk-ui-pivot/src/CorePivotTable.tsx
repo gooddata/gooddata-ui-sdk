@@ -968,6 +968,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         if (shouldAutoresizeColumns || growToFit) {
             await this.autoresizeColumns(event);
+        } else if (this.columnApi && growToFit) {
+            this.growToFit(this.columnApi);
         }
 
         this.updateStickyRow();
