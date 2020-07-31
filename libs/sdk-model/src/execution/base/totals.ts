@@ -50,7 +50,7 @@ export interface ITotal {
  *
  * @public
  */
-export function isTotal(obj: any): obj is ITotal {
+export function isTotal(obj: unknown): obj is ITotal {
     return !isEmpty(obj) && (obj as ITotal).type !== undefined;
 }
 

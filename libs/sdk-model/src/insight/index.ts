@@ -208,7 +208,7 @@ export interface IColorMappingItem {
  *
  * @public
  */
-export function isInsight(obj: any): obj is IInsight {
+export function isInsight(obj: unknown): obj is IInsight {
     return !isEmpty(obj) && (obj as IInsight).insight !== undefined;
 }
 

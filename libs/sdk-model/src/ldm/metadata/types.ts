@@ -60,7 +60,7 @@ export interface IMetadataObject {
     unlisted: boolean;
 }
 
-export function isMetadataObject(obj: any): obj is IMetadataObject {
+export function isMetadataObject(obj: unknown): obj is IMetadataObject {
     const c = obj as IMetadataObject;
 
     return !isEmpty(c) && c.type !== undefined && c.ref !== undefined;

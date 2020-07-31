@@ -95,6 +95,10 @@
       "allowedCategories": [ "examples", "tools" ]
     },
     {
+      "name": "@gooddata/eslint-config",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "@gooddata/example-workspace",
       "allowedCategories": [ "production" ]
     },
@@ -204,6 +208,10 @@
     },
     {
       "name": "@openapitools/openapi-generator-cli",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@rushstack/eslint-config",
       "allowedCategories": [ "production" ]
     },
     {
@@ -407,6 +415,14 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "@typescript-eslint/eslint-plugin",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@typescript-eslint/parser",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "ag-grid-community",
       "allowedCategories": [ "production" ]
     },
@@ -524,6 +540,34 @@
     },
     {
       "name": "enzyme-adapter-react-16",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-header",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-import",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-jest",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-prettier",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-react",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-react-hooks",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {

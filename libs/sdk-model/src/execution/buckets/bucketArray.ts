@@ -116,7 +116,7 @@ export function bucketsFindAttribute(
     }
 
     const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
-    const typeAgnosticPredicate = (obj: any): boolean => {
+    const typeAgnosticPredicate = (obj: unknown): boolean => {
         return isAttribute(obj) && predicate(obj);
     };
 
@@ -157,7 +157,7 @@ export function bucketsFindMeasure(
     }
 
     const predicate = typeof idOrFun === "string" ? idMatchMeasure(idOrFun) : idOrFun;
-    const typeAgnosticPredicate = (obj: any): boolean => {
+    const typeAgnosticPredicate = (obj: unknown): boolean => {
         return isMeasure(obj) && predicate(obj);
     };
 

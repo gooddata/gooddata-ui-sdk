@@ -47,7 +47,7 @@ type MeasureEnvelope = Omit<IMeasure["measure"], "definition">;
  * @public
  */
 export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
-    protected customLocalId: boolean = false;
+    protected customLocalId = false;
     private measure: MeasureEnvelope;
 
     /**
@@ -71,7 +71,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      * @param localId - local identifier to set; if not specified, the builder will ensure local id will
      * be generated
      */
-    public localId = (localId?: Identifier | undefined) => {
+    public localId = (localId?: Identifier | undefined): this => {
         if (!localId || localId.trim().length === 0) {
             return this.defaultLocalId();
         }
@@ -85,7 +85,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     /**
      * Indicates that the measure's localId should be generated using the default local-id generator logic.
      */
-    public defaultLocalId = () => {
+    public defaultLocalId = (): this => {
         this.measure.localIdentifier = "";
         this.customLocalId = false;
 
@@ -99,7 +99,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      *
      * @param alias - alias to use instead of measure title; undefined to use the title instead
      */
-    public alias = (alias?: string | undefined) => {
+    public alias = (alias?: string | undefined): this => {
         if (!alias) {
             return this.noAlias();
         }
@@ -111,7 +111,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      * Resets alias - alternative title - set for the measure. The measure title will be used if specified, otherwise
      * the server-defined title will be used instead.
      */
-    public noAlias = () => {
+    public noAlias = (): this => {
         delete this.measure.alias;
         return this;
     };
@@ -123,7 +123,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      *
      * @param title - alternative title to use instead of server-defined value; undefined to use server-defined value
      */
-    public title = (title?: string | undefined) => {
+    public title = (title?: string | undefined): this => {
         if (!title) {
             return this.noTitle();
         }
@@ -137,7 +137,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      * Resets alternative title for the measure. The server-defined title of the measure will be used
      * instead.
      */
-    public noTitle = () => {
+    public noTitle = (): this => {
         delete this.measure.title;
 
         return this;
@@ -151,7 +151,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      *
      * @param format - measure format string; or undefined if you want to fall back to server-defined value
      */
-    public format = (format?: string | undefined) => {
+    public format = (format?: string | undefined): this => {
         if (!format) {
             return this.defaultFormat();
         }
@@ -164,7 +164,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     /**
      * Resets format string to the server-defined value.
      */
-    public defaultFormat = () => {
+    public defaultFormat = (): this => {
         delete this.measure.format;
 
         return this;
@@ -287,7 +287,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
      *
      * @param aggregation - aggregation to use; if undefined will reset to default
      */
-    public aggregation = (aggregation?: MeasureAggregation | undefined) => {
+    public aggregation = (aggregation?: MeasureAggregation | undefined): this => {
         if (!aggregation) {
             return this.defaultAggregation();
         }
@@ -300,7 +300,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     /**
      * Resets measure aggregation to the default (SUM).
      */
-    public defaultAggregation = () => {
+    public defaultAggregation = (): this => {
         delete this.measureDefinition.aggregation;
 
         return this;
@@ -315,7 +315,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
      *
      * @param value - set the compute ratio indicator to this value
      */
-    public ratio = (value: boolean = true) => {
+    public ratio = (value = true): this => {
         if (!value) {
             return this.noRatio();
         }
@@ -328,7 +328,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     /**
      * Resets compute as ratio indicator.
      */
-    public noRatio = () => {
+    public noRatio = (): this => {
         delete this.measureDefinition.computeRatio;
 
         return this;
@@ -340,7 +340,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
      *
      * @param filters - filters to apply to this measure
      */
-    public filters = (...filters: IMeasureFilter[]) => {
+    public filters = (...filters: IMeasureFilter[]): this => {
         this.measureDefinition.filters = filters;
 
         return this;
@@ -349,7 +349,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     /**
      * Resets measure filters - this will remove all filters from the measure.
      */
-    public noFilters = () => {
+    public noFilters = (): this => {
         this.measureDefinition.filters = [];
 
         return this;
@@ -361,7 +361,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
      *
      * @param ref - new reference to use
      */
-    public measureItem = (ref: ObjRef) => {
+    public measureItem = (ref: ObjRef): this => {
         this.measureDefinition.item = ref;
 
         return this;
@@ -435,7 +435,7 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
      *
      * @param op - operator
      */
-    public operator = (op: ArithmeticMeasureOperator) => {
+    public operator = (op: ArithmeticMeasureOperator): this => {
         this.arithmeticMeasure.operator = op;
 
         return this;
@@ -446,7 +446,7 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
      *
      * @param measuresOrLocalIds - array of measures and/or localIds of measures to use as operands
      */
-    public operands = (measuresOrLocalIds: MeasureOrLocalId[]) => {
+    public operands = (measuresOrLocalIds: MeasureOrLocalId[]): this => {
         this.arithmeticMeasure.measureIdentifiers = measuresOrLocalIds.map(measureLocalId);
 
         return this;
@@ -507,7 +507,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
      *
      * @param measureOrLocalId - measure value or measure local identifier
      */
-    public masterMeasure = (measureOrLocalId: MeasureOrLocalId) => {
+    public masterMeasure = (measureOrLocalId: MeasureOrLocalId): this => {
         this.popMeasureDefinition.measureIdentifier = measureLocalId(measureOrLocalId);
 
         return this;
@@ -520,7 +520,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
      *
      * @param popAttrIdOrRef - reference of the PoP attribute, or identifier
      */
-    public popAttribute = (popAttrIdOrRef: ObjRef | Identifier) => {
+    public popAttribute = (popAttrIdOrRef: ObjRef | Identifier): this => {
         this.popMeasureDefinition.popAttribute = isObjRef(popAttrIdOrRef)
             ? popAttrIdOrRef
             : idRef(popAttrIdOrRef, "attribute");
@@ -580,7 +580,7 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
      *
      * @param measureOrLocalId - measure value or measure local identifier
      */
-    public masterMeasure = (measureOrLocalId: MeasureOrLocalId) => {
+    public masterMeasure = (measureOrLocalId: MeasureOrLocalId): this => {
         this.previousPeriodMeasure.measureIdentifier = measureLocalId(measureOrLocalId);
 
         return this;
@@ -591,8 +591,10 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
      *
      * @param dd - date data set + offset
      */
-    public dateDataSets = (dd: IPreviousPeriodDateDataSetSimple[]) => {
+    public dateDataSets = (dd: IPreviousPeriodDateDataSetSimple[]): this => {
         this.previousPeriodMeasure.dateDataSets = this.convertDd(dd);
+
+        return this;
     };
 
     protected buildDefinition(): IPreviousPeriodMeasureDefinition {
@@ -605,7 +607,7 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
         return `${this.previousPeriodMeasure.measureIdentifier}_previous_period`;
     }
 
-    private convertDd = (dd: IPreviousPeriodDateDataSetSimple[]) => {
+    private convertDd = (dd: IPreviousPeriodDateDataSetSimple[]): IPreviousPeriodDateDataSet[] => {
         return dd.map(
             (d): IPreviousPeriodDateDataSet => ({
                 ...d,

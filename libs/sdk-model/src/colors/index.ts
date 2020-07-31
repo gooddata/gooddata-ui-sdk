@@ -78,7 +78,7 @@ export type IColor = IColorFromPalette | IRgbColor;
  *
  * @public
  */
-export function isColorFromPalette(obj: any): obj is IColorFromPalette {
+export function isColorFromPalette(obj: unknown): obj is IColorFromPalette {
     return !isEmpty(obj) && (obj as IColorFromPalette).type === "guid";
 }
 
@@ -87,7 +87,7 @@ export function isColorFromPalette(obj: any): obj is IColorFromPalette {
  *
  * @public
  */
-export function isRgbColor(obj: any): obj is IRgbColor {
+export function isRgbColor(obj: unknown): obj is IRgbColor {
     return !isEmpty(obj) && (obj as IRgbColor).type === "rgb";
 }
 

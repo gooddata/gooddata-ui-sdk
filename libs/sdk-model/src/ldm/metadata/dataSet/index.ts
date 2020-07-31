@@ -16,6 +16,6 @@ export interface IDataSetMetadataObject extends IMetadataObject {
  * @param obj - object to test
  * @public
  */
-export function isDataSetMetadataObject(obj: any): obj is IDataSetMetadataObject {
+export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataObject {
     return isMetadataObject(obj) && obj.type === "dataSet";
 }

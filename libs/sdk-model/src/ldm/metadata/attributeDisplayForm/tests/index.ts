@@ -22,12 +22,12 @@ describe("attribute display form", () => {
         });
 
         it("should fail if attribute display form is null", () => {
-            // @ts-ignore
+            // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
             expect(() => attributeDisplayFormRef(null)).toThrow();
         });
 
         it("should fail if attribute display form is undefined", () => {
-            // @ts-ignore
+            // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
             expect(() => attributeDisplayFormRef(undefined)).toThrow();
         });
     });
@@ -38,12 +38,12 @@ describe("attribute display form", () => {
         });
 
         it("should fail if attribute display form is null", () => {
-            // @ts-ignore
+            // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
             expect(() => attributeDisplayFormTitle(null)).toThrow();
         });
 
         it("should fail if attribute display form is undefined", () => {
-            // @ts-ignore
+            // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
             expect(() => attributeDisplayFormTitle(undefined)).toThrow();
         });
     });
@@ -56,12 +56,12 @@ describe("attribute display form", () => {
         });
 
         it("should fail if attribute display form is null", () => {
-            // @ts-ignore
+            // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
             expect(() => attributeDisplayFormAttributeId(null)).toThrow();
         });
 
         it("should fail if attribute display form is undefined", () => {
-            // @ts-ignore
+            // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
             expect(() => attributeDisplayFormAttributeId(undefined)).toThrow();
         });
     });

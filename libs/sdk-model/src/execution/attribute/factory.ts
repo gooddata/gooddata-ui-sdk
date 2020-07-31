@@ -18,7 +18,7 @@ type AttributeBuilderInput = Identifier | ObjRef | IAttribute;
  */
 export class AttributeBuilder {
     private attribute: IAttribute["attribute"];
-    private customLocalId: boolean = false;
+    private customLocalId = false;
 
     /**
      * @internal
@@ -44,7 +44,7 @@ export class AttributeBuilder {
      *
      * @param alias - alias to use instead of attribute title; undefined to use server-defined value
      */
-    public alias = (alias?: string | undefined) => {
+    public alias = (alias?: string | undefined): this => {
         if (!alias) {
             return this.noAlias();
         }
@@ -58,7 +58,7 @@ export class AttributeBuilder {
      * Resets alias - alternative title - set for the attribute. The server-defined title of the attribute
      * will be used instead.
      */
-    public noAlias = () => {
+    public noAlias = (): this => {
         delete this.attribute.alias;
 
         return this;
@@ -69,7 +69,7 @@ export class AttributeBuilder {
      *
      * @param ref - new ref to use
      */
-    public displayForm = (ref: ObjRef) => {
+    public displayForm = (ref: ObjRef): this => {
         this.attribute.displayForm = ref;
 
         return this;
@@ -89,7 +89,7 @@ export class AttributeBuilder {
      * @param localId - local identifier to set; if not specified, the builder will ensure local id will
      * be generated
      */
-    public localId = (localId?: Identifier | undefined) => {
+    public localId = (localId?: Identifier | undefined): this => {
         if (!localId || localId.trim().length === 0) {
             return this.defaultLocalId();
         }
@@ -103,7 +103,7 @@ export class AttributeBuilder {
     /**
      * Indicates that the attribute's localId should be generated using the default local-id generator logic.
      */
-    public defaultLocalId = () => {
+    public defaultLocalId = (): this => {
         this.attribute.localIdentifier = "";
         this.customLocalId = false;
 
@@ -113,7 +113,7 @@ export class AttributeBuilder {
     /**
      * Creates the IAttribute instance.
      */
-    public build = () => {
+    public build = (): IAttribute => {
         const localIdentifier = this.getOrGenerateLocalId();
 
         return {

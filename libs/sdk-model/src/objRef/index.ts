@@ -112,7 +112,7 @@ export type ObjRefInScope = ObjRef | LocalIdRef;
  *
  * @public
  */
-export function isUriRef(obj: any): obj is UriRef {
+export function isUriRef(obj: unknown): obj is UriRef {
     return !isEmpty(obj) && (obj as UriRef).uri !== undefined;
 }
 
@@ -121,7 +121,7 @@ export function isUriRef(obj: any): obj is UriRef {
  *
  * @public
  */
-export function isIdentifierRef(obj: any): obj is IdentifierRef {
+export function isIdentifierRef(obj: unknown): obj is IdentifierRef {
     return !isEmpty(obj) && (obj as IdentifierRef).identifier !== undefined;
 }
 
@@ -130,7 +130,7 @@ export function isIdentifierRef(obj: any): obj is IdentifierRef {
  *
  * @public
  */
-export function isObjRef(obj: any): obj is ObjRef {
+export function isObjRef(obj: unknown): obj is ObjRef {
     return isUriRef(obj) || isIdentifierRef(obj);
 }
 
@@ -139,7 +139,7 @@ export function isObjRef(obj: any): obj is ObjRef {
  *
  * @public
  */
-export function isLocalIdRef(obj: any): obj is LocalIdRef {
+export function isLocalIdRef(obj: unknown): obj is LocalIdRef {
     return !isEmpty(obj) && (obj as LocalIdRef).localIdentifier !== undefined;
 }
 

@@ -60,6 +60,6 @@ export function attributeDisplayFormAttributeRef(displayForm: IAttributeDisplayF
  * @param obj - object to test
  * @public
  */
-export function isAttributeDisplayFormMetadataObject(obj: any): obj is IAttributeDisplayFormMetadataObject {
+export function isAttributeDisplayFormMetadataObject(obj: unknown): obj is IAttributeDisplayFormMetadataObject {
     return isMetadataObject(obj) && obj.type === "displayForm";
 }

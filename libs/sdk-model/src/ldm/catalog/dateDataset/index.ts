@@ -60,6 +60,6 @@ export interface ICatalogDateDataset extends ICatalogItemBase {
  *
  * @public
  */
-export function isCatalogDateDataset(obj: any): obj is ICatalogDateDataset {
+export function isCatalogDateDataset(obj: unknown): obj is ICatalogDateDataset {
     return !isEmpty(obj) && (obj as ICatalogDateDataset).type === "dateDataset";
 }

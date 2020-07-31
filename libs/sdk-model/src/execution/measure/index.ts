@@ -190,7 +190,7 @@ export const idMatchMeasure: (id: string) => MeasurePredicate = (id) => (m) =>
  *
  * @public
  */
-export function isMeasure(obj: any): obj is IMeasure {
+export function isMeasure(obj: unknown): obj is IMeasure {
     return !isEmpty(obj) && (obj as IMeasure).measure !== undefined;
 }
 
@@ -199,7 +199,7 @@ export function isMeasure(obj: any): obj is IMeasure {
  *
  * @public
  */
-export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition> {
+export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition> {
     return isMeasure(obj) && isMeasureDefinition(obj.measure.definition);
 }
 
@@ -209,7 +209,7 @@ export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition> {
  *
  * @public
  */
-export function isAdhocMeasure(obj: any): obj is IMeasure<IMeasureDefinition> {
+export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition> {
     if (!isSimpleMeasure(obj)) {
         return false;
     }
@@ -226,7 +226,7 @@ export function isAdhocMeasure(obj: any): obj is IMeasure<IMeasureDefinition> {
  *
  * @public
  */
-export function isPoPMeasure(obj: any): obj is IMeasure<IPoPMeasureDefinition> {
+export function isPoPMeasure(obj: unknown): obj is IMeasure<IPoPMeasureDefinition> {
     return isMeasure(obj) && isPoPMeasureDefinition(obj.measure.definition);
 }
 
@@ -235,7 +235,7 @@ export function isPoPMeasure(obj: any): obj is IMeasure<IPoPMeasureDefinition> {
  *
  * @public
  */
-export function isPreviousPeriodMeasure(obj: any): obj is IMeasure<IPreviousPeriodMeasureDefinition> {
+export function isPreviousPeriodMeasure(obj: unknown): obj is IMeasure<IPreviousPeriodMeasureDefinition> {
     return isMeasure(obj) && isPreviousPeriodMeasureDefinition(obj.measure.definition);
 }
 
@@ -244,7 +244,7 @@ export function isPreviousPeriodMeasure(obj: any): obj is IMeasure<IPreviousPeri
  *
  * @public
  */
-export function isArithmeticMeasure(obj: any): obj is IMeasure<IArithmeticMeasureDefinition> {
+export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMeasureDefinition> {
     return isMeasure(obj) && isArithmeticMeasureDefinition(obj.measure.definition);
 }
 
@@ -253,7 +253,7 @@ export function isArithmeticMeasure(obj: any): obj is IMeasure<IArithmeticMeasur
  *
  * @public
  */
-export function isMeasureDefinition(obj: any): obj is IMeasureDefinition {
+export function isMeasureDefinition(obj: unknown): obj is IMeasureDefinition {
     return !isEmpty(obj) && (obj as IMeasureDefinition).measureDefinition !== undefined;
 }
 
@@ -262,7 +262,7 @@ export function isMeasureDefinition(obj: any): obj is IMeasureDefinition {
  *
  * @public
  */
-export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition {
+export function isPoPMeasureDefinition(obj: unknown): obj is IPoPMeasureDefinition {
     return !isEmpty(obj) && (obj as IPoPMeasureDefinition).popMeasureDefinition !== undefined;
 }
 
@@ -271,7 +271,7 @@ export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition {
  *
  * @public
  */
-export function isPreviousPeriodMeasureDefinition(obj: any): obj is IPreviousPeriodMeasureDefinition {
+export function isPreviousPeriodMeasureDefinition(obj: unknown): obj is IPreviousPeriodMeasureDefinition {
     return !isEmpty(obj) && (obj as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined;
 }
 
@@ -280,7 +280,7 @@ export function isPreviousPeriodMeasureDefinition(obj: any): obj is IPreviousPer
  *
  * @public
  */
-export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasureDefinition {
+export function isArithmeticMeasureDefinition(obj: unknown): obj is IArithmeticMeasureDefinition {
     return !isEmpty(obj) && (obj as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
 }
 
@@ -362,7 +362,7 @@ export function measureItem(measure: IMeasure): ObjRef | undefined;
 export function measureItem(measure: IMeasure): ObjRef | undefined {
     invariant(measure, "measure must be specified");
 
-    return (measure.measure.definition as any).measureDefinition?.item;
+    return (measure.measure.definition as IMeasureDefinition).measureDefinition?.item;
 }
 
 /**

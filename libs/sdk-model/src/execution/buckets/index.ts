@@ -91,7 +91,7 @@ export type MeasureInBucket = {
  * @param obj - object to test
  * @public
  */
-export function isBucket(obj: any): obj is IBucket {
+export function isBucket(obj: unknown): obj is IBucket {
     return (
         !isEmpty(obj) &&
         (obj as IBucket).localIdentifier !== undefined &&
@@ -184,7 +184,7 @@ export function bucketAttributeIndex(
     invariant(bucket, "bucket must be specified");
 
     const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
-    const compositeGuard = (obj: any): obj is IAttribute => {
+    const compositeGuard = (obj: unknown): obj is IAttribute => {
         return isAttribute(obj) && predicate(obj);
     };
 
@@ -231,7 +231,7 @@ export function bucketAttributes(
     invariant(bucket, "bucket must be specified");
 
     // need custom type-guard so as not to break type inference in filter() method
-    const compositeGuard = (obj: any): obj is IAttribute => {
+    const compositeGuard = (obj: unknown): obj is IAttribute => {
         return isAttribute(obj) && predicate(obj);
     };
 
@@ -256,7 +256,7 @@ export function bucketMeasureIndex(bucket: IBucket, idOrFun: string | MeasurePre
     invariant(bucket, "bucket must be specified");
 
     const predicate = typeof idOrFun === "string" ? idMatchMeasure(idOrFun) : idOrFun;
-    const compositeGuard = (obj: any): obj is IMeasure => {
+    const compositeGuard = (obj: unknown): obj is IMeasure => {
         return isMeasure(obj) && predicate(obj);
     };
 
@@ -300,7 +300,7 @@ export function bucketMeasures(bucket: IBucket, predicate: MeasurePredicate = an
     invariant(bucket, "bucket must be specified");
 
     // need custom type-guard so as not to break type inference in filter() method
-    const compositeGuard = (obj: any): obj is IMeasure => {
+    const compositeGuard = (obj: unknown): obj is IMeasure => {
         return isMeasure(obj) && predicate(obj);
     };
 

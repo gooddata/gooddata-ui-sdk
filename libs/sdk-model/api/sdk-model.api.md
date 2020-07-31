@@ -50,13 +50,7 @@ export class AttributeBuilder {
     // @internal
     constructor(input: AttributeBuilderInput);
     alias: (alias?: string | undefined) => this;
-    build: () => {
-        attribute: {
-            localIdentifier: string;
-            displayForm: ObjRef;
-            alias?: string | undefined;
-        };
-    };
+    build: () => IAttribute;
     defaultLocalId: () => this;
     displayForm: (ref: ObjRef) => this;
     localId: (localId?: Identifier | undefined) => this;
@@ -1040,136 +1034,136 @@ export interface IRgbColorValue {
 }
 
 // @public
-export function isAbsoluteDateFilter(obj: any): obj is IAbsoluteDateFilter;
+export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter;
 
 // @public
-export function isAdhocMeasure(obj: any): obj is IMeasure<IMeasureDefinition>;
+export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
 // @public
-export function isArithmeticMeasure(obj: any): obj is IMeasure<IArithmeticMeasureDefinition>;
+export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMeasureDefinition>;
 
 // @public
-export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasureDefinition;
+export function isArithmeticMeasureDefinition(obj: unknown): obj is IArithmeticMeasureDefinition;
 
 // @public
-export function isAttribute(obj: any): obj is IAttribute;
+export function isAttribute(obj: unknown): obj is IAttribute;
 
 // @public
-export function isAttributeAreaSort(obj: any): obj is IAttributeSortItem;
+export function isAttributeAreaSort(obj: unknown): obj is IAttributeSortItem;
 
 // @public
-export function isAttributeElementsByRef(obj: any): obj is IAttributeElementsByRef;
+export function isAttributeElementsByRef(obj: unknown): obj is IAttributeElementsByRef;
 
 // @public
-export function isAttributeElementsByValue(obj: any): obj is IAttributeElementsByValue;
+export function isAttributeElementsByValue(obj: unknown): obj is IAttributeElementsByValue;
 
 // @public
-export function isAttributeFilter(obj: any): obj is IAttributeFilter;
+export function isAttributeFilter(obj: unknown): obj is IAttributeFilter;
 
 // @public
-export function isAttributeLocator(obj: any): obj is IAttributeLocatorItem;
+export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem;
 
 // @public
-export function isAttributeSort(obj: any): obj is IAttributeSortItem;
+export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
 
 // @public
-export function isBucket(obj: any): obj is IBucket;
+export function isBucket(obj: unknown): obj is IBucket;
 
 // @public
-export function isCatalogAttribute(obj: any): obj is ICatalogAttribute;
+export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
 
 // @public
-export function isCatalogDateDataset(obj: any): obj is ICatalogDateDataset;
+export function isCatalogDateDataset(obj: unknown): obj is ICatalogDateDataset;
 
 // @public
-export function isCatalogFact(obj: any): obj is ICatalogFact;
+export function isCatalogFact(obj: unknown): obj is ICatalogFact;
 
 // @public
-export function isCatalogMeasure(obj: any): obj is ICatalogMeasure;
+export function isCatalogMeasure(obj: unknown): obj is ICatalogMeasure;
 
 // @public
-export function isColorFromPalette(obj: any): obj is IColorFromPalette;
+export function isColorFromPalette(obj: unknown): obj is IColorFromPalette;
 
 // @public
-export function isComparisonCondition(obj: any): obj is IComparisonCondition;
+export function isComparisonCondition(obj: unknown): obj is IComparisonCondition;
 
 // @public
-export function isComparisonConditionOperator(obj: any): obj is ComparisonConditionOperator;
+export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator;
 
 // @public
-export function isDateFilter(obj: any): obj is IDateFilter;
+export function isDateFilter(obj: unknown): obj is IDateFilter;
 
 // @public
-export function isDimension(obj: any): obj is IDimension;
+export function isDimension(obj: unknown): obj is IDimension;
 
 // @public
-export function isIdentifierRef(obj: any): obj is IdentifierRef;
+export function isIdentifierRef(obj: unknown): obj is IdentifierRef;
 
 // @public
-export function isInsight(obj: any): obj is IInsight;
+export function isInsight(obj: unknown): obj is IInsight;
 
 // @public
-export function isLocalIdRef(obj: any): obj is LocalIdRef;
+export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
 
 // @public
-export function isMeasure(obj: any): obj is IMeasure;
+export function isMeasure(obj: unknown): obj is IMeasure;
 
 // @public
-export function isMeasureDefinition(obj: any): obj is IMeasureDefinition;
+export function isMeasureDefinition(obj: unknown): obj is IMeasureDefinition;
 
 // @public
-export function isMeasureLocator(obj: any): obj is IMeasureLocatorItem;
+export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem;
 
 // @public
-export function isMeasureSort(obj: any): obj is IMeasureSortItem;
+export function isMeasureSort(obj: unknown): obj is IMeasureSortItem;
 
 // @public
-export function isMeasureValueFilter(obj: any): obj is IMeasureValueFilter;
+export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter;
 
 // @public
-export function isNegativeAttributeFilter(obj: any): obj is INegativeAttributeFilter;
+export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;
 
 // @public
-export function isObjRef(obj: any): obj is ObjRef;
+export function isObjRef(obj: unknown): obj is ObjRef;
 
 // @public
 export type ISortItem = IAttributeSortItem | IMeasureSortItem;
 
 // @public
-export function isPoPMeasure(obj: any): obj is IMeasure<IPoPMeasureDefinition>;
+export function isPoPMeasure(obj: unknown): obj is IMeasure<IPoPMeasureDefinition>;
 
 // @public
-export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition;
+export function isPoPMeasureDefinition(obj: unknown): obj is IPoPMeasureDefinition;
 
 // @public
-export function isPositiveAttributeFilter(obj: any): obj is IPositiveAttributeFilter;
+export function isPositiveAttributeFilter(obj: unknown): obj is IPositiveAttributeFilter;
 
 // @public
-export function isPreviousPeriodMeasure(obj: any): obj is IMeasure<IPreviousPeriodMeasureDefinition>;
+export function isPreviousPeriodMeasure(obj: unknown): obj is IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @public
-export function isPreviousPeriodMeasureDefinition(obj: any): obj is IPreviousPeriodMeasureDefinition;
+export function isPreviousPeriodMeasureDefinition(obj: unknown): obj is IPreviousPeriodMeasureDefinition;
 
 // @public
-export function isRangeCondition(obj: any): obj is IRangeCondition;
+export function isRangeCondition(obj: unknown): obj is IRangeCondition;
 
 // @public
-export function isRangeConditionOperator(obj: any): obj is RangeConditionOperator;
+export function isRangeConditionOperator(obj: unknown): obj is RangeConditionOperator;
 
 // @public
-export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter;
+export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter;
 
 // @public
-export function isRgbColor(obj: any): obj is IRgbColor;
+export function isRgbColor(obj: unknown): obj is IRgbColor;
 
 // @public
-export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition>;
+export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
 // @public
-export function isTotal(obj: any): obj is ITotal;
+export function isTotal(obj: unknown): obj is ITotal;
 
 // @public
-export function isUriRef(obj: any): obj is UriRef;
+export function isUriRef(obj: unknown): obj is UriRef;
 
 // @public
 export type ItemInDimension = {
@@ -1558,7 +1552,7 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
     constructor(input: PreviousPeriodMeasureBuilderInput);
     // (undocumented)
     protected buildDefinition(): IPreviousPeriodMeasureDefinition;
-    dateDataSets: (dd: IPreviousPeriodDateDataSetSimple[]) => void;
+    dateDataSets: (dd: IPreviousPeriodDateDataSetSimple[]) => this;
     // (undocumented)
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;

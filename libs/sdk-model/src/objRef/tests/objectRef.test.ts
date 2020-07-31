@@ -12,12 +12,12 @@ describe("objRefToString", () => {
     });
 
     it("should throw if input null", () => {
-        // @ts-ignore
+        // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
         expect(() => objRefToString(null)).toThrow();
     });
 
     it("should throw if input undefined", () => {
-        // @ts-ignore
+        // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
         expect(() => objRefToString(undefined)).toThrow();
     });
 });

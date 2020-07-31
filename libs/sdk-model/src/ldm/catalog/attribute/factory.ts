@@ -65,7 +65,7 @@ export class CatalogAttributeBuilder<
         }
 
         const defaultModifications: AttributeModifications = (a) =>
-            a.alias(this.item.defaultDisplayForm?.title!);
+            a.alias(this.item.defaultDisplayForm?.title);
 
         return newAttribute(this.item.defaultDisplayForm.ref, (m) => modifications(defaultModifications(m)));
     }

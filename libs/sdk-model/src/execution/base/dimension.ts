@@ -47,7 +47,7 @@ const isMeasureGroupIdentifier = (itemOrTotal: DimensionItem) => itemOrTotal ===
  *
  * @public
  */
-export function isDimension(obj: any): obj is IDimension {
+export function isDimension(obj: unknown): obj is IDimension {
     return !isEmpty(obj) && (obj as IDimension).itemIdentifiers !== undefined;
 }
 

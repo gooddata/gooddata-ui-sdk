@@ -24,6 +24,6 @@ export interface IAttributeMetadataObject extends IMetadataObject {
  * @param obj - object to test
  * @public
  */
-export function isAttributeMetadataObject(obj: any): obj is IAttributeMetadataObject {
+export function isAttributeMetadataObject(obj: unknown): obj is IAttributeMetadataObject {
     return isMetadataObject(obj) && obj.type === "attribute";
 }
