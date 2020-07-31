@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+import React from "react";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
 import { render } from "react-dom";
@@ -39,7 +40,6 @@ import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
-import React = require("react");
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 

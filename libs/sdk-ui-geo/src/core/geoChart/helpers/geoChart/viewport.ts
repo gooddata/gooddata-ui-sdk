@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import mapboxgl = require("mapbox-gl");
+import mapboxgl from "mapbox-gl";
 
 import { DEFAULT_CENTER, DEFAULT_ZOOM, VIEWPORTS, DEFAULT_WORLD_BOUNDS } from "../../constants/geoChart";
 import { IGeoConfig, IGeoConfigViewport, IGeoLngLat, IGeoLngLatBounds } from "../../../../GeoChart";

@@ -8,9 +8,7 @@
     "license": "LicenseRef-LICENSE",
     "files": [
         "dist",
-        "src",
-        "styles",
-        "LICENSE"
+        "styles"
     ],
     "config": {
         "tslint": "./{__mocks__,src}/{,**/}*.{ts,tsx}"

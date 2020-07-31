@@ -6,14 +6,14 @@ import { initChartPlugins } from "./highcharts/chartPlugins";
 import { IChartConfig } from "../../interfaces";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 
-const HighchartsMore = require("highcharts/highcharts-more"); // tslint:disable-line
-const drillmodule = require("highcharts/modules/drilldown"); // tslint:disable-line
-const treemapModule = require("highcharts/modules/treemap"); // tslint:disable-line
-const bulletModule = require("highcharts/modules/bullet"); // tslint:disable-line
-const funnelModule = require("highcharts/modules/funnel"); // tslint:disable-line
-const heatmap = require("highcharts/modules/heatmap"); // tslint:disable-line
-const patternFill = require("highcharts/modules/pattern-fill"); // tslint:disable-line
-const groupedCategories = require("highcharts-grouped-categories"); // tslint:disable-line
+import HighchartsMore from "highcharts/highcharts-more";
+import drillmodule from "highcharts/modules/drilldown";
+import treemapModule from "highcharts/modules/treemap";
+import bulletModule from "highcharts/modules/bullet";
+import funnelModule from "highcharts/modules/funnel";
+import heatmap from "highcharts/modules/heatmap";
+import patternFill from "highcharts/modules/pattern-fill";
+import groupedCategories from "highcharts-grouped-categories";
 
 drillmodule(Highcharts);
 treemapModule(Highcharts);

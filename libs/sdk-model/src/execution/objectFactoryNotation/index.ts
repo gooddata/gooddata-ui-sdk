@@ -4,7 +4,7 @@ import identity from "lodash/identity";
 import isArray from "lodash/isArray";
 import isObject from "lodash/isObject";
 import isString from "lodash/isString";
-import stringifyObject = require("stringify-object");
+import stringifyObject from "stringify-object";
 import { ObjRef } from "../../objRef";
 import {
     isMeasureLocator,

@@ -6,15 +6,10 @@ import isNil from "lodash/isNil";
 import setWith from "lodash/setWith";
 import { numberFormat } from "@gooddata/numberjs";
 import escape from "lodash/escape";
+import isEqual from "lodash/fp/isEqual";
 import unescape from "lodash/unescape";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartOptions, ISeriesItem } from "../typings/unsafe";
-
-// lodash/fp does not provide typings
-// https://stackoverflow.com/questions/38020019/where-can-i-find-typescript-typings-for-lodash-fp
-/* tslint:disable */
-const isEqual = require("lodash/fp/isEqual");
-/* tslint:enable */
 
 export function parseValue(value: string) {
     const parsedValue = parseFloat(value);

@@ -9,9 +9,7 @@
     "typings": "dist/gooddata-browser.d.ts",
     "files": [
         "dist",
-        "umd",
-        "src",
-        "LICENSE"
+        "umd"
     ],
     "config": {
         "tslint": "./{src}/**/*.ts"

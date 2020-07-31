@@ -26,10 +26,7 @@
         "tslint": "./src/{,**/}*.ts"
     },
     "files": [
-        "dist",
-        "src/index.ts",
-        "LICENSE",
-        "README.md"
+        "dist"
     ],
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-model-bear",
     "keywords": [
