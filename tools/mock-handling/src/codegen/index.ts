@@ -28,6 +28,7 @@ const FILE_DIRECTIVES = [
     "/* tslint:disable:file-header */",
     "/* tslint:disable:variable-name */",
     "/* tslint:disable:no-var-requires */",
+    "/* eslint-disable @typescript-eslint/no-var-requires */",
 ];
 const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 
