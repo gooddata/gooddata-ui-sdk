@@ -55,11 +55,11 @@ const ALIGN_POINTS_CUSTOM_COLOR_PICKER = [
 ];
 
 export default class ColorOverlay extends React.PureComponent<IColorOverlayProps> {
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.startScrollingPropagation();
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <Overlay
                 alignTo={this.props.alignTo}

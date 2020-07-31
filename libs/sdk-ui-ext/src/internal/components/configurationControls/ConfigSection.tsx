@@ -58,12 +58,12 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
         };
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IConfigSectionOwnProps & WrappedComponentProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IConfigSectionOwnProps & WrappedComponentProps): void {
         const collapsed = get(nextProps, `propertiesMeta.${this.props.id}.collapsed`, true);
         this.setState({ collapsed });
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { collapsed } = this.state;
         const { title, intl, subtitle, className } = this.props;
         const configSectionClassName = `adi-bucket-configuration ${className}`;

@@ -100,7 +100,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): React.ReactNode {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <HeatMapConfigurationPanel
@@ -119,5 +119,6 @@ export class PluggableHeatmap extends PluggableBaseChart {
                 document.querySelector(this.configPanelElement),
             );
         }
+        return null;
     }
 }

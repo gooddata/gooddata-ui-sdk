@@ -16,7 +16,7 @@ import {
 } from "../../constants/bubble";
 
 export default class PieChartConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         const { propertiesMeta, properties, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 

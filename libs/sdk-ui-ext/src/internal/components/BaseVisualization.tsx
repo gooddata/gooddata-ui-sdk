@@ -81,11 +81,11 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         this.executionFactory = props.backend.workspace(props.projectId).execution();
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.visualization.unmount();
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IBaseVisualizationProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IBaseVisualizationProps): void {
         const newDerivedBucketItemsChanged =
             !isEmpty(nextProps.newDerivedBucketItems) &&
             !isEqual(nextProps.newDerivedBucketItems, this.props.newDerivedBucketItems);
@@ -118,19 +118,19 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.setupVisualization(this.props);
         this.updateVisualization();
         this.triggerExtendedReferencePointChanged(this.props);
     }
 
-    public componentDidUpdate() {
+    public componentDidUpdate(): void {
         if (this.props.isMdObjectValid) {
             this.updateVisualization();
         }
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return <div key={this.visElementId} style={{ height: "100%" }} className={this.getClassName()} />;
     }
 
@@ -163,7 +163,8 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         try {
             visFactory = this.props.visualizationCatalog.forUri(visUri);
         } catch (e) {
-            console.error(`Error: unsupported visualization type - ${visUri}`); // tslint:disable-line
+            // eslint-disable-next-line no-console
+            console.error(`Error: unsupported visualization type - ${visUri}`);
         }
 
         if (visFactory) {

@@ -7,8 +7,8 @@ import NamePositionControl from "./NamePositionControl";
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 
-class NameSubsection extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps, {}> {
-    public render() {
+class NameSubsection extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
+    public render(): React.ReactNode {
         const { axisVisible, axisNameVisible } = this.getControlProperties();
         const { axis, properties, pushData, disabled, configPanelDisabled } = this.props;
 

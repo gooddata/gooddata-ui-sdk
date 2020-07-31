@@ -70,7 +70,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): React.ReactNode {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BulletChartConfigurationPanel
@@ -89,6 +89,8 @@ export class PluggableBulletChart extends PluggableBaseChart {
                 document.querySelector(this.configPanelElement),
             );
         }
+
+        return null;
     }
 
     protected mergeDerivedBucketItems(

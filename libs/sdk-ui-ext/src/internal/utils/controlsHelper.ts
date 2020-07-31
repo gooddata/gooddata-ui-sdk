@@ -4,32 +4,37 @@ import set from "lodash/set";
 import { WrappedComponentProps } from "react-intl";
 import { getTranslation } from "./translations";
 import { IMinMaxControlState, IMinMaxControlProps } from "../interfaces/MinMaxControl";
+import { IPushData } from "@gooddata/sdk-ui";
 
-export function fixEmptyMaxValue(value: string) {
+export function fixEmptyMaxValue(value: string): number {
     return value === "" ? Number.MAX_SAFE_INTEGER : Number(value);
 }
 
-export function fixEmptyMinValue(value: string) {
+export function fixEmptyMinValue(value: string): number {
     return value === "" ? Number.MIN_SAFE_INTEGER : Number(value);
 }
 
-export function isValueMinusOrEmpty(value: string) {
+export function isValueMinusOrEmpty(value: string): boolean {
     return value === "-" || value === "";
 }
 
-export function isInvalidOrMinMaxError(value: string, minNumberValue: number, maxNumberValue: number) {
+export function isInvalidOrMinMaxError(
+    value: string,
+    minNumberValue: number,
+    maxNumberValue: number,
+): boolean {
     const valueIsMinus = value === "-";
     const maxMinNumbers = !isNaN(minNumberValue) && !isNaN(maxNumberValue);
     return valueIsMinus || !maxMinNumbers || minNumberValue > maxNumberValue;
 }
 
 export function maxInputValidateAndPushData(
-    data: any,
+    data: IPushData,
     state: IMinMaxControlState,
     props: IMinMaxControlProps & WrappedComponentProps,
-    setState: any,
+    setState: (data: Partial<IMinMaxControlState>) => void,
     defaultState: IMinMaxControlState,
-) {
+): void {
     const { basePath } = props;
     const maxValue = get(data, `properties.controls.${basePath}.max`);
     const incorrectMinValue = get(state, "minScale.incorrectValue", "");
@@ -82,12 +87,12 @@ export function maxInputValidateAndPushData(
 }
 
 export function minInputValidateAndPushData(
-    data: any,
+    data: IPushData,
     state: IMinMaxControlState,
     props: IMinMaxControlProps & WrappedComponentProps,
-    setState: any,
+    setState: (data: Partial<IMinMaxControlState>) => void,
     defaultState: IMinMaxControlState,
-) {
+): void {
     const { basePath } = props;
     const minValue = get(data, `properties.controls.${basePath}.min`);
     const incorrectMaxValue = get(state, "maxScale.incorrectValue", "");

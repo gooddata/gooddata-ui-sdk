@@ -14,7 +14,7 @@ export interface IBubbleMessageOwnProps {
 export type IBubbleMessageProps = IBubbleMessageOwnProps & WrappedComponentProps;
 
 export class DisabledBubbleMessage extends React.PureComponent<IBubbleMessageProps> {
-    public render() {
+    public render(): React.ReactNode {
         const { className, children, intl } = this.props;
         return (
             <BubbleHoverTrigger className={className}>
@@ -26,7 +26,7 @@ export class DisabledBubbleMessage extends React.PureComponent<IBubbleMessagePro
         );
     }
 
-    private getBubbleClassNames() {
+    private getBubbleClassNames(): string {
         return cx("bubble-primary", {
             invisible: !this.props.showDisabledMessage,
         });

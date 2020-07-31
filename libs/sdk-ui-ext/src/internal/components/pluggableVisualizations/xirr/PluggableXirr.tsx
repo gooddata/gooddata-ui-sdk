@@ -53,7 +53,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         this.renderFun = props.renderFun;
     }
 
-    public unmount() {
+    public unmount(): void {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
@@ -89,7 +89,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
-    ) {
+    ): void {
         const { locale, custom = {}, config } = options;
         const { drillableItems } = custom;
         const execution = executionFactory
@@ -114,7 +114,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         );
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): void {
         if (document.querySelector(this.configPanelElement)) {
             const properties = this.visualizationProperties ?? {};
 

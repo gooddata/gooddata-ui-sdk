@@ -15,7 +15,7 @@ import {
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
 
 export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel {
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
         const { properties, propertiesMeta, pushData } = this.props;

@@ -16,7 +16,9 @@ export function findSecondMasterMeasure(allMeasures: IBucketItem[]): IBucketItem
     return masterBucketItems.length > 1 ? masterBucketItems[1] : null;
 }
 
-export function tryToMapForeignBuckets(extendedReferencePoint: Readonly<IExtendedReferencePoint>) {
+export function tryToMapForeignBuckets(
+    extendedReferencePoint: Readonly<IExtendedReferencePoint>,
+): IExtendedReferencePoint {
     const newReferencePoint = setHeadlineRefPointBuckets(extendedReferencePoint);
     const totalBuckets = extendedReferencePoint.buckets.length;
     let allMeasuresCompatible = true;

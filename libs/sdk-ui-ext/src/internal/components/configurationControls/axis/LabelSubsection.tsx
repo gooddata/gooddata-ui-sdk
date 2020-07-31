@@ -15,8 +15,8 @@ export interface ILabelSubsection {
     pushData: (data: any) => any;
 }
 
-class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComponentProps, {}> {
-    public render() {
+class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComponentProps> {
+    public render(): React.ReactNode {
         const { axisVisible, axisLabelsEnabled } = this.getControlProperties();
 
         return (
@@ -41,7 +41,7 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
         );
     }
 
-    private getControlProperties() {
+    private getControlProperties(): IVisualizationProperties {
         const axisVisible = get(this.props, `properties.controls.${this.props.axis}.visible`, true);
         const axisLabelsEnabled = get(
             this.props,

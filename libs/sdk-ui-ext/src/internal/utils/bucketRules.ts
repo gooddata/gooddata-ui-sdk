@@ -170,7 +170,7 @@ export function isShowInPercentAllowed(
     buckets: IBucketOfFun[],
     filters: IFilters,
     bucketLocalIdentifier: string,
-) {
+): boolean {
     const rules = [hasNoStacks, hasSomeCategories];
 
     return (
@@ -182,7 +182,7 @@ export function isComparisonOverTimeAllowed(
     buckets: IBucketOfFun[],
     filters: IFilters,
     weekFiltersEnabled: boolean,
-) {
+): boolean {
     const rules = weekFiltersEnabled ? [hasNoStacks] : [hasNoStacks, hasNoWeekGranularity];
 
     return allRulesMet(rules, buckets, filters) && hasGlobalDateFilter(filters);
@@ -191,7 +191,7 @@ export function isComparisonOverTimeAllowed(
 export function overTimeComparisonRecommendationEnabled(
     referencePoint: IReferencePoint,
     weekFiltersEnabled: boolean,
-) {
+): boolean {
     const baseRules = [
         noDerivedMeasurePresent,
         hasOneMeasure,
@@ -208,7 +208,7 @@ export function overTimeComparisonRecommendationEnabled(
     );
 }
 
-export function comparisonAndTrendingRecommendationEnabled(buckets: IBucketOfFun[]) {
+export function comparisonAndTrendingRecommendationEnabled(buckets: IBucketOfFun[]): boolean {
     const rules = [hasOneMeasure, noDerivedMeasurePresent, hasNoCategories];
 
     return allRulesMet(rules, buckets);
@@ -226,7 +226,7 @@ export function percentRecommendationEnabled(buckets: IBucketOfFun[]): boolean {
     return allRulesMet(rules, buckets);
 }
 
-export function previousPeriodRecommendationEnabled(buckets: IBucketOfFun[]) {
+export function previousPeriodRecommendationEnabled(buckets: IBucketOfFun[]): boolean {
     const rules = [
         hasOneMeasure,
         hasOneCategory,

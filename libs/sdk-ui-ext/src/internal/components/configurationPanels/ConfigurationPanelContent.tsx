@@ -46,7 +46,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
 
     protected supportedPropertiesList: string[];
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div key={`config-${this.props.type}`}>
                 <InternalIntlWrapper locale={this.props.locale}>
@@ -56,14 +56,14 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
         );
     }
 
-    protected abstract renderConfigurationPanel(): JSX.Element;
+    protected abstract renderConfigurationPanel(): React.ReactNode;
 
-    protected isControlDisabled() {
+    protected isControlDisabled(): boolean {
         const { insight, isError, isLoading } = this.props;
         return !insight || !insightHasMeasures(insight) || isError || isLoading;
     }
 
-    protected renderColorSection() {
+    protected renderColorSection(): React.ReactNode {
         const {
             properties,
             propertiesMeta,
@@ -93,7 +93,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
         );
     }
 
-    protected renderLegendSection() {
+    protected renderLegendSection(): React.ReactNode {
         const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 

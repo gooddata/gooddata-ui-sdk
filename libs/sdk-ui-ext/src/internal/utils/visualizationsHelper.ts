@@ -9,6 +9,6 @@ const openAsReportSupportingVisualizations: ChartType[] = [
     VisualizationTypes.PIE,
 ];
 
-export function isOpenAsReportSupportedByVisualization(type: ChartType) {
+export function isOpenAsReportSupportedByVisualization(type: ChartType): boolean {
     return includes(openAsReportSupportingVisualizations, type);
 }

@@ -22,7 +22,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         return cloneDeep(COLUMN_BAR_CHART_UICONFIG);
     }
 
-    public getSupportedPropertiesList() {
+    public getSupportedPropertiesList(): string[] {
         return COLUMN_CHART_SUPPORTED_PROPERTIES[this.axis || AXIS.DUAL] || [];
     }
 }

@@ -20,7 +20,7 @@ import {
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 
 export default class BulletChartConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
 
         const controls = (properties && properties.controls) || {};

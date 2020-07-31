@@ -9,8 +9,8 @@ import { xAxisPositionDropdownItems, yAxisPositionDropdownItems } from "../../..
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 
-class NamePositionControl extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps, {}> {
-    public render() {
+class NamePositionControl extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
+    public render(): React.ReactNode {
         const { axisVisible, axisNameVisible, namePosition } = this.getControlProperties();
         const { axis, properties, pushData, disabled, configPanelDisabled, intl } = this.props;
 

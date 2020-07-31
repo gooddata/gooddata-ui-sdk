@@ -27,7 +27,7 @@ import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIn
 import NameSubsection from "../configurationControls/axis/NameSubsection";
 
 export default class BaseChartConfigurationPanel extends ConfigurationPanelContent {
-    protected renderCanvasSection() {
+    protected renderCanvasSection(): React.ReactNode {
         const { gridEnabled } = this.getControlProperties();
 
         const { properties, propertiesMeta, pushData } = this.props;
@@ -57,7 +57,7 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
         );
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         const { axes } = this.getControlProperties();
 
         return (
@@ -83,7 +83,7 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
         return BASE_CHART_AXIS_CONFIG[type];
     }
 
-    protected getControlProperties() {
+    protected getControlProperties(): { gridEnabled: boolean; axes: IAxisProperties[] } {
         const props = this.props;
         const gridEnabled = get(props, "properties.controls.grid.enabled", true);
         const axisType = includes(DUAL_AXES_SUPPORTED_CHARTS, props.type)
@@ -103,19 +103,19 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
         };
     }
 
-    protected getBubbleClassNames() {
+    protected getBubbleClassNames(): string {
         return cx("bubble-primary", {
             invisible: !this.isControlDisabled(),
         });
     }
 
-    protected isViewedBy() {
+    protected isViewedBy(): boolean {
         const { insight } = this.props;
 
         return !bucketsIsEmpty(insightBuckets(insight, BucketNames.VIEW, BucketNames.TREND));
     }
 
-    protected getBaseChartAxisSection(axes: IAxisProperties[]) {
+    protected getBaseChartAxisSection(axes: IAxisProperties[]): React.ReactNode {
         const { featureFlags, type, properties, propertiesMeta, pushData, insight } = this.props;
         const controls = properties && properties.controls;
         const controlsDisabled = this.isControlDisabled();
@@ -164,7 +164,7 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
         });
     }
 
-    protected renderMinMax(basePath: string) {
+    protected renderMinMax(basePath: string): React.ReactNode {
         const { pushData, properties, propertiesMeta } = this.props;
         return (
             <MinMaxControl

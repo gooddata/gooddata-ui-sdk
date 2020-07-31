@@ -100,7 +100,7 @@ export function getProperties(
 export function getValidProperties(
     properties: IVisualizationProperties,
     colorAssignments: IColorAssignment[],
-) {
+): IVisualizationProperties {
     if (!properties || !properties.controls || !properties.controls.colorMapping) {
         return properties;
     }

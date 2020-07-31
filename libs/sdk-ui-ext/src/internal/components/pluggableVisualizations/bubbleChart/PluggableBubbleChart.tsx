@@ -124,7 +124,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): React.ReactNode {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BubbleChartConfigurationPanel
@@ -143,5 +143,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
                 document.querySelector(this.configPanelElement),
             );
         }
+
+        return null;
     }
 }

@@ -26,11 +26,11 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         return cloneDeep(COLUMN_BAR_CHART_UICONFIG);
     }
 
-    public getSupportedPropertiesList() {
+    public getSupportedPropertiesList(): string[] {
         return BAR_CHART_SUPPORTED_PROPERTIES[this.axis || AXIS.DUAL] || [];
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BarChartConfigurationPanel

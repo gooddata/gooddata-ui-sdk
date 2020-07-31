@@ -118,6 +118,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     public update(
         options: IVisProps,
         insight: IInsightDefinition,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         insightPropertiesMeta: any,
         executionFactory: IExecutionFactory,
     ): void {
@@ -151,11 +152,12 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * @param insight - insight that is about to be rendered
      */
     protected updateInstanceProperties(
-        // @ts-ignore
+        // @ts-expect-error Ignoring here so that the JSDoc has the proper name (not _options)
         options: IVisProps,
         insight: IInsightDefinition,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         insightPropertiesMeta: any,
-    ) {
+    ): void {
         this.visualizationProperties = getSupportedProperties(
             insightProperties(insight),
             this.supportedPropertiesList,
@@ -206,7 +208,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     // Callback delegates
     //
 
-    protected onError = (error: GoodDataSdkError) => {
+    protected onError = (error: GoodDataSdkError): void => {
         this.callbacks.onError?.(error);
 
         // EMPTY_AFM is handled in update as it can change on any render contrary to other error types
@@ -218,7 +220,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         this.renderConfigurationPanel(this.currentInsight);
     };
 
-    protected onLoadingChanged = (loadingState: ILoadingState) => {
+    protected onLoadingChanged = (loadingState: ILoadingState): void => {
         this.callbacks.onLoadingChanged?.(loadingState);
 
         this.hasError = false;
@@ -226,19 +228,19 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         this.renderConfigurationPanel(this.currentInsight);
     };
 
-    protected onExportReady = (exportResult: IExportFunction) => {
+    protected onExportReady = (exportResult: IExportFunction): void => {
         this.callbacks.onExportReady?.(exportResult);
     };
 
-    protected pushData = (data: IPushData, options?: IVisualizationOptions) => {
+    protected pushData = (data: IPushData, options?: IVisualizationOptions): void => {
         this.callbacks.pushData?.(data, options);
     };
 
-    protected afterRender = () => {
+    protected afterRender = (): void => {
         this.callbacks.afterRender?.();
     };
 
-    protected onDrill = (event: IDrillEvent) => {
+    protected onDrill = (event: IDrillEvent): void | boolean => {
         // in case onDrill is not specified, default to always firing drill events
         return this.callbacks.onDrill ? this.callbacks.onDrill(event) : true;
     };

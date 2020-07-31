@@ -22,7 +22,7 @@ import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 export function getSupportedPropertiesControls(
-    visualizationControlsProperties: any,
+    visualizationControlsProperties: IVisualizationProperties["controls"],
     supportedPropertiesList: string[],
 ): IVisualizationProperties {
     const clonedControls = cloneDeep(visualizationControlsProperties);
@@ -36,11 +36,14 @@ export function getSupportedPropertiesControls(
     return {};
 }
 
-export function hasColorMapping(properties: IVisualizationProperties) {
+export function hasColorMapping(properties: IVisualizationProperties): boolean {
     return !!get(properties, ["controls", "colorMapping"]);
 }
 
-export function setSecondaryMeasures(referencePoint: IExtendedReferencePoint, axisName: AxisType) {
+export function setSecondaryMeasures(
+    referencePoint: IExtendedReferencePoint,
+    axisName: AxisType,
+): IExtendedReferencePoint {
     if (!axisName) {
         return referencePoint;
     }
@@ -72,7 +75,7 @@ export function setSecondaryMeasures(referencePoint: IExtendedReferencePoint, ax
     return newReferencePoint;
 }
 
-export function isEmptyObject(obj: object) {
+export function isEmptyObject(obj: object): boolean {
     return obj && keys(obj).length === 0;
 }
 
@@ -126,11 +129,11 @@ export function getReferencePointWithSupportedProperties(
     };
 }
 
-export function isStackingMeasure(properties: IVisualizationProperties) {
+export function isStackingMeasure(properties: IVisualizationProperties): boolean {
     return get(properties, ["controls", "stackMeasures"], false);
 }
 
-export function isStackingToPercent(properties: IVisualizationProperties) {
+export function isStackingToPercent(properties: IVisualizationProperties): boolean {
     return get(properties, ["controls", "stackMeasuresToPercent"], false);
 }
 
@@ -147,7 +150,7 @@ export function isDualAxisOrSomeSecondaryAxisMeasure(
 export function removeImmutableOptionalStackingProperties(
     referencePoint: IExtendedReferencePoint,
     supportedPropertiesList: string[],
-) {
+): string[] {
     const buckets = get(referencePoint, BUCKETS, []);
     let immutableProperties: string[] = [];
 

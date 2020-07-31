@@ -19,7 +19,7 @@ export default class ColorPaletteItem extends React.PureComponent<IColorPaletteI
         this.itemRef = (React as any).createRef();
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div
                 ref={this.itemRef}
@@ -32,7 +32,7 @@ export default class ColorPaletteItem extends React.PureComponent<IColorPaletteI
         );
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.scrollSelectedItemIntoParent();
     }
 

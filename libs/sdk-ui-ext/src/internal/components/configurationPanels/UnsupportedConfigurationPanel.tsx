@@ -5,7 +5,7 @@ import ConfigurationPanelContent from "./ConfigurationPanelContent";
 import UnsupportedProperties from "../configurationControls/UnsupportedProperties";
 
 export default class UnsupportedConfigurationPanel extends ConfigurationPanelContent {
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.props.pushData({
             properties: omit(this.props.properties, "controls"),
             references: null,
@@ -13,11 +13,11 @@ export default class UnsupportedConfigurationPanel extends ConfigurationPanelCon
         });
     }
 
-    protected isControlDisabled() {
+    protected isControlDisabled(): boolean {
         return true;
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         return <UnsupportedProperties />;
     }
 }

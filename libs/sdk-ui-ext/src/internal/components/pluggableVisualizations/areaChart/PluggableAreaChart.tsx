@@ -65,8 +65,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
     protected updateInstanceProperties(
         options: IVisProps,
         insight: IInsightDefinition,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         insightPropertiesMeta: any,
-    ) {
+    ): void {
         super.updateInstanceProperties(options, insight, insightPropertiesMeta);
 
         this.updateCustomSupportedProperties(insight);
@@ -121,11 +122,11 @@ export class PluggableAreaChart extends PluggableBaseChart {
         ]);
     }
 
-    protected getSupportedPropertiesList() {
+    protected getSupportedPropertiesList(): string[] {
         return AREA_CHART_SUPPORTED_PROPERTIES;
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <LineChartBasedConfigurationPanel

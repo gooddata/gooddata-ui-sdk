@@ -24,13 +24,13 @@ import NameSubsection from "../configurationControls/axis/NameSubsection";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
-    protected isControlDisabled() {
+    protected isControlDisabled(): boolean {
         const { insight, isError, isLoading } = this.props;
         const measures = getMeasuresFromMdObject(insight);
         return !measures || measures.length < 1 || isError || isLoading;
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         const { xAxisVisible, gridEnabled, yAxisVisible } = this.getControlProperties();
 
         const { featureFlags, propertiesMeta, properties, pushData, insight, type } = this.props;

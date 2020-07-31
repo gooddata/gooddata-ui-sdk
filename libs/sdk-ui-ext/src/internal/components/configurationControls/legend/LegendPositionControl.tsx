@@ -15,8 +15,8 @@ export interface ILegendPositionControl {
     pushData: (data: any) => any;
 }
 
-class LegendPositionControl extends React.PureComponent<ILegendPositionControl & WrappedComponentProps, {}> {
-    public render() {
+class LegendPositionControl extends React.PureComponent<ILegendPositionControl & WrappedComponentProps> {
+    public render(): React.ReactNode {
         return (
             <DropdownControl
                 value={this.props.value}
