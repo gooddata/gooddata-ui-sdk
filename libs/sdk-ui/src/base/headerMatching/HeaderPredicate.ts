@@ -18,6 +18,6 @@ export type IHeaderPredicate = (header: IMappingHeader, context: IHeaderPredicat
 /**
  * @public
  */
-export function isHeaderPredicate(obj: any): obj is IHeaderPredicate {
+export function isHeaderPredicate(obj: unknown): obj is IHeaderPredicate {
     return typeof obj === "function";
 }

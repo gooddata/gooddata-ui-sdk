@@ -38,7 +38,8 @@ export class IntlWrapper extends React.PureComponent<IIntlWrapperProps> {
     public static defaultProps: IIntlWrapperProps = {
         locale: DefaultLocale,
     };
-    public render() {
+
+    public render(): React.ReactNode {
         const { locale } = this.props;
         return (
             <IntlProvider locale={locale} messages={messagesMap[locale]}>

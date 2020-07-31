@@ -16,7 +16,7 @@ describe("IntlStore", () => {
         });
 
         it("should return default locale when locale is null", () => {
-            // @ts-ignore
+            // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
             const intl = getIntl(null);
             expect(intl.locale).toEqual(DefaultLocale);
         });

@@ -173,7 +173,9 @@ type WithLoadingState = {
  *
  * @internal
  */
-export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProps>) {
+export function withExecutionLoading<TProps>(
+    params: IWithExecutionLoading<TProps>,
+): (WrappedComponent: React.ComponentType<TProps & WithLoadingResult>) => React.ComponentClass<TProps> {
     const {
         promiseFactory,
         loadOnMount = true,

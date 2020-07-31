@@ -32,11 +32,11 @@ export type IDrillableItem =
     | IDrillableItemIdentifier
     | (IDrillableItemUri & IDrillableItemIdentifier);
 
-export function isDrillableItemUri(item: any): item is IDrillableItemUri {
+export function isDrillableItemUri(item: unknown): item is IDrillableItemUri {
     return (item as IDrillableItemUri).uri !== undefined;
 }
 
-export function isDrillableItemIdentifier(item: any): item is IDrillableItemIdentifier {
+export function isDrillableItemIdentifier(item: unknown): item is IDrillableItemIdentifier {
     return (item as IDrillableItemIdentifier).identifier !== undefined;
 }
 

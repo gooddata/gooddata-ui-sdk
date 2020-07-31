@@ -12,7 +12,10 @@ const getDisplayName = (Component: React.ComponentType<any>) => {
  * Wrap displayName of React component
  * @internal
  */
-export const wrapDisplayName = (hocName: string, BaseComponent?: React.ComponentType<any>) => {
+export const wrapDisplayName = (
+    hocName: string,
+    BaseComponent?: React.ComponentType<any>,
+): (<T>(Component: React.ComponentType<T>) => React.ComponentType<T>) => {
     return <T>(Component: React.ComponentType<T>) => {
         const componentName = getDisplayName(BaseComponent || Component);
         Component.displayName = `${hocName}(${componentName})`;

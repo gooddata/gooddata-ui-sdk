@@ -73,7 +73,7 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
  * @returns new instance of GoodDataSdkError
  * @public
  */
-export function convertError(error: any): GoodDataSdkError {
+export function convertError(error: unknown): GoodDataSdkError {
     if (isGoodDataSdkError(error)) {
         return error;
     } else if (isAnalyticalBackendError(error)) {
@@ -112,6 +112,6 @@ export function convertError(error: any): GoodDataSdkError {
  *
  * @param error - error to log
  */
-export function defaultErrorHandler(error: any) {
-    console.error(error); // tslint:disable-line:no-console
+export function defaultErrorHandler(error: unknown): void {
+    console.error(error); // eslint-disable-line no-console
 }

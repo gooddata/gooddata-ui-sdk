@@ -26,7 +26,7 @@ export const getNumericSymbols = (intl: IntlShape): string[] => {
 export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
 
 export class TranslationsProvider extends React.PureComponent<ITranslationsProviderProps> {
-    public render() {
+    public render(): React.ReactNode {
         const props: ITranslationsComponentProps = {
             numericSymbols: getNumericSymbols(this.props.intl),
             emptyHeaderString: this.getEmptyHeaderString(),

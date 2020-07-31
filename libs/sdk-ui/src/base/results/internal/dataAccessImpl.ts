@@ -332,7 +332,7 @@ export class DataAccessImpl {
         return this.slices[Symbol.iterator]();
     };
 
-    public getDataSeries = (idx: number) => {
+    public getDataSeries = (idx: number): IDataSeries => {
         return this.series.get(idx);
     };
 

@@ -30,7 +30,7 @@ export function usePromiseCache<TParams, TResult, TError>(
     fetchDeps: React.DependencyList,
     resetDeps: React.DependencyList,
     getCacheKey?: (params: TParams) => string,
-) {
+): IUsePromiseCacheState<TResult, TError> {
     const promiseCacheRef = useRef<PromiseCache<TParams, TResult, TError>>(
         new PromiseCache(promiseFactory, getCacheKey),
     );
