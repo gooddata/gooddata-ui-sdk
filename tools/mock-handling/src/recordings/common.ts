@@ -62,7 +62,7 @@ export interface IRecording {
 //
 //
 
-export function toJsonString(obj: any, keys?: string[]): string {
+export function toJsonString(obj: object, keys?: string[]): string {
     if (keys) {
         return JSON.stringify(pick(obj, keys), null, 4);
     }
@@ -70,8 +70,8 @@ export function toJsonString(obj: any, keys?: string[]): string {
     return JSON.stringify(obj, null, 4);
 }
 
-export function writeAsJsonSync(file: string, obj: any, keys?: string[]) {
-    return fs.writeFileSync(file, toJsonString(obj, keys), { encoding: "utf-8" });
+export function writeAsJsonSync(file: string, obj: object, keys?: string[]): void {
+    fs.writeFileSync(file, toJsonString(obj, keys), { encoding: "utf-8" });
 }
 
 export function readJsonSync(file: string): any {

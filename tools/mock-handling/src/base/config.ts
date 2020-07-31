@@ -3,7 +3,7 @@ import { get, pick, pickBy, identity } from "lodash";
 import * as fs from "fs";
 import * as path from "path";
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants";
-import { DataRecorderConfig, BackendType } from "./types";
+import { DataRecorderConfig } from "./types";
 
 function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): DataRecorderConfig {
     return {
@@ -15,18 +15,18 @@ function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): 
     };
 }
 
-function retrieveConfigFromObject(obj: any): DataRecorderConfig {
+function retrieveConfigFromObject(obj: object): DataRecorderConfig {
     return {
-        hostname: get<string | null>(obj, "hostname", null),
-        projectId: get<string | null>(obj, "projectId", null),
-        username: get<string | null>(obj, "username", null),
-        password: get<string | null>(obj, "password", null),
-        recordingDir: get<string | null>(obj, "recordingDir", null),
-        backend: get<BackendType | null>(obj, "backend", null),
+        hostname: get(obj, "hostname", null),
+        projectId: get(obj, "projectId", null),
+        username: get(obj, "username", null),
+        password: get(obj, "password", null),
+        recordingDir: get(obj, "recordingDir", null),
+        backend: get(obj, "backend", null),
     };
 }
 
-export function getConfigFromProgram(obj: any, prevConfig = DEFAULT_CONFIG): DataRecorderConfig {
+export function getConfigFromProgram(obj: object, prevConfig = DEFAULT_CONFIG): DataRecorderConfig {
     return mergeConfigs(retrieveConfigFromObject(obj), prevConfig);
 }
 

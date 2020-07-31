@@ -3,7 +3,7 @@
 import { createUniqueVariableName, createUniqueVariableNameForIdentifier } from "../variableNaming";
 
 describe("createUniqueVariableName", () => {
-    describe("scenario transformation", () => {
+    describe("from title", () => {
         const TEST_DATA: Array<[string, string]> = [
             ["MyScenario", "my scenario"],
             ["SingleMeasureSingleViewBy", "single measure, single view by"],
@@ -16,7 +16,7 @@ describe("createUniqueVariableName", () => {
         });
     });
 
-    describe("scenario transformation", () => {
+    describe("from identifier", () => {
         const TEST_DATA: Array<[string, string]> = [
             ["my_df", "my.df"],
             ["funny_df__1", "funny.df..1"],
