@@ -70,7 +70,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
      *
      * @param execution - execution to wrap
      */
-    protected wrap = (execution: IPreparedExecution) => {
+    protected wrap = (execution: IPreparedExecution): IPreparedExecution => {
         return this.wrapper(execution);
     };
 }

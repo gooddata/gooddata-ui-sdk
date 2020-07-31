@@ -176,7 +176,10 @@ export type DecoratorFactories = {
  * @returns new decorated backend
  * @alpha
  */
-export function decoratedBackend(backend: IAnalyticalBackend, decorators: DecoratorFactories) {
+export function decoratedBackend(
+    backend: IAnalyticalBackend,
+    decorators: DecoratorFactories,
+): IAnalyticalBackend {
     if (isEmpty(decorators)) {
         return backend;
     }
