@@ -24,7 +24,9 @@ module.exports = {
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "import/order": "off",
+        "react/prop-types": "off",
     },
 };
