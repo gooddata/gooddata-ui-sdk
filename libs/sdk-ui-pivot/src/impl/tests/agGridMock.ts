@@ -16,6 +16,7 @@ export const getFakeColumnApi = (columnsMaps: { [id: string]: Column }): ColumnA
     return fakeColumnApi as ColumnApi;
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getFakeColumn = (colDef: any): Column => {
     const columnDefinition = {
         ...colDef,

@@ -123,14 +123,14 @@ export class AgGridDatasource implements IDatasource {
                         this.processData(DataViewFacade.for(data), params);
                     })
                     .catch((err) => {
-                        // tslint:disable-next-line:no-console
+                        // eslint-disable-next-line no-console
                         console.error("Error while doing execution to obtain data view", err);
 
                         failCallback();
                     });
             })
             .catch((err) => {
-                // tslint:disable-next-line:no-console
+                // eslint-disable-next-line no-console
                 console.error("Error while doing execution to obtain transformed results", err);
 
                 failCallback();
@@ -186,7 +186,7 @@ export class AgGridDatasource implements IDatasource {
                     this.processData(DataViewFacade.for(data), params);
                 })
                 .catch((err) => {
-                    // tslint:disable-next-line:no-console
+                    // eslint-disable-next-line no-console
                     console.error("Error while doing execution to obtain data view", err);
 
                     failCallback();

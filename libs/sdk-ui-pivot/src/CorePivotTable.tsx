@@ -412,11 +412,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             });
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.initialize(this.props.execution);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
 
         if (this.containerRef) {
@@ -426,7 +426,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.clearTimeouts();
     }
 
-    public componentDidUpdate(prevProps: ICorePivotTableProps) {
+    public componentDidUpdate(prevProps: ICorePivotTableProps): void {
         if (this.isReinitNeeded(prevProps)) {
             /*
              * This triggers when execution changes (new measures / attributes). In that case,
@@ -502,13 +502,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         );
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { ErrorComponent } = this.props;
         const { desiredHeight, error } = this.state;
 
         if (error) {
             const errorProps = this.errorMap[
-                this.errorMap.hasOwnProperty(error) ? error : ErrorCodes.UNKNOWN_ERROR
+                Object.prototype.hasOwnProperty.call(this.errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
             ];
 
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
@@ -714,14 +714,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             return Promise.resolve();
         }
 
-        return new Promise(async (resolve) => {
-            const newColumnIds = difference(autoWidthColumnIds, previouslyResizedColumnIds);
+        const newColumnIds = difference(autoWidthColumnIds, previouslyResizedColumnIds);
 
-            this.autoresizeColumnsByColumnId(columnApi, newColumnIds);
+        this.autoresizeColumnsByColumnId(columnApi, newColumnIds);
 
-            await sleep(COLUMN_RESIZE_TIMEOUT);
-            resolve(this.autoresizeVisibleColumns(columnApi, autoWidthColumnIds, false));
-        });
+        await sleep(COLUMN_RESIZE_TIMEOUT);
+        this.autoresizeVisibleColumns(columnApi, autoWidthColumnIds, false);
     };
 
     private autoresizeColumnsByColumnId(columnApi: ColumnApi, columnIds: string[]) {
@@ -939,7 +937,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private onFirstDataRendered = async (event: AgGridEvent) => {
         if (this.firstDataRendered) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             console.error("onFirstDataRendered called multiple times");
         }
 
@@ -1211,7 +1209,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private sortChanged = (event: SortChangedEvent): void => {
         if (!this.currentResult) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             console.warn("changing sorts without prior execution cannot work");
             return;
         }

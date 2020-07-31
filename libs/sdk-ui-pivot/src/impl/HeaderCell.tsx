@@ -58,13 +58,13 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         currentSortDirection: null,
     };
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.setState({
             currentSortDirection: this.props.sortDirection,
         });
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IHeaderCellProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IHeaderCellProps): void {
         if (nextProps.sortDirection !== this.props.sortDirection) {
             this.setState({
                 currentSortDirection: this.props.sortDirection,
@@ -72,7 +72,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         }
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { menuPosition, className } = this.props;
 
         return (

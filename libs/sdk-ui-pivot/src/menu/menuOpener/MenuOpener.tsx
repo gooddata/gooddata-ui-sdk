@@ -26,7 +26,7 @@ export default class MenuOpener extends React.Component<IMenuOpenerProps> {
         portalTarget: document.querySelector("body"),
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const Component = this.getComponentByOpenAction();
 
         return (

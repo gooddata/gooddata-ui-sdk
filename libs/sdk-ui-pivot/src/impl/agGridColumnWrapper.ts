@@ -5,7 +5,7 @@ export const setColumnMaxWidth = (
     columnApi: ColumnApi,
     columnIds: string[],
     newMaxWidth: number | undefined,
-) => {
+): void => {
     setColumnMaxWidthIf(columnApi, columnIds, newMaxWidth, () => true);
 };
 
@@ -14,7 +14,7 @@ export const setColumnMaxWidthIf = (
     columnIds: string[],
     newMaxWidth: number | undefined,
     condition: (column: Column) => boolean,
-) => {
+): void => {
     columnIds.forEach((colId) => {
         const column = columnApi.getColumn(colId);
 

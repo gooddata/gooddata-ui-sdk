@@ -41,7 +41,7 @@ import invariant from "ts-invariant";
  * All code related to transforming headers from our backend to ag-grid specific data structures
  */
 
-export const identifyHeader = (header: IResultHeader) => {
+export const identifyHeader = (header: IResultHeader): string => {
     if (isResultAttributeHeader(header)) {
         return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeaderItem.uri).join(ID_SEPARATOR)}`;
     }
@@ -54,7 +54,7 @@ export const identifyHeader = (header: IResultHeader) => {
     invariant(false, `Unknown header type: ${JSON.stringify(header)}`);
 };
 
-export const identifyResponseHeader = (header: IDimensionItemDescriptor) => {
+export const identifyResponseHeader = (header: IDimensionItemDescriptor): string | null => {
     if (isAttributeDescriptor(header)) {
         // response headers have no value id
         return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeader.uri)[0]}`;
@@ -66,7 +66,13 @@ export const identifyResponseHeader = (header: IDimensionItemDescriptor) => {
     invariant(false, `Unknown response header type: ${JSON.stringify(header)}`);
 };
 
-export const headerToGrid = (header: IResultHeader, fieldPrefix = "") => {
+export const headerToGrid = (
+    header: IResultHeader,
+    fieldPrefix = "",
+): {
+    headerName: string;
+    field: string;
+} => {
     return {
         headerName: resultHeaderName(header),
         field: fieldPrefix + identifyHeader(header),
@@ -107,7 +113,7 @@ export const mergeHeaderEndIndex = (
 
 /*
  * getColumnHeaders transforms header items from matrix to tree hierarchy
- * for each span of identical headers in a row, the function is called recursively to assign child items
+ * for each span of identical headers in a row, the function is called recursively to assign child items
  */
 export const getColumnHeaders = (
     resultHeaderDimension: IResultHeader[][],
@@ -184,15 +190,20 @@ export const getRowHeaders = (
     });
 };
 
-export const getFields = (dataHeaders: IResultHeader[][]) => {
+export const getFields = (dataHeaders: IResultHeader[][]): string[] => {
     return range((dataHeaders[0] || []).length).map((cellIndex: number) => {
         const fieldList = dataHeaders.map((header: IResultHeader[]) => identifyHeader(header[cellIndex]));
         return fieldList.join(FIELD_SEPARATOR);
-    }) as string[];
+    });
 };
 
 // TODO: move this to data view facade / sanitize / make more generic
-export const assortDimensionDescriptors = (dimensions: IDimensionDescriptor[]) => {
+export const assortDimensionDescriptors = (
+    dimensions: IDimensionDescriptor[],
+): {
+    attributeDescriptors: IAttributeDescriptor[];
+    measureDescriptors: IMeasureDescriptor[];
+} => {
     const dimensionHeaders: IDimensionItemDescriptor[] = dimensions.reduce(
         (headers: IDimensionItemDescriptor[], dimension: IDimensionDescriptor) => [
             ...headers,

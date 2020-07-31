@@ -12,14 +12,14 @@ function getCellElement(gridApi: GridApi, attributeId: string, rowIndex: number)
     return rowComp && rowComp.cellComps[attributeId] ? rowComp.cellComps[attributeId].eGui : null;
 }
 
-function addCellClass(gridApi: GridApi, attributeId: string, rowIndex: number, className: string) {
+function addCellClass(gridApi: GridApi, attributeId: string, rowIndex: number, className: string): void {
     const cellElement = getCellElement(gridApi, attributeId, rowIndex);
     if (cellElement !== null) {
         cellElement.classList.add(className);
     }
 }
 
-function removeCellClass(gridApi: GridApi, attributeId: string, rowIndex: number, className: string) {
+function removeCellClass(gridApi: GridApi, attributeId: string, rowIndex: number, className: string): void {
     const cellElement = getCellElement(gridApi, attributeId, rowIndex);
     if (cellElement !== null) {
         cellElement.classList.remove(className);
@@ -45,17 +45,17 @@ function getPinnedTopRowElement(gridApi: GridApi): HTMLElement | null {
     return pinnedTopRow ? pinnedTopRow.bodyContainerComp.eContainer.parentElement.parentElement : null;
 }
 
-function addPinnedTopRowClass(gridApi: GridApi, className: string) {
+function addPinnedTopRowClass(gridApi: GridApi, className: string): void {
     const rowElement = getPinnedTopRowElement(gridApi);
     rowElement.classList.add(className);
 }
 
-function removePinnedTopRowClass(gridApi: GridApi, className: string) {
+function removePinnedTopRowClass(gridApi: GridApi, className: string): void {
     const rowElement = getPinnedTopRowElement(gridApi);
     rowElement.classList.remove(className);
 }
 
-function setPinnedTopRowStyle(gridApi: GridApi, propertyName: string, propertyValue: string) {
+function setPinnedTopRowStyle(gridApi: GridApi, propertyName: string, propertyValue: string): void {
     const rowElement = getPinnedTopRowElement(gridApi);
     rowElement.style[propertyName] = propertyValue;
 }
@@ -78,21 +78,21 @@ function getPinnedTopRowCellElement(gridApi: GridApi, attributeId: string): HTML
     return pinnedTopRowCellElementWrapper ? pinnedTopRowCellElementWrapper.querySelector("span") : null;
 }
 
-function addPinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string) {
+function addPinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string): void {
     const cellElement = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
     if (cellElement !== null) {
         cellElement.classList.add(className);
     }
 }
 
-function removePinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string) {
+function removePinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string): void {
     const cellElement = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
     if (cellElement !== null) {
         cellElement.classList.remove(className);
     }
 }
 
-function setPinnedTopRowCellText(gridApi: GridApi, attributeId: string, text: string) {
+function setPinnedTopRowCellText(gridApi: GridApi, attributeId: string, text: string): void {
     const cellElement = getPinnedTopRowCellElement(gridApi, attributeId);
 
     if (cellElement !== null) {

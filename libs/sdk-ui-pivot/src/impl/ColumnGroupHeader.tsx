@@ -15,12 +15,12 @@ export interface IColumnGroupDef extends ColGroupDef {
 }
 
 export default class ColumnGroupHeader extends React.Component<IProps> {
-    public render() {
+    public render(): React.ReactNode {
         const { menu, intl } = this.props;
         const columnGroupDef = this.props.columnGroup.getColGroupDef() as IColumnGroupDef;
         const parent = this.props.columnGroup.getParent();
 
-        // do not show menu for the first group header and empty headers above row attribute column heders
+        // do not show menu for the first group header and empty headers above row attribute column headers
         const showMenu = !!parent && !!columnGroupDef.headerName;
 
         return (

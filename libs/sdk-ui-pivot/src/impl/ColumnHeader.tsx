@@ -24,18 +24,18 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
         sorting: null,
     };
 
-    public UNSAFE_componentWillMount() {
+    public UNSAFE_componentWillMount(): void {
         this.props.column.addEventListener("sortChanged", this.getCurrentSortDirection);
         this.setState({
             sorting: this.props.column.getSort() as SortDirection,
         });
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.props.column.removeEventListener("sortChanged", this.getCurrentSortDirection);
     }
 
-    public getCurrentSortDirection = () => {
+    public getCurrentSortDirection = (): void => {
         const currentSort: SortDirection = this.props.column.getSort() as SortDirection;
         this.setState({
             sorting: currentSort,
@@ -46,12 +46,12 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
         return this.getFieldType() === FIELD_TYPE_ATTRIBUTE ? ASC : DESC;
     }
 
-    public onSortRequested = (sortDir: SortDirection) => {
+    public onSortRequested = (sortDir: SortDirection): void => {
         const multiSort = false; // Enable support for multisort with CMD key with 'event.shiftKey';
         this.props.setSort(sortDir, multiSort);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { displayName, enableSorting, menu, column } = this.props;
         const textAlign = this.getFieldType() === FIELD_TYPE_ATTRIBUTE ? ALIGN_LEFT : ALIGN_RIGHT;
         const isColumnAttribute = column.getColDef().type === COLUMN_ATTRIBUTE_COLUMN;

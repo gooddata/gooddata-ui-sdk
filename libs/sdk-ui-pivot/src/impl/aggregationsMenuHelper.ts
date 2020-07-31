@@ -22,7 +22,7 @@ function getAttributeIntersection(totals: ITotal[], type: TotalType, measureLoca
         const filteredTotals = getTotalsForMeasureAndType(totals, type, measure);
         return filteredTotals.map((total) => total.attributeIdentifier);
     });
-    return intersection.apply(null, attributeGroups);
+    return intersection(...attributeGroups);
 }
 
 function getUniqueMeasures(totals: ITotal[], type: TotalType) {

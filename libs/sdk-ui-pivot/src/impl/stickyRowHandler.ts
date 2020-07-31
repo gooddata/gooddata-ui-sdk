@@ -10,11 +10,11 @@ export interface IScrollPosition {
     readonly left: number;
 }
 
-export const initializeStickyRow = (gridApi: GridApi) => {
+export const initializeStickyRow = (gridApi: GridApi): void => {
     gridApi.setPinnedTopRowData([{}]);
 };
 
-export const updateStickyRowPosition = (gridApi: GridApi, apiWrapper: any = ApiWrapper) => {
+export const updateStickyRowPosition = (gridApi: GridApi, apiWrapper: any = ApiWrapper): void => {
     const headerHeight = apiWrapper.getHeaderHeight(gridApi);
     apiWrapper.setPinnedTopRowStyle(gridApi, "top", `${headerHeight}px`);
     apiWrapper.setPinnedTopRowStyle(gridApi, "padding-right", `${getScrollbarWidth()}px`);
@@ -51,8 +51,8 @@ export const updateStickyRowContentClasses = (
     rowHeight: number,
     gridApi: GridApi,
     groupingProvider: IGroupingProvider,
-    apiWrapper: any,
-) => {
+    apiWrapper: typeof ApiWrapper,
+): void => {
     if (!shouldUpdate(currentScrollPosition, lastScrollPosition, rowHeight)) {
         return;
     }

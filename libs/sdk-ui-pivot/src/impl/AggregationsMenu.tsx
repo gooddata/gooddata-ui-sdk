@@ -47,7 +47,7 @@ export interface IAggregationsMenuProps {
 }
 
 export default class AggregationsMenu extends React.Component<IAggregationsMenuProps> {
-    public render() {
+    public render(): React.ReactNode {
         const { intl, colId, getDataView, isMenuOpened, onMenuOpenedChange } = this.props;
 
         // Because of Ag-grid react wrapper does not rerender the component when we pass
