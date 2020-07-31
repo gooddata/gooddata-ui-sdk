@@ -15,7 +15,7 @@
     ],
     "config": {
         "tslint": "./{src}/**/*.ts",
-        "eslint": "-c .eslintrc.js --ext ts,tsx ./{src,test}/**/*.ts"
+        "eslint": "-c .eslintrc.js --ext ts ./{src,test}/**/*.ts"
     },
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",

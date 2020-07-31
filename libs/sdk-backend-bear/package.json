@@ -12,7 +12,7 @@
     ],
     "config": {
         "tslint": "./{src}/**/*.ts",
-        "eslint": "-c .eslintrc.js --ext ts,tsx ./{src,test}/**/*.ts"
+        "eslint": "-c .eslintrc.js --ext ts ./src/**/*.ts"
     },
     "scripts": {
         "clear-recordings": "rm -rf ./tests/wiremock/recordings/*",

@@ -11,7 +11,8 @@
         "styles"
     ],
     "config": {
-        "tslint": "./{__mocks__,src}/{,**/}*.{ts,tsx}"
+        "tslint": "./{__mocks__,src}/{,**/}*.{ts,tsx}",
+        "eslint": "-c .eslintrc.js --ext ts,tsx ./src/**/*.{ts,tsx}"
     },
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log styles/css && jest --clearCache",
