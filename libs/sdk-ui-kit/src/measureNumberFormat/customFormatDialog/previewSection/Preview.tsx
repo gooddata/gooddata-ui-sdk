@@ -25,7 +25,7 @@ export class Preview extends React.PureComponent<ICustomFormatPreviewProps, ICus
         preview: DEFAULT_PREVIEW_VALUE,
     };
 
-    public render = () => {
+    public render(): React.ReactNode {
         const { format, separators, intl } = this.props;
 
         return (
@@ -61,9 +61,9 @@ export class Preview extends React.PureComponent<ICustomFormatPreviewProps, ICus
                 <ExtendedPreview format={format} separators={separators} />
             </div>
         );
-    };
+    }
 
-    private onPreviewChange = (value: number) => {
+    private onPreviewChange = (value: number): void => {
         this.setState({ preview: value });
     };
 }

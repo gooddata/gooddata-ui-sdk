@@ -8,7 +8,7 @@ interface IDropdownToggleButtonProps {
     toggleDropdown: () => void;
 }
 
-const DropdownToggleButton = ({ toggleDropdown, isOpened }: IDropdownToggleButtonProps) => (
+const DropdownToggleButton = ({ toggleDropdown, isOpened }: IDropdownToggleButtonProps): JSX.Element => (
     <div
         className="gd-measure-format-button gd-measure-format-button-templates s-measure-format-templates-toggle-button"
         onClick={toggleDropdown}

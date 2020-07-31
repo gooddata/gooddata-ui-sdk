@@ -7,6 +7,16 @@
 import { ISeparators } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 
+// Warning: (ae-internal-missing-underscore) The name "IAlignPoint" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface IAlignPoint {
+    // (undocumented)
+    align: string;
+    // (undocumented)
+    offset: IOffset;
+}
+
 // Warning: (ae-internal-missing-underscore) The name "IFormatPreset" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
@@ -103,7 +113,7 @@ export interface IToggleButtonProps {
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.ReactNode;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "PresetType" should be prefixed with an underscore because the declaration is marked as @internal

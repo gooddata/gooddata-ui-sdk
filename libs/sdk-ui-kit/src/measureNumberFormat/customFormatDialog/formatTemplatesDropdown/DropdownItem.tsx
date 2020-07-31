@@ -30,7 +30,7 @@ export default class DropdownItem extends React.Component<
         displayHelp: false,
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { template, separators } = this.props;
         const { displayHelp } = this.state;
         return (
