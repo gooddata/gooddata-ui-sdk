@@ -68,7 +68,7 @@ export function createUniqueVariableName(title: string, scope: TakenNamesSet = {
  * @param name - name to ensure uniqueness of
  * @param scope - uniqueness scope
  */
-export function createUniqueName(name: string, scope: any): string {
+export function createUniqueName(name: string, scope: object): string {
     let uniqueName: string = name;
     let num: number = 1;
 

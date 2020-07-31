@@ -134,18 +134,18 @@ export type ProjectMetadata = {
 // Type Guards
 //
 
-export function isAttribute(obj: any): obj is Attribute {
+export function isAttribute(obj: unknown): obj is Attribute {
     return !isEmpty(obj) && (obj as Attribute).attribute !== undefined;
 }
 
-export function isMetric(obj: any): obj is Metric {
+export function isMetric(obj: unknown): obj is Metric {
     return !isEmpty(obj) && (obj as Metric).metric !== undefined;
 }
 
-export function isFact(obj: any): obj is Fact {
+export function isFact(obj: unknown): obj is Fact {
     return !isEmpty(obj) && (obj as Fact).fact !== undefined;
 }
 
-export function isCatalogExportError(obj: any): obj is CatalogExportError {
+export function isCatalogExportError(obj: unknown): obj is CatalogExportError {
     return !isEmpty(obj) && (obj as CatalogExportError).rc !== undefined;
 }

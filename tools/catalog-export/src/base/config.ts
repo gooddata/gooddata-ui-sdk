@@ -3,7 +3,7 @@ import { get, pick, pickBy, identity } from "lodash";
 import * as fs from "fs";
 import * as path from "path";
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants";
-import { CatalogExportConfig, SupportedBackendTypes } from "./types";
+import { CatalogExportConfig } from "./types";
 
 function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
     return {
@@ -23,19 +23,19 @@ function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG):
     };
 }
 
-function retrieveConfigFromObject(obj: any): CatalogExportConfig {
+function retrieveConfigFromObject(obj: object): CatalogExportConfig {
     return {
-        hostname: get<string | null>(obj, "hostname", null),
-        projectId: get<string | null>(obj, "projectId", null),
-        projectName: get<string | null>(obj, "projectName", null),
-        username: get<string | null>(obj, "username", null),
-        password: get<string | null>(obj, "password", null),
-        output: get<string | null>(obj, "output", null),
-        backend: get<SupportedBackendTypes | null>(obj, "backend", "bear"),
+        hostname: get(obj, "hostname", null),
+        projectId: get(obj, "projectId", null),
+        projectName: get(obj, "projectName", null),
+        username: get(obj, "username", null),
+        password: get(obj, "password", null),
+        output: get(obj, "output", null),
+        backend: get(obj, "backend", "bear"),
     };
 }
 
-export function getConfigFromProgram(obj: any, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
+export function getConfigFromProgram(obj: object, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
     return mergeConfigs(retrieveConfigFromObject(obj), prevConfig);
 }
 
