@@ -3,7 +3,7 @@ module.exports = {
     root: true,
     ignorePatterns: ["**/dist/**/*.*"],
     parser: "@typescript-eslint/parser",
-    plugins: ["react-hooks"],
+    plugins: ["react-hooks", "prettier"],
     extends: ["@gooddata", "plugin:react/recommended", "plugin:import/errors", "plugin:import/typescript"],
     settings: {
         react: {
