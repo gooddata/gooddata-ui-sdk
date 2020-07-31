@@ -1,8 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
-import "@gooddata/sdk-ui-ext/styles/css/insightView.css";
-
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { InsightViewColumnChartByIdentifierExample } from "./InsightViewColumnChartByIdentifierExample";
