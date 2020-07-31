@@ -41,8 +41,8 @@ export function renderLegend(props: IGeoChartLegendRendererProps): React.ReactEl
     return (
         <IntlWrapper locale={props.locale}>
             <IntlTranslationsProvider>
-                {(transplationProps: ITranslationsComponentProps) => (
-                    <GeoChartLegendRenderer {...props} numericSymbols={transplationProps.numericSymbols} />
+                {(translationProps: ITranslationsComponentProps) => (
+                    <GeoChartLegendRenderer {...props} numericSymbols={translationProps.numericSymbols} />
                 )}
             </IntlTranslationsProvider>
         </IntlWrapper>
@@ -129,16 +129,16 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         this.throttledOnWindowResize = throttle(this.onWindowResize, 100);
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.updateConfigurationPanel(this.props.geoChartOptions);
         window.addEventListener("resize", this.throttledOnWindowResize);
     }
 
-    public componentDidUpdate() {
+    public componentDidUpdate(): void {
         this.updateConfigurationPanel(this.props.geoChartOptions);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.throttledOnWindowResize.cancel();
         window.removeEventListener("resize", this.throttledOnWindowResize);
     }

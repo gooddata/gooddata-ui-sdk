@@ -37,7 +37,7 @@ export const VIEWPORTS: IGeoViewports = {
 export const DEFAULT_CLUSTER_FILTER = ["has", "point_count"];
 export const DEFAULT_CLUSTER_LABELS_CONFIG = {
     id: "gdcClusterLabels",
-    type: "symbol" as "symbol",
+    type: "symbol" as const,
     layout: {
         "text-allow-overlap": true,
         "text-field": "{point_count_abbreviated}",

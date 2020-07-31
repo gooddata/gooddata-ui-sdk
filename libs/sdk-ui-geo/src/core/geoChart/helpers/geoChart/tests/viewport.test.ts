@@ -190,7 +190,7 @@ describe("viewport", () => {
         });
 
         it("should return default World viewport with all empty coordinates", () => {
-            // @ts-ignore
+            // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
             const lnglats: IGeoLngLat[] = [null, null];
             expect(getLngLatBounds(lnglats)).toEqual({
                 northEast: { lat: -84, lng: -180 },
@@ -253,7 +253,7 @@ describe("viewport", () => {
                 },
                 null,
             ];
-            // @ts-ignore
+            // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
             const result = getLngLatBounds(lnglats);
             expect(result).toEqual({
                 northEast: {

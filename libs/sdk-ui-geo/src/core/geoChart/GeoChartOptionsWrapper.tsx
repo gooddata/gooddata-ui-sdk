@@ -37,7 +37,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
         this.errorMap = newErrorMapping(props.intl);
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { dataView, error, isLoading } = this.props;
 
         const ErrorComponent = this.props.ErrorComponent ?? DefaultErrorComponent;
@@ -45,7 +45,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
 
         if (error) {
             const errorProps = this.errorMap[
-                this.errorMap.hasOwnProperty(error) ? error : ErrorCodes.UNKNOWN_ERROR
+                Object.prototype.hasOwnProperty.call(this.errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
             ];
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
@@ -57,7 +57,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
         return this.renderVisualization();
     }
 
-    public renderVisualization() {
+    public renderVisualization(): React.ReactNode {
         const sanitizedProps: IGeoChartInnerProps = this.sanitizeProperties();
 
         const { dataView, onDataTooLarge } = sanitizedProps;

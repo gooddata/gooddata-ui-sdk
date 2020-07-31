@@ -75,7 +75,7 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
             const { execution } = this.props;
 
             this.isLocationMissing = isLocationMissing(execution.definition.buckets);
-            this.isMapboxTokenMissing = !Boolean(mapboxToken);
+            this.isMapboxTokenMissing = !mapboxToken;
         }
 
         private handleError() {
