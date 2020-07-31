@@ -37,6 +37,7 @@ export const objRefToIdentifier = async (
 
     // for now fake this as there is no API endpoint this could call
     // uses the fact that md objects have uris ending like /{md object type}/id
+    // eslint-disable-next-line no-useless-escape
     const regex = /\/([^\/]+)\/?$/;
     const matches = regex.exec(ref.uri);
     if (!matches) {
