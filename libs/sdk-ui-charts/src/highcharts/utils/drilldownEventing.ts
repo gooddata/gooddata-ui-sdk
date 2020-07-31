@@ -183,7 +183,7 @@ export function chartClick(
     event: Highcharts.DrilldownEventObject,
     target: EventTarget,
     chartType: ChartType,
-) {
+): void {
     chartClickDebounced(drillConfig, event, target, chartType);
 }
 
@@ -237,6 +237,6 @@ export function tickLabelClick(
     points: IHighchartsPointObject[],
     target: EventTarget,
     chartType: ChartType,
-) {
+): void {
     tickLabelClickDebounce(drillConfig, points, target, chartType);
 }

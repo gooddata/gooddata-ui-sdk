@@ -113,7 +113,7 @@ const toggleStackedChartLabels = (visiblePoints: Highcharts.Point[], axisRangeFo
     }
 };
 
-export function isOverlappingWidth(visiblePoints: Highcharts.Point[]) {
+export function isOverlappingWidth(visiblePoints: Highcharts.Point[]): boolean {
     return visiblePoints.filter(hasDataLabel).some((point: Highcharts.Point) => {
         const { dataLabel, shapeArgs } = point;
 
@@ -282,7 +282,7 @@ function toggleStackedLabels() {
     return toggleStackedLabelsForSingleAxis.call(this);
 }
 
-export const autohideColumnLabels = (chart: Highcharts.Chart) => {
+export const autohideColumnLabels = (chart: Highcharts.Chart): void => {
     const isStackedChart = isStacked(chart);
     const hasLabelsStacked = areLabelsStacked(chart);
 
@@ -302,7 +302,7 @@ export const autohideColumnLabels = (chart: Highcharts.Chart) => {
     }
 };
 
-export const handleColumnLabelsOutsideChart = (chart: Highcharts.Chart) => {
+export const handleColumnLabelsOutsideChart = (chart: Highcharts.Chart): void => {
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
 

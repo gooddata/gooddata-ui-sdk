@@ -8,7 +8,7 @@ class MockHighChartsLabel {
     public basicStyles = { cursor: "default" };
     private classNames: string[] = [];
     private cssObj: { [property: string]: string } = {};
-    private events: { [property: string]: (event: Event) => {} } = {};
+    private events: { [property: string]: (event: Event) => void } = {};
 
     public addClass(className: string) {
         this.classNames.push(className);
@@ -24,7 +24,7 @@ class MockHighChartsLabel {
         return this;
     }
 
-    public on(eventName: string, callback: (event: Event) => {}) {
+    public on(eventName: string, callback: (event: Event) => void) {
         this.events[eventName] = callback;
         return this;
     }

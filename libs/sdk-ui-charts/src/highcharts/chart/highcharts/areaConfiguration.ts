@@ -3,7 +3,7 @@ import cloneDeep from "lodash/cloneDeep";
 
 const LINE_WIDTH = 3;
 
-const AREA_TEMPLATE: any = {
+const AREA_TEMPLATE = {
     chart: {
         type: "area",
     },
@@ -40,8 +40,8 @@ const AREA_TEMPLATE: any = {
             },
         },
     ],
-};
+} as const;
 
-export function getAreaConfiguration() {
+export function getAreaConfiguration(): typeof AREA_TEMPLATE {
     return cloneDeep(AREA_TEMPLATE);
 }

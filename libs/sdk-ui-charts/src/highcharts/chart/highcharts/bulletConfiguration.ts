@@ -42,6 +42,6 @@ const BULLET_TEMPLATE = {
     ],
 };
 
-export function getBulletConfiguration() {
+export function getBulletConfiguration(): typeof BULLET_TEMPLATE {
     return cloneDeep(BULLET_TEMPLATE);
 }

@@ -4,13 +4,13 @@ import { visualizationIsBetaWarning } from "@gooddata/sdk-ui";
 import { BaseChart } from "../_base/BaseChart";
 import { ICoreChartProps } from "../../interfaces";
 
-export class CoreFunnelChart extends React.PureComponent<ICoreChartProps, null> {
+export class CoreFunnelChart extends React.PureComponent<ICoreChartProps> {
     constructor(props: ICoreChartProps) {
         super(props);
         visualizationIsBetaWarning();
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return <BaseChart type="funnel" {...this.props} />;
     }
 }

@@ -12,7 +12,7 @@ export default class LegendItem extends React.Component<any, any> {
         width: null,
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { item, chartType, width } = this.props;
         const itemChartType = isComboChart(chartType) ? item.type : chartType;
         const enableBorderRadius = isLineChart(itemChartType) || isAreaChart(itemChartType);

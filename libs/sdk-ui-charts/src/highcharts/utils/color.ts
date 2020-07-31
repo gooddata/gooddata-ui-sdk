@@ -2,7 +2,7 @@
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getColorPaletteFromColors } from "@gooddata/sdk-ui-vis-commons";
 import { IChartConfig } from "../../interfaces";
-import { IRgbColorValue } from "@gooddata/sdk-model";
+import { IRgbColorValue, IColorPalette } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 export const WHITE = "rgb(255, 255, 255)";
@@ -33,7 +33,7 @@ export const DEFAULT_BULLET_GRAY_COLOR: IRgbColorValue = {
     b: 226,
 };
 
-export function getValidColorPalette(config: IChartConfig) {
+export function getValidColorPalette(config: IChartConfig): IColorPalette {
     return isEmpty(config.colorPalette)
         ? isEmpty(config.colors)
             ? DefaultColorPalette

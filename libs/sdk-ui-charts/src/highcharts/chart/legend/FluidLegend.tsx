@@ -5,28 +5,34 @@ import cx from "classnames";
 import LegendList from "./LegendList";
 import { calculateFluidLegend } from "./helpers";
 
-export default class FluidLegend extends React.PureComponent<any, any> {
+interface IFluidLegendProps {
+    onItemClick: (item: any) => void;
+    chartType: string;
+    series: any[];
+    position: string;
+    containerWidth: number;
+}
+
+interface IFluidLegendState {
+    showAll: boolean;
+}
+
+export default class FluidLegend extends React.PureComponent<IFluidLegendProps, IFluidLegendState> {
     public static defaultProps: any = {
         containerWidth: null,
     };
 
-    constructor(props: any) {
-        super(props);
+    state: IFluidLegendState = {
+        showAll: false,
+    };
 
-        this.state = {
-            showAll: false,
-        };
-
-        this.toggleShowAll = this.toggleShowAll.bind(this);
-    }
-
-    public toggleShowAll() {
+    public toggleShowAll = (): void => {
         this.setState({
             showAll: !this.state.showAll,
         });
-    }
+    };
 
-    public renderSeries(itemWidth: any, visibleItemsCount: any) {
+    public renderSeries = (itemWidth: number, visibleItemsCount: number): React.ReactNode => {
         const { series, chartType, onItemClick } = this.props;
 
         const limit = this.state.showAll ? series.length : visibleItemsCount;
@@ -42,9 +48,9 @@ export default class FluidLegend extends React.PureComponent<any, any> {
                 />
             </div>
         );
-    }
+    };
 
-    public renderPaging() {
+    public renderPaging = (): React.ReactNode => {
         const classes = cx("gd-button-link", "gd-button-icon-only", "paging-button", {
             "icon-chevron-up": this.state.showAll,
             "icon-chevron-down": !this.state.showAll,
@@ -54,9 +60,9 @@ export default class FluidLegend extends React.PureComponent<any, any> {
                 <button className={classes} onClick={this.toggleShowAll} />
             </div>
         );
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         const { series, containerWidth } = this.props;
         const { itemWidth, hasPaging, visibleItemsCount } = calculateFluidLegend(
             series.length,

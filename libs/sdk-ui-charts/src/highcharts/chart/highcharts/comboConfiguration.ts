@@ -15,7 +15,7 @@ function getDefaultComboTypes(config?: IChartConfig): IChartConfig {
         secondaryChartType: get(config, "secondaryChartType", LINE),
     };
 }
-export function getDefaultChartType(config?: IChartConfig) {
+export function getDefaultChartType(config?: IChartConfig): "line" | "column" | "area" {
     const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
 
     if (primaryChartType === secondaryChartType) {
@@ -45,7 +45,7 @@ function isOnlyLineSeries(config: IChartConfig, definition?: IExecutionDefinitio
     );
 }
 
-export function getComboConfiguration(config?: IChartConfig, definition?: IExecutionDefinition) {
+export function getComboConfiguration(config?: IChartConfig, definition?: IExecutionDefinition): any {
     const series = isOnlyLineSeries(config, definition)
         ? {
               series: {

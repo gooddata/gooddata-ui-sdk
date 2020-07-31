@@ -35,7 +35,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
     public static defaultProps = {
         locale: "en-US",
         numericSymbols: [] as string[],
-        onDrill: () => true,
+        onDrill: (): boolean => true,
         afterRender: noop,
     };
 
@@ -45,15 +45,15 @@ export class Visualization extends React.Component<IVisualizationProps> {
         this.setNumericSymbols(this.props);
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IVisualizationProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IVisualizationProps): void {
         this.setNumericSymbols(nextProps);
     }
 
-    public shouldComponentUpdate(nextProps: IVisualizationProps) {
+    public shouldComponentUpdate(nextProps: IVisualizationProps): boolean {
         return !isEqual(omitBy(this.props, isFunction), omitBy(nextProps, isFunction));
     }
 
-    public setNumericSymbols(props: IVisualizationProps) {
+    public setNumericSymbols(props: IVisualizationProps): void {
         const { numericSymbols } = props;
 
         if (numericSymbols && numericSymbols.length) {
@@ -65,7 +65,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const visType = this.props.config.type;
 
         if (isChartSupported(visType)) {

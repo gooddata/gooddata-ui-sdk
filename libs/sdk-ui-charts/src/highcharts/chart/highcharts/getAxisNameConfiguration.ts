@@ -67,7 +67,7 @@ function getHighchartsAxisTitleConfiguration(
     return title;
 }
 
-export function getAxisNameConfiguration(chartOptions: IChartOptions) {
+export function getAxisNameConfiguration(chartOptions: IChartOptions): { xAxis: any; yAxis: any } {
     const configGetter = axisNameConfigGetter(chartOptions);
     return {
         xAxis: configGetter("x"),

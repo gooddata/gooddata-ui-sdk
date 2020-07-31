@@ -7,31 +7,37 @@ import LegendList from "./LegendList";
 import { TOP, BOTTOM } from "./PositionTypes";
 import { calculateStaticLegend, ITEM_HEIGHT } from "./helpers";
 
-export default class StaticLegend extends React.PureComponent<any, any> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            page: 1,
-        };
+interface IStaticLegendProps {
+    onItemClick: (item: any) => void;
+    chartType: string;
+    series: any[];
+    position: string;
+    containerHeight: number;
+}
 
-        this.showNextPage = this.showNextPage.bind(this);
-        this.showPrevPage = this.showPrevPage.bind(this);
-    }
+interface IStaticLegendState {
+    page: number;
+}
 
-    public showNextPage() {
+export default class StaticLegend extends React.PureComponent<IStaticLegendProps, IStaticLegendState> {
+    state: IStaticLegendState = {
+        page: 1,
+    };
+
+    public showNextPage = (): void => {
         this.setState({ page: this.state.page + 1 });
-    }
+    };
 
-    public showPrevPage() {
+    public showPrevPage = (): void => {
         this.setState({ page: this.state.page - 1 });
-    }
+    };
 
-    public renderPagingButton(type: any, handler: any, disabled: any) {
+    public renderPagingButton = (type: string, handler: () => void, disabled: boolean): React.ReactNode => {
         const classes = cx("gd-button-link", "gd-button-icon-only", `icon-chevron-${type}`, "paging-button");
         return <button className={classes} onClick={handler} disabled={disabled} />;
-    }
+    };
 
-    public renderPaging(visibleItemsCount: any) {
+    public renderPaging = (visibleItemsCount: number): React.ReactNode => {
         const { page } = this.state;
         const pagesCount = Math.ceil(this.props.series.length / visibleItemsCount);
 
@@ -48,9 +54,9 @@ export default class StaticLegend extends React.PureComponent<any, any> {
                 {this.renderPagingButton("down", this.showNextPage, page === pagesCount)}
             </div>
         );
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         const { series, chartType, onItemClick, position, containerHeight } = this.props;
         const { page } = this.state;
 

@@ -11,6 +11,7 @@ import {
     ROTATE_NEGATIVE_90_DEGREES,
 } from "../../constants/axisLabel";
 import { IChartOptions } from "../../typings/unsafe";
+import { XAxisOptions } from "highcharts";
 
 function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highcharts.XAxisOptions {
     const isOppositeAxis: boolean = index === 1;
@@ -24,7 +25,9 @@ function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highch
     };
 }
 
-export function getAxisLabelConfigurationForDualBarChart(chartOptions: IChartOptions) {
+export function getAxisLabelConfigurationForDualBarChart(
+    chartOptions: IChartOptions,
+): { yAxis?: XAxisOptions[] } {
     const { type, yAxes = [] } = chartOptions;
     const isBar: boolean = isBarChart(type);
     const isDualAxis: boolean = yAxes.length === 2;

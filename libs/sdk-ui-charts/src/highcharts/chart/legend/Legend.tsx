@@ -48,11 +48,12 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
         this.onItemClick = this.onItemClick.bind(this);
     }
 
-    public onItemClick(item: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public onItemClick(item: any): void {
         this.props.onItemClick(item);
     }
 
-    public getSeries() {
+    public getSeries(): ReturnType<typeof getComboChartSeries> {
         const { series, legendItemsEnabled, chartType } = this.props;
 
         const seriesWithVisibility = series.map((seriesItem: any) => {
@@ -70,7 +71,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
         return transformToDualAxesSeries(seriesWithVisibility, chartType);
     }
 
-    public renderFluid() {
+    public renderFluid(): React.ReactNode {
         const { chartType } = this.props;
 
         return (
@@ -95,7 +96,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
         );
     }
 
-    public renderStatic() {
+    public renderStatic(): React.ReactNode {
         const { chartType, position, height, format, locale, responsive } = this.props;
 
         const classNames = cx("viz-static-legend-wrap", `position-${position}`);
@@ -133,7 +134,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
         );
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { responsive } = this.props;
         const { showFluidLegend } = this.props;
 

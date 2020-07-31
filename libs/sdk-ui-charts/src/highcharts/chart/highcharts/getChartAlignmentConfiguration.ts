@@ -4,7 +4,7 @@ import { IChartOptions } from "../../typings/unsafe";
 
 export function getChartAlignmentConfiguration(
     _chartOptions: IChartOptions,
-    _config: any,
+    _config: unknown,
     chartConfig: IChartConfig = {},
 ): Partial<IChartConfig> {
     const { chart } = chartConfig;

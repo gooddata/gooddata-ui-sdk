@@ -33,6 +33,6 @@ const PIE_TEMPLATE = {
     },
 };
 
-export function getPieConfiguration() {
+export function getPieConfiguration(): typeof PIE_TEMPLATE {
     return cloneDeep(PIE_TEMPLATE);
 }

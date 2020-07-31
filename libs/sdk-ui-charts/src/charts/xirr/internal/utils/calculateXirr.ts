@@ -35,7 +35,7 @@ const newtonRaphson = (fun: NumericFunction, derivative: NumericFunction, guess:
  * @param transactions
  * @param guess
  */
-export const calculateXirr = (transactions: IXirrInput[], guess = 0.1) => {
+export const calculateXirr = (transactions: IXirrInput[], guess = 0.1): number => {
     // convert any date to a fractional year difference to allow non-uniform cash-flow distribution (the X in XIRR)
     const startDate = transactions[0].when;
     const data = transactions.map((t) => ({

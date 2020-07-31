@@ -4,7 +4,7 @@ import get from "lodash/get";
 import { getPieConfiguration } from "./pieConfiguration";
 import { alignChart } from "./helpers";
 
-export function getDonutConfiguration() {
+export function getDonutConfiguration(): ReturnType<typeof getPieConfiguration> {
     return merge({}, getPieConfiguration(), {
         chart: {
             events: {

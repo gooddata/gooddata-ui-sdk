@@ -22,7 +22,7 @@ import getLegend from "./legend/legendBuilder";
 import noop from "lodash/noop";
 import { IChartOptions } from "../typings/unsafe";
 
-export function renderHighCharts(props: IHighChartsRendererProps) {
+export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     return <HighChartsRenderer {...props} />;
 }
 
@@ -59,7 +59,7 @@ export default class ChartTransformation extends React.Component<
         renderer: renderHighCharts,
         afterRender: noop,
         onNegativeValues: null as any,
-        onDrill: () => true,
+        onDrill: (): boolean => true,
         pushData: noop,
         onLegendReady: noop,
         height: undefined as number,
@@ -69,15 +69,15 @@ export default class ChartTransformation extends React.Component<
     private chartOptions: IChartOptions;
     private legendOptions: ILegendOptions;
 
-    public UNSAFE_componentWillMount() {
+    public UNSAFE_componentWillMount(): void {
         this.assignChartOptions(this.props);
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IChartTransformationProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IChartTransformationProps): void {
         this.assignChartOptions(nextProps);
     }
 
-    public getRendererProps() {
+    public getRendererProps(): Omit<IHighChartsRendererProps, "legendRenderer" | "chartRenderer"> {
         const { chartOptions, legendOptions } = this;
         const { dataView, height, width, afterRender, onDrill, onLegendReady, locale, config } = this.props;
         const drillConfig = { dataView, onDrill };
@@ -95,7 +95,7 @@ export default class ChartTransformation extends React.Component<
         };
     }
 
-    public assignChartOptions(props: IChartTransformationProps) {
+    public assignChartOptions(props: IChartTransformationProps): IChartOptions {
         const { drillableItems, dataView, onDataTooLarge, onNegativeValues, pushData, config } = props;
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
@@ -134,7 +134,7 @@ export default class ChartTransformation extends React.Component<
         return this.chartOptions;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.dataTooLarge || this.state.hasNegativeValue) {
             return null;
         }

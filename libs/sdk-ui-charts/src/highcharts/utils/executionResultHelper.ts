@@ -3,6 +3,7 @@ import {
     IAttributeDescriptor,
     IMeasureGroupDescriptor,
     IDimensionDescriptor,
+    IResultHeader,
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { IUnwrappedAttributeHeadersWithItems } from "./types";
@@ -63,8 +64,8 @@ export function findMeasureGroupInDimensions(
 }
 
 export function findAttributeInDimension(
-    dimension: any,
-    attributeHeaderItemsDimension: any,
+    dimension: IDimensionDescriptor,
+    attributeHeaderItemsDimension: IResultHeader[][],
     indexInDimension?: number,
 ): IUnwrappedAttributeHeadersWithItems {
     return findInDimensionHeaders(

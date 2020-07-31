@@ -473,17 +473,6 @@ describe("helpers", () => {
 
                 expect(result).toBeTruthy();
             });
-
-            it("should return true when min is bigger than minimal value", () => {
-                const result = shouldFollowPointer({
-                    ...nonStackedChartOptions,
-                    yAxisProps: {
-                        min: "0",
-                    },
-                });
-
-                expect(result).toBeTruthy();
-            });
         });
 
         describe("Stacked chart", () => {

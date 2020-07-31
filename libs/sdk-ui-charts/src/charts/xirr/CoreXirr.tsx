@@ -16,7 +16,7 @@ import XirrTransformation from "./internal/XirrTransformation";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
-export class XirrStateless extends React.Component<Props, {}> {
+export class XirrStateless extends React.Component<Props> {
     public static defaultProps: Partial<ICommonChartProps> = defaultCoreChartProps;
 
     private errorMap: IErrorDescriptors;
@@ -34,7 +34,7 @@ export class XirrStateless extends React.Component<Props, {}> {
 
         if (error) {
             const errorProps = this.errorMap[
-                this.errorMap.hasOwnProperty(error) ? error : ErrorCodes.UNKNOWN_ERROR
+                Object.prototype.hasOwnProperty.call(this.errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
             ];
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }

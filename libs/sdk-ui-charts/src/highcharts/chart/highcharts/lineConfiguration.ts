@@ -3,7 +3,7 @@ import cloneDeep from "lodash/cloneDeep";
 
 export const LINE_WIDTH = 3;
 
-const LINE_TEMPLATE: any = {
+const LINE_TEMPLATE = {
     chart: {
         type: "line",
     },
@@ -40,8 +40,8 @@ const LINE_TEMPLATE: any = {
             },
         },
     ],
-};
+} as const;
 
-export function getLineConfiguration() {
+export function getLineConfiguration(): typeof LINE_TEMPLATE {
     return cloneDeep(LINE_TEMPLATE);
 }

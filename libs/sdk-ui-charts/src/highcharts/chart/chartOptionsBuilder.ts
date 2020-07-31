@@ -161,7 +161,7 @@ export type ITooltipFactory = (
     percentageValue?: number,
 ) => string;
 
-export function isNegativeValueIncluded(series: ISeriesItem[]) {
+export function isNegativeValueIncluded(series: ISeriesItem[]): boolean {
     return series.some((seriesItem: ISeriesItem) =>
         (seriesItem.data || []).some(({ y, value }: ISeriesDataItem) => y < 0 || value < 0),
     );
@@ -201,7 +201,7 @@ function getChartLimits(type: string): IChartLimits {
     }
 }
 
-export function cannotShowNegativeValues(type: string) {
+export function cannotShowNegativeValues(type: string): boolean {
     return isOneOfTypes(type, unsupportedNegativeValuesTypes);
 }
 
@@ -238,7 +238,7 @@ export function getSeriesItemData(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     colorStrategy: IColorStrategy,
-) {
+): IPointData[] {
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         // by default seriesIndex corresponds to measureGroup label index
         let measureIndex = seriesIndex;
@@ -295,7 +295,7 @@ export function getSeriesItemData(
 export function getHeatmapSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-) {
+): any[] {
     const data: IPointData[] = [];
     dv.rawData()
         .twoDimData()
@@ -341,9 +341,10 @@ export function getHeatmapSeries(
 
 export function getScatterPlotSeries(
     dv: DataViewFacade,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
-) {
+): any[] {
     const primaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.MEASURES);
     const secondaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
 
@@ -379,9 +380,10 @@ function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
 export function getBubbleChartSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
-) {
+): any[] {
     const primaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.MEASURES);
     const secondaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
 
@@ -509,6 +511,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
 export function getTreemapStackedSeriesDataWithMeasures(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
 ): any[] {
@@ -565,7 +568,7 @@ export function getTreemapStackedSeries(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
-) {
+): any[] {
     let data = [];
     if (viewByAttribute) {
         data = getTreemapStackedSeriesDataWithViewBy(
@@ -773,7 +776,7 @@ export function buildTooltipForTwoAttributesFactory(
 }
 
 export function generateTooltipXYFn(
-    measures: any,
+    measures: IMeasureDescriptor[],
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
 ): ITooltipFactory {
@@ -813,7 +816,9 @@ export function generateTooltipXYFn(
 }
 
 export function generateTooltipHeatmapFn(
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     viewByAttribute: any,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     stackByAttribute: any,
     config: IChartConfig = {},
 ): ITooltipFactory {
@@ -946,19 +951,19 @@ function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stack
 
 export function getDrillableSeries(
     dv: DataViewFacade,
-    series: any,
+    series: any[],
     drillableItems: IHeaderPredicate[],
     viewByAttributes: IUnwrappedAttributeHeadersWithItems[],
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: VisType,
-) {
+): any {
     const [viewByChildAttribute, viewByParentAttribute] = viewByAttributes;
 
     const isMultiMeasureWithOnlyMeasures =
         isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByChildAttribute;
     const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
 
-    return series.map((seriesItem: any, seriesIndex: number) => {
+    return series.map((seriesItem, seriesIndex) => {
         let isSeriesDrillable = false;
         let data =
             seriesItem.data &&

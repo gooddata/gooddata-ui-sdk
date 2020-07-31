@@ -31,7 +31,8 @@ export interface IBubbleSeries extends Highcharts.Series {
     getRadii(zMin: number, zMax: number, series: Highcharts.Series): number | null;
 }
 
-export function renderBubbles(HighchartsInstance: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function renderBubbles(HighchartsInstance: any): void {
     const wrap = HighchartsInstance.wrap;
     const pInt = HighchartsInstance.pInt;
     const arrayMax = HighchartsInstance.arrayMax;
@@ -52,7 +53,7 @@ export function renderBubbles(HighchartsInstance: any) {
             let radius = proceed.apply(this, [zMin, zMax, minSize, maxSize, value]);
             if (isNaN(value) && isNil(radius)) {
                 // Relative size, a number between 0 and 1 (default is 0.5)
-                // Use Math.sqrt for buble is sized by area
+                // Use Math.sqrt for bubble is sized by area
                 radius = Math.ceil(minSize + Math.sqrt(0.5) * (maxSize - minSize)) / 2;
             }
             return radius;
@@ -60,6 +61,7 @@ export function renderBubbles(HighchartsInstance: any) {
 
         // #SD-479 fix bubbles is not rendered with min/max config
         wrap(HighchartsInstance.Axis.prototype, "beforePadding", function (_proceed: any) {
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
             const axis: IBubbleAxis = this;
             const axisLength: number = this.len;
             const chart: Highcharts.Chart = this.chart;

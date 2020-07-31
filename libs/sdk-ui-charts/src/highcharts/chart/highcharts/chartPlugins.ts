@@ -9,6 +9,7 @@ import { adjustTickAmount } from "./plugins/adjustTickAmount";
 
 const extendRenderStackTotals = (Highcharts: any) => {
     Highcharts.wrap(Highcharts.Axis.prototype, "renderStackTotals", function (proceed: any) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const axis = this;
         const { chart, stackTotalGroup } = axis;
         const { renderer } = chart;
@@ -32,7 +33,8 @@ const extendRenderStackTotals = (Highcharts: any) => {
     });
 };
 
-export function initChartPlugins(Highcharts: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function initChartPlugins(Highcharts: any): void {
     extendRenderStackTotals(Highcharts);
     autohideLabels(Highcharts);
     extendDataLabelColors(Highcharts);

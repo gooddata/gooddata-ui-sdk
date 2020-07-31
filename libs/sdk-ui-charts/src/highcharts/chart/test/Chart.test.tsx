@@ -7,7 +7,7 @@ import Chart from "../Chart";
 
 jest.mock("highcharts", () => {
     return {
-        Chart: ({}, callback: any) => {
+        Chart: (_: any, callback: any) => {
             callback();
         },
     };

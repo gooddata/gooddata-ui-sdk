@@ -282,6 +282,7 @@ function alignYAxes(axis: IHighchartsAxisExtend): void {
  * Copy and modify Highcharts behavior
  */
 export function customAdjustTickAmount(): void {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const axis = this;
     if (!axis.hasData()) {
         return;
@@ -344,10 +345,12 @@ export function shouldBeHandledByHighcharts(axis: IHighchartsAxisExtend): boolea
     return yAxes.some((axis: IHighchartsAxisExtend) => axis.visible === false);
 }
 
-export const adjustTickAmount = (HighchartsInstance: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const adjustTickAmount = (HighchartsInstance: any): void => {
     Highcharts.wrap(HighchartsInstance.Axis.prototype, "adjustTickAmount", function (
         proceed: Highcharts.WrapProceedFunction,
     ) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const axis = this;
 
         if (shouldBeHandledByHighcharts(axis)) {

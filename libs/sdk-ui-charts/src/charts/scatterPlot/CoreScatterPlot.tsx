@@ -4,7 +4,7 @@ import { BaseChart } from "../_base/BaseChart";
 import { ICoreChartProps } from "../../interfaces";
 
 export class CoreScatterPlot extends React.PureComponent<ICoreChartProps, null> {
-    public render() {
+    public render(): React.ReactNode {
         return <BaseChart type="scatter" {...this.props} />;
     }
 }

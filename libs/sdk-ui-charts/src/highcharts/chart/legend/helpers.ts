@@ -11,7 +11,7 @@ import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";
 import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from "../../utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { supportedDualAxesChartTypes } from "../chartCapabilities";
-import { ISeriesItem } from "../../typings/unsafe";
+import { ISeriesItem, IChartOptions } from "../../typings/unsafe";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;
@@ -202,7 +202,15 @@ export const heatmapSmallLegendConfigMatrix = [
     ],
 ];
 
-export function buildHeatmapLabelsConfig(labels: string[], config: any) {
+export function buildHeatmapLabelsConfig(
+    labels: string[],
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    config: any,
+): {
+    label: string;
+    style: React.CSSProperties;
+    key: string;
+} {
     return config.map((element: any, index: number) => {
         switch (element.type) {
             case "label":
@@ -257,7 +265,14 @@ function getHeatmapLegendLabelsConfiguration(legendLabels: string[], isSmall: bo
     return buildHeatmapLabelsConfig(legendLabels, shorteningConfig);
 }
 
-export function calculateFluidLegend(seriesCount: number, containerWidth: number) {
+export function calculateFluidLegend(
+    seriesCount: number,
+    containerWidth: number,
+): {
+    hasPaging: boolean;
+    itemWidth: number;
+    visibleItemsCount: number;
+} {
     // -1 because flex dimensions provide rounded number and the real width can be float
     const realWidth = containerWidth - 2 * LEGEND_PADDING - 1;
 
@@ -297,7 +312,13 @@ function getStaticVisibleItemsCount(containerHeight: number, withPaging: boolean
     return Math.floor((containerHeight - pagingHeight) / ITEM_HEIGHT);
 }
 
-export function calculateStaticLegend(seriesCount: number, containerHeight: number) {
+export function calculateStaticLegend(
+    seriesCount: number,
+    containerHeight: number,
+): {
+    hasPaging: boolean;
+    visibleItemsCount: number;
+} {
     const visibleItemsCount = getStaticVisibleItemsCount(containerHeight);
     if (visibleItemsCount >= seriesCount) {
         return {
@@ -378,7 +399,7 @@ export function getHeatmapLegendConfiguration(
 
     return {
         classes,
-        labels: finalLabels,
+        labels: finalLabels as any,
         boxes,
         position: finalPosition,
     };
@@ -437,7 +458,8 @@ export function groupSeriesItemsByType(series: ISeriesItem[]): { [key: string]: 
     );
 }
 
-export function getComboChartSeries(series: ISeriesItem[]) {
+// TODO the return type is fishy, should probably return ISeriesItem[]?
+export function getComboChartSeries(series: ISeriesItem[]): any[] {
     const { primaryItems, secondaryItems } = groupSeriesItemsByType(series);
     const primaryItem: ISeriesItem = head(primaryItems) || {};
     const secondaryItem: ISeriesItem = head(secondaryItems) || {};
@@ -478,7 +500,8 @@ export function getComboChartSeries(series: ISeriesItem[]) {
     ];
 }
 
-export function transformToDualAxesSeries(series: any[], chartType: string) {
+// TODO the return type is fishy, should probably return ISeriesItem[]?
+export function transformToDualAxesSeries(series: ISeriesItem[], chartType: string): any[] {
     const { itemsOnFirstAxis, itemsOnSecondAxis } = separateLegendItems(series);
 
     if (
@@ -500,7 +523,7 @@ export function transformToDualAxesSeries(series: any[], chartType: string) {
     ];
 }
 
-export function isStackedChart(chartOptions: any) {
+export function isStackedChart(chartOptions: IChartOptions): boolean {
     const seriesLength = get(chartOptions, "data.series.length");
     const { type, stacking, hasStackByAttribute } = chartOptions;
     const hasMoreThanOneSeries = seriesLength > 1;

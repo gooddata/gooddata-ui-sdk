@@ -12,6 +12,7 @@ import { chartClick } from "../../utils/drilldownEventing";
 import { setupDrilldown } from "../events/setupDrilldownToParentAttribute";
 import Highcharts from "./highchartsEntryPoint";
 import { supportedDualAxesChartTypes } from "../chartCapabilities";
+import { IChartOptions } from "../../typings/unsafe";
 
 const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
@@ -144,7 +145,7 @@ function registerDrilldownHandler(configuration: any, chartOptions: any, drillCo
 }
 
 export function handleChartLoad(chartType: ChartType) {
-    return function () {
+    return function (): void {
         setupDrilldown(this, chartType);
     };
 }
@@ -156,7 +157,7 @@ function registerRenderHandler(configuration: any, chartOptions: any) {
     return configuration;
 }
 
-export function getCommonConfiguration(chartOptions: any, drillConfig: IDrillConfig) {
+export function getCommonConfiguration(chartOptions: IChartOptions, drillConfig: IDrillConfig): any {
     const commonConfiguration = cloneDeep(BASE_TEMPLATE);
     const handlers = [registerDrilldownHandler, registerRenderHandler];
 

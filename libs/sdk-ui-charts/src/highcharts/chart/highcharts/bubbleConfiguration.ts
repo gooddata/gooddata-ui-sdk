@@ -48,6 +48,6 @@ const BUBBLE_TEMPLATE = {
     },
 };
 
-export function getBubbleConfiguration() {
+export function getBubbleConfiguration(): typeof BUBBLE_TEMPLATE {
     return cloneDeep(BUBBLE_TEMPLATE);
 }
