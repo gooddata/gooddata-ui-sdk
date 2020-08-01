@@ -154,11 +154,11 @@ export namespace GdcCatalog {
         returnAllRelatedDateDataSets?: boolean;
     }
     // (undocumented)
-    export function isCatalogAttribute(obj: any): obj is ICatalogAttribute;
+    export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
     // (undocumented)
-    export function isCatalogFact(obj: any): obj is ICatalogFact;
+    export function isCatalogFact(obj: unknown): obj is ICatalogFact;
     // (undocumented)
-    export function isCatalogMetric(obj: any): obj is ICatalogMetric;
+    export function isCatalogMetric(obj: unknown): obj is ICatalogMetric;
     // (undocumented)
     export type ItemDescription = {
         uri: string;
@@ -286,9 +286,9 @@ export namespace GdcDashboardLayout {
         title: string;
     }
     // (undocumented)
-    export function isFluidLayout(obj: any): obj is IFluidLayout;
+    export function isFluidLayout(obj: unknown): obj is IFluidLayout;
     // (undocumented)
-    export function isLayoutWidget(obj: any): obj is IPersistedWidget;
+    export function isLayoutWidget(obj: unknown): obj is IPersistedWidget;
     // (undocumented)
     export type Layout = IFluidLayout;
     // (undocumented)
@@ -1018,11 +1018,11 @@ export namespace GdcExtendedDateFilters {
         dateFilterConfig: IDateFilterConfig;
     }
     const // (undocumented)
-    isDateFilterReference: (obj: any) => obj is IDateFilterReference;
+    isDateFilterReference: (obj: unknown) => obj is IDateFilterReference;
     // (undocumented)
     export type RelativeGranularityOffset = number;
     const // (undocumented)
-    isAttributeFilterReference: (obj: any) => obj is IAttributeFilterReference;
+    isAttributeFilterReference: (obj: unknown) => obj is IAttributeFilterReference;
 }
 
 // @public (undocumented)
@@ -1068,13 +1068,13 @@ export namespace GdcFilterContext {
     // (undocumented)
     export function isDateFilter(filter: FilterContextItem): filter is IDateFilter;
     // (undocumented)
-    export function isFilterContext(obj: any): obj is IFilterContext;
+    export function isFilterContext(obj: unknown): obj is IFilterContext;
     // (undocumented)
-    export function isTempFilterContext(obj: any): obj is ITempFilterContext;
+    export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
     // (undocumented)
-    export function isWrappedFilterContext(obj: any): obj is IWrappedFilterContext;
+    export function isWrappedFilterContext(obj: unknown): obj is IWrappedFilterContext;
     // (undocumented)
-    export function isWrappedTempFilterContext(obj: any): obj is IWrappedTempFilterContext;
+    export function isWrappedTempFilterContext(obj: unknown): obj is IWrappedTempFilterContext;
     export interface ITempFilterContext {
         // (undocumented)
         created: Timestamp;
@@ -1145,11 +1145,11 @@ export namespace GdcKpi {
         projectDashboardTab: string;
     }
     // (undocumented)
-    export function isKpi(obj: any): obj is IKPI;
+    export function isKpi(obj: unknown): obj is IKPI;
     // (undocumented)
-    export function isKpiContentWithoutComparison(obj: any): obj is IKpiContentWithoutComparison;
+    export function isKpiContentWithoutComparison(obj: unknown): obj is IKpiContentWithoutComparison;
     // (undocumented)
-    export function isWrappedKpi(obj: any): obj is IWrappedKPI;
+    export function isWrappedKpi(obj: unknown): obj is IWrappedKPI;
     // (undocumented)
     export interface IWrappedKPI {
         // (undocumented)
@@ -1379,33 +1379,33 @@ export namespace GdcMetadata {
         };
     }
     // (undocumented)
-    export function isAttribute(obj: any): obj is IAttribute;
+    export function isAttribute(obj: unknown): obj is IAttribute;
     // (undocumented)
-    export function isAttributeDisplayForm(obj: any): obj is IAttributeDisplayForm;
+    export function isAttributeDisplayForm(obj: unknown): obj is IAttributeDisplayForm;
     // (undocumented)
-    export function isDataSet(obj: any): obj is IDataSet;
+    export function isDataSet(obj: unknown): obj is IDataSet;
     // (undocumented)
-    export function isFact(obj: any): obj is IFact;
+    export function isFact(obj: unknown): obj is IFact;
     // (undocumented)
-    export function isKpiAlert(obj: any): obj is IKpiAlert;
+    export function isKpiAlert(obj: unknown): obj is IKpiAlert;
     // (undocumented)
-    export function isMetric(obj: any): obj is IMetric;
+    export function isMetric(obj: unknown): obj is IMetric;
     // (undocumented)
-    export function isPrompt(obj: any): obj is IPrompt;
+    export function isPrompt(obj: unknown): obj is IPrompt;
     // (undocumented)
-    export function isWrappedAttribute(obj: any): obj is IWrappedAttribute;
+    export function isWrappedAttribute(obj: unknown): obj is IWrappedAttribute;
     // (undocumented)
-    export function isWrappedAttributeDisplayForm(obj: any): obj is IWrappedAttributeDisplayForm;
+    export function isWrappedAttributeDisplayForm(obj: unknown): obj is IWrappedAttributeDisplayForm;
     // (undocumented)
-    export function isWrappedDataSet(obj: any): obj is IWrappedDataSet;
+    export function isWrappedDataSet(obj: unknown): obj is IWrappedDataSet;
     // (undocumented)
-    export function isWrappedFact(obj: any): obj is IWrappedFact;
+    export function isWrappedFact(obj: unknown): obj is IWrappedFact;
     // (undocumented)
-    export function isWrappedKpiAlert(obj: any): obj is IWrappedKpiAlert;
+    export function isWrappedKpiAlert(obj: unknown): obj is IWrappedKpiAlert;
     // (undocumented)
-    export function isWrappedMetric(obj: any): obj is IWrappedMetric;
+    export function isWrappedMetric(obj: unknown): obj is IWrappedMetric;
     // (undocumented)
-    export function isWrappedPrompt(obj: any): obj is IWrappedPrompt;
+    export function isWrappedPrompt(obj: unknown): obj is IWrappedPrompt;
     export interface IValidElementsParams {
         // (undocumented)
         afm?: GdcExecuteAFM.IAfm;
@@ -1707,7 +1707,7 @@ export namespace GdcScheduledMail {
         timeZone: string;
     }
     // (undocumented)
-    export function isKpiDashboardAttachment(obj: any): obj is IKpiDashboardAttachment;
+    export function isKpiDashboardAttachment(obj: unknown): obj is IKpiDashboardAttachment;
     // (undocumented)
     export interface IWrappedScheduledMail {
         // (undocumented)
@@ -2129,7 +2129,7 @@ export namespace GdcUser {
         // (undocumented)
         runningProcess?: IProcessBody | null;
         // (undocumented)
-        ui?: {};
+        ui?: object;
     }
     // (undocumented)
     export type ProjectPermission = "canAccessIntegration" | "canAccessWorkbench" | "canAssignUserWithRole" | "canCreateAnalyticalDashboard" | "canCreateAttribute" | "canCreateAttributeGroup" | "canCreateAttributeLabel" | "canCreateColumn" | "canCreateComment" | "canCreateDataSet" | "canCreateDomain" | "canCreateETLFile" | "canCreateExecutionContext" | "canCreateFact" | "canCreateFilterSettings" | "canCreateFolder" | "canCreateHelp" | "canCreateMetric" | "canCreateProjectDashboard" | "canCreateProjectTemplates" | "canCreatePrompt" | "canCreateReport" | "canCreateReportDefinition" | "canCreateRole" | "canCreateScheduledMail" | "canCreateTable" | "canCreateTableDataLoad" | "canCreateVisualization" | "canCreateVisualizationClass" | "canEnrichData" | "canExecute" | "canExecuteRaw" | "canExportDashboard" | "canExportReport" | "canInitData" | "canInviteUserToProject" | "canListInvitationsInProject" | "canListUsersInProject" | "canMaintainProject" | "canMaintainUserFilter" | "canMaintainUserFilterRelation" | "canManageACL" | "canManageAnalyticalDashboard" | "canManageAttribute" | "canManageAttributeGroup" | "canManageAttributeLabel" | "canManageColumn" | "canManageComment" | "canManageDataSet" | "canManageDomain" | "canManageETLFile" | "canManageExecutionContext" | "canManageFact" | "canManageFilterSettings" | "canManageFolder" | "canManageHelp" | "canManageIntegration" | "canManageIsProduction" | "canManageMetric" | "canManageProject" | "canManageProjectDashboard" | "canManagePrompt" | "canManagePublicAccessCode" | "canManageReport" | "canManageReportDefinition" | "canManageScheduledMail" | "canManageTable" | "canManageTableDataLoad" | "canManageTranslations" | "canManageVisualization" | "canRefreshData" | "canSeeOtherUserDetails" | "canSeePublicAccessCode" | "canSetLocale" | "canSetProjectVariables" | "canSetStyle" | "canSetUserVariables" | "canSuspendUserFromProject" | "canUploadNonProductionCSV" | "canValidateProject";
@@ -2354,7 +2354,7 @@ export namespace GdcVisualizationObject {
     // (undocumented)
     export function isDateFilter(filter: ExtendedFilter): filter is DateFilter;
     // (undocumented)
-    export function isLocalIdentifierQualifier(objectQualifier: any): objectQualifier is ILocalIdentifierQualifier;
+    export function isLocalIdentifierQualifier(objectQualifier: unknown): objectQualifier is ILocalIdentifierQualifier;
     // (undocumented)
     export function isMeasure(bucketItem: IMeasure | IAttribute): bucketItem is IMeasure;
     // (undocumented)
@@ -2378,7 +2378,7 @@ export namespace GdcVisualizationObject {
     // (undocumented)
     export function isRelativeDateFilter(filter: DateFilter): filter is IRelativeDateFilter;
     // (undocumented)
-    export function isVisualization(obj: any): obj is IVisualization;
+    export function isVisualization(obj: unknown): obj is IVisualization;
     // (undocumented)
     export interface ITotal {
         // (undocumented)
@@ -2492,17 +2492,17 @@ export namespace GdcVisualizationWidget {
         };
     }
     // (undocumented)
-    export function isDrillToAttributeUrl(obj: any): obj is IDrillToAttributeUrl;
+    export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
     // (undocumented)
-    export function isDrillToCustomUrl(obj: any): obj is IDrillToCustomUrl;
+    export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
     // (undocumented)
-    export function isDrillToDashboard(obj: any): obj is IDrillToDashboard;
+    export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
     // (undocumented)
-    export function isDrillToVisualization(obj: any): obj is IDrillToVisualization;
+    export function isDrillToVisualization(obj: unknown): obj is IDrillToVisualization;
     // (undocumented)
-    export function isVisualizationWidget(obj: any): obj is IVisualizationWidget;
+    export function isVisualizationWidget(obj: unknown): obj is IVisualizationWidget;
     // (undocumented)
-    export function isWrappedVisualizationWidget(obj: any): obj is IWrappedVisualizationWidget;
+    export function isWrappedVisualizationWidget(obj: unknown): obj is IWrappedVisualizationWidget;
     // (undocumented)
     export interface IVisualizationWidget {
         // (undocumented)
