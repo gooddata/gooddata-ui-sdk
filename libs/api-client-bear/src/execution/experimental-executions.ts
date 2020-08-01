@@ -577,9 +577,15 @@ export class ExperimentalExecutionsModule {
      *
      * @return {Object} Structure with `headers` and `rawData` keys filled with values from execution.
      */
-    public getData(projectId: string, columns: any[], executionConfiguration: any = {}, settings: any = {}) {
+    public getData(
+        projectId: string,
+        columns: any[],
+        executionConfiguration: any = {},
+        settings: any = {},
+    ): Promise<any> {
         if (process.env.NODE_ENV !== "test") {
             // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             console.warn(
                 "ExperimentalExecutionsModule is deprecated and is no longer being maintained. " +
                     "Please migrate to the ExecuteAfmModule.",
@@ -637,7 +643,7 @@ export class ExperimentalExecutionsModule {
     public mdToExecutionDefinitionsAndColumns(
         projectId: string,
         mdObj: GdcVisualizationObject.IVisualizationObjectContent,
-        options: { attributesMap?: {}; removeDateItems?: boolean } = {},
+        options: { attributesMap?: object; removeDateItems?: boolean } = {},
     ): Promise<GdcCatalog.IColumnsAndDefinitions> {
         const allDfUris = getAttributesDisplayForms(mdObj);
         const attributesMapPromise = this.getAttributesMap(options, allDfUris, projectId);
@@ -648,7 +654,7 @@ export class ExperimentalExecutionsModule {
     }
 
     private getAttributesMap(
-        options: { attributesMap?: {} } = {},
+        options: { attributesMap?: object } = {},
         displayFormUris: string[],
         projectId: string,
     ) {

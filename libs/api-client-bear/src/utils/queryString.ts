@@ -6,5 +6,5 @@ import qs from "qs";
  * @param obj - object to stringify
  * @param options - additional qs.stringify options
  */
-export const stringify = (obj: any, options?: qs.IStringifyOptions): string =>
+export const stringify = (obj: object, options?: qs.IStringifyOptions): string =>
     qs.stringify(obj, { ...options, arrayFormat: "comma" });

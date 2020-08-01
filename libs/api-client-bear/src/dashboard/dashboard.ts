@@ -24,15 +24,12 @@ export class DashboardModule {
         const sanitizedFilters = sanitizeDateFilters(filters);
         const payload = this.getDashboardExportPayload(dashboardUri, sanitizedFilters);
 
-        try {
-            const response: ApiResponse = await this.xhr.post(
-                `/gdc/internal/projects/${projectId}/exportDashboard`,
-                { body: payload },
-            );
-            return await this.pollPdfFile(response, pollingOptions);
-        } catch (error) {
-            throw error;
-        }
+        const response: ApiResponse = await this.xhr.post(
+            `/gdc/internal/projects/${projectId}/exportDashboard`,
+            { body: payload },
+        );
+
+        return this.pollPdfFile(response, pollingOptions);
     }
 
     private async pollPdfFile(
