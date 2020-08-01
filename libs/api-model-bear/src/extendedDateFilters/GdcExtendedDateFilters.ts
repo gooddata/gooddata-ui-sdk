@@ -70,7 +70,7 @@ export namespace GdcExtendedDateFilters {
         };
     }
 
-    export const isDateFilterReference = (obj: any): obj is IDateFilterReference =>
+    export const isDateFilterReference = (obj: unknown): obj is IDateFilterReference =>
         !isEmpty(obj) && !!(obj as IDateFilterReference).dateFilterReference;
 
     export interface IAttributeFilterReference {
@@ -79,6 +79,6 @@ export namespace GdcExtendedDateFilters {
         };
     }
 
-    export const isAttributeFilterReference = (obj: any): obj is IAttributeFilterReference =>
+    export const isAttributeFilterReference = (obj: unknown): obj is IAttributeFilterReference =>
         !isEmpty(obj) && !!(obj as IAttributeFilterReference).attributeFilterReference;
 }

@@ -77,7 +77,7 @@ export namespace GdcScheduledMail {
         };
     }
 
-    export function isKpiDashboardAttachment(obj: any): obj is IKpiDashboardAttachment {
+    export function isKpiDashboardAttachment(obj: unknown): obj is IKpiDashboardAttachment {
         return !isEmpty(obj) && !!(obj as IKpiDashboardAttachment).kpiDashboardAttachment;
     }
 }

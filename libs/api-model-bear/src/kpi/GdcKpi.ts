@@ -35,7 +35,7 @@ export namespace GdcKpi {
         comparisonType: IKpiComparisonTypeNoComparison;
     }
 
-    export function isKpiContentWithoutComparison(obj: any): obj is IKpiContentWithoutComparison {
+    export function isKpiContentWithoutComparison(obj: unknown): obj is IKpiContentWithoutComparison {
         return !isEmpty(obj) && (obj as IKpiContentWithoutComparison).comparisonType === "none";
     }
 
@@ -48,11 +48,11 @@ export namespace GdcKpi {
     export type IKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
     export type IKpiComparisonDirection = "growIsGood" | "growIsBad";
 
-    export function isKpi(obj: any): obj is IKPI {
+    export function isKpi(obj: unknown): obj is IKPI {
         return !isEmpty(obj) && (obj as IKPI).meta.category === "kpi";
     }
 
-    export function isWrappedKpi(obj: any): obj is IWrappedKPI {
+    export function isWrappedKpi(obj: unknown): obj is IWrappedKPI {
         return !isEmpty(obj) && !!(obj as IWrappedKPI).kpi;
     }
 }

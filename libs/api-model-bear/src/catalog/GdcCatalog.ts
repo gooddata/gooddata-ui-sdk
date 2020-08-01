@@ -35,7 +35,7 @@ export namespace GdcCatalog {
         };
     }
 
-    export function isCatalogAttribute(obj: any): obj is ICatalogAttribute {
+    export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute {
         return !isEmpty(obj) && (obj as ICatalogAttribute).type === "attribute";
     }
 
@@ -45,7 +45,7 @@ export namespace GdcCatalog {
         readonly format: string;
     }
 
-    export function isCatalogMetric(obj: any): obj is ICatalogMetric {
+    export function isCatalogMetric(obj: unknown): obj is ICatalogMetric {
         return !isEmpty(obj) && (obj as ICatalogMetric).type === "metric";
     }
 
@@ -53,7 +53,7 @@ export namespace GdcCatalog {
         readonly type: "fact";
     }
 
-    export function isCatalogFact(obj: any): obj is ICatalogFact {
+    export function isCatalogFact(obj: unknown): obj is ICatalogFact {
         return !isEmpty(obj) && (obj as ICatalogFact).type === "fact";
     }
 

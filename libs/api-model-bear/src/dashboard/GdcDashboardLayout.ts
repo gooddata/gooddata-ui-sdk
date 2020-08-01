@@ -60,11 +60,11 @@ export namespace GdcDashboardLayout {
         description: string;
     }
 
-    export function isFluidLayout(obj: any): obj is IFluidLayout {
+    export function isFluidLayout(obj: unknown): obj is IFluidLayout {
         return !isEmpty(obj) && !!(obj as IFluidLayout).fluidLayout;
     }
 
-    export function isLayoutWidget(obj: any): obj is IPersistedWidget {
+    export function isLayoutWidget(obj: unknown): obj is IPersistedWidget {
         return !isEmpty(obj) && !!(obj as IPersistedWidget).widget;
     }
 }

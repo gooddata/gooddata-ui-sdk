@@ -65,15 +65,16 @@ export namespace GdcFilterContext {
         return !isEmpty(filter) && !!(filter as IAttributeFilter).attributeFilter;
     }
 
-    export function isFilterContext(obj: any): obj is IFilterContext {
+    export function isFilterContext(obj: unknown): obj is IFilterContext {
         return !isEmpty(obj) && (obj as IFilterContext).meta.category === "filterContext";
     }
 
-    export function isWrappedFilterContext(obj: any): obj is IWrappedFilterContext {
+    export function isWrappedFilterContext(obj: unknown): obj is IWrappedFilterContext {
+        // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && (obj as IWrappedFilterContext).hasOwnProperty("filterContext");
     }
 
-    export function isTempFilterContext(obj: any): obj is ITempFilterContext {
+    export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
         return (
             !isEmpty(obj) &&
             (obj as ITempFilterContext).created &&
@@ -82,7 +83,8 @@ export namespace GdcFilterContext {
         );
     }
 
-    export function isWrappedTempFilterContext(obj: any): obj is IWrappedTempFilterContext {
+    export function isWrappedTempFilterContext(obj: unknown): obj is IWrappedTempFilterContext {
+        // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && (obj as IWrappedTempFilterContext).hasOwnProperty("tempFilterContext");
     }
 }

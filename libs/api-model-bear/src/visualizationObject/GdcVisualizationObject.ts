@@ -222,7 +222,7 @@ export namespace GdcVisualizationObject {
         visualizationObject: IVisualizationObject;
     }
 
-    export function isVisualization(obj: any): obj is IVisualization {
+    export function isVisualization(obj: unknown): obj is IVisualization {
         return !isEmpty(obj) && (obj as IVisualization).visualizationObject !== undefined;
     }
 
@@ -303,7 +303,7 @@ export namespace GdcVisualizationObject {
     }
 
     export function isLocalIdentifierQualifier(
-        objectQualifier: any,
+        objectQualifier: unknown,
     ): objectQualifier is ILocalIdentifierQualifier {
         return (
             !isEmpty(objectQualifier) &&
