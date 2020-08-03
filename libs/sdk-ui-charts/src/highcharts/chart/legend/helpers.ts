@@ -206,11 +206,7 @@ export function buildHeatmapLabelsConfig(
     labels: string[],
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     config: any,
-): {
-    label: string;
-    style: React.CSSProperties;
-    key: string;
-} {
+): any {
     return config.map((element: any, index: number) => {
         switch (element.type) {
             case "label":
@@ -457,8 +453,7 @@ export function groupSeriesItemsByType(series: ISeriesItem[]): { [key: string]: 
     );
 }
 
-// TODO the return type is fishy, should probably return ISeriesItem[]?
-export function getComboChartSeries(series: ISeriesItem[]): any[] {
+export function getComboChartSeries(series: any[]): any[] {
     const { primaryItems, secondaryItems } = groupSeriesItemsByType(series);
     const primaryItem: ISeriesItem = head(primaryItems) || {};
     const secondaryItem: ISeriesItem = head(secondaryItems) || {};
@@ -499,8 +494,7 @@ export function getComboChartSeries(series: ISeriesItem[]): any[] {
     ];
 }
 
-// TODO the return type is fishy, should probably return ISeriesItem[]?
-export function transformToDualAxesSeries(series: ISeriesItem[], chartType: string): any[] {
+export function transformToDualAxesSeries(series: any[], chartType: string): any[] {
     const { itemsOnFirstAxis, itemsOnSecondAxis } = separateLegendItems(series);
 
     if (

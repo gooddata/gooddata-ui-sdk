@@ -65,7 +65,7 @@ describe("getRowNodeId", () => {
             },
         };
 
-        expect(getRowNodeId(item)).toEqual("a_1027_1226-a_1094_nat-a_64727_966650");
+        expect(getRowNodeId(item as any)).toEqual("a_1027_1226-a_1094_nat-a_64727_966650");
     });
 });
 
@@ -179,7 +179,7 @@ const tree: any = {
     ],
 };
 
-describe("getTreeleaves", () => {
+describe("getTreeLeaves", () => {
     it("should return tree nodes that have no children", () => {
         expect(getTreeLeaves(tree)).toEqual([
             {
@@ -202,7 +202,7 @@ describe("getTreeleaves", () => {
 });
 
 describe("indexOfTreeNode", () => {
-    it("should return an array of indexes that define a matiching node in a tree structure", () => {
+    it("should return an array of indexes that define a matching node in a tree structure", () => {
         const node: any = tree.children[1].children[2];
         expect(indexOfTreeNode(node, tree)).toEqual([0, 1, 2]);
     });
@@ -214,7 +214,7 @@ describe("indexOfTreeNode", () => {
         ).toEqual([0, 1, 2]);
     });
     it("should return return null if the node is not found", () => {
-        const node = {};
+        const node = {} as any;
         expect(indexOfTreeNode(node, tree)).toEqual(null);
     });
 });

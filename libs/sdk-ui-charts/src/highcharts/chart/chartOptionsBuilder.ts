@@ -292,10 +292,11 @@ export function getSeriesItemData(
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getHeatmapSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-): any[] {
+) {
     const data: IPointData[] = [];
     dv.rawData()
         .twoDimData()
