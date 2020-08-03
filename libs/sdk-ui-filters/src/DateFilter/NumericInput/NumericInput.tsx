@@ -12,7 +12,8 @@ type NumericInputValue = number | "" | "-";
 
 const isIntermediateValue = (value: number | string): value is "" | "-" => value === "" || value === "-";
 
-const isNotNumeric = <T extends {}>(value: T | number): value is T => !isEmpty(value) && !isNumber(value);
+const isNotNumeric = <T extends unknown>(value: T | number): value is T =>
+    !isEmpty(value) && !isNumber(value);
 
 const UP_ARROW_CODE = 38;
 const DOWN_ARROW_CODE = 40;

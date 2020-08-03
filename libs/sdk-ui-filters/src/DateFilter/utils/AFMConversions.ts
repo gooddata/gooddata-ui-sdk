@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { IAbsoluteDateFilter, IRelativeDateFilter, ObjRef } from "@gooddata/sdk-model";
+import { IAbsoluteDateFilter, IRelativeDateFilter, ObjRef, IDateFilter } from "@gooddata/sdk-model";
 import { applyExcludeCurrentPeriod } from "./PeriodExlusion";
 import {
     AbsoluteDateFilterOption,
@@ -37,7 +37,7 @@ export const mapOptionToAfm = (
     value: DateFilterOption,
     dateDataSet: ObjRef,
     excludeCurrentPeriod: boolean,
-) => {
+): IDateFilter => {
     const excludeApplied = applyExcludeCurrentPeriod(value, excludeCurrentPeriod);
 
     if (isAllTimeDateFilter(excludeApplied)) {

@@ -27,7 +27,7 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
         bubbleText: null,
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { intl, operator, selectedOperator, bubbleText } = this.props;
 
         const className = cx(
@@ -50,7 +50,7 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
         );
     }
 
-    public handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    public handleOnClick = (e: React.MouseEvent<HTMLDivElement>): void => {
         const { operator, onClick } = this.props;
         onClick(operator);
         e.preventDefault();

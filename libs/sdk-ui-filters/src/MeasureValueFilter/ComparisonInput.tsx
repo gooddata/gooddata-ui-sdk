@@ -19,7 +19,7 @@ const ComparisonInput = ({
     onValueChange,
     onEnterKeyPress,
     separators,
-}: IComparisonInputProps) => {
+}: IComparisonInputProps): JSX.Element => {
     return (
         <InputWithNumberFormat
             className="s-mvf-comparison-value-input"

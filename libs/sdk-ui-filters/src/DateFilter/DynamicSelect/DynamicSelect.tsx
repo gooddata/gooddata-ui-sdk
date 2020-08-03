@@ -58,13 +58,13 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         visibleItemsRange: defaultVisibleItemsRange,
     };
 
-    public onChange = (option: DynamicSelectOption | null) => {
+    public onChange = (option: DynamicSelectOption | null): void => {
         if (option) {
             this.props.onChange(option.value);
         }
     };
 
-    public componentDidUpdate = (lastProps: IDynamicSelectProps) => {
+    public componentDidUpdate = (lastProps: IDynamicSelectProps): void => {
         if (lastProps.value !== this.props.value) {
             const defaultItems = this.props.getItems(this.props.value.toString());
             const inputValue = findRelativeDateFilterOptionByValue(defaultItems, this.props.value).label;
@@ -74,19 +74,19 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         }
     };
 
-    public focus = () => {
+    public focus = (): void => {
         if (this.inputRef.current) {
             this.inputRef.current.focus();
         }
     };
 
-    public onInputValueChanged = (inputValue: string) => {
+    public onInputValueChanged = (inputValue: string): void => {
         if (inputValue !== this.state.inputValue) {
             this.setState({ inputValue });
         }
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const {
             initialIsOpen,
             placeholder,

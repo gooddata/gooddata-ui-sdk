@@ -23,5 +23,5 @@ export const mergeDayPickerProps = (
     userProps: DayPickerProps | undefined,
 ): DayPickerProps => (userProps ? mergeDayPickerPropsBody(defaultProps, userProps) : defaultProps);
 
-export const areRangeBoundsCrossed = (from: Date, to: Date) =>
+export const areRangeBoundsCrossed = (from: Date, to: Date): boolean =>
     from && to ? moment(from).isAfter(moment(to)) : false;

@@ -212,10 +212,11 @@ export function getRelativeDateFilterItems(
             return getTooBigOptions(intl);
         case "Textual":
             return getFullTextMatches(inputInfo.trimmedValue, undefined, granularity, intl);
-        case "Numeric":
+        case "Numeric": {
             const { offset, isOnlyNumber } = inputInfo;
             return isOnlyNumber
                 ? getOptionsByNumber(offset, granularity, intl)
                 : getFullTextMatches(trimmedInput, offset, granularity, intl);
+        }
     }
 }

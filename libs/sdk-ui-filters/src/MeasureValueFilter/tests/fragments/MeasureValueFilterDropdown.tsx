@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { ReactWrapper } from "enzyme";
 import { string as stringUtils } from "@gooddata/js-utils";
 

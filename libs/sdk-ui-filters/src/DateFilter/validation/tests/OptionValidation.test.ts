@@ -41,7 +41,7 @@ describe("validateFilterOption", () => {
             expect(actual).toEqual(expected);
         });
 
-        it("should not validate semantically incorrect from (with message)", () => {
+        it("should not validate semantically incorrect to (with message)", () => {
             const filter: IUiAbsoluteDateFilterForm = {
                 from: "2019-30-01",
                 to: undefined,

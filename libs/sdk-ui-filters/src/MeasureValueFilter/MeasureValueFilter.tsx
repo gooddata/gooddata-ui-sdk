@@ -39,7 +39,7 @@ export class MeasureValueFilter extends React.PureComponent<
 
     private buttonRef = React.createRef<HTMLDivElement>();
 
-    public render() {
+    public render(): React.ReactNode {
         const { displayDropdown } = this.state;
         const {
             filter,

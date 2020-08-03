@@ -23,7 +23,7 @@ const RangeInput = ({
     onToChange,
     onEnterKeyPress,
     separators,
-}: IRangeInputProps) => {
+}: IRangeInputProps): JSX.Element => {
     return (
         <div className={"gd-mvf-range-input"}>
             <InputWithNumberFormat

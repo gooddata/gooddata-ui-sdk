@@ -4,6 +4,7 @@ import cx from "classnames";
 import { ISelectItemOption } from "./types";
 import { itemToString } from "./utils";
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const SelectButton = <V extends {}>({
     selectedItem,
     isOpen,
@@ -12,7 +13,7 @@ export const SelectButton = <V extends {}>({
     selectedItem: ISelectItemOption<V>;
     isOpen: boolean;
     getToggleButtonProps: () => any;
-}) => (
+}): JSX.Element => (
     // TODO: Replace with goodstrap Button once it supports aria props
     // This needs to be a button element, because Downshift requires something that can get focus
     <button

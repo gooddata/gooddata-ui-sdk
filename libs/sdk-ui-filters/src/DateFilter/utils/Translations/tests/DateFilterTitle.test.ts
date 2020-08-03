@@ -108,7 +108,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
             to: number,
             granularity: DateFilterGranularity,
             expectedId: string,
-            expectedValues: {},
+            expectedValues: any,
         ) => {
             const filter: IUiRelativeDateFilterForm = {
                 localIdentifier: "RELATIVE_FORM",

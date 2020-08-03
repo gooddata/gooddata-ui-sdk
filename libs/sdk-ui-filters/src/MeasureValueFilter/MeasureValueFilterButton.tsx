@@ -8,7 +8,7 @@ interface IMeasureValueButtonProps {
     onClick: () => void;
 }
 
-const DropdownButton = ({ isActive, buttonTitle, onClick }: IMeasureValueButtonProps) => {
+const DropdownButton = ({ isActive, buttonTitle, onClick }: IMeasureValueButtonProps): JSX.Element => {
     const className = cx(
         "gd-mvf-dropdown-button",
         "s-mvf-dropdown-button",

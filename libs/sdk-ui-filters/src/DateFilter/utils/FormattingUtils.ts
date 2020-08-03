@@ -8,7 +8,7 @@ export const sanitizeLocaleForMoment = (intlLocale: string): string => {
     return intlLocale;
 };
 
-export const getLocalizedDateFormat = (locale: string) => {
+export const getLocalizedDateFormat = (locale: string): any => {
     const localizedMoment = moment().locale(sanitizeLocaleForMoment(locale));
     const localeData = localizedMoment && localizedMoment.localeData && (localizedMoment.localeData() as any);
     return localeData && localeData._longDateFormat && localeData._longDateFormat.L;

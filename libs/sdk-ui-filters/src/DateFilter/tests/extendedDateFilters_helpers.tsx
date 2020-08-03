@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { platformDateFormat } from "../constants/Platform";
@@ -220,7 +221,7 @@ export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}) =>
 
 // common wrapper methods
 
-export type WrapperType = ReactWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
+export type WrapperType = ReactWrapper<any, Readonly<unknown>, React.Component<unknown, unknown, any>>;
 
 export const clickDateFilterButton = (wrapper: WrapperType) => {
     wrapper.find(dateFilterButton).simulate("click");

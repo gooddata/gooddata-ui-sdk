@@ -18,6 +18,7 @@ export interface ISelectProps<V> {
     style?: React.CSSProperties;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const Select = <V extends {}>({
     onChange,
     value,
@@ -25,7 +26,7 @@ export const Select = <V extends {}>({
     initialIsOpen,
     className,
     style,
-}: ISelectProps<V>) => {
+}: ISelectProps<V>): JSX.Element => {
     const selectableOptions = getSelectableItems(items);
 
     return (

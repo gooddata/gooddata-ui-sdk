@@ -64,8 +64,10 @@ export interface IDateFilterBodyState {
     route: DateFilterRoute;
 }
 
-export const isFilterOptionSelected = (filterOption: IDateFilterOption, selectedOption: IDateFilterOption) =>
-    filterOption.localIdentifier === selectedOption.localIdentifier;
+export const isFilterOptionSelected = (
+    filterOption: IDateFilterOption,
+    selectedOption: IDateFilterOption,
+): boolean => filterOption.localIdentifier === selectedOption.localIdentifier;
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 
@@ -74,11 +76,11 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         route: null,
     };
 
-    public changeRoute = (route: IDateFilterBodyState["route"] = null) => {
+    public changeRoute = (route: IDateFilterBodyState["route"] = null): void => {
         this.setState({ route });
     };
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         // Dropdown component does not expose isOpened prop but it mounts
         // this component every time it is opened and un-mounts when closed
         if (this.props.isMobile) {

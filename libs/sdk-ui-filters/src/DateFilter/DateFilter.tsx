@@ -118,7 +118,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         super(props);
         this.state = DateFilter.getStateFromProps(props);
 
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.warn(
             "DateFilter component is still in beta. Component and its API may change in the future.",
         );

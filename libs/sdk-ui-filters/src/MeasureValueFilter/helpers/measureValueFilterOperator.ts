@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { MeasureValueFilterOperator } from "../types";
 
-export const getOperatorTranslationKey = (operator: MeasureValueFilterOperator) => {
+export const getOperatorTranslationKey = (operator: MeasureValueFilterOperator): string => {
     const translationKeysDictionary: {
         [K in MeasureValueFilterOperator]: string;
     } = {
@@ -19,7 +19,7 @@ export const getOperatorTranslationKey = (operator: MeasureValueFilterOperator) 
     return `mvf.operator.${translationKeysDictionary[operator]}`;
 };
 
-export const getOperatorIcon = (operator: MeasureValueFilterOperator) => {
+export const getOperatorIcon = (operator: MeasureValueFilterOperator): string => {
     const iconNamesDictionary: {
         [K in MeasureValueFilterOperator]: string;
     } = {
