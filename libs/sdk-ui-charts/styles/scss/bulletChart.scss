@@ -1,3 +1,12 @@
 // (C) 2020 GoodData Corporation
-
-@import "../../src/highcharts/styles/bulletChart.scss";
+.highcharts-container {
+    // documented in https://www.highcharts.com/docs/chart-design-and-style/style-by-css
+    .highcharts-bullet-series {
+        .highcharts-point {
+            visibility: hidden;
+        }
+        .highcharts-bullet-target {
+            visibility: visible;
+        }
+    }
+}

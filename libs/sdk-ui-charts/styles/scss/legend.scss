@@ -1,5 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
+@import "~@gooddata/goodstrap/lib/core/styles/variables";
+@import "~@gooddata/goodstrap/lib/core/styles/mixins";
+@import "variables";
+
 $responsive-legend: "only screen and (max-width: 767px)";
+$legend-paging-background: #eee;
+$legend-right-width: 190px;
+$paging-button-small-size: 22px;
 
 @media #{$responsive-legend} {
     .viz-line-family-chart-wrap {
