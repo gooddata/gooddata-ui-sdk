@@ -25,13 +25,18 @@ export type DrillOrigin = IDrillFromMeasure;
  * Drill transition
  * @alpha
  */
-export type DrillTransition = "pop-up" | "in-place";
+export type DrillTransition = "pop-up" | "in-place" | "new-window";
 
 /**
  * Drill type
  * @alpha
  */
-export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard";
+export type DrillType =
+    | "drillToInsight"
+    | "drillToDashboard"
+    | "drillToLegacyDashboard"
+    | "drillToCustomUrl"
+    | "drillToAttributeUrl";
 
 /**
  * Drill origin base type
@@ -43,6 +48,39 @@ export interface IDrillOrigin {
      */
     type: DrillOriginType;
 }
+
+/**
+ * Drill to custom url target
+ * @alpha
+ */
+export interface IDrillToCustomUrlTarget {
+    /**
+     * Custom url to drill to
+     */
+    url: string;
+}
+
+/**
+ * Drill to attribute url target
+ * @alpha
+ */
+export interface IDrillToAttributeUrlTarget {
+    /**
+     * Original attribute display form on the insight
+     */
+    displayForm: ObjRef;
+
+    /**
+     * Target attribute display form (must be of type `Hyperlink`), which contains elements with destination URL
+     */
+    hyperlinkDisplayForm: ObjRef;
+}
+
+/**
+ * Drill target
+ * @alpha
+ */
+export type IDrillTarget = ObjRef | IDrillToCustomUrlTarget | IDrillToAttributeUrlTarget;
 
 /**
  * Drill from measure
@@ -81,9 +119,9 @@ export interface IDrill {
     origin: DrillOrigin;
 
     /**
-     * Drill target object ref
+     * Drill target
      */
-    target: ObjRef;
+    target: IDrillTarget;
 }
 
 /**
@@ -105,6 +143,11 @@ export interface IDrillToLegacyDashboard extends IDrill {
      * Target dashboard tab
      */
     tab: string;
+
+    /**
+     * Target legacy dashboard ref
+     */
+    target: ObjRef;
 }
 
 /**
@@ -129,6 +172,11 @@ export interface IDrillToDashboard extends IDrill {
      * Drill transition
      */
     transition: "in-place";
+
+    /**
+     * Target dashboard ref
+     */
+    target: ObjRef;
 }
 
 /**
@@ -153,6 +201,11 @@ export interface IDrillToInsight extends IDrill {
      * Drill transition
      */
     transition: "pop-up";
+
+    /**
+     * Target insight ref
+     */
+    target: ObjRef;
 }
 
 /**
@@ -161,4 +214,62 @@ export interface IDrillToInsight extends IDrill {
  */
 export function isDrillToInsight(obj: any): obj is IDrillToInsight {
     return !isEmpty(obj) && (obj as IDrillToInsight).type === "drillToInsight";
+}
+
+/**
+ * Drill to custom url
+ * @alpha
+ */
+export interface IDrillToCustomUrl extends IDrill {
+    /**
+     * Drill type
+     */
+    type: "drillToCustomUrl";
+
+    /**
+     * Drill transition
+     */
+    transition: "new-window";
+
+    /**
+     * Target url
+     */
+    target: IDrillToCustomUrlTarget;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDrillToCustomUrl}.
+ * @alpha
+ */
+export function isDrillToCustomUrl(obj: any): obj is IDrillToCustomUrl {
+    return !isEmpty(obj) && (obj as IDrillToCustomUrl).type === "drillToCustomUrl";
+}
+
+/**
+ * Drill to attribute url
+ * @alpha
+ */
+export interface IDrillToAttributeUrl extends IDrill {
+    /**
+     * Drill type
+     */
+    type: "drillToAttributeUrl";
+
+    /**
+     * Drill transition
+     */
+    transition: "new-window";
+
+    /**
+     * Target display form and hyperlink display form
+     */
+    target: IDrillToAttributeUrlTarget;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDrillToAttributeUrl}.
+ * @alpha
+ */
+export function isDrillToAttributeUrl(obj: any): obj is IDrillToAttributeUrl {
+    return !isEmpty(obj) && (obj as IDrillToAttributeUrl).type === "drillToAttributeUrl";
 }

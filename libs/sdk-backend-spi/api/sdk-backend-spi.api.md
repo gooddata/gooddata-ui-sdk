@@ -140,10 +140,10 @@ export type DrillOrigin = IDrillFromMeasure;
 export type DrillOriginType = "drillFromMeasure";
 
 // @alpha
-export type DrillTransition = "pop-up" | "in-place";
+export type DrillTransition = "pop-up" | "in-place" | "new-window";
 
 // @alpha
-export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard";
+export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl";
 
 // @public
 export type ErrorConverter = (e: any) => AnalyticalBackendError;
@@ -367,7 +367,7 @@ export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescr
 // @alpha
 export interface IDrill {
     origin: DrillOrigin;
-    target: ObjRef;
+    target: IDrillTarget;
     transition: DrillTransition;
     type: DrillType;
 }
@@ -384,13 +384,43 @@ export interface IDrillOrigin {
 }
 
 // @alpha
+export type IDrillTarget = ObjRef | IDrillToCustomUrlTarget | IDrillToAttributeUrlTarget;
+
+// @alpha
+export interface IDrillToAttributeUrl extends IDrill {
+    target: IDrillToAttributeUrlTarget;
+    transition: "new-window";
+    type: "drillToAttributeUrl";
+}
+
+// @alpha
+export interface IDrillToAttributeUrlTarget {
+    displayForm: ObjRef;
+    hyperlinkDisplayForm: ObjRef;
+}
+
+// @alpha
+export interface IDrillToCustomUrl extends IDrill {
+    target: IDrillToCustomUrlTarget;
+    transition: "new-window";
+    type: "drillToCustomUrl";
+}
+
+// @alpha
+export interface IDrillToCustomUrlTarget {
+    url: string;
+}
+
+// @alpha
 export interface IDrillToDashboard extends IDrill {
+    target: ObjRef;
     transition: "in-place";
     type: "drillToDashboard";
 }
 
 // @alpha
 export interface IDrillToInsight extends IDrill {
+    target: ObjRef;
     transition: "pop-up";
     type: "drillToInsight";
 }
@@ -398,6 +428,7 @@ export interface IDrillToInsight extends IDrill {
 // @alpha
 export interface IDrillToLegacyDashboard extends IDrill {
     tab: string;
+    target: ObjRef;
     transition: "in-place";
     type: "drillToLegacyDashboard";
 }
@@ -749,6 +780,12 @@ export function isDashboardDateFilterReference(obj: any): obj is IDashboardDateF
 
 // @public
 export function isDataTooLargeError(obj: any): obj is DataTooLargeError;
+
+// @alpha
+export function isDrillToAttributeUrl(obj: any): obj is IDrillToAttributeUrl;
+
+// @alpha
+export function isDrillToCustomUrl(obj: any): obj is IDrillToCustomUrl;
 
 // @alpha
 export function isDrillToDashboard(obj: any): obj is IDrillToDashboard;

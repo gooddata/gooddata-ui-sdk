@@ -136,6 +136,13 @@ export {
     isDrillToDashboard,
     isDrillToInsight,
     isDrillToLegacyDashboard,
+    IDrillToAttributeUrl,
+    isDrillToAttributeUrl,
+    IDrillToCustomUrl,
+    isDrillToCustomUrl,
+    IDrillTarget,
+    IDrillToAttributeUrlTarget,
+    IDrillToCustomUrlTarget,
 } from "./workspace/dashboards/drills";
 export {
     IDashboard,
