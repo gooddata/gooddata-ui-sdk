@@ -22,7 +22,7 @@ import {
     IVisualization,
 } from "../interfaces/Visualization";
 import {
-    DefaultVisualizationCatalog,
+    FullVisualizationCatalog,
     IVisualizationCatalog,
     PluggableVisualizationFactory,
 } from "./VisualizationCatalog";
@@ -60,7 +60,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
 
 export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps> {
     public static defaultProps: Partial<IBaseVisualizationProps> = {
-        visualizationCatalog: DefaultVisualizationCatalog,
+        visualizationCatalog: FullVisualizationCatalog,
         newDerivedBucketItems: [],
         referencePoint: null,
         onExtendedReferencePointChanged: noop,
