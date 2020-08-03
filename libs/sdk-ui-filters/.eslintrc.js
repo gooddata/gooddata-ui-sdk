@@ -7,7 +7,7 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:import/errors",
         "plugin:import/typescript",
-        "../../.eslintrc.js",
+        "../../.eslintrc.react.js",
     ],
-    parserOptions: { tsconfigRootDir: __dirname, project: "./tsconfig.json" },
+    parserOptions: { tsconfigRootDir: __dirname },
 };

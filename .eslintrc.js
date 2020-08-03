@@ -2,11 +2,6 @@
 module.exports = {
     root: true,
     ignorePatterns: ["**/dist/**/*.*"],
-    settings: {
-        react: {
-            version: "detect",
-        },
-    },
     rules: {
         "@typescript-eslint/array-type": "off",
         "@typescript-eslint/ban-ts-comment": ["error", { "ts-expect-error": "allow-with-description" }],
@@ -27,6 +22,5 @@ module.exports = {
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "import/order": "off",
-        "react/prop-types": "off",
     },
 };
