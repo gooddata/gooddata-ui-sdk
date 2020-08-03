@@ -1,4 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
+@import "~@gooddata/goodstrap/lib/Bubble/styles/mixins";
+@import "~@gooddata/goodstrap/lib/core/styles/variables";
+@import "variables";
 
 .gd-viz-tooltip {
     position: relative;
