@@ -8,6 +8,8 @@ export {
     builderFactory,
 } from "./base/builder";
 
+export { DateAttributeGranularity, DateGranularity } from "./base/dateGranularities";
+
 export { IDrillingActivationPostMessageData } from "./embedding/postMessage";
 
 export {
@@ -99,7 +101,6 @@ export {
     IMeasureFilter,
     IDateFilter,
     IAttributeFilter,
-    DateGranularity,
     isAbsoluteDateFilter,
     isRelativeDateFilter,
     isPositiveAttributeFilter,
@@ -313,7 +314,6 @@ export { insightSanitize } from "./insight/sanitization";
 export {
     CatalogItemType,
     CatalogItem,
-    CatalogDateAttributeGranularity,
     ICatalogGroup,
     ICatalogAttribute,
     ICatalogFact,

@@ -215,11 +215,8 @@ export class CatalogDateAttributeBuilder<T extends ICatalogDateAttribute = ICata
     // (undocumented)
     defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
     // (undocumented)
-    granularity(granularity: CatalogDateAttributeGranularity): this;
+    granularity(granularity: DateAttributeGranularity): this;
 }
-
-// @public
-export type CatalogDateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date";
 
 // @public
 export class CatalogDateDatasetBuilder<T extends ICatalogDateDataset = ICatalogDateDataset> extends Builder<T> {
@@ -289,12 +286,11 @@ export class DataSetMetadataObjectBuilder<T extends IDataSetMetadataObject = IDa
 }
 
 // @public
+export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date";
+
+// @public
 export const DateGranularity: {
-    date: string;
-    week: string;
-    month: string;
-    quarter: string;
-    year: string;
+    [short: string]: DateAttributeGranularity;
 };
 
 // @public
@@ -512,7 +508,7 @@ export interface ICatalogAttribute extends IGroupableCatalogItemBase {
 export interface ICatalogDateAttribute {
     attribute: IAttributeMetadataObject;
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
-    granularity: CatalogDateAttributeGranularity;
+    granularity: DateAttributeGranularity;
 }
 
 // @public
@@ -1009,7 +1005,7 @@ export interface IRelativeDateFilter {
     // (undocumented)
     relativeDateFilter: {
         dataSet: ObjRef;
-        granularity: string;
+        granularity: DateAttributeGranularity;
         from: number;
         to: number;
     };
@@ -1515,7 +1511,7 @@ export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef |
 export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @public
-export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: string, from: number, to: number): IRelativeDateFilter;
+export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number): IRelativeDateFilter;
 
 // @public
 export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, attributeOrId: IAttribute | Identifier, alias?: string): ITotal;

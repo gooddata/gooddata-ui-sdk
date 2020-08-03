@@ -11,7 +11,7 @@ import {
 import { Execution, AttributeGranularityResourceAttribute } from "@gooddata/api-client-tiger";
 import isResultAttributeHeader = Execution.isResultAttributeHeader;
 import isResultMeasureHeader = Execution.isResultMeasureHeader;
-import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { toSdkGranularity } from "../dateGranularityConversions";
 import { DateFormatter } from "../dateFormatting/types";
 import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
@@ -32,7 +32,7 @@ const supportedSuffixes: string[] = Object.keys(AttributeGranularityResourceAttr
             AttributeGranularityResourceAttribute[key as keyof typeof AttributeGranularityResourceAttribute],
     );
 
-function getGranularity(header: IDimensionItemDescriptor): CatalogDateAttributeGranularity | undefined {
+function getGranularity(header: IDimensionItemDescriptor): DateAttributeGranularity | undefined {
     if (!isAttributeDescriptor(header)) {
         return undefined;
     }

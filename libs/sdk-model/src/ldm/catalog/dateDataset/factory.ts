@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import identity from "lodash/identity";
 import { Builder, builderFactory, BuilderModifications } from "../../../base/builder";
-import { CatalogDateAttributeGranularity, ICatalogDateAttribute, ICatalogDateDataset } from ".";
+import { ICatalogDateAttribute, ICatalogDateDataset } from ".";
 import { IAttributeMetadataObject, isAttributeMetadataObject } from "../../metadata/attribute";
 import {
     IAttributeDisplayFormMetadataObject,
@@ -19,6 +19,7 @@ import {
     newDataSetMetadataObject,
 } from "../../metadata";
 import { isDataSetMetadataObject } from "../../metadata/dataSet";
+import { DateAttributeGranularity } from "../../../base/dateGranularities";
 
 /**
  * Catalog date attribute builder
@@ -29,7 +30,7 @@ import { isDataSetMetadataObject } from "../../metadata/dataSet";
 export class CatalogDateAttributeBuilder<
     T extends ICatalogDateAttribute = ICatalogDateAttribute
 > extends Builder<T> {
-    public granularity(granularity: CatalogDateAttributeGranularity): this {
+    public granularity(granularity: DateAttributeGranularity): this {
         this.item.granularity = granularity;
         return this;
     }

@@ -2,19 +2,20 @@
 import invariant from "ts-invariant";
 import isNil from "lodash/isNil";
 import {
-    IAttributeElements,
     ComparisonConditionOperator,
     IAbsoluteDateFilter,
+    IAttributeElements,
     IMeasureValueFilter,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
     IRelativeDateFilter,
     RangeConditionOperator,
 } from "./index";
-import { IAttribute, attributeDisplayFormRef } from "../attribute";
-import { ObjRef, isObjRef, Identifier, UriRef, LocalIdRef } from "../../objRef";
+import { attributeDisplayFormRef, IAttribute } from "../attribute";
+import { Identifier, isObjRef, LocalIdRef, ObjRef, UriRef } from "../../objRef";
 import { IMeasure, isMeasure, measureLocalId } from "../measure";
 import { idRef, localIdRef } from "../../objRef/factory";
+import { DateAttributeGranularity } from "../../base/dateGranularities";
 
 /**
  * Creates a new positive attribute filter.
@@ -104,11 +105,13 @@ export function newAbsoluteDateFilter(
  * @param granularity - granularity of the filters (month, year, etc.)
  * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
+ *
+ * See also {@link DateAttributeGranularity} and {@link DateGranularity}
  * @public
  */
 export function newRelativeDateFilter(
     dateDataSet: ObjRef | Identifier,
-    granularity: string,
+    granularity: DateAttributeGranularity,
     from: number,
     to: number,
 ): IRelativeDateFilter {

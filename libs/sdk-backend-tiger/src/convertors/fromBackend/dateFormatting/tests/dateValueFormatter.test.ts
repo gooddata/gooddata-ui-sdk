@@ -1,12 +1,12 @@
 // (C) 2020 GoodData Corporation
-import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { createDateValueFormatter } from "../dateValueFormatter";
 import { createDefaultDateFormatter } from "../defaultDateFormatter";
 
 describe("createDateValueFormatter", () => {
     const defaultDateValueFormatter = createDateValueFormatter(createDefaultDateFormatter());
 
-    type Scenario = [string, CatalogDateAttributeGranularity, string];
+    type Scenario = [string, DateAttributeGranularity, string];
     const scenarios: Scenario[] = [
         ["2020-01-31", "GDC.time.date", "01/31/2020"],
         ["1", "GDC.time.day_in_month", "01"],

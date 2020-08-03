@@ -57,12 +57,7 @@ export { CatalogMeasureBuilder, newCatalogMeasure } from "./measure/factory";
 export { ICatalogFact, isCatalogFact } from "./fact";
 export { CatalogFactBuilder, newCatalogFact } from "./fact/factory";
 
-export {
-    ICatalogDateDataset,
-    ICatalogDateAttribute,
-    CatalogDateAttributeGranularity,
-    isCatalogDateDataset,
-} from "./dateDataset";
+export { ICatalogDateDataset, ICatalogDateAttribute, isCatalogDateDataset } from "./dateDataset";
 export {
     CatalogDateDatasetBuilder,
     CatalogDateAttributeBuilder,
