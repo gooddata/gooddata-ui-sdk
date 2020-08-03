@@ -166,10 +166,10 @@ export interface IMeasureValueFilterState {
 }
 
 // @alpha
-export const isAbsoluteDateFilterOption: (obj: any) => obj is AbsoluteDateFilterOption;
+export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFilterOption;
 
 // @alpha
-export const isRelativeDateFilterOption: (obj: any) => obj is RelativeDateFilterOption;
+export const isRelativeDateFilterOption: (obj: unknown) => obj is RelativeDateFilterOption;
 
 // @alpha
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
@@ -189,7 +189,7 @@ export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilte
     // (undocumented)
     static defaultProps: Partial<IMeasureValueFilterProps>;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.ReactNode;
     // (undocumented)
     state: IMeasureValueFilterState;
     }
@@ -199,7 +199,7 @@ export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureVa
     // (undocumented)
     static defaultProps: Partial<IMeasureValueFilterDropdownProps>;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.ReactNode;
 }
 
 // @alpha

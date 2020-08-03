@@ -8,7 +8,7 @@ import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { locationAttribute, sizeMeasure, colorMeasure } from "../../ldm/geoModel";
 
 export class GeoPushpinChartWithColorLegendExample extends Component {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div style={{ height: "500px", position: "relative" }} className="s-geo-pushpin-chart-color">
                 <GeoPushpinChart
@@ -28,22 +28,22 @@ export class GeoPushpinChartWithColorLegendExample extends Component {
     }
 
     private onLoadingChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartWithColorLegendExample onLoadingChanged", ...params);
     }
 
     private onError(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartWithColorLegendExample onError", ...params);
     }
 
     private onZoomChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartWithColorLegendExample onZoomChanged", ...params);
     }
 
     private onCenterPositionChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartWithColorLegendExample onCenterPositionChanged", ...params);
     }
 }

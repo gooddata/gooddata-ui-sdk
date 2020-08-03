@@ -13,20 +13,17 @@ interface ISourceDropdownProps {
 }
 
 export class SourceDropdown extends React.Component<ISourceDropdownProps, ISourceDropdownState> {
-    constructor(props: ISourceDropdownProps) {
-        super(props);
-        this.state = { hidden: true, viewJS: true };
-    }
+    state: ISourceDropdownState = { hidden: true, viewJS: true };
 
-    public toggle = () => {
+    public toggle = (): void => {
         this.setState((state) => ({ ...state, hidden: !state.hidden }));
     };
 
-    public switchLang = (isJS: boolean) => {
+    public switchLang = (isJS: boolean): void => {
         this.setState((state) => ({ ...state, viewJS: isJS }));
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { hidden, viewJS } = this.state;
         const { sourceJS, source } = this.props;
 

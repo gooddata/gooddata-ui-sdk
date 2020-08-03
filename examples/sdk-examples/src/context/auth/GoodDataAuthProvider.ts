@@ -1,17 +1,22 @@
 // (C) 2019-2020 GoodData Corporation
 import sdk from "@gooddata/api-client-bear";
-import { IAuthenticationProvider } from "@gooddata/sdk-backend-spi";
+import { IAuthenticationProvider, AuthenticatedPrincipal } from "@gooddata/sdk-backend-spi";
 
 export class GoodDataAuthProvider implements IAuthenticationProvider {
-    public async logout() {
+    public async logout(): Promise<any> {
         return sdk.user.logout();
     }
 
-    public async login(username: string, password: string) {
+    public async login(username: string, password: string): Promise<any> {
         return sdk.user.login(username, password);
     }
 
-    public async register(username: string, password: string, firstName: string, lastName: string) {
+    public async register(
+        username: string,
+        password: string,
+        firstName: string,
+        lastName: string,
+    ): Promise<any> {
         return sdk.xhr.post("/api/register", {
             data: {
                 login: username,
@@ -24,7 +29,10 @@ export class GoodDataAuthProvider implements IAuthenticationProvider {
         });
     }
 
-    public async authenticate() {
+    public async authenticate(): Promise<{
+        userId: string;
+        userMeta: any;
+    }> {
         const user = await sdk.user.getCurrentProfile();
 
         return {
@@ -33,11 +41,11 @@ export class GoodDataAuthProvider implements IAuthenticationProvider {
         };
     }
 
-    public async deauthenticate() {
+    public async deauthenticate(): Promise<void> {
         // TODO: SDK8 Decide whether to implement this or remove it
     }
 
-    public async getCurrentPrincipal() {
+    public async getCurrentPrincipal(): Promise<AuthenticatedPrincipal | null> {
         // TODO: SDK8 Decide whether to implement this or remove it
         return null;
     }

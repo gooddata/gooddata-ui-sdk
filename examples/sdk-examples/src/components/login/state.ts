@@ -16,7 +16,10 @@ const initialState = {
     authStatus: DemoProjectAuthStatus.AUTHORIZING,
 };
 
-export const useDemoProjectAuth = () => {
+export const useDemoProjectAuth = (): {
+    authStatus: DemoProjectAuthStatus;
+    error: string | undefined;
+} => {
     const { authStatus: userAuthStatus } = useAuth();
     const [{ authStatus, profileUri, projects, error }, setState] = useState<IDemoProjectState>(initialState);
     const hasUserDemoProjectAssigned = projects && isDemoProjectAssignedToUser(projects);

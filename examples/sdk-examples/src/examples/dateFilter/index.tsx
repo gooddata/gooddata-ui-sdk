@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 
 import { ExampleWithSource } from "../../components/ExampleWithSource";

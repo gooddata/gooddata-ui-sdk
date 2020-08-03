@@ -46,7 +46,7 @@ interface IMeasureValueFilterComponentExampleState {
 }
 
 export class MeasureValueFilterComponentExample extends React.PureComponent<
-    {},
+    unknown,
     IMeasureValueFilterComponentExampleState
 > {
     public state = {
@@ -54,23 +54,20 @@ export class MeasureValueFilterComponentExample extends React.PureComponent<
         filters: [],
     };
     public ref = React.createRef<HTMLDivElement>();
-    constructor(props: any) {
-        super(props);
-    }
 
-    public onApply = (filter: IMeasureValueFilter) => {
+    public onApply = (filter: IMeasureValueFilter): void => {
         this.setState({ filters: [filter ?? defaultFilter], displayDropdown: false });
     };
 
-    public onCancel = () => {
+    public onCancel = (): void => {
         this.setState({ displayDropdown: false });
     };
 
-    public toggleDropdown = () => {
+    public toggleDropdown = (): void => {
         this.setState((state) => ({ ...state, displayDropdown: !state.displayDropdown }));
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { filters, displayDropdown } = this.state;
 
         return (

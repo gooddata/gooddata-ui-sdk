@@ -3,7 +3,8 @@ import React from "react";
 
 import { Link, Redirect } from "react-router-dom";
 
-export const WithSubRoutes = ({ subRoutes, match, location: { pathname } }: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const WithSubRoutes = ({ subRoutes, match, location: { pathname } }: any): JSX.Element => {
     if (match.isExact) {
         return <Redirect to={subRoutes[0].path} />;
     }

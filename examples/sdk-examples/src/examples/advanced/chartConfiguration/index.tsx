@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 import { BarChartDynamicExample } from "./BarChartDynamicExample";
@@ -17,7 +18,7 @@ import insightViewDualAxisBarChartExample from "./InsightViewDualAxisBarChartExa
 import insightViewDualAxisBarChartExampleSRC from "!raw-loader!./InsightViewDualAxisBarChartExample";
 import insightViewDualAxisBarChartExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/chartConfiguration/InsightViewDualAxisBarChartExample";
 
-export const ChartConfiguration = () => (
+export const ChartConfiguration = (): JSX.Element => (
     <div>
         <div>
             <h1>Customize chart bucket component</h1>

@@ -11,11 +11,12 @@ export interface IItem {
 
 export class AttributeFilterItem extends Component<IItem> {
     public onChange(uri: string) {
-        // tslint:disable-next-line:no-console
-        return (event: any) => console.log("AttributeFilterItem onChange", uri, event.target.value === "on");
+        return (event: React.ChangeEvent<HTMLInputElement>): void =>
+            // eslint-disable-next-line no-console
+            console.log("AttributeFilterItem onChange", uri, event.target.value === "on");
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { title, uri } = this.props;
         return (
             <label className="gd-list-item s-attribute-filter-list-item" style={{ display: "inline-flex" }}>
@@ -27,13 +28,13 @@ export class AttributeFilterItem extends Component<IItem> {
 }
 
 export class AttributeElementsExample extends Component {
-    public buildAttributeFilterItem(item: IItem) {
+    public buildAttributeFilterItem(item: IItem): JSX.Element {
         const { title, uri } = item;
 
         return <AttributeFilterItem key={uri} uri={uri} title={title} />;
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div style={{ minHeight: 500 }}>
                 <AttributeElements displayForm={attributeDisplayFormRef(Ldm.EmployeeName.Default)} limit={20}>

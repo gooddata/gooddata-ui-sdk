@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { ErrorComponent } from "@gooddata/sdk-ui";
+import { ErrorComponent, OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { LineChart } from "@gooddata/sdk-ui-charts";
 import {
@@ -18,24 +18,19 @@ interface IAttributeFilterExampleState {
     error: string | undefined;
 }
 
-export class AttributeFilterExample extends Component<{}, IAttributeFilterExampleState> {
-    constructor(props: any) {
-        super(props);
+export class AttributeFilterExample extends Component<unknown, IAttributeFilterExampleState> {
+    state: IAttributeFilterExampleState = {
+        filters: [],
+        error: undefined,
+    };
 
-        this.onApply = this.onApply.bind(this);
-        this.state = {
-            filters: [],
-            error: undefined,
-        };
-    }
-
-    public onLoadingChanged(...params: any) {
-        // tslint:disable-next-line:no-console
+    public onLoadingChanged: OnLoadingChanged = (...params) => {
+        // eslint-disable-next-line no-console
         console.info("AttributeFilterExample onLoadingChanged", ...params);
-    }
+    };
 
-    public onApply(filter: IAttributeFilter) {
-        // tslint:disable-next-line:no-console
+    public onApply = (filter: IAttributeFilter): void => {
+        // eslint-disable-next-line no-console
         console.log("AttributeFilterExample onApply", filter);
         this.setState({ filters: [], error: undefined });
         if (isPositiveAttributeFilter(filter)) {
@@ -43,14 +38,14 @@ export class AttributeFilterExample extends Component<{}, IAttributeFilterExampl
         } else {
             this.filterNegativeAttribute(filter);
         }
-    }
+    };
 
-    public onError(...params: any) {
-        // tslint:disable-next-line:no-console
+    public onError: OnError = (...params) => {
+        // eslint-disable-next-line no-console
         console.info("AttributeFilterExample onLoadingChanged", ...params);
-    }
+    };
 
-    public filterPositiveAttribute(filter: IPositiveAttributeFilter) {
+    public filterPositiveAttribute(filter: IPositiveAttributeFilter): void {
         let filters;
         const {
             positiveAttributeFilter,
@@ -77,7 +72,7 @@ export class AttributeFilterExample extends Component<{}, IAttributeFilterExampl
         this.setState({ filters });
     }
 
-    public filterNegativeAttribute(filter: INegativeAttributeFilter) {
+    public filterNegativeAttribute(filter: INegativeAttributeFilter): void {
         let filters;
         const {
             negativeAttributeFilter: { notIn, displayForm },
@@ -98,7 +93,7 @@ export class AttributeFilterExample extends Component<{}, IAttributeFilterExampl
         this.setState({ filters });
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { filters, error } = this.state;
 
         return (

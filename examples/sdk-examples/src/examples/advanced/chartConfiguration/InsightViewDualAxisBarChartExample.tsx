@@ -6,7 +6,7 @@ import { Ldm } from "../../../ldm";
 import { totalCostsLocalId, totalSalesLocalIdentifier } from "../../../ldm/ext";
 
 export class InsightViewDualAxisBarChartExample extends Component {
-    public render() {
+    public render(): React.ReactNode {
         const config = {
             secondary_xaxis: {
                 visible: true,

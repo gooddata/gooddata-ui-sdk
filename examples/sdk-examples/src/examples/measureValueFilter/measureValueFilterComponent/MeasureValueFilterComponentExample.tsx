@@ -22,11 +22,11 @@ export class MeasureValueFilterComponentExample extends React.PureComponent {
         filters: [],
     };
 
-    public onApply = (filter: IMeasureValueFilter) => {
+    public onApply = (filter: IMeasureValueFilter): void => {
         this.setState({ filters: [filter ?? defaultFilter] });
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { filters } = this.state;
         return (
             <React.Fragment>

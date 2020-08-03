@@ -119,7 +119,7 @@
     },
     "config": {
         "tslint": "./{src,test}/**/*.ts",
-        "eslint": "-c .eslintrc.js --ext ts,tsx ./{src,test}/**/*.{ts,tsx}"
+        "eslint": "-c .eslintrc.js --ext ts,tsx ./src/**/*.{ts,tsx}"
     },
     "scripts": {
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",

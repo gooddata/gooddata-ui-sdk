@@ -8,7 +8,7 @@ import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { locationAttribute, segmentByAttribute, sizeMeasure } from "../../ldm/geoModel";
 
 export class GeoPushpinChartConfigurationLegendExample extends Component {
-    public render() {
+    public render(): React.ReactNode {
         const geoConfig: IGeoConfig = {
             mapboxToken: MAPBOX_TOKEN,
             legend: {
@@ -32,7 +32,7 @@ export class GeoPushpinChartConfigurationLegendExample extends Component {
     }
 
     private onError(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationLegendExample onError", ...params);
     }
 }

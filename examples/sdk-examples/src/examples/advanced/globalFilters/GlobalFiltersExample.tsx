@@ -7,7 +7,7 @@ import { CustomError } from "../../../components/CustomError";
 import { EmployeeProfile } from "./EmployeeProfile";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 
-export const GlobalFiltersExample = () => (
+export const GlobalFiltersExample = (): JSX.Element => (
     <AttributeElements displayForm={attributeDisplayFormRef(Ldm.EmployeeName.Default)} limit={20}>
         {({ validElements, error, isLoading }) => {
             if (error) {

@@ -11,16 +11,12 @@ type State = {
     groupNearbyPoints: boolean;
 };
 
-export class GeoPushpinChartConfigurationPointsGroupNearbyExample extends Component<any, State> {
-    constructor(props: any) {
-        super(props);
+export class GeoPushpinChartConfigurationPointsGroupNearbyExample extends Component<unknown, State> {
+    state: State = {
+        groupNearbyPoints: false,
+    };
 
-        this.state = {
-            groupNearbyPoints: false,
-        };
-    }
-
-    public render() {
+    public render(): React.ReactNode {
         const { groupNearbyPoints } = this.state;
         const geoConfig = {
             mapboxToken: MAPBOX_TOKEN,
@@ -58,7 +54,7 @@ export class GeoPushpinChartConfigurationPointsGroupNearbyExample extends Compon
     };
 
     private onLoadingChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log(
             "GeoPushpinChartConfigurationPointsGroupNearbyExample onLoadingChanged",
             ...params,
@@ -66,17 +62,17 @@ export class GeoPushpinChartConfigurationPointsGroupNearbyExample extends Compon
     }
 
     private onError(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationPointsGroupNearbyExample onError", ...params);
     }
 
     private onZoomChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationPointsGroupNearbyExample onZoomChanged", ...params);
     }
 
     private onCenterPositionChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log(
             "GeoPushpinChartConfigurationPointsGroupNearbyExample onCenterPositionChanged",
             ...params,

@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 
 import { ExampleWithSource } from "../../components/ExampleWithSource";
@@ -51,7 +52,7 @@ import InsightViewGeoPushpinByIdentifierExampleSRCJS from "!raw-loader!../../../
 import InsightViewBulletByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewBulletByIdentifierExample";
 import { InsightViewTableByIdentifierExample } from "./InsightViewTableByIdentifierExample";
 
-export const InsightView = () => (
+export const InsightView = (): JSX.Element => (
     <div>
         <h1>InsightView by identifier</h1>
 

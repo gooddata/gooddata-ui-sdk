@@ -5,12 +5,12 @@ import { idRef, newPositiveAttributeFilter, newNegativeAttributeFilter, uriRef }
 import { Ldm, LdmExt } from "../../ldm";
 
 export class AttributeFilterComponentExample extends Component {
-    public onApply(...params: any[]) {
-        // tslint:disable-next-line:no-console
+    public onApply = (...params: any[]): void => {
+        // eslint-disable-next-line no-console
         console.log("AttributeFilterComponentExample onApply", ...params);
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div>
                 <div>attribute defined by identifier</div>

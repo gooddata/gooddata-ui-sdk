@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { useState } from "react";
 import { IAuthState, AuthStatus } from "./types";
 
@@ -6,6 +6,7 @@ const initialState: IAuthState = {
     authStatus: AuthStatus.AUTHORIZING,
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useAuthState = (initialAuthState: IAuthState = initialState) => {
     const [{ authStatus, authError }, setState] = useState<IAuthState>(initialAuthState);
     const onLoginStart = () =>

@@ -17,7 +17,7 @@ import MeasureValueFilterShownInPercentageExampleSRCJS from "!raw-loader!../../.
 import MeasureValueFilterStackedToHundredPercentExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterByValue/MeasureValueFilterStackedToHundredPercentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import MeasureValueFilterFormattedInPercentageExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterByValue/MeasureValueFilterFormattedInPercentageExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const MeasureValueFilter = () => (
+export const MeasureValueFilter = (): JSX.Element => (
     <div>
         <h1>Filter by Measure Value</h1>
         <p>

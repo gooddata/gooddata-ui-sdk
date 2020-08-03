@@ -11,22 +11,18 @@ interface IConfigurationColumnChartExampleState {
     customSeparatorUsed: boolean;
 }
 
-export class ConfigurationColumnChartExample extends Component<{}, IConfigurationColumnChartExampleState> {
-    constructor(props: any) {
-        super(props);
+export class ConfigurationColumnChartExample extends Component<
+    unknown,
+    IConfigurationColumnChartExampleState
+> {
+    state: IConfigurationColumnChartExampleState = {
+        config: {},
+        customPaletteUsed: false,
+        customLegendUsed: true,
+        customSeparatorUsed: true,
+    };
 
-        this.state = {
-            config: {},
-            customPaletteUsed: false,
-            customLegendUsed: true,
-            customSeparatorUsed: true,
-        };
-        this.onPaletteChange = this.onPaletteChange.bind(this);
-        this.onLegendChange = this.onLegendChange.bind(this);
-        this.onSeparatorChange = this.onSeparatorChange.bind(this);
-    }
-
-    public onPaletteChange() {
+    public onPaletteChange = (): void => {
         const { config: currentConfig, customPaletteUsed } = this.state;
         const colorPaletteProp = {
             colorPalette: customPaletteUsed ? undefined : CUSTOM_COLOR_PALETTE,
@@ -38,9 +34,9 @@ export class ConfigurationColumnChartExample extends Component<{}, IConfiguratio
             },
             customPaletteUsed: !customPaletteUsed,
         });
-    }
+    };
 
-    public onLegendChange() {
+    public onLegendChange = (): void => {
         const { config: currentConfig, customLegendUsed } = this.state;
         const legendProp = {
             legend: {
@@ -55,9 +51,9 @@ export class ConfigurationColumnChartExample extends Component<{}, IConfiguratio
             },
             customLegendUsed: !customLegendUsed,
         });
-    }
+    };
 
-    public onSeparatorChange() {
+    public onSeparatorChange = (): void => {
         const { config: currentConfig, customSeparatorUsed } = this.state;
         const separatorProp = {
             separators: customSeparatorUsed
@@ -71,9 +67,9 @@ export class ConfigurationColumnChartExample extends Component<{}, IConfiguratio
             },
             customSeparatorUsed: !customSeparatorUsed,
         });
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         // const { config } = this.state;
 
         return (

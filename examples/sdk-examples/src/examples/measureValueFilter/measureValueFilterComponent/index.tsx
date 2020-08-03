@@ -17,7 +17,7 @@ import MeasureValueFilterDropdownComponentExample from "./MeasureValueFilterDrop
 import MeasureValueFilterDropdownComponentExampleSRC from "!raw-loader!./MeasureValueFilterDropdownComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import MeasureValueFilterDropdownComponentExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterComponent/MeasureValueFilterDropdownComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const MeasureValueFilterComponent = () => (
+export const MeasureValueFilterComponent = (): JSX.Element => (
     <div>
         <h1>Measure Value Filter Component</h1>
         <p>The example below shows general usage of the component for managing the measure value filter.</p>

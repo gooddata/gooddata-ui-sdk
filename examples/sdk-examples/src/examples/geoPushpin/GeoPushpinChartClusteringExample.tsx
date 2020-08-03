@@ -8,7 +8,7 @@ import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { Ldm } from "../../ldm";
 
 export class GeoPushpinChartClusteringExample extends Component {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div style={{ height: "500px", position: "relative" }} className="s-geo-pushpin-chart-clustering">
                 <GeoPushpinChart
@@ -26,22 +26,22 @@ export class GeoPushpinChartClusteringExample extends Component {
     }
 
     private onLoadingChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartClusteringExample onLoadingChanged", ...params);
     }
 
     private onError(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartClusteringExample onError", ...params);
     }
 
     private onZoomChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartClusteringExample onZoomChanged", ...params);
     }
 
     private onCenterPositionChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartClusteringExample onCenterPositionChanged", ...params);
     }
 }
