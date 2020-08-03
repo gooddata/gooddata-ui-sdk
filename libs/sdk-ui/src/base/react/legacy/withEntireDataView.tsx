@@ -6,11 +6,18 @@ import {
     IMeasureDescriptor,
     IPreparedExecution,
     isNoDataError,
+    isUnexpectedResponseError,
+    isMeasureGroupDescriptor,
+    IDimensionDescriptor,
+    isAttributeDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import noop from "lodash/noop";
 import omit from "lodash/omit";
+import flatMap from "lodash/fp/flatMap";
+import filter from "lodash/fp/filter";
+import flow from "lodash/fp/flow";
 import {
     IExportFunction,
     ILoadingState,
@@ -23,6 +30,10 @@ import { DataViewFacade } from "../../results/facade";
 import { convertError } from "../../errors/errorHandling";
 import { IntlWrapper } from "../../localization/IntlWrapper";
 import { IDataVisualizationProps } from "../../vis/VisualizationProps";
+import {
+    IMeasureGroupDescriptor,
+    IAttributeDescriptor,
+} from "../../../../../sdk-backend-spi/dist/workspace/execution/results";
 
 interface IDataViewLoadState {
     isLoading: boolean;
@@ -196,6 +207,33 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             };
         }
 
+        private getAvailableDrillTargetsFromExecutionResult(
+            executionResult: IExecutionResult,
+        ): IAvailableDrillTargets {
+            const attributeDescriptors: IAttributeDescriptor[] = flow(
+                flatMap((dimensionDescriptor: IDimensionDescriptor) => dimensionDescriptor.headers),
+                filter(isAttributeDescriptor),
+            )(executionResult.dimensions);
+
+            const measureDescriptors: IMeasureDescriptor[] = flow(
+                flatMap((dimensionDescriptor: IDimensionDescriptor) => dimensionDescriptor.headers),
+                filter(isMeasureGroupDescriptor),
+                flatMap(
+                    (measureGroupDescriptor: IMeasureGroupDescriptor) =>
+                        measureGroupDescriptor.measureGroupHeader.items,
+                ),
+            )(executionResult.dimensions);
+
+            return {
+                measures: measureDescriptors.map(
+                    (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
+                        measure,
+                        attributes: attributeDescriptors,
+                    }),
+                ),
+            };
+        }
+
         private async initDataLoading(execution: IPreparedExecution) {
             const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
@@ -208,7 +246,21 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     return;
                 }
 
-                const dataView = await executionResult.readAll();
+                const dataView = await executionResult.readAll().catch((err) => {
+                    /**
+                     * When execution result is received successfully,
+                     * but data load fails with unexpected http response,
+                     * we still want to push availableDrillTargets
+                     */
+                    if (isUnexpectedResponseError(err) && pushData) {
+                        const availableDrillTargets = this.getAvailableDrillTargetsFromExecutionResult(
+                            executionResult,
+                        );
+
+                        pushData({ availableDrillTargets });
+                    }
+                    throw err;
+                });
 
                 if (this.hasUnmounted) {
                     return;
