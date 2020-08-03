@@ -111,13 +111,17 @@ function transformToWeakMeasureColumnWidthItem(
 // removes attribute widthItems with invalid identifiers
 // removes measure widthItems with invalid identifiers and invalid number of locators
 function adaptWidthItemsToPivotTable(
-    originalColumnWidths: ColumnWidthItem[],
+    originalColumnWidths: ColumnWidthItem[] | undefined,
     measureLocalIdentifiers: string[],
     rowAttributeLocalIdentifiers: string[],
     columnAttributeLocalIdentifiers: string[],
     filters: IBucketFilter[],
     firstColumnAttributeAdded: boolean,
 ): ColumnWidthItem[] {
+    if (!originalColumnWidths) {
+        return originalColumnWidths;
+    }
+
     const attributeLocalIdentifiers = [...rowAttributeLocalIdentifiers, ...columnAttributeLocalIdentifiers];
 
     return originalColumnWidths.reduce((columnWidths: ColumnWidthItem[], columnWidth: ColumnWidthItem) => {
