@@ -112,6 +112,10 @@ interface IInsightViewState {
 
 const getElementId = () => `gd-vis-${uuid.v4()}`;
 
+const visualizationUriRootStyle = {
+    height: "100%",
+};
+
 class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewState> {
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
@@ -179,6 +183,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
                 separators: config.separators,
                 colorPalette: this.colorPalette,
                 mapboxToken: config.mapboxToken,
+                forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
                 isInEditMode: false,
             },
             customVisualizationConfig: config,
@@ -362,7 +367,12 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             <>
                 {this.state.isLoading && <LoadingComponent />}
                 {this.state.error && <ErrorComponent message={this.state.error.message} />}
-                <div className="visualization-uri-root" id={this.elementId} ref={this.containerRef} />
+                <div
+                    className="visualization-uri-root"
+                    id={this.elementId}
+                    ref={this.containerRef}
+                    style={visualizationUriRootStyle}
+                />
             </>
         );
     }

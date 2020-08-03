@@ -342,6 +342,7 @@ export interface IGdcConfig {
     mapboxToken?: string;
     maxWidth?: number;
     maxHeight?: number;
+    forceDisableDrillOnAxes?: boolean;
 }
 
 /**

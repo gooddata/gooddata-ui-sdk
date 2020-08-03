@@ -353,6 +353,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return {
             separators: config.separators,
             colorPalette: config.colorPalette,
+            forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
             ...supportedControls,
             colorMapping: validColorMapping && validColorMapping.length > 0 ? validColorMapping : null,
             ...customVisualizationConfig,
