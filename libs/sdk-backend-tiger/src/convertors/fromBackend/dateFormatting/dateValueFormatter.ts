@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { parseDateValue } from "./dateValueParser";
 import { DateFormatter } from "./types";
 
@@ -9,7 +9,7 @@ import { DateFormatter } from "./types";
  * @public
  */
 export function createDateValueFormatter(dateFormatter: DateFormatter) {
-    return (value: string, granularity: CatalogDateAttributeGranularity) => {
+    return (value: string, granularity: DateAttributeGranularity) => {
         const parsed = parseDateValue(value, granularity);
         return dateFormatter(parsed, granularity);
     };

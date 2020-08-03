@@ -1,12 +1,12 @@
 // (C) 2020 GoodData Corporation
 import format from "date-fns/format";
 import { enUS, de, es, fr, ja, nl, pt, ptBR, zhCN } from "date-fns/locale";
-import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { DateFormatter } from "./types";
 
 const granularityFormatPatterns: {
-    [granularity in CatalogDateAttributeGranularity]?: string;
+    [granularity in DateAttributeGranularity]?: string;
 } = {
     "GDC.time.date": "P", // 01/31/2020
     "GDC.time.day_in_month": "dd", // 01-31

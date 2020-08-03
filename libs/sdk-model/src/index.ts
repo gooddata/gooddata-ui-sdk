@@ -8,6 +8,8 @@ export {
     builderFactory,
 } from "./base/builder";
 
+export { DateAttributeGranularity } from "./base/dateGranularities";
+
 export { IDrillingActivationPostMessageData } from "./embedding/postMessage";
 
 export {
@@ -313,7 +315,6 @@ export { insightSanitize } from "./insight/sanitization";
 export {
     CatalogItemType,
     CatalogItem,
-    CatalogDateAttributeGranularity,
     ICatalogGroup,
     ICatalogAttribute,
     ICatalogFact,

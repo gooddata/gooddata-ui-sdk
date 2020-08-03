@@ -1,13 +1,13 @@
 // (C) 2020 GoodData Corporation
 import parse from "date-fns/parse";
 import identity from "lodash/identity";
-import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
 type ValueTransform = (value: string) => string;
 
 const granularityParseValueTransformations: {
-    [granularity in CatalogDateAttributeGranularity]?: ValueTransform;
+    [granularity in DateAttributeGranularity]?: ValueTransform;
 } = {
     "GDC.time.day_in_week": (value) => {
         // server returns 0 = Sunday, 6 = Saturday
@@ -16,7 +16,7 @@ const granularityParseValueTransformations: {
     },
 };
 
-const granularityParsePatterns: { [granularity in CatalogDateAttributeGranularity]?: string } = {
+const granularityParsePatterns: { [granularity in DateAttributeGranularity]?: string } = {
     "GDC.time.date": "yyyy-MM-dd", // 2020-01-31
     "GDC.time.day_in_month": "d", // 1-31
     "GDC.time.day_in_week": "i", // 1-7
@@ -36,7 +36,7 @@ const granularityParsePatterns: { [granularity in CatalogDateAttributeGranularit
  * @param granularity - granularity to assume when parsing the value.
  * @internal
  */
-export const parseDateValue = (value: string, granularity: CatalogDateAttributeGranularity): Date => {
+export const parseDateValue = (value: string, granularity: DateAttributeGranularity): Date => {
     const parsePattern = granularityParsePatterns[granularity];
     if (!parsePattern) {
         throw new UnexpectedError(`No date parser for the "${granularity}" granularity available.`);

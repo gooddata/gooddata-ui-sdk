@@ -1,14 +1,14 @@
 // (C) 2019-2020 GoodData Corporation
 import { AttributeGranularityResourceAttribute } from "@gooddata/api-client-tiger";
-import { CatalogDateAttributeGranularity } from "@gooddata/sdk-model";
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 
 type TigerToSdk = {
-    [key in AttributeGranularityResourceAttribute]: CatalogDateAttributeGranularity;
+    [key in AttributeGranularityResourceAttribute]: DateAttributeGranularity;
 };
 
 type SdkToTiger = {
-    [key in CatalogDateAttributeGranularity]: AttributeGranularityResourceAttribute | undefined;
+    [key in DateAttributeGranularity]: AttributeGranularityResourceAttribute | undefined;
 };
 
 /*
@@ -48,7 +48,7 @@ const TigerToSdkGranularityMap: TigerToSdk = {
  */
 export function toSdkGranularity(
     granularity: AttributeGranularityResourceAttribute,
-): CatalogDateAttributeGranularity {
+): DateAttributeGranularity {
     return TigerToSdkGranularityMap[granularity];
 }
 
@@ -83,7 +83,7 @@ const SdkToTigerGranularityMap: SdkToTiger = {
  * @throws NotSupport if the input granularity is not supported by tiger
  */
 export function toTigerGranularity(
-    granularity: CatalogDateAttributeGranularity,
+    granularity: DateAttributeGranularity,
 ): AttributeGranularityResourceAttribute {
     const tigerGranularity = SdkToTigerGranularityMap[granularity];
 
