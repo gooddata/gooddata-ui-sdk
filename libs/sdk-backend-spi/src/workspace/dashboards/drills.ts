@@ -7,7 +7,12 @@ import isEmpty from "lodash/isEmpty";
  * Widget drill definition
  * @alpha
  */
-export type DrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToLegacyDashboard;
+export type DrillDefinition =
+    | IDrillToInsight
+    | IDrillToDashboard
+    | IDrillToLegacyDashboard
+    | IDrillToCustomUrl
+    | IDrillToAttributeUrl;
 
 /**
  * Drill origin type
