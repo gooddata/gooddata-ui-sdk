@@ -30,12 +30,6 @@ const getCodeMirrorDocument = (wrapper: MountWrapper) => {
     return instance.editor.getDoc();
 };
 
-const triggerCodeMirrorBlur = (wrapper: MountWrapper) => {
-    const instance = wrapper.find(CodeMirrorInput).instance() as ICodeMirrorInputInstance;
-    const editor = instance.editor;
-    wrapper.find(CodeMirrorInput).props().onBlur?.(editor);
-};
-
 describe("SyntaxHighlightingInput", () => {
     it("should render CodeMirrorInput component", () => {
         const wrapper = renderComponent();
@@ -69,36 +63,22 @@ describe("SyntaxHighlightingInput", () => {
     describe("onCursor", () => {
         const multiLineValue = "01234\n01234\n01234";
 
-        it("should call onCursor function on editor blur with expected parameters", () => {
+        it("should call onCursor function with expected parameters on cursor position change", () => {
             const onCursor = jest.fn();
             const wrapper = renderComponent({ onCursor, value: multiLineValue });
 
             const doc = getCodeMirrorDocument(wrapper);
             doc.setCursor({ line: 1, ch: 2 });
 
-            triggerCodeMirrorBlur(wrapper);
-
             expect(onCursor).toHaveBeenCalledWith(8, 8);
         });
 
-        it("should call onCursor function on value change with expected parameters", () => {
-            const onCursor = jest.fn();
-            const wrapper = renderComponent({ onCursor, value: multiLineValue });
-
-            const doc = getCodeMirrorDocument(wrapper);
-            doc.setValue("text");
-
-            expect(onCursor).toHaveBeenCalledWith(0, 0);
-        });
-
-        it("should call onCursor function with expected parameters for multiline selection", () => {
+        it("should call onCursor function with expected parameters on multiline selection", () => {
             const onCursor = jest.fn();
             const wrapper = renderComponent({ onCursor, value: multiLineValue });
 
             const doc = getCodeMirrorDocument(wrapper);
             doc.setSelection({ line: 0, ch: 3 }, { line: 2, ch: 2 });
-
-            triggerCodeMirrorBlur(wrapper);
 
             expect(onCursor).toHaveBeenCalledWith(3, 14);
         });
