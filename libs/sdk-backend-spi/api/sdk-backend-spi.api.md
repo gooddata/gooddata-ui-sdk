@@ -131,7 +131,7 @@ export type DateFilterType = RelativeType | AbsoluteType;
 export type DateString = string;
 
 // @alpha
-export type DrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToLegacyDashboard;
+export type DrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToLegacyDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
 
 // @alpha
 export type DrillOrigin = IDrillFromMeasure;

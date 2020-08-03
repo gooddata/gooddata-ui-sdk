@@ -25,14 +25,20 @@ export namespace GdcVisualizationWidget {
         visualizationWidget: IVisualizationWidget;
     }
 
-    export type IDrillDefinition = IDrillToVisualization | IDrillToDashboard;
+    export type IDrillDefinition =
+        | IDrillToVisualization
+        | IDrillToDashboard
+        | IDrillToCustomUrl
+        | IDrillToAttributeUrl;
+
+    export interface IDrillFromMeasure {
+        drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
+    }
 
     export interface IDrillToVisualization {
         drillToVisualization: {
             target: "pop-up";
-            from: {
-                drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
-            };
+            from: IDrillFromMeasure;
             toVisualization: GdcVisualizationObject.IObjUriQualifier;
         };
     }
@@ -40,10 +46,25 @@ export namespace GdcVisualizationWidget {
     export interface IDrillToDashboard {
         drillToDashboard: {
             target: "in-place";
-            from: {
-                drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
-            };
+            from: IDrillFromMeasure;
             toDashboard: Identifier;
+        };
+    }
+
+    export interface IDrillToCustomUrl {
+        drillToCustomUrl: {
+            target: "new-window";
+            from: IDrillFromMeasure;
+            customUrl: string;
+        };
+    }
+
+    export interface IDrillToAttributeUrl {
+        drillToAttributeUrl: {
+            target: "new-window";
+            from: IDrillFromMeasure;
+            insightAttributeDisplayForm: GdcVisualizationObject.IObjUriQualifier;
+            drillToAttributeDisplayForm: GdcVisualizationObject.IObjUriQualifier;
         };
     }
 
@@ -53,6 +74,14 @@ export namespace GdcVisualizationWidget {
 
     export function isDrillToDashboard(obj: any): obj is IDrillToDashboard {
         return !isEmpty(obj) && !!(obj as IDrillToDashboard).drillToDashboard;
+    }
+
+    export function isDrillToCustomUrl(obj: any): obj is IDrillToCustomUrl {
+        return !isEmpty(obj) && !!(obj as IDrillToCustomUrl).drillToCustomUrl;
+    }
+
+    export function isDrillToAttributeUrl(obj: any): obj is IDrillToAttributeUrl {
+        return !isEmpty(obj) && !!(obj as IDrillToAttributeUrl).drillToAttributeUrl;
     }
 
     export function isVisualizationWidget(obj: any): obj is IVisualizationWidget {

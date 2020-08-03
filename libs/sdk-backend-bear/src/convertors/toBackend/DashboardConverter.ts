@@ -42,6 +42,10 @@ import {
     IDashboardDateFilterConfig,
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
+    IDrillToCustomUrl,
+    IDrillToAttributeUrl,
+    isDrillToCustomUrl,
+    isDrillToAttributeUrl,
 } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -235,25 +239,26 @@ const convertFilterReference = (
 
 export function convertDrill(drill: IDrillToLegacyDashboard): GdcKpi.IKpiProjectDashboardLink;
 export function convertDrill(
-    drill: IDrillToInsight | IDrillToDashboard,
+    drill: IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl,
 ): GdcVisualizationWidget.IDrillDefinition;
 export function convertDrill(
     drill: DrillDefinition,
 ): GdcKpi.IKpiProjectDashboardLink | GdcVisualizationWidget.IDrillDefinition {
     const {
         origin: { measure },
-        target,
     } = drill;
+    const drillFromMeasure = {
+        drillFromMeasure: {
+            localIdentifier: objRefToString(measure),
+        },
+    };
+
     if (isDrillToDashboard(drill)) {
         const drillToDashboard: GdcVisualizationWidget.IDrillToDashboard = {
             drillToDashboard: {
-                from: {
-                    drillFromMeasure: {
-                        localIdentifier: objRefToString(measure),
-                    },
-                },
+                from: drillFromMeasure,
                 target: "in-place",
-                toDashboard: objRefToString(target),
+                toDashboard: objRefToString(drill.target),
             },
         };
 
@@ -261,23 +266,39 @@ export function convertDrill(
     } else if (isDrillToInsight(drill)) {
         const drillToInsight: GdcVisualizationWidget.IDrillToVisualization = {
             drillToVisualization: {
-                from: {
-                    drillFromMeasure: {
-                        localIdentifier: objRefToString(measure),
-                    },
-                },
+                from: drillFromMeasure,
                 target: "pop-up",
                 toVisualization: {
-                    uri: refToUri(target),
+                    uri: refToUri(drill.target),
                 },
             },
         };
 
         return drillToInsight;
+    } else if (isDrillToCustomUrl(drill)) {
+        const drillToCustomUrl: GdcVisualizationWidget.IDrillToCustomUrl = {
+            drillToCustomUrl: {
+                from: drillFromMeasure,
+                target: "new-window",
+                customUrl: drill.target.url,
+            },
+        };
+        return drillToCustomUrl;
+    } else if (isDrillToAttributeUrl(drill)) {
+        const drillToAttributeUrl: GdcVisualizationWidget.IDrillToAttributeUrl = {
+            drillToAttributeUrl: {
+                from: drillFromMeasure,
+                target: "new-window",
+                drillToAttributeDisplayForm: { uri: refToUri(drill.target.hyperlinkDisplayForm) },
+                insightAttributeDisplayForm: { uri: refToUri(drill.target.displayForm) },
+            },
+        };
+
+        return drillToAttributeUrl;
     } else if (isDrillToLegacyDashboard(drill)) {
         const { tab } = drill;
         const kpiDrill: GdcKpi.IKpiProjectDashboardLink = {
-            projectDashboard: refToUri(target),
+            projectDashboard: refToUri(drill.target),
             projectDashboardTab: tab,
         };
         return kpiDrill;

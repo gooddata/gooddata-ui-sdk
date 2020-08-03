@@ -2448,15 +2448,37 @@ export namespace GdcVisualizationObject {
 // @public (undocumented)
 export namespace GdcVisualizationWidget {
     // (undocumented)
-    export type IDrillDefinition = IDrillToVisualization | IDrillToDashboard;
+    export type IDrillDefinition = IDrillToVisualization | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
+    // (undocumented)
+    export interface IDrillFromMeasure {
+        // (undocumented)
+        drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
+    }
+    // (undocumented)
+    export interface IDrillToAttributeUrl {
+        // (undocumented)
+        drillToAttributeUrl: {
+            target: "new-window";
+            from: IDrillFromMeasure;
+            insightAttributeDisplayForm: GdcVisualizationObject.IObjUriQualifier;
+            drillToAttributeDisplayForm: GdcVisualizationObject.IObjUriQualifier;
+        };
+    }
+    // (undocumented)
+    export interface IDrillToCustomUrl {
+        // (undocumented)
+        drillToCustomUrl: {
+            target: "new-window";
+            from: IDrillFromMeasure;
+            customUrl: string;
+        };
+    }
     // (undocumented)
     export interface IDrillToDashboard {
         // (undocumented)
         drillToDashboard: {
             target: "in-place";
-            from: {
-                drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
-            };
+            from: IDrillFromMeasure;
             toDashboard: Identifier;
         };
     }
@@ -2465,12 +2487,14 @@ export namespace GdcVisualizationWidget {
         // (undocumented)
         drillToVisualization: {
             target: "pop-up";
-            from: {
-                drillFromMeasure: GdcVisualizationObject.ILocalIdentifierQualifier;
-            };
+            from: IDrillFromMeasure;
             toVisualization: GdcVisualizationObject.IObjUriQualifier;
         };
     }
+    // (undocumented)
+    export function isDrillToAttributeUrl(obj: any): obj is IDrillToAttributeUrl;
+    // (undocumented)
+    export function isDrillToCustomUrl(obj: any): obj is IDrillToCustomUrl;
     // (undocumented)
     export function isDrillToDashboard(obj: any): obj is IDrillToDashboard;
     // (undocumented)
@@ -2519,7 +2543,7 @@ export type Uri = string;
 
 // Warnings were encountered during analysis:
 //
-// dist/visualizationWidget/GdcVisualizationWidget.d.ts:37:13 - (ae-forgotten-export) The symbol "Identifier" needs to be exported by the entry point index.d.ts
+// dist/visualizationWidget/GdcVisualizationWidget.d.ts:36:13 - (ae-forgotten-export) The symbol "Identifier" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
