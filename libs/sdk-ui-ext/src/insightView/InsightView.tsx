@@ -21,6 +21,7 @@ import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetF
 import {
     GoodDataSdkError,
     fillMissingTitles,
+    ignoreTitlesForSimpleMeasures,
     ILocale,
     withContexts,
     DefaultLocale,
@@ -185,7 +186,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
 
         this.visualization.update(
             visProps,
-            fillMissingTitles(this.insight, this.getLocale()),
+            ignoreTitlesForSimpleMeasures(fillMissingTitles(this.insight, this.getLocale())),
             {},
             this.getExecutionFactory(),
         );

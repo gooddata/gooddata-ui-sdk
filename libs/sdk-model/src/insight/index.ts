@@ -2,7 +2,13 @@
 import isEmpty from "lodash/isEmpty";
 import intersection from "lodash/intersection";
 import { SortEntityIds, sortEntityIds, ISortItem } from "../execution/base/sort";
-import { anyBucket, BucketPredicate, IAttributeOrMeasure, IBucket } from "../execution/buckets";
+import {
+    anyBucket,
+    BucketPredicate,
+    IAttributeOrMeasure,
+    IBucket,
+    BucketItemModifications,
+} from "../execution/buckets";
 import { IFilter } from "../execution/filter";
 import { IMeasure, measureLocalId } from "../execution/measure";
 import { attributeLocalId, IAttribute } from "../execution/attribute";
@@ -14,9 +20,11 @@ import {
     bucketsItems,
     bucketsMeasures,
     bucketsTotals,
+    bucketsModifyItem,
 } from "../execution/buckets/bucketArray";
 import invariant from "ts-invariant";
 import { IColor } from "../colors";
+import identity from "lodash/identity";
 
 /**
  * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
@@ -575,6 +583,33 @@ export function insightSetBuckets<T extends IInsightDefinition>(
         insight: {
             ...insight.insight,
             buckets,
+        },
+    } as T;
+}
+
+/**
+ * Creates a new insight with modified bucket items (retrieved by applying the modifications function to each bucketItem in the insight).
+ *
+ * Note: the bucket item modification function SHOULD NOT modify bucket item's localId.
+ * The localId MAY be used to reference the item from other places in the insight (for example from sorts).
+ * Changing the item localId has potential to break the insight: as-is this function does not concern itself with changing the references.
+ *
+ * @param insight - insight to use as template for the new insight
+ * @param modifications - modifications to apply to the bucket items
+ * @returns always new instance
+ * @public
+ */
+export function insightModifyItems<T extends IInsightDefinition>(
+    insight: T,
+    modifications: BucketItemModifications = identity,
+): T {
+    invariant(insight, "insight must be specified");
+    const buckets: IBucket[] = insightBuckets(insight);
+    // tslint:disable-next-line: no-object-literal-type-assertion
+    return {
+        insight: {
+            ...insight.insight,
+            buckets: bucketsModifyItem(buckets, modifications),
         },
     } as T;
 }

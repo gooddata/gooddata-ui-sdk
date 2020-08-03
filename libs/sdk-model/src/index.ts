@@ -151,6 +151,7 @@ export {
     IPreviousPeriodDateDataSet,
     isMeasure,
     isSimpleMeasure,
+    isAdhocMeasure,
     isPoPMeasure,
     isPreviousPeriodMeasure,
     isArithmeticMeasure,
@@ -218,6 +219,8 @@ export {
     applyRatioRule,
     ComputeRatioRule,
     disableComputeRatio,
+    BucketItemModifications,
+    bucketModifyItems,
 } from "./execution/buckets";
 
 export {
@@ -230,6 +233,7 @@ export {
     bucketsFindAttribute,
     bucketsItems,
     bucketsTotals,
+    bucketsModifyItem,
 } from "./execution/buckets/bucketArray";
 
 export {
@@ -296,6 +300,7 @@ export {
     insightSetFilters,
     insightSetProperties,
     insightSetSorts,
+    insightModifyItems,
     visClassUrl,
     visClassId,
     visClassUri,

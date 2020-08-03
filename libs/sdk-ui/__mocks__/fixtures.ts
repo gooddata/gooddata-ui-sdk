@@ -376,6 +376,7 @@ export const insightWithComplexArithmeticMeasureTree: IInsight = {
                     {
                         measure: {
                             localIdentifier: "m1_pop",
+                            title: "M1 Pop Measure Title",
                             definition: {
                                 popMeasureDefinition: {
                                     measureIdentifier: "m1",
@@ -389,6 +390,7 @@ export const insightWithComplexArithmeticMeasureTree: IInsight = {
                     {
                         measure: {
                             localIdentifier: "m1_previous_period",
+                            title: "M1 Previous Measure Title",
                             definition: {
                                 previousPeriodMeasure: {
                                     measureIdentifier: "m1",
@@ -453,6 +455,7 @@ export const insightWithComplexArithmeticMeasureTree: IInsight = {
                     {
                         measure: {
                             localIdentifier: "arithmetic_measure_created_from_simple_measures",
+                            title: "Arithmetic sum(m1, m2) Measure Title",
                             definition: {
                                 arithmeticMeasure: {
                                     operator: "sum",
@@ -464,6 +467,7 @@ export const insightWithComplexArithmeticMeasureTree: IInsight = {
                     {
                         measure: {
                             localIdentifier: "arithmetic_measure_created_from_renamed_simple_measures",
+                            title: "Arithmetic sum(m3, m4) Measure Title",
                             definition: {
                                 arithmeticMeasure: {
                                     operator: "sum",

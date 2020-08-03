@@ -14,6 +14,7 @@ import { isTotal, ITotal } from "../base/totals";
 import invariant from "ts-invariant";
 import { modifySimpleMeasure } from "../measure/factory";
 import isArray from "lodash/isArray";
+import identity from "lodash/identity";
 
 /**
  * Type representing bucket items - which can be either measure or an attribute.
@@ -422,4 +423,36 @@ export function disableComputeRatio<T extends IAttributeOrMeasure>(item: T): T {
     }
 
     return item;
+}
+
+/**
+ * Describes the type of the function used to modify the bucket items.
+ *
+ * @public
+ */
+export type BucketItemModifications = (bucketItem: IAttributeOrMeasure) => IAttributeOrMeasure;
+
+/**
+ * Creates a new bucket by modifying items of the provided input bucket.
+ * Each item from the input bucket will be dispatched to the modification function
+ * and the result of the modification will be included in the new bucket.
+ *
+ * Note: it is valid for the modification function to just return the original item.
+ * In that case the item will be included in the bucket without modification.
+ *
+ * @param bucket - bucket in which all items are applied the modification function
+ * @param modifications - the modification to apply to the bucket items
+ * @returns new instance of bucket with modified bucket items
+ * @public
+ */
+export function bucketModifyItems(
+    bucket: IBucket,
+    modifications: BucketItemModifications = identity,
+): IBucket {
+    invariant(bucket, "bucket must be specified");
+    const items: IAttributeOrMeasure[] = bucketItems(bucket);
+    return {
+        ...bucket,
+        items: items.map((bucketItem: IAttributeOrMeasure): IAttributeOrMeasure => modifications(bucketItem)),
+    };
 }
