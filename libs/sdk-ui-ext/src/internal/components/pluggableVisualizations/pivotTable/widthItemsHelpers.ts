@@ -3,17 +3,26 @@ import includes from "lodash/includes";
 import {
     ColumnWidthItem,
     IMeasureColumnWidthItem,
-    isMeasureColumnWidthItem,
-    isAttributeColumnWidthItem,
-    isAllMeasureColumnWidthItem,
-    IWeakMeasureColumnWidthItem,
     isAbsoluteColumnWidth,
+    isAllMeasureColumnWidthItem,
+    isAttributeColumnWidthItem,
+    isMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
+    IWeakMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
 import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interfaces/Visualization";
-import { isMeasureLocator } from "@gooddata/sdk-model";
+import {
+    attributeLocalId,
+    bucketAttributes,
+    IInsightDefinition,
+    insightBucket,
+    insightMeasures,
+    isMeasureLocator,
+    measureLocalId,
+} from "@gooddata/sdk-model";
 import { isAttributeFilter } from "../../../utils/bucketHelper";
+import { BucketNames } from "@gooddata/sdk-ui";
 
 const isMeasureWidthItemMatchedByFilter = (
     widthItem: IMeasureColumnWidthItem,
@@ -102,13 +111,17 @@ function transformToWeakMeasureColumnWidthItem(
 // removes attribute widthItems with invalid identifiers
 // removes measure widthItems with invalid identifiers and invalid number of locators
 function adaptWidthItemsToPivotTable(
-    originalColumnWidths: ColumnWidthItem[],
+    originalColumnWidths: ColumnWidthItem[] | undefined,
     measureLocalIdentifiers: string[],
     rowAttributeLocalIdentifiers: string[],
     columnAttributeLocalIdentifiers: string[],
     filters: IBucketFilter[],
     firstColumnAttributeAdded: boolean,
 ): ColumnWidthItem[] {
+    if (!originalColumnWidths) {
+        return originalColumnWidths;
+    }
+
     const attributeLocalIdentifiers = [...rowAttributeLocalIdentifiers, ...columnAttributeLocalIdentifiers];
 
     return originalColumnWidths.reduce((columnWidths: ColumnWidthItem[], columnWidth: ColumnWidthItem) => {
@@ -195,5 +208,28 @@ export function adaptReferencePointWidthItemsToPivotTable(
         filteredColumnAttributeLocalIdentifiers,
         filters,
         firstColumnAttributeAdded,
+    );
+}
+
+export function adaptMdObjectWidthItemsToPivotTable(
+    originalColumnWidths: ColumnWidthItem[],
+    insight: IInsightDefinition,
+): ColumnWidthItem[] {
+    const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
+    const columnBucket = insightBucket(insight, BucketNames.COLUMNS);
+
+    const measureLocalIdentifiers = insightMeasures(insight).map(measureLocalId);
+    const rowAttributeLocalIdentifiers = rowBucket ? bucketAttributes(rowBucket).map(attributeLocalId) : [];
+    const columnAttributeLocalIdentifiers = columnBucket
+        ? bucketAttributes(columnBucket).map(attributeLocalId)
+        : [];
+
+    return adaptWidthItemsToPivotTable(
+        originalColumnWidths,
+        measureLocalIdentifiers,
+        rowAttributeLocalIdentifiers,
+        columnAttributeLocalIdentifiers,
+        [],
+        false,
     );
 }

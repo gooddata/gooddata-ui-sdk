@@ -55,8 +55,23 @@ export interface IAvailableDrillTargetAttribute {
     attribute: IAttributeDescriptor;
 }
 
+/*
+ * Push data is a 'catch-all' type of callback that is used to transfer 'misc' information from visualization
+ * up to the consumer (say AD or KD). The existence of push data indicates insufficient first-class callbacks
+ * on different react components + insufficient modeling in the plug viz area (everything that is pushed goes
+ * through the plug viz boundary and into the consumer apps)
+ *
+ * We need to get rid of push data:
+ *
+ * 1.  some props in the below interface should be returned using first-class callbacks on the react
+ *     components: dataView and availableDrillTargets are perfect for this
+ *
+ * 2.  the remainder of props are specific to plug viz impl (and are indeed dispatched by them) and should
+ *     be exposed using plug-viz-specific callbacks
+ */
+
 /**
- * TODO consider getting rid of push data
+ * TODO: remove push data
  * @internal
  */
 export interface IPushData {
@@ -64,6 +79,7 @@ export interface IPushData {
     properties?: {
         sortItems?: ISortItem[];
         totals?: ITotal[];
+        controls?: object;
     };
     propertiesMeta?: any;
     colors?: IColorsData;
