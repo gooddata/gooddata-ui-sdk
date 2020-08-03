@@ -18,7 +18,7 @@ export interface IHeatmapLegendProps {
  * @internal
  */
 export class HeatmapLegend extends React.PureComponent<IHeatmapLegendProps> {
-    public render() {
+    public render(): React.ReactNode {
         const { series, format, numericSymbols, isSmall, position } = this.props;
         const data = series.map(
             (item: IHeatmapLegendItem): IColorLegendItem => {

@@ -46,17 +46,12 @@ export class Legend extends React.PureComponent<ILegendProps, ILegendState> {
         enableBorderRadius: false,
     };
 
-    constructor(props: ILegendProps) {
-        super(props);
-
-        this.onItemClick = this.onItemClick.bind(this);
-    }
-
-    public onItemClick(item: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public onItemClick = (item: any): void => {
         this.props.onItemClick(item);
-    }
+    };
 
-    public getSeries() {
+    public getSeries = (): any => {
         const { series, legendItemsEnabled = [], seriesMapper } = this.props;
 
         const seriesWithVisibility = series.map((seriesItem: any) => {
@@ -72,9 +67,9 @@ export class Legend extends React.PureComponent<ILegendProps, ILegendState> {
         }
 
         return seriesWithVisibility;
-    }
+    };
 
-    public renderFluid() {
+    public renderFluid = (): React.ReactNode => {
         const { enableBorderRadius } = this.props;
 
         return (
@@ -97,9 +92,9 @@ export class Legend extends React.PureComponent<ILegendProps, ILegendState> {
                 }}
             </Measure>
         );
-    }
+    };
 
-    public renderStatic() {
+    public renderStatic = (): React.ReactNode => {
         const { position, height, format, locale, responsive } = this.props;
 
         const classNames = cx("viz-static-legend-wrap", `position-${position}`);
@@ -134,9 +129,9 @@ export class Legend extends React.PureComponent<ILegendProps, ILegendState> {
                 }}
             </Measure>
         );
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         const { responsive, showFluidLegend, heatmapLegend } = this.props;
 
         const isFluidLegend = Boolean(responsive && showFluidLegend);
@@ -152,7 +147,7 @@ export class Legend extends React.PureComponent<ILegendProps, ILegendState> {
         return this.renderStatic();
     }
 
-    private renderHeatmapLegend() {
+    private renderHeatmapLegend = (): React.ReactNode => {
         const { locale, format, responsive, position } = this.props;
         const { showFluidLegend } = this.props;
         const series = this.getSeries();
@@ -173,5 +168,5 @@ export class Legend extends React.PureComponent<ILegendProps, ILegendState> {
                 </IntlTranslationsProvider>
             </IntlWrapper>
         );
-    }
+    };
 }

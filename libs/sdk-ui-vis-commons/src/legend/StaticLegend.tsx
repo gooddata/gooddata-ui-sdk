@@ -28,25 +28,19 @@ interface IStaticLegendState {
  * @internal
  */
 export class StaticLegend extends React.PureComponent<IStaticLegendProps, IStaticLegendState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            page: 1,
-        };
+    public state: IStaticLegendState = {
+        page: 1,
+    };
 
-        this.showNextPage = this.showNextPage.bind(this);
-        this.showPrevPage = this.showPrevPage.bind(this);
-    }
-
-    public showNextPage() {
+    public showNextPage = (): void => {
         this.setState({ page: this.state.page + 1 });
-    }
+    };
 
-    public showPrevPage() {
+    public showPrevPage = (): void => {
         this.setState({ page: this.state.page - 1 });
-    }
+    };
 
-    public renderPaging(visibleItemsCount: number) {
+    public renderPaging = (visibleItemsCount: number): React.ReactNode => {
         const { page } = this.state;
         const pagesCount = Math.ceil(this.props.series.length / visibleItemsCount);
 
@@ -58,9 +52,9 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps, IStati
                 showPrevPage={this.showPrevPage}
             />
         );
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         const {
             enableBorderRadius,
             containerHeight,

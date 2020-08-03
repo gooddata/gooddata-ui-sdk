@@ -16,31 +16,25 @@ export interface IFluidLegendProps {
     onItemClick?(item: IPushpinCategoryLegendItem): void;
 }
 
+interface IFluidLegendState {
+    showAll: boolean;
+}
+
 /**
  * @internal
  */
-export class FluidLegend extends React.PureComponent<IFluidLegendProps, any> {
-    public static defaultProps: any = {
-        containerWidth: null,
+export class FluidLegend extends React.PureComponent<IFluidLegendProps, IFluidLegendState> {
+    public state: IFluidLegendState = {
+        showAll: false,
     };
 
-    constructor(props: any) {
-        super(props);
-
-        this.state = {
-            showAll: false,
-        };
-
-        this.toggleShowAll = this.toggleShowAll.bind(this);
-    }
-
-    public toggleShowAll() {
+    public toggleShowAll = (): void => {
         this.setState({
             showAll: !this.state.showAll,
         });
-    }
+    };
 
-    public renderSeries(itemWidth: any, visibleItemsCount: any) {
+    public renderSeries = (itemWidth: number, visibleItemsCount: number): React.ReactNode => {
         const { series, onItemClick = noop, enableBorderRadius } = this.props;
 
         const limit = this.state.showAll ? series.length : visibleItemsCount;
@@ -56,9 +50,9 @@ export class FluidLegend extends React.PureComponent<IFluidLegendProps, any> {
                 />
             </div>
         );
-    }
+    };
 
-    public renderPaging() {
+    public renderPaging = (): React.ReactNode => {
         const classes = cx("gd-button-link", "gd-button-icon-only", "paging-button", {
             "icon-chevron-up": this.state.showAll,
             "icon-chevron-down": !this.state.showAll,
@@ -68,9 +62,9 @@ export class FluidLegend extends React.PureComponent<IFluidLegendProps, any> {
                 <button className={classes} onClick={this.toggleShowAll} />
             </div>
         );
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         const { series, containerWidth } = this.props;
         const { itemWidth, hasPaging, visibleItemsCount } = calculateFluidLegend(
             series.length,

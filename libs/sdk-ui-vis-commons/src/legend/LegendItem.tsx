@@ -5,12 +5,15 @@ import unescape from "lodash/unescape";
 const VISIBLE_COLOR = "#6D7680";
 const DISABLED_COLOR = "#CCCCCC";
 
-export class LegendItem extends React.Component<any, any> {
-    public static defaultProps: any = {
-        width: null,
-    };
+interface ILegendItemProps {
+    item: any;
+    width?: number;
+    enableBorderRadius?: boolean;
+    onItemClick: (item: any) => void;
+}
 
-    public render() {
+export class LegendItem extends React.Component<ILegendItemProps> {
+    public render(): React.ReactNode {
         const { item, width, enableBorderRadius = false } = this.props;
         const iconStyle = {
             borderRadius: enableBorderRadius ? "50%" : "0",
