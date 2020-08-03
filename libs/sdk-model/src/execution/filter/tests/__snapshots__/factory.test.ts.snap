@@ -283,7 +283,7 @@ Object {
       "identifier": "foo",
     },
     "from": 1,
-    "granularity": "quarter",
+    "granularity": "GDC.time.month",
     "to": 3,
   },
 }

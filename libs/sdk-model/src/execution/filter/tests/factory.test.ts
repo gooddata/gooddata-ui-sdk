@@ -51,7 +51,7 @@ describe("filter factory", () => {
 
     describe("newRelativeDateFilter", () => {
         it("should generate correct filter", () => {
-            expect(newRelativeDateFilter("foo", "quarter", 1, 3)).toMatchSnapshot();
+            expect(newRelativeDateFilter("foo", "GDC.time.month", 1, 3)).toMatchSnapshot();
         });
     });
 

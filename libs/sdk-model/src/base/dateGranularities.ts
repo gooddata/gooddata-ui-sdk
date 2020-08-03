@@ -1,10 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 
 /**
- * Date dataset attribute granularities.
+ * All possible date dataset attribute granularities.
  *
- * NOTE: This type enumerates all potentially supported granularities - implementations of analytical backend
- * MAY support only a subset of the granularities.
+ * NOTE: Implementations of analytical backend MAY support only a subset of these granularities.
+ *
+ * See {@link DateGranularity} for a more convenient way to access commonly used granularities.
  *
  * @public
  */
@@ -27,3 +28,16 @@ export type DateAttributeGranularity =
     | "GDC.time.day_in_week"
     | "GDC.time.day_in_euweek"
     | "GDC.time.date";
+
+/**
+ * Defines shortcuts for commonly used date dataset attribute granularities.
+ *
+ * @public
+ */
+export const DateGranularity: { [short: string]: DateAttributeGranularity } = {
+    date: "GDC.time.date",
+    week: "GDC.time.week_us",
+    month: "GDC.time.month",
+    quarter: "GDC.time.quarter",
+    year: "GDC.time.year",
+};

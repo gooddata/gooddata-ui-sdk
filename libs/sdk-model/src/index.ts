@@ -8,7 +8,7 @@ export {
     builderFactory,
 } from "./base/builder";
 
-export { DateAttributeGranularity } from "./base/dateGranularities";
+export { DateAttributeGranularity, DateGranularity } from "./base/dateGranularities";
 
 export { IDrillingActivationPostMessageData } from "./embedding/postMessage";
 
@@ -101,7 +101,6 @@ export {
     IMeasureFilter,
     IDateFilter,
     IAttributeFilter,
-    DateGranularity,
     isAbsoluteDateFilter,
     isRelativeDateFilter,
     isPositiveAttributeFilter,

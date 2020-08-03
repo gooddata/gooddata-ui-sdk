@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { Account, Activity, Won } from "../../../../__mocks__/model";
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
@@ -10,7 +10,6 @@ import {
     newRelativeDateFilter,
 } from "../factory";
 import {
-    DateGranularity,
     isAbsoluteDateFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
@@ -23,6 +22,7 @@ import {
     isComparisonConditionOperator,
     isRangeConditionOperator,
 } from "../index";
+import { DateGranularity } from "../../../base/dateGranularities";
 
 describe("filter type guards", () => {
     describe("isPositiveAttributeFilter", () => {

@@ -9,6 +9,7 @@ import {
     IAttributeElements,
     IAttribute,
     IMeasureFilter,
+    DateAttributeGranularity,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
@@ -85,6 +86,7 @@ const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFi
         return {
             relativeDateFilter: {
                 ...filter.relativeDateFilter,
+                granularity: filter.relativeDateFilter.granularity as DateAttributeGranularity,
                 from: filter.relativeDateFilter.from!,
                 to: filter.relativeDateFilter.to!,
             },

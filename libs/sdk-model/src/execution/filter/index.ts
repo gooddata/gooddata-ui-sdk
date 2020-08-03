@@ -1,7 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
-import { ObjRef, ObjRefInScope, UriRef, LocalIdRef } from "../../objRef";
+import { LocalIdRef, ObjRef, ObjRefInScope, UriRef } from "../../objRef";
+import { DateAttributeGranularity } from "../../base/dateGranularities";
 
 /**
  * Attribute elements specified by their URI.
@@ -105,30 +106,17 @@ export interface IAbsoluteDateFilter {
  * Filters results to a relative date range. The relative filtering is always done on some granularity - this specifies
  * the units in the 'from' and 'to' fields.
  *
- * {@link DateGranularity}
+ * See {@link DateAttributeGranularity} and {@link DateGranularity} for further detail.
  * @public
  */
 export interface IRelativeDateFilter {
     relativeDateFilter: {
         dataSet: ObjRef;
-        granularity: string;
+        granularity: DateAttributeGranularity;
         from: number;
         to: number;
     };
 }
-
-/**
- * Defines date data set granularities that can be used in relative date filter.
- *
- * @public
- */
-export const DateGranularity = {
-    date: "GDC.time.date",
-    week: "GDC.time.week_us",
-    month: "GDC.time.month",
-    quarter: "GDC.time.quarter",
-    year: "GDC.time.year",
-};
 
 /**
  * Attribute filters limit results of execution to data pertaining to attributes that are or are not specified
