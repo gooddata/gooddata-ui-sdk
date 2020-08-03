@@ -956,7 +956,6 @@ function shouldExpandYAxis(chartOptions: IChartOptions) {
 function getAxisLineConfiguration(chartType: ChartType, isAxisVisible: boolean) {
     let lineWidth;
 
-    // tslint:disable-next-line prefer-conditional-expression
     if (isAxisVisible === false) {
         lineWidth = 0;
     } else {

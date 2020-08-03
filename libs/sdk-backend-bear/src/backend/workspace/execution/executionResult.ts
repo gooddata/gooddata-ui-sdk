@@ -123,7 +123,7 @@ function sanitizeOffset(offset: number[]): number[] {
 function sanitizeSize(size: number[]): number[] {
     return size.map((sizeInDim = BEAR_PAGE_SIZE_LIMIT) => {
         if (sizeInDim > BEAR_PAGE_SIZE_LIMIT) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             console.warn("The maximum limit per page is " + BEAR_PAGE_SIZE_LIMIT);
 
             return BEAR_PAGE_SIZE_LIMIT;

@@ -31,7 +31,7 @@ function sanitizeOffset(offset: number[]): number[] {
 function sanitizeSize(size: number[]): number[] {
     return size.map((sizeInDim = TIGER_PAGE_SIZE_LIMIT) => {
         if (sizeInDim > TIGER_PAGE_SIZE_LIMIT) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             console.warn("The maximum limit per page is " + TIGER_PAGE_SIZE_LIMIT);
 
             return TIGER_PAGE_SIZE_LIMIT;

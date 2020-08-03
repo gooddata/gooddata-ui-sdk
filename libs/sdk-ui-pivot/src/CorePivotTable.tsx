@@ -1089,7 +1089,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         if (onDrill(drillEvent)) {
             // This is needed for /analyze/embedded/ drilling with post message
-            // tslint:disable-next-line:max-line-length
             // More info: https://github.com/gooddata/gdc-analytical-designer/blob/develop/test/drillEventing/drillEventing_page.html
             const event = new CustomEvent("drill", {
                 detail: drillEvent,

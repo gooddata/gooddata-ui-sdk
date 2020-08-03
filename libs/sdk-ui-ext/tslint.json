@@ -1,9 +1,0 @@
-{
-    "extends": ["../../tslint.json"],
-    "linterOptions": {
-        "exclude": ["stories/**"]
-    },
-    "rules": {
-        "member-ordering": false
-    }
-}

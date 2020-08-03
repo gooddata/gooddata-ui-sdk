@@ -88,7 +88,6 @@ export const convertInsightDefinition = (
             title: insightTitle(insight),
             category: "visualizationObject",
         },
-        // tslint:disable-next-line no-object-literal-type-assertion
     } as GdcVisualizationObject.IVisualizationObject;
 };
 

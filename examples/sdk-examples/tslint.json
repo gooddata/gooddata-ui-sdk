@@ -1,8 +1,0 @@
-{
-    "extends": ["../../tslint.json"],
-    "rules": {
-        "jsx-boolean-value": [true, "never"],
-        "jsx-no-lambda": false,
-        "no-implicit-dependencies": [true, ["!raw-loader!.", "!raw-loader!..", "testcafe", "commander"]]
-    }
-}

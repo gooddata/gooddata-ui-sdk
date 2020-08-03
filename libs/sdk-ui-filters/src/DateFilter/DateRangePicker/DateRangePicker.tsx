@@ -61,7 +61,6 @@ export class DateRangePickerComponent extends React.Component<IDateRangePickerPr
                     errorFrom && "gd-date-range-picker-input-error",
                 )}
                 placeholder={intl.formatMessage({ id: "filters.from" })}
-                // tslint:disable-next-line:jsx-no-lambda
                 onChange={(event) =>
                     this.handleFromChange(convertPlatformDateStringToDate(event.target.value))
                 }
@@ -94,7 +93,6 @@ export class DateRangePickerComponent extends React.Component<IDateRangePickerPr
                     errorTo && "gd-date-range-picker-input-error",
                 )}
                 placeholder={intl.formatMessage({ id: "filters.to" })}
-                // tslint:disable-next-line:jsx-no-lambda
                 onChange={(event) => this.handleToChange(convertPlatformDateStringToDate(event.target.value))}
                 value={convertDateToPlatformDateString(to)}
             />

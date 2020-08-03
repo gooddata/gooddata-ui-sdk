@@ -43,7 +43,8 @@ const onFiredDrillEvent = ({
     executionContext: any;
     drillContext: any;
 }) => {
-    console.log("onFiredDrillEvent", { executionContext, drillContext }); // tslint:disable-line:no-console
+    // eslint-disable-next-line no-console
+    console.log("onFiredDrillEvent", { executionContext, drillContext });
     return false;
 };
 
@@ -52,13 +53,6 @@ const eventAction = decorateAction([
         return [args[0][0].detail];
     },
 ]);
-
-const defaultColumnChartProps = {
-    config: {
-        type: "column",
-    },
-    onDataTooLarge: noop,
-};
 
 document.addEventListener("drill", eventAction("drill"));
 

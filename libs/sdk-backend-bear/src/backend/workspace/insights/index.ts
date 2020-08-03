@@ -190,7 +190,6 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
             throw new Error(`Visualization class with url ${visClassUrl} not found.`);
         }
 
-        // tslint:disable-next-line: no-object-literal-type-assertion
         const withFixedVisClass = {
             insight: {
                 ...insight.insight,

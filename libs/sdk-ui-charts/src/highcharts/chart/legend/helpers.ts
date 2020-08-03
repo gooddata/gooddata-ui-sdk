@@ -384,7 +384,6 @@ export function getHeatmapLegendConfiguration(
 
     let finalPosition;
 
-    // tslint:disable-next-line:prefer-conditional-expression
     if (isSmall) {
         finalPosition = position === TOP ? TOP : BOTTOM;
     } else {

@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-/* tslint:disable:file-header */
-/* tslint:disable:variable-name */
+/* eslint-disable header/header */
 /* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-12-10T13:37:20.314Z; */
 import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition } from "@gooddata/sdk-model";
 

@@ -195,10 +195,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "@gooddata/tslint-config",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@microsoft/api-extractor",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -932,14 +928,6 @@
     },
     {
       "name": "tslib",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "tslint",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "tslint-config-prettier",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {

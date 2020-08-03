@@ -89,11 +89,10 @@ export class NumericInput extends React.Component<{
             isIntermediateValue(this.props.value) ? delta : this.clampToRange(this.props.value + delta),
         );
 
-    // tslint:disable-next-line:member-ordering
     private increment = this.valueChanger(1);
-    // tslint:disable-next-line:member-ordering
+
     private decrement = this.valueChanger(-1);
-    // tslint:disable-next-line:member-ordering
+
     private keyDownHandlers = {
         [UP_ARROW_CODE]: () => unless(this.isIncrementDisabled, this.increment),
         [DOWN_ARROW_CODE]: () => unless(this.isDecrementDisabled, this.decrement),

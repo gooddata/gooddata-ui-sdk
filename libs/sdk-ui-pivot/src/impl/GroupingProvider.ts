@@ -20,7 +20,6 @@ export interface IGroupingProvider {
 }
 
 class DefaultGroupingProvider implements IGroupingProvider {
-    // tslint:disable-next-line:no-empty
     public reset() {}
 
     public isGroupBoundary(_rowIndex: number) {
@@ -31,7 +30,6 @@ class DefaultGroupingProvider implements IGroupingProvider {
         return false;
     }
 
-    // tslint:disable-next-line:no-empty
     public processPage(_pageRows: IGridRow[], _rowOffset: number, _columnIds: string[]) {}
 
     public isRepeatedValue(_columnId: string, _rowIndex: number) {

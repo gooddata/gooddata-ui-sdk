@@ -352,7 +352,7 @@ export class XhrModule {
     }
 
     private logDeprecatedRestApiCall(deprecatedVersionDetails: string) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.warn(
             `The REST API version ${LATEST_REST_API_VERSION} is deprecated (${deprecatedVersionDetails}). ` +
                 "Please migrate your application to use GoodData.UI SDK or @gooddata/gd-bear-client package that " +

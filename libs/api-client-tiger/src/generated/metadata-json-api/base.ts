@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-// tslint:disable
+// eslint-disable
 /**
  * Metadata JSON:API
  * OpenAPI generated for Metadata JSON:API endpoints

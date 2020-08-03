@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-// tslint:disable-line
 /**
  * Calculate new min/max to make Y axes aligned, and insert them to Highcharts config
  *

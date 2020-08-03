@@ -106,11 +106,9 @@ export const getTreeLeaves = (
     let node;
     let children;
     while (
-        // tslint:disable:no-conditional-assignment ban-comma-operator
         ((node = nodes.shift()),
         (children = getChildren(node)),
         (children && children.length) || (leaves.push(node) && nodes.length))
-        // tslint:enable:no-conditional-assignment ban-comma-operator
     ) {
         if (children) {
             nodes.push(...children);

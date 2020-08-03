@@ -1,7 +1,4 @@
 // (C) 2019 GoodData Corporation
-
-// tslint:disable member-ordering
-
 import React from "react";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import cx from "classnames";

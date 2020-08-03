@@ -512,7 +512,6 @@ export function insightSetProperties<T extends IInsightDefinition>(
 ): T {
     invariant(insight, "insight must be specified");
 
-    // tslint:disable-next-line: no-object-literal-type-assertion
     return {
         insight: {
             ...insight.insight,
@@ -533,7 +532,6 @@ export function insightSetProperties<T extends IInsightDefinition>(
 export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts: ISortItem[] = []): T {
     invariant(insight, "insight must be specified");
 
-    // tslint:disable-next-line: no-object-literal-type-assertion
     return {
         insight: {
             ...insight.insight,
@@ -554,7 +552,6 @@ export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts:
 export function insightSetFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[] = []): T {
     invariant(insight, "insight must be specified");
 
-    // tslint:disable-next-line: no-object-literal-type-assertion
     return {
         insight: {
             ...insight.insight,
@@ -578,7 +575,6 @@ export function insightSetBuckets<T extends IInsightDefinition>(
 ): T {
     invariant(insight, "insight must be specified");
 
-    // tslint:disable-next-line: no-object-literal-type-assertion
     return {
         insight: {
             ...insight.insight,

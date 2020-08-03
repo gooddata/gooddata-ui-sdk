@@ -229,7 +229,6 @@ function updateVisualizationObjectTitles<T extends IInsightDefinition>(
     measureTitleProps: IMeasureTitleProps[],
 ): T {
     const buckets = insightBuckets(insight);
-    // tslint:disable-next-line: no-object-literal-type-assertion
     return {
         insight: {
             ...insight.insight,

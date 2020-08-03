@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-// tslint:disable-line
 /* *
  * (c) 2010-2019 Torstein Honsi
  *

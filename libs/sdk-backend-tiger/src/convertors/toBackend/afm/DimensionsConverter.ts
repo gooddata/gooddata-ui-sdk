@@ -117,7 +117,7 @@ function dimensionsWithSorts(dims: ExecuteAFM.IDimension[], sorts: ISortItem[]):
             const dimIdx = dims.findIndex((dim) => dim.itemIdentifiers.includes(attributeIdentifier));
 
             if (dimIdx < 0) {
-                // tslint:disable-next-line:no-console
+                // eslint-disable-next-line no-console
                 console.log(
                     `attempting to sort by attribute with localId ${attributeIdentifier} but this attribute is not in any dimension.`,
                 );
@@ -128,7 +128,7 @@ function dimensionsWithSorts(dims: ExecuteAFM.IDimension[], sorts: ISortItem[]):
             sorting[dimIdx].push(attributeSortKey);
         } else {
             if (nonMeasureDimIdx < 0) {
-                // tslint:disable-next-line:no-console
+                // eslint-disable-next-line no-console
                 console.warn(
                     "Trying to use measure sort in an execution that only contains dimension with MeasureGroup. " +
                         "This is not valid sort. Measure sort is used to sort the non-measure dimension by values from measure dimension. Ignoring",
@@ -138,7 +138,7 @@ function dimensionsWithSorts(dims: ExecuteAFM.IDimension[], sorts: ISortItem[]):
             }
 
             if (!measureDim) {
-                // tslint:disable-next-line:no-console
+                // eslint-disable-next-line no-console
                 console.warn(
                     "Trying to use measure sort in an execution that does not contain MeasureGroup. Ignoring.",
                 );

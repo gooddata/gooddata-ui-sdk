@@ -22,7 +22,6 @@ export const RelativeDateFilterForm: React.FC<IRelativeDateFilterFormProps> = ({
         <GranularityTabs
             availableGranularities={availableGranularities}
             selectedGranularity={selectedFilterOption.granularity}
-            // tslint:disable-next-line: jsx-no-lambda
             onSelectedGranularityChange={(granularity) =>
                 onSelectedFilterOptionChange({
                     ...selectedFilterOption,

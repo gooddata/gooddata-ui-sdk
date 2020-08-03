@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-// tslint:disable-line
 /**
  * Highcharts extension that overwrites 'axis.adjustTickAmount' of Highcharts
  * Original code snippet

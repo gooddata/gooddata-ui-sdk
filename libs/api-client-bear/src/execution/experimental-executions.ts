@@ -185,7 +185,6 @@ function getPercentMetricExpression(category: any, attributesMap: any, measure: 
     );
     const whereExpression = notEmpty(...whereFilters) ? ` WHERE ${whereFilters.join(" AND ")}` : "";
 
-    // tslint:disable-next-line:max-line-length
     return `SELECT (${metricExpressionWithoutFilters}${whereExpression}) / (${metricExpressionWithoutFilters} BY ALL [${attributeUri}]${whereExpression})`;
 }
 
@@ -559,6 +558,7 @@ function getMeasureFilters(measure: any) {
  *      have new functionality added.
  */
 export class ExperimentalExecutionsModule {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor(private xhr: XhrModule, private loadAttributesMap: any) {}
 
     /**
@@ -584,7 +584,6 @@ export class ExperimentalExecutionsModule {
         settings: any = {},
     ): Promise<any> {
         if (process.env.NODE_ENV !== "test") {
-            // tslint:disable-next-line:no-console
             // eslint-disable-next-line no-console
             console.warn(
                 "ExperimentalExecutionsModule is deprecated and is no longer being maintained. " +
