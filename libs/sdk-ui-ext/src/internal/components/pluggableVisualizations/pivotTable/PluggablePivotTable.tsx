@@ -376,6 +376,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     private sanitizeColumnWidths(columnWidths: ColumnWidthItem[], insight: IInsightDefinition) {
+        if (isEmpty(insightBuckets(insight))) {
+            return;
+        }
+
         const adaptedColumnWidths = adaptMdObjectWidthItemsToPivotTable(columnWidths, insight);
 
         if (!isEqual(columnWidths, adaptedColumnWidths)) {
