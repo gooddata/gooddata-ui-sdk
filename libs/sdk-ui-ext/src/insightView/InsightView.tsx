@@ -183,6 +183,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
                 separators: config.separators,
                 colorPalette: this.colorPalette,
                 mapboxToken: config.mapboxToken,
+                forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
                 isInEditMode: false,
             },
             customVisualizationConfig: config,
