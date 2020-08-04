@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { IntlProvider, IntlShape, createIntl } from "react-intl";
-import { translations } from "@gooddata/js-utils";
+import { translationUtils } from "@gooddata/utilities";
 
 import * as enUS from "../translations/en-US.json";
 import * as deDE from "../translations/de-DE.json";
@@ -15,7 +15,7 @@ import * as zhHans from "../translations/zh-Hans.json";
 import { DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 
 export const messagesMap = {
-    "en-US": translations.removeMetadata(enUS),
+    "en-US": translationUtils.removeMetadata(enUS),
     "de-DE": deDE,
     "es-ES": esES,
     "fr-FR": frFR,

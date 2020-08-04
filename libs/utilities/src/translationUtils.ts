@@ -7,7 +7,7 @@
  * @param translationsWithMetadata - parsed translation bundle
  * @internal
  */
-export function removeMetadata(translationsWithMetadata: object): object {
+export function removeMetadata(translationsWithMetadata: Record<string, any>): Record<string, string> {
     const translations = {};
     Object.keys(translationsWithMetadata).forEach((key) => {
         translations[key] =
