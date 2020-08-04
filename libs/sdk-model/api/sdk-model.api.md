@@ -61,6 +61,8 @@ export class AttributeBuilder {
 export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDisplayFormMetadataObject = IAttributeDisplayFormMetadataObject> extends MetadataObjectBuilder<T> {
     // (undocumented)
     attribute(ref: ObjRef): this;
+    // (undocumented)
+    displayFormType(type: string | undefined): this;
 }
 
 // @public
@@ -411,6 +413,7 @@ export interface IAttribute {
 // @public
 export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
+    displayFormType?: string;
     // (undocumented)
     type: "displayForm";
 }
