@@ -165,7 +165,7 @@ const DefaultOptions = {
      for a complete list
 */
     doNotFollow: {
-        path: ".*(node_modules|api-|sdk-|__mocks__|test|tests).*",
+        path: ".*(node_modules|api-|sdk-|utilities|__mocks__|test|tests).*",
         dependencyTypes: ["npm", "npm-dev", "npm-optional", "npm-peer", "npm-bundled", "npm-no-pkg"],
     },
 
@@ -175,7 +175,7 @@ const DefaultOptions = {
                 leave out if you want to exclude neither (recommended!)
     */
     exclude: {
-        path: ".*(node_modules|api-|sdk-|__mocks__|test|tests).*",
+        path: ".*(node_modules|api-|sdk-|utilities|__mocks__|test|tests).*",
         //, dynamic: true
     },
 
