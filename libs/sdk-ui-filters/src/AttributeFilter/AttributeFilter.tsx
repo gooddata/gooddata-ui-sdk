@@ -32,7 +32,7 @@ import { MediaQueries } from "../constants";
 /**
  * @public
  */
-interface IAttributeFilterProps {
+export interface IAttributeFilterProps {
     /**
      * Optionally specify an instance of analytical backend instance to work with.
      *

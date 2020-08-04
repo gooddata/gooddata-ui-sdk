@@ -2,6 +2,9 @@
 import { IMeasureValueFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/sdk-ui";
 
+/**
+ * @beta
+ */
 export interface IMeasureValueFilterCommonProps {
     filter: IMeasureValueFilter;
     measureIdentifier: string;

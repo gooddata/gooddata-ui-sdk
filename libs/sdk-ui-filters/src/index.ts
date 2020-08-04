@@ -1,12 +1,15 @@
 // (C) 2019-2020 GoodData Corporation
 
-export { AttributeElements } from "./AttributeElements/AttributeElements";
-export { AttributeFilter } from "./AttributeFilter/AttributeFilter";
+export { AttributeElements, IAttributeElementsProps } from "./AttributeElements/AttributeElements";
+export { IAttributeElementsChildren } from "./AttributeElements/types";
+export { AttributeFilter, IAttributeFilterProps } from "./AttributeFilter/AttributeFilter";
 export {
     DateFilter,
     IDateFilterCallbackProps,
     IDateFilterOwnProps,
     IDateFilterProps,
+    IDateFilterState,
+    IDateFilterStatePropsIntersection,
     DateFilterHelpers,
     defaultDateFilterOptions,
     AbsoluteDateFilterOption,
@@ -29,3 +32,4 @@ export {
     MeasureValueFilterDropdown,
     IMeasureValueFilterDropdownProps,
 } from "./MeasureValueFilter/MeasureValueFilterDropdown";
+export { IMeasureValueFilterCommonProps } from "./MeasureValueFilter/typings";
