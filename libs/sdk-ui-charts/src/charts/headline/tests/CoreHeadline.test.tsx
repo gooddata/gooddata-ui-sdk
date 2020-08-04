@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
-import { testUtils } from "@gooddata/js-utils";
+import { testUtils } from "@gooddata/utilities";
 import { CoreHeadline } from "../CoreHeadline";
 import HeadlineTransformation from "../internal/HeadlineTransformation";
 import { ICoreChartProps } from "../../../interfaces/chartProps";

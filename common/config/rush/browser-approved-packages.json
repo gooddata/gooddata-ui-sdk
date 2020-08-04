@@ -163,6 +163,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/utilities",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@microsoft/api-extractor",
       "allowedCategories": [ "production", "tools" ]
     },
