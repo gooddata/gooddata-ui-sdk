@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { IntlProvider } from "react-intl";
-import { translations } from "@gooddata/js-utils";
+import { translationUtils } from "@gooddata/utilities";
 import { DefaultLocale } from "./Locale";
 
 import * as enUS from "./bundles/en-US.json";
@@ -19,7 +19,7 @@ interface ITranslations {
 }
 
 export const messagesMap: { [locale: string]: ITranslations } = {
-    "en-US": translations.removeMetadata(enUS),
+    "en-US": translationUtils.removeMetadata(enUS),
     "de-DE": deDE,
     "es-ES": esES,
     "fr-FR": frFR,

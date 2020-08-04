@@ -19,7 +19,7 @@ import {
     insightBuckets,
     bucketItems,
 } from "@gooddata/sdk-model";
-import { string as stringUtils } from "@gooddata/js-utils";
+import { stringUtils } from "@gooddata/utilities";
 
 import { DerivedMeasureTitleSuffixFactory } from "./DerivedMeasureTitleSuffixFactory";
 import { ArithmeticMeasureTitleFactory } from "./ArithmeticMeasureTitleFactory";

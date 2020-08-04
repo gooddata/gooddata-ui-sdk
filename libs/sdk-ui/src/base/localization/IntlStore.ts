@@ -2,7 +2,7 @@
 import isEmpty from "lodash/isEmpty";
 
 import { IntlShape, createIntl } from "react-intl";
-import { translations } from "@gooddata/js-utils";
+import { translationUtils } from "@gooddata/utilities";
 
 import * as enUS from "./bundles/en-US.json";
 import * as deDE from "./bundles/de-DE.json";
@@ -16,7 +16,7 @@ import * as zhHans from "./bundles/zh-Hans.json";
 import { DefaultLocale, ILocale } from "./Locale";
 
 const messagesMap = {
-    "en-US": translations.removeMetadata(enUS),
+    "en-US": translationUtils.removeMetadata(enUS),
     "de-DE": deDE,
     "es-ES": esES,
     "fr-FR": frFR,
