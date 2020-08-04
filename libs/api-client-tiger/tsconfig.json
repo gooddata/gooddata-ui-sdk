@@ -6,6 +6,7 @@
         "lib": ["es6", "dom"],
         "importHelpers": true,
         "declaration": true,
+        "declarationMap": true,
         "sourceMap": true,
         "outDir": "./dist",
         "strict": true,

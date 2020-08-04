@@ -156,7 +156,7 @@ export const PivotTable: React_2.ComponentType<IPivotTableProps>;
 
 // Warnings were encountered during analysis:
 //
-// dist/columnWidths.d.ts:54:9 - (ae-forgotten-export) The symbol "LocatorItem" needs to be exported by the entry point index.d.ts
+// src/columnWidths.ts:68:9 - (ae-forgotten-export) The symbol "LocatorItem" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

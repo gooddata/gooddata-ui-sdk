@@ -78,7 +78,7 @@ export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase impl
 
 // Warnings were encountered during analysis:
 //
-// dist/index.d.ts:27:5 - (ae-forgotten-export) The symbol "toAfmExecution" needs to be exported by the entry point index.d.ts
+// src/index.ts:44:37 - (ae-forgotten-export) The symbol "toAfmExecution" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

@@ -9801,8 +9801,8 @@ export interface VisualizationObjectResourcesResponseSchemaAllOf {
 
 // Warnings were encountered during analysis:
 //
-// dist/generated/afm-rest-api/api.d.ts:955:5 - (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
-// dist/generated/metadata-json-api/api.d.ts:3830:5 - (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
+// src/generated/afm-rest-api/api.ts:988:9 - (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
+// src/generated/metadata-json-api/api.ts:3890:9 - (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

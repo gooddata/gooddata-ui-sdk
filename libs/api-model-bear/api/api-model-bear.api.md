@@ -2543,7 +2543,7 @@ export type Uri = string;
 
 // Warnings were encountered during analysis:
 //
-// dist/visualizationWidget/GdcVisualizationWidget.d.ts:36:13 - (ae-forgotten-export) The symbol "Identifier" needs to be exported by the entry point index.d.ts
+// src/visualizationWidget/GdcVisualizationWidget.ts:50:13 - (ae-forgotten-export) The symbol "Identifier" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

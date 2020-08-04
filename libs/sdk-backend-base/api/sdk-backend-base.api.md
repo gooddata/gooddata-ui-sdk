@@ -390,12 +390,12 @@ export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspace
 
 // Warnings were encountered during analysis:
 //
-// dist/customBackend/config.d.ts:138:5 - (ae-incompatible-release-tags) The symbol "telemetry" is marked as @beta, but its signature references "TelemetryData" which is marked as @internal
-// dist/customBackend/config.d.ts:148:5 - (ae-incompatible-release-tags) The symbol "authApiCall" is marked as @beta, but its signature references "AuthenticatedCallGuard" which is marked as @internal
-// dist/decoratedBackend/index.d.ts:12:5 - (ae-forgotten-export) The symbol "ExecutionDecoratorFactory" needs to be exported by the entry point index.d.ts
-// dist/decoratedBackend/index.d.ts:13:5 - (ae-forgotten-export) The symbol "CatalogDecoratorFactory" needs to be exported by the entry point index.d.ts
-// dist/normalizingBackend/index.d.ts:10:5 - (ae-incompatible-release-tags) The symbol "normalizationStatus" is marked as @beta, but its signature references "NormalizationState" which is marked as @internal
-// dist/normalizingBackend/normalizer.d.ts:21:5 - (ae-forgotten-export) The symbol "LocalIdMap" needs to be exported by the entry point index.d.ts
+// src/customBackend/config.ts:153:5 - (ae-incompatible-release-tags) The symbol "telemetry" is marked as @beta, but its signature references "TelemetryData" which is marked as @internal
+// src/customBackend/config.ts:164:5 - (ae-incompatible-release-tags) The symbol "authApiCall" is marked as @beta, but its signature references "AuthenticatedCallGuard" which is marked as @internal
+// src/decoratedBackend/index.ts:163:5 - (ae-forgotten-export) The symbol "ExecutionDecoratorFactory" needs to be exported by the entry point index.d.ts
+// src/decoratedBackend/index.ts:164:5 - (ae-forgotten-export) The symbol "CatalogDecoratorFactory" needs to be exported by the entry point index.d.ts
+// src/normalizingBackend/index.ts:189:5 - (ae-incompatible-release-tags) The symbol "normalizationStatus" is marked as @beta, but its signature references "NormalizationState" which is marked as @internal
+// src/normalizingBackend/normalizer.ts:65:5 - (ae-forgotten-export) The symbol "LocalIdMap" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
