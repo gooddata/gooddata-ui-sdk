@@ -1084,6 +1084,18 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return this.getItemAndAttributeHeaders(rowDrillItems, columnDefs);
     };
 
+    private getAttributeDrillItemsForAttributeDrill = (
+        cellEvent: IGridCellEvent,
+        columnDefs: IGridHeader[],
+        rowDrillItem: IMappingHeader,
+    ): IMappingHeader[] => {
+        const attributeHeaders = this.getAttributeDrillItemsForMeasureDrill(cellEvent, columnDefs);
+
+        // pick whole path up to current attributeHeader and attributeHeaderItem (inclusive)
+        const index = attributeHeaders.indexOf(rowDrillItem);
+        return attributeHeaders.slice(0, index + 2);
+    };
+
     private isSomeTotal = (rowType: string) => {
         const isRowTotal = rowType === ROW_TOTAL;
         const isRowSubtotal = rowType === ROW_SUBTOTAL;
@@ -1102,12 +1114,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private getDrillIntersection = (
         cellEvent: IGridCellEvent,
         drillItems: IMappingHeader[],
-        columnDefs: IGridHeader[],
+        allHeaders: IGridHeader[],
     ): IDrillEventIntersectionElement[] => {
         const rowDrillItem = this.getRowDrillItem(cellEvent);
         const completeDrillItems: IMappingHeader[] = rowDrillItem
-            ? drillItems
-            : [...drillItems, ...this.getAttributeDrillItemsForMeasureDrill(cellEvent, columnDefs)];
+            ? this.getAttributeDrillItemsForAttributeDrill(cellEvent, allHeaders, rowDrillItem)
+            : [...drillItems, ...this.getAttributeDrillItemsForMeasureDrill(cellEvent, allHeaders)];
         return getDrillIntersection(completeDrillItems);
     };
 
@@ -1134,7 +1146,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const leafColumnDefs = getTreeLeaves(tableHeaders.allHeaders);
         const columnIndex = leafColumnDefs.findIndex((gridHeader) => gridHeader.field === colDef.field);
         const row = getDrillRowData(leafColumnDefs, cellEvent.data);
-        const intersection = this.getDrillIntersection(cellEvent, drillItems, tableHeaders.colHeaders);
+        const intersection = this.getDrillIntersection(cellEvent, drillItems, tableHeaders.allHeaders);
 
         const drillContext: IDrillEventContextTable = {
             type: VisualizationTypes.TABLE,

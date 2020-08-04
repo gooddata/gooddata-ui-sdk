@@ -26,6 +26,12 @@ export const PivotTableWithTwoMeasuresAndTwoRowsAndCols = {
     columns: [ReferenceLdm.ForecastCategory, ReferenceLdm.Region],
 };
 
+export const PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols = {
+    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
+    rows: [ReferenceLdm.Product.Name, ReferenceLdm.Department, ReferenceLdm.SalesRep.OwnerName],
+    columns: [ReferenceLdm.ForecastCategory, ReferenceLdm.Region],
+};
+
 export const PivotTableWithArithmeticMeasures = {
     measures: [
         ReferenceLdm.Amount,
@@ -89,6 +95,10 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario(
         "two measures with two row and two column attributes",
         PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+    )
+    .addScenario(
+        "two measures with three rows and two column attributes",
+        PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols,
     )
     .addScenario("empty values", PivotTableWithSingleMeasureAndTwoRowsAndCols)
     .addScenario("arithmetic measures", PivotTableWithArithmeticMeasures);

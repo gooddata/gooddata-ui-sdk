@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { measureIdentifier } from "@gooddata/sdk-model";
+import { measureIdentifier, attributeIdentifier } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 
 /**
@@ -24,4 +24,16 @@ export const AmountMeasurePredicate = HeaderPredicates.identifierMatch(
 export const WonMeasurePredicate = HeaderPredicates.identifierMatch(measureIdentifier(ReferenceLdm.Won)!);
 export const SampleXirrMeasurePredicate = HeaderPredicates.identifierMatch(
     measureIdentifier(ReferenceLdm.SampleXIRR)!,
+);
+
+export const DepartmentPredicate = HeaderPredicates.identifierMatch(
+    attributeIdentifier(ReferenceLdm.Department)!,
+);
+
+export const ProductPredicate = HeaderPredicates.identifierMatch(
+    attributeIdentifier(ReferenceLdm.Product.Name)!,
+);
+
+export const SalesRepPredicate = HeaderPredicates.identifierMatch(
+    attributeIdentifier(ReferenceLdm.SalesRep.OwnerName)!,
 );

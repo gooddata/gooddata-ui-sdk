@@ -1,4 +1,5 @@
 // (C) 2020 GoodData Corporation
+
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
