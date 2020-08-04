@@ -15,6 +15,11 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
      * A reference to the attribute that displayForm represents
      */
     attribute: ObjRef;
+
+    /**
+     * Subtype of the display form (e.g. GDC.geo.pin, or GDC.link)
+     */
+    displayFormType?: string;
 }
 
 /**

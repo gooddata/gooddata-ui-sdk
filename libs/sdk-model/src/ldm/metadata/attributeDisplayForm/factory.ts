@@ -18,6 +18,11 @@ export class AttributeDisplayFormMetadataObjectBuilder<
         this.item.attribute = ref;
         return this;
     }
+
+    public displayFormType(type: string | undefined): this {
+        this.item.displayFormType = type;
+        return this;
+    }
 }
 
 /**

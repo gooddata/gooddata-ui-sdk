@@ -68,7 +68,8 @@ export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataO
                     .title(displayForm.meta.title)
                     .description(displayForm.meta.summary)
                     .id(displayForm.meta.identifier)
-                    .uri(displayForm.meta.uri),
+                    .uri(displayForm.meta.uri)
+                    .displayFormType(displayForm.content.type),
             ),
         );
         return newAttributeMetadataObject(ref, (a) =>

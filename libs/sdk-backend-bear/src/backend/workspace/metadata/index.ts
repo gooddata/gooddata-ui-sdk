@@ -62,7 +62,8 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
                     .title(displayForm.meta.title)
                     .description(displayForm.meta.summary)
                     .id(displayForm.meta.identifier)
-                    .uri(displayForm.meta.uri),
+                    .uri(displayForm.meta.uri)
+                    .displayFormType(displayForm.content.type),
             ),
         );
 
