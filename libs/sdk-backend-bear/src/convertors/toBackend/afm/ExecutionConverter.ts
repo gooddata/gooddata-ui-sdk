@@ -121,6 +121,7 @@ function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IResultSpec
     };
 }
 
+// This has to be const function, otherwise api-extractor breaks...
 /**
  * Converts execution definition to AFM Execution
  *
@@ -129,11 +130,11 @@ function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IResultSpec
  *
  * @internal
  */
-export function toAfmExecution(def: IExecutionDefinition): GdcExecuteAFM.IExecution {
+export const toAfmExecution = (def: IExecutionDefinition): GdcExecuteAFM.IExecution => {
     return {
         execution: {
             afm: convertAFM(def),
             resultSpec: convertResultSpec(def),
         },
     };
-}
+};

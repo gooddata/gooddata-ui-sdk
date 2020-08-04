@@ -31,6 +31,7 @@ export {
     modifyAttribute,
     AttributeBuilder,
     AttributeModifications,
+    AttributeBuilderInput,
 } from "./execution/attribute/factory";
 
 export {
@@ -178,6 +179,7 @@ export {
     measureFilters,
     measurePopAttribute,
     measurePreviousPeriodDateDataSets,
+    MeasureOrLocalId,
 } from "./execution/measure";
 
 export {
@@ -195,6 +197,10 @@ export {
     newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
+    MeasureEnvelope,
+    ArithmeticMeasureBuilderInput,
+    PoPMeasureBuilderInput,
+    PreviousPeriodMeasureBuilderInput,
 } from "./execution/measure/factory";
 
 export {

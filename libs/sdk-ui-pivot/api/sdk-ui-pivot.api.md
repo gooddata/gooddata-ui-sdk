@@ -25,8 +25,6 @@ export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 // @public (undocumented)
 export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
 
-// Warning: (ae-internal-missing-underscore) The name "CorePivotTable" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
 
@@ -71,8 +69,6 @@ export interface IColumnSizing {
     growToFit?: boolean;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "ICorePivotTableProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedComponentProps {
     // (undocumented)
@@ -92,6 +88,15 @@ export interface IMeasureColumnWidthItem {
 export interface IMenu {
     aggregations?: boolean;
     aggregationsSubMenu?: boolean;
+}
+
+// @public (undocumented)
+export interface IPivotTableAttributeLocatorItem {
+    // (undocumented)
+    attributeLocatorItem: {
+        attributeIdentifier: Identifier;
+        element?: string;
+    };
 }
 
 // @public (undocumented)
@@ -150,13 +155,12 @@ export interface IWeakMeasureColumnWidthItem {
     };
 }
 
+// @public (undocumented)
+export type LocatorItem = IPivotTableAttributeLocatorItem | IMeasureLocatorItem;
+
 // @public
 export const PivotTable: React_2.ComponentType<IPivotTableProps>;
 
-
-// Warnings were encountered during analysis:
-//
-// dist/columnWidths.d.ts:54:9 - (ae-forgotten-export) The symbol "LocatorItem" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

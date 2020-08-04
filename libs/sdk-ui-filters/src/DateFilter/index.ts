@@ -9,7 +9,14 @@ import {
     getDateFilterRepresentation,
     getDateFilterTitleUsingTranslator,
 } from "./utils/Translations/DateFilterTitle";
-import { DateFilter, IDateFilterCallbackProps, IDateFilterOwnProps, IDateFilterProps } from "./DateFilter";
+import {
+    DateFilter,
+    IDateFilterCallbackProps,
+    IDateFilterOwnProps,
+    IDateFilterProps,
+    IDateFilterState,
+    IDateFilterStatePropsIntersection,
+} from "./DateFilter";
 
 /**
  * @beta
@@ -27,7 +34,15 @@ const DateFilterHelpers = {
 };
 
 // This is 1:1 reexported by root index.ts and is part of SDK's public API
-export { DateFilter, IDateFilterCallbackProps, IDateFilterOwnProps, IDateFilterProps, DateFilterHelpers };
+export {
+    DateFilter,
+    IDateFilterCallbackProps,
+    IDateFilterOwnProps,
+    IDateFilterProps,
+    IDateFilterState,
+    DateFilterHelpers,
+    IDateFilterStatePropsIntersection,
+};
 
 export {
     AbsoluteDateFilterOption,

@@ -10,7 +10,7 @@ import {
 /**
  * Authenticated async call context
  *
- * @internal
+ * @beta
  */
 export interface IAuthenticatedAsyncCallContext {
     /**
@@ -25,7 +25,7 @@ export interface IAuthenticatedAsyncCallContext {
 /**
  * Authenticated async call
  *
- * @internal
+ * @beta
  */
 export type AuthenticatedAsyncCall<TSdk, TReturn> = (
     sdk: TSdk,
@@ -35,7 +35,7 @@ export type AuthenticatedAsyncCall<TSdk, TReturn> = (
 /**
  * Authenticated call guard
  *
- * @internal
+ * @beta
  */
 export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(
     call: AuthenticatedAsyncCall<TSdk, TReturn>,

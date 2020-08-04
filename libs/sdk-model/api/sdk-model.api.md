@@ -24,18 +24,21 @@ export function areObjRefsEqual<T extends ObjRefInScope | null | undefined>(a: T
 
 // @public
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
-    // Warning: (ae-forgotten-export) The symbol "ArithmeticMeasureBuilderInput" needs to be exported by the entry point index.d.ts
-    //
     // @internal
     constructor(input: ArithmeticMeasureBuilderInput);
     // (undocumented)
     protected buildDefinition(): IArithmeticMeasureDefinition;
     // (undocumented)
     protected generateLocalId(): string;
-    // Warning: (ae-forgotten-export) The symbol "MeasureOrLocalId" needs to be exported by the entry point index.d.ts
     operands: (measuresOrLocalIds: MeasureOrLocalId[]) => this;
     operator: (op: ArithmeticMeasureOperator) => this;
 }
+
+// @public
+export type ArithmeticMeasureBuilderInput = {
+    measuresOrIds: ReadonlyArray<MeasureOrLocalId>;
+    operator: ArithmeticMeasureOperator;
+} | IMeasure<IArithmeticMeasureDefinition>;
 
 // @public
 export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
@@ -45,8 +48,6 @@ export function attributeAlias(attribute: IAttribute): string | undefined;
 
 // @public
 export class AttributeBuilder {
-    // Warning: (ae-forgotten-export) The symbol "AttributeBuilderInput" needs to be exported by the entry point index.d.ts
-    //
     // @internal
     constructor(input: AttributeBuilderInput);
     alias: (alias?: string | undefined) => this;
@@ -56,6 +57,9 @@ export class AttributeBuilder {
     localId: (localId?: Identifier | undefined) => this;
     noAlias: () => this;
 }
+
+// @public
+export type AttributeBuilderInput = Identifier | ObjRef | IAttribute;
 
 // @public
 export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDisplayFormMetadataObject = IAttributeDisplayFormMetadataObject> extends MetadataObjectBuilder<T> {
@@ -856,8 +860,6 @@ export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): I
 // @public
 export function insightCreated(insight: IInsight): string | undefined;
 
-// Warning: (ae-internal-missing-underscore) The name "InsightDefinitionBuilder" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export class InsightDefinitionBuilder {
     constructor(visualizationUrl: string);
@@ -899,8 +901,6 @@ export function insightItems(insight: IInsightDefinition): IAttributeOrMeasure[]
 // @public
 export function insightMeasures(insight: IInsightDefinition): IMeasure[];
 
-// Warning: (ae-internal-missing-underscore) The name "InsightModifications" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export type InsightModifications = (builder: InsightDefinitionBuilder) => InsightDefinitionBuilder;
 
@@ -1290,7 +1290,6 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     defaultLocalId: () => this;
     format: (format?: string | undefined) => this;
     protected abstract generateLocalId(): string;
-    // Warning: (ae-forgotten-export) The symbol "MeasureEnvelope" needs to be exported by the entry point index.d.ts
     protected initializeFromExisting(measure: MeasureEnvelope): void;
     localId: (localId?: Identifier | undefined) => this;
     noAlias: () => this;
@@ -1300,6 +1299,9 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
 
 // @public
 export function measureDoesComputeRatio(measure: IMeasure): boolean;
+
+// @public
+export type MeasureEnvelope = Omit<IMeasure["measure"], "definition">;
 
 // @public
 export function measureFilters(measure: IMeasure): IMeasureFilter[] | undefined;
@@ -1345,6 +1347,9 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
 
 // @public
 export type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
+
+// @public
+export type MeasureOrLocalId = IMeasure | Identifier;
 
 // @public
 export function measurePopAttribute(measure: IMeasure<IPoPMeasureDefinition>): ObjRef;
@@ -1478,8 +1483,6 @@ export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimen
 // @public
 export const newFactMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder>) => IFactMetadataObject;
 
-// Warning: (ae-internal-missing-underscore) The name "newInsightDefinition" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export function newInsightDefinition(visualizationUrl: string, modifications?: InsightModifications): IInsightDefinition;
 
@@ -1531,15 +1534,11 @@ export type ObjRef = UriRef | IdentifierRef;
 // @public
 export type ObjRefInScope = ObjRef | LocalIdRef;
 
-// Warning: (ae-internal-missing-underscore) The name "objRefToString" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export function objRefToString(objRef: ObjRef | ObjRefInScope): string;
 
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
-    // Warning: (ae-forgotten-export) The symbol "PoPMeasureBuilderInput" needs to be exported by the entry point index.d.ts
-    //
     // @internal
     constructor(input: PoPMeasureBuilderInput);
     // (undocumented)
@@ -1551,9 +1550,13 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     }
 
 // @public
+export type PoPMeasureBuilderInput = {
+    measureOrLocalId: MeasureOrLocalId;
+    popAttrIdOrRef: ObjRef | Identifier;
+} | IMeasure<IPoPMeasureDefinition>;
+
+// @public
 export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMeasureDefinition> {
-    // Warning: (ae-forgotten-export) The symbol "PreviousPeriodMeasureBuilderInput" needs to be exported by the entry point index.d.ts
-    //
     // @internal
     constructor(input: PreviousPeriodMeasureBuilderInput);
     // (undocumented)
@@ -1563,6 +1566,12 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
     }
+
+// @public
+export type PreviousPeriodMeasureBuilderInput = {
+    measureIdOrLocalId: MeasureOrLocalId;
+    dateDataSets: IPreviousPeriodDateDataSetSimple[];
+} | IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @public (undocumented)
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";

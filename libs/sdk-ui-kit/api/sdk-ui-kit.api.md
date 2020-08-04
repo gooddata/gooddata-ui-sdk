@@ -7,8 +7,6 @@
 import { ISeparators } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 
-// Warning: (ae-internal-missing-underscore) The name "IAlignPoint" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export interface IAlignPoint {
     // (undocumented)
@@ -17,8 +15,6 @@ export interface IAlignPoint {
     offset: IOffset;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "IFormatPreset" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export interface IFormatPreset {
     // (undocumented)
@@ -35,8 +31,6 @@ export interface IFormatPreset {
     type?: PresetType;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "IFormatTemplate" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export interface IFormatTemplate {
     // (undocumented)
@@ -47,8 +41,34 @@ export interface IFormatTemplate {
     name: string;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "IOffset" should be prefixed with an underscore because the declaration is marked as @internal
-//
+// @internal (undocumented)
+export interface IMeasureNumberFormatOwnProps {
+    // (undocumented)
+    anchorElementSelector?: string;
+    // (undocumented)
+    customFormatDialogPositioning?: IPositioning[];
+    // (undocumented)
+    defaultCustomFormat?: string;
+    // (undocumented)
+    documentationLink?: string;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    presets: ReadonlyArray<IFormatPreset>;
+    // (undocumented)
+    presetsDropdownPositioning?: IPositioning[];
+    // (undocumented)
+    selectedFormat: string | null;
+    // (undocumented)
+    separators: ISeparators;
+    // (undocumented)
+    setFormat: (format: string | null) => void;
+    // (undocumented)
+    templates?: ReadonlyArray<IFormatTemplate>;
+    // (undocumented)
+    toggleButton: React_2.ComponentType<IToggleButtonProps>;
+}
+
 // @internal (undocumented)
 export interface IOffset {
     // (undocumented)
@@ -57,8 +77,6 @@ export interface IOffset {
     y?: number;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "IPositioning" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export interface IPositioning {
     // (undocumented)
@@ -67,8 +85,6 @@ export interface IPositioning {
     snapPoints: ISnapPoints;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "ISnapPoints" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export interface ISnapPoints {
     // (undocumented)
@@ -77,8 +93,6 @@ export interface ISnapPoints {
     parent: SnapPoint;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "ISyntaxHighlightingInputProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export interface ISyntaxHighlightingInputProps {
     // (undocumented)
@@ -95,8 +109,6 @@ export interface ISyntaxHighlightingInputProps {
     value: string;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "IToggleButtonProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export interface IToggleButtonProps {
     // (undocumented)
@@ -107,25 +119,18 @@ export interface IToggleButtonProps {
     toggleDropdown: (e: React_2.SyntheticEvent) => void;
 }
 
-// Warning: (ae-forgotten-export) The symbol "IMeasureNumberFormatOwnProps" needs to be exported by the entry point index.d.ts
-// Warning: (ae-internal-missing-underscore) The name "MeasureNumberFormat" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
     render(): React_2.ReactNode;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "PresetType" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
 }
 
-// Warning: (ae-internal-missing-underscore) The name "SnapPoint" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export enum SnapPoint {
     // (undocumented)
@@ -148,8 +153,6 @@ export enum SnapPoint {
     TopRight = "tr"
 }
 
-// Warning: (ae-internal-missing-underscore) The name "SyntaxHighlightingInput" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 

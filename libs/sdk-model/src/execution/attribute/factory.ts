@@ -7,7 +7,11 @@ import { ObjRef, objRefToString, Identifier, isObjRef } from "../../objRef";
 import { idRef } from "../../objRef/factory";
 import SparkMD5 from "spark-md5";
 
-type AttributeBuilderInput = Identifier | ObjRef | IAttribute;
+/**
+ * Input to the AttributeBuilder.
+ * @public
+ */
+export type AttributeBuilderInput = Identifier | ObjRef | IAttribute;
 
 /**
  * Builder for attributes.

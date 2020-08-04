@@ -1,8 +1,20 @@
 // (C) 2019-2020 GoodData Corporation
 import { AxiosInstance } from "axios";
 import { tigerExecutionClientFactory } from "./execution";
-import { tigerLabelElementsClientFactory } from "./labelElements";
-import { tigerMetadataClientFactory } from "./metadata";
+import {
+    tigerLabelElementsClientFactory,
+    LabelElementsConfiguration,
+    LabelElementsConfigurationParameters,
+    LabelElementsBaseApi,
+    LabelElementsRequestArgs,
+} from "./labelElements";
+import {
+    tigerMetadataClientFactory,
+    MetadataConfiguration,
+    MetadataConfigurationParameters,
+    MetadataBaseApi,
+    MetadataRequestArgs,
+} from "./metadata";
 import { tigerValidObjectsClientFactory } from "./validObjects";
 import { axios as defaultAxios, newAxios } from "./axios";
 
@@ -14,6 +26,21 @@ export { newAxios };
 
 export * from "./generated/afm-rest-api/api";
 export * from "./generated/metadata-json-api/api";
+
+export {
+    tigerMetadataClientFactory,
+    MetadataConfiguration,
+    MetadataConfigurationParameters,
+    MetadataBaseApi,
+    MetadataRequestArgs,
+    tigerExecutionClientFactory,
+    tigerLabelElementsClientFactory,
+    LabelElementsConfiguration,
+    LabelElementsConfigurationParameters,
+    LabelElementsBaseApi,
+    LabelElementsRequestArgs,
+    tigerValidObjectsClientFactory,
+};
 
 export interface ITigerClient {
     metadata: ReturnType<typeof tigerMetadataClientFactory>;

@@ -5,6 +5,15 @@
 ```ts
 
 // @public (undocumented)
+export type BooleanAsString = "1" | "0";
+
+// @public (undocumented)
+export type DateString = string;
+
+// @public (undocumented)
+export type Email = string;
+
+// @public (undocumented)
 export namespace GdcCatalog {
     // (undocumented)
     export type CatalogItem = ICatalogAttribute | ICatalogMetric | ICatalogFact;
@@ -327,8 +336,6 @@ export namespace GdcDataSets {
         dataLoadingColumns: Uri[];
         // (undocumented)
         facts: Uri[];
-        // Warning: (ae-forgotten-export) The symbol "BooleanAsString" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         hasUploadConfiguration?: BooleanAsString;
         // (undocumented)
@@ -1684,8 +1691,6 @@ export namespace GdcScheduledMail {
         lastSuccessfull?: Timestamp;
         // (undocumented)
         subject: string;
-        // Warning: (ae-forgotten-export) The symbol "Email" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         to: Email[];
         // (undocumented)
@@ -1699,8 +1704,6 @@ export namespace GdcScheduledMail {
         endDate?: DateString;
         // (undocumented)
         recurrency: string;
-        // Warning: (ae-forgotten-export) The symbol "DateString" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         startDate: DateString;
         // (undocumented)
@@ -1852,8 +1855,6 @@ export namespace GdcUser {
         links: {
             self: Uri;
         };
-        // Warning: (ae-forgotten-export) The symbol "TimeIso8601" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         started: TimeIso8601;
         // (undocumented)
@@ -2526,6 +2527,9 @@ export namespace GdcVisualizationWidget {
 export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent): string[];
 
 // @public (undocumented)
+export type Identifier = string;
+
+// @public (undocumented)
 export type MaqlExpression = string;
 
 // @public (undocumented)
@@ -2535,15 +2539,14 @@ export type NumberAsString = string;
 export function sanitizeDateFilters(filters: GdcFilterContext.FilterContextItem[]): GdcFilterContext.FilterContextItem[];
 
 // @public (undocumented)
+export type TimeIso8601 = string;
+
+// @public (undocumented)
 export type Timestamp = string;
 
 // @public (undocumented)
 export type Uri = string;
 
-
-// Warnings were encountered during analysis:
-//
-// dist/visualizationWidget/GdcVisualizationWidget.d.ts:36:13 - (ae-forgotten-export) The symbol "Identifier" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

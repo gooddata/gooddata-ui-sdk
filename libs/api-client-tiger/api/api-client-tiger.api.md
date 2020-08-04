@@ -27,10 +27,8 @@ export interface AFM {
     measures: Array<MeasureItem>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "BaseAPI" needs to be exported by the entry point index.d.ts
-//
 // @public
-export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterface {
+export class AfmControllerApi extends LabelElementsBaseApi implements AfmControllerApiInterface {
     // (undocumented)
     processAfmRequest(params: {
         afmExecution: AfmExecution;
@@ -43,22 +41,20 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
     }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Configuration" needs to be exported by the entry point index.d.ts
-//
 // @public
-export const AfmControllerApiAxiosParamCreator: (configuration?: Configuration | undefined) => {
+export const AfmControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
     processAfmRequest(params: {
         afmExecution: AfmExecution;
         skipCache?: boolean | undefined;
         timestamp?: string | undefined;
-    }, options?: any): RequestArgs;
+    }, options?: any): LabelElementsRequestArgs;
     processAfmValidObjectsQuery(params: {
         afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): RequestArgs;
+    }, options?: any): LabelElementsRequestArgs;
 };
 
 // @public
-export const AfmControllerApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+export const AfmControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     processAfmRequest(params: {
         afmExecution: AfmExecution;
         skipCache?: boolean;
@@ -70,7 +66,7 @@ export const AfmControllerApiFactory: (configuration?: Configuration | undefined
 };
 
 // @public
-export const AfmControllerApiFp: (configuration?: Configuration | undefined) => {
+export const AfmControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
     processAfmRequest(params: {
         afmExecution: AfmExecution;
         skipCache?: boolean;
@@ -537,10 +533,8 @@ export enum DatasetTypeResourceAttribute {
 // @public
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 
-// Warning: (ae-forgotten-export) The symbol "BaseAPI" needs to be exported by the entry point index.d.ts
-//
 // @public
-export class DefaultApi extends BaseAPI_2 implements DefaultApiInterface {
+export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
     attributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -2030,10 +2024,8 @@ export class DefaultApi extends BaseAPI_2 implements DefaultApiInterface {
     }, options?: any): AxiosPromise<VisualizationObjectResourceResponseSchema>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Configuration" needs to be exported by the entry point index.d.ts
-//
 // @public
-export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | undefined) => {
+export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
     attributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -2051,19 +2043,19 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         sort?: string | undefined;
         pageLimit?: number | undefined;
         pageOffset?: number | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     attributesIdDatasetGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     attributesIdGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     attributesIdLabelsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2079,13 +2071,13 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     attributesIdRelationshipsDatasetGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     attributesIdRelationshipsLabelsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2101,7 +2093,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     attributesIdRelationshipsTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2118,7 +2110,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     attributesIdTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2135,7 +2127,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -2159,7 +2151,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         sort?: string | undefined;
         pageLimit?: number | undefined;
         pageOffset?: number | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsIdAttributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2175,7 +2167,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsIdFactsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2190,13 +2182,13 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsIdGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsIdReferencesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2218,7 +2210,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsIdRelationshipsAttributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2234,7 +2226,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsIdRelationshipsFactsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2249,7 +2241,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsIdRelationshipsReferencesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2271,7 +2263,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsIdRelationshipsTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2288,7 +2280,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     datasetsIdTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2305,7 +2297,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     factsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -2322,25 +2314,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         sort?: string | undefined;
         pageLimit?: number | undefined;
         pageOffset?: number | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     factsIdDatasetGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     factsIdGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     factsIdRelationshipsDatasetGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     factsIdRelationshipsTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2357,7 +2349,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     factsIdTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2374,7 +2366,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     labelsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -2392,25 +2384,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         sort?: string | undefined;
         pageLimit?: number | undefined;
         pageOffset?: number | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     labelsIdAttributeGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     labelsIdGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     labelsIdRelationshipsAttributeGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     labelsIdRelationshipsTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2427,7 +2419,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     labelsIdTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2444,7 +2436,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -2466,11 +2458,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         sort?: string | undefined;
         pageLimit?: number | undefined;
         pageOffset?: number | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdAttributesDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdAttributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2486,25 +2478,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdAttributesPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdAttributesPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdFactsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdFactsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2519,27 +2511,27 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdFactsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdFactsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdLabelsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdLabelsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2555,21 +2547,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdLabelsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdLabelsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdMetricsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdMetricsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2589,26 +2581,26 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdMetricsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdMetricsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         metricPatchResource?: MetricPatchResource | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsAttributesDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsAttributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2624,21 +2616,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsAttributesPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsAttributesPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsFactsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsFactsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2653,21 +2645,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsFactsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsFactsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsLabelsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsLabelsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2683,21 +2675,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsLabelsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsLabelsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsMetricsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsMetricsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2717,21 +2709,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsMetricsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsMetricsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsTagsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2748,21 +2740,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsTagsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsTagsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdTagsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2779,21 +2771,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdTagsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsIdTagsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     metricsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         metricPostResource?: MetricPostResource | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     sourcesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -2806,13 +2798,13 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         sort?: string | undefined;
         pageLimit?: number | undefined;
         pageOffset?: number | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     sourcesIdGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     sourcesIdRelationshipsTablesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2824,7 +2816,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     sourcesIdTablesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2836,7 +2828,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tablesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -2850,25 +2842,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         sort?: string | undefined;
         pageLimit?: number | undefined;
         pageOffset?: number | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tablesIdGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tablesIdRelationshipsSourceGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tablesIdSourceGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -2887,11 +2879,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         sort?: string | undefined;
         pageLimit?: number | undefined;
         pageOffset?: number | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdAttributesDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdAttributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2907,21 +2899,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdAttributesPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdAttributesPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdDatasetsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdDatasetsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2943,25 +2935,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdDatasetsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdDatasetsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdFactsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdFactsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -2976,27 +2968,27 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdFactsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdFactsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdLabelsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdLabelsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3012,21 +3004,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdLabelsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdLabelsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdMetricsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdMetricsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3046,26 +3038,26 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdMetricsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdMetricsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         tagPatchResource?: TagPatchResource | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAttributesDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAttributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3081,21 +3073,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAttributesPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAttributesPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsDatasetsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsDatasetsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3117,21 +3109,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsDatasetsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsDatasetsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsFactsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsFactsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3146,21 +3138,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsFactsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsFactsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsLabelsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsLabelsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3176,21 +3168,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsLabelsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsLabelsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsMetricsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsMetricsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3210,21 +3202,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsMetricsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsMetricsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsVisualizationObjectsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsVisualizationObjectsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3241,21 +3233,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsVisualizationObjectsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsVisualizationObjectsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdVisualizationObjectsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdVisualizationObjectsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3272,21 +3264,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdVisualizationObjectsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsIdVisualizationObjectsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     tagsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         tagPostResource?: TagPostResource | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -3305,7 +3297,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         sort?: string | undefined;
         pageLimit?: number | undefined;
         pageOffset?: number | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdAttributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3321,11 +3313,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdFactsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3340,13 +3332,13 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdLabelsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3362,7 +3354,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdMetricsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3382,12 +3374,12 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         visualizationObjectPatchResource?: VisualizationObjectPatchResource | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsAttributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3403,7 +3395,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsFactsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3418,7 +3410,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsLabelsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3434,7 +3426,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsMetricsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3454,11 +3446,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsTagsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3475,21 +3467,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsTagsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsTagsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdTagsDelete(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdTagsGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
@@ -3506,25 +3498,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: Configuration_2 | und
         filterId?: string | undefined;
         fields?: string | undefined;
         include?: string | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdTagsPatch(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdTagsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
     visualizationObjectsPost(params: {
         contentType: "application/vnd.api+json" | "application/json";
         visualizationObjectPostResource?: VisualizationObjectPostResource | undefined;
-    }, options?: any): RequestArgs_2;
+    }, options?: any): MetadataRequestArgs;
 };
 
 // @public
-export const DefaultApiFactory: (configuration?: Configuration_2 | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     attributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -5015,7 +5007,7 @@ export const DefaultApiFactory: (configuration?: Configuration_2 | undefined, ba
 };
 
 // @public
-export const DefaultApiFp: (configuration?: Configuration_2 | undefined) => {
+export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) => {
     attributesGet(params: {
         contentType: "application/vnd.api+json" | "application/json";
         filter?: {
@@ -8015,7 +8007,7 @@ interface Element_2 {
 export { Element_2 as Element }
 
 // @public
-export class ElementsControllerApi extends BaseAPI implements ElementsControllerApiInterface {
+export class ElementsControllerApi extends LabelElementsBaseApi implements ElementsControllerApiInterface {
     // (undocumented)
     processElementsRequest(params: {
         workspace: string;
@@ -8031,7 +8023,7 @@ export class ElementsControllerApi extends BaseAPI implements ElementsController
 }
 
 // @public
-export const ElementsControllerApiAxiosParamCreator: (configuration?: Configuration | undefined) => {
+export const ElementsControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
     processElementsRequest(params: {
         workspace: string;
         label: string;
@@ -8042,11 +8034,11 @@ export const ElementsControllerApiAxiosParamCreator: (configuration?: Configurat
         offset?: number | undefined;
         limit?: number | undefined;
         skipCache?: boolean | undefined;
-    }, options?: any): RequestArgs;
+    }, options?: any): LabelElementsRequestArgs;
 };
 
 // @public
-export const ElementsControllerApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+export const ElementsControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     processElementsRequest(params: {
         workspace: string;
         label: string;
@@ -8061,7 +8053,7 @@ export const ElementsControllerApiFactory: (configuration?: Configuration | unde
 };
 
 // @public
-export const ElementsControllerApiFp: (configuration?: Configuration | undefined) => {
+export const ElementsControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
     processElementsRequest(params: {
         workspace: string;
         label: string;
@@ -8712,20 +8704,12 @@ export interface InlineMeasureDefinitionInline {
 
 // @public (undocumented)
 export interface ITigerClient {
-    // Warning: (ae-forgotten-export) The symbol "tigerExecutionClientFactory" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     execution: ReturnType<typeof tigerExecutionClientFactory>;
-    // Warning: (ae-forgotten-export) The symbol "tigerLabelElementsClientFactory" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
-    // Warning: (ae-forgotten-export) The symbol "tigerMetadataClientFactory" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     metadata: ReturnType<typeof tigerMetadataClientFactory>;
-    // Warning: (ae-forgotten-export) The symbol "tigerValidObjectsClientFactory" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
 }
@@ -8733,6 +8717,52 @@ export interface ITigerClient {
 // @public
 export interface JsonApi {
     version?: string;
+}
+
+// @public
+export class LabelElementsBaseApi {
+    constructor(configuration?: LabelElementsConfiguration, basePath?: string, axios?: AxiosInstance);
+    // (undocumented)
+    protected axios: AxiosInstance;
+    // (undocumented)
+    protected basePath: string;
+    // (undocumented)
+    protected configuration: LabelElementsConfiguration | undefined;
+}
+
+// @public (undocumented)
+export class LabelElementsConfiguration {
+    constructor(param?: LabelElementsConfigurationParameters);
+    accessToken?: string | ((name?: string, scopes?: string[]) => string);
+    apiKey?: string | ((name: string) => string);
+    baseOptions?: any;
+    basePath?: string;
+    password?: string;
+    username?: string;
+}
+
+// @public
+export interface LabelElementsConfigurationParameters {
+    // (undocumented)
+    accessToken?: string | ((name?: string, scopes?: string[]) => string);
+    // (undocumented)
+    apiKey?: string | ((name: string) => string);
+    // (undocumented)
+    baseOptions?: any;
+    // (undocumented)
+    basePath?: string;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    username?: string;
+}
+
+// @public
+export interface LabelElementsRequestArgs {
+    // (undocumented)
+    options: any;
+    // (undocumented)
+    url: string;
 }
 
 // @public
@@ -8900,6 +8930,52 @@ export interface MeasureItem {
 
 // @public
 export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
+
+// @public
+export class MetadataBaseApi {
+    constructor(configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance);
+    // (undocumented)
+    protected axios: AxiosInstance;
+    // (undocumented)
+    protected basePath: string;
+    // (undocumented)
+    protected configuration: MetadataConfiguration | undefined;
+}
+
+// @public (undocumented)
+export class MetadataConfiguration {
+    constructor(param?: MetadataConfigurationParameters);
+    accessToken?: string | ((name?: string, scopes?: string[]) => string);
+    apiKey?: string | ((name: string) => string);
+    baseOptions?: any;
+    basePath?: string;
+    password?: string;
+    username?: string;
+}
+
+// @public
+export interface MetadataConfigurationParameters {
+    // (undocumented)
+    accessToken?: string | ((name?: string, scopes?: string[]) => string);
+    // (undocumented)
+    apiKey?: string | ((name: string) => string);
+    // (undocumented)
+    baseOptions?: any;
+    // (undocumented)
+    basePath?: string;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    username?: string;
+}
+
+// @public
+export interface MetadataRequestArgs {
+    // (undocumented)
+    options: any;
+    // (undocumented)
+    url: string;
+}
 
 // @public
 export interface MetricPatchResource {
@@ -9624,6 +9700,21 @@ export interface TagResourcesResponseSchemaAllOf {
 // @public
 export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 
+// @public
+export const tigerExecutionClientFactory: (axios: AxiosInstance) => {
+    executeAfm: (execution: ExecuteAFM.IExecution) => Promise<Execution.IExecutionResponse>;
+    executionResult: (resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<Execution.IExecutionResult>;
+};
+
+// @public (undocumented)
+export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => ElementsControllerApiInterface;
+
+// @public (undocumented)
+export const tigerMetadataClientFactory: (axios: AxiosInstance) => DefaultApiInterface;
+
+// @public (undocumented)
+export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => AfmControllerApiInterface;
+
 // @public (undocumented)
 export namespace VisualizationObject {
     // (undocumented)
@@ -9798,11 +9889,6 @@ export interface VisualizationObjectResourcesResponseSchemaAllOf {
     data: Array<VisualizationObjectResourceSchema>;
 }
 
-
-// Warnings were encountered during analysis:
-//
-// dist/generated/afm-rest-api/api.d.ts:955:5 - (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
-// dist/generated/metadata-json-api/api.d.ts:3830:5 - (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

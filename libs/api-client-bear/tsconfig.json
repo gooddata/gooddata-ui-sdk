@@ -5,6 +5,7 @@
         "module": "commonjs",
         "lib": ["es6", "dom"],
         "declaration": true,
+        "sourceMap": true,
         "outDir": "./dist",
         "importHelpers": true,
         "strict": true,

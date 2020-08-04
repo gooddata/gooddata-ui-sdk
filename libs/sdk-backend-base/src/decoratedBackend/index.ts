@@ -149,7 +149,14 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 }
 
+/**
+ * @alpha
+ */
 export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;
+
+/**
+ * @alpha
+ */
 export type CatalogDecoratorFactory = (catalog: IWorkspaceCatalogFactory) => IWorkspaceCatalogFactory;
 
 /**

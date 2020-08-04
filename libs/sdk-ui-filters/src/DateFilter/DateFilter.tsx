@@ -27,7 +27,10 @@ const normalizeSelectedFilterOption = (selectedFilterOption: DateFilterOption): 
     return selectedFilterOption;
 };
 
-interface IStatePropsIntersection {
+/**
+ * @beta
+ */
+export interface IDateFilterStatePropsIntersection {
     excludeCurrentPeriod: boolean;
     selectedFilterOption: DateFilterOption;
 }
@@ -35,7 +38,7 @@ interface IStatePropsIntersection {
 /**
  * @beta
  */
-export interface IDateFilterOwnProps extends IStatePropsIntersection {
+export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     filterOptions: IDateFilterOptionsByType;
     availableGranularities: DateFilterGranularity[];
     isEditMode?: boolean;
@@ -59,7 +62,10 @@ export interface IDateFilterCallbackProps {
  */
 export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallbackProps {}
 
-interface IDateFilterState extends IStatePropsIntersection {
+/**
+ * @beta
+ */
+export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     initExcludeCurrentPeriod: boolean;
     initSelectedFilterOption: DateFilterOption;
     isExcludeCurrentPeriodEnabled: boolean;

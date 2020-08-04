@@ -31,4 +31,6 @@ export {
     LegacyExecutionRecording,
     legacyRecordedBackend,
     legacyRecordedDataView,
+    LegacyRecordingIndex,
+    LegacyWorkspaceRecordings,
 } from "./legacyRecordedBackend";

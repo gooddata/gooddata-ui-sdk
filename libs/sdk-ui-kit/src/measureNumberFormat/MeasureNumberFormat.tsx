@@ -10,6 +10,9 @@ import { IPositioning } from "../typings/positioning";
 
 export const CUSTOM_FORMAT_PRESET_LOCAL_IDENTIFIER = "customFormat";
 
+/**
+ * @internal
+ */
 export interface IMeasureNumberFormatOwnProps {
     toggleButton: React.ComponentType<IToggleButtonProps>;
     presets: ReadonlyArray<IFormatPreset>;

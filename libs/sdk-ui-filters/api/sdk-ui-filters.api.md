@@ -24,21 +24,15 @@ import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { RelativeGranularityOffset } from '@gooddata/sdk-backend-spi';
 
-// @alpha
+// @beta
 export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
 
-// Warning: (ae-forgotten-export) The symbol "IAttributeElementsProps" needs to be exported by the entry point index.d.ts
-//
 // @public
 export const AttributeElements: React_2.ComponentType<IAttributeElementsProps>;
 
-// Warning: (ae-forgotten-export) The symbol "IAttributeFilterProps" needs to be exported by the entry point index.d.ts
-//
 // @public
 export const AttributeFilter: React_2.ComponentType<IAttributeFilterProps>;
 
-// Warning: (ae-forgotten-export) The symbol "IDateFilterState" needs to be exported by the entry point index.d.ts
-//
 // @beta (undocumented)
 export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
     constructor(props: IDateFilterProps);
@@ -69,23 +63,59 @@ export const DateFilterHelpers: {
     mapOptionToAfm: (value: import("./interfaces").DateFilterOption, dateDataSet: import("@gooddata/sdk-model").ObjRef, excludeCurrentPeriod: boolean) => import("@gooddata/sdk-model").IDateFilter;
 };
 
-// @alpha
+// @beta
 export type DateFilterOption = IAllTimeDateFilter | AbsoluteDateFilterOption | RelativeDateFilterOption;
 
-// @alpha
+// @beta
 export type DateFilterRelativeOptionGroup = {
     [key in DateFilterGranularity]?: Array<IRelativeDateFilterPresetOfGranularity<key>>;
 };
 
-// Warning: (ae-incompatible-release-tags) The symbol "defaultDateFilterOptions" is marked as @beta, but its signature references "IDateFilterOptionsByType" which is marked as @alpha
-//
 // @beta (undocumented)
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
 
+// @public
+export interface IAttributeElementsChildren {
+    error: any;
+    isLoading: boolean;
+    loadMore: () => void;
+    validElements: IElementQueryResult;
+}
+
+// @public (undocumented)
+export interface IAttributeElementsProps {
+    backend?: IAnalyticalBackend;
+    // (undocumented)
+    children?(props: IAttributeElementsChildren): React_2.ReactNode;
+    displayForm: ObjRef;
+    limit?: number;
+    offset?: number;
+    onError?: OnError;
+    options?: IElementQueryOptions;
+    workspace?: string;
+}
+
+// @public (undocumented)
+export interface IAttributeFilterProps {
+    backend?: IAnalyticalBackend;
+    filter?: IAttributeFilter;
+    FilterError?: React_2.ComponentType<{
+        error?: any;
+    }>;
+    FilterLoading?: React_2.ComponentType;
+    fullscreenOnMobile?: boolean;
+    // @deprecated
+    identifier?: string;
+    locale?: string;
+    onApply: (filter: IAttributeFilter) => void;
+    onError?: OnError;
+    title?: string;
+    titleWithSelection?: boolean;
+    workspace?: string;
+}
+
 // @beta (undocumented)
 export interface IDateFilterCallbackProps {
-    // Warning: (ae-incompatible-release-tags) The symbol "onApply" is marked as @beta, but its signature references "DateFilterOption" which is marked as @alpha
-    //
     // (undocumented)
     onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
     // (undocumented)
@@ -96,7 +126,7 @@ export interface IDateFilterCallbackProps {
     onOpen?: () => void;
 }
 
-// @alpha
+// @beta
 export interface IDateFilterOptionsByType {
     absoluteForm?: IUiAbsoluteDateFilterForm;
     absolutePreset?: IAbsoluteDateFilterPreset[];
@@ -105,18 +135,14 @@ export interface IDateFilterOptionsByType {
     relativePreset?: DateFilterRelativeOptionGroup;
 }
 
-// Warning: (ae-forgotten-export) The symbol "IStatePropsIntersection" needs to be exported by the entry point index.d.ts
-//
 // @beta (undocumented)
-export interface IDateFilterOwnProps extends IStatePropsIntersection {
+export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
     availableGranularities: DateFilterGranularity[];
     // (undocumented)
     customFilterName?: string;
     // (undocumented)
     dateFilterMode: DashboardDateFilterConfigMode;
-    // Warning: (ae-incompatible-release-tags) The symbol "filterOptions" is marked as @beta, but its signature references "IDateFilterOptionsByType" which is marked as @alpha
-    //
     // (undocumented)
     filterOptions: IDateFilterOptionsByType;
     // (undocumented)
@@ -129,7 +155,25 @@ export interface IDateFilterOwnProps extends IStatePropsIntersection {
 export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallbackProps {
 }
 
-// @alpha
+// @beta (undocumented)
+export interface IDateFilterState extends IDateFilterStatePropsIntersection {
+    // (undocumented)
+    initExcludeCurrentPeriod: boolean;
+    // (undocumented)
+    initSelectedFilterOption: DateFilterOption;
+    // (undocumented)
+    isExcludeCurrentPeriodEnabled: boolean;
+}
+
+// @beta (undocumented)
+export interface IDateFilterStatePropsIntersection {
+    // (undocumented)
+    excludeCurrentPeriod: boolean;
+    // (undocumented)
+    selectedFilterOption: DateFilterOption;
+}
+
+// @beta
 export interface IExtendedDateFilterErrors {
     absoluteForm?: {
         from?: string;
@@ -141,8 +185,28 @@ export interface IExtendedDateFilterErrors {
     };
 }
 
-// Warning: (ae-forgotten-export) The symbol "IMeasureValueFilterCommonProps" needs to be exported by the entry point index.d.ts
-//
+// @beta (undocumented)
+export interface IMeasureValueFilterCommonProps {
+    // (undocumented)
+    displayTreatNullAsZeroOption?: boolean;
+    // (undocumented)
+    filter: IMeasureValueFilter;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    measureIdentifier: string;
+    // (undocumented)
+    onApply: (filter: IMeasureValueFilter) => void;
+    // (undocumented)
+    separators?: ISeparators;
+    // (undocumented)
+    treatNullAsZeroDefaultValue?: boolean;
+    // (undocumented)
+    usePercentage?: boolean;
+    // (undocumented)
+    warningMessage?: string;
+}
+
 // @beta (undocumented)
 export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     // (undocumented)
@@ -165,19 +229,19 @@ export interface IMeasureValueFilterState {
     displayDropdown: boolean;
 }
 
-// @alpha
+// @beta
 export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFilterOption;
 
-// @alpha
+// @beta
 export const isRelativeDateFilterOption: (obj: unknown) => obj is RelativeDateFilterOption;
 
-// @alpha
+// @beta
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     from?: DateString;
     to?: DateString;
 }
 
-// @alpha
+// @beta
 export interface IUiRelativeDateFilterForm extends IRelativeDateFilterForm {
     from?: RelativeGranularityOffset;
     granularity?: DateFilterGranularity;
@@ -202,7 +266,7 @@ export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureVa
     render(): React_2.ReactNode;
 }
 
-// @alpha
+// @beta
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
 
 

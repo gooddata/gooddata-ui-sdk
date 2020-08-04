@@ -35,7 +35,11 @@ export interface IPreviousPeriodDateDataSetSimple {
     periodsAgo: number;
 }
 
-type MeasureEnvelope = Omit<IMeasure["measure"], "definition">;
+/**
+ * Measure without the definition.
+ * @public
+ */
+export type MeasureEnvelope = Omit<IMeasure["measure"], "definition">;
 
 /**
  * Abstract base class for measure builders. Measure builders allow for incremental, fluent construction
@@ -394,7 +398,11 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     }
 }
 
-type ArithmeticMeasureBuilderInput =
+/**
+ * Input to the ArithmeticMeasureBuilder.
+ * @public
+ */
+export type ArithmeticMeasureBuilderInput =
     | {
           measuresOrIds: ReadonlyArray<MeasureOrLocalId>;
           operator: ArithmeticMeasureOperator;
@@ -466,7 +474,11 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
     }
 }
 
-type PoPMeasureBuilderInput =
+/**
+ * Input to the PoPMeasureBuilder.
+ * @public
+ */
+export type PoPMeasureBuilderInput =
     | { measureOrLocalId: MeasureOrLocalId; popAttrIdOrRef: ObjRef | Identifier }
     | IMeasure<IPoPMeasureDefinition>;
 
@@ -541,7 +553,11 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     }
 }
 
-type PreviousPeriodMeasureBuilderInput =
+/**
+ * Import to the PreviousPeriodMeasureBuilder.
+ * @public
+ */
+export type PreviousPeriodMeasureBuilderInput =
     | {
           measureIdOrLocalId: MeasureOrLocalId;
           dateDataSets: IPreviousPeriodDateDataSetSimple[];

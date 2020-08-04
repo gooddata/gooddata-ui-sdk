@@ -16,15 +16,11 @@ export interface IFluidLegendProps {
     onItemClick?(item: IPushpinCategoryLegendItem): void;
 }
 
-interface IFluidLegendState {
-    showAll: boolean;
-}
-
 /**
  * @internal
  */
-export class FluidLegend extends React.PureComponent<IFluidLegendProps, IFluidLegendState> {
-    public state: IFluidLegendState = {
+export class FluidLegend extends React.PureComponent<IFluidLegendProps> {
+    public state = {
         showAll: false,
     };
 

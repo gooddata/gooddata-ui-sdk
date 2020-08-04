@@ -17,7 +17,7 @@ import {
 
 /**
  * Represents the global absolute date filter, which may contain selected values
- * @alpha
+ * @beta
  */
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     /**
@@ -32,7 +32,7 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
 
 /**
  * Represents the global relative date filter, which may contain selected granularity and values
- * @alpha
+ * @beta
  */
 export interface IUiRelativeDateFilterForm extends IRelativeDateFilterForm {
     /**
@@ -51,39 +51,39 @@ export interface IUiRelativeDateFilterForm extends IRelativeDateFilterForm {
 
 /**
  * Represents a absolute date filter option in the date filter dropdown
- * @alpha
+ * @beta
  */
 export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link AbsoluteDateFilterOption}.
- * @alpha
+ * @beta
  */
 export const isAbsoluteDateFilterOption = (obj: unknown): obj is AbsoluteDateFilterOption =>
     isAbsoluteDateFilterForm(obj) || isAbsoluteDateFilterPreset(obj);
 
 /**
  * Represents a relative date filter option in the date filter dropdown
- * @alpha
+ * @beta
  */
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link RelativeDateFilterOption}.
- * @alpha
+ * @beta
  */
 export const isRelativeDateFilterOption = (obj: unknown): obj is RelativeDateFilterOption =>
     isRelativeDateFilterForm(obj) || isRelativeDateFilterPreset(obj);
 
 /**
  * Represents any option in the date filter dropdown
- * @alpha
+ * @beta
  */
 export type DateFilterOption = IAllTimeDateFilter | AbsoluteDateFilterOption | RelativeDateFilterOption;
 
 /**
  * Relative date filter options grouped by their granularity
- * @alpha
+ * @beta
  */
 export type DateFilterRelativeOptionGroup = {
     [key in DateFilterGranularity]?: Array<IRelativeDateFilterPresetOfGranularity<key>>;
@@ -91,7 +91,7 @@ export type DateFilterRelativeOptionGroup = {
 
 /**
  * All date filter options grouped by their type
- * @alpha
+ * @beta
  */
 export interface IDateFilterOptionsByType {
     /**
@@ -118,7 +118,7 @@ export interface IDateFilterOptionsByType {
 
 /**
  * Extended date filter errors
- * @alpha
+ * @beta
  */
 export interface IExtendedDateFilterErrors {
     /**
