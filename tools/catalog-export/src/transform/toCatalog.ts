@@ -190,6 +190,7 @@ function mergeData(
             let resultItem = newItem;
             if (existingTitle) {
                 subItemKeys.forEach((subItemKey) => {
+                    // eslint-disable-next-line no-prototype-builtins
                     if (resultItem.hasOwnProperty(subItemKey)) {
                         resultItem = mergeData(resultItem, existingItems[existingTitle], [subItemKey]);
                     }
@@ -210,7 +211,7 @@ function mergeData(
  * @param projectMeta - project metadata to work with
  * @param existingCatalog - existing catalog structure to merge with
  */
-export function transformToCatalog(projectMeta: ProjectMetadata, existingCatalog?: any): any {
+export function transformToCatalog(projectMeta: ProjectMetadata, existingCatalog?: object): any {
     const measures = createMeasures(projectMeta);
     const measuresProp = !isEmpty(measures) ? { measures } : {};
     const attributes = createCatalogAttributes(projectMeta);

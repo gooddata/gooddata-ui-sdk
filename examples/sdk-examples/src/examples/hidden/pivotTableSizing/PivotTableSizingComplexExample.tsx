@@ -77,7 +77,7 @@ export class PivotTableSizingComplexExample extends Component {
 
     public onButtonClick = (
         columnWidthItem: IMeasureColumnWidthItem | IAttributeColumnWidthItem | IAllMeasureColumnWidthItem,
-    ) => {
+    ): void => {
         const filteredColumnWidths = this.state.columnWidths.filter(
             (item) => !isSameWidthItem(item, columnWidthItem),
         );
@@ -89,11 +89,11 @@ export class PivotTableSizingComplexExample extends Component {
 
     public onColumnResized = (
         columnWidths: Array<IMeasureColumnWidthItem | IAttributeColumnWidthItem | IAllMeasureColumnWidthItem>,
-    ) => {
+    ): void => {
         this.setState({ columnWidths });
     };
 
-    public onAutoResizeChanged = () => {
+    public onAutoResizeChanged = (): void => {
         // change also PivotTable key so by this checkbox we simulate init render
         this.setState((prevState: any) => ({
             ...prevState,
@@ -102,7 +102,7 @@ export class PivotTableSizingComplexExample extends Component {
         }));
     };
 
-    public onGrowToFitChanged = () => {
+    public onGrowToFitChanged = (): void => {
         this.setState((prevState: any) => ({
             ...prevState,
             growToFit: !prevState.growToFit,
@@ -110,7 +110,7 @@ export class PivotTableSizingComplexExample extends Component {
         }));
     };
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div>
                 <div>

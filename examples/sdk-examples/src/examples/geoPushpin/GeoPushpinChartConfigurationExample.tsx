@@ -14,7 +14,7 @@ import {
 } from "../../ldm/geoModel";
 
 export class GeoPushpinChartConfigurationExample extends Component {
-    public render() {
+    public render(): React.ReactNode {
         const geoConfig = {
             center: {
                 lat: 39,
@@ -45,22 +45,22 @@ export class GeoPushpinChartConfigurationExample extends Component {
     }
 
     private onLoadingChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationExample onLoadingChanged", ...params);
     }
 
     private onError(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationExample onError", ...params);
     }
 
     private onZoomChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationExample onZoomChanged", ...params);
     }
 
     private onCenterPositionChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationExample onCenterPositionChanged", ...params);
     }
 }

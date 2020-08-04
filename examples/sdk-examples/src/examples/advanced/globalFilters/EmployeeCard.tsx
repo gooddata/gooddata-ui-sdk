@@ -128,7 +128,7 @@ const employeeAdditionalInfo = [
     },
 ];
 
-export const EmployeeCard = ({ name }: { name: string }) => {
+export const EmployeeCard = ({ name }: { name: string }): JSX.Element => {
     const { avatarUrl, gender, startDate } = employeeAdditionalInfo.find((info) => info.name === name) || {};
 
     return (

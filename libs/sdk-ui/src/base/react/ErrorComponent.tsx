@@ -34,7 +34,7 @@ export class ErrorComponent extends React.Component<IErrorProps> {
         },
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { className, style, width, height, message, description, icon } = this.props;
 
         const wrapperStyle = {

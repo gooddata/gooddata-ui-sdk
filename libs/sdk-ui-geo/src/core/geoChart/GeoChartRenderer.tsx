@@ -77,7 +77,7 @@ export default class GeoChartRenderer extends React.Component<IGeoChartRendererP
         this.chartRef = null;
     }
 
-    public componentDidUpdate(prevProps: IGeoChartRendererProps) {
+    public componentDidUpdate(prevProps: IGeoChartRendererProps): void {
         const {
             config: { selectedSegmentItems },
             colorStrategy,
@@ -112,22 +112,22 @@ export default class GeoChartRenderer extends React.Component<IGeoChartRendererP
         this.updateMapWithConfig(prevConfig, prevColorStrategy);
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.createTooltip();
         this.createMap();
         this.createMapControls();
         this.handleMapEvent();
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.removeMap();
     }
 
-    public setChartRef = (ref: HTMLElement | null) => {
+    public setChartRef = (ref: HTMLElement | null): void => {
         this.chartRef = ref;
     };
 
-    public createMap = () => {
+    public createMap = (): void => {
         const { config, geoData } = this.props;
         const data = geoData.location!.data;
         const { isExportMode = false } = config || {};
@@ -144,7 +144,7 @@ export default class GeoChartRenderer extends React.Component<IGeoChartRendererP
         });
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const {
             config: { isExportMode = false },
         } = this.props;

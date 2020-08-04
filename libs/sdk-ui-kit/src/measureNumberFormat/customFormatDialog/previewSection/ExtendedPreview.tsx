@@ -20,7 +20,7 @@ export class ExtendedPreview extends React.Component<IExtendedPreviewProps, IExt
         expanded: false,
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { expanded } = this.state;
         const { format, separators } = this.props;
 
@@ -42,7 +42,7 @@ export class ExtendedPreview extends React.Component<IExtendedPreviewProps, IExt
         );
     }
 
-    private openExtendedPreview = () => {
+    private openExtendedPreview = (): void => {
         this.setState({ expanded: true });
     };
 }

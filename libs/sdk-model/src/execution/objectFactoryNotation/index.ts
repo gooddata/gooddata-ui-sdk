@@ -5,7 +5,7 @@ import isArray from "lodash/isArray";
 import isObject from "lodash/isObject";
 import isString from "lodash/isString";
 import stringifyObject from "stringify-object";
-import { ObjRef } from "../../objRef";
+import { ObjRef, isUriRef } from "../../objRef";
 import {
     isMeasureLocator,
     IAttributeLocatorItem,
@@ -54,7 +54,7 @@ const stringify = (input: any) =>
 
 const ARRAY_JOINER = ", ";
 
-const getObjQualifierValue = (value: ObjRef): string => (value as any).uri || (value as any).identifier;
+const getObjQualifierValue = (value: ObjRef): string => (isUriRef(value) ? value.uri : value.identifier);
 
 type Converter<T> = (input: T) => string;
 
@@ -215,6 +215,7 @@ const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
  * @param data - data to return the generating code for
  * @public
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const factoryNotationFor = (data: any): string => {
     if (isArray(data)) {
         return `[${data.map(factoryNotationFor).join(ARRAY_JOINER)}]`;

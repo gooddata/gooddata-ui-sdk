@@ -24,7 +24,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 
 export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
         const controls: IChartConfig = properties && properties.controls;
 

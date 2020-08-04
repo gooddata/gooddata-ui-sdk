@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -88,7 +88,6 @@ export namespace GdcExecution {
 
     export type DataValue = null | string | number;
 
-    // tslint:disable-next-line:interface-name
     export interface Warning {
         warningCode: string;
         message: string;

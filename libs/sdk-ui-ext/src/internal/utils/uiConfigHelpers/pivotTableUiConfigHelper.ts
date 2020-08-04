@@ -18,7 +18,7 @@ export function setPivotTableUiConfig(
     referencePoint: IExtendedReferencePoint,
     intl: IntlShape,
     visualizationType: string,
-) {
+): void {
     set(referencePoint, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"], true);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], true);

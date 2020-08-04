@@ -14,7 +14,7 @@ import { IAttributeDisplayFormMetadataObject } from ".";
 export class AttributeDisplayFormMetadataObjectBuilder<
     T extends IAttributeDisplayFormMetadataObject = IAttributeDisplayFormMetadataObject
 > extends MetadataObjectBuilder<T> {
-    public attribute(ref: ObjRef) {
+    public attribute(ref: ObjRef): this {
         this.item.attribute = ref;
         return this;
     }

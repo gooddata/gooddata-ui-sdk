@@ -2,4 +2,4 @@
 import { IHighchartsAxisExtend } from "../typings/extend";
 import { IAxis } from "../typings/unsafe";
 
-export const isPrimaryYAxis = (yAxis: IAxis | IHighchartsAxisExtend) => !yAxis.opposite;
+export const isPrimaryYAxis = (yAxis: IAxis | IHighchartsAxisExtend): boolean => !yAxis.opposite;

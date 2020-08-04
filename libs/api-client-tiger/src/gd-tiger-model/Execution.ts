@@ -84,7 +84,6 @@ export namespace Execution {
 
     export type DataValue = null | string | number;
 
-    // tslint:disable-next-line:interface-name
     export interface Warning {
         warningCode: string;
         message: string;

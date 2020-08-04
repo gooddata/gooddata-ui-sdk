@@ -8,7 +8,7 @@ import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import { locationAttribute } from "../../ldm/geoModel";
 
 export class GeoPushpinChartConfigurationViewportExample extends Component {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div
                 style={{ height: "500px", position: "relative" }}
@@ -29,7 +29,7 @@ export class GeoPushpinChartConfigurationViewportExample extends Component {
     }
 
     private onError(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationViewportExample onError", ...params);
     }
 }

@@ -119,7 +119,7 @@ export const App: React.FC = () => {
                         />
                         <div className="pageWrapper">
                             {(authStatus === AuthStatus.AUTHORIZED) === true && (
-                                // @ts-ignore
+                                // @ts-expect-error the sideNavigationRoutes typings are behaving strange here
                                 <Menu sideNavigationRoutes={sideNavigationRoutes} routes={routes} />
                             )}
                             <main>
@@ -139,14 +139,16 @@ export const App: React.FC = () => {
                                 {authStatus !== AuthStatus.AUTHORIZING && (
                                     <div className="flexWrapper">
                                         <Switch>
-                                            {userRoutes.map(({ title, path, Component, ...routeProps }) => (
-                                                <Route
-                                                    key={path}
-                                                    path={path}
-                                                    component={Component}
-                                                    {...routeProps}
-                                                />
-                                            ))}
+                                            {userRoutes.map(
+                                                ({ title: _, path, Component, ...routeProps }) => (
+                                                    <Route
+                                                        key={path}
+                                                        path={path}
+                                                        component={Component}
+                                                        {...routeProps}
+                                                    />
+                                                ),
+                                            )}
                                             {authStatus === AuthStatus.UNAUTHORIZED && (
                                                 <Redirect
                                                     to={{
@@ -160,7 +162,7 @@ export const App: React.FC = () => {
                                             )}
                                         </Switch>
                                         {authStatus === AuthStatus.AUTHORIZED &&
-                                            routes.map(({ title, path, Component, ...routeProps }) => (
+                                            routes.map(({ title: _, path, Component, ...routeProps }) => (
                                                 <Route
                                                     key={path}
                                                     path={path}

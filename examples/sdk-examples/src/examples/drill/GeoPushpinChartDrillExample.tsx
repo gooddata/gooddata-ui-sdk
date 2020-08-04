@@ -16,16 +16,12 @@ type State = {
     drillEvent: IDrillEvent | null;
 };
 
-export class GeoPushpinChartDrillExample extends React.Component<any, State> {
-    constructor(props: any) {
-        super(props);
+export class GeoPushpinChartDrillExample extends React.Component<unknown, State> {
+    state: State = {
+        drillEvent: null,
+    };
 
-        this.state = {
-            drillEvent: null,
-        };
-    }
-
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div className="s-geo-pushpin-chart-on-drill">
                 <div style={{ height: 500, position: "relative" }} className="s-geo-pushpin-chart">

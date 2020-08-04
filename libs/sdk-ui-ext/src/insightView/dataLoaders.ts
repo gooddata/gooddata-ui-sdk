@@ -128,7 +128,7 @@ const loaders: LRUCache<string, IInsightViewDataLoader> = new LRUCache({ max: LO
  *
  * @public
  */
-export const clearInsightViewCaches = () => {
+export const clearInsightViewCaches = (): void => {
     loaders.reset();
 };
 

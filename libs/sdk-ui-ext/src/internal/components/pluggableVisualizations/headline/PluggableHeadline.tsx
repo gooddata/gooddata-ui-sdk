@@ -64,11 +64,13 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.renderFun = props.renderFun;
     }
 
-    public unmount() {
+    public unmount(): void {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
-    public getExtendedReferencePoint(referencePoint: Readonly<IReferencePoint>) {
+    public getExtendedReferencePoint(
+        referencePoint: Readonly<IReferencePoint>,
+    ): Promise<IExtendedReferencePoint> {
         const referencePointCloned = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...referencePointCloned,
@@ -129,7 +131,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
-    ) {
+    ): void {
         if (!insightHasDataDefined(insight)) {
             return;
         }
@@ -158,7 +160,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         );
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): void {
         if (document.querySelector(this.configPanelElement)) {
             const properties = this.visualizationProperties ?? {};
 

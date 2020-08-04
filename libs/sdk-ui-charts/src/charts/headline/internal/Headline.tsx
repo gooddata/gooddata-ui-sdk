@@ -46,15 +46,15 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         this.handleClickOnSecondaryItem = this.handleClickOnSecondaryItem.bind(this);
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.props.onAfterRender();
     }
 
-    public componentDidUpdate() {
+    public componentDidUpdate(): void {
         this.props.onAfterRender();
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div className="headline">
                 {this.renderPrimaryItem()}

@@ -1,9 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const bodyParser = require("body-parser");
 
 module.exports = (app, sdk, { domainAdmin, projectIdToAssign, userRole }) => {
     if (!domainAdmin.username || !domainAdmin.password || !projectIdToAssign) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.warn(
             "Set up DOMAIN_ADMIN_USERNAME/PASSWORD and PROJECT_ID_TO_ASSIGN for the /api/assign-project endpoint to work.",
         );
@@ -16,7 +17,7 @@ module.exports = (app, sdk, { domainAdmin, projectIdToAssign, userRole }) => {
         }
 
         const keys = ["user"];
-        const missingKeys = keys.filter(f => !body[f]);
+        const missingKeys = keys.filter((f) => !body[f]);
         if (missingKeys.length > 0) {
             return res.status(400).send(`Missing parameters: ${missingKeys.join(", ")}`);
         }
@@ -38,8 +39,8 @@ module.exports = (app, sdk, { domainAdmin, projectIdToAssign, userRole }) => {
                             },
                         }),
                     })
-                    .then(result => {
-                        // tslint:disable-next-line:no-console
+                    .then((result) => {
+                        // eslint-disable-next-line no-console
                         console.log("POST", result.response.url, ">>>", result.getData());
 
                         return res.status(200).json({
@@ -47,8 +48,8 @@ module.exports = (app, sdk, { domainAdmin, projectIdToAssign, userRole }) => {
                         });
                     });
             })
-            .catch(err => {
-                // tslint:disable-next-line:no-console
+            .catch((err) => {
+                // eslint-disable-next-line no-console
                 console.log(err); // Log all errors to console
 
                 if (err.responseBody) {

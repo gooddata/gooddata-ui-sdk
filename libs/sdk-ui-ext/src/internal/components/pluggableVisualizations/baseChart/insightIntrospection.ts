@@ -5,7 +5,13 @@ import { isBarChart, isScatterPlot, isBubbleChart, isBulletChart } from "@goodda
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 import get from "lodash/get";
 
-export function countBucketItems(insight: IInsightDefinition) {
+export function countBucketItems(
+    insight: IInsightDefinition,
+): {
+    viewByItemCount: number;
+    measureItemCount: number;
+    secondaryMeasureItemCount: number;
+} {
     if (!insight) {
         return {
             viewByItemCount: 0,
@@ -29,7 +35,12 @@ export function countItemsOnAxes(
     type: string,
     controls: IVisualizationProperties,
     insight: IInsightDefinition,
-) {
+): {
+    xaxis: number;
+    yaxis: number;
+    secondary_xaxis?: number;
+    secondary_yaxis?: number;
+} {
     const isBarFamilyChartType = isBarChart(type) || isBulletChart(type);
 
     const { viewByItemCount, measureItemCount, secondaryMeasureItemCount } = countBucketItems(insight);

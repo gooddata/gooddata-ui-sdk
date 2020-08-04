@@ -91,11 +91,20 @@ export const measureValueFilterUseCasesRoutes = [
     },
 ];
 
-const InsightViewUseCasesRoutes = (props: any) =>
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const InsightViewUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: insightViewUseCasesRoutes });
-const AdvancedUseCasesRoutes = (props: any) => WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
-const DrillingUseCasesRoutes = (props: any) => WithSubRoutes({ ...props, subRoutes: drillingUseCasesRoutes });
-const MeasureValueFilterUseCasesRoutes = (props: any) =>
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const AdvancedUseCasesRoutes = (props: any): JSX.Element =>
+    WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const DrillingUseCasesRoutes = (props: any): JSX.Element =>
+    WithSubRoutes({ ...props, subRoutes: drillingUseCasesRoutes });
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const MeasureValueFilterUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: measureValueFilterUseCasesRoutes });
 
 export const sideNavigationRoutes = [

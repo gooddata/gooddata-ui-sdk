@@ -279,11 +279,9 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should disable open as report for insight have properties stackMeasures ", () => {
             const visualization = createComponent(defaultProps);
-            let visualizationProperties;
-            let isOpenAsReportSupported;
 
             // stackMeasures property
-            visualizationProperties = {
+            const visualizationProperties = {
                 controls: {
                     stackMeasures: true,
                 },
@@ -294,17 +292,15 @@ describe("PluggableColumnBarCharts", () => {
             );
 
             visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
-            isOpenAsReportSupported = visualization.isOpenAsReportSupported();
+            const isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(false);
         });
 
         it("should disable open as report for insight have properties stackMeasuresToPercent", () => {
             const visualization = createComponent(defaultProps);
-            let visualizationProperties;
-            let isOpenAsReportSupported;
 
             // stackMeasuresToPercent property
-            visualizationProperties = {
+            const visualizationProperties = {
                 controls: {
                     stackMeasuresToPercent: true,
                 },
@@ -315,7 +311,7 @@ describe("PluggableColumnBarCharts", () => {
             );
 
             visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
-            isOpenAsReportSupported = visualization.isOpenAsReportSupported();
+            const isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(false);
         });
 

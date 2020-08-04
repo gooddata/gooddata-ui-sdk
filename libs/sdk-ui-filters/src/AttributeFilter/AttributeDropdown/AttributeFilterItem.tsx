@@ -25,7 +25,7 @@ export class AttributeFilterItem extends React.PureComponent<IAttributeFilterIte
         classname: "",
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { item } = this.props;
 
         if (!item || item.source.empty) {

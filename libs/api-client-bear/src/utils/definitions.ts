@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import difference from "lodash/difference";
 import map from "lodash/map";
 
@@ -11,7 +11,7 @@ export interface IMetric {
     };
 }
 
-function getDependencies({ metricDefinition }: IMetric) {
+function getDependencies({ metricDefinition }: IMetric): string[] {
     return (metricDefinition.expression.match(IDENTIFIER_REGEX) || []).map((s: string) =>
         s.substring(1, s.length - 1),
     );
@@ -55,7 +55,7 @@ function sort(unresolved: any[]) {
     return resolved;
 }
 
-export function sortDefinitions(definitions: any[]) {
+export function sortDefinitions(definitions: any[]): any[] {
     const indexed = definitions.map((definition: any) => ({
         definition,
         identifier: getIdentifier(definition),

@@ -25,6 +25,6 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
  *
  * @public
  */
-export function isCatalogMeasure(obj: any): obj is ICatalogMeasure {
+export function isCatalogMeasure(obj: unknown): obj is ICatalogMeasure {
     return !isEmpty(obj) && (obj as ICatalogMeasure).type === "measure";
 }

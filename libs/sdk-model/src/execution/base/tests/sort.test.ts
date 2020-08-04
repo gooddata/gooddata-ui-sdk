@@ -106,8 +106,8 @@ describe("newMeasureSort", () => {
         expect(() => newMeasureSort(undefined as any)).toThrowError(InvariantError);
     });
 
-    it("should throw if measure input is undefined", () => {
-        expect(() => newMeasureSort(undefined as any)).toThrowError(InvariantError);
+    it("should throw if measure input is null", () => {
+        expect(() => newMeasureSort(null as any)).toThrowError(InvariantError);
     });
 });
 

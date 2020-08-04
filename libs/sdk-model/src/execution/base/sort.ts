@@ -111,7 +111,7 @@ export interface IMeasureLocatorItem {
  *
  * @public
  */
-export function isAttributeSort(obj: any): obj is IAttributeSortItem {
+export function isAttributeSort(obj: unknown): obj is IAttributeSortItem {
     return !isEmpty(obj) && (obj as IAttributeSortItem).attributeSortItem !== undefined;
 }
 
@@ -120,7 +120,7 @@ export function isAttributeSort(obj: any): obj is IAttributeSortItem {
  *
  * @public
  */
-export function isAttributeAreaSort(obj: any): obj is IAttributeSortItem {
+export function isAttributeAreaSort(obj: unknown): obj is IAttributeSortItem {
     return isAttributeSort(obj) && obj.attributeSortItem.aggregation !== undefined;
 }
 
@@ -129,7 +129,7 @@ export function isAttributeAreaSort(obj: any): obj is IAttributeSortItem {
  *
  * @public
  */
-export function isMeasureSort(obj: any): obj is IMeasureSortItem {
+export function isMeasureSort(obj: unknown): obj is IMeasureSortItem {
     return !isEmpty(obj) && (obj as IMeasureSortItem).measureSortItem !== undefined;
 }
 
@@ -138,7 +138,7 @@ export function isMeasureSort(obj: any): obj is IMeasureSortItem {
  *
  * @public
  */
-export function isAttributeLocator(obj: any): obj is IAttributeLocatorItem {
+export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem {
     return !isEmpty(obj) && (obj as IAttributeLocatorItem).attributeLocatorItem !== undefined;
 }
 
@@ -147,7 +147,7 @@ export function isAttributeLocator(obj: any): obj is IAttributeLocatorItem {
  *
  * @public
  */
-export function isMeasureLocator(obj: any): obj is IMeasureLocatorItem {
+export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem {
     return !isEmpty(obj) && (obj as IMeasureLocatorItem).measureLocatorItem !== undefined;
 }
 

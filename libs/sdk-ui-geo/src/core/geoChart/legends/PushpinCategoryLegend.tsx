@@ -43,7 +43,7 @@ function renderFluidCategoryLegend(
     const { categoryItems, onItemClick } = props;
 
     const legendProps = {
-        series: categoryItems,
+        series: categoryItems ?? [],
         onItemClick,
     };
 

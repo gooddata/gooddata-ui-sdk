@@ -13,11 +13,11 @@ export interface IColorPaletteProps {
 }
 
 export default class ColorPalette extends React.PureComponent<IColorPaletteProps> {
-    public render() {
+    public render(): React.ReactNode {
         return <div className={this.getClassNames()}>{this.renderItems()}</div>;
     }
 
-    private getClassNames() {
+    private getClassNames(): string {
         const isColorPaletteLarge = this.isColorPaletteLarge();
         return cx(
             {
@@ -28,7 +28,7 @@ export default class ColorPalette extends React.PureComponent<IColorPaletteProps
         );
     }
 
-    private renderItems() {
+    private renderItems(): React.ReactNode {
         return this.props.colorPalette.map((item: IColorPaletteItem) => {
             return (
                 <ColorPaletteItem
@@ -41,15 +41,15 @@ export default class ColorPalette extends React.PureComponent<IColorPaletteProps
         });
     }
 
-    private isColorPaletteLarge() {
+    private isColorPaletteLarge(): boolean {
         return this.props.colorPalette.length > MAX_SMALL_PALETTE_SIZE;
     }
 
-    private isItemSelected(guid: string) {
+    private isItemSelected(guid: string): boolean {
         return this.props.selectedColorGuid === guid;
     }
 
-    private onColorSelected = (color: IColor) => {
+    private onColorSelected = (color: IColor): void => {
         this.props.onColorSelected(color);
     };
 }

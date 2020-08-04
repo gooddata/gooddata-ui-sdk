@@ -11,10 +11,10 @@ export interface ILegendListProps {
     onItemClick: (item: any) => void;
 }
 
-export const LegendSeparator = () => <div className="legend-separator" />;
+export const LegendSeparator = (): JSX.Element => <div className="legend-separator" />;
 
 export class LegendList extends React.PureComponent<ILegendListProps> {
-    public render() {
+    public render(): React.ReactNode {
         const { series, enableBorderRadius, onItemClick, width } = this.props;
         return series.map((item: any, index: number) => {
             const { type, labelKey, data } = item;

@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
@@ -6,7 +7,7 @@ import { CustomLegendExample } from "./CustomLegendExample";
 import CustomLegendExampleSRC from "!raw-loader!./CustomLegendExample";
 import CustomLegendExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/customLegend/CustomLegendExample";
 
-export const CustomLegend = () => (
+export const CustomLegend = (): JSX.Element => (
     <div>
         <h1>Custom legend</h1>
 

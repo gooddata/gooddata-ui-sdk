@@ -56,7 +56,7 @@ describe("AttributeFilter", () => {
 
     it("should detect deprecated attribute definition", () => {
         const warnMock = jest.fn();
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.warn = warnMock;
         mount(
             <AttributeFilter

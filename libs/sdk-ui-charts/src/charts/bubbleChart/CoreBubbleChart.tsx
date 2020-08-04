@@ -3,8 +3,8 @@ import React from "react";
 import { ICoreChartProps } from "../../interfaces";
 import { BaseChart } from "../_base/BaseChart";
 
-export class CoreBubbleChart extends React.Component<ICoreChartProps, null> {
-    public render() {
+export class CoreBubbleChart extends React.Component<ICoreChartProps> {
+    public render(): React.ReactNode {
         return <BaseChart type="bubble" {...this.props} />;
     }
 }

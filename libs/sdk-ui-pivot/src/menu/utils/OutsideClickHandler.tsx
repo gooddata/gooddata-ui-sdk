@@ -15,7 +15,7 @@ export default class OutsideClickHandler extends React.Component<IOutsideClickHa
 
     private wrapperEl: HTMLElement = null;
 
-    public componentDidUpdate(prevProps: IOutsideClickHandlerProps) {
+    public componentDidUpdate(prevProps: IOutsideClickHandlerProps): void {
         if (
             prevProps.onOutsideClick !== this.props.onOutsideClick ||
             prevProps.useCapture !== this.props.useCapture
@@ -25,15 +25,15 @@ export default class OutsideClickHandler extends React.Component<IOutsideClickHa
         }
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.addListeners();
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.removeListeners();
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return <div ref={this.setWrapperEl}>{this.props.children}</div>;
     }
 

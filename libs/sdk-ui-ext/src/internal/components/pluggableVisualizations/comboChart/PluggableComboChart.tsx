@@ -71,7 +71,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getSupportedPropertiesList() {
+    public getSupportedPropertiesList(): string[] {
         return COMBO_CHART_SUPPORTED_PROPERTIES[this.axis] || [];
     }
 
@@ -124,7 +124,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    public isStackMeasuresByDefault() {
+    public isStackMeasuresByDefault(): boolean {
         return isAreaChart(this.primaryChartType);
     }
 

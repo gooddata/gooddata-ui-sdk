@@ -40,16 +40,11 @@ export default class Chart extends React.Component<IChartProps> {
     private chart: Highcharts.Chart;
     private chartRef: HTMLElement;
 
-    public constructor(props: IChartProps) {
-        super(props);
-        this.setChartRef = this.setChartRef.bind(this);
-    }
-
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.createChart(this.props.config);
     }
 
-    public shouldComponentUpdate(nextProps: IChartProps) {
+    public shouldComponentUpdate(nextProps: IChartProps): boolean {
         if (isEqual(this.props.config, nextProps.config)) {
             return false;
         }
@@ -57,11 +52,11 @@ export default class Chart extends React.Component<IChartProps> {
         return true;
     }
 
-    public componentDidUpdate() {
+    public componentDidUpdate(): void {
         this.createChart(this.props.config);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.chart.destroy();
     }
 
@@ -69,9 +64,9 @@ export default class Chart extends React.Component<IChartProps> {
         return this.chartRef;
     }
 
-    public setChartRef(ref: HTMLElement) {
+    public setChartRef = (ref: HTMLElement): void => {
         this.chartRef = ref;
-    }
+    };
 
     public getChart(): Highcharts.Chart {
         if (!this.chart) {
@@ -81,7 +76,7 @@ export default class Chart extends React.Component<IChartProps> {
         return this.chart;
     }
 
-    public createChart(config: IChartConfig) {
+    public createChart(config: IChartConfig): void {
         const chartConfig = config.chart;
         this.chart = new Highcharts.Chart(
             {
@@ -95,7 +90,7 @@ export default class Chart extends React.Component<IChartProps> {
         );
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return <div {...this.props.domProps} ref={this.setChartRef} />;
     }
 }

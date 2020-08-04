@@ -6,10 +6,14 @@ import { ExampleWithSource } from "../../components/ExampleWithSource";
 import { SamePeriodColumnChartExample } from "./SamePeriodColumnChartExample";
 import PreviousPeriodHeadlineExample from "./PreviousPeriodHeadlineExample";
 
+// eslint-disable-next-line import/no-unresolved
 import SamePeriodColumnChartExampleSrc from "!raw-loader!./SamePeriodColumnChartExample";
+// eslint-disable-next-line import/no-unresolved
 import PreviousPeriodHeadlineExampleSrc from "!raw-loader!./PreviousPeriodHeadlineExample";
 
+// eslint-disable-next-line import/default
 import SamePeriodColumnChartExampleSrcJS from "!raw-loader!../../../examplesJS/timeOverTimeComparison/SamePeriodColumnChartExample";
+// eslint-disable-next-line import/default
 import PreviousPeriodHeadlineExampleSrcJS from "!raw-loader!../../../examplesJS/timeOverTimeComparison/PreviousPeriodHeadlineExample";
 
 export const TimeOverTimeComparison: React.FC = () => (

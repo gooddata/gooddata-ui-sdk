@@ -26,7 +26,6 @@ export const ArrowButton: React.FC<{
             "gd-icon",
             iconClassNames[props.arrowDirection],
         )}
-        // tslint:disable-next-line:jsx-no-lambda
         onClick={() => unless(constant(props.disabled), props.onClick)}
         aria-hidden="true"
         disabled={props.disabled}

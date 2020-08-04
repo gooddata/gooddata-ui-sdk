@@ -4,19 +4,20 @@ import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
 import { LdmExt } from "../../ldm";
+import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 
 export class PreviousPeriodHeadlineExample extends Component {
-    public onLoadingChanged(...params: any) {
-        // tslint:disable-next-line:no-console
+    public onLoadingChanged: OnLoadingChanged = (...params) => {
+        // eslint-disable-next-line no-console
         return console.log("PreviousPeriodHeadlineExample onLoadingChanged", ...params);
-    }
+    };
 
-    public onError(...params: any) {
-        // tslint:disable-next-line:no-console
+    public onError: OnError = (...params): void => {
+        // eslint-disable-next-line no-console
         return console.log("PreviousPeriodHeadlineExample onError", ...params);
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         const primaryMeasure = LdmExt.TotalSales2;
         const secondaryMeasure = newPreviousPeriodMeasure(
             LdmExt.TotalSales2,

@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-// tslint:disable-line
 /**
  * Calculate new min/max to make Y axes aligned, and insert them to Highcharts config
  *
@@ -185,6 +184,7 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
     };
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getMinMaxInfo(config: any, stacking: string, type: string): IMinMaxInfo[] {
     const { series, yAxis } = config;
     const isStackedChart = !isNil(stacking);
@@ -425,7 +425,8 @@ function hideInvalidAxis(config: any, minmax: IMinMaxInfo[], type: string) {
  * @param chartOptions
  * @param config
  */
-export function getZeroAlignConfiguration(chartOptions: IChartOptions, config: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function getZeroAlignConfiguration(chartOptions: IChartOptions, config: any): any {
     const { stacking, type } = chartOptions;
     const { yAxis } = config;
     const isDualAxis = (yAxis || []).length === 2;

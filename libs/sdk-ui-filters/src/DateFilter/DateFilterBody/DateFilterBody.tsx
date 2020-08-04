@@ -64,8 +64,10 @@ export interface IDateFilterBodyState {
     route: DateFilterRoute;
 }
 
-export const isFilterOptionSelected = (filterOption: IDateFilterOption, selectedOption: IDateFilterOption) =>
-    filterOption.localIdentifier === selectedOption.localIdentifier;
+export const isFilterOptionSelected = (
+    filterOption: IDateFilterOption,
+    selectedOption: IDateFilterOption,
+): boolean => filterOption.localIdentifier === selectedOption.localIdentifier;
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 
@@ -74,11 +76,11 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         route: null,
     };
 
-    public changeRoute = (route: IDateFilterBodyState["route"] = null) => {
+    public changeRoute = (route: IDateFilterBodyState["route"] = null): void => {
         this.setState({ route });
     };
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         // Dropdown component does not expose isOpened prop but it mounts
         // this component every time it is opened and un-mounts when closed
         if (this.props.isMobile) {
@@ -125,7 +127,6 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 >
                     {route === null && isMobile && (
                         <div
-                            // tslint:disable-next-line:jsx-no-lambda
                             onClick={() => {
                                 onCancelClick();
                                 closeDropdown();
@@ -160,7 +161,6 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             <DateFilterBodyButton
                                 messageId="cancel"
                                 className="gd-button-secondary s-date-filter-cancel"
-                                // tslint:disable-next-line:jsx-no-lambda
                                 onClick={() => {
                                     onCancelClick();
                                     closeDropdown();
@@ -170,7 +170,6 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                                 messageId="apply"
                                 className="gd-button-action s-date-filter-apply"
                                 disabled={!isEmpty(errors)}
-                                // tslint:disable-next-line:jsx-no-lambda
                                 onClick={() => {
                                     onApplyClick();
                                     closeDropdown();
@@ -217,7 +216,6 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 {(!isMobile || !isOnRoute) && (
                     <ListItem
                         isSelected={isSelected}
-                        // tslint:disable-next-line:jsx-no-lambda
                         onClick={() => {
                             this.changeRoute("absoluteForm");
                             if (!isAbsoluteDateFilterForm(selectedFilterOption)) {
@@ -269,7 +267,6 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 {(!isMobile || !isOnRoute) && (
                     <ListItem
                         isSelected={isSelected}
-                        // tslint:disable-next-line:jsx-no-lambda
                         onClick={() => {
                             this.changeRoute("relativeForm");
                             if (!isRelativeDateFilterForm(selectedFilterOption)) {
@@ -294,7 +291,6 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 {isSelected && (!isMobile || isOnRoute) && (
                     <DateFilterFormWrapper isMobile={isMobile}>
                         <RelativeDateFilterForm
-                            // tslint:disable-next-line:jsx-no-lambda
                             onSelectedFilterOptionChange={(option) => {
                                 onSelectedFilterOptionChange(option);
                             }}

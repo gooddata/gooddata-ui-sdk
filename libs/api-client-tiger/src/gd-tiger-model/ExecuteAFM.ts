@@ -229,7 +229,7 @@ export namespace ExecuteAFM {
         totals?: ITotalItem[];
     }
 
-    export const isObjIdentifierQualifier = (value: any): value is IObjIdentifierQualifier => {
+    export const isObjIdentifierQualifier = (value: unknown): value is IObjIdentifierQualifier => {
         return !!(
             (value as Partial<IObjIdentifierQualifier>)?.identifier?.id &&
             (value as Partial<IObjIdentifierQualifier>)?.identifier?.type

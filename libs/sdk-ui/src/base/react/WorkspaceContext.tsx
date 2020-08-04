@@ -29,9 +29,8 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
  *
  * @public
  */
-export const useWorkspace = () => {
+export const useWorkspace = (): string | undefined => {
     const workspace = React.useContext(WorkspaceContext);
-
     return workspace;
 };
 
@@ -41,7 +40,9 @@ export const useWorkspace = () => {
  *
  * @internal
  */
-export function withWorkspace<T extends { workspace?: string }>(Chart: React.ComponentType<T>) {
+export function withWorkspace<T extends { workspace?: string }>(
+    Chart: React.ComponentType<T>,
+): React.ComponentType<T> {
     const ComponentWithInjectedWorkspace: React.FC<T> = (props) => {
         return (
             <WorkspaceContext.Consumer>

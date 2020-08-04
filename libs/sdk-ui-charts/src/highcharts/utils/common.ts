@@ -11,21 +11,24 @@ import unescape from "lodash/unescape";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartOptions, ISeriesItem } from "../typings/unsafe";
 
-export function parseValue(value: string) {
+export function parseValue(value: string): number | null {
     const parsedValue = parseFloat(value);
     return isNaN(parsedValue) ? null : parsedValue;
 }
 
-export const immutableSet = (dataSet: any, path: any, newValue: any) =>
-    setWith({ ...dataSet }, path, newValue, clone);
+export const immutableSet = <T extends object, U>(
+    dataSet: T,
+    path: Parameters<typeof setWith>[1],
+    newValue: U,
+): T => setWith({ ...dataSet }, path, newValue, clone);
 
-export const repeatItemsNTimes = (array: any[], n: number) =>
+export const repeatItemsNTimes = <T>(array: T[], n: number): T[] =>
     new Array(n).fill(null).reduce((result) => [...result, ...array], []);
 
-export const unEscapeAngleBrackets = (str: string) =>
+export const unEscapeAngleBrackets = (str: string): string =>
     str && str.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");
 
-export function isRotationInRange(rotation: number, min: number, max: number) {
+export function isRotationInRange(rotation: number, min: number, max: number): boolean {
     return rotation >= min && rotation <= max;
 }
 
@@ -67,7 +70,7 @@ export const isDonutChart = isEqual(VisualizationTypes.DONUT);
 /**
  * @internal
  */
-export const isPieOrDonutChart = (type: string) => isPieChart(type) || isDonutChart(type);
+export const isPieOrDonutChart = (type: string): boolean => isPieChart(type) || isDonutChart(type);
 
 /**
  * @internal
@@ -82,7 +85,7 @@ export const isBubbleChart = isEqual(VisualizationTypes.BUBBLE);
 /**
  * @internal
  */
-export const isComboChart = (type: string) =>
+export const isComboChart = (type: string): boolean =>
     isEqual(type, VisualizationTypes.COMBO) || isEqual(type, VisualizationTypes.COMBO2);
 
 /**
@@ -99,10 +102,10 @@ export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);
  * @internal
  * @param type
  */
-export const isInvertedChartType = (type: string) => isBarChart(type) || isBulletChart(type);
-export const isChartSupported = (type: string) => includes(VisualizationTypes, type);
-export const isOneOfTypes = (type: string, types: string[]) => includes(types, type);
-export const stringifyChartTypes = () =>
+export const isInvertedChartType = (type: string): boolean => isBarChart(type) || isBulletChart(type);
+export const isChartSupported = (type: string): boolean => includes(VisualizationTypes, type);
+export const isOneOfTypes = (type: string, types: string[]): boolean => includes(types, type);
+export const stringifyChartTypes = (): string =>
     Object.keys(VisualizationTypes)
         .reduce((acc, type) => {
             acc.push(VisualizationTypes[type]);
@@ -146,7 +149,7 @@ export const getPrimaryChartType = (chartOptions: IChartOptions): string => {
     return get(targetSeries, "type", chartOptions.type);
 };
 
-export const unwrap = (wrappedObject: any) => {
+export const unwrap = (wrappedObject: unknown): any => {
     return wrappedObject[Object.keys(wrappedObject)[0]];
 };
 
@@ -158,4 +161,4 @@ export const isCssMultiLineTruncationSupported = (): boolean => {
     // support -webkit-line-clamp
     return "webkitLineClamp" in document.body.style;
 };
-export const customEscape = (str: string) => str && escape(unescape(str));
+export const customEscape = (str: string): string => str && escape(unescape(str));

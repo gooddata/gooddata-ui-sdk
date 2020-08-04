@@ -52,7 +52,7 @@ export interface IAttribute {
  *
  * @public
  */
-export function isAttribute(obj: any): obj is IAttribute {
+export function isAttribute(obj: unknown): obj is IAttribute {
     return !isEmpty(obj) && (obj as IAttribute).attribute !== undefined;
 }
 

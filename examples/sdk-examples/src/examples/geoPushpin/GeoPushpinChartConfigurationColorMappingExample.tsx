@@ -35,7 +35,7 @@ const colorMapping: IColorMapping[] = [
 ];
 
 export class GeoPushpinChartConfigurationColorMappingExample extends Component {
-    public render() {
+    public render(): React.ReactNode {
         const geoConfig = {
             tooltipText: tooltipTextAttribute,
             mapboxToken: MAPBOX_TOKEN,
@@ -63,22 +63,22 @@ export class GeoPushpinChartConfigurationColorMappingExample extends Component {
     }
 
     private onLoadingChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationColorMappingExample onLoadingChanged", ...params);
     }
 
     private onError(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationColorMappingExample onError", ...params);
     }
 
     private onZoomChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationColorMappingExample onZoomChanged", ...params);
     }
 
     private onCenterPositionChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log(
             "GeoPushpinChartConfigurationColorMappingExample onCenterPositionChanged",
             ...params,

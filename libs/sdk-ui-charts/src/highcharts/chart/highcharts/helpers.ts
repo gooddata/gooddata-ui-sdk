@@ -19,7 +19,7 @@ import { isInvertedChartType } from "../../utils/common";
 import { IChartConfig, ChartAlignTypes } from "../../../interfaces";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments";
 import Highcharts from "./highchartsEntryPoint";
-import { ISeriesDataItem, ISeriesItem, UnsafeInternals } from "../../typings/unsafe";
+import { ISeriesDataItem, ISeriesItem, UnsafeInternals, IChartOptions } from "../../typings/unsafe";
 
 export interface IRectByPoints {
     left: number;
@@ -33,32 +33,40 @@ export interface IRectBySize {
     y: number;
     width: number;
     height: number;
-    show?: () => {};
-    hide?: () => {};
+    show?: () => void;
+    hide?: () => void;
 }
 
 // https://silentmatt.com/rectangle-intersection/
-export const rectanglesAreOverlapping = (r1: IRectByPoints, r2: IRectByPoints, padding: number = 0) =>
+export const rectanglesAreOverlapping = (
+    r1: IRectByPoints,
+    r2: IRectByPoints,
+    padding: number = 0,
+): boolean =>
     r1.left - padding < r2.right + padding &&
     r1.right + padding > r2.left - padding &&
     r1.top - padding < r2.bottom + padding &&
     r1.bottom + padding > r2.top - padding;
 
-export const isIntersecting = (r1: IRectBySize, r2: IRectBySize) =>
+export const isIntersecting = (r1: IRectBySize, r2: IRectBySize): boolean =>
     r1.x < r2.x + r2.width && r1.x + r1.width > r2.x && r1.y < r2.y + r2.height && r1.y + r1.height > r2.y;
 
-export const toNeighbors = (array: any) => zip(initial(array), tail(array));
-export const getVisibleSeries = (chart: Highcharts.Chart) =>
+export const toNeighbors = (array: any[]): any[] => zip(initial(array), tail(array));
+
+export const getVisibleSeries = (chart: Highcharts.Chart): Highcharts.Series[] =>
     chart.series && chart.series.filter((s: Highcharts.Series) => s.visible);
-export const getHiddenSeries = (chart: Highcharts.Chart) =>
+
+export const getHiddenSeries = (chart: Highcharts.Chart): Highcharts.Series[] =>
     chart.series && chart.series.filter((s: Highcharts.Series) => !s.visible);
-export const getDataPoints = (series: Highcharts.Series[]) =>
+
+export const getDataPoints = (series: Highcharts.Series[]): Highcharts.Point[] =>
     flatten(unzip(map(series, (s: Highcharts.Series) => s.points)));
-export const getDataPointsOfVisibleSeries = (chart: Highcharts.Chart) =>
+
+export const getDataPointsOfVisibleSeries = (chart: Highcharts.Chart): Highcharts.Point[] =>
     getDataPoints(getVisibleSeries(chart));
 
 export const getChartType = (chart: Highcharts.Chart): string | undefined => chart.options.chart?.type;
-export const isStacked = (chart: Highcharts.Chart) => {
+export const isStacked = (chart: Highcharts.Chart): boolean => {
     const chartType = getChartType(chart);
 
     if (
@@ -78,7 +86,7 @@ export const isStacked = (chart: Highcharts.Chart) => {
     return false;
 };
 
-export function getChartProperties(config: IChartConfig, type: VisType) {
+export function getChartProperties(config: IChartConfig, type: VisType): any {
     const isInvertedType = isInvertedChartType(type);
     const chartProps: any = {
         xAxisProps: isInvertedType ? { ...config.yaxis } : { ...config.xaxis },
@@ -102,7 +110,16 @@ export function getChartProperties(config: IChartConfig, type: VisType) {
     return chartProps;
 }
 
-export const getPointPositions = (point: any) => {
+export const getPointPositions = (
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    point: any,
+): {
+    shape: DOMRect;
+    label: DOMRect;
+    labelPadding: any;
+    show: () => void;
+    hide: () => void;
+} => {
     const { dataLabel, graphic } = point;
     const labelRect = dataLabel.element.getBoundingClientRect();
     const shapeRect = graphic.element.getBoundingClientRect();
@@ -115,6 +132,7 @@ export const getPointPositions = (point: any) => {
     };
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getShapeAttributes(point: any): IRectBySize {
     const { series, shapeArgs } = point;
     const { plotSizeX, plotSizeY, options } = series.chart;
@@ -150,7 +168,7 @@ function getExtremeOnAxis(min: number, max: number) {
     return { axisMin, axisMax };
 }
 
-export function shouldFollowPointerForDualAxes(chartOptions: any) {
+export function shouldFollowPointerForDualAxes(chartOptions: IChartOptions): boolean {
     const yAxes = get(chartOptions, "yAxes", []);
     if (yAxes.length <= 1) {
         return false;
@@ -181,7 +199,7 @@ function isMinMaxLimitData(chartOptions: any, key: string) {
     return (!isNaN(yMax) && axisMax > yMax) || (!isNaN(yMin) && axisMin < yMin);
 }
 
-export function shouldFollowPointer(chartOptions: any) {
+export function shouldFollowPointer(chartOptions: IChartOptions): boolean {
     if (shouldFollowPointerForDualAxes(chartOptions)) {
         return true;
     }
@@ -241,14 +259,14 @@ function getSerieMinDataValue(serieData: ISeriesDataItem[]): number {
     return min ? min.y : Number.MAX_SAFE_INTEGER;
 }
 
-export function getStackedMaxValue(series: ISeriesItem[]) {
+export function getStackedMaxValue(series: ISeriesItem[]): number {
     const maximumPerColumn = getColumnExtremeValue(series, getMaxFromPositiveNegativeStacks);
 
     const maxValue = max(maximumPerColumn);
     return !isNil(maxValue) ? maxValue : Number.MIN_SAFE_INTEGER;
 }
 
-export function getStackedMinValue(series: ISeriesItem[]) {
+export function getStackedMinValue(series: ISeriesItem[]): number {
     const minimumPerColumn = getColumnExtremeValue(series, getMinFromPositiveNegativeStacks);
 
     const minValue = min(minimumPerColumn);
@@ -293,7 +311,7 @@ function getMinFromPositiveNegativeStacks(data: number[]): number {
     }, Number.MAX_SAFE_INTEGER);
 }
 
-export function shouldStartOnTick(chartOptions: any, axisPropsKey = "yAxisProps"): boolean {
+export function shouldStartOnTick(chartOptions: IChartOptions, axisPropsKey = "yAxisProps"): boolean {
     const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ""));
     const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ""));
 
@@ -317,7 +335,7 @@ export function shouldStartOnTick(chartOptions: any, axisPropsKey = "yAxisProps"
 
     return false;
 }
-export function shouldEndOnTick(chartOptions: any, axisPropsKey = "yAxisProps"): boolean {
+export function shouldEndOnTick(chartOptions: IChartOptions, axisPropsKey = "yAxisProps"): boolean {
     const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ""));
     const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ""));
 
@@ -342,13 +360,13 @@ export function shouldEndOnTick(chartOptions: any, axisPropsKey = "yAxisProps"):
     return false;
 }
 
-export function shouldXAxisStartOnTickOnBubbleScatter(chartOptions: any) {
+export function shouldXAxisStartOnTickOnBubbleScatter(chartOptions: IChartOptions): boolean {
     const min = parseFloat(get(chartOptions, "xAxisProps.min", ""));
 
     return isNaN(min) ? true : false;
 }
 
-export function shouldYAxisStartOnTickOnBubbleScatter(chartOptions: any) {
+export function shouldYAxisStartOnTickOnBubbleScatter(chartOptions: IChartOptions): boolean {
     const min = parseFloat(get(chartOptions, "yAxisProps.min", ""));
 
     const series = get(chartOptions, "data.series");
@@ -387,7 +405,7 @@ export function pointInRange(pointValue: number, axisRange: IAxisRange): boolean
     return axisRange.minAxisValue <= pointValue && pointValue <= axisRange.maxAxisValue;
 }
 
-export function alignChart(chart: Highcharts.Chart) {
+export function alignChart(chart: Highcharts.Chart): void {
     const { container } = chart;
     if (!container) {
         return;

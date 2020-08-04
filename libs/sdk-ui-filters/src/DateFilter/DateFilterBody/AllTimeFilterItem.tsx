@@ -14,7 +14,6 @@ export const AllTimeFilterItem: React.FC<{
 }> = ({ className, filterOption, selectedFilterOption, onSelectedFilterOptionChange }) => (
     <ListItem
         isSelected={filterOption.localIdentifier === selectedFilterOption.localIdentifier}
-        // tslint:disable-next-line:jsx-no-lambda
         onClick={() => onSelectedFilterOptionChange(filterOption)}
         className={cx("s-all-time", className)}
     >

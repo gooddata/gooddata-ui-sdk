@@ -59,7 +59,7 @@ export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDate
  * Type-guard testing whether the provided object is an instance of {@link AbsoluteDateFilterOption}.
  * @alpha
  */
-export const isAbsoluteDateFilterOption = (obj: any): obj is AbsoluteDateFilterOption =>
+export const isAbsoluteDateFilterOption = (obj: unknown): obj is AbsoluteDateFilterOption =>
     isAbsoluteDateFilterForm(obj) || isAbsoluteDateFilterPreset(obj);
 
 /**
@@ -72,7 +72,7 @@ export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDate
  * Type-guard testing whether the provided object is an instance of {@link RelativeDateFilterOption}.
  * @alpha
  */
-export const isRelativeDateFilterOption = (obj: any): obj is RelativeDateFilterOption =>
+export const isRelativeDateFilterOption = (obj: unknown): obj is RelativeDateFilterOption =>
     isRelativeDateFilterForm(obj) || isRelativeDateFilterPreset(obj);
 
 /**

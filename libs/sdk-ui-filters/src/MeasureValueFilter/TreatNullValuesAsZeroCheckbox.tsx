@@ -13,7 +13,7 @@ const TreatNullValuesAsZeroCheckbox = ({
     checked = false,
     onChange,
     intl,
-}: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps) => {
+}: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps): JSX.Element => {
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
 
     return (

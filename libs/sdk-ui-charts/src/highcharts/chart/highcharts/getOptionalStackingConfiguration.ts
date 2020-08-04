@@ -175,6 +175,7 @@ function getSeriesConfiguration(
 
 export function getYAxisConfiguration(
     chartOptions: IChartOptions,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     config: any,
     chartConfig: IChartConfig,
 ): IYAxisConfig {
@@ -216,6 +217,7 @@ export function getYAxisConfiguration(
  */
 export function getStackMeasuresConfiguration(
     chartOptions: IChartOptions,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     config: any,
     chartConfig: IChartConfig,
 ): IStackMeasuresConfig {
@@ -242,7 +244,15 @@ export function getStackMeasuresConfiguration(
  * @param chartOptions
  * @param config
  */
-export function getParentAttributeConfiguration(chartOptions: IChartOptions, config: any) {
+export function getParentAttributeConfiguration(
+    chartOptions: IChartOptions,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    config: any,
+): {
+    xAxis: {
+        drillConfig: IDrillConfig;
+    }[];
+} {
     const { type } = chartOptions;
     const { xAxis } = config;
     const xAxisItem = xAxis[0]; // expect only one X axis
@@ -266,7 +276,13 @@ export function getParentAttributeConfiguration(chartOptions: IChartOptions, con
     return { xAxis: [xAxisItem] };
 }
 
-export function setDrillConfigToXAxis(drillConfig: IDrillConfig) {
+export function setDrillConfigToXAxis(
+    drillConfig: IDrillConfig,
+): {
+    xAxis: {
+        drillConfig: IDrillConfig;
+    }[];
+} {
     return { xAxis: [{ drillConfig }] };
 }
 
@@ -277,6 +293,7 @@ export function setDrillConfigToXAxis(drillConfig: IDrillConfig) {
  * @param _config
  * @param chartConfig
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getShowInPercentConfiguration(
     chartOptions: IChartOptions,
     config: any = {},
@@ -315,8 +332,10 @@ export function getShowInPercentConfiguration(
  * @param config
  * @param chartConfig
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function convertMinMaxFromPercentToNumber(
     _chartOptions: IChartOptions,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     config: any,
     chartConfig: IChartConfig,
 ) {
@@ -352,10 +371,11 @@ export function convertMinMaxFromPercentToNumber(
 
 export default function getOptionalStackingConfiguration(
     chartOptions: IChartOptions,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     config: any,
     chartConfig: IChartConfig = {},
     drillConfig?: IDrillConfig,
-) {
+): any {
     const { type } = chartOptions;
     return includes(supportedStackingAttributesChartTypes, type)
         ? merge(

@@ -52,7 +52,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         this.initializeProperties(props.visualizationProperties);
     }
 
-    public getSupportedPropertiesList() {
+    public getSupportedPropertiesList(): string[] {
         return LINE_CHART_SUPPORTED_PROPERTIES[this.axis];
     }
 
@@ -132,7 +132,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <LineChartBasedConfigurationPanel

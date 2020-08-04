@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { getDataPoints, getVisibleSeries } from "../../helpers";
 
 import {
@@ -9,10 +9,11 @@ import {
 } from "../../dataLabelsHelpers";
 
 function autohideLabelsOverlappingItsShape(
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     chart: any,
     hideFunction: (point: any) => void = hideDataLabel,
     showFunction: (point: any) => void = showDataLabel,
-) {
+): void {
     const visibleSeries = getVisibleSeries(chart);
     const visiblePoints = getDataPoints(visibleSeries);
 

@@ -97,7 +97,7 @@ export class ResizedColumnsStore {
         }
     }
 
-    public isColumnManuallyResized(item: Column | ColDef) {
+    public isColumnManuallyResized(item: Column | ColDef): boolean {
         return !!this.getManuallyResizedColumn(item);
     }
 
@@ -112,7 +112,7 @@ export class ResizedColumnsStore {
         column.getColDef().suppressSizeToFit = !allowGrowToFit;
     }
 
-    public addAllMeasureColumn(columnWidth: number, allColumns: Column[]) {
+    public addAllMeasureColumn(columnWidth: number, allColumns: Column[]): void {
         this.allMeasureColumnWidth = columnWidth;
         allColumns.forEach((col) => {
             if (isMeasureColumn(col)) {
@@ -126,7 +126,7 @@ export class ResizedColumnsStore {
         this.weakMeasuresColumnWidths = {};
     }
 
-    public addWeekMeasureColumn(column: Column) {
+    public addWeekMeasureColumn(column: Column): void {
         const width = column.getActualWidth();
         const measureHeaderLocalIdentifier: string = getMappingHeaderMeasureItemLocalIdentifier(column);
         if (measureHeaderLocalIdentifier) {
@@ -150,7 +150,7 @@ export class ResizedColumnsStore {
         }
     }
 
-    public removeAllMeasureColumns() {
+    public removeAllMeasureColumns(): void {
         this.allMeasureColumnWidth = null;
         const shouldBeRemoved = (resizedColumnItem: IResizedColumnsCollectionItem) =>
             isColumnWidthAuto(resizedColumnItem.width);
@@ -159,7 +159,7 @@ export class ResizedColumnsStore {
         this.weakMeasuresColumnWidths = {};
     }
 
-    public removeWeakMeasureColumn(column: Column) {
+    public removeWeakMeasureColumn(column: Column): void {
         const weakColumnWidth = this.getMatchedWeakMeasuresColumnWidth(column);
         if (weakColumnWidth) {
             this.weakMeasuresColumnWidths = omit(
@@ -212,7 +212,7 @@ export class ResizedColumnsStore {
         return result.concat(weakColumnWidthItems);
     }
 
-    public updateColumnWidths(columnWidths: ColumnWidthItem[], dv: DataViewFacade) {
+    public updateColumnWidths(columnWidths: ColumnWidthItem[], dv: DataViewFacade): void {
         const allMeasureWidthItem = this.filterAllMeasureColumnWidthItem(columnWidths);
 
         if (isAllMeasureColumnWidthItem(allMeasureWidthItem)) {
@@ -577,7 +577,7 @@ export const updateColumnDefinitionsWithWidths = (
 export const syncSuppressSizeToFitOnColumns = (
     resizedColumnsStore: ResizedColumnsStore,
     columnApi: ColumnApi,
-) => {
+): void => {
     if (!columnApi) {
         return;
     }
@@ -592,8 +592,8 @@ export const syncSuppressSizeToFitOnColumns = (
     });
 };
 
-export const isColumnAutoResized = (autoResizedColumns: IResizedColumns, resizedColumnId: string) =>
-    resizedColumnId && autoResizedColumns[resizedColumnId];
+export const isColumnAutoResized = (autoResizedColumns: IResizedColumns, resizedColumnId: string): boolean =>
+    Boolean(resizedColumnId && autoResizedColumns[resizedColumnId]);
 
 export const resetColumnsWidthToDefault = (
     columnApi: ColumnApi,
@@ -601,7 +601,7 @@ export const resetColumnsWidthToDefault = (
     resizedColumnsStore: ResizedColumnsStore,
     autoResizedColumns: IResizedColumns,
     defaultWidth: number,
-) => {
+): void => {
     columns.forEach((col) => {
         const id = getColumnIdentifier(col);
 
@@ -620,7 +620,7 @@ export const resizeAllMeasuresColumns = (
     columnApi: ColumnApi,
     resizedColumnsStore: ResizedColumnsStore,
     column: Column,
-) => {
+): void => {
     const columnWidth = column.getActualWidth();
     const allColumns = columnApi.getAllColumns();
 
@@ -636,7 +636,7 @@ export const resizeWeakMeasureColumns = (
     columnApi: ColumnApi,
     resizedColumnsStore: ResizedColumnsStore,
     column: Column,
-) => {
+): void => {
     const allColumns = columnApi.getAllColumns();
     resizedColumnsStore.addWeekMeasureColumn(column);
     allColumns.forEach((col) => {
@@ -648,4 +648,5 @@ export const resizeWeakMeasureColumns = (
     });
 };
 
-export const getAllowGrowToFitProp = (allowGrowToFit: boolean) => (allowGrowToFit ? { allowGrowToFit } : {});
+export const getAllowGrowToFitProp = (allowGrowToFit: boolean): { allowGrowToFit?: boolean } =>
+    allowGrowToFit ? { allowGrowToFit } : {};

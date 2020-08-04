@@ -99,7 +99,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.supportedPropertiesList = this.getSupportedPropertiesList();
     }
 
-    public unmount() {
+    public unmount(): void {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
@@ -137,11 +137,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    public isOpenAsReportSupported() {
+    public isOpenAsReportSupported(): boolean {
         return isOpenAsReportSupportedByVisualization(this.type);
     }
 
-    public setCustomControlsProperties(customControlsProperties: IVisualizationProperties) {
+    public setCustomControlsProperties(customControlsProperties: IVisualizationProperties): void {
         this.customControlsProperties = customControlsProperties;
     }
 
@@ -168,7 +168,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         ]);
     }
 
-    protected getSupportedPropertiesList() {
+    protected getSupportedPropertiesList(): string[] {
         return BASE_CHART_SUPPORTED_PROPERTIES;
     }
 
@@ -209,7 +209,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
-    ) {
+    ): void {
         const { dimensions = { height: undefined }, custom = {}, locale } = options;
         const { height } = dimensions;
 
@@ -248,7 +248,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         );
     }
 
-    protected initializeProperties(visualizationProperties: IVisualizationProperties) {
+    protected initializeProperties(visualizationProperties: IVisualizationProperties): void {
         const controls = visualizationProperties?.controls;
 
         const supportedProperties = getSupportedPropertiesControls(controls, this.supportedPropertiesList);
@@ -261,7 +261,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BaseChartConfigurationPanel
@@ -287,7 +287,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return generateDimensions(insight, this.type);
     }
 
-    protected handleConfirmedColorMapping(data: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    protected handleConfirmedColorMapping(data: any): void {
         const resultingData = data;
         this.colors = data.colors;
 
@@ -322,7 +323,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         }
     }
 
-    protected handlePushData = (data: any) => {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    protected handlePushData = (data: any): void => {
         const resultingData = data;
         if (data.colors) {
             this.handleConfirmedColorMapping(data);

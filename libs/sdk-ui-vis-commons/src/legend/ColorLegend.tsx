@@ -65,7 +65,7 @@ export function ColorBoxes(colorBoxProps: IColorBoxesProps): JSX.Element {
 /**
  * @internal
  */
-export function ColorLegend(colorLegendProps: IColorLegendProps) {
+export function ColorLegend(colorLegendProps: IColorLegendProps): JSX.Element | null {
     const { data, format, numericSymbols, isSmall = false, position } = colorLegendProps;
     if (!data.length) {
         return null;

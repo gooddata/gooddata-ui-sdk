@@ -229,6 +229,7 @@ describe("PluggableBaseChart", () => {
 
         // while this .. a remnant from the past .. will be picked up by config panel rendering
         //  which does not allow override of the renderFun.
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const renderObject = require("react-dom");
         const mockReactRender = jest.spyOn(renderObject, "render");
 

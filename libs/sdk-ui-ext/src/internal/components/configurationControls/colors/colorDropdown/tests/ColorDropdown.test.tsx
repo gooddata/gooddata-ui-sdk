@@ -145,17 +145,6 @@ describe("ColorDropdown", () => {
         expect(wrapper.find(ColorPalette).length).toBe(0);
     });
 
-    it("should render ColorPicker when CustomColorButton button click", () => {
-        const wrapper = createComponent({ showCustomPicker: true });
-        wrapper.find(".buttonitem").simulate("click");
-
-        const customColorButtonButton = wrapper.find("button").find(".s-custom-section-button");
-        customColorButtonButton.simulate("click");
-
-        expect(wrapper.find(ColorPicker).length).toBe(1);
-        expect(wrapper.find(ColorPalette).length).toBe(0);
-    });
-
     it(
         "should render ColorPicker when CustomColorButton click" +
             "and initialRgbColor should be color with 04 in rgb(194, 153, 121)",
@@ -183,16 +172,6 @@ describe("ColorDropdown", () => {
         customColorButtonButton.simulate("click");
 
         expect(wrapper.find(MockItem).prop("isSelected")).toBeTruthy();
-    });
-
-    it("should inject position=IconPosition.Right into child when ColorPicker control shown", () => {
-        const wrapper = createComponent({ showCustomPicker: true });
-        wrapper.find(".buttonitem").simulate("click");
-
-        const customColorButtonButton = wrapper.find("button").find(".s-custom-section-button");
-        customColorButtonButton.simulate("click");
-
-        expect(wrapper.find(MockItem).prop("position")).toEqual(IconPosition.Right);
     });
 
     it("should inject position=IconPosition.Right into child when ColorPicker control shown", () => {

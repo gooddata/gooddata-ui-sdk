@@ -36,7 +36,7 @@ export class CatalogMeasureBuilder<
         }
 
         const defaultModifications: MeasureModifications<MeasureBuilder> = (m) =>
-            m.alias(this.item.measure?.title!).format(this.item.measure?.format!);
+            m.alias(this.item.measure?.title).format(this.item.measure?.format);
 
         return newMeasure(this.item.measure.ref, (m) => modifications(defaultModifications(m)));
     }

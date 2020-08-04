@@ -3,7 +3,7 @@ import cloneDeep from "lodash/cloneDeep";
 
 export const LINE_WIDTH = 3;
 
-const SCATTER_TEMPLATE: any = {
+const SCATTER_TEMPLATE = {
     chart: {
         type: "scatter",
     },
@@ -47,6 +47,6 @@ const SCATTER_TEMPLATE: any = {
     },
 };
 
-export function getScatterConfiguration() {
+export function getScatterConfiguration(): typeof SCATTER_TEMPLATE {
     return cloneDeep(SCATTER_TEMPLATE);
 }

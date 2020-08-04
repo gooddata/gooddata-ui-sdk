@@ -16,6 +16,6 @@ export interface IVariableMetadataObject extends IMetadataObject {
  * @param obj - object to test
  * @public
  */
-export function isVariableMetadataObject(obj: any): obj is IVariableMetadataObject {
+export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject {
     return isMetadataObject(obj) && obj.type === "variable";
 }

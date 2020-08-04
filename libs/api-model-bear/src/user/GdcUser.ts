@@ -311,7 +311,7 @@ export namespace GdcUser {
             processes: Uri;
             configuration: Uri;
         };
-        ui?: {};
+        ui?: object;
     }
 
     export interface IIntegration {

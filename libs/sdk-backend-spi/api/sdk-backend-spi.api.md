@@ -146,7 +146,7 @@ export type DrillTransition = "pop-up" | "in-place" | "new-window";
 export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl";
 
 // @public
-export type ErrorConverter = (e: any) => AnalyticalBackendError;
+export type ErrorConverter = (e: Error) => AnalyticalBackendError;
 
 // @alpha
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
@@ -751,7 +751,7 @@ export const isAbsoluteDateFilterPreset: (obj: any) => obj is IAbsoluteDateFilte
 export const isAllTimeDateFilter: (obj: any) => obj is IAllTimeDateFilter;
 
 // @public
-export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendError;
+export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
 
 // @public
 export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor;
@@ -779,7 +779,7 @@ export function isDashboardDateFilter(obj: any): obj is IDashboardDateFilter;
 export function isDashboardDateFilterReference(obj: any): obj is IDashboardDateFilterReference;
 
 // @public
-export function isDataTooLargeError(obj: any): obj is DataTooLargeError;
+export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError;
 
 // @alpha
 export function isDrillToAttributeUrl(obj: any): obj is IDrillToAttributeUrl;
@@ -844,19 +844,19 @@ export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor;
 export function isMeasureGroupDescriptor(obj: any): obj is IMeasureGroupDescriptor;
 
 // @public
-export function isNoDataError(obj: any): obj is NoDataError;
+export function isNoDataError(obj: unknown): obj is NoDataError;
 
 // @public
-export function isNotAuthenticated(obj: any): obj is NotAuthenticated;
+export function isNotAuthenticated(obj: unknown): obj is NotAuthenticated;
 
 // @public
-export function isNotImplemented(obj: any): obj is NotImplemented;
+export function isNotImplemented(obj: unknown): obj is NotImplemented;
 
 // @public
-export function isNotSupported(obj: any): obj is NotSupported;
+export function isNotSupported(obj: unknown): obj is NotSupported;
 
 // @public
-export function isProtectedDataError(obj: any): obj is ProtectedDataError;
+export function isProtectedDataError(obj: unknown): obj is ProtectedDataError;
 
 // @alpha
 export const isRelativeDateFilterForm: (obj: any) => obj is IRelativeDateFilterForm;
@@ -880,10 +880,10 @@ export function isTempFilterContext(obj: any): obj is ITempFilterContext;
 export function isTotalDescriptor(obj: any): obj is ITotalDescriptor;
 
 // @public
-export function isUnexpectedError(obj: any): obj is UnexpectedError;
+export function isUnexpectedError(obj: unknown): obj is UnexpectedError;
 
 // @public
-export function isUnexpectedResponseError(obj: any): obj is UnexpectedResponseError;
+export function isUnexpectedResponseError(obj: unknown): obj is UnexpectedResponseError;
 
 // @alpha
 export function isWidget(obj: any): obj is IWidget;
@@ -1287,11 +1287,11 @@ export class UnexpectedError extends AnalyticalBackendError {
 
 // @public
 export class UnexpectedResponseError extends AnalyticalBackendError {
-    constructor(message: string, httpStatus: number, responseBody: any, cause?: Error);
+    constructor(message: string, httpStatus: number, responseBody: unknown, cause?: Error);
     // (undocumented)
     readonly httpStatus: number;
     // (undocumented)
-    readonly responseBody: number;
+    readonly responseBody: unknown;
 }
 
 // @alpha

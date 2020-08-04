@@ -11,7 +11,7 @@ import {
     ROW_TOTAL,
     MEASURE_COLUMN,
 } from "./agGridConst";
-import { IGridHeader } from "./agGridTypes";
+import { IGridHeader, IGridRow } from "./agGridTypes";
 import escape from "lodash/escape";
 import {
     isTotalDescriptor,
@@ -21,14 +21,14 @@ import {
     IMeasureDescriptor,
     isMeasureDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { IDimension } from "@gooddata/sdk-model";
+import { IDimension, IAttributeLocatorItem } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.
  */
 
-export const sanitizeField = (field: string) =>
+export const sanitizeField = (field: string): string =>
     // Identifiers can not contain a dot character, because AGGrid cannot handle it.
     // Alternatively, we could handle it with a custom renderer (works in RowLoadingElement).
     field
@@ -38,8 +38,8 @@ export const sanitizeField = (field: string) =>
 
 // returns [attributeId, attributeValueId]
 // attributeValueId can be null if supplied with attribute uri instead of attribute value uri
-export const getIdsFromUri = (uri: string, sanitize = true) => {
-    const [, attributeId, , attributeValueId = null] = uri.match(/obj\/([^\/]*)(\/elements\?id=)?(.*)?$/);
+export const getIdsFromUri = (uri: string, sanitize = true): (string | null)[] => {
+    const [, attributeId, , attributeValueId = null] = uri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)?$/);
     return [attributeId, attributeValueId].map((id: string | null) =>
         id && sanitize ? sanitizeField(id) : id,
     );
@@ -50,12 +50,12 @@ export const getParsedFields = (colId: string): string[][] => {
     return colId.split(FIELD_SEPARATOR).map((field: string) => field.split(ID_SEPARATOR));
 };
 
-export const colIdIsSimpleAttribute = (colId: string) => {
+export const colIdIsSimpleAttribute = (colId: string): boolean => {
     const parsedFields = getParsedFields(colId);
     return parsedFields[0].length === 2 && parsedFields[0][0] === "a";
 };
 
-export const getRowNodeId = (item: any) => {
+export const getRowNodeId = (item: IGridRow["headerItemMap"]): string => {
     return Object.keys(item.headerItemMap)
         .map((key) => {
             const mappingHeader: IMappingHeader = item.headerItemMap[key];
@@ -71,11 +71,11 @@ export const getRowNodeId = (item: any) => {
         .join(FIELD_SEPARATOR);
 };
 
-export const getGridIndex = (position: number, gridDistance: number) => {
+export const getGridIndex = (position: number, gridDistance: number): number => {
     return Math.floor(position / gridDistance);
 };
 
-export const cellRenderer = (params: ICellRendererParams) => {
+export const cellRenderer = (params: ICellRendererParams): string => {
     const isRowTotalOrSubtotal =
         params.data &&
         params.data.type &&
@@ -97,17 +97,18 @@ export const cellRenderer = (params: ICellRendererParams) => {
     return `<span class="${className}">${formattedValue || ""}</span>`;
 };
 
-export const getTreeLeaves = (tree: any, getChildren = (node: any) => node && node.children) => {
+export const getTreeLeaves = (
+    tree: IGridHeader[] | IGridHeader,
+    getChildren = (node: any) => node && node.children,
+): IGridHeader[] => {
     const leaves = [];
     const nodes = Array.isArray(tree) ? [...tree] : [tree];
     let node;
     let children;
     while (
-        // tslint:disable:no-conditional-assignment ban-comma-operator
         ((node = nodes.shift()),
         (children = getChildren(node)),
         (children && children.length) || (leaves.push(node) && nodes.length))
-        // tslint:enable:no-conditional-assignment ban-comma-operator
     ) {
         if (children) {
             nodes.push(...children);
@@ -117,8 +118,8 @@ export const getTreeLeaves = (tree: any, getChildren = (node: any) => node && no
 };
 
 export const indexOfTreeNode = (
-    node: any,
-    tree: any,
+    node: IGridHeader,
+    tree: IGridHeader[],
     matchNode = (nodeA: any, nodeB: any) => nodeA === nodeB,
     getChildren = (node: any) => (node && node.children) || [],
     indexes: number[] = [],
@@ -187,7 +188,10 @@ export function getLastFieldId(fields: string[][]): string {
     return lastFieldId;
 }
 
-export function getAttributeLocators(fields: string[][], attributeHeaders: IAttributeDescriptor[]) {
+export function getAttributeLocators(
+    fields: string[][],
+    attributeHeaders: IAttributeDescriptor[],
+): IAttributeLocatorItem[] {
     return fields.slice(0, -1).map((field: string[]) => {
         // first item is type which should be always 'a'
         const [, fieldId, fieldValueId] = field;
@@ -223,14 +227,14 @@ export function isColumn(item: Column | ColDef): item is Column {
     return !!(item as Column).getColDef;
 }
 
-export const isMeasureColumn = (item: Column | ColDef) => {
+export const isMeasureColumn = (item: Column | ColDef): boolean => {
     if (isColumn(item)) {
         return item.getColDef().type === MEASURE_COLUMN;
     }
     return item.type === MEASURE_COLUMN;
 };
 
-export const isColumnDisplayed = (displayedColumns: Column[], column: Column) => {
+export const isColumnDisplayed = (displayedColumns: Column[], column: Column): boolean => {
     return displayedColumns.some((displayedColumn) => displayedColumn.getColId() === column.getColId());
 };
 

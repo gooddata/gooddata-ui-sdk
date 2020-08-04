@@ -30,7 +30,7 @@ export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, bac
  *
  * @public
  */
-export const useBackend = () => {
+export const useBackend = (): IAnalyticalBackend | undefined => {
     const backend = React.useContext(BackendContext);
     return backend;
 };
@@ -41,7 +41,9 @@ export const useBackend = () => {
  *
  * @internal
  */
-export function withBackend<T extends { backend?: IAnalyticalBackend }>(Chart: React.ComponentType<T>) {
+export function withBackend<T extends { backend?: IAnalyticalBackend }>(
+    Chart: React.ComponentType<T>,
+): React.ComponentType<T> {
     const ComponentWithInjectedBackend: React.FC<T> = (props) => {
         return (
             <BackendContext.Consumer>

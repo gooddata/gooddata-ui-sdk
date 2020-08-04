@@ -1,12 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
-interface IKpieMetricBoxProps {
+interface IKpiMetricBoxProps {
     title: string;
     children: React.ReactNode;
 }
 
-export const KpiMetricBox = ({ title, children }: IKpieMetricBoxProps) => {
+export const KpiMetricBox = ({ title, children }: IKpiMetricBoxProps): JSX.Element => {
     return (
         <div className="kpi-metric">
             {/* language=CSS */}

@@ -76,21 +76,21 @@ export function fixEmptyHeaderItems(dataView: IDataView, emptyHeaderString: stri
 // @internal (undocumented)
 export const FLUID_LEGEND_THRESHOLD = 768;
 
+// Warning: (ae-forgotten-export) The symbol "IFluidLegendState" needs to be exported by the entry point index.d.ts
 // Warning: (ae-internal-missing-underscore) The name "FluidLegend" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export class FluidLegend extends React_2.PureComponent<IFluidLegendProps, any> {
-    constructor(props: any);
+export class FluidLegend extends React_2.PureComponent<IFluidLegendProps, IFluidLegendState> {
     // (undocumented)
-    static defaultProps: any;
+    render(): React_2.ReactNode;
     // (undocumented)
-    render(): JSX.Element;
+    renderPaging: () => React_2.ReactNode;
     // (undocumented)
-    renderPaging(): JSX.Element;
+    renderSeries: (itemWidth: number, visibleItemsCount: number) => React_2.ReactNode;
     // (undocumented)
-    renderSeries(itemWidth: any, visibleItemsCount: any): JSX.Element;
+    state: IFluidLegendState;
     // (undocumented)
-    toggleShowAll(): void;
+    toggleShowAll: () => void;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "formatLegendLabel" should be prefixed with an underscore because the declaration is marked as @internal
@@ -131,11 +131,7 @@ export function getLighterColor(color: string, percent: number): string;
 // Warning: (ae-internal-missing-underscore) The name "getLighterColorFromRGB" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export function getLighterColorFromRGB(color: IRgbColorValue, percent: number): {
-    r: number;
-    g: number;
-    b: number;
-};
+export function getLighterColorFromRGB(color: IRgbColorValue, percent: number): IRgbColorValue;
 
 // Warning: (ae-internal-missing-underscore) The name "getRgbString" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -157,7 +153,7 @@ export function getValidColorPalette(colors?: string[], colorPalette?: IColorPal
 // @internal (undocumented)
 export class HeatmapLegend extends React_2.PureComponent<IHeatmapLegendProps> {
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.ReactNode;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "IBaseLegendItem" should be prefixed with an underscore because the declaration is marked as @internal
@@ -405,7 +401,6 @@ export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalett
 //
 // @internal (undocumented)
 export class Legend extends React_2.PureComponent<ILegendProps, ILegendState> {
-    constructor(props: ILegendProps);
     // (undocumented)
     static defaultProps: {
         responsive: boolean;
@@ -416,15 +411,15 @@ export class Legend extends React_2.PureComponent<ILegendProps, ILegendState> {
         enableBorderRadius: boolean;
     };
     // (undocumented)
-    getSeries(): any;
+    getSeries: () => any;
     // (undocumented)
-    onItemClick(item: any): void;
+    onItemClick: (item: any) => void;
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.ReactNode;
     // (undocumented)
-    renderFluid(): JSX.Element;
+    renderFluid: () => React_2.ReactNode;
     // (undocumented)
-    renderStatic(): JSX.Element;
+    renderStatic: () => React_2.ReactNode;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "LegendOptionsItemType" should be prefixed with an underscore because the declaration is marked as @internal
@@ -473,15 +468,16 @@ export function shouldShowFluid(documentObj: Document): boolean;
 //
 // @internal (undocumented)
 export class StaticLegend extends React_2.PureComponent<IStaticLegendProps, IStaticLegendState> {
-    constructor(props: any);
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_2.ReactNode;
     // (undocumented)
-    renderPaging(visibleItemsCount: number): JSX.Element;
+    renderPaging: (visibleItemsCount: number) => React_2.ReactNode;
     // (undocumented)
-    showNextPage(): void;
+    showNextPage: () => void;
     // (undocumented)
-    showPrevPage(): void;
+    showPrevPage: () => void;
+    // (undocumented)
+    state: IStaticLegendState;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "SupportedLegendPositions" should be prefixed with an underscore because the declaration is marked as @internal

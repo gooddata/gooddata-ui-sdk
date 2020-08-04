@@ -1,4 +1,4 @@
-/* tslint:disable:file-header */
+/* eslint-disable header/header */
 /* tslint:disable:variable-name */
 // THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-10-17T14:42:41.833Z;
 import {

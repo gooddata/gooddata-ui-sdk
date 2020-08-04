@@ -99,7 +99,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         return cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
     }
 
-    protected getSupportedPropertiesList() {
+    protected getSupportedPropertiesList(): string[] {
         return GEOPUSHPIN_SUPPORTED_PROPERTIES;
     }
 
@@ -153,7 +153,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         return newExtendedReferencePoint;
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
         const configPanelElement = document.querySelector(this.configPanelElement);
 
         // NOTE: using pushData directly; no handlePushData here as in other visualizations.
@@ -214,7 +214,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
-    ) {
+    ): void {
         const { dimensions = { height: undefined }, custom = {}, locale } = options;
         const { height } = dimensions;
         const { geoPushpinElement, intl } = this;

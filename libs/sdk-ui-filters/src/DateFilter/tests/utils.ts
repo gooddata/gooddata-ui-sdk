@@ -1,4 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { CommonWrapper, ShallowWrapper, ReactWrapper } from "enzyme";
 
 export const childGetter = (selector: any) => (component: ShallowWrapper | ReactWrapper) =>

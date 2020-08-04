@@ -25,6 +25,6 @@ export interface ICatalogFact extends IGroupableCatalogItemBase {
  *
  * @public
  */
-export function isCatalogFact(obj: any): obj is ICatalogFact {
+export function isCatalogFact(obj: unknown): obj is ICatalogFact {
     return !isEmpty(obj) && (obj as ICatalogFact).type === "fact";
 }

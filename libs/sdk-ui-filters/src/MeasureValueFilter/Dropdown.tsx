@@ -12,7 +12,7 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
  *  project on which both of filters and ext can depend. perhaps the purpose of the new project would be to provide
  *  thin layer on top of goodstrap (?)
  */
-const DROPDOWN_ALIGMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
+const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
 interface IDropdownOwnProps {
     onApply: (operator: string, value: IMeasureValueFilterValue, treatNullValuesAsZero: boolean) => void;
@@ -61,7 +61,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
         return (
             <Overlay
                 alignTo={anchorEl}
-                alignPoints={DROPDOWN_ALIGMENTS}
+                alignPoints={DROPDOWN_ALIGNMENTS}
                 closeOnOutsideClick={true}
                 closeOnParentScroll={true}
                 closeOnMouseDrag={true}
@@ -95,7 +95,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
 export const DropdownWithIntl = injectIntl(DropdownWrapped);
 
 export class Dropdown extends React.PureComponent<IDropdownOwnProps, IDropdownState> {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <IntlWrapper locale={this.props.locale}>
                 <DropdownWithIntl {...this.props} />

@@ -34,7 +34,7 @@ import GeoPushpinChartConfigurationPointsGroupNearbyExampleSRCJS from "!raw-load
 import GeoPushpinChartConfigurationPointsSizeExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartConfigurationPointsSizeExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import GeoPushpinChartConfigurationLegendExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartConfigurationLegendExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const GeoPushpin = () => (
+export const GeoPushpin = (): JSX.Element => (
     <div>
         <h1>Geo Pushpin Chart</h1>
 

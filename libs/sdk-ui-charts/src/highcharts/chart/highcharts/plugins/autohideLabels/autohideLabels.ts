@@ -8,11 +8,13 @@ import { autohideBarLabels, handleBarLabelsOutsideChart } from "./autohideBarLab
 import autohidePieLabels from "./autohidePieLabels";
 import autohideLabelsOverlappingItsShape from "./autohideLabelsOverlappingItsShape";
 
-const autohideLabels = (Highcharts: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const autohideLabels = (Highcharts: any): void => {
     Highcharts.wrap(Highcharts.Chart.prototype, "hideOverlappingLabels", function (
         proceed: any,
         labels: any,
     ) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const chart = this;
         const chartType = getChartType(this);
         const dataLabelsUserVisibility = getDataLabelsGdcVisible(this);

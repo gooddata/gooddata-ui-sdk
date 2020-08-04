@@ -9,7 +9,7 @@ import { LoadingComponent } from "@gooddata/sdk-ui";
  * @param props
  * @constructor
  */
-export const RowLoadingElement = (props: ICellRendererParams) => {
+export const RowLoadingElement = (props: ICellRendererParams): JSX.Element => {
     if (props.node.rowPinned === "top") {
         return <span className={"gd-sticky-header-value"}>{props.formatValue(props.value)}</span>;
     }

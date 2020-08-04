@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React, { createContext, useContext, useEffect } from "react";
 import bearFactory from "@gooddata/sdk-backend-bear";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { GoodDataAuthProvider } from "./GoodDataAuthProvider";
 import { IAuthState, IAuthContext, AuthStatus } from "./types";
@@ -86,7 +87,7 @@ export const AuthProvider: React.FC = ({ children }) => {
                 await backend.authenticate(true);
                 onLoginSuccess();
             } catch (err) {
-                // tslint:disable-next-line:no-console
+                // eslint-disable-next-line no-console
                 console.log(err);
                 onLogoutSuccess();
             }
@@ -111,9 +112,9 @@ export const AuthProvider: React.FC = ({ children }) => {
     );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = (): IAuthContext => useContext(AuthContext);
 
-export const useBackend = () => {
+export const useBackend = (): IAnalyticalBackend => {
     const { backend } = useAuth();
     return backend;
 };

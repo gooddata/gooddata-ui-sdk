@@ -46,7 +46,7 @@ export class CustomFormatDialog extends React.PureComponent<
         format: this.props.formatString || "",
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const {
             anchorEl,
             positioning,

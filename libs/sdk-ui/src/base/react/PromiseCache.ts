@@ -44,7 +44,7 @@ export class PromiseCache<TParams, TResult, TError = any> {
         }
     };
 
-    public reset = () => {
+    public reset = (): void => {
         values(this.params).forEach(this.cancel);
         this.params = {};
         this.promises = {};

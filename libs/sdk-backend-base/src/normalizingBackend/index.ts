@@ -112,19 +112,17 @@ class DenormalizingExecutionResult implements IExecutionResult {
 
     public readAll = (): Promise<IDataView> => {
         const promisedDataView = this.normalizedResult.readAll();
-        const result = this;
 
         return promisedDataView.then((dataView) => {
-            return new DenormalizedDataView(result, dataView, result.denormalizer);
+            return new DenormalizedDataView(this, dataView, this.denormalizer);
         });
     };
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
         const promisedDataView = this.normalizedResult.readWindow(offset, size);
-        const result = this;
 
         return promisedDataView.then((dataView) => {
-            return new DenormalizedDataView(result, dataView, result.denormalizer);
+            return new DenormalizedDataView(this, dataView, this.denormalizer);
         });
     };
 

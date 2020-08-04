@@ -10,7 +10,7 @@ export interface IPushpinSizeLegendProps {
     measureName: string;
 }
 
-export default function PushpinSizeLegend(props: IPushpinSizeLegendProps) {
+export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): JSX.Element | null {
     const { sizes = [], format, numericSymbols = [], measureName } = props;
     const sizeData: number[] = sizes.filter(
         (value) => value !== null && isFinite && !isNaN(value),

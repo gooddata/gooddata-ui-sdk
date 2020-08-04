@@ -7,6 +7,7 @@ import { tickLabelClick } from "../../utils/drilldownEventing";
 import { ChartType, IDrillConfig, IHighchartsCategoriesTree, IHighchartsParentTick } from "@gooddata/sdk-ui";
 import { IHighchartsPointObject } from "../../utils/isGroupHighchartsDrillEvent";
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick): IHighchartsPointObject[] {
     const { startAt, leaves } = tick;
     const ddPoints: IHighchartsPointObject[] = []; // drilldown points
@@ -55,7 +56,7 @@ function setParentTickDrillable(
     }
 }
 
-export function setupDrilldown(chart: Highcharts.Chart, chartType: ChartType) {
+export function setupDrilldown(chart: Highcharts.Chart, chartType: ChartType): void {
     const xAxes: any[] = (chart && chart.xAxis) || [];
     const axis = xAxes[0];
     if (!axis) {

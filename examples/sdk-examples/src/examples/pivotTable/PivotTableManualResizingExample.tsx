@@ -35,7 +35,7 @@ export class PivotTableManualResizingExample extends Component {
 
     public onButtonClick = (
         columnWidthItem: IAttributeColumnWidthItem | IMeasureColumnWidthItem | IAllMeasureColumnWidthItem,
-    ) => {
+    ): void => {
         this.setState({
             columnWidths: [columnWidthItem],
         });
@@ -43,11 +43,11 @@ export class PivotTableManualResizingExample extends Component {
 
     public onColumnResized = (
         columnWidths: Array<IAttributeColumnWidthItem | IMeasureColumnWidthItem | IAllMeasureColumnWidthItem>,
-    ) => {
+    ): void => {
         this.setState({ columnWidths });
     };
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div>
                 <div>

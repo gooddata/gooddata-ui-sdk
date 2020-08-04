@@ -49,11 +49,11 @@ export interface IHighChartsRendererState {
     showFluidLegend: boolean;
 }
 
-export function renderChart(props: IChartProps) {
+export function renderChart(props: IChartProps): JSX.Element {
     return <Chart {...props} />;
 }
 
-export function renderLegend(props: ILegendProps) {
+export function renderLegend(props: ILegendProps): JSX.Element {
     return <Legend {...props} />;
 }
 
@@ -100,7 +100,7 @@ export default class HighChartsRenderer extends React.PureComponent<
         this.throttledOnWindowResize = throttle(this.onWindowResize.bind(this), 100);
     }
 
-    public onWindowResize() {
+    public onWindowResize(): void {
         this.setState({
             showFluidLegend: this.shouldShowFluid(),
         });
@@ -108,16 +108,16 @@ export default class HighChartsRenderer extends React.PureComponent<
         this.realignPieOrDonutChart();
     }
 
-    public shouldShowFluid() {
+    public shouldShowFluid(): boolean {
         const { documentObj } = this.props;
         return documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD;
     }
 
-    public UNSAFE_componentWillMount() {
+    public UNSAFE_componentWillMount(): void {
         this.resetLegendState(this.props);
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         // http://stackoverflow.com/questions/18240254/highcharts-width-exceeds-container-div-on-first-load
         setTimeout(() => {
             if (this.chartRef) {
@@ -138,12 +138,12 @@ export default class HighChartsRenderer extends React.PureComponent<
         window.addEventListener("resize", this.throttledOnWindowResize);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.throttledOnWindowResize.cancel();
         window.removeEventListener("resize", this.throttledOnWindowResize);
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IHighChartsRendererProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IHighChartsRendererProps): void {
         const thisLegendItems = get(this.props, "legend.items", []);
         const nextLegendItems = get(nextProps, "legend.items", []);
         const hasLegendChanged = !isEqual(thisLegendItems, nextLegendItems);
@@ -158,7 +158,8 @@ export default class HighChartsRenderer extends React.PureComponent<
         }
     }
 
-    public onLegendItemClick(item: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public onLegendItemClick(item: any): void {
         this.setState({
             legendItemsEnabled: set<boolean[]>(
                 [...this.state.legendItemsEnabled],
@@ -168,11 +169,11 @@ export default class HighChartsRenderer extends React.PureComponent<
         });
     }
 
-    public setChartRef(chartRef: IChartHTMLElement) {
+    public setChartRef(chartRef: IChartHTMLElement): void {
         this.chartRef = chartRef;
     }
 
-    public getFlexDirection() {
+    public getFlexDirection(): React.CSSProperties["flexDirection"] {
         const { legend } = this.props;
 
         if (legend.position === TOP || legend.position === BOTTOM) {
@@ -182,8 +183,8 @@ export default class HighChartsRenderer extends React.PureComponent<
         return "row";
     }
 
-    public getItems(items: any) {
-        return items.map((i: any) => {
+    public getItems(items: any[]): any[] {
+        return items.map((i) => {
             return {
                 name: i.name,
                 color: i.color,
@@ -192,14 +193,14 @@ export default class HighChartsRenderer extends React.PureComponent<
         });
     }
 
-    public resetLegendState(props: any) {
+    public resetLegendState(props: IHighChartsRendererProps): void {
         const legendItemsCount = get(props, "legend.items.length", 0);
         this.setState({
             legendItemsEnabled: new Array(legendItemsCount).fill(true),
         });
     }
 
-    public createChartConfig(chartConfig: IChartConfig, legendItemsEnabled: any): IChartConfig {
+    public createChartConfig(chartConfig: IChartConfig, legendItemsEnabled: any[]): IChartConfig {
         const config: any = cloneDeep(chartConfig);
         const { yAxis } = config;
 
@@ -235,7 +236,7 @@ export default class HighChartsRenderer extends React.PureComponent<
         return config;
     }
 
-    public renderLegend() {
+    public renderLegend(): React.ReactNode {
         const { chartOptions, legend, height, legendRenderer, locale } = this.props;
         const { items, format } = legend;
         const { showFluidLegend } = this.state;
@@ -266,7 +267,7 @@ export default class HighChartsRenderer extends React.PureComponent<
         return legendRenderer(legendProps);
     }
 
-    public renderHighcharts() {
+    public renderHighcharts(): React.ReactNode {
         // shrink chart to give space to legend items
         const style = { flex: "1 1 auto", position: "relative" };
         const chartProps = {
@@ -278,7 +279,7 @@ export default class HighChartsRenderer extends React.PureComponent<
         return this.props.chartRenderer(chartProps);
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { legend } = this.props;
         const { showFluidLegend } = this.state;
 

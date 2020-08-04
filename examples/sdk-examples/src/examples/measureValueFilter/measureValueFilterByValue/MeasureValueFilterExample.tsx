@@ -15,15 +15,16 @@ export interface IMeasureValueFilterState {
     filters: IMeasureValueFilter[];
 }
 
-export class FilterByValueExample extends Component<{}, IMeasureValueFilterState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            filters: [],
-        };
-    }
+export class FilterByValueExample extends Component<unknown, IMeasureValueFilterState> {
+    state: IMeasureValueFilterState = {
+        filters: [],
+    };
 
-    public renderPresetButton(label: string, appliedFilters: IMeasureValueFilter[], isActive: boolean) {
+    public renderPresetButton(
+        label: string,
+        appliedFilters: IMeasureValueFilter[],
+        isActive: boolean,
+    ): JSX.Element {
         return (
             <button
                 className={`gd-button gd-button-secondary ${isActive ? "is-active" : ""} s-filter-button`}
@@ -38,7 +39,7 @@ export class FilterByValueExample extends Component<{}, IMeasureValueFilterState
         );
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { filters } = this.state;
         return (
             <div>

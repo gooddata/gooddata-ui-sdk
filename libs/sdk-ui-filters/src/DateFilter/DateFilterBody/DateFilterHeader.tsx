@@ -9,13 +9,10 @@ export const DateFilterHeader: React.FC<{
     return (
         <button
             className="gd-extended-date-filter-header s-do-not-close-dropdown-on-click"
-            onClick={
-                // tslint:disable-next-line:jsx-no-lambda
-                (e) => {
-                    e.preventDefault();
-                    changeRoute(null);
-                }
-            }
+            onClick={(e) => {
+                e.preventDefault();
+                changeRoute(null);
+            }}
             {...otherProps}
         >
             <span className="icon-navigateleft" />

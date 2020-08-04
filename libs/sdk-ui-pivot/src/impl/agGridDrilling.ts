@@ -13,10 +13,11 @@ import {
     isMeasureGroupDescriptor,
     isResultAttributeHeader,
     isResultMeasureHeader,
+    IMeasureDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import get from "lodash/get";
 
-export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }) => {
+export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }): any[] => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
         const { type } = colDef;
         // colDef without field is a utility column (e.g. top column label)
@@ -44,7 +45,7 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: strin
 export const getMeasureDrillItem = (
     responseHeaders: IDimensionItemDescriptor[],
     header: IResultMeasureHeader,
-) => {
+): IMeasureDescriptor => {
     const measureGroupHeader = responseHeaders.find(isMeasureGroupDescriptor);
 
     return get(measureGroupHeader, ["measureGroupHeader", "items", header.measureHeaderItem.order], null);
@@ -56,7 +57,7 @@ export const assignDrillItemsAndType = (
     responseHeaders: IDimensionItemDescriptor[],
     headerIndex: number,
     drillItems: IMappingHeader[],
-) => {
+): void => {
     if (isResultAttributeHeader(currentHeader)) {
         header.type = COLUMN_ATTRIBUTE_COLUMN;
         // attribute value uri

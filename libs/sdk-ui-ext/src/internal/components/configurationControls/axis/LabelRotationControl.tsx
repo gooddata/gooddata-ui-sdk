@@ -17,8 +17,8 @@ export interface ILabelRotationControl {
     pushData: (data: any) => any;
 }
 
-class LabelRotationControl extends React.PureComponent<ILabelRotationControl & WrappedComponentProps, {}> {
-    public render() {
+class LabelRotationControl extends React.PureComponent<ILabelRotationControl & WrappedComponentProps> {
+    public render(): React.ReactNode {
         const { axisVisible, axisLabelsEnabled, axisRotation } = this.getControlProperties();
 
         const isDisabled = this.props.disabled || !axisVisible || !axisLabelsEnabled;
@@ -36,7 +36,7 @@ class LabelRotationControl extends React.PureComponent<ILabelRotationControl & W
         );
     }
 
-    private getControlProperties() {
+    private getControlProperties(): IVisualizationProperties {
         const axisVisible = get(this.props, `properties.controls.${this.props.axis}.visible`, true);
         const axisLabelsEnabled = get(
             this.props,

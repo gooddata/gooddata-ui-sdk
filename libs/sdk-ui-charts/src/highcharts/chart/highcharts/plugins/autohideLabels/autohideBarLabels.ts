@@ -21,8 +21,8 @@ import {
     getShapeVisiblePart,
 } from "../../dataLabelsHelpers";
 
-const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRangeForAxes) => {
-    const intersectionFound = visiblePoints.filter(hasDataLabel).some((point: any) => {
+const toggleStackedChartLabels = (visiblePoints: any[], axisRangeForAxes: IAxisRangeForAxes) => {
+    const intersectionFound = visiblePoints.filter(hasDataLabel).some((point) => {
         const { dataLabel, shapeArgs } = point;
 
         if (dataLabel && shapeArgs) {
@@ -36,7 +36,7 @@ const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRan
     if (intersectionFound) {
         hideDataLabels(visiblePoints);
     } else {
-        visiblePoints.filter(hasDataLabel).forEach((point: any) => {
+        visiblePoints.filter(hasDataLabel).forEach((point) => {
             const {
                 dataLabel,
                 shapeArgs,
@@ -96,7 +96,8 @@ const toggleNonStackedChartLabels = (
     }
 };
 
-export const autohideBarLabels = (chart: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const autohideBarLabels = (chart: any): void => {
     const isStackedChart = isStacked(chart);
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
@@ -108,7 +109,8 @@ export const autohideBarLabels = (chart: any) => {
     }
 };
 
-export const handleBarLabelsOutsideChart = (chart: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const handleBarLabelsOutsideChart = (chart: any): void => {
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
 

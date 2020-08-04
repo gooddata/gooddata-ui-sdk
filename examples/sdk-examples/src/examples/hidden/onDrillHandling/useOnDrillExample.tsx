@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 import React, { useState } from "react";
-import { IDrillEvent } from "@gooddata/sdk-ui";
+import { IDrillEvent, IDrillEventCallback } from "@gooddata/sdk-ui";
 
-export const useOnDrillExample = () => {
+export const useOnDrillExample = (): { onDrill: IDrillEventCallback; renderDrillEvent: JSX.Element } => {
     const [drillEvent, setDrillEvent] = useState<IDrillEvent>();
 
     const onDrill = (drillEvent: IDrillEvent) => setDrillEvent(drillEvent);

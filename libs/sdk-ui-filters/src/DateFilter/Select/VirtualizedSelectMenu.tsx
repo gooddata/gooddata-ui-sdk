@@ -27,6 +27,7 @@ export interface ISelectMenuProps<V> extends IOptionGetterProps<V> {
 
 export const defaultVisibleItemsRange = 3;
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 const optionGetter = <V extends {}>({
     items,
     selectedItem,
@@ -76,7 +77,7 @@ const itemHeightByTypeMap: { [key in SelectItemTypes]: number } = {
     separator: 1,
 };
 
-export const getItemHeight = <V extends {}>(items: Array<ISelectItem<V>>) => (index: number) => {
+export const getItemHeight = <V extends unknown>(items: Array<ISelectItem<V>>) => (index: number): number => {
     const itemType = items[index].type;
     return itemHeightByTypeMap[itemType];
 };
@@ -147,7 +148,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
         );
     }
 
-    public scrollToIndex = (index = this.props.highlightedIndex) => {
+    public scrollToIndex = (index = this.props.highlightedIndex): void => {
         if (this.listRef.current) {
             const { items } = this.props;
             const selectableOptions = getSelectableItems(items);
@@ -159,14 +160,14 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
         }
     };
 
-    public scrollToTop = () => {
+    public scrollToTop = (): void => {
         if (!this.listRef.current) {
             return;
         }
         this.listRef.current.scrollTo(0);
     };
 
-    public componentDidUpdate = (lastProps: ISelectMenuProps<V>) => {
+    public componentDidUpdate = (lastProps: ISelectMenuProps<V>): void => {
         const { highlightedIndex, items, setHighlightedIndex, inputValue } = this.props;
 
         const lastSelectibleLastItemIndex = getSelectableItems(lastProps.items).length - 1;

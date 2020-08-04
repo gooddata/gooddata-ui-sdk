@@ -21,6 +21,6 @@ const FUNNEL_TEMPLATE = {
     },
 };
 
-export function getFunnelConfiguration() {
+export function getFunnelConfiguration(): typeof FUNNEL_TEMPLATE {
     return cloneDeep(FUNNEL_TEMPLATE);
 }

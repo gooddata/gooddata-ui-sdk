@@ -48,7 +48,7 @@ export function getHighchartsOptions(
     drillConfig: IDrillConfig,
     config?: IChartConfig,
     definition?: IExecutionDefinition,
-) {
+): any {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type];
     invariant(
         getConfigurationByType,
@@ -62,7 +62,12 @@ export function getHighchartsOptions(
     );
 }
 
-export function isDataOfReasonableSize(chartData: any, limits: IChartLimits, isViewByTwoAttributes = false) {
+export function isDataOfReasonableSize(
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    chartData: any,
+    limits: IChartLimits,
+    isViewByTwoAttributes = false,
+): boolean {
     let result = true;
 
     const seriesLimit = get(limits, "series");

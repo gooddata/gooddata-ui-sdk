@@ -2,6 +2,7 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-07-10T08:43:45.044Z; */
 
 const df_label_product_id_name = require("./metadata/displayForms/label.product.id.name/elements.json");

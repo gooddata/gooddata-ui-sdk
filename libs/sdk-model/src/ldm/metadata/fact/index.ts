@@ -16,6 +16,6 @@ export interface IFactMetadataObject extends IMetadataObject {
  * @param obj - object to test
  * @public
  */
-export function isFactMetadataObject(obj: any): obj is IFactMetadataObject {
+export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject {
     return isMetadataObject(obj) && obj.type === "fact";
 }

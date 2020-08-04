@@ -3,12 +3,8 @@ import React from "react";
 import { ICoreChartProps } from "../../interfaces";
 import { BaseChart } from "../_base/BaseChart";
 
-export class CoreComboChart extends React.PureComponent<ICoreChartProps, null> {
-    constructor(props: ICoreChartProps) {
-        super(props);
-    }
-
-    public render() {
+export class CoreComboChart extends React.PureComponent<ICoreChartProps> {
+    public render(): React.ReactNode {
         return <BaseChart type="combo" {...this.props} />;
     }
 }

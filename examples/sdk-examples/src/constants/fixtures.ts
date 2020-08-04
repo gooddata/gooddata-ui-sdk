@@ -13,11 +13,11 @@ const backendUrl = BACKEND_URL;
 const demoProjectId = demoProject[backendUrl];
 
 if (!demoProjectId) {
-    // tslint:disable-next-line no-console
+    // eslint-disable-next-line no-console
     console.error(`[fixtures.js] ProjectId for backend "${backendUrl}" is not in `, demoProject);
 }
 
-// tslint:disable-next-line no-console
+// eslint-disable-next-line no-console
 console.log("The /gdc proxy is connected to: ", backendUrl, " with workspace: ", demoProjectId);
 
 // your workspace would be probably static (you may ignore the code above)

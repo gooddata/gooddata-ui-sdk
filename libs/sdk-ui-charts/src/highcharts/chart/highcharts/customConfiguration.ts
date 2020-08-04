@@ -106,7 +106,8 @@ function getTitleConfiguration(chartOptions: IChartOptions) {
     };
 }
 
-export function formatOverlappingForParentAttribute(category: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function formatOverlappingForParentAttribute(category: any): string {
     // category is passed from 'grouped-categories' which is npm highcharts plug-in
     if (!category) {
         return formatOverlapping.call(this);
@@ -122,7 +123,7 @@ export function formatOverlappingForParentAttribute(category: any) {
     return `<div style="width: ${finalWidth}px; overflow: hidden; text-overflow: ellipsis">${this.value}</div>`;
 }
 
-export function formatOverlapping() {
+export function formatOverlapping(): string {
     const chartHeight = get(this, "chart.chartHeight", 1);
     const categoriesCount = get(this, "axis.categories", []).length;
     const width = Math.floor(chartHeight / categoriesCount);
@@ -255,7 +256,7 @@ export function getTooltipPositionInChartContainer(
     labelWidth: number,
     labelHeight: number,
     point: IPointData,
-) {
+): { x: number; y: number } {
     const dataPointEnd = getDataPointEnd(chartType, point.negative, point.plotX, point.h, stacking);
     const arrowPosition = getArrowHorizontalPosition(chartType, stacking, dataPointEnd, point.h);
     const chartWidth = this.chart.plotWidth;
@@ -305,7 +306,7 @@ export function getTooltipPositionInViewPort(
     labelWidth: number,
     labelHeight: number,
     point: IPointData,
-) {
+): { x: number; y: number } {
     const { x, y } = getTooltipPositionInChartContainer.call(
         this,
         chartType,
@@ -728,7 +729,8 @@ function getHeatmapDataConfiguration(chartOptions: IChartOptions) {
     };
 }
 
-export function escapeCategories(dataCategories: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function escapeCategories(dataCategories: any): any {
     return map(dataCategories, (category: any) => {
         return isString(category)
             ? escapeAngleBrackets(category)
@@ -928,7 +930,7 @@ export function areAxisLabelsEnabled(
     chartOptions: IChartOptions,
     axisPropsName: string,
     shouldCheckForEmptyCategories: boolean,
-) {
+): { enabled: boolean } {
     const data = chartOptions.data || EMPTY_DATA;
 
     const { type } = chartOptions;
@@ -954,7 +956,6 @@ function shouldExpandYAxis(chartOptions: IChartOptions) {
 function getAxisLineConfiguration(chartType: ChartType, isAxisVisible: boolean) {
     let lineWidth;
 
-    // tslint:disable-next-line prefer-conditional-expression
     if (isAxisVisible === false) {
         lineWidth = 0;
     } else {
@@ -1155,7 +1156,7 @@ export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
     chartConfig?: IChartConfig,
     drillConfig?: IDrillConfig,
-) {
+): any {
     const configurators = [
         getAxesConfiguration,
         getTitleConfiguration,

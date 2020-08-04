@@ -179,7 +179,7 @@ const MeasureNumberFormatWithIntl = injectIntl(WrappedMeasureNumberFormat);
  * @internal
  */
 export class MeasureNumberFormat extends React.PureComponent<IMeasureNumberFormatOwnProps> {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <IntlWrapper locale={this.props.locale}>
                 <MeasureNumberFormatWithIntl {...this.props} />

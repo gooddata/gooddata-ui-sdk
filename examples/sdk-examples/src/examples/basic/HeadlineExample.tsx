@@ -1,20 +1,21 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
+import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { LdmExt } from "../../ldm";
 
 export class HeadlineExample extends Component {
-    public onLoadingChanged(...params: any) {
-        // tslint:disable-next-line:no-console
+    public onLoadingChanged: OnLoadingChanged = (...params) => {
+        // eslint-disable-next-line no-console
         return console.log("ColumnChartExample onLoadingChanged", ...params);
-    }
+    };
 
-    public onError(...params: any) {
-        // tslint:disable-next-line:no-console
+    public onError: OnError = (...params) => {
+        // eslint-disable-next-line no-console
         return console.log("ColumnChartExample onError", ...params);
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         const primaryMeasure = LdmExt.FranchiseFees;
 
         const secondaryMeasure = LdmExt.FranchiseFeesAdRoyalty;

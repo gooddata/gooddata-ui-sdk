@@ -33,7 +33,7 @@ function formatColor(red: number, green: number, blue: number) {
 /**
  * @internal
  */
-export function parseRGBColorCode(color: string) {
+export function parseRGBColorCode(color: string): { R: number; G: number; B: number } {
     const f = color.split(",");
     const R = parseInt(f[0].slice(4), 10);
     const G = parseInt(f[1], 10);
@@ -47,7 +47,7 @@ export function parseRGBColorCode(color: string) {
  *
  * @internal
  */
-export function getLighterColor(color: string, percent: number) {
+export function getLighterColor(color: string, percent: number): string {
     const { R, G, B } = parseRGBColorCode(color);
 
     return formatColor(lighter(R, percent), lighter(G, percent), lighter(B, percent));
@@ -56,7 +56,7 @@ export function getLighterColor(color: string, percent: number) {
 /**
  * @internal
  */
-export function getLighterColorFromRGB(color: IRgbColorValue, percent: number) {
+export function getLighterColorFromRGB(color: IRgbColorValue, percent: number): IRgbColorValue {
     const { r, g, b } = color;
 
     return {
@@ -69,7 +69,7 @@ export function getLighterColorFromRGB(color: IRgbColorValue, percent: number) {
 /**
  * @internal
  */
-export function normalizeColorToRGB(color: string) {
+export function normalizeColorToRGB(color: string): string {
     const hexPattern = /#([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})/i;
     return color.replace(hexPattern, (_prefix: string, r: string, g: string, b: string) => {
         return `rgb(${[r, g, b].map((value) => parseInt(value, 16).toString(10)).join(", ")})`;
@@ -110,7 +110,7 @@ export function getRgbString(color: IColorPaletteItem): string {
 /**
  * @internal
  */
-export function isCustomPalette(palette: IColorPalette) {
+export function isCustomPalette(palette: IColorPalette): boolean {
     return !isEqual(palette, DefaultColorPalette);
 }
 
@@ -133,7 +133,7 @@ export function getColorFromMapping(
 /**
  * @internal
  */
-export function getColorByGuid(colorPalette: IColorPalette, guid: string, index: number) {
+export function getColorByGuid(colorPalette: IColorPalette, guid: string, index: number): IRgbColorValue {
     const inPalette = colorPalette.find((item: any) => item.guid === guid);
 
     return inPalette ? inPalette.fill : colorPalette[index % colorPalette.length].fill;
@@ -142,7 +142,7 @@ export function getColorByGuid(colorPalette: IColorPalette, guid: string, index:
 /**
  * @internal
  */
-export function getRgbStringFromRGB(color: IRgbColorValue) {
+export function getRgbStringFromRGB(color: IRgbColorValue): string {
     return `rgb(${color.r},${color.g},${color.b})`;
 }
 

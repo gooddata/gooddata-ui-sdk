@@ -13,7 +13,7 @@ export function unmountComponentsAtNodes(
         unmount: unmountComponentAtNode,
         documentInstance: document,
     },
-) {
+): void {
     elementSelectors.forEach((elementSelector) => {
         const element = documentInstance.querySelector(elementSelector);
         if (element) {

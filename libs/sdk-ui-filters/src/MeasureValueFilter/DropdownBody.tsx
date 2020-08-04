@@ -255,7 +255,7 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
 export const DropdownBodyWithIntl = injectIntl(DropdownBodyWrapped);
 
 export class DropdownBody extends React.PureComponent<IDropdownBodyOwnProps> {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <IntlWrapper locale={this.props.locale}>
                 <DropdownBodyWithIntl {...this.props} />

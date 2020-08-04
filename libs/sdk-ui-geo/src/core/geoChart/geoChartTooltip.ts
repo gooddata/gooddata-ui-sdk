@@ -37,7 +37,7 @@ function formatAttribute(item: IGeoTooltipItem): IGeoTooltipItem {
     const { value } = item;
     return {
         ...item,
-        value: Boolean(value) ? escapeAttributeValue(value) : NULL_TOOLTIP_VALUE,
+        value: value ? escapeAttributeValue(value) : NULL_TOOLTIP_VALUE,
     };
 }
 
@@ -109,7 +109,7 @@ export const handlePushpinMouseEnter = (
     chart: mapboxgl.Map,
     tooltip: mapboxgl.Popup,
     config: IGeoConfig,
-) => {
+): void => {
     if (isTooltipDisabled(config)) {
         return;
     }
@@ -148,7 +148,7 @@ export const handlePushpinMouseLeave = (
     chart: mapboxgl.Map,
     tooltip: mapboxgl.Popup,
     config: IGeoConfig,
-) => {
+): void => {
     if (isTooltipDisabled(config)) {
         return;
     }

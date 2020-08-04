@@ -18,7 +18,7 @@ export class PluggableFunnelChart extends PluggablePieChart {
         return super.getExtendedReferencePoint(referencePoint).then(setFunnelChartUiConfig);
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): void {
         if (document.querySelector(this.configPanelElement)) {
             const properties = this.visualizationProperties ?? {};
 

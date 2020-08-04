@@ -12,7 +12,8 @@ type NumericInputValue = number | "" | "-";
 
 const isIntermediateValue = (value: number | string): value is "" | "-" => value === "" || value === "-";
 
-const isNotNumeric = <T extends {}>(value: T | number): value is T => !isEmpty(value) && !isNumber(value);
+const isNotNumeric = <T extends unknown>(value: T | number): value is T =>
+    !isEmpty(value) && !isNumber(value);
 
 const UP_ARROW_CODE = 38;
 const DOWN_ARROW_CODE = 40;
@@ -88,11 +89,10 @@ export class NumericInput extends React.Component<{
             isIntermediateValue(this.props.value) ? delta : this.clampToRange(this.props.value + delta),
         );
 
-    // tslint:disable-next-line:member-ordering
     private increment = this.valueChanger(1);
-    // tslint:disable-next-line:member-ordering
+
     private decrement = this.valueChanger(-1);
-    // tslint:disable-next-line:member-ordering
+
     private keyDownHandlers = {
         [UP_ARROW_CODE]: () => unless(this.isIncrementDisabled, this.increment),
         [DOWN_ARROW_CODE]: () => unless(this.isDecrementDisabled, this.decrement),

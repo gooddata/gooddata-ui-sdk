@@ -58,7 +58,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <ScatterPlotConfigurationPanel

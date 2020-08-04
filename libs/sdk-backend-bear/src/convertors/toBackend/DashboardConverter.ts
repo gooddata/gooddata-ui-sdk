@@ -177,7 +177,6 @@ export function convertFilterContext(
         const { created, filters } = filterContext;
 
         const convertedTempFilterContext: GdcFilterContext.IWrappedTempFilterContext = {
-            // tslint:disable-next-line: no-object-literal-type-assertion
             tempFilterContext: {
                 created,
                 filters: filters.map(convertFilterContextItem),
@@ -199,7 +198,6 @@ export function convertFilterContext(
             content: {
                 filters: filters.map(convertFilterContextItem),
             },
-            // tslint:disable-next-line: no-object-literal-type-assertion
             meta: {
                 summary: description,
                 title,
@@ -311,7 +309,6 @@ export const convertWidget = (
     widget: IWidget | IWidgetDefinition,
 ): GdcVisualizationWidget.IWrappedVisualizationWidget | GdcKpi.IWrappedKPI => {
     const { type, insight, kpi, ignoreDashboardFilters, dateDataSet, title, description, drills } = widget;
-    // tslint:disable-next-line: no-object-literal-type-assertion
     const meta = {
         ...(isWidget(widget)
             ? {
@@ -421,7 +418,6 @@ export const convertDashboard = (
                 widgets: widgets ? widgets.filter(isWidget).map((widget) => refToUri(widget.ref)) : [],
                 layout: convertedLayout,
             },
-            // tslint:disable-next-line: no-object-literal-type-assertion
             meta: {
                 ...(dashboardUri
                     ? {
@@ -466,7 +462,6 @@ export const convertWidgetAlert = (
                 threshold,
                 whenTriggered,
             },
-            // tslint:disable-next-line: no-object-literal-type-assertion
             meta: {
                 ...(alertUri
                     ? {
@@ -529,7 +524,6 @@ export const convertScheduledMail = (
                 lastSuccessfull,
                 unsubscribed,
             },
-            // tslint:disable-next-line: no-object-literal-type-assertion
             meta: {
                 ...(uri
                     ? {

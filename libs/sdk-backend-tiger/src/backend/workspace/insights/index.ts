@@ -60,7 +60,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
         } = await this.authCall((sdk) => {
             const orderBy = options?.orderBy;
             if (orderBy === "updated") {
-                // tslint:disable-next-line: no-console
+                // eslint-disable-next-line no-console
                 console.warn('Tiger does not support sorting by "updated" in getInsights');
             }
 

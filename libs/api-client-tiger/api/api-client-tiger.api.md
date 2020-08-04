@@ -8379,7 +8379,7 @@ export namespace ExecuteAFM {
     // (undocumented)
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
     const // (undocumented)
-    isObjIdentifierQualifier: (value: any) => value is IObjIdentifierQualifier;
+    isObjIdentifierQualifier: (value: unknown) => value is IObjIdentifierQualifier;
 }
 
 // @public (undocumented)

@@ -47,6 +47,7 @@ import {
     insightBuckets,
     isSimpleMeasure,
     ITotal,
+    IMeasure,
 } from "@gooddata/sdk-model";
 
 export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
@@ -426,12 +427,12 @@ export function getTotalsFromBucket(buckets: IBucketOfFun[], bucketName: string)
     return get(selectedBucket, "totals", []);
 }
 
-export function getUniqueAttributes(buckets: IBucketOfFun[]) {
+export function getUniqueAttributes(buckets: IBucketOfFun[]): IBucketItem[] {
     const attributes = getAllItemsByType(buckets, [ATTRIBUTE, DATE]);
     return uniqBy(attributes, (attribute) => get(attribute, "attribute"));
 }
 
-export function getMeasuresFromMdObject(insight: IInsightDefinition) {
+export function getMeasuresFromMdObject(insight: IInsightDefinition): IMeasure[] {
     if (!insight) {
         return [];
     }
@@ -439,7 +440,7 @@ export function getMeasuresFromMdObject(insight: IInsightDefinition) {
     return bucketsMeasures(insightBuckets(insight), isSimpleMeasure);
 }
 
-export function getMeasures(buckets: IBucketOfFun[]) {
+export function getMeasures(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAllItemsByType(buckets, [METRIC]);
 }
 
@@ -480,7 +481,7 @@ export function getBucketItemsWithExcludeByType(
     buckets: IBucketOfFun[],
     excludedBucket: string[],
     type: string[],
-) {
+): IBucketItem[] {
     const includedBuckets = buckets.filter(
         (bucket: IBucketOfFun) => !includes(excludedBucket, bucket.localIdentifier),
     );
@@ -654,7 +655,7 @@ export function hasDerivedBucketItems(masterBucketItem: IBucketItem, buckets: IB
     );
 }
 
-export function getFilteredMeasuresForStackedCharts(buckets: IBucketOfFun[]) {
+export function getFilteredMeasuresForStackedCharts(buckets: IBucketOfFun[]): IBucketItem[] {
     const hasStacks = getStackItems(buckets).length > 0;
     if (hasStacks) {
         const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, 1);
@@ -871,18 +872,18 @@ export interface IMeasureBucketItemsLimit {
 export const transformMeasureBuckets = (
     measureBucketItemsLimits: IMeasureBucketItemsLimit[],
     buckets: IBucketOfFun[],
-) => {
+): IBucketOfFun[] => {
     let unusedMeasures: IBucketItem[] = [];
 
     const newBuckets: IBucketOfFun[] = measureBucketItemsLimits.map(({ localIdentifier, itemsLimit }) => {
-        const preferedBucketlocalIdentifiers: string[] =
+        const preferredBucketLocalIdentifiers: string[] =
             localIdentifier === BucketNames.MEASURES
                 ? [BucketNames.MEASURES, BucketNames.SIZE]
                 : localIdentifier === BucketNames.SECONDARY_MEASURES
                 ? [BucketNames.SECONDARY_MEASURES, BucketNames.COLOR]
                 : [localIdentifier];
 
-        const preferredBucketItems = getPreferredBucketItems(buckets, preferedBucketlocalIdentifiers, [
+        const preferredBucketItems = getPreferredBucketItems(buckets, preferredBucketLocalIdentifiers, [
             METRIC,
         ]);
         const measuresToBePlaced = preferredBucketItems.splice(0, itemsLimit);

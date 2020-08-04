@@ -30,7 +30,7 @@ export default class PositionedMenuContent extends React.Component<
 
     private menuEl: HTMLElement = null;
 
-    public componentDidUpdate(prevProps: IPositionedMenuContentProps) {
+    public componentDidUpdate(prevProps: IPositionedMenuContentProps): void {
         if (
             prevProps.alignment !== this.props.alignment ||
             prevProps.spacing !== this.props.spacing ||
@@ -43,16 +43,16 @@ export default class PositionedMenuContent extends React.Component<
         }
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.positionMenu();
         this.addEventListeners();
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.removeEventListeners();
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div
                 style={{

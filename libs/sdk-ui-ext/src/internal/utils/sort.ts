@@ -165,7 +165,7 @@ function isSortItemValid(item: ISortItem, identifiers: string[]) {
     return every(sortIdentifiers.allIdentifiers, (id) => includes(identifiers, id));
 }
 
-export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>) {
+export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>): IExtendedReferencePoint {
     if (referencePoint.properties) {
         const properties = omitBy(
             {
@@ -184,7 +184,9 @@ export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>) {
     return referencePoint;
 }
 
-export function removeInvalidSort(referencePoint: Readonly<IExtendedReferencePoint>) {
+export function removeInvalidSort(
+    referencePoint: Readonly<IExtendedReferencePoint>,
+): IExtendedReferencePoint {
     if (referencePoint.properties) {
         const identifiers = getBucketItemIdentifiers(referencePoint);
 
@@ -205,7 +207,7 @@ export function removeInvalidSort(referencePoint: Readonly<IExtendedReferencePoi
     return referencePoint;
 }
 
-export function setSortItems(referencePoint: IExtendedReferencePoint) {
+export function setSortItems(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const buckets = referencePoint.buckets;
     const sortItems = get(referencePoint, ["properties", "sortItems"], []);
 

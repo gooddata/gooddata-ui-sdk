@@ -5,7 +5,7 @@ import { BulletChart } from "@gooddata/sdk-ui-charts";
 import { LdmExt } from "../../ldm";
 
 export class BulletChartExample extends Component {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div style={{ height: 300 }} className="s-bullet-chart">
                 <BulletChart

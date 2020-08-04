@@ -12,7 +12,7 @@ export interface ISdkComponentProps {
  * @public
  */
 export class SdkComponent extends React.Component<ISdkComponentProps> {
-    public render() {
+    public render(): React.ReactNode {
         return <p>{this.props.message}</p>;
     }
 }

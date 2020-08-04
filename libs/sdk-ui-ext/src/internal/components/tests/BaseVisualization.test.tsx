@@ -363,7 +363,7 @@ describe("BaseVisualization", () => {
             visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
         });
 
-        expect(console.error).toBeCalled(); // tslint:disable-line:no-console
+        expect(console.error).toBeCalled(); // eslint-disable-line no-console
         global.console.error = originalConsoleError;
     });
 

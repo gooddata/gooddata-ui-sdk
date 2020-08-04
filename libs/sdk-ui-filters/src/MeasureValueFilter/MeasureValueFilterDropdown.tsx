@@ -63,7 +63,7 @@ export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValu
         treatNullAsZeroDefaultValue: false,
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const {
             filter,
             onCancel,

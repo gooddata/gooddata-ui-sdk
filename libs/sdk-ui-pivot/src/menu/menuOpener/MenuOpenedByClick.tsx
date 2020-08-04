@@ -4,7 +4,7 @@ import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps";
 import OutsideClickHandler from "../utils/OutsideClickHandler";
 import MenuPosition from "../positioning/MenuPosition";
 
-const MenuOpenedByClick = (props: IMenuOpenedBySharedProps) => {
+const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): JSX.Element => {
     const outsideClick = () => props.onOpenedChange({ opened: false, source: "OUTSIDE_CLICK" });
     const togglerWrapperClick = () =>
         props.onOpenedChange({ opened: !props.opened, source: "TOGGLER_BUTTON_CLICK" });

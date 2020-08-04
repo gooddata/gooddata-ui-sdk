@@ -24,7 +24,7 @@ import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasMeasures } 
 import { BucketNames } from "@gooddata/sdk-ui";
 
 export default class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
-    protected getControlProperties() {
+    protected getControlProperties(): { groupNearbyPoints: boolean } {
         const { props } = this;
         const groupNearbyPoints = get(props, "properties.controls.points.groupNearbyPoints", true);
 
@@ -33,7 +33,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         };
     }
 
-    protected renderLegendSection() {
+    protected renderLegendSection(): React.ReactNode {
         const { insight, properties, propertiesMeta, pushData } = this.props;
 
         const isLegendVisible =
@@ -103,18 +103,18 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected isControlDisabled() {
+    protected isControlDisabled(): boolean {
         const { insight, isError, isLoading } = this.props;
         return !hasLocationAttribute(insight) || isError || isLoading;
     }
 
-    protected getBubbleClassNames() {
+    protected getBubbleClassNames(): string {
         return cx("bubble-primary", {
             invisible: !this.isControlDisabled(),
         });
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
@@ -134,7 +134,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         );
     }
 
-    protected renderColorSection() {
+    protected renderColorSection(): React.ReactNode {
         const {
             properties,
             propertiesMeta,

@@ -31,6 +31,7 @@ function parseDate(str: string, format: string, locale: string): Date | void {
     return;
 }
 
+// eslint-disable-next-line react/display-name
 export const DateRangePickerInputField = React.forwardRef<DayPickerInput, IDateRangePickerInputFieldProps>(
     (props: IDateRangePickerInputFieldProps, ref: any) => (
         <DayPickerInput

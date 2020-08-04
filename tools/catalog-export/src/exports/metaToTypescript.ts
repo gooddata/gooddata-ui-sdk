@@ -14,7 +14,7 @@ import { ProjectMetadata } from "../base/types";
 export async function exportMetadataToTypescript(
     projectMetadata: ProjectMetadata,
     outputFile: string,
-    tiger: boolean = false,
+    tiger = false,
 ): Promise<void> {
     const output = transformToTypescript(projectMetadata, outputFile, tiger);
 

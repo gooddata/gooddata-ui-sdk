@@ -12,6 +12,13 @@ interface IUsePagedResourceState<TItem> {
 }
 
 /**
+ * @internal
+ */
+interface IUsePagedResourceResult<TItem> extends IUsePagedResourceState<TItem> {
+    isLoading: boolean;
+}
+
+/**
  * Hook for getting data from paged resource
  * @public
  */
@@ -25,7 +32,7 @@ export function usePagedResource<TParams, TItem>(
         totalItemsCount: undefined,
         items: [],
     },
-) {
+): IUsePagedResourceResult<TItem> {
     const [state, setState] = useState<IUsePagedResourceState<TItem>>(initialState);
 
     const reset = () => setState(initialState);

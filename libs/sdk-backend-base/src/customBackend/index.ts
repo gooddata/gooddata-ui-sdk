@@ -141,10 +141,7 @@ export class CustomBackend implements IAnalyticalBackend {
         return result;
     };
 
-    private triggerAuthentication = (
-        reset: boolean = false,
-        useClient?: any,
-    ): Promise<AuthenticatedPrincipal> => {
+    private triggerAuthentication = (reset = false, useClient?: any): Promise<AuthenticatedPrincipal> => {
         if (!this.authProvider) {
             return Promise.reject(
                 new NotAuthenticated("Backend is not set up with authentication provider."),

@@ -47,7 +47,7 @@ export function getLocation(latlng: string): IGeoLngLat | null {
 
     const [latitude, longitude] = latlng.split(";").map(dataValueAsFloat);
     if (isNaN(latitude) || isNaN(longitude)) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.warn("UI-SDK: geoChartDataSource - getLocation: invalid location", latlng);
         return null;
     }

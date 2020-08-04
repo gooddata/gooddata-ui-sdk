@@ -367,59 +367,66 @@ export namespace GdcMetadata {
         entries: IObjectLink[];
     }
 
-    export function isAttribute(obj: any): obj is IAttribute {
+    export function isAttribute(obj: unknown): obj is IAttribute {
         return !isEmpty(obj) && (obj as IAttribute).meta.category === "attribute";
     }
 
-    export function isWrappedAttribute(obj: any): obj is IWrappedAttribute {
+    export function isWrappedAttribute(obj: unknown): obj is IWrappedAttribute {
+        // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && obj.hasOwnProperty("attribute");
     }
 
-    export function isWrappedAttributeDisplayForm(obj: any): obj is IWrappedAttributeDisplayForm {
+    export function isWrappedAttributeDisplayForm(obj: unknown): obj is IWrappedAttributeDisplayForm {
+        // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && obj.hasOwnProperty("attributeDisplayForm");
     }
 
-    export function isAttributeDisplayForm(obj: any): obj is IAttributeDisplayForm {
+    export function isAttributeDisplayForm(obj: unknown): obj is IAttributeDisplayForm {
         return !isEmpty(obj) && (obj as IAttributeDisplayForm).meta.category === "attributeDisplayForm";
     }
 
-    export function isWrappedMetric(obj: any): obj is IWrappedMetric {
+    export function isWrappedMetric(obj: unknown): obj is IWrappedMetric {
+        // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && obj.hasOwnProperty("metric");
     }
 
-    export function isMetric(obj: any): obj is IMetric {
+    export function isMetric(obj: unknown): obj is IMetric {
         return !isEmpty(obj) && (obj as IMetric).meta.category === "metric";
     }
 
-    export function isWrappedFact(obj: any): obj is IWrappedFact {
+    export function isWrappedFact(obj: unknown): obj is IWrappedFact {
+        // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && obj.hasOwnProperty("fact");
     }
 
-    export function isFact(obj: any): obj is IFact {
+    export function isFact(obj: unknown): obj is IFact {
         return !isEmpty(obj) && (obj as IFact).meta.category === "fact";
     }
 
-    export function isKpiAlert(obj: any): obj is IKpiAlert {
+    export function isKpiAlert(obj: unknown): obj is IKpiAlert {
         return !isEmpty(obj) && (obj as IKpiAlert).meta.category === "kpiAlert";
     }
 
-    export function isWrappedKpiAlert(obj: any): obj is IWrappedKpiAlert {
+    export function isWrappedKpiAlert(obj: unknown): obj is IWrappedKpiAlert {
+        // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && obj.hasOwnProperty("kpiAlert");
     }
 
-    export function isDataSet(obj: any): obj is IDataSet {
+    export function isDataSet(obj: unknown): obj is IDataSet {
         return !isEmpty(obj) && (obj as IDataSet).meta.category === "dataSet";
     }
 
-    export function isWrappedDataSet(obj: any): obj is IWrappedDataSet {
+    export function isWrappedDataSet(obj: unknown): obj is IWrappedDataSet {
+        // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && obj.hasOwnProperty("dataSet");
     }
 
-    export function isPrompt(obj: any): obj is IPrompt {
+    export function isPrompt(obj: unknown): obj is IPrompt {
         return !isEmpty(obj) && (obj as IPrompt).meta.category === "prompt";
     }
 
-    export function isWrappedPrompt(obj: any): obj is IWrappedPrompt {
+    export function isWrappedPrompt(obj: unknown): obj is IWrappedPrompt {
+        // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && obj.hasOwnProperty("prompt");
     }
 }

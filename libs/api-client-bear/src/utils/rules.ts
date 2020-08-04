@@ -14,7 +14,7 @@ export class Rules {
         this.rules = [];
     }
 
-    public addRule(tests: RulePredicate[], callback: RuleCallback) {
+    public addRule(tests: RulePredicate[], callback: RuleCallback): void {
         this.rules.push([tests, callback]);
     }
 

@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 
 export default class UnsupportedProperties extends React.Component {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div className={this.getClassNames()}>
                 <FormattedMessage id="properties.unsupported" />

@@ -148,7 +148,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         }
     }
 
-    public getElementTotalCount = async () => {
+    public getElementTotalCount = async (): Promise<void> => {
         const { workspace, displayForm } = this.props;
         const elements = await this.getBackend()
             .workspace(workspace)
@@ -161,7 +161,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         this.setState({ totalCount: elements.totalCount });
     };
 
-    public getElements = async () => {
+    public getElements = async (): Promise<void> => {
         const { offset, limit, validElements } = this.state;
 
         const currentElements = validElements ? validElements.items : [];
@@ -293,7 +293,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         return title;
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { FilterLoading } = this.props;
         const customizedTitle = this.getTitle();
         const classes = cx(
@@ -382,8 +382,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         const nonEmptyItems = items.filter(isNonEmptyListItem);
         nonEmptyItems.forEach((item) => {
             if (isEmpty(item.title)) {
-                // TODO: SDK8: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
-                // @ts-ignore
+                // @ts-expect-error TODO: SDK8: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
                 item.title = emptyHeaderString;
             }
         });

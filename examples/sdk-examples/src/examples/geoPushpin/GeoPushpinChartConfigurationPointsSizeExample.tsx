@@ -14,17 +14,13 @@ type State = {
     maxSize: PushpinSizeOption;
 };
 
-export class GeoPushpinChartConfigurationPointsSizeExample extends Component<any, State> {
-    constructor(props: any) {
-        super(props);
+export class GeoPushpinChartConfigurationPointsSizeExample extends Component<unknown, State> {
+    state: State = {
+        minSize: "default",
+        maxSize: "default",
+    };
 
-        this.state = {
-            minSize: "default",
-            maxSize: "default",
-        };
-    }
-
-    public render() {
+    public render(): React.ReactNode {
         const { minSize, maxSize } = this.state;
         const geoConfig: IGeoConfig = {
             mapboxToken: MAPBOX_TOKEN,
@@ -59,22 +55,22 @@ export class GeoPushpinChartConfigurationPointsSizeExample extends Component<any
     }
 
     private onLoadingChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationPointsSizeExample onLoadingChanged", ...params);
     }
 
     private onError(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationPointsSizeExample onError", ...params);
     }
 
     private onZoomChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log("GeoPushpinChartConfigurationPointsSizeExample onZoomChanged", ...params);
     }
 
     private onCenterPositionChanged(...params: any[]) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         return console.log(
             "GeoPushpinChartConfigurationPointsSizeExample onCenterPositionChanged",
             ...params,

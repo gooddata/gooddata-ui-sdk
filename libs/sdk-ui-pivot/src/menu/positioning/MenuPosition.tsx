@@ -54,7 +54,7 @@ export default class MenuPosition extends React.Component<IMenuPositionProps, IM
     // positions from React Measure were outdated. To solve this we do the
     // measurements manually in PositionedMenuContent at the correct time.
 
-    public render() {
+    public render(): React.ReactNode {
         const {
             portalTarget,
             topLevelMenu,

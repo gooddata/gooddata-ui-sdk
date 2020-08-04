@@ -104,7 +104,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         if (document.querySelector(this.configPanelElement)) {
             const properties = this.visualizationProperties ?? {};
 
@@ -117,5 +117,6 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
                 document.querySelector(this.configPanelElement),
             );
         }
+        return null;
     }
 }

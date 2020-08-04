@@ -266,7 +266,7 @@ export const heatmapSmallLegendConfigMatrix: IColorLabelConfigItem[][] = [
     ],
 ];
 
-export function buildColorLabelsConfig(labels: string[], config: any) {
+export function buildColorLabelsConfig(labels: string[], config: any[]): any[] {
     return config
         .map((element: any, index: number) => {
             switch (element.type) {
@@ -289,15 +289,15 @@ export function buildColorLabelsConfig(labels: string[], config: any) {
         .filter((value: any) => value !== null);
 }
 
-const LABEL_LENGHT_THRESHOLDS = [5, 8, 10, 15, 18];
-const SMALL_LABEL_LENGHT_THRESHOLDS = [4, 7, 9, 13, 15];
+const LABEL_LENGTH_THRESHOLDS = [5, 8, 10, 15, 18];
+const SMALL_LABEL_LENGTH_THRESHOLDS = [4, 7, 9, 13, 15];
 
 function getColorLegendLabelsConfiguration(legendLabels: string[], isSmall: boolean, isVertical: boolean) {
     const numberOfLabels = legendLabels.length;
     const firstLabelLength = head(legendLabels)?.length ?? 0;
     const lastLabelLength = last(legendLabels)?.length ?? 0;
     const maxLabelLength = firstLabelLength > lastLabelLength ? firstLabelLength : lastLabelLength;
-    const labelLengths = isSmall ? SMALL_LABEL_LENGHT_THRESHOLDS : LABEL_LENGHT_THRESHOLDS;
+    const labelLengths = isSmall ? SMALL_LABEL_LENGTH_THRESHOLDS : LABEL_LENGTH_THRESHOLDS;
 
     const shorteningConfig = isVertical
         ? verticalHeatmapConfig
@@ -340,7 +340,14 @@ function getColorLabelShorteningLevel(labelLengths: number[], maxLabelLength: nu
     return shorteningLevel;
 }
 
-export function calculateFluidLegend(seriesCount: number, containerWidth: number) {
+export function calculateFluidLegend(
+    seriesCount: number,
+    containerWidth: number,
+): {
+    hasPaging: boolean;
+    itemWidth: number;
+    visibleItemsCount: number;
+} {
     // -1 because flex dimensions provide rounded number and the real width can be float
     const realWidth = containerWidth - 2 * LEGEND_PADDING - 1;
 
@@ -380,7 +387,13 @@ function getStaticVisibleItemsCount(containerHeight: number, withPaging: boolean
     return Math.floor((containerHeight - pagingHeight) / ITEM_HEIGHT);
 }
 
-export function calculateStaticLegend(seriesCount: number, containerHeight: number) {
+export function calculateStaticLegend(
+    seriesCount: number,
+    containerHeight: number,
+): {
+    hasPaging: boolean;
+    visibleItemsCount: number;
+} {
     const visibleItemsCount = getStaticVisibleItemsCount(containerHeight);
     if (visibleItemsCount >= seriesCount) {
         return {
@@ -448,7 +461,6 @@ export function getColorLegendConfiguration(
     const legendLabels = getColorLegendLabels(series, format, numericSymbols);
     let finalPosition;
 
-    // tslint:disable-next-line:prefer-conditional-expression
     if (isSmall) {
         finalPosition = position === TOP ? TOP : BOTTOM;
     } else {
@@ -516,7 +528,7 @@ export const FLUID_LEGEND_THRESHOLD = 768;
 /**
  * @internal
  */
-export function shouldShowFluid(documentObj: Document) {
+export function shouldShowFluid(documentObj: Document): boolean {
     if (!documentObj) {
         return false;
     }

@@ -1,4 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import {
@@ -328,7 +329,7 @@ const maxHeightPresets: any = {
     },
 };
 
-const groupRowsPresets: any = {
+const groupRowsPresets = {
     disabledGrouping: {
         label: "Disabled",
         key: "disabledGrouping",
@@ -354,20 +355,20 @@ const drillHandlingPresets: any = {
     },
 };
 
-export const getDrillableItems = (drillableKeys: any) => {
+export const getDrillableItems = (drillableKeys: any): any[] => {
     return Object.keys(drillableKeys)
         .filter((itemKey) => drillableKeys[itemKey])
         .map((itemKey) => drillingPresets[itemKey].drillableItem);
 };
 
-export const getTotalItems = (totalKeys: any) => {
+export const getTotalItems = (totalKeys: any): any[] => {
     return Object.keys(totalKeys)
         .filter((itemKey) => totalKeys[itemKey])
         .map((itemKey) => totalPresets[itemKey].totalItem);
 };
 
-export const getGroupRows = (groupRowsKey: any) => {
-    return groupRowsPresets[groupRowsKey].value;
+export const getGroupRows = (groupRowsKey: any): boolean => {
+    return groupRowsPresets[groupRowsKey as keyof typeof groupRowsPresets].value;
 };
 interface IPivotTableDrillingExampleState {
     bucketPresetKey: string;
@@ -380,12 +381,12 @@ interface IPivotTableDrillingExampleState {
     menuPresetKey: string;
     pivotTableSizeKey: string;
     maxHeightPresetKey: string;
-    groupRowsKey: string;
+    groupRowsKey: Parameters<typeof getGroupRows>[0];
     drillHandlingKey: string;
 }
 
-export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDrillingExampleState> {
-    constructor(props: any) {
+export class PivotTableDrillingExample extends React.Component<unknown, IPivotTableDrillingExampleState> {
+    constructor(props: null) {
         super(props);
 
         const drillingPresetKeys = {
@@ -411,7 +412,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
         };
     }
 
-    public onDrillingPresetChange = (drillingPresetKey: any) => {
+    public onDrillingPresetChange = (drillingPresetKey: any): void => {
         const drillingPresetKeys = {
             ...this.state.drillingPresetKeys,
             [drillingPresetKey]: !this.state.drillingPresetKeys[drillingPresetKey],
@@ -421,7 +422,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
             drillableItems: getDrillableItems(drillingPresetKeys),
         });
     };
-    public onTotalPresetChange = (totalPresetKey: any) => {
+    public onTotalPresetChange = (totalPresetKey: any): void => {
         const totalPresetKeys = {
             ...this.state.totalPresetKeys,
             [totalPresetKey]: !this.state.totalPresetKeys[totalPresetKey],
@@ -430,7 +431,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
             totalPresetKeys,
         });
     };
-    public onFilterPresetChange = (filterPresetKey: any) => {
+    public onFilterPresetChange = (filterPresetKey: any): void => {
         const filterPresetKeys = {
             ...this.state.filterPresetKeys,
             [filterPresetKey]: !this.state.filterPresetKeys[filterPresetKey],
@@ -439,46 +440,46 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
             filterPresetKeys,
         });
     };
-    public onBucketPresetChange = (bucketPresetKey: any) => {
+    public onBucketPresetChange = (bucketPresetKey: any): void => {
         this.setState({
             bucketPresetKey,
         });
     };
-    public onSortingPresetChange = (sortingPresetKey: any) => {
+    public onSortingPresetChange = (sortingPresetKey: any): void => {
         this.setState({
             sortingPresetKey,
         });
     };
-    public onMenuPresetChange = (menuPresetKey: any) => {
+    public onMenuPresetChange = (menuPresetKey: any): void => {
         this.setState({
             menuPresetKey,
         });
     };
-    public onPivotTableSizeChange = (pivotTableSizeKey: any) => {
+    public onPivotTableSizeChange = (pivotTableSizeKey: any): void => {
         this.setState({
             pivotTableSizeKey,
         });
     };
-    public onMaxHeightPresetChange = (maxHeightPresetKey: any) => {
+    public onMaxHeightPresetChange = (maxHeightPresetKey: any): void => {
         this.setState({
             maxHeightPresetKey,
         });
     };
 
-    public onGroupRowsPresetChange = (groupRowsKey: any) => {
+    public onGroupRowsPresetChange = (groupRowsKey: any): void => {
         this.setState({
             groupRowsKey,
         });
     };
 
-    public onDrillHandlingChange = (drillHandlingKey: any) => {
+    public onDrillHandlingChange = (drillHandlingKey: any): void => {
         this.setState({
             drillHandlingKey,
         });
     };
 
-    public onFiredDrillEvent = (drillEvent: any) => {
-        // tslint:disable-next-line:no-console
+    public onFiredDrillEvent = (drillEvent: any): boolean => {
+        // eslint-disable-next-line no-console
         console.log(
             "onFiredDrillEvent",
             drillEvent,
@@ -490,15 +491,15 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
         return true;
     };
 
-    public onDrill = (drillEvent: any) => {
-        // tslint:disable-next-line:no-console
+    public onDrill = (drillEvent: any): void => {
+        // eslint-disable-next-line no-console
         console.log("onDrill", drillEvent, JSON.stringify(drillEvent.drillContext.intersection, null, 2));
         this.setState({
             drillEvent,
         });
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const {
             bucketPresetKey,
             sortingPresetKey,
@@ -548,7 +549,7 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
 
         const groupRows = getGroupRows(groupRowsKey);
         const drillHandlerProp = {
-            // @ts-ignore
+            // @ts-expect-error this is ok for now
             [drillHandlingKey]: this[drillHandlingKey],
         };
 
@@ -713,7 +714,9 @@ export class PivotTableDrillingExample extends React.Component<{}, IPivotTableDr
                 <div className="presets">
                     Group rows:{" "}
                     {Object.keys(groupRowsPresets).map((presetItemKey) => {
-                        const { key, label } = groupRowsPresets[presetItemKey];
+                        const { key, label } = groupRowsPresets[
+                            presetItemKey as keyof typeof groupRowsPresets
+                        ];
                         return (
                             <ElementWithParam
                                 key={key}

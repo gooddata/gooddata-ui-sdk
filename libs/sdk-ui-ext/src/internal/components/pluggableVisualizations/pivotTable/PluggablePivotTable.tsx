@@ -116,7 +116,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.supportsTotals = props.backend.capabilities.canCalculateTotals ?? false;
     }
 
-    public unmount() {
+    public unmount(): void {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
@@ -252,7 +252,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
-    ) {
+    ): void {
         if (!insightHasDataDefined(insight)) {
             // there is nothing in the insight's bucket that can be visualized
             // bail out
@@ -332,7 +332,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    protected renderConfigurationPanel(insight: IInsightDefinition) {
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
         if (document.querySelector(this.configPanelElement)) {
             const properties = this.visualizationProperties ?? {};
 

@@ -13,7 +13,7 @@ function between(x: number, lowerLimit: number, higherLimit: number): number {
 }
 
 // Fix Highchart issue https://github.com/highcharts/highcharts/issues/11229
-export function resetPointPaddingForTooSmallHeatmapCells(series: IHighchartsSeriesExtend) {
+export function resetPointPaddingForTooSmallHeatmapCells(series: IHighchartsSeriesExtend): void {
     const xAxis: IHighchartsAxisExtend = series.xAxis;
     const yAxis: IHighchartsAxisExtend = series.yAxis;
     const options: IHighchartsSeriesOptionsType = series.options;
@@ -115,6 +115,6 @@ const HEATMAP_TEMPLATE = {
     ],
 };
 
-export function getHeatmapConfiguration() {
+export function getHeatmapConfiguration(): typeof HEATMAP_TEMPLATE {
     return cloneDeep(HEATMAP_TEMPLATE);
 }

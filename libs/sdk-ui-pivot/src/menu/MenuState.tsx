@@ -29,7 +29,7 @@ export default class MenuState extends React.Component<IMenuStateProps, IMenuSta
         };
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return this.props.children({
             opened: this.isControlled() ? this.props.opened : this.state.opened,
             onOpenedChange: this.onOpenedChange,

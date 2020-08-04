@@ -94,7 +94,7 @@ export function dataValueAsFloat(value: DataValue): number {
     const parsedNumber = typeof value === "string" ? parseFloat(value) : value;
 
     if (isNaN(parsedNumber)) {
-        // tslint:disable-next-line no-console
+        // eslint-disable-next-line no-console
         console.warn(`SDK: utils - stringToFloat: ${value} is not a number`);
     }
     return parsedNumber;

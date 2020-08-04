@@ -17,19 +17,19 @@ export default class RenderChildrenInPortal extends React.Component<IRenderChild
         this.portalContentWrapperEl = wrapperEl;
     }
 
-    public UNSAFE_componentWillMount() {
+    public UNSAFE_componentWillMount(): void {
         if (this.props.targetElement) {
             this.props.targetElement.appendChild(this.portalContentWrapperEl);
         }
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         if (this.props.targetElement) {
             this.props.targetElement.removeChild(this.portalContentWrapperEl);
         }
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return ReactDOM.createPortal(this.props.children, this.portalContentWrapperEl);
     }
 }

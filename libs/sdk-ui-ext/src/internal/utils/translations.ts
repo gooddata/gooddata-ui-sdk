@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { IDropdownItem } from "../interfaces/Dropdown";
 
@@ -6,7 +6,7 @@ export function getTranslation(
     translationId: string,
     intl: IntlShape,
     values: { [key: string]: string } = {},
-) {
+): string {
     return intl ? intl.formatMessage({ id: translationId }, values) : translationId;
 }
 

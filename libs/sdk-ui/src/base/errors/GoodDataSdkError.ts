@@ -10,6 +10,7 @@ import isEmpty from "lodash/isEmpty";
 export class GoodDataSdkError extends Error {
     public readonly sdkError: boolean = true;
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor(public message: string, public cause?: any) {
         super(message);
 
@@ -19,14 +20,14 @@ export class GoodDataSdkError extends Error {
     /**
      * Provides description of the problem or one of {@link ErrorCodes}.
      */
-    public getMessage() {
+    public getMessage(): string {
         return this.message;
     }
 
     /**
      * Underlying cause of this error (if any).
      */
-    public getCause() {
+    public getCause(): any {
         return this.cause;
     }
 }
@@ -36,7 +37,7 @@ export class GoodDataSdkError extends Error {
  *
  * @public
  */
-export function isGoodDataSdkError(obj: any): obj is GoodDataSdkError {
+export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).sdkError === true;
 }
 

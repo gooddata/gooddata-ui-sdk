@@ -32,7 +32,6 @@ export const getScrollbarWidth = once(getScrollbarWidthBody);
 
 export const sleep = async (delay: number): Promise<void> => {
     return new Promise((resolve) => {
-        // tslint:disable-next-line no-string-based-set-timeout
         setTimeout(resolve, delay);
     });
 };

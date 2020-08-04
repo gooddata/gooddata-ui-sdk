@@ -219,7 +219,7 @@ export type IMeasureFilter =
  *
  * @public
  */
-export function isPositiveAttributeFilter(obj: any): obj is IPositiveAttributeFilter {
+export function isPositiveAttributeFilter(obj: unknown): obj is IPositiveAttributeFilter {
     return !isEmpty(obj) && (obj as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
 }
 
@@ -228,7 +228,7 @@ export function isPositiveAttributeFilter(obj: any): obj is IPositiveAttributeFi
  *
  * @public
  */
-export function isNegativeAttributeFilter(obj: any): obj is INegativeAttributeFilter {
+export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter {
     return !isEmpty(obj) && (obj as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
 }
 
@@ -237,7 +237,7 @@ export function isNegativeAttributeFilter(obj: any): obj is INegativeAttributeFi
  *
  * @public
  */
-export function isAbsoluteDateFilter(obj: any): obj is IAbsoluteDateFilter {
+export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter {
     return !isEmpty(obj) && (obj as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
 }
 
@@ -246,7 +246,7 @@ export function isAbsoluteDateFilter(obj: any): obj is IAbsoluteDateFilter {
  *
  * @public
  */
-export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter {
+export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter {
     return !isEmpty(obj) && (obj as IRelativeDateFilter).relativeDateFilter !== undefined;
 }
 
@@ -255,7 +255,7 @@ export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter {
  *
  * @public
  */
-export function isAttributeFilter(obj: any): obj is IAttributeFilter {
+export function isAttributeFilter(obj: unknown): obj is IAttributeFilter {
     return isPositiveAttributeFilter(obj) || isNegativeAttributeFilter(obj);
 }
 
@@ -264,7 +264,7 @@ export function isAttributeFilter(obj: any): obj is IAttributeFilter {
  *
  * @public
  */
-export function isDateFilter(obj: any): obj is IDateFilter {
+export function isDateFilter(obj: unknown): obj is IDateFilter {
     return isRelativeDateFilter(obj) || isAbsoluteDateFilter(obj);
 }
 
@@ -273,7 +273,7 @@ export function isDateFilter(obj: any): obj is IDateFilter {
  *
  * @public
  */
-export function isMeasureValueFilter(obj: any): obj is IMeasureValueFilter {
+export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter {
     return !isEmpty(obj) && (obj as IMeasureValueFilter).measureValueFilter !== undefined;
 }
 
@@ -282,7 +282,7 @@ export function isMeasureValueFilter(obj: any): obj is IMeasureValueFilter {
  *
  * @public
  */
-export function isComparisonCondition(obj: any): obj is IComparisonCondition {
+export function isComparisonCondition(obj: unknown): obj is IComparisonCondition {
     return !isEmpty(obj) && (obj as IComparisonCondition).comparison !== undefined;
 }
 
@@ -291,7 +291,7 @@ export function isComparisonCondition(obj: any): obj is IComparisonCondition {
  *
  * @public
  */
-export function isComparisonConditionOperator(obj: any): obj is ComparisonConditionOperator {
+export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator {
     return (
         obj === "GREATER_THAN" ||
         obj === "GREATER_THAN_OR_EQUAL_TO" ||
@@ -307,7 +307,7 @@ export function isComparisonConditionOperator(obj: any): obj is ComparisonCondit
  *
  * @public
  */
-export function isRangeCondition(obj: any): obj is IRangeCondition {
+export function isRangeCondition(obj: unknown): obj is IRangeCondition {
     return !isEmpty(obj) && (obj as IRangeCondition).range !== undefined;
 }
 
@@ -316,7 +316,7 @@ export function isRangeCondition(obj: any): obj is IRangeCondition {
  *
  * @public
  */
-export function isRangeConditionOperator(obj: any): obj is RangeConditionOperator {
+export function isRangeConditionOperator(obj: unknown): obj is RangeConditionOperator {
     return obj === "BETWEEN" || obj === "NOT_BETWEEN";
 }
 
@@ -325,7 +325,7 @@ export function isRangeConditionOperator(obj: any): obj is RangeConditionOperato
  *
  * @public
  */
-export function isAttributeElementsByRef(obj: any): obj is IAttributeElementsByRef {
+export function isAttributeElementsByRef(obj: unknown): obj is IAttributeElementsByRef {
     return !isEmpty(obj) && (obj as IAttributeElementsByRef).uris !== undefined;
 }
 
@@ -334,7 +334,7 @@ export function isAttributeElementsByRef(obj: any): obj is IAttributeElementsByR
  *
  * @public
  */
-export function isAttributeElementsByValue(obj: any): obj is IAttributeElementsByValue {
+export function isAttributeElementsByValue(obj: unknown): obj is IAttributeElementsByValue {
     return !isEmpty(obj) && (obj as IAttributeElementsByValue).values !== undefined;
 }
 

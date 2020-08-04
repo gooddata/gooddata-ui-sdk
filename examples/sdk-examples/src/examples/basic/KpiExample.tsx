@@ -3,7 +3,7 @@ import React from "react";
 import { Kpi } from "@gooddata/sdk-ui";
 import { Ldm } from "../../ldm";
 
-export const KpiExample = () => {
+export const KpiExample = (): JSX.Element => {
     return (
         <div className="kpi">
             <style jsx>{`

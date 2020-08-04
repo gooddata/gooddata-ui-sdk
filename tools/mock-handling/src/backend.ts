@@ -28,7 +28,7 @@ export const getOrInitBackend = (
     return backend;
 };
 
-const getBackend = () => {
+const getBackend = (): IAnalyticalBackend => {
     if (!backend) {
         throw new UnexpectedError(
             "Backend not initialized before use. Make sure you have called initBackend.",

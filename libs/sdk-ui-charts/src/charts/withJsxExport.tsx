@@ -9,7 +9,9 @@ import { factoryNotationFor } from "@gooddata/sdk-model";
 const getDisplayName = (WrappedComponent: React.ComponentType): string =>
     WrappedComponent.displayName || WrappedComponent.name || "Component";
 
-export const withJsxExport = <T extends {}>(Component: React.ComponentType<T>) => {
+export const withJsxExport = <T extends object>(
+    Component: React.ComponentType<T>,
+): React.ComponentType<T> => {
     const result = class extends React.Component<T> {
         public static displayName = `WithJsxExport(${getDisplayName(Component)})`;
 

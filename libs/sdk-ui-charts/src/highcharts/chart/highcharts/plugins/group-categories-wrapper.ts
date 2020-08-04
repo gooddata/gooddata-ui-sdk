@@ -2,7 +2,8 @@
 import isEmpty from "lodash/isEmpty";
 import { isInvertedChartType } from "../../../utils/common";
 
-export function groupCategoriesWrapper(Highcharts: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function groupCategoriesWrapper(Highcharts: any): void {
     const wrap = Highcharts.wrap;
 
     function hideGridInXAxis() {
@@ -14,6 +15,7 @@ export function groupCategoriesWrapper(Highcharts: any) {
 
     wrap(Highcharts.Axis.prototype, "render", function (proceed: any) {
         // default behaviour
+        // eslint-disable-next-line prefer-rest-params
         proceed.apply(this, Array.prototype.slice.call(arguments, 1));
 
         hideGridInXAxis.call(this);

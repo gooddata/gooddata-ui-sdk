@@ -12,7 +12,8 @@ export const errorMap: any = {
     gdc1052: "email",
 };
 
-export const transformApiError = ({ errorCode, message }: any) =>
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const transformApiError = ({ errorCode, message }: any): any =>
     has(errorMap, errorCode) ? { [errorMap[errorCode]]: message } : null;
 
 interface IRegistrationFormValues {

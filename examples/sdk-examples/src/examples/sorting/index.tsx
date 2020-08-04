@@ -7,12 +7,18 @@ import { MeasureSortingExample } from "./MeasureSortingExample";
 import { AttributeSortingExample } from "./AttributeSortingExample";
 import { DynamicSortingExample } from "./DynamicSortingExample";
 
+// eslint-disable-next-line import/no-unresolved
 import MeasureSortingExampleSRC from "!raw-loader!./MeasureSortingExample";
+// eslint-disable-next-line import/no-unresolved
 import AttributeSortingExampleSRC from "!raw-loader!./AttributeSortingExample";
+// eslint-disable-next-line import/no-unresolved
 import DynamicSortingExampleSRC from "!raw-loader!./DynamicSortingExample";
 
+// eslint-disable-next-line import/default
 import MeasureSortingExampleSRCJS from "!raw-loader!../../../examplesJS/sorting/MeasureSortingExample";
+// eslint-disable-next-line import/default
 import AttributeSortingExampleSRCJS from "!raw-loader!../../../examplesJS/sorting/AttributeSortingExample";
+// eslint-disable-next-line import/default
 import DynamicSortingExampleSRCJS from "!raw-loader!../../../examplesJS/sorting/DynamicSortingExample";
 
 export const Sorting: React.FC = () => (

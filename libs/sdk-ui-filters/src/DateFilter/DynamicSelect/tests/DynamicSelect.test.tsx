@@ -154,7 +154,7 @@ describe("DynamicSelect", () => {
         expect(selectOption).toHaveText("today");
     });
 
-    it("should call onChange when option is selected", () => {
+    it("should call onChange when option is selected after searching for white-space string", () => {
         const onChange = jest.fn();
         const mounted = mountDynamicSelect({ onChange });
 
@@ -179,7 +179,7 @@ describe("DynamicSelect", () => {
         expect(onChange).toHaveBeenCalledTimes(0);
     });
 
-    it("should call onChange when option is selected", () => {
+    it("should call onChange when option is selected after searching for non-white-space string", () => {
         const onChange = jest.fn();
         const mounted = mountDynamicSelect({ onChange });
         const input = mounted.find("input");

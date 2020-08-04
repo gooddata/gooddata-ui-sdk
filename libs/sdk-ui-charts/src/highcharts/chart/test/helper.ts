@@ -13,6 +13,8 @@ import {
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IChartOptions } from "../../typings/unsafe";
 import { recordedDataFacade } from "../../../../__mocks__/recordings";
+import { IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { IUnwrappedAttributeHeadersWithItems } from "../../utils/types";
 
 const defaultDv = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
@@ -29,7 +31,14 @@ export function generateChartOptions(
     return getChartOptions(dv.dataView, config, drillableItems);
 }
 
-export function getMVS(dv: DataViewFacade) {
+export interface IMVS {
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"];
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems;
+    viewByParentAttribute?: IUnwrappedAttributeHeadersWithItems;
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems;
+}
+
+export function getMVS(dv: DataViewFacade): IMVS {
     const dimensions = dv.meta().dimensions();
     const headerItems = dv.meta().allHeaders();
     const measureGroup = findMeasureGroupInDimensions(dimensions);
@@ -48,7 +57,7 @@ export function getMVS(dv: DataViewFacade) {
     };
 }
 
-export function getMVSForViewByTwoAttributes(dv: DataViewFacade) {
+export function getMVSForViewByTwoAttributes(dv: DataViewFacade): IMVS {
     const mvs = getMVS(dv);
 
     const dimensions = dv.meta().dimensions();

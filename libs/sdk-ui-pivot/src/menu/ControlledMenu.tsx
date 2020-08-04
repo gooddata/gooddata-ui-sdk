@@ -15,19 +15,19 @@ export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
 }
 
 export default class ControlledMenu extends React.Component<IControlledMenuProps> {
-    public componentDidMount() {
+    public componentDidMount(): void {
         if (this.props.closeOnScroll) {
             this.addScrollListeners();
         }
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         if (this.props.closeOnScroll) {
             this.removeScrollListeners();
         }
     }
 
-    public componentDidUpdate(prevProps: IControlledMenuProps) {
+    public componentDidUpdate(prevProps: IControlledMenuProps): void {
         if (prevProps.closeOnScroll !== this.props.closeOnScroll) {
             if (this.props.closeOnScroll) {
                 this.addScrollListeners();
@@ -37,7 +37,7 @@ export default class ControlledMenu extends React.Component<IControlledMenuProps
         }
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <MenuOpener
                 opened={this.props.opened}

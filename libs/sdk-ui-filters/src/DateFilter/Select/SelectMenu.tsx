@@ -18,6 +18,7 @@ export interface ISelectMenuProps<V> {
     optionClassName?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const SelectMenu = <V extends {}>({
     items,
     selectedItem,
@@ -26,7 +27,7 @@ export const SelectMenu = <V extends {}>({
     getMenuProps,
     className,
     optionClassName,
-}: ISelectMenuProps<V>) => {
+}: ISelectMenuProps<V>): JSX.Element => {
     const selectableOptions = getSelectableItems(items);
 
     return (

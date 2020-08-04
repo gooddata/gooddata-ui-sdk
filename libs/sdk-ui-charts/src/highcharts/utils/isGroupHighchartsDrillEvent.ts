@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import Highcharts from "../chart/highcharts/highchartsEntryPoint";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
@@ -8,6 +8,6 @@ export interface IHighchartsPointObject extends Highcharts.Point {
     value?: number; // is missing in HCH's interface
 }
 
-export function isGroupHighchartsDrillEvent(event: Highcharts.DrilldownEventObject) {
+export function isGroupHighchartsDrillEvent(event: Highcharts.DrilldownEventObject): boolean {
     return !!event.points;
 }

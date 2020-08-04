@@ -82,9 +82,9 @@ export class ProtectedDataError extends AnalyticalBackendError {
  */
 export class UnexpectedResponseError extends AnalyticalBackendError {
     public readonly httpStatus: number;
-    public readonly responseBody: number;
+    public readonly responseBody: unknown;
 
-    constructor(message: string, httpStatus: number, responseBody: any, cause?: Error) {
+    constructor(message: string, httpStatus: number, responseBody: unknown, cause?: Error) {
         super(message, AnalyticalBackendErrorTypes.UNEXPECTED_HTTP, cause);
 
         this.httpStatus = httpStatus;
@@ -143,14 +143,14 @@ export class NotAuthenticated extends AnalyticalBackendError {
  *
  * @public
  */
-export type ErrorConverter = (e: any) => AnalyticalBackendError;
+export type ErrorConverter = (e: Error) => AnalyticalBackendError;
 
 /**
  * Type guard checking whether input is an instance of {@link AnalyticalBackendError}
  *
  * @public
  */
-export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendError {
+export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError {
     return !isEmpty(obj) && (obj as AnalyticalBackendError).abeType !== undefined;
 }
 
@@ -159,7 +159,7 @@ export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendErro
  *
  * @public
  */
-export function isNoDataError(obj: any): obj is NoDataError {
+export function isNoDataError(obj: unknown): obj is NoDataError {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.NO_DATA;
 }
 
@@ -168,7 +168,7 @@ export function isNoDataError(obj: any): obj is NoDataError {
  *
  * @public
  */
-export function isDataTooLargeError(obj: any): obj is DataTooLargeError {
+export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.DATA_TOO_LARGE;
 }
 
@@ -177,7 +177,7 @@ export function isDataTooLargeError(obj: any): obj is DataTooLargeError {
  *
  * @public
  */
-export function isProtectedDataError(obj: any): obj is ProtectedDataError {
+export function isProtectedDataError(obj: unknown): obj is ProtectedDataError {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.PROTECTED_DATA;
 }
 
@@ -186,7 +186,7 @@ export function isProtectedDataError(obj: any): obj is ProtectedDataError {
  *
  * @public
  */
-export function isUnexpectedResponseError(obj: any): obj is UnexpectedResponseError {
+export function isUnexpectedResponseError(obj: unknown): obj is UnexpectedResponseError {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.UNEXPECTED_HTTP;
 }
 
@@ -195,7 +195,7 @@ export function isUnexpectedResponseError(obj: any): obj is UnexpectedResponseEr
  *
  * @public
  */
-export function isUnexpectedError(obj: any): obj is UnexpectedError {
+export function isUnexpectedError(obj: unknown): obj is UnexpectedError {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.UNEXPECTED;
 }
 
@@ -204,7 +204,7 @@ export function isUnexpectedError(obj: any): obj is UnexpectedError {
  *
  * @public
  */
-export function isNotSupported(obj: any): obj is NotSupported {
+export function isNotSupported(obj: unknown): obj is NotSupported {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.NOT_SUPPORTED;
 }
 
@@ -213,7 +213,7 @@ export function isNotSupported(obj: any): obj is NotSupported {
  *
  * @public
  */
-export function isNotImplemented(obj: any): obj is NotImplemented {
+export function isNotImplemented(obj: unknown): obj is NotImplemented {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.NOT_IMPLEMENTED;
 }
 
@@ -222,6 +222,6 @@ export function isNotImplemented(obj: any): obj is NotImplemented {
  *
  * @public
  */
-export function isNotAuthenticated(obj: any): obj is NotAuthenticated {
+export function isNotAuthenticated(obj: unknown): obj is NotAuthenticated {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.NOT_AUTHENTICATED;
 }

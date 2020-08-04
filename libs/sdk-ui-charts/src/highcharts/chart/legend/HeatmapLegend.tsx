@@ -45,7 +45,7 @@ function HeatmapBoxes(boxes: IHeatmapLegendBox[]) {
 }
 
 export default class HeatmapLegend extends React.PureComponent<IHeatmapLegendProps> {
-    public render() {
+    public render(): React.ReactNode {
         const { series, format, numericSymbols, isSmall, position } = this.props;
 
         const config: IHeatmapLegendConfig = getHeatmapLegendConfiguration(

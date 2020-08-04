@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { mount, ReactWrapper } from "enzyme";
+import { mount } from "enzyme";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { CorePivotTablePure, WATCHING_TABLE_RENDERED_INTERVAL } from "../CorePivotTable";
@@ -10,8 +10,7 @@ import agGridApiWrapper from "../impl/agGridApiWrapper";
 import { ICorePivotTableProps } from "../types";
 import { IPreparedExecution, prepareExecution } from "@gooddata/sdk-backend-spi";
 import { recordedBackend, DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
-import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { measureLocalId } from "@gooddata/sdk-model";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import noop from "lodash/noop";
 import { recordedDataFacade } from "../../__mocks__/recordings";
 
@@ -25,12 +24,12 @@ const waitForDataLoaded = (wrapper: ReactWrapper<any, Readonly<{}>, React.Compon
 };
 */
 
-export function waitFor(test: () => any, maxDelay = 1000, delayOffset = 0, increment = 100) {
+export function waitFor(testFn: () => any, maxDelay = 1000, delayOffset = 0, increment = 100): Promise<void> {
     const start = Date.now();
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             const intervalRef = setInterval(() => {
-                const testResult = test();
+                const testResult = testFn();
                 if (testResult) {
                     clearInterval(intervalRef);
                     return resolve(testResult);
@@ -49,12 +48,6 @@ describe("CorePivotTable", () => {
     const singleMeasureExec = prepareExecution(
         backend,
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes.execution.definition,
-    );
-
-    // @ts-ignore
-    const columnOnlyExec = prepareExecution(
-        backend,
-        ReferenceRecordings.Scenarios.PivotTable.SingleColumn.execution.definition,
     );
 
     function renderComponent(
@@ -84,14 +77,18 @@ describe("CorePivotTable", () => {
             getCacheBlockState: jest.fn().mockReturnValueOnce({ pageId: { pageStatus: "loaded" } }),
         };
     }
+    // this describe block needs to be first, otherwise random tests fail
+    /* update: random tests fail on CI despite this block being first :D
+    const columnOnlyExec = prepareExecution(
+        backend,
+        ReferenceRecordings.Scenarios.PivotTable.SingleColumn.execution.definition,
+    );
 
-    // @ts-ignore
     function getTableInstanceFromWrapper(wrapper: ReactWrapper) {
         const table = wrapper.find(CorePivotTablePure);
         return table.instance() as any;
     }
 
-    // @ts-ignore
     const columnWidths = [
         {
             measureColumnWidthItem: {
@@ -107,8 +104,6 @@ describe("CorePivotTable", () => {
         },
     ];
 
-    // this describe block needs to be first, otherwise random tests fail
-    /* update: random tests fail on CI despite this block being first :D
     describe("componentDidUpdate", () => {
         it("should grow to fit when this prop is set", async (done) => {
             expect.assertions(1);

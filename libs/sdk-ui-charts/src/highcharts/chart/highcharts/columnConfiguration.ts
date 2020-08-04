@@ -34,6 +34,6 @@ const COLUMN_TEMPLATE = {
     ],
 };
 
-export function getColumnConfiguration() {
+export function getColumnConfiguration(): typeof COLUMN_TEMPLATE {
     return cloneDeep(COLUMN_TEMPLATE);
 }

@@ -221,7 +221,7 @@ export class TigerBackend implements IAnalyticalBackend {
         };
     };
 
-    private triggerAuthentication = (reset: boolean = false): Promise<AuthenticatedPrincipal> => {
+    private triggerAuthentication = (reset = false): Promise<AuthenticatedPrincipal> => {
         if (!this.authProvider) {
             return Promise.reject(
                 new NotAuthenticated("Backend is not set up with authentication provider."),

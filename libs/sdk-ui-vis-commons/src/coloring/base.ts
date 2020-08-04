@@ -36,7 +36,9 @@ export abstract class ColorStrategy implements IColorStrategy {
     constructor(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         viewByAttribute: any,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
         dv: DataViewFacade,
     ) {
@@ -62,18 +64,20 @@ export abstract class ColorStrategy implements IColorStrategy {
         return this.palette[index];
     }
 
-    public getColorAssignment() {
+    public getColorAssignment(): IColorAssignment[] {
         return this.outputColorAssignment;
     }
 
-    public getFullColorAssignment() {
+    public getFullColorAssignment(): IColorAssignment[] {
         return this.fullColorAssignment;
     }
 
     protected createPalette(
         colorPalette: IColorPalette,
         colorAssignment: IColorAssignment[],
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         _viewByAttribute: any,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         _stackByAttribute: any,
     ): string[] {
         return colorAssignment.map((map, index: number) => {
@@ -87,7 +91,9 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected abstract createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         viewByAttribute: any,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue;
@@ -125,6 +131,7 @@ function isColorItemInPalette(colorItem: IColor, colorPalette: IColorPalette) {
  * @internal
  */
 export function getAtributeColorAssignment(
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     attribute: any,
     colorPalette: IColorPalette,
     colorMapping: IColorMapping[],

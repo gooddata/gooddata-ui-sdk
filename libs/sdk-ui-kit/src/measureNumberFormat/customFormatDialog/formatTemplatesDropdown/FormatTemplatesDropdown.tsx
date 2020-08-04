@@ -26,7 +26,7 @@ export class FormatTemplatesDropdown extends React.Component<
         isOpened: false,
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { isOpened } = this.state;
         const { templates, separators } = this.props;
         return (

@@ -32,6 +32,6 @@ const BAR_TEMPLATE = {
     ],
 };
 
-export function getBarConfiguration() {
+export function getBarConfiguration(): typeof BAR_TEMPLATE {
     return cloneDeep(BAR_TEMPLATE);
 }

@@ -1,4 +1,4 @@
-// tslint:disable
+// eslint-disable
 {{>licenseInfo}}
 
 export interface ConfigurationParameters {
@@ -19,14 +19,14 @@ export class Configuration {
     apiKey?: string | ((name: string) => string);
     /**
      * parameter for basic security
-     * 
+     *
      * @type {string}
      * @memberof Configuration
      */
     username?: string;
     /**
      * parameter for basic security
-     * 
+     *
      * @type {string}
      * @memberof Configuration
      */
@@ -40,7 +40,7 @@ export class Configuration {
     accessToken?: string | ((name?: string, scopes?: string[]) => string);
     /**
      * override base path
-     * 
+     *
      * @type {string}
      * @memberof Configuration
      */

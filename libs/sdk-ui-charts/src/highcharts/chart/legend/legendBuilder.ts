@@ -16,8 +16,9 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { ILegendOptions, LegendOptionsItemType, DEFAULT_LEGEND_CONFIG } from "../../typings/legend";
 import { isStackedChart } from "./helpers";
 import { supportedDualAxesChartTypes } from "../chartCapabilities";
+import { IChartOptions } from "../../typings/unsafe";
 
-function isHeatmapWithMultipleValues(chartOptions: any) {
+function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;
     const dataClasses: Highcharts.ColorAxisDataClassesOptions[] = get(
         chartOptions,
@@ -28,7 +29,7 @@ function isHeatmapWithMultipleValues(chartOptions: any) {
     return isHeatmap(type) && dataClasses.length > 1;
 }
 
-export function shouldLegendBeEnabled(chartOptions: any) {
+export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     const seriesLength = get(chartOptions, "data.series.length");
     const { type, hasStackByAttribute, hasViewByAttribute } = chartOptions;
 
@@ -56,7 +57,7 @@ export function shouldLegendBeEnabled(chartOptions: any) {
     );
 }
 
-export function getLegendItems(chartOptions: any): LegendOptionsItemType[] {
+export function getLegendItems(chartOptions: IChartOptions): LegendOptionsItemType[] {
     const { type } = chartOptions;
     const firstSeriesDataTypes = [
         VisualizationTypes.PIE,
@@ -108,7 +109,7 @@ export function getLegendItems(chartOptions: any): LegendOptionsItemType[] {
         .map((legendDataSourceItem: any) => pick(legendDataSourceItem, pickedProps));
 }
 
-export default function getLegend(legendConfig: any = {}, chartOptions: any): ILegendOptions {
+export default function getLegend(legendConfig: any = {}, chartOptions: IChartOptions): ILegendOptions {
     const defaultLegendConfigByType = {};
     const rightLegendCharts = [
         VisualizationTypes.SCATTER,

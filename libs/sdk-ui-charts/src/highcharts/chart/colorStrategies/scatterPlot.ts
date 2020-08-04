@@ -9,7 +9,9 @@ export class ScatterPlotColorStrategy extends PointsChartColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
         colorMapping: IColorMapping[],
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         _viewByAttribute: any,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         _stackByAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {
@@ -22,7 +24,9 @@ export class ScatterPlotColorStrategy extends PointsChartColorStrategy {
     protected createPalette(
         colorPalette: IColorPalette,
         colorAssignment: IColorAssignment[],
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         _viewByAttribute: any,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
     ): string[] {
         return super.createSingleColorPalette(colorPalette, colorAssignment, stackByAttribute);

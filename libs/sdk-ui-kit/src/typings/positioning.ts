@@ -38,3 +38,11 @@ export interface IPositioning {
     snapPoints: ISnapPoints;
     offset?: IOffset;
 }
+
+/**
+ * @internal
+ */
+export interface IAlignPoint {
+    align: string;
+    offset: IOffset;
+}

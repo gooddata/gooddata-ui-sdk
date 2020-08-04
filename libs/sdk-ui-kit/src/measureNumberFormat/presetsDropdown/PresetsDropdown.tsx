@@ -30,7 +30,7 @@ export class PresetsDropdown extends React.PureComponent<IMeasureNumberFormatDro
         ],
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { presets, anchorEl, onClose, positioning } = this.props;
 
         return (

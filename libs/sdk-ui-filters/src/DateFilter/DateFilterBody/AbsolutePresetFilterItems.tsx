@@ -25,7 +25,6 @@ export const AbsolutePresetFilterItems: React.FC<IAbsolutePresetFilterItemsProps
             <ListItem
                 key={item.localIdentifier}
                 isSelected={item.localIdentifier === selectedFilterOption.localIdentifier}
-                // tslint:disable-next-line:jsx-no-lambda
                 onClick={() => onSelectedFilterOptionChange(item)}
                 className={cx(`s-absolute-preset-${kebabCase(item.localIdentifier)}`, className)}
             >

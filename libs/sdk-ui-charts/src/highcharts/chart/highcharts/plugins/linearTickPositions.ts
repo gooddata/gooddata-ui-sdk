@@ -1,10 +1,13 @@
 // (C) 2007-2020 GoodData Corporation
-export function linearTickPositions(Highcharts: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function linearTickPositions(Highcharts: any): void {
     const wrap = Highcharts.wrap;
     const YAXIS = "yAxis";
     const HEATMAP = "heatmap";
 
     wrap(Highcharts.Axis.prototype, "getLinearTickPositions", function (proceed: (...params: any[]) => any) {
+        // TODO fix this, I'm not brave enough to touch this...
+        // eslint-disable-next-line prefer-rest-params
         const args = Array.prototype.slice.call(arguments);
         args.shift();
         const {

@@ -22,7 +22,7 @@ import { noRowsAndHasOneMeasure, noColumnsAndHasOneMeasure } from "../../utils/b
 import { IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 
 export default class HeatMapConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         const { featureFlags, propertiesMeta, properties, pushData } = this.props;
         const { xAxisVisible, yAxisVisible } = this.getControlProperties();
 

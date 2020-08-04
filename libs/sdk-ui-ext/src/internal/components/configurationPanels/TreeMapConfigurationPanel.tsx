@@ -16,7 +16,7 @@ import {
 } from "../../constants/bubble";
 
 export default class TreeMapConfigurationPanel extends ConfigurationPanelContent {
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(): React.ReactNode {
         const { propertiesMeta, properties, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
 
@@ -51,7 +51,7 @@ export default class TreeMapConfigurationPanel extends ConfigurationPanelContent
         );
     }
 
-    private getBubbleClassNames() {
+    private getBubbleClassNames(): string {
         return cx("bubble-primary", {
             invisible: !this.isControlDisabled(),
         });

@@ -14,7 +14,7 @@ import get from "lodash/get";
 import includes from "lodash/includes";
 import * as HttpStatusCodes from "http-status-codes";
 
-export function isApiResponseError(error: any): error is ApiResponseError {
+export function isApiResponseError(error: unknown): error is ApiResponseError {
     return (error as ApiResponseError).response !== undefined;
 }
 
@@ -42,7 +42,7 @@ function isComplainingAboutAuthorization(error: ApiResponseError): boolean {
     return includes(message, "Attempt to execute protected report unsafely");
 }
 
-export function convertExecutionApiError(error: any): AnalyticalBackendError {
+export function convertExecutionApiError(error: Error): AnalyticalBackendError {
     if (isApiResponseError(error)) {
         if (error.response.status === HttpStatusCodes.NO_CONTENT) {
             return new NoDataError("Server returned no data");
@@ -59,7 +59,7 @@ export function convertExecutionApiError(error: any): AnalyticalBackendError {
     return convertApiError(error);
 }
 
-export function convertApiError(error: any): AnalyticalBackendError {
+export function convertApiError(error: Error): AnalyticalBackendError {
     if (isAnalyticalBackendError(error)) {
         return error;
     }

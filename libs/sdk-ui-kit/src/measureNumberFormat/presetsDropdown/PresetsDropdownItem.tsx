@@ -19,7 +19,7 @@ export class PresetsDropdownItem extends React.PureComponent<IMeasureNumberForma
         isSelected: false,
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { preset, separators, isSelected } = this.props;
         const { localIdentifier, name, previewNumber, format } = preset;
 

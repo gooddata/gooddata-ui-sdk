@@ -8,11 +8,11 @@ export default class MenuOpenedByHover extends React.Component<IMenuOpenedByShar
 
     private timerCloseDelay: number = null;
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.clearCloseDelayTimer();
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <MenuPosition
                 toggler={
@@ -35,18 +35,18 @@ export default class MenuOpenedByHover extends React.Component<IMenuOpenedByShar
         );
     }
 
-    private clearCloseDelayTimer = () => {
+    private clearCloseDelayTimer = (): void => {
         window.clearTimeout(this.timerCloseDelay);
     };
 
-    private hoverStart = () => {
+    private hoverStart = (): void => {
         this.clearCloseDelayTimer();
         this.timerCloseDelay = window.setTimeout(() => {
             this.props.onOpenedChange({ opened: true, source: "HOVER_TIMEOUT" });
         }, MenuOpenedByHover.openCloseDelayMs);
     };
 
-    private hoverEnd = () => {
+    private hoverEnd = (): void => {
         this.clearCloseDelayTimer();
         this.timerCloseDelay = window.setTimeout(() => {
             this.props.onOpenedChange({ opened: false, source: "HOVER_TIMEOUT" });

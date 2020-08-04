@@ -29,7 +29,7 @@ export class CancelError extends Error {
     /**
      * Underlying cause of this error (if any).
      */
-    public getReason() {
+    public getReason(): string | undefined {
         return this.reason;
     }
 }
@@ -37,7 +37,7 @@ export class CancelError extends Error {
 /**
  * @internal
  */
-export const isCancelError = (obj: any): obj is CancelError => {
+export const isCancelError = (obj: unknown): obj is CancelError => {
     return isError(obj) && obj.message === CANCEL_ERROR_MESSAGE;
 };
 

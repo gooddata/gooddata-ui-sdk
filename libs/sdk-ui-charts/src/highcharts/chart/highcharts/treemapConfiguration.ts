@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 
-const TREEMAP_TEMPLATE: any = {
+const TREEMAP_TEMPLATE = {
     chart: {
         type: "treemap",
         margin: [0, 0, 5, 0],
@@ -48,6 +48,6 @@ const TREEMAP_TEMPLATE: any = {
     },
 };
 
-export function getTreemapConfiguration() {
+export function getTreemapConfiguration(): typeof TREEMAP_TEMPLATE {
     return cloneDeep(TREEMAP_TEMPLATE);
 }

@@ -48,7 +48,7 @@ function getClassnames(props: IGeoChartLegendRendererProps, availableLegends: IA
     });
 }
 
-export default function GeoChartLegendRenderer(props: IGeoChartLegendRendererProps) {
+export default function GeoChartLegendRenderer(props: IGeoChartLegendRendererProps): JSX.Element | null {
     const { categoryItems = [], geoData = {}, height, numericSymbols = [] } = props;
     const position = props.position ?? "top";
 
@@ -185,7 +185,10 @@ function renderPushpinCategoryLegend(
     return <PushpinCategoryLegend {...props} contentRect={contentRect} hasSizeLegend={hasSizeLegend} />;
 }
 
-function renderPushpinSizeLegend(props: IGeoChartLegendRendererProps, hasSizeLegend: boolean) {
+function renderPushpinSizeLegend(
+    props: IGeoChartLegendRendererProps,
+    hasSizeLegend: boolean,
+): JSX.Element | null {
     if (!hasSizeLegend) {
         return null;
     }
@@ -193,7 +196,7 @@ function renderPushpinSizeLegend(props: IGeoChartLegendRendererProps, hasSizeLeg
     const { geoData, numericSymbols = [] } = props;
 
     if (!geoData || !geoData.size) {
-        return;
+        return null;
     }
 
     const {

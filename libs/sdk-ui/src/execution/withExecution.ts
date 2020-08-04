@@ -67,7 +67,9 @@ export interface IWithExecution<T> {
  *
  * @internal
  */
-export function withExecution<T>(params: IWithExecution<T>) {
+export function withExecution<T>(
+    params: IWithExecution<T>,
+): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentClass<T, any> {
     const { execution, events, loadOnMount, shouldRefetch, window, exportTitle } = params;
 
     return (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => {

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 export interface IDummyPromise<R, E> {
     willResolve?: boolean;
     result?: R;
@@ -6,7 +6,12 @@ export interface IDummyPromise<R, E> {
     delay: number;
 }
 
-export const createDummyPromise = <R, E>({ willResolve = true, result, error, delay }: IDummyPromise<R, E>) =>
+export const createDummyPromise = <R, E>({
+    willResolve = true,
+    result,
+    error,
+    delay,
+}: IDummyPromise<R, E>): Promise<R> =>
     new Promise<R>((resolve, reject) => {
         setTimeout(() => {
             if (willResolve) {

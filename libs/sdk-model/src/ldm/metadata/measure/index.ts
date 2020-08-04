@@ -26,6 +26,6 @@ export interface IMeasureMetadataObject extends IMetadataObject {
  * @param obj - object to test
  * @public
  */
-export function isMeasureMetadataObject(obj: any): obj is IMeasureMetadataObject {
+export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataObject {
     return isMetadataObject(obj) && obj.type === "measure";
 }

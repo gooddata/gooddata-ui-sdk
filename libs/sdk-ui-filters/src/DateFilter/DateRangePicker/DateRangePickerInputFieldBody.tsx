@@ -9,14 +9,14 @@ export class DateRangePickerInputFieldBody extends React.Component<
 > {
     private inputRef = React.createRef<HTMLInputElement>();
 
-    public invokeInputMethod = (key: "blur" | "focus") => {
+    public invokeInputMethod = (key: "blur" | "focus"): void => {
         if (this.inputRef.current) {
             this.inputRef.current[key]();
         }
     };
 
-    public blur = () => this.invokeInputMethod("blur");
-    public focus = () => this.invokeInputMethod("focus");
+    public blur = (): void => this.invokeInputMethod("blur");
+    public focus = (): void => this.invokeInputMethod("focus");
 
     public get value(): string {
         if (this.inputRef.current) {

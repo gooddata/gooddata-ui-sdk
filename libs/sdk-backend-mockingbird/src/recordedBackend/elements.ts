@@ -24,8 +24,8 @@ export class RecordedElementQueryFactory implements IElementQueryFactory {
 }
 
 class RecordedElements implements IElementQuery {
-    private limit: number = 50;
-    private offset: number = 0;
+    private limit = 50;
+    private offset = 0;
     private options: IElementQueryOptions = {};
 
     constructor(private ref: ObjRef, private recordings: RecordingIndex) {}

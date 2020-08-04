@@ -272,7 +272,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
         this.props.onExportReady(decorator);
     };
 
-    private getRemoteResource = async <T extends {}>(
+    private getRemoteResource = async <T extends any>(
         resourceObtainer: (loader: IInsightViewDataLoader) => Promise<T>,
     ) => {
         try {

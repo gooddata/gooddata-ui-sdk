@@ -66,7 +66,7 @@ export class InputControl extends React.Component<
         this.triggerBlur = this.triggerBlur.bind(this);
     }
 
-    public UNSAFE_componentWillReceiveProps(newProps: IInputControlProps & WrappedComponentProps) {
+    public UNSAFE_componentWillReceiveProps(newProps: IInputControlProps & WrappedComponentProps): void {
         if (newProps.value !== this.state.value) {
             this.setState({
                 value: newProps.value,
@@ -75,7 +75,7 @@ export class InputControl extends React.Component<
         }
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { disabled, labelText, placeholder, showDisabledMessage, intl, type } = this.props;
 
         return (

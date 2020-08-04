@@ -13,6 +13,7 @@ const DocumentationLink = ({ url }: IDocumentationLinkProps) => (
         <a
             className="gd-measure-format-button s-custom-format-dialog-documentation-link"
             target="_blank"
+            rel="noreferrer noopener"
             href={url}
         >
             <div className="icon-circle-question gd-measure-format-button-icon-left" />

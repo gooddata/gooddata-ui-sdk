@@ -36,7 +36,6 @@ export const GranularityTabs: React.FC<IGranularityTabsProps> = ({
                 <Tab
                     key={granularity}
                     selected={granularity === selectedGranularity}
-                    // tslint:disable-next-line: jsx-no-lambda
                     onClick={() => onSelectedGranularityChange(granularity)}
                     className={`s-granularity-${intlGranularity}`}
                 >

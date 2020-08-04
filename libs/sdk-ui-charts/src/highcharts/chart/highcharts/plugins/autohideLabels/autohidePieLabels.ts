@@ -3,11 +3,12 @@ import get from "lodash/get";
 import fill from "lodash/fill";
 
 import { getVisibleSeries, getDataPoints, isIntersecting, IRectBySize } from "../../helpers";
+import Highcharts from "../../highchartsEntryPoint";
 
 // delete this plugin once we upgrade to newer highcharts,
 // set allowOverlap: false to get this behaviour
 
-const autohidePieLabels = (chart: any) => {
+const autohidePieLabels = (chart: Highcharts.Chart): void => {
     const visibleSeries = getVisibleSeries(chart);
     const visiblePoints = getDataPoints(visibleSeries);
     if (!visiblePoints || visiblePoints.length === 0) {

@@ -36,6 +36,6 @@ export interface ICatalogAttribute extends IGroupableCatalogItemBase {
  *
  * @public
  */
-export function isCatalogAttribute(obj: any): obj is ICatalogAttribute {
+export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute {
     return !isEmpty(obj) && (obj as ICatalogAttribute).type === "attribute";
 }

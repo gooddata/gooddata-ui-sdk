@@ -48,6 +48,7 @@ export const userLoginMd5FromAuthenticatedPrincipal = async (
  * @param uri - URI to get objectId from
  */
 export const getObjectIdFromUri = (uri: string): string => {
+    // eslint-disable-next-line no-useless-escape
     const match = /\/obj\/([^$\/\?]*)/.exec(uri);
     return match ? match[1] : "";
 };

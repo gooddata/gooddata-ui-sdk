@@ -40,30 +40,28 @@ interface ICityOptions {
         | undefined;
 }
 
-export class ParentFilterExample extends Component<{}, IParentFilterExampleState> {
-    constructor(props: any) {
-        super(props);
+export class ParentFilterExample extends Component<unknown, IParentFilterExampleState> {
+    state: IParentFilterExampleState = {
+        stateFilterValues: [],
+        cityFilterValues: [],
+    };
 
-        this.renderFilter = this.renderFilter.bind(this);
-        this.state = {
-            stateFilterValues: [],
-            cityFilterValues: [],
-        };
-    }
-
-    public onStateChange = (stateFilterValues: IFilterValue[]) => {
+    public onStateChange = (stateFilterValues: IFilterValue[]): void => {
         this.setState({
             stateFilterValues,
         });
     };
 
-    public onCityChange = (cityFilterValues: IFilterValue[]) => {
+    public onCityChange = (cityFilterValues: IFilterValue[]): void => {
         this.setState({
             cityFilterValues,
         });
     };
 
-    public renderInsightView(stateFilterValues: IFilterValue[], cityFilterValues: IFilterValue[]) {
+    public renderInsightView = (
+        stateFilterValues: IFilterValue[],
+        cityFilterValues: IFilterValue[],
+    ): React.ReactNode => {
         const visFilters = [];
 
         if (stateFilterValues.length) {
@@ -91,21 +89,23 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
                 />
             </div>
         );
-    }
+    };
 
-    public renderFilter(
+    public renderFilter = (
         key: string,
         displayForm: ObjRef,
         filterValues: IFilterValue[],
         placeholder: string,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         options: any,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         onChange: any,
-    ) {
+    ): React.ReactNode => {
         return (
             <AttributeElements key={key} displayForm={displayForm} options={options}>
                 {({ validElements, isLoading, error }) => {
                     if (error) {
-                        // tslint:disable-next-line: no-console
+                        // eslint-disable-next-line no-console
                         console.error("Loading attribute elements failed!", error);
                     }
                     const selectOptions = validElements
@@ -145,9 +145,9 @@ export class ParentFilterExample extends Component<{}, IParentFilterExampleState
                 }}
             </AttributeElements>
         );
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         const { stateFilterValues, cityFilterValues } = this.state;
         // State (parent) filter
         const stateFilter = this.renderFilter(

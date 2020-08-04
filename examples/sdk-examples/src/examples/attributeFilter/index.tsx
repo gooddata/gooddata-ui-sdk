@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 
 import { ExampleWithSource } from "../../components/ExampleWithSource";
@@ -15,7 +16,7 @@ import AttributeFilterComponentExampleSRCJS from "!raw-loader!../../../examplesJ
 import AttributeElementsExampleSRCJS from "!raw-loader!../../../examplesJS/attributeFilter/AttributeElementsExample";
 import AttributeFilterExampleSRCJS from "!raw-loader!../../../examplesJS/attributeFilter/AttributeFilterExample";
 
-export const AttributeFilter = () => (
+export const AttributeFilter = (): JSX.Element => (
     <div>
         <h1>Attribute Filter Component</h1>
 

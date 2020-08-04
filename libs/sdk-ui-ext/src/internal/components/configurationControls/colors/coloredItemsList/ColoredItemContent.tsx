@@ -10,7 +10,7 @@ export interface IColoredItemContentProps extends ISelectableChild {
 }
 
 export default class ColoredItemContent extends React.PureComponent<IColoredItemContentProps> {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div className={this.getClassName()}>
                 <div className={this.getIconStyle()} style={{ backgroundColor: this.getBackgroundColor() }} />

@@ -11,7 +11,7 @@
         "dist"
     ],
     "config": {
-        "tslint": "./{src,test}/**/*.ts"
+        "eslint": "-c .eslintrc.js --ext ts ./src/**/*.ts"
     },
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
@@ -21,14 +21,14 @@
         "test": "jest --watch",
         "test-once": "jest",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
-        "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
-        "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "eslint": "eslint $npm_package_config_eslint",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "validate": "npm run dep-cruiser && npm run tslint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
+        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
         "@gooddata/sdk-backend-base": "^8.0.0-beta.28",
@@ -40,19 +40,24 @@
     },
     "devDependencies": {
         "@gooddata/api-model-bear": "^8.0.0-beta.28",
+        "@gooddata/eslint-config": "^2.0.0",
         "@gooddata/reference-workspace": "^8.0.0-beta.28",
-        "@gooddata/tslint-config": "1.0.0",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^25.1.2",
         "@types/lodash": "^4.14.123",
         "@types/node": "^12.12.26",
+        "@typescript-eslint/eslint-plugin": "^3.7.1",
+        "@typescript-eslint/parser": "^3.7.1",
         "dependency-cruiser": "^8.0.1",
-        "jest": "^25.1.0",
+        "eslint-plugin-header": "^3.0.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-jest": "^23.20.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "eslint": "^7.5.0",
         "jest-junit": "^3.0.0",
+        "jest": "^25.1.0",
         "prettier": "~2.0.5",
         "ts-jest": "^25.2.0",
-        "tslint": "^5.14.0",
-        "tslint-config-prettier": "^1.18.0",
         "typescript": "3.9.5"
     }
 }

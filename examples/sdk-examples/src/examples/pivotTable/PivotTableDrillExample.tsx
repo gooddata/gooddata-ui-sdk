@@ -50,16 +50,17 @@ const drillableItems = [
     HeaderPredicates.identifierMatch(measureIdentifier(Ldm.$FranchiseFees)!),
 ];
 
-export class PivotTableDrillExample extends Component<{}, { drillEvent: any }> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            drillEvent: null,
-        };
-    }
+interface IPivotTableDrillExampleState {
+    drillEvent: IDrillEvent | null;
+}
 
-    public onDrill = (drillEvent: IDrillEvent) => {
-        // tslint:disable-next-line:no-console
+export class PivotTableDrillExample extends Component<unknown, IPivotTableDrillExampleState> {
+    state: IPivotTableDrillExampleState = {
+        drillEvent: null,
+    };
+
+    public onDrill = (drillEvent: IDrillEvent): boolean => {
+        // eslint-disable-next-line no-console
         console.log(
             "onFiredDrillEvent",
             drillEvent,
@@ -71,14 +72,18 @@ export class PivotTableDrillExample extends Component<{}, { drillEvent: any }> {
         return true;
     };
 
-    public renderDrillValue() {
+    public renderDrillValue = (): React.ReactNode => {
         const { drillEvent } = this.state;
 
         if (!drillEvent) {
             return null;
         }
 
-        const drillColumn = drillEvent.drillContext.row[drillEvent.drillContext.columnIndex];
+        const drillColumn =
+            drillEvent.drillContext.row && drillEvent.drillContext.columnIndex
+                ? drillEvent.drillContext.row[drillEvent.drillContext.columnIndex]
+                : undefined;
+
         const drillValue = typeof drillColumn === "object" ? drillColumn.name : drillColumn;
 
         return (
@@ -86,9 +91,9 @@ export class PivotTableDrillExample extends Component<{}, { drillEvent: any }> {
                 You have Clicked <span className="s-drill-value">{drillValue}</span>{" "}
             </h3>
         );
-    }
+    };
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div>
                 {this.renderDrillValue()}

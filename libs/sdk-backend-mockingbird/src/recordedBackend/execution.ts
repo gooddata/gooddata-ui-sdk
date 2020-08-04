@@ -43,10 +43,11 @@ export const DataViewAll = `${DataViewPrefix}all`;
 /**
  * @internal
  */
-export const dataViewWindow = (offset: number[], size: number[]) =>
+export const dataViewWindow = (offset: number[], size: number[]): string =>
     `${DataViewPrefix}${dataViewWindowId(offset, size)}`;
 
-const dataViewWindowId = (offset: number[], size: number[]) => `o${offset.join("_")}s${size.join("_")}`;
+const dataViewWindowId = (offset: number[], size: number[]): string =>
+    `o${offset.join("_")}s${size.join("_")}`;
 
 /**
  * @internal

@@ -26,19 +26,21 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
         opened: false,
     };
 
-    public render = () => (
-        <>
-            {this.renderDropdownButton()}
-            {this.state.opened ? (
-                <OperatorDropdownBody
-                    alignTo={".gd-mvf-operator-dropdown-button"}
-                    onSelect={this.handleOperatorSelected}
-                    selectedOperator={this.props.operator}
-                    onClose={this.closeOperatorDropdown}
-                />
-            ) : null}
-        </>
-    );
+    public render(): React.ReactNode {
+        return (
+            <>
+                {this.renderDropdownButton()}
+                {this.state.opened ? (
+                    <OperatorDropdownBody
+                        alignTo={".gd-mvf-operator-dropdown-button"}
+                        onSelect={this.handleOperatorSelected}
+                        selectedOperator={this.props.operator}
+                        onClose={this.closeOperatorDropdown}
+                    />
+                ) : null}
+            </>
+        );
+    }
 
     private renderDropdownButton() {
         const { intl, operator } = this.props;

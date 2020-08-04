@@ -94,13 +94,13 @@ const getComparativeSeries = (seriesItemConfig: IPointData) => ({
     bulletChartMeasureType: "comparative",
 });
 
-export const isPrimarySeries = (seriesIndex: number, bucketsLocalIdentifiers: Identifier[]) =>
+export const isPrimarySeries = (seriesIndex: number, bucketsLocalIdentifiers: Identifier[]): boolean =>
     seriesIndex === bucketsLocalIdentifiers.indexOf(BucketNames.MEASURES);
 
-export const isTargetSeries = (seriesIndex: number, bucketsLocalIdentifiers: Identifier[]) =>
+export const isTargetSeries = (seriesIndex: number, bucketsLocalIdentifiers: Identifier[]): boolean =>
     seriesIndex === bucketsLocalIdentifiers.indexOf(BucketNames.SECONDARY_MEASURES);
 
-export const isComparativeSeries = (seriesIndex: number, bucketsLocalIdentifiers: Identifier[]) =>
+export const isComparativeSeries = (seriesIndex: number, bucketsLocalIdentifiers: Identifier[]): boolean =>
     seriesIndex === bucketsLocalIdentifiers.indexOf(BucketNames.TERTIARY_MEASURES);
 
 const getSeries = (
@@ -124,7 +124,7 @@ export function getBulletChartSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     colorStrategy: IColorStrategy,
-) {
+): any {
     const occupiedMeasureBucketsLocalIdentifiers = getOccupiedMeasureBucketsLocalIdentifiers(dv);
     const executionResultData = dv.rawData().twoDimData();
 

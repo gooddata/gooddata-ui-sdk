@@ -51,7 +51,7 @@ function setBarDataLabelsColor(chart: any) {
     });
 }
 
-export function isWhiteNotContrastEnough(color: string) {
+export function isWhiteNotContrastEnough(color: string): boolean {
     // to keep first 17 colors from our default palette with white labels
     const HIGHCHARTS_CONTRAST_THRESHOLD = 530;
 
@@ -73,7 +73,8 @@ function setContrastLabelsColor(chart: any) {
     });
 }
 
-export function extendDataLabelColors(Highcharts: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function extendDataLabelColors(Highcharts: any): void {
     Highcharts.Chart.prototype.callbacks.push((chart: any) => {
         const type: string = getChartType(chart);
 

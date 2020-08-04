@@ -33,7 +33,7 @@ export interface IBaseChartProps extends ICoreChartProps {
 
 type Props = IBaseChartProps & ILoadingInjectedProps;
 
-class StatelessBaseChart extends React.Component<Props, {}> {
+class StatelessBaseChart extends React.Component<Props> {
     public static defaultProps: Partial<Props> = {
         ...defaultCoreChartProps,
         onDataTooLarge: noop,
@@ -58,7 +58,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
 
         if (error) {
             const errorProps = this.errorMap[
-                this.errorMap.hasOwnProperty(error) ? error : ErrorCodes.UNKNOWN_ERROR
+                Object.prototype.hasOwnProperty.call(this.errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
             ];
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
