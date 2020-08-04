@@ -97,8 +97,15 @@ export type ColumnWidthItem =
     | IAllMeasureColumnWidthItem
     | IWeakMeasureColumnWidthItem;
 
-type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
-interface IAttributeLocatorItem {
+/**
+ * @public
+ */
+export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
+
+/**
+ * @public
+ */
+export interface IAttributeLocatorItem {
     attributeLocatorItem: {
         attributeIdentifier: Identifier;
         element?: string; // this is difference from AFM.IAttributeLocatorItem
