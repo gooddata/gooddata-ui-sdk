@@ -29,14 +29,10 @@ export interface ILegendProps {
     validateOverHeight(legendClient: Rect): void;
 }
 
-export interface ILegendState {
-    showFluid: boolean;
-}
-
 /**
  * @internal
  */
-export class Legend extends React.PureComponent<ILegendProps, ILegendState> {
+export class Legend extends React.PureComponent<ILegendProps> {
     public static defaultProps = {
         responsive: false,
         legendItemsEnabled: [] as any,

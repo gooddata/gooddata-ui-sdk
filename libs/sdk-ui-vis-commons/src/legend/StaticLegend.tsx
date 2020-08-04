@@ -20,15 +20,11 @@ export interface IStaticLegendProps {
     onItemClick?(item: IPushpinCategoryLegendItem): void;
 }
 
-interface IStaticLegendState {
-    page: number;
-}
-
 /**
  * @internal
  */
-export class StaticLegend extends React.PureComponent<IStaticLegendProps, IStaticLegendState> {
-    public state: IStaticLegendState = {
+export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
+    public state = {
         page: 1,
     };
 
