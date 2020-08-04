@@ -8,8 +8,6 @@ import { GdcExecuteAFM } from '@gooddata/api-model-bear';
 import { GdcExport } from '@gooddata/api-model-bear';
 import { GdcVisualizationObject } from '@gooddata/api-model-bear';
 
-// Warning: (ae-internal-missing-underscore) The name "addListener" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export function addListener(listener: GdcMessageEventListener, target?: Window & typeof globalThis): void;
 
@@ -502,8 +500,6 @@ export interface IGdcMessageEventListenerConfig {
     validReceivedPostEvents: string[];
 }
 
-// Warning: (ae-internal-missing-underscore) The name "IHost" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export interface IHost {
     // (undocumented)
@@ -536,23 +532,15 @@ export interface ISimpleDrillableItemsCommandBody {
     uris?: string[];
 }
 
-// Warning: (ae-internal-missing-underscore) The name "postEvent" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export function postEvent(product: string, name: string, data: object, contextId?: string): void;
 
-// Warning: (ae-internal-missing-underscore) The name "removeListener" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export function removeListener(listener: GdcMessageEventListener, target?: Window & typeof globalThis): void;
 
-// Warning: (ae-internal-missing-underscore) The name "setConfig" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export function setConfig(product: string, validReceivedPostEvents: string[]): void;
 
-// Warning: (ae-internal-missing-underscore) The name "setHost" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export const setHost: (h: IHost) => void;
 
