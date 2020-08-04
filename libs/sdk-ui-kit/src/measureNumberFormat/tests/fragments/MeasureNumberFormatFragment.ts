@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { ReactWrapper } from "enzyme";
-import { string as stringUtils } from "@gooddata/js-utils";
+import { stringUtils } from "@gooddata/utilities";
 import { UnControlled as CodeMirrorInput } from "react-codemirror2";
 
 const CUSTOM_FORMAT_APPLY_BUTTON_SELECTOR = ".s-custom-format-dialog-apply";

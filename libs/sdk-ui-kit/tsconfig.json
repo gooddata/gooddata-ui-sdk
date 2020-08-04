@@ -18,7 +18,8 @@
         "suppressImplicitAnyIndexErrors": true,
         "baseUrl": "..",
         "paths": {
-            "@gooddata/sdk-ui": ["sdk-ui/src"]
+            "@gooddata/sdk-ui": ["sdk-ui/src"],
+            "@gooddata/utilities": ["utilities/src"]
         }
     },
     "compileOnSave": false,
