@@ -7,6 +7,10 @@ import {
     IPreparedExecution,
     isAttributeDescriptor,
     isNoDataError,
+    isUnexpectedResponseError,
+    IMeasureGroupDescriptor,
+    isMeasureGroupDescriptor,
+    IDimensionDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { defFingerprint, defTotals, ITotal, SortDirection } from "@gooddata/sdk-model";
 import {
@@ -27,6 +31,9 @@ import cx from "classnames";
 import CustomEvent from "custom-event";
 import React from "react";
 import { injectIntl } from "react-intl";
+import flatMap from "lodash/fp/flatMap";
+import filter from "lodash/fp/filter";
+import flow from "lodash/fp/flow";
 
 import "../styles/css/pivotTable.css";
 import {
@@ -303,6 +310,33 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         };
     };
 
+    private getAvailableDrillTargetsFromExecutionResult(
+        executionResult: IExecutionResult,
+    ): IAvailableDrillTargets {
+        const attributeDescriptors: IAttributeDescriptor[] = flow(
+            flatMap((dimensionDescriptor: IDimensionDescriptor) => dimensionDescriptor.headers),
+            filter(isAttributeDescriptor),
+        )(executionResult.dimensions);
+
+        const measureDescriptors: IMeasureDescriptor[] = flow(
+            flatMap((dimensionDescriptor: IDimensionDescriptor) => dimensionDescriptor.headers),
+            filter(isMeasureGroupDescriptor),
+            flatMap(
+                (measureGroupDescriptor: IMeasureGroupDescriptor) =>
+                    measureGroupDescriptor.measureGroupHeader.items,
+            ),
+        )(executionResult.dimensions);
+
+        return {
+            measures: measureDescriptors.map(
+                (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
+                    measure,
+                    attributes: attributeDescriptors,
+                }),
+            ),
+        };
+    }
+
     private onLoadingChanged = (loadingState: ILoadingState): void => {
         const { onLoadingChanged } = this.props;
 
@@ -386,6 +420,19 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     .catch((error) => {
                         if (this.unmounted) {
                             return;
+                        }
+
+                        /**
+                         * When execution result is received successfully,
+                         * but data load fails with unexpected http response,
+                         * we still want to push availableDrillTargets
+                         */
+                        if (isUnexpectedResponseError(error)) {
+                            const availableDrillTargets = this.getAvailableDrillTargetsFromExecutionResult(
+                                result,
+                            );
+
+                            this.props.pushData({ availableDrillTargets });
                         }
 
                         /*
