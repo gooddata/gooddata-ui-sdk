@@ -301,6 +301,13 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/utilities",
+            "projectFolder": "libs/utilities",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-embedding",
             "projectFolder": "libs/sdk-embedding",
             "reviewCategory": "production",
