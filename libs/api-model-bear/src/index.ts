@@ -21,7 +21,17 @@ export { GdcMetadataObject } from "./meta/GdcMetadataObject";
 export { GdcScheduledMail } from "./scheduledMail/GdcScheduledMail";
 export { GdcProjectDashboard } from "./projectDashboard/GdcProjectDashboard";
 export { GdcPaging } from "./base/GdcPaging";
-export { MaqlExpression, NumberAsString, Timestamp, Uri } from "./aliases";
+export {
+    BooleanAsString,
+    DateString,
+    Email,
+    Identifier,
+    MaqlExpression,
+    NumberAsString,
+    TimeIso8601,
+    Timestamp,
+    Uri,
+} from "./aliases";
 
 export { sanitizeDateFilters } from "./filterContext/utils";
 export { getAttributesDisplayForms } from "./visualizationObject/utils";
