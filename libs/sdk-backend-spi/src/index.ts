@@ -173,6 +173,7 @@ export {
     IDashboardDateFilterReference,
     isDashboardAttributeFilterReference,
     isDashboardDateFilterReference,
+    IFilterContextBase,
 } from "./workspace/dashboards/filterContext";
 export {
     Layout,
@@ -216,6 +217,7 @@ export {
     SupportedWidgetReferenceTypes,
     widgetUri,
     widgetType,
+    IWidgetBase,
 } from "./workspace/dashboards/widget";
 export {
     ILegacyKpi,
@@ -241,6 +243,7 @@ export {
     IScheduledMail,
     IScheduledMailDefinition,
     ScheduledMailAttachment,
+    IScheduledMailBase,
 } from "./workspace/dashboards/scheduledMail";
 export { IWorkspaceUser, IWorkspaceUsersQuery, IWorkspaceUsersQueryOptions } from "./workspace/users";
 export {

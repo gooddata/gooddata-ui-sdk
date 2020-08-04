@@ -186,10 +186,8 @@ export interface IAnalyticalBackend {
 // @public
 export interface IAnalyticalWorkspace {
     catalog(): IWorkspaceCatalogFactory;
-    // Warning: (ae-incompatible-release-tags) The symbol "dashboards" is marked as @public, but its signature references "IWorkspaceDashboards" which is marked as @alpha
     dashboards(): IWorkspaceDashboards;
     dataSets(): IWorkspaceDatasetsService;
-    // Warning: (ae-incompatible-release-tags) The symbol "dateFilterConfigs" is marked as @public, but its signature references "IWorkspaceDateFilterConfigsQuery" which is marked as @alpha
     dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery;
     elements(): IElementQueryFactory;
     execution(): IExecutionFactory;
@@ -341,8 +339,6 @@ export interface IDateFilterConfig {
     selectedOption: Identifier;
 }
 
-// Warning: (ae-incompatible-release-tags) The symbol "IDateFilterConfigsQueryResult" is marked as @public, but its signature references "IDateFilterConfig" which is marked as @alpha
-//
 // @public
 export interface IDateFilterConfigsQueryResult extends IPagedResource<IDateFilterConfig> {
 }
@@ -497,10 +493,15 @@ export interface IExportResult {
     uri: string;
 }
 
-// Warning: (ae-forgotten-export) The symbol "IFilterContextBase" needs to be exported by the entry point index.d.ts
-//
 // @alpha
 export interface IFilterContext extends IFilterContextBase, IDashboardObjectIdentity {
+}
+
+// @alpha
+export interface IFilterContextBase {
+    readonly description: string;
+    readonly filters: FilterContextItem[];
+    readonly title: string;
 }
 
 // @alpha
@@ -756,10 +757,27 @@ export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackend
 // @public
 export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor;
 
-// Warning: (ae-forgotten-export) The symbol "IScheduledMailBase" needs to be exported by the entry point index.d.ts
-//
 // @alpha
 export interface IScheduledMail extends IScheduledMailBase, IDashboardObjectIdentity {
+}
+
+// @alpha
+export interface IScheduledMailBase {
+    attachments: ScheduledMailAttachment[];
+    bcc?: string[];
+    body: string;
+    description: string;
+    lastSuccessfull?: string;
+    subject: string;
+    title: string;
+    to: string[];
+    unsubscribed?: string[];
+    when: {
+        startDate: string;
+        endDate?: string;
+        recurrency: string;
+        timeZone: string;
+    };
 }
 
 // @alpha
@@ -933,8 +951,6 @@ export interface IUserSettingsService {
 export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {
 }
 
-// Warning: (ae-forgotten-export) The symbol "IWidgetBase" needs to be exported by the entry point index.d.ts
-//
 // @alpha (undocumented)
 export interface IWidget extends IWidgetBase, IDashboardObjectIdentity {
 }
@@ -964,6 +980,18 @@ export interface IWidgetAlertCount {
 // @alpha
 export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
+}
+
+// @alpha
+export interface IWidgetBase {
+    readonly dateDataSet?: ObjRef;
+    readonly description: string;
+    readonly drills: DrillDefinition[];
+    readonly ignoreDashboardFilters: IDashboardFilterReference[];
+    readonly insight?: ObjRef;
+    readonly kpi?: ILegacyKpi;
+    readonly title: string;
+    readonly type: WidgetType;
 }
 
 // @alpha
