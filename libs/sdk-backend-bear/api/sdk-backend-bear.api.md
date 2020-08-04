@@ -7,13 +7,9 @@
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { AuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { AuthenticationContext } from '@gooddata/sdk-backend-spi';
-import { GdcExecuteAFM } from '@gooddata/api-model-bear';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
-import { IExecutionDefinition } from '@gooddata/sdk-model';
 
-// Warning: (ae-internal-missing-underscore) The name "BackendToBearConvertors" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export const BackendToBearConvertors: {
     convertVisualization: (visualization: import("@gooddata/api-model-bear").GdcVisualizationObject.IVisualization, visualizationClassUri: string) => import("@gooddata/sdk-model").IInsight;
@@ -52,13 +48,11 @@ function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnaly
 
 export default bearFactory;
 
-// Warning: (ae-internal-missing-underscore) The name "BearToBackendConvertors" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export const BearToBackendConvertors: {
     convertInsight: (insight: import("@gooddata/sdk-model").IInsight) => import("@gooddata/api-model-bear").GdcVisualizationObject.IVisualizationObject;
     convertInsightDefinition: (insight: import("@gooddata/sdk-model").IInsightDefinition) => import("@gooddata/api-model-bear").GdcVisualizationObject.IVisualizationObject;
-    toAfmExecution: typeof toAfmExecution;
+    toAfmExecution: (def: import("@gooddata/sdk-model").IExecutionDefinition) => import("@gooddata/api-model-bear").GdcExecuteAFM.IExecution;
     convertScheduledMail: (scheduledMail: import("@gooddata/sdk-backend-spi").IScheduledMailDefinition | import("@gooddata/sdk-backend-spi").IScheduledMail) => import("@gooddata/api-model-bear").GdcScheduledMail.IWrappedScheduledMail;
 };
 
@@ -75,10 +69,6 @@ export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase impl
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
     }
 
-
-// Warnings were encountered during analysis:
-//
-// src/index.ts:44:37 - (ae-forgotten-export) The symbol "toAfmExecution" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
