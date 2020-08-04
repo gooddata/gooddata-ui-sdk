@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import identity from "lodash/identity";
+import { IAttributeDisplayFormMetadataObject } from "../attributeDisplayForm";
 import { ObjRef } from "../../../objRef";
 import { BuilderModifications, builderFactory } from "../../../base/builder";
 import { MetadataObjectBuilder } from "../factory";
@@ -18,6 +19,11 @@ export class AttributeMetadataObjectBuilder<
         if (ref) {
             this.item.drillDownStep = ref;
         }
+        return this;
+    }
+
+    public displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this {
+        this.item.displayForms = displayForms;
         return this;
     }
 }

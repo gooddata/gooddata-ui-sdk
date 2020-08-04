@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { IMetadataObject, isMetadataObject } from "../types";
+import { IAttributeDisplayFormMetadataObject } from "../attributeDisplayForm";
 import { ObjRef } from "../../../objRef";
 
 /**
@@ -16,6 +17,11 @@ export interface IAttributeMetadataObject extends IMetadataObject {
      * This will be performed on attribute headers and attribute element headers. These will be defined in LDM.
      */
     drillDownStep?: ObjRef;
+
+    /**
+     * Display forms of the attribute
+     */
+    displayForms: IAttributeDisplayFormMetadataObject[];
 }
 
 /**

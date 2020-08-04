@@ -82,6 +82,8 @@ export function attributeLocalId(attributeOrId: IAttribute | Identifier): string
 // @public
 export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject = IAttributeMetadataObject> extends MetadataObjectBuilder<T> {
     // (undocumented)
+    displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
+    // (undocumented)
     drillDownStep(ref: ObjRef | undefined): this;
 }
 
@@ -455,6 +457,7 @@ export interface IAttributeLocatorItem {
 
 // @public
 export interface IAttributeMetadataObject extends IMetadataObject {
+    displayForms: IAttributeDisplayFormMetadataObject[];
     drillDownStep?: ObjRef;
     // (undocumented)
     type: "attribute";
