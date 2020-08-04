@@ -7,10 +7,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@ag-grid-community/infinite-row-model",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@ag-grid-community/react",
       "allowedCategories": [ "production" ]
     },
@@ -35,16 +31,8 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "@babel/plugin-syntax-jsx",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "@babel/plugin-transform-async-to-generator",
       "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@babel/plugin-transform-flow-strip-types",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "@babel/plugin-transform-typescript",
@@ -57,10 +45,6 @@
     {
       "name": "@babel/preset-env",
       "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@babel/preset-flow",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "@babel/preset-react",
@@ -95,24 +79,8 @@
       "allowedCategories": [ "examples", "tools" ]
     },
     {
-      "name": "@gooddata/embedding",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@gooddata/eslint-config",
       "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/example-workspace",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/gd-bear-filters",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "@gooddata/gd-ui-filters",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "@gooddata/goodstrap",
@@ -129,10 +97,6 @@
     {
       "name": "@gooddata/mock-handling",
       "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/mock-js",
-      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/numberjs",
@@ -199,44 +163,32 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@gooddata/test-storybook",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "@microsoft/api-extractor",
       "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@muellerbbm-vas/grivet",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "@openapitools/openapi-generator-cli",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@rushstack/eslint-config",
+      "name": "@storybook/addon-actions",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@storybook/addon-actions",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "@storybook/addon-options",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@storybook/addons",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@storybook/react",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@storybook/theming",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/classnames",
@@ -280,18 +232,10 @@
     },
     {
       "name": "@types/jest",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@types/jsdom",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@types/json-stable-stringify",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/jsonapi-serializer",
       "allowedCategories": [ "production" ]
     },
     {
@@ -343,10 +287,6 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "@types/react-day-picker",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@types/react-dom",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -359,16 +299,8 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "@types/react-intl",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "@types/react-measure",
       "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@types/react-portal",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/react-responsive",
@@ -399,14 +331,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/storybook__addon-actions",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@types/storybook__react",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "@types/stringify-object",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -427,23 +351,7 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "ag-grid-community",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "ag-grid-react",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "api-spec-converter",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "async",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "autorest",
       "allowedCategories": [ "production" ]
     },
     {
@@ -452,7 +360,7 @@
     },
     {
       "name": "babel-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "babel-plugin-lodash",
@@ -467,16 +375,8 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "babel-preset-react-app",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "babel-runtime",
       "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "caller-callsite",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "chalk",
@@ -484,7 +384,7 @@
     },
     {
       "name": "circular-dependency-plugin",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "classnames",
@@ -512,7 +412,7 @@
     },
     {
       "name": "css-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "custom-event",
@@ -540,11 +440,11 @@
     },
     {
       "name": "enzyme",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "enzyme-adapter-react-16",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "eslint",
@@ -588,7 +488,7 @@
     },
     {
       "name": "file-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "fixed-data-table-2",
@@ -635,10 +535,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "immer",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "inquirer",
       "allowedCategories": [ "tools" ]
     },
@@ -649,14 +545,6 @@
     {
       "name": "jest",
       "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "jest-environment-enzyme",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "jest-environment-jsdom-fifteen",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "jest-environment-jsdom-fourteen",
@@ -675,23 +563,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "jsdom",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "json-stable-stringify",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "jsona",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "jsonapi-serializer",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "kitsu",
       "allowedCategories": [ "production" ]
     },
     {
@@ -707,15 +579,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "madge",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "mapbox-gl",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "mapbox-gl-js-mock",
       "allowedCategories": [ "production" ]
     },
     {
@@ -743,14 +607,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "nodelist-foreach-polyfill",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "openapi-generator",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "ora",
       "allowedCategories": [ "tools" ]
     },
@@ -768,7 +624,7 @@
     },
     {
       "name": "prop-types",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "qs",
@@ -803,10 +659,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "react-dom-factories",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "react-ga",
       "allowedCategories": [ "examples" ]
     },
@@ -835,19 +687,11 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "react-scripts",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "react-select",
       "allowedCategories": [ "examples" ]
     },
     {
       "name": "react-syntax-highlighter",
-      "allowedCategories": [ "examples" ]
-    },
-    {
-      "name": "react-test-renderer",
       "allowedCategories": [ "examples" ]
     },
     {
@@ -859,24 +703,12 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "require-context.macro",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "rimraf",
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "sarala-json-api-data-formatter",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "sass-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "serve",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "spark-md5",
@@ -896,7 +728,7 @@
     },
     {
       "name": "style-loader",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "styled-jsx",
@@ -911,10 +743,6 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
-      "name": "testcafe-live",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
       "name": "ts-invariant",
       "allowedCategories": [ "production" ]
     },
@@ -924,7 +752,7 @@
     },
     {
       "name": "ts-loader",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "ts-morph",
@@ -941,10 +769,6 @@
     {
       "name": "typescript",
       "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "typescript-json-schema",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "url",
