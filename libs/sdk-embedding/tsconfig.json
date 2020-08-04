@@ -1,12 +1,11 @@
 {
     "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
     "compilerOptions": {
+        "removeComments": false,
         "declaration": true,
-        "declarationMap": true,
         "target": "es5",
         "jsx": "react",
         "lib": ["es7", "dom"],
-        "resolveJsonModule": true,
         "module": "commonjs",
         "moduleResolution": "node",
         "esModuleInterop": true,
@@ -19,14 +18,7 @@
         "suppressImplicitAnyIndexErrors": true,
         "baseUrl": "..",
         "paths": {
-            "@gooddata/sdk-embedding": ["sdk-embedding/src"],
-            "@gooddata/sdk-ui": ["sdk-ui/src"],
-            "@gooddata/sdk-ui-charts": ["sdk-ui-charts/src"],
-            "@gooddata/sdk-ui-geo": ["sdk-ui-geo/src"],
-            "@gooddata/sdk-ui-pivot": ["sdk-ui-pivot/src"],
-            "@gooddata/sdk-model": ["sdk-model/src"],
-            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
-            "@gooddata/sdk-backend-mockingbird": ["sdk-backend-mockingbird/src"]
+            "@gooddata/api-model-bear": ["api-model-bear/src"]
         }
     },
     "compileOnSave": false,

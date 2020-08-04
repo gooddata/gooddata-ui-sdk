@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { IUriIdentifierPair } from "@gooddata/api-client-bear";
 import { sanitizeDrillingActivationPostMessageData } from "..";
-import { IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
+import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 
 describe("sanitizeDrillingPostMessageData", () => {
     const mockIdToUriConverter = async (
@@ -15,11 +15,7 @@ describe("sanitizeDrillingPostMessageData", () => {
             }),
         );
 
-    const testCases: Array<[
-        string,
-        IDrillingActivationPostMessageData,
-        IDrillingActivationPostMessageData,
-    ]> = [
+    const testCases: Array<[string, IDrillableItemsCommandBody, IDrillableItemsCommandBody]> = [
         [
             "not convert uris",
             {

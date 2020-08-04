@@ -323,21 +323,6 @@ export interface IFeatureFlags {
     [key: string]: number | boolean | string;
 }
 
-export interface IBaseExportConfig {
-    title?: string;
-    format?: "xlsx" | "csv" | "raw";
-    mergeHeaders?: boolean;
-}
-
-export interface IExportConfig extends IBaseExportConfig {
-    showFilters?: boolean;
-    afm?: GdcExecuteAFM.IAfm;
-}
-
-export interface IExportResponse {
-    uri: string;
-}
-
 export type GuidType = "guid";
 export type RGBType = "rgb";
 

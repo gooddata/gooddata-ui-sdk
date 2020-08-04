@@ -10,8 +10,6 @@ export {
 
 export { DateAttributeGranularity, DateGranularity } from "./base/dateGranularities";
 
-export { IDrillingActivationPostMessageData } from "./embedding/postMessage";
-
 export {
     IAttribute,
     isAttribute,

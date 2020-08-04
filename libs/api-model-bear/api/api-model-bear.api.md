@@ -942,6 +942,26 @@ export namespace GdcExecution {
 }
 
 // @public (undocumented)
+export namespace GdcExport {
+    // (undocumented)
+    export interface IBaseExportConfig {
+        format?: "xlsx" | "csv" | "raw";
+        mergeHeaders?: boolean;
+        title?: string;
+    }
+    // (undocumented)
+    export interface IExportConfig extends IBaseExportConfig {
+        afm?: GdcExecuteAFM.IAfm;
+        showFilters?: boolean;
+    }
+    // (undocumented)
+    export interface IExportResponse {
+        // (undocumented)
+        uri: string;
+    }
+}
+
+// @public (undocumented)
 export namespace GdcExtendedDateFilters {
     // (undocumented)
     export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";

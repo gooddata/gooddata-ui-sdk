@@ -1,7 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcFilterContext, sanitizeDateFilters } from "@gooddata/api-model-bear";
+import { GdcExport, GdcFilterContext, sanitizeDateFilters } from "@gooddata/api-model-bear";
 import { ApiResponse, XhrModule } from "../xhr";
-import { IExportResponse } from "../interfaces";
 import { handleHeadPolling, IPollingOptions } from "../util";
 import { isExportFinished } from "../utils/export";
 
@@ -20,7 +19,7 @@ export class DashboardModule {
         dashboardUri: string,
         filters: GdcFilterContext.FilterContextItem[] = [],
         pollingOptions: IPollingOptions = {},
-    ): Promise<IExportResponse> {
+    ): Promise<GdcExport.IExportResponse> {
         const sanitizedFilters = sanitizeDateFilters(filters);
         const payload = this.getDashboardExportPayload(dashboardUri, sanitizedFilters);
 
@@ -35,8 +34,8 @@ export class DashboardModule {
     private async pollPdfFile(
         response: ApiResponse,
         pollingOptions: IPollingOptions,
-    ): Promise<IExportResponse> {
-        const data: IExportResponse = response.getData();
+    ): Promise<GdcExport.IExportResponse> {
+        const data: GdcExport.IExportResponse = response.getData();
         return handleHeadPolling(this.xhr.head.bind(this.xhr), data.uri, isExportFinished, pollingOptions);
     }
 

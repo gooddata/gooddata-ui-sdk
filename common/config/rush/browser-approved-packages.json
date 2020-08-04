@@ -95,6 +95,10 @@
       "allowedCategories": [ "examples", "tools" ]
     },
     {
+      "name": "@gooddata/embedding",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/eslint-config",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -153,6 +157,10 @@
     {
       "name": "@gooddata/sdk-backend-spi",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/sdk-embedding",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/sdk-model",

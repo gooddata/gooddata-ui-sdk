@@ -2,6 +2,7 @@
 
 export { GdcExecuteAFM } from "./executeAfm/GdcExecuteAFM";
 export { GdcExecution } from "./executeAfm/GdcExecution";
+export { GdcExport } from "./export/GdcExport";
 export { GdcExtendedDateFilters } from "./extendedDateFilters/GdcExtendedDateFilters";
 export { GdcVisualizationObject } from "./visualizationObject/GdcVisualizationObject";
 export { GdcVisualizationClass } from "./visualizationObject/GdcVisualizationClass";

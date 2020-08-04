@@ -1,14 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
-import { GdcExecuteAFM } from "@gooddata/api-model-bear";
+// (C) 2007-2020 GoodData Corporation
+import { GdcExecuteAFM, GdcExport } from "@gooddata/api-model-bear";
 import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
 import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "../constants/errors";
-import { IBaseExportConfig, IExportConfig, IExportResponse } from "../interfaces";
 import { ApiResponse, ApiResponseError, XhrModule } from "../xhr";
 import { handleHeadPolling, IPollingOptions } from "../util";
 import { isExportFinished } from "../utils/export";
 
-interface IExtendedExportConfig extends IBaseExportConfig {
+interface IExtendedExportConfig extends GdcExport.IBaseExportConfig {
     showFilters?: boolean;
     afm?: GdcExecuteAFM.IAfm;
 }
@@ -48,9 +47,9 @@ export class ReportModule {
     public exportResult(
         projectId: string,
         executionResult: string,
-        exportConfig: IExportConfig = {},
+        exportConfig: GdcExport.IExportConfig = {},
         pollingOptions: IPollingOptions = {},
-    ): Promise<IExportResponse> {
+    ): Promise<GdcExport.IExportResponse> {
         const requestPayload: IExportResultPayload = {
             resultExport: {
                 executionResult,
@@ -64,13 +63,13 @@ export class ReportModule {
         return this.xhr
             .post(`/gdc/internal/projects/${projectId}/exportResult`, { body: requestPayload })
             .then((response: ApiResponse) => response.getData())
-            .then((data: IExportResponse) =>
+            .then((data: GdcExport.IExportResponse) =>
                 handleHeadPolling(this.xhr.get.bind(this.xhr), data.uri, isExportFinished, pollingOptions),
             )
             .catch(this.handleExportResultError);
     }
 
-    private sanitizeExportConfig(exportConfig: IExportConfig): IExtendedExportConfig {
+    private sanitizeExportConfig(exportConfig: GdcExport.IExportConfig): IExtendedExportConfig {
         const { afm } = exportConfig;
 
         if (afm && !isEmpty(afm.filters)) {
