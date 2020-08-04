@@ -54,9 +54,26 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
             sdk.md.getObjectDetails(attributeUri),
         );
         const { title, uri, isProduction, identifier, summary } = wrappedAttribute.attribute.meta;
+        const { displayForms } = wrappedAttribute.attribute.content;
+        const attributeDisplayForms = displayForms.map((displayForm) =>
+            newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri), (df) =>
+                df
+                    .attribute(ref)
+                    .title(displayForm.meta.title)
+                    .description(displayForm.meta.summary)
+                    .id(displayForm.meta.identifier)
+                    .uri(displayForm.meta.uri),
+            ),
+        );
 
         return newAttributeMetadataObject(ref, (a) =>
-            a.title(title).uri(uri).production(Boolean(isProduction)).id(identifier).description(summary),
+            a
+                .title(title)
+                .uri(uri)
+                .production(Boolean(isProduction))
+                .id(identifier)
+                .description(summary)
+                .displayForms(attributeDisplayForms),
         );
     };
 

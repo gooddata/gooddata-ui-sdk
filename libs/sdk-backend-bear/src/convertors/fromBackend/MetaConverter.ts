@@ -61,7 +61,19 @@ export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataO
             .uri(obj.meta.uri);
 
     if (GdcMetadata.isAttribute(obj)) {
-        return newAttributeMetadataObject(ref, (a) => a.modify(commonModifications));
+        const attributeDisplayForms = obj.content.displayForms.map((displayForm) =>
+            newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri), (df) =>
+                df
+                    .attribute(ref)
+                    .title(displayForm.meta.title)
+                    .description(displayForm.meta.summary)
+                    .id(displayForm.meta.identifier)
+                    .uri(displayForm.meta.uri),
+            ),
+        );
+        return newAttributeMetadataObject(ref, (a) =>
+            a.modify(commonModifications).displayForms(attributeDisplayForms),
+        );
     } else if (GdcMetadata.isAttributeDisplayForm(obj)) {
         return newAttributeDisplayFormMetadataObject(ref, (a) =>
             a.modify(commonModifications).attribute(uriRef(obj.content.formOf)),
