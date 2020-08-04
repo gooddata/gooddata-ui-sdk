@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
-    "version": "8.0.0-beta.28",
+    "version": "8.0.0-beta.29",
     "author": "GoodData",
     "description": "GoodData SDK - All-In-One",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-all",
@@ -31,14 +31,14 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.0.0-beta.28",
-        "@gooddata/sdk-model": "^8.0.0-beta.28",
-        "@gooddata/sdk-ui": "^8.0.0-beta.28",
-        "@gooddata/sdk-ui-charts": "^8.0.0-beta.28",
-        "@gooddata/sdk-ui-ext": "^8.0.0-beta.28",
-        "@gooddata/sdk-ui-filters": "^8.0.0-beta.28",
-        "@gooddata/sdk-ui-geo": "^8.0.0-beta.28",
-        "@gooddata/sdk-ui-pivot": "^8.0.0-beta.28",
+        "@gooddata/sdk-backend-spi": "^8.0.0-beta.29",
+        "@gooddata/sdk-model": "^8.0.0-beta.29",
+        "@gooddata/sdk-ui": "^8.0.0-beta.29",
+        "@gooddata/sdk-ui-charts": "^8.0.0-beta.29",
+        "@gooddata/sdk-ui-ext": "^8.0.0-beta.29",
+        "@gooddata/sdk-ui-filters": "^8.0.0-beta.29",
+        "@gooddata/sdk-ui-geo": "^8.0.0-beta.29",
+        "@gooddata/sdk-ui-pivot": "^8.0.0-beta.29",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -48,13 +48,13 @@
         "@typescript-eslint/eslint-plugin": "^3.7.1",
         "@typescript-eslint/parser": "^3.7.1",
         "dependency-cruiser": "^8.0.1",
+        "eslint": "^7.5.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
         "eslint-plugin-jest": "^23.20.0",
         "eslint-plugin-prettier": "^3.1.4",
-        "eslint": "^7.5.0",
-        "jest-junit": "^3.0.0",
         "jest": "^25.1.0",
+        "jest-junit": "^3.0.0",
         "prettier": "~2.0.5",
         "ts-jest": "^25.2.0",
         "typescript": "3.9.5"

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-bear",
-    "version": "8.0.0-beta.28",
+    "version": "8.0.0-beta.29",
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
     "license": "LicenseRef-LICENSE",
@@ -35,7 +35,7 @@
     },
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-client-bear",
     "dependencies": {
-        "@gooddata/api-model-bear": "^8.0.0-beta.28",
+        "@gooddata/api-model-bear": "^8.0.0-beta.29",
         "fetch-cookie": "^0.7.0",
         "isomorphic-fetch": "^2.2.1",
         "lodash": "^4.17.15",
@@ -61,23 +61,23 @@
         "@typescript-eslint/parser": "^3.7.1",
         "async": "^2.1.5",
         "dependency-cruiser": "^8.0.1",
+        "eslint": "^7.5.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
         "eslint-plugin-jest": "^23.20.0",
         "eslint-plugin-prettier": "^3.1.4",
-        "eslint": "^7.5.0",
         "fast-levenshtein": "^2.0.6",
         "fetch-mock": "^5.12.2",
-        "jest-junit": "^3.0.0",
         "jest": "^25.1.0",
+        "jest-junit": "^3.0.0",
         "js-object-pretty-print": "^0.2.0",
         "lodash-webpack-plugin": "^0.11.0",
         "prettier": "~2.0.5",
         "ts-jest": "^25.2.0",
         "ts-loader": "^6.2.1",
         "typescript": "3.9.5",
+        "webpack": "^4.39.2",
         "webpack-cli": "^3.3.7",
-        "webpack-dev-server": "^3.8.0",
-        "webpack": "^4.39.2"
+        "webpack-dev-server": "^3.8.0"
     }
 }
