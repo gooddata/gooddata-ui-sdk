@@ -21,44 +21,30 @@ import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 
-// Warning: (ae-internal-missing-underscore) The name "CatalogRecording" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export type CatalogRecording = {
     items: CatalogItem[];
     groups: ICatalogGroup[];
 };
 
-// Warning: (ae-internal-missing-underscore) The name "compositeBackend" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export function compositeBackend(...components: CompositeBackendPart[]): IAnalyticalBackend;
 
-// Warning: (ae-internal-missing-underscore) The name "CompositeBackendPart" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export type CompositeBackendPart = {
     workspace: string;
     backend: IAnalyticalBackend;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "DataViewAll" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export const DataViewAll: string;
 
-// Warning: (ae-internal-missing-underscore) The name "DataViewFirstPage" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export const DataViewFirstPage: string;
 
-// Warning: (ae-internal-missing-underscore) The name "dataViewWindow" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export const dataViewWindow: (offset: number[], size: number[]) => string;
 
-// Warning: (ae-internal-missing-underscore) The name "DisplayFormRecording" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export type DisplayFormRecording = {
     obj: IAttributeDisplayFormMetadataObject;
@@ -71,8 +57,6 @@ export { dummyBackendEmptyData }
 
 export { dummyDataView }
 
-// Warning: (ae-internal-missing-underscore) The name "ExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export type ExecutionRecording = {
     scenarios?: any[];
@@ -81,15 +65,11 @@ export type ExecutionRecording = {
     [dataViews: string]: any;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "InsightRecording" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export type InsightRecording = {
     obj: IInsight;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "LegacyExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal @deprecated
 export type LegacyExecutionRecording = {
     definition: IExecutionDefinition;
@@ -97,50 +77,53 @@ export type LegacyExecutionRecording = {
     result: any;
 };
 
-// Warning: (ae-forgotten-export) The symbol "LegacyRecordingIndex" needs to be exported by the entry point index.d.ts
-// Warning: (ae-internal-missing-underscore) The name "legacyRecordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal @deprecated
 export function legacyRecordedBackend(index: LegacyRecordingIndex, config?: AnalyticalBackendConfig): IAnalyticalBackend;
 
-// Warning: (ae-internal-missing-underscore) The name "legacyRecordedDataView" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal @deprecated
 export function legacyRecordedDataView(recording: LegacyExecutionRecording): IDataView;
 
-// Warning: (ae-internal-missing-underscore) The name "NamedDataView" should be prefixed with an underscore because the declaration is marked as @internal
-//
+// @internal @deprecated
+export type LegacyRecordingIndex = {
+    [workspace: string]: LegacyWorkspaceRecordings;
+};
+
+// @internal @deprecated
+export type LegacyWorkspaceRecordings = {
+    execution?: {
+        [fp: string]: LegacyExecutionRecording;
+    };
+    metadata?: {
+        attributeDisplayForm?: {
+            [id: string]: IAttributeDisplayFormMetadataObject;
+        };
+    };
+    elements?: {
+        [id: string]: IAttributeElement[];
+    };
+};
+
 // @internal (undocumented)
 export type NamedDataView = {
     name: string;
     dataView: IDataView;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "recordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export function recordedBackend(index: RecordingIndex, config?: RecordedBackendConfig, capabilities?: BackendCapabilities): IAnalyticalBackend;
 
-// Warning: (ae-internal-missing-underscore) The name "RecordedBackendConfig" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export type RecordedBackendConfig = AnalyticalBackendConfig & {
     globalSettings?: ISettings;
     globalPalette?: IColorPalette;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "recordedDataView" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export function recordedDataView(recording: ScenarioRecording, dataViewId?: string): IDataView;
 
-// Warning: (ae-internal-missing-underscore) The name "recordedDataViews" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export function recordedDataViews(recordings: RecordingIndex): NamedDataView[];
 
-// Warning: (ae-internal-missing-underscore) The name "RecordingIndex" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export type RecordingIndex = {
     executions?: {
@@ -158,16 +141,12 @@ export type RecordingIndex = {
     };
 };
 
-// Warning: (ae-internal-missing-underscore) The name "ScenarioRecording" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export type ScenarioRecording = {
     execution: ExecutionRecording;
     scenarioIndex: number;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "VisClassesRecording" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export type VisClassesRecording = {
     items: IVisualizationClass[];
