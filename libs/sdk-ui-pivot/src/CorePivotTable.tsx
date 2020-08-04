@@ -191,6 +191,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private visibleData: DataViewFacade = null;
     private currentFingerprint: string = null;
 
+    /**
+     * Fingerprint of the last execution definition the initialize was called with.
+     */
+    private lastInitRequestFingerprint: string = null;
+
     private lastScrollPosition: IScrollPosition = {
         top: 0,
         left: 0,
@@ -245,6 +250,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.currentResult = null;
         this.visibleData = null;
         this.currentFingerprint = null;
+        this.lastInitRequestFingerprint = null;
         this.firstDataRendered = false;
         this.resizedColumnsStore = new ResizedColumnsStore();
         this.autoResizedColumns = {};
@@ -387,6 +393,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private initialize(execution: IPreparedExecution): void {
         this.onLoadingChanged({ isLoading: true });
+        this.lastInitRequestFingerprint = defFingerprint(execution.definition);
         execution
             .execute()
             .then((result) => {
@@ -397,6 +404,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                             /*
                              * Stop right now if the component gets unmounted while it is still being
                              * initialized.
+                             */
+                            return;
+                        }
+
+                        if (this.lastInitRequestFingerprint !== defFingerprint(dataView.definition)) {
+                            /*
+                             * Stop right now if the data are not relevant anymore because there was another
+                             * initialize request in the meantime.
                              */
                             return;
                         }
