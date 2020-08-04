@@ -27,24 +27,106 @@ import { PositionType } from '@gooddata/sdk-ui-vis-commons';
 import { default as React_2 } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
-// Warning: (ae-internal-missing-underscore) The name "CoreGeoChart" should be prefixed with an underscore because the declaration is marked as @internal
-//
+// @public (undocumented)
+export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
+
 // @internal (undocumented)
-export const CoreGeoChart: import("react").ComponentClass<import("./geoChart/GeoChartInner").ICoreGeoChartProps & import("react-intl").WrappedComponentProps<"intl">, any>;
+export const CoreGeoChart: import("react").ComponentClass<import("..").ICoreGeoChartProps & import("react-intl").WrappedComponentProps<"intl">, any>;
 
 // @public (undocumented)
 export const GeoPushpinChart: React_2.ComponentType<IGeoPushpinChartProps>;
 
-// Warning: (ae-internal-missing-underscore) The name "getGeoChartDimensions" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[];
 
-// Warning: (ae-forgotten-export) The symbol "ICoreGeoChartProps" needs to be exported by the entry point index.d.ts
-// Warning: (ae-internal-missing-underscore) The name "IGeoChartInnerProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
+// @internal (undocumented)
+export interface ICoreGeoChartProps extends IDataVisualizationProps {
+    // (undocumented)
+    chartRenderer?: (props: IGeoChartRendererProps) => React_2.ReactElement;
+    // (undocumented)
+    config?: IGeoConfig;
+    // (undocumented)
+    documentObj?: Document;
+    // (undocumented)
+    geoChartOptions?: IGeoChartInnerOptions;
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    legendRenderer?: (props: IGeoChartLegendRendererProps) => React_2.ReactElement;
+    // (undocumented)
+    onCenterPositionChanged?: (center: IGeoLngLat) => void;
+    // (undocumented)
+    onZoomChanged?: (zoom: number) => void;
+}
+
+// @public (undocumented)
+export interface IGeoAttributeItem extends IGeoDataItem {
+    // (undocumented)
+    data: string[];
+}
+
+// @internal (undocumented)
+export interface IGeoChartInnerOptions {
+    // (undocumented)
+    categoryItems: IPushpinCategoryLegendItem[];
+    // (undocumented)
+    colorPalette: IColorPalette;
+    // (undocumented)
+    colorStrategy: IColorStrategy;
+    // (undocumented)
+    geoData: IGeoData;
+}
+
 // @internal (undocumented)
 export type IGeoChartInnerProps = ICoreGeoChartProps & ILoadingInjectedProps & WrappedComponentProps;
+
+// @internal (undocumented)
+export interface IGeoChartLegendRendererProps {
+    // (undocumented)
+    categoryItems?: IPushpinCategoryLegendItem[];
+    // (undocumented)
+    colorLegendValue: string;
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    geoData?: IGeoData;
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    numericSymbols?: string[];
+    // (undocumented)
+    onItemClick?: (item: IPushpinCategoryLegendItem) => void;
+    // (undocumented)
+    position?: PositionType;
+    // (undocumented)
+    responsive?: boolean;
+    // (undocumented)
+    showFluidLegend?: boolean;
+}
+
+// @internal (undocumented)
+export interface IGeoChartRendererProps {
+    // (undocumented)
+    afterRender(): void;
+    // (undocumented)
+    colorStrategy: IColorStrategy;
+    // (undocumented)
+    config: IGeoConfig;
+    // (undocumented)
+    dataView: IDataView;
+    // (undocumented)
+    drillableItems: IHeaderPredicate[];
+    // (undocumented)
+    drillConfig: IDrillConfig;
+    // (undocumented)
+    geoData: IGeoData;
+    // (undocumented)
+    onCenterPositionChanged(center: IGeoLngLat): void;
+    // (undocumented)
+    onZoomChanged(zoom: number): void;
+}
 
 // @public (undocumented)
 export interface IGeoConfig {
@@ -58,8 +140,6 @@ export interface IGeoConfig {
     colors?: string[];
     // (undocumented)
     isExportMode?: boolean;
-    // Warning: (ae-forgotten-export) The symbol "IGeoLegendConfig" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     legend?: IGeoLegendConfig;
     // (undocumented)
@@ -92,11 +172,54 @@ export interface IGeoConfigViewport {
 export type IGeoConfigViewportArea = "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world";
 
 // @public (undocumented)
+export interface IGeoData {
+    // (undocumented)
+    color?: IGeoMeasureItem;
+    // (undocumented)
+    location?: IGeoLocationItem;
+    // (undocumented)
+    segment?: IGeoSegmentItem;
+    // (undocumented)
+    size?: IGeoMeasureItem;
+    // (undocumented)
+    tooltipText?: IGeoAttributeItem;
+}
+
+// @public (undocumented)
+export interface IGeoDataItem {
+    // (undocumented)
+    index: number;
+    // (undocumented)
+    name: string;
+}
+
+// @public (undocumented)
+export interface IGeoLegendConfig {
+    enabled?: boolean;
+    position?: PositionType;
+    responsive?: boolean;
+}
+
+// @public (undocumented)
 export interface IGeoLngLat {
     // (undocumented)
     lat: number;
     // (undocumented)
     lng: number;
+}
+
+// @public (undocumented)
+export interface IGeoLocationItem extends IGeoDataItem {
+    // (undocumented)
+    data: IGeoLngLat[];
+}
+
+// @public (undocumented)
+export interface IGeoMeasureItem extends IGeoDataItem {
+    // (undocumented)
+    data: number[];
+    // (undocumented)
+    format: string;
 }
 
 // @public (undocumented)
@@ -120,9 +243,7 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     filters?: IFilter[];
     // (undocumented)
     location: IAttribute;
-    // Warning: (ae-forgotten-export) The symbol "CenterPositionChangedCallback" needs to be exported by the entry point index.d.ts
     onCenterPositionChanged?: CenterPositionChangedCallback;
-    // Warning: (ae-forgotten-export) The symbol "ZoomChangedCallback" needs to be exported by the entry point index.d.ts
     onZoomChanged?: ZoomChangedCallback;
     // (undocumented)
     segmentBy?: IAttribute;
@@ -134,7 +255,16 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
 }
 
 // @public (undocumented)
+export interface IGeoSegmentItem extends IGeoAttributeItem {
+    // (undocumented)
+    uris: string[];
+}
+
+// @public (undocumented)
 export type PushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+
+// @public (undocumented)
+export type ZoomChangedCallback = (zoom: number) => void;
 
 
 // (No @packageDocumentation comment for this package)

@@ -33,6 +33,8 @@ import {
 import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common";
 import { IColorPalette } from "@gooddata/sdk-model";
 
+export { IGeoChartRendererProps, IGeoChartLegendRendererProps };
+
 export function renderChart(props: IGeoChartRendererProps): React.ReactElement {
     return <GeoChartRenderer {...props} />;
 }

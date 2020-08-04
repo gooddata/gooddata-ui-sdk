@@ -25,28 +25,46 @@ export interface IPushpinColor {
     background: string;
 }
 
+/**
+ * @public
+ */
 export interface IGeoDataItem {
     name: string;
     index: number;
 }
 
+/**
+ * @public
+ */
 export interface IGeoAttributeItem extends IGeoDataItem {
     data: string[];
 }
 
+/**
+ * @public
+ */
 export interface IGeoSegmentItem extends IGeoAttributeItem {
     uris: string[];
 }
 
+/**
+ * @public
+ */
 export interface IGeoLocationItem extends IGeoDataItem {
     data: IGeoLngLat[];
 }
 
+/**
+ * @public
+ */
 export interface IGeoMeasureItem extends IGeoDataItem {
     format: string;
     data: number[];
 }
 
+/**
+ * @public
+ */
 export interface IGeoData {
     location?: IGeoLocationItem;
     size?: IGeoMeasureItem;
