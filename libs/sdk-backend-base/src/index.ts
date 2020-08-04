@@ -1,8 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 
-export { dummyBackend, dummyBackendEmptyData, dummyDataView } from "./dummyBackend";
+export { dummyBackend, dummyBackendEmptyData, dummyDataView, DummyBackendConfig } from "./dummyBackend";
 
-export { decoratedBackend, DecoratorFactories } from "./decoratedBackend";
+export {
+    decoratedBackend,
+    DecoratorFactories,
+    CatalogDecoratorFactory,
+    ExecutionDecoratorFactory,
+} from "./decoratedBackend";
 
 export {
     DecoratedExecutionFactory,
@@ -25,7 +30,7 @@ export {
     CacheControl,
 } from "./cachingBackend";
 export { withNormalization, NormalizationConfig } from "./normalizingBackend";
-export { Normalizer, Denormalizer, NormalizationState } from "./normalizingBackend/normalizer";
+export { Normalizer, Denormalizer, NormalizationState, LocalIdMap } from "./normalizingBackend/normalizer";
 
 export {
     AuthenticatedAsyncCall,

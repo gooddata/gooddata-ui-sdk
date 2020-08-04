@@ -39,8 +39,6 @@ import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 
-// Warning: (ae-internal-missing-underscore) The name "AbstractExecutionFactory" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
     constructor(workspace: string);
@@ -81,18 +79,12 @@ export class AnonymousAuthProvider implements IAuthProviderCallGuard {
 // @beta (undocumented)
 export type ApiClientProvider = (config: CustomBackendConfig) => any;
 
-// Warning: (ae-internal-missing-underscore) The name "AuthenticatedAsyncCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @beta
 export type AuthenticatedAsyncCall<TSdk, TReturn> = (sdk: TSdk, context: IAuthenticatedAsyncCallContext) => Promise<TReturn>;
 
-// Warning: (ae-internal-missing-underscore) The name "AuthenticatedCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @beta
 export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(call: AuthenticatedAsyncCall<TSdk, TReturn>, errorConverter?: ErrorConverter) => Promise<TReturn>;
 
-// Warning: (ae-internal-missing-underscore) The name "AuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     constructor(realProvider: IAuthenticationProvider);
@@ -121,6 +113,9 @@ export type CachingConfiguration = {
     maxCatalogOptions: number | undefined;
     onCacheReady?: (cacheControl: CacheControl) => void;
 };
+
+// @alpha (undocumented)
+export type CatalogDecoratorFactory = (catalog: IWorkspaceCatalogFactory) => IWorkspaceCatalogFactory;
 
 // @beta
 export function customBackend(config: CustomBackendConfig): IAnalyticalBackend;
@@ -271,8 +266,6 @@ export type DecoratorFactories = {
 // @beta (undocumented)
 export const DefaultCachingConfiguration: CachingConfiguration;
 
-// Warning: (ae-internal-missing-underscore) The name "Denormalizer" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
 export class Denormalizer {
     denormalizeDimDescriptors: (normalizedDims: IDimensionDescriptor[]) => IDimensionDescriptor[];
@@ -283,25 +276,24 @@ export class Denormalizer {
     readonly state: NormalizationState;
 }
 
-// Warning: (ae-forgotten-export) The symbol "DummyBackendConfig" needs to be exported by the entry point index.d.ts
-// Warning: (ae-internal-missing-underscore) The name "dummyBackend" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export function dummyBackend(config?: DummyBackendConfig): IAnalyticalBackend;
 
-// Warning: (ae-internal-missing-underscore) The name "dummyBackendEmptyData" should be prefixed with an underscore because the declaration is marked as @internal
-//
+// @internal (undocumented)
+export type DummyBackendConfig = AnalyticalBackendConfig & {
+    raiseNoDataExceptions: boolean;
+};
+
 // @internal
 export function dummyBackendEmptyData(): IAnalyticalBackend;
 
-// Warning: (ae-internal-missing-underscore) The name "dummyDataView" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
-// Warning: (ae-internal-missing-underscore) The name "IAuthenticatedAsyncCallContext" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @alpha (undocumented)
+export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;
+
+// @beta
 export interface IAuthenticatedAsyncCallContext {
     getPrincipal(): Promise<AuthenticatedPrincipal>;
 }
@@ -312,8 +304,11 @@ export interface IAuthProviderCallGuard extends IAuthenticationProvider {
     reset(): void;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "NoopAuthProvider" should be prefixed with an underscore because the declaration is marked as @internal
-//
+// @beta (undocumented)
+export type LocalIdMap = {
+    [from: string]: string;
+};
+
 // @internal
 export class NoopAuthProvider implements IAuthProviderCallGuard {
     // (undocumented)
@@ -331,17 +326,13 @@ export type NormalizationConfig = {
     normalizationStatus?: (normalizationState: NormalizationState) => void;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "NormalizationState" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @beta (undocumented)
 export type NormalizationState = {
     readonly normalized: IExecutionDefinition;
     readonly original: IExecutionDefinition;
     readonly n2oMap: LocalIdMap;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "Normalizer" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
 export class Normalizer {
     // (undocumented)
@@ -367,9 +358,7 @@ export type ResultProviderContext = CustomCallContext & {
     resultFactory: ResultFactory;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "TelemetryData" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @beta (undocumented)
 export type TelemetryData = {
     componentName?: string;
     props?: string[];
@@ -387,15 +376,6 @@ export function withNormalization(realBackend: IAnalyticalBackend, config?: Norm
 // @alpha (undocumented)
 export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspaceCatalog;
 
-
-// Warnings were encountered during analysis:
-//
-// src/customBackend/config.ts:153:5 - (ae-incompatible-release-tags) The symbol "telemetry" is marked as @beta, but its signature references "TelemetryData" which is marked as @internal
-// src/customBackend/config.ts:164:5 - (ae-incompatible-release-tags) The symbol "authApiCall" is marked as @beta, but its signature references "AuthenticatedCallGuard" which is marked as @internal
-// src/decoratedBackend/index.ts:163:5 - (ae-forgotten-export) The symbol "ExecutionDecoratorFactory" needs to be exported by the entry point index.d.ts
-// src/decoratedBackend/index.ts:164:5 - (ae-forgotten-export) The symbol "CatalogDecoratorFactory" needs to be exported by the entry point index.d.ts
-// src/normalizingBackend/index.ts:189:5 - (ae-incompatible-release-tags) The symbol "normalizationStatus" is marked as @beta, but its signature references "NormalizationState" which is marked as @internal
-// src/normalizingBackend/normalizer.ts:65:5 - (ae-forgotten-export) The symbol "LocalIdMap" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

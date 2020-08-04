@@ -43,10 +43,13 @@ import cloneDeep from "lodash/cloneDeep";
 import cloneDeepWith from "lodash/cloneDeepWith";
 import keyBy from "lodash/keyBy";
 
-type LocalIdMap = { [from: string]: string };
+/**
+ * @beta
+ */
+export type LocalIdMap = { [from: string]: string };
 
 /**
- * @internal
+ * @beta
  */
 export type NormalizationState = {
     /**
