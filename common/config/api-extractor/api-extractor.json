@@ -303,8 +303,34 @@
          */
         "extractorMessageReporting": {
             "default": {
-                "logLevel": "error"
-                // "addToApiReportFile": false
+                "logLevel": "error",
+                "addToApiReportFile": false
+            },
+            // We need to be explicit here, otherwise the default is used that suppresses the errors...
+            "ae-forgotten-export": {
+                "logLevel": "error",
+                "addToApiReportFile": false
+            },
+            "ae-incompatible-release-tags": {
+                "logLevel": "error",
+                "addToApiReportFile": false
+            },
+            // we do not want to enforce this rule
+            "ae-internal-missing-underscore": {
+                "logLevel": "none",
+                "addToApiReportFile": false
+            },
+            "ae-internal-mixed-release-tag": {
+                "logLevel": "error",
+                "addToApiReportFile": false
+            },
+            "ae-unresolved-inheritdoc-reference": {
+                "logLevel": "error",
+                "addToApiReportFile": false
+            },
+            "ae-unresolved-inheritdoc-base": {
+                "logLevel": "error",
+                "addToApiReportFile": false
             }
 
             // "ae-extra-release-tag": {
