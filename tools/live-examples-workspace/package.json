@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/live-examples-workspace",
-    "version": "8.0.0-beta.31",
+    "version": "8.0.0-beta.32",
     "author": "GoodData",
     "description": "GoodData SDK - Live examples workspace for tests",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/tools/live-examples-workspace",
@@ -33,15 +33,15 @@
         "refresh-recordings": "./bin/refresh-recordings.sh && npm run prettier-write && npm run build"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.0.0-beta.31",
-        "@gooddata/sdk-model": "^8.0.0-beta.31",
+        "@gooddata/sdk-backend-spi": "^8.0.0-beta.32",
+        "@gooddata/sdk-model": "^8.0.0-beta.32",
         "lodash": "^4.17.15",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@gooddata/catalog-export": "^8.0.0-beta.31",
+        "@gooddata/catalog-export": "^8.0.0-beta.32",
         "@gooddata/eslint-config": "^2.0.0",
-        "@gooddata/mock-handling": "8.0.0-beta.31",
+        "@gooddata/mock-handling": "8.0.0-beta.32",
         "@types/jest": "^25.1.2",
         "@types/lodash": "^4.14.123",
         "@types/node": "^12.12.26",
