@@ -11,16 +11,16 @@ interface IExpressionToken {
     value: string;
 }
 
-const REMOVE_BRACKETS_REGEXP = /[\[\]\{\}]/g;
+const REMOVE_BRACKETS_REGEXP = /[[\]{}]/g;
 const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
-    ["text", /^[^\{\}\[\]]+/],
+    ["text", /^[^{}[\]]+/],
     ["quoted_text", /^"(?:[^"\\]|\\\\.)*"/],
     ["identifier", /^\{.*\}/],
-    ["element_uri", /^\[[a-zA-Z0-9\\\/]+elements\?id=\d+]/],
-    ["uri", /^\[[a-zA-Z0-9\\\/]+]/],
+    ["element_uri", /^\[[a-zA-Z0-9\\/]+elements\?id=\d+]/],
+    ["uri", /^\[[a-zA-Z0-9\\/]+]/],
 ];
 
-export const getTokenValuesOfType = (tokenType: ExpressionTokenType, tokens: IExpressionToken[]) =>
+export const getTokenValuesOfType = (tokenType: ExpressionTokenType, tokens: IExpressionToken[]): string[] =>
     flow(
         filter((token: IExpressionToken) => token.type === tokenType),
         map((token) => token.value),

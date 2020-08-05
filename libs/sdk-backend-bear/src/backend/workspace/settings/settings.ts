@@ -38,7 +38,7 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
             return {
                 userId: userLoginMd5,
                 workspace: this.workspace,
-                locale: language,
+                locale: language!,
                 // the order is important here, user configs with the "user" source should override the workspace settings
                 ...workspaceFeatureFlags,
                 ...userFeatureFlags,

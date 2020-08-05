@@ -267,7 +267,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         return convertedResult;
     };
 
-    public createWidgetAlert = async (alert: IWidgetAlertDefinition) => {
+    public createWidgetAlert = async (alert: IWidgetAlertDefinition): Promise<IWidgetAlert> => {
         const savedFilterContext = await this.createOrUpdateWidgetAlertFilterContext(alert);
         const alertWithSavedFilterContext: IWidgetAlertDefinition = {
             ...alert,
@@ -277,7 +277,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         return this.createBearWidgetAlert(alertWithSavedFilterContext);
     };
 
-    public updateWidgetAlert = async (updatedAlert: IWidgetAlert) => {
+    public updateWidgetAlert = async (updatedAlert: IWidgetAlert): Promise<IWidgetAlert> => {
         const savedFilterContext = await this.createOrUpdateWidgetAlertFilterContext(updatedAlert);
         const alertWithSavedFilterContext: IWidgetAlert = {
             ...updatedAlert,
@@ -291,7 +291,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         await this.deleteBearMetadataObject(ref);
     };
 
-    public bulkDeleteWidgetAlerts = async (refs: ObjRef[]) => {
+    public bulkDeleteWidgetAlerts = async (refs: ObjRef[]): Promise<void> => {
         const uris = await Promise.all(refs.map((ref) => objRefToUri(ref, this.workspace, this.authCall)));
         return this.authCall((sdk) => sdk.md.bulkDeleteObjects(this.workspace, uris, "cascade"));
     };

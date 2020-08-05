@@ -67,7 +67,6 @@ export class BearPreparedExecution implements IPreparedExecution {
     }
 }
 
-// @ts-ignore
-function checkDefIsExecutable(def: IExecutionDefinition): void {
+function checkDefIsExecutable(_def: IExecutionDefinition): void {
     return;
 }
