@@ -67,7 +67,7 @@ dependencies:
   '@types/isomorphic-fetch': 0.0.34
   '@types/jest': 25.2.3
   '@types/json-stable-stringify': 1.0.32
-  '@types/lodash': 4.14.155
+  '@types/lodash': 4.14.158
   '@types/lru-cache': 5.1.0
   '@types/mapbox-gl': 1.10.4
   '@types/md5': 2.2.0
@@ -149,7 +149,7 @@ dependencies:
   jest-junit: 3.7.0
   js-object-pretty-print: 0.2.0
   json-stable-stringify: 1.0.1
-  lodash: 4.17.15
+  lodash: 4.17.19
   lodash-webpack-plugin: 0.11.5_webpack@4.43.0
   lru-cache: 5.1.1
   mapbox-gl: 1.11.0_mapbox-gl@1.11.0
@@ -3254,6 +3254,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-vEcX7S7aPhsBCivxMwAANQburHBtfN9RdyXFk84IJmu2Z4Hkg1tOFgaslRiEqqvoLtbCBi6ika1EMspE+NZ9Lg==
+  /@types/lodash/4.14.158:
+    dev: false
+    resolution:
+      integrity: sha512-InCEXJNTv/59yO4VSfuvNrZHt7eeNtWQEgnieIA+mIC+MOWM9arOWG2eQ8Vhk6NbOre6/BidiXhkZYeDY9U35w==
   /@types/lru-cache/5.1.0:
     dev: false
     resolution:
@@ -18677,7 +18681,7 @@ packages:
       '@types/invariant': 2.2.33
       '@types/isomorphic-fetch': 0.0.34
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/md5': 2.2.0
       '@types/node-fetch': 1.6.9
       '@types/qs': 6.9.3
@@ -18701,7 +18705,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       js-object-pretty-print: 0.2.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       lodash-webpack-plugin: 0.11.5_webpack@4.43.0
       md5: 2.2.1
       node-fetch: 1.7.3
@@ -18721,7 +18725,7 @@ packages:
     dev: false
     name: '@rush-temp/api-client-bear'
     resolution:
-      integrity: sha512-7HNQ8KWlaSviAbw/Ss+hhVsdernNqNkFswkqP02W4wvDvb3LgMMkSDbxgVt+A8uBVrm9mZ9VtAFMsc9L+h4unQ==
+      integrity: sha512-G+lnBpVIArLPoEtFLH6yaBQ+4YeyBe2pa9nf7JNkF8qDuKyq5/kBqMxyQKUZ3dO/0L8bqHElE9kbi1zpGm11Xw==
       tarball: 'file:projects/api-client-bear.tgz'
     version: 0.0.0
   'file:projects/api-client-tiger.tgz':
@@ -18731,7 +18735,7 @@ packages:
       '@microsoft/api-extractor': 7.8.1
       '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/qs': 6.9.3
       '@types/spark-md5': 3.0.2
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
@@ -18749,7 +18753,7 @@ packages:
       eslint-plugin-react-hooks: 4.0.8_eslint@7.5.0
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       mkdirp: 1.0.4
       prettier: 2.0.5
       qs: 6.9.4
@@ -18762,7 +18766,7 @@ packages:
     dev: false
     name: '@rush-temp/api-client-tiger'
     resolution:
-      integrity: sha512-dFS+QFQSkhEdsY6rh098Ix0p8INVI2+VkSWHVj33ye39N366umqKk6rmchoaSfsvyzw4CP3PIFJ5X9KovrwTew==
+      integrity: sha512-0pExwNjM5AGfqL2PNvBGfNiCFIFsd1/i8mBocMlZbP6EhehbFFOtA9JNVybwYO4ZE+pjskddsdNM8CcKnVkGzA==
       tarball: 'file:projects/api-client-tiger.tgz'
     version: 0.0.0
   'file:projects/api-model-bear.tgz':
@@ -18771,7 +18775,7 @@ packages:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.5
       dependency-cruiser: 8.2.0_typescript@3.9.5
@@ -18784,7 +18788,7 @@ packages:
       eslint-plugin-react-hooks: 4.0.8_eslint@7.5.0
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslib: 2.0.0
@@ -18794,7 +18798,7 @@ packages:
     dev: false
     name: '@rush-temp/api-model-bear'
     resolution:
-      integrity: sha512-DTT5Y5GU+mlM5c62UYs/ZXiBWmr3452XeqvdR8Lp+Cz/8Rxqf4VBOXVjBQPtRgJqaO0JnP5IYtRfZ30HIeVe1Q==
+      integrity: sha512-4jpYNPYeQYkOBM8WrWaR99c/j99RmeI+SgjB/LvS5aBzts+MmbVd53e1TRCf/8AC8F+54ElEyBrn1FQfp0mO7Q==
       tarball: 'file:projects/api-model-bear.tgz'
     version: 0.0.0
   'file:projects/catalog-export.tgz':
@@ -18805,7 +18809,7 @@ packages:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@types/inquirer': 6.5.0
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/prettier': 1.18.4
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
@@ -18823,7 +18827,7 @@ packages:
       inquirer: 6.5.2
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       ora: 4.0.4
       p-map: 3.0.0
       prettier: 2.0.5
@@ -18839,7 +18843,7 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-XqXn+GcKcjXy80TAkgxc57agD6gJYHaCgUR0lllBV/u8vsl0IF4FAbCtpUbC+7BlVLWkuhU42IcZT3RMiWLrRA==
+      integrity: sha512-m7Ybc0vLy6CtRDUQv41tRm2Gz/LU4/BsXjYqWWI0iaeGfB0j//1zTmV29hDZoUVpuBt0okGBZhAg2d9Ayi16Rg==
       tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/live-examples-workspace.tgz':
@@ -18848,7 +18852,7 @@ packages:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.5
@@ -18862,7 +18866,7 @@ packages:
       eslint-plugin-react-hooks: 4.0.8_eslint@7.5.0
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslib: 2.0.0
@@ -18872,7 +18876,7 @@ packages:
     dev: false
     name: '@rush-temp/live-examples-workspace'
     resolution:
-      integrity: sha512-tRuDsKF2ERo+qwSp4vGTMbPctP0J5RSthiDzKwRDtmIAxXBge385JPdD/Lqj6V5UHAbysdTS+vfF2bgf9kdB/g==
+      integrity: sha512-SaW4XzhqIecjUT3CUtw9fEq1LoLpE1K97BDlfriKW5TBaPf777bz705KjUKxW62gMEUCWzlLUy61tA/3krLudQ==
       tarball: 'file:projects/live-examples-workspace.tgz'
     version: 0.0.0
   'file:projects/mock-handling.tgz':
@@ -18881,7 +18885,7 @@ packages:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@types/inquirer': 6.5.0
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/prettier': 1.18.4
       '@types/rimraf': 2.0.4
@@ -18900,7 +18904,7 @@ packages:
       inquirer: 6.5.2
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       ora: 4.0.4
       p-map: 3.0.0
       prettier: 2.0.5
@@ -18917,7 +18921,7 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-dMjXNvNdUGGUYeIJsIoPWR1jdMlTP/0l/tszdUj38jl7k6JStCrhgiKOrxKzdJYFt7EQuHmZ37/OB/6iGGS7DQ==
+      integrity: sha512-Z8Y9HkCCyqF0Ri+F8UkhgPw4qjiLcTtBZqztVCR8Zr00UFeXMbOMkZICyKx4KnvnDky2SdYXSbrp4L/KLBHQBg==
       tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/reference-workspace-mgmt.tgz':
@@ -18925,7 +18929,7 @@ packages:
       '@gooddata/eslint-config': 2.0.0_b7dcd9519c3aa34f8004998e9ab9cf7f
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.5
@@ -18948,7 +18952,7 @@ packages:
     dev: false
     name: '@rush-temp/reference-workspace-mgmt'
     resolution:
-      integrity: sha512-zApJk40d8qOxEJHy1821PRL3aLKA18q5/cCLsoBUAIjQEh+vMdi+T6HKaij3OuUSsCgA8RgHBYIzKTd37C5d5Q==
+      integrity: sha512-qJZKC87ETXEuCg1/E9qjml0ZMcZPM5Ptj88U7sLSxDYH62C4AuDeWAxyCwUXqHz7YorF3LzTbnlk0Mv0WM7NyQ==
       tarball: 'file:projects/reference-workspace-mgmt.tgz'
     version: 0.0.0
   'file:projects/reference-workspace.tgz':
@@ -18956,7 +18960,7 @@ packages:
       '@gooddata/eslint-config': 2.0.0_b7dcd9519c3aa34f8004998e9ab9cf7f
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.5
@@ -18970,7 +18974,7 @@ packages:
       eslint-plugin-react-hooks: 4.0.8_eslint@7.5.0
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslib: 2.0.0
@@ -18980,7 +18984,7 @@ packages:
     dev: false
     name: '@rush-temp/reference-workspace'
     resolution:
-      integrity: sha512-dBVTF4vORdvgJhlhS1s+DlYgQwKh2///XhLcMglQ3HAc6adYLLeXKZ5z58U1hTHbfdM7T+Y27nB67Lp2YEcMlg==
+      integrity: sha512-h7SsOO6+u4J2+phgeRwbUAWexko10BHKlS68La71tEr/TJK+PO2PTxexsTNOD/8nbv83pfzqOacgcONglCu0IA==
       tarball: 'file:projects/reference-workspace.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-base.tgz':
@@ -18990,7 +18994,7 @@ packages:
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
       '@types/json-stable-stringify': 1.0.32
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/lru-cache': 5.1.0
       '@types/spark-md5': 3.0.2
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
@@ -19006,7 +19010,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
-      lodash: 4.17.15
+      lodash: 4.17.19
       lru-cache: 5.1.1
       prettier: 2.0.5
       spark-md5: 3.0.1
@@ -19019,7 +19023,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-base'
     resolution:
-      integrity: sha512-VDqMrw8uvAZy0SGu2/WnBI4s5whzeyeCE2Ci0kj8tBl/LG35rAbJDOBRENMMB8eqEk8XKpXgzZ75ZaZEsELUvg==
+      integrity: sha512-RTXj3SVTjDn7zkRgAV0/CFXi0MNut71vJUk5L8Y2+AU85Wn9ezchMA0g4MndpuKE5PvtzORViSnduNh5wpIrmQ==
       tarball: 'file:projects/sdk-backend-base.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-bear.tgz':
@@ -19029,7 +19033,7 @@ packages:
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
       '@types/json-stable-stringify': 1.0.32
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/spark-md5': 3.0.2
       '@types/uuid': 3.4.9
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
@@ -19047,7 +19051,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
@@ -19060,7 +19064,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-bear'
     resolution:
-      integrity: sha512-TSAtOtiRg4H9CwADt/IbyfbzDAPYil5fb0gicBxQOYrwKQYSWT0VUuj3DIQs5D3iqp/6OokLvSpGebZggJ8ggQ==
+      integrity: sha512-OR96p/Ra5Fz6toghC+4s5Bx9insW0HO35SQWIrue3H8/Ydb9QieLmSIvX8nP0WMaUzqk6JmZa3kgVJFSNf2IYw==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz':
@@ -19069,7 +19073,7 @@ packages:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.5
@@ -19083,7 +19087,7 @@ packages:
       eslint-plugin-react-hooks: 4.0.8_eslint@7.5.0
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       ts-invariant: 0.4.4
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
@@ -19094,7 +19098,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-mockingbird'
     resolution:
-      integrity: sha512-6LAKzcrW1fXRm/lJVyv/5XMbeoY6PuGUxJj28dKSBoNb/OszOwxWCYDcQKWknUPyHWJgH6v2/kdXCwUMP0NG6A==
+      integrity: sha512-+a4KENXmBJMWRxeEJnauwG/FhscMUJ21svmHrZqvUbizzwEkH0t71CPXITYfw0soS/06TsL2U1p0vlHnBulG3w==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
@@ -19103,7 +19107,7 @@ packages:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/spark-md5': 3.0.2
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.5
@@ -19117,7 +19121,7 @@ packages:
       eslint-plugin-react-hooks: 4.0.8_eslint@7.5.0
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
@@ -19129,7 +19133,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-spi'
     resolution:
-      integrity: sha512-qg62X+VPEa8JPthm+ZqU4rDEFzfEkKYuByuo4aCY9i8U+yNpLk/32oXwUmHRvklMex1FDvs8pxp5/4//UAF5TQ==
+      integrity: sha512-O8re2oN8RNmoCXiQInyz+sZpl02ihgNqNu6uXi5cHTgZesHzfL8UAau/wbs48h2DkyMOnLqAf4zlzp06PEdLlw==
       tarball: 'file:projects/sdk-backend-spi.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-tiger.tgz':
@@ -19138,7 +19142,7 @@ packages:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/spark-md5': 3.0.2
       '@types/uuid': 3.4.9
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
@@ -19155,7 +19159,7 @@ packages:
       eslint-plugin-react-hooks: 4.0.8_eslint@7.5.0
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       spark-md5: 3.0.1
       ts-invariant: 0.4.4
@@ -19169,7 +19173,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-tiger'
     resolution:
-      integrity: sha512-PcQ9u2rC7ARQoiZ3XTq/e4SMckTY9AcogCOuLN+tIOejXo4B+KqP1w2jQUqpxuvEO50UqtVmQKtMfqpo9F2XDw==
+      integrity: sha512-PK3vXlydi5lDgPOpweAb751c+Xx40x+UEbIufk9Xg5OXgCQemZhTUKp++t1FjckgBCLLzBXb7KyhMf5THrGSXQ==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-embedding.tgz':
@@ -19177,7 +19181,7 @@ packages:
       '@gooddata/eslint-config': 2.0.0_b7dcd9519c3aa34f8004998e9ab9cf7f
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.5
       dependency-cruiser: 8.2.0_typescript@3.9.5
@@ -19196,7 +19200,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-embedding'
     resolution:
-      integrity: sha512-/ztcKpu60K2KinT5UTeQlw3Mx//2tKkKNqNuaYcbGSllKq70lmXb6IYqZsahllKkQgpqo/DJD5CDpLk57RO45g==
+      integrity: sha512-SAn/SQ8C2wno0i3m53ydmuAfko6ZVRLhUf09aQwdyPCkwtS6ihmCYP55iP2dx4GLbQzSkU7EBz/NUO8Ci8fnTw==
       tarball: 'file:projects/sdk-embedding.tgz'
     version: 0.0.0
   'file:projects/sdk-examples.tgz_prop-types@15.7.2':
@@ -19219,7 +19223,7 @@ packages:
       '@types/history': 4.7.6
       '@types/invariant': 2.2.33
       '@types/isomorphic-fetch': 0.0.34
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/prop-types': 15.7.3
       '@types/react': 16.9.38
@@ -19261,7 +19265,7 @@ packages:
       isomorphic-fetch: 2.2.1
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       moment: 2.26.0
       node-sass: 4.14.1
       prettier: 2.0.5
@@ -19297,7 +19301,7 @@ packages:
     peerDependencies:
       prop-types: '*'
     resolution:
-      integrity: sha512-oSbmdtoG0TP7FiWvTQk6QzWX9DW0Ga+J6+nsDEP0Ql2ml/SzbbqodpToWC2vgesC3qb3Lf5ZWfrBwV5kD8trfg==
+      integrity: sha512-RxIuTmC4e/oYV4uUKKBGlblnI57mZ2k8PcR5aGn3xYHZJKOS+WI4gBHR0Vm4LOBi5yO2QvPOqIob0YMBQbQPnA==
       tarball: 'file:projects/sdk-examples.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -19307,7 +19311,7 @@ packages:
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
       '@types/json-stable-stringify': 1.0.32
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/spark-md5': 3.0.2
       '@types/stringify-object': 3.3.0
@@ -19324,7 +19328,7 @@ packages:
       jest: 25.5.4
       jest-junit: 3.7.0
       json-stable-stringify: 1.0.1
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       spark-md5: 3.0.1
       stringify-object: 2.4.0
@@ -19337,7 +19341,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-model'
     resolution:
-      integrity: sha512-zGDb5gu2NxxoDasB+Ps+KemUoChtCWYK44/ejz9/bVW0xO6C4Gho2Ruhttgxe6gLDbr/RPiqo2sr6eQC+zai/A==
+      integrity: sha512-eIEgy8GEdZhxqZ6NkLhwXZHGYNuHd59Umn3/bsDyPBn+r3zn0QKolWQ3OvCkxkRn6r2w6lva8OttRlzm9YyQLg==
       tarball: 'file:projects/sdk-model.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-ts.tgz':
@@ -19346,7 +19350,7 @@ packages:
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.5
       dependency-cruiser: 8.2.0_typescript@3.9.5
@@ -19359,7 +19363,7 @@ packages:
       eslint-plugin-react-hooks: 4.0.8_eslint@7.5.0
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       ts-jest: 25.5.1_jest@25.5.4+typescript@3.9.5
       tslib: 2.0.0
@@ -19369,7 +19373,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-skel-ts'
     resolution:
-      integrity: sha512-bqcvx0LjymCwdsCLE7kGvpTwx3diZAZERlyNhm0jks/YBGEEsjTHQt2qu8/Lcn0VitCtoQxQRX06wZdZ7yayyQ==
+      integrity: sha512-hXmGGEv7kVxaemRr3xkTDwT1juAmYmxPB+Xq1D+lP59Vy4Kahb3376vOIIaCuOy8cpmgsBv7TYh9olo28VesMw==
       tarball: 'file:projects/sdk-skel-ts.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-tsx.tgz':
@@ -19380,7 +19384,7 @@ packages:
       '@types/enzyme': 3.10.5
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/prop-types': 15.7.3
       '@types/raf': 3.4.0
@@ -19402,7 +19406,7 @@ packages:
       jest: 25.5.4
       jest-enzyme: 7.1.2_cf42f157aab73decab4c77c6f27921b2
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
       prettier: 2.0.5
@@ -19419,7 +19423,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-skel-tsx'
     resolution:
-      integrity: sha512-fNKJwKHVfe0bgbuE3gMS7KTnrRoQ0SeallJtyzX2an54CUYzWoohlvfW7BtJB9I0d7nbURXTwY5wjVPN5b6wmQ==
+      integrity: sha512-qlvzqNuTv6XiudCaqxJQUAhsZy9OIClRykasZuanTMebh3bwPyqyFE8pe6PeabZ4nE7E37jfqJ9lCsXfZTqZ4A==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-all.tgz':
@@ -19449,7 +19453,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-all'
     resolution:
-      integrity: sha512-KXzeB3XoFrXZigEnlkTUO/hFk0kcLotCVDvU/+ARZyljSmemoLZYiGAvWmkseYEK9xIbt7yiGzXG/XXw4hLQCQ==
+      integrity: sha512-dRzDtLSVdSKIqvPRwffbeDu66kahe2NygrqnIBAEb0vAD2xVzkjMyRjuwNAWQDdDXh6fxpqFFo43yC8ziIHcTA==
       tarball: 'file:projects/sdk-ui-all.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-charts.tgz':
@@ -19465,7 +19469,7 @@ packages:
       '@types/hoist-non-react-statics': 3.3.1
       '@types/invariant': 2.2.33
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/raf': 3.4.0
       '@types/react': 16.9.38
@@ -19495,7 +19499,7 @@ packages:
       jest: 25.5.4
       jest-enzyme: 7.1.2_cf42f157aab73decab4c77c6f27921b2
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
       prettier: 2.0.5
@@ -19513,7 +19517,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-charts'
     resolution:
-      integrity: sha512-ZI7m0cTF9sO0QYDhZg9zbI1vaf0T0bP2Zjs/fzc6W0mITCtTflKZl6mL3VKh+davgz7MY3OKvVcY+/GNUeNJxw==
+      integrity: sha512-E3t2gOzvgi1z32qkuMa7Luxj8nbatt+8idH9AzgQw1Wq/nw9vkom3GZBYNbJVDAatUl8fqko8A/tWG6GKTcdLg==
       tarball: 'file:projects/sdk-ui-charts.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-ext.tgz':
@@ -19529,7 +19533,7 @@ packages:
       '@types/enzyme': 3.10.5
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/lru-cache': 5.1.0
       '@types/node': 12.12.47
       '@types/raf': 3.4.0
@@ -19557,7 +19561,7 @@ packages:
       jest: 25.5.4
       jest-enzyme: 7.1.2_cf42f157aab73decab4c77c6f27921b2
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       lru-cache: 5.1.1
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
@@ -19576,7 +19580,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-ext'
     resolution:
-      integrity: sha512-AXHLz+RtyUx65RBBJMM8OoLiGYDqjbOrkXgxAA/UEOS3J3cNkuvsMY6e/6rUZ1KuBeLjQiIQm+0TVOTA4RCeWg==
+      integrity: sha512-jfD7Aup6M6UzoZ1VuQahIX3PfOlnjbZ15pF4vJs0GScug45YuJcIE5CtoLak+iVlzrSXSueTGRr0CPp8uG3fXg==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz':
@@ -19593,7 +19597,7 @@ packages:
       '@types/hoist-non-react-statics': 3.3.1
       '@types/invariant': 2.2.33
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/raf': 3.4.0
       '@types/react': 16.9.38
@@ -19622,7 +19626,7 @@ packages:
       jest: 25.5.4
       jest-enzyme: 7.1.2_cf42f157aab73decab4c77c6f27921b2
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       moment: 2.26.0
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
@@ -19642,7 +19646,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-filters'
     resolution:
-      integrity: sha512-mkiS/gtiAV2vB33N0qhWe+pxIfZVf0Hh61x6maT3GMel48AZcrYTVtLGFukzOE1gr1aGYakTKMtsFijYk2TTZA==
+      integrity: sha512-keoZUSAWqCbkQsx54MqedhM3BMFe0mRs6GqcRCQfSz5DC++WK9Y3PHffPpC4HoB8oEN2xDM/8Pbwp4n89vropA==
       tarball: 'file:projects/sdk-ui-filters.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-geo.tgz':
@@ -19656,7 +19660,7 @@ packages:
       '@types/enzyme': 3.10.5
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/mapbox-gl': 1.10.4
       '@types/node': 12.12.47
       '@types/prop-types': 15.7.3
@@ -19681,7 +19685,7 @@ packages:
       foundation-sites: 5.5.3
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       mapbox-gl: 1.11.0_mapbox-gl@1.11.0
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
@@ -19701,7 +19705,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-geo'
     resolution:
-      integrity: sha512-la/MxCDN8NV+ZEzeybfe1DUeRvO+/yvNrQReY4JDStaSZPVu3kr+ABZ6u50wn4Z5yzRUnHjQ31G5J1bwlAaVdg==
+      integrity: sha512-/XbhPhQ1fG9oaF8onYvEJNlbnjTfgUrIM3aRBwwM5hK71Yiw67/XhdIF/VW4RIG1GJsI/+QJ1cmc8D1f/O0fLw==
       tarball: 'file:projects/sdk-ui-geo.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-kit.tgz':
@@ -19717,7 +19721,7 @@ packages:
       '@types/enzyme': 3.10.5
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/prop-types': 15.7.3
       '@types/raf': 3.4.0
@@ -19741,7 +19745,7 @@ packages:
       jest: 25.5.4
       jest-enzyme: 7.1.2_cf42f157aab73decab4c77c6f27921b2
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
       prettier: 2.0.5
@@ -19759,7 +19763,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-kit'
     resolution:
-      integrity: sha512-VaLSdyuZJ2uRtiR7jcVS2+yMANT7IPcFjXt25BKRqBpA7kLKdOk5RPb6jXjEXwZz3VSsEJDzrtemYatJd6WYEw==
+      integrity: sha512-4TMrqJdBZdpKK1n5KNGNUhdYwLApOiLEnv7W3CEAhUxCgzpQPfd/FESYRuXMv8v3GL9qMVRH908T0b7J8xZrQQ==
       tarball: 'file:projects/sdk-ui-kit.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-pivot.tgz':
@@ -19778,7 +19782,7 @@ packages:
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/invariant': 2.2.33
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/raf': 3.4.0
       '@types/react': 16.9.38
@@ -19805,7 +19809,7 @@ packages:
       jest-environment-jsdom-fourteen: 1.0.1
       jest-enzyme: 7.1.2_cf42f157aab73decab4c77c6f27921b2
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
       prettier: 2.0.5
@@ -19822,7 +19826,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-pivot'
     resolution:
-      integrity: sha512-C3+1gY/Qa+YRXygHIuF4OjXbFLGoyPS67qtXjr5KPwMP2bajrY6abdSo9GJieMQcR9i5sxU/9+xfSbIBtcRdXA==
+      integrity: sha512-jAH1il3njCwipM8YEQXVAGdHLgCx/bMeefc1qO9VQbOho9/rtgP53zOpbCwrWqBR3Hi2WWY40ydF0ez/gTh7wA==
       tarball: 'file:projects/sdk-ui-pivot.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-tests.tgz_webpack@4.43.0':
@@ -19845,7 +19849,7 @@ packages:
       '@types/enzyme': 3.10.5
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/react': 16.9.38
       '@types/react-dom': 16.9.8
@@ -19868,7 +19872,7 @@ packages:
       eslint-plugin-react-hooks: 4.0.8_eslint@7.5.0
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       mapbox-gl: 1.11.0_mapbox-gl@1.11.0
       prettier: 2.0.5
       react: 16.13.1
@@ -19889,7 +19893,7 @@ packages:
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-eAWPrkdvQuty07K+xJ9mBvm2mSNRGL3YGzyqeqmBrg9uGOajyQJKzVT/sWvzbcpEk+asNtVMZOB0K0LzWk0/wQ==
+      integrity: sha512-zAiChtV2v+PvcCqqDcwgsa5Qi3BuD+MqsiANDCbyiXFzH4X3DIwtw8jTcpGlpyOYtGg7qpst4hmo5lAdfjSkcg==
       tarball: 'file:projects/sdk-ui-tests.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-vis-commons.tgz':
@@ -19903,7 +19907,7 @@ packages:
       '@types/enzyme': 3.10.5
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/prop-types': 15.7.3
       '@types/react': 16.9.38
@@ -19926,7 +19930,7 @@ packages:
       foundation-sites: 5.5.3
       jest: 25.5.4
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       node-sass: 4.14.1
       node-sass-magic-importer: 5.3.2
       prettier: 2.0.5
@@ -19944,7 +19948,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-vis-commons'
     resolution:
-      integrity: sha512-33t0nZy9x1CBrVFHp66FM+QXD+VLGj5HLW9GGgTEaVzp/Ek26WjMxyZlqYPSTlaL+Mt5YBdchpfmcfcOZyM6iA==
+      integrity: sha512-hxDu3RwYlKvPaAD6kHD1APR6XDjtZd1utiUjBV2ei5ArPSpL3b/spnR7URJ1M3Kg/C10GlUB6OaLLQgcJAao9A==
       tarball: 'file:projects/sdk-ui-vis-commons.tgz'
     version: 0.0.0
   'file:projects/sdk-ui.tgz':
@@ -19960,7 +19964,7 @@ packages:
       '@types/hoist-non-react-statics': 3.3.1
       '@types/invariant': 2.2.33
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@types/node': 12.12.47
       '@types/raf': 3.4.0
       '@types/react': 16.9.38
@@ -19985,7 +19989,7 @@ packages:
       jest: 25.5.4
       jest-enzyme: 7.1.2_cf42f157aab73decab4c77c6f27921b2
       jest-junit: 3.7.0
-      lodash: 4.17.15
+      lodash: 4.17.19
       prettier: 2.0.5
       raf: 3.4.1
       react: 16.13.1
@@ -20000,7 +20004,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui'
     resolution:
-      integrity: sha512-xvJG6bM2jcmwKlg17lJ6rjG3PZyxyC++QGBKOk9ZBXjtbxbZP7wT8VZ/IE+K3LM+5LLjvQmYspsfdZvjB2h6xw==
+      integrity: sha512-aI8SuZB0JOaviM7uh0QXzZPm2uw6f7U+whi20NzVZJWy5bNLabdfuzrlpBcbM6g3dbWhFFUlN/Z7syDnL2LonQ==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
   'file:projects/util.tgz':
@@ -20008,7 +20012,7 @@ packages:
       '@gooddata/eslint-config': 2.0.0_b7dcd9519c3aa34f8004998e9ab9cf7f
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 25.2.3
-      '@types/lodash': 4.14.155
+      '@types/lodash': 4.14.158
       '@typescript-eslint/eslint-plugin': 3.7.1_0216606a4b2147c7e316a95308caea7a
       '@typescript-eslint/parser': 3.7.1_eslint@7.5.0+typescript@3.9.5
       dependency-cruiser: 8.2.0_typescript@3.9.5
@@ -20027,7 +20031,7 @@ packages:
     dev: false
     name: '@rush-temp/util'
     resolution:
-      integrity: sha512-gg6c/X0Pp/Igp5G22Fp5cRH65X3zYPhYwgFjU8YZuW7NXWbvynfa/Q6q7sJLXIPmxsMxnrDulAPGEm5lUl3g1Q==
+      integrity: sha512-9Ijd/67bs5kjZgJGu3d319x89H7/uSFPNCaOLhGawh0CbYjkGQ5B2FJRRPKUO3fmyGLzuj7gNDxX8E8JueQSWA==
       tarball: 'file:projects/util.tgz'
     version: 0.0.0
 registry: ''
@@ -20100,7 +20104,7 @@ specifiers:
   '@types/isomorphic-fetch': ^0.0.34
   '@types/jest': ^25.1.2
   '@types/json-stable-stringify': ^1.0.32
-  '@types/lodash': ^4.14.123
+  '@types/lodash': ^4.14.158
   '@types/lru-cache': ^5.1.0
   '@types/mapbox-gl': ^1.6.1
   '@types/md5': ^2.1.32
@@ -20182,7 +20186,7 @@ specifiers:
   jest-junit: ^3.0.0
   js-object-pretty-print: ^0.2.0
   json-stable-stringify: ^1.0.1
-  lodash: ^4.17.15
+  lodash: ^4.17.19
   lodash-webpack-plugin: ^0.11.0
   lru-cache: ^5.1.1
   mapbox-gl: ^1.6.1

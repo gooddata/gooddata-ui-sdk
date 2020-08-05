@@ -47,7 +47,7 @@
         "classnames": "^2.2.6",
         "custom-event": "^1.0.1",
         "fixed-data-table-2": "^0.7.17",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "react-intl": "^3.6.0",
         "ts-invariant": "^0.4.4",
         "tslib": "^2.0.0"
@@ -65,7 +65,7 @@
         "@types/enzyme": "^3.10.3",
         "@types/enzyme-adapter-react-16": "^1.0.5",
         "@types/jest": "^25.1.2",
-        "@types/lodash": "^4.14.123",
+        "@types/lodash": "^4.14.158",
         "@types/node": "^12.12.26",
         "@types/raf": "^3.4.0",
         "@types/react": "^16.9.11",

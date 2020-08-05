@@ -35,13 +35,13 @@
     "dependencies": {
         "@gooddata/sdk-backend-spi": "^8.0.0-beta.33",
         "@gooddata/sdk-model": "^8.0.0-beta.33",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.0.0",
         "@types/jest": "^25.1.2",
-        "@types/lodash": "^4.14.123",
+        "@types/lodash": "^4.14.158",
         "@types/node": "^12.12.26",
         "@typescript-eslint/eslint-plugin": "^3.7.1",
         "@typescript-eslint/parser": "^3.7.1",
