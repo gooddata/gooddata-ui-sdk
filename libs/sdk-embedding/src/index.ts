@@ -25,4 +25,7 @@ export { EmbeddedAnalyticalDesigner } from "./iframe/ad";
 
 export { EmbeddedKpiDashboard } from "./iframe/kd";
 
-export { IHost, setConfig, setHost, addListener, postEvent, removeListener } from "./iframe/messagingUtils";
+import * as filterConvertors from "./internal/filterConvertors";
+import * as messagingUtils from "./internal/messagingUtils";
+
+export { filterConvertors, messagingUtils };
