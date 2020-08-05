@@ -1793,5 +1793,10 @@
     },
     "PivotTable.ab5a2b8d16bb33e0e507930b3ab4bde1": {
         "comment": "Auto-generated insight for test scenario PivotTable - table with multiple measure columns and weak measure size."
+    },
+    "PivotTable.03d6b3d66f30e0595bc109a891877850": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with three rows and two column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with three rows and two column attributes."
     }
 }

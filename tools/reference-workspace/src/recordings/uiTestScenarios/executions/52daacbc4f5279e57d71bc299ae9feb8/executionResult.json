@@ -1,0 +1,101 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "name": "Product Name",
+                        "localIdentifier": "a_label.product.id.name",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                        "identifier": "label.product.id.name",
+                        "formOf": {
+                            "name": "Product",
+                            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+                            "identifier": "attr.product.id"
+                        }
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "name": "Department",
+                        "localIdentifier": "a_label.owner.department",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+                        "identifier": "label.owner.department",
+                        "formOf": {
+                            "name": "Department",
+                            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
+                            "identifier": "attr.owner.department"
+                        }
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "name": "Owner Name",
+                        "localIdentifier": "a_label.owner.id.name",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+                        "identifier": "label.owner.id.name",
+                        "formOf": {
+                            "name": "Sales Rep",
+                            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
+                            "identifier": "attr.owner.id"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "name": "Forecast Category",
+                        "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+                        "identifier": "label.opportunitysnapshot.forecastcategory",
+                        "formOf": {
+                            "name": "Forecast Category",
+                            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
+                            "identifier": "attr.opportunitysnapshot.forecastcategory"
+                        }
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "name": "Region",
+                        "localIdentifier": "a_label.owner.region",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                        "identifier": "label.owner.region",
+                        "formOf": {
+                            "name": "Region",
+                            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+                            "identifier": "attr.owner.region"
+                        }
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Amount",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Won",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

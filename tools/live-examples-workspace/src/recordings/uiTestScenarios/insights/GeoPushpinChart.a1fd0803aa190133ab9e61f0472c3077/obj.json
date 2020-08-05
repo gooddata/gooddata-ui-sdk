@@ -40,6 +40,20 @@
                         }
                     }
                 ]
+            },
+            {
+                "localIdentifier": "tooltipText",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.uscities.city",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "tooltipText_df"
+                        }
+                    }
+                ]
             }
         ],
         "filters": [],
