@@ -24,8 +24,3 @@ export {
 export { EmbeddedAnalyticalDesigner } from "./iframe/ad";
 
 export { EmbeddedKpiDashboard } from "./iframe/kd";
-
-import * as filterConvertors from "./internal/filterConvertors";
-import * as messagingUtils from "./internal/messagingUtils";
-
-export { filterConvertors, messagingUtils };
