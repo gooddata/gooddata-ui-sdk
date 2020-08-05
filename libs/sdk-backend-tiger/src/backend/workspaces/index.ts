@@ -21,9 +21,9 @@ class TigerWorkspaceQuery implements IWorkspaceQuery {
     private search: string | undefined = undefined;
 
     constructor(
-        // @ts-ignore
+        // @ts-expect-error Keeping this for now for future use
         private readonly authCall: TigerAuthenticatedCallGuard,
-        // @ts-ignore
+        // @ts-expect-error Keeping this for now for future use
         private readonly userId?: string,
     ) {}
 

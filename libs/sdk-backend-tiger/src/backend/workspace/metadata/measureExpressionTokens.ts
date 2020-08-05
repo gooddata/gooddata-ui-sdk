@@ -6,9 +6,9 @@ export interface IExpressionToken {
     value: string;
 }
 
-const REMOVE_BRACKETS_REGEXP = /[\[\]\{\}]/g;
+const REMOVE_BRACKETS_REGEXP = /[[\]{}]/g;
 const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
-    ["text", /^[^\{\}\[\]\"]+/],
+    ["text", /^[^{}[\]"]+/],
     ["quoted_text", /^"(?:[^"\\]|\\\\.)*"/],
     ["fact", /^\{fact\/\S*\}/],
     ["metric", /^\{metric\/\S*\}/],

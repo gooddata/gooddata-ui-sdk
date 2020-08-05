@@ -49,7 +49,7 @@ function convertSortDirection(direction: SortDirection): ExecuteAFM.SortDirectio
  * user who specified primaryLabelValue directly, it has logic to fall back to using the uri as-is.
  */
 function extractItemValueFromElement(elementUri: string): string {
-    const parsedUri = elementUri.match(/obj\/([^\/]*)(\/elements\?id=)?(.*)?$/);
+    const parsedUri = elementUri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)?$/);
 
     if (parsedUri && parsedUri[3]) {
         return parsedUri[3];

@@ -90,7 +90,9 @@ export function toLocalIdentifier(localIdentifier: string): ILocalIdentifierQual
 /**
  * @internal
  */
-export function toMeasureValueFilterMeasureQualifier(ref: ObjRefInScope) {
+export function toMeasureValueFilterMeasureQualifier(
+    ref: ObjRefInScope,
+): ExecuteAFM.ILocalIdentifierQualifier | ExecuteAFM.IObjIdentifierQualifier {
     if (isLocalIdRef(ref)) {
         return toLocalIdentifier(ref.localIdentifier);
     } else if (isObjRef(ref)) {
