@@ -159,7 +159,7 @@ export interface IDrillToLegacyDashboard extends IDrill {
  * Type-guard testing whether the provided object is an instance of {@link IDrillToLegacyDashboard}.
  * @alpha
  */
-export function isDrillToLegacyDashboard(obj: any): obj is IDrillToLegacyDashboard {
+export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard {
     return !isEmpty(obj) && (obj as IDrillToLegacyDashboard).type === "drillToLegacyDashboard";
 }
 
@@ -188,7 +188,7 @@ export interface IDrillToDashboard extends IDrill {
  * Type-guard testing whether the provided object is an instance of {@link IDrillToDashboard}.
  * @alpha
  */
-export function isDrillToDashboard(obj: any): obj is IDrillToDashboard {
+export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard {
     return !isEmpty(obj) && (obj as IDrillToDashboard).type === "drillToDashboard";
 }
 
@@ -217,7 +217,7 @@ export interface IDrillToInsight extends IDrill {
  * Type-guard testing whether the provided object is an instance of {@link IDrillToInsight}.
  * @alpha
  */
-export function isDrillToInsight(obj: any): obj is IDrillToInsight {
+export function isDrillToInsight(obj: unknown): obj is IDrillToInsight {
     return !isEmpty(obj) && (obj as IDrillToInsight).type === "drillToInsight";
 }
 
@@ -246,7 +246,7 @@ export interface IDrillToCustomUrl extends IDrill {
  * Type-guard testing whether the provided object is an instance of {@link IDrillToCustomUrl}.
  * @alpha
  */
-export function isDrillToCustomUrl(obj: any): obj is IDrillToCustomUrl {
+export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl {
     return !isEmpty(obj) && (obj as IDrillToCustomUrl).type === "drillToCustomUrl";
 }
 
@@ -275,6 +275,6 @@ export interface IDrillToAttributeUrl extends IDrill {
  * Type-guard testing whether the provided object is an instance of {@link IDrillToAttributeUrl}.
  * @alpha
  */
-export function isDrillToAttributeUrl(obj: any): obj is IDrillToAttributeUrl {
+export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl {
     return !isEmpty(obj) && (obj as IDrillToAttributeUrl).type === "drillToAttributeUrl";
 }

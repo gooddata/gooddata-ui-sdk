@@ -49,7 +49,7 @@ export interface IDashboardAttributeFilter {
  * Type-guard testing whether the provided object is an instance of {@link IDashboardAttributeFilter}.
  * @alpha
  */
-export function isDashboardAttributeFilter(obj: any): obj is IDashboardAttributeFilter {
+export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter {
     return !isEmpty(obj) && !!(obj as IDashboardAttributeFilter).attributeFilter;
 }
 
@@ -95,7 +95,7 @@ export interface IDashboardDateFilter {
  * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilter}.
  * @alpha
  */
-export function isDashboardDateFilter(obj: any): obj is IDashboardDateFilter {
+export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter {
     return !isEmpty(obj) && !!(obj as IDashboardDateFilter).dateFilter;
 }
 
@@ -138,9 +138,9 @@ export interface IFilterContextDefinition extends IFilterContextBase, Partial<ID
  * Type-guard testing whether the provided object is an instance of {@link IFilterContextDefinition}.
  * @alpha
  */
-export function isFilterContextDefinition(obj: any): obj is IFilterContextDefinition {
+export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
-    return hasFilterContextBaseProps(obj) && !isObjRef(obj.ref);
+    return hasFilterContextBaseProps(obj) && !isObjRef((obj as any).ref);
 }
 
 /**
@@ -155,9 +155,9 @@ export interface IFilterContext extends IFilterContextBase, IDashboardObjectIden
  * Type-guard testing whether the provided object is an instance of {@link IFilterContext}.
  * @alpha
  */
-export function isFilterContext(obj: any): obj is IFilterContext {
+export function isFilterContext(obj: unknown): obj is IFilterContext {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
-    return hasFilterContextBaseProps(obj) && isObjRef(obj.ref);
+    return hasFilterContextBaseProps(obj) && isObjRef((obj as any).ref);
 }
 
 /**
@@ -192,11 +192,11 @@ export interface ITempFilterContext {
  * Type-guard testing whether the provided object is an instance of {@link ITempFilterContext}.
  * @alpha
  */
-export function isTempFilterContext(obj: any): obj is ITempFilterContext {
+export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
     return (
         hasFilterContextBaseProps(obj) &&
-        isObjRef(obj.ref) &&
+        isObjRef((obj as any).ref) &&
         !(obj as IFilterContext).identifier &&
         !(obj as IFilterContext).title
     );
@@ -225,7 +225,7 @@ export interface IDashboardDateFilterReference {
  * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilterReference}.
  * @alpha
  */
-export function isDashboardDateFilterReference(obj: any): obj is IDashboardDateFilterReference {
+export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference {
     return !isEmpty(obj) && (obj as IDashboardDateFilterReference).type === "dateFilterReference";
 }
 
@@ -252,7 +252,7 @@ export interface IDashboardAttributeFilterReference {
  * Type-guard testing whether the provided object is an instance of {@link IDashboardAttributeFilterReference}.
  * @alpha
  */
-export function isDashboardAttributeFilterReference(obj: any): obj is IDashboardAttributeFilterReference {
+export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference {
     return !isEmpty(obj) && (obj as IDashboardAttributeFilterReference).type === "attributeFilterReference";
 }
 
@@ -268,6 +268,6 @@ export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboa
 /**
  * @internal
  */
-function hasFilterContextBaseProps(obj: any): boolean {
+function hasFilterContextBaseProps(obj: unknown): boolean {
     return !isEmpty(obj) && !!(obj as IFilterContextBase).filters;
 }

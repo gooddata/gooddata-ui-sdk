@@ -97,22 +97,22 @@ export interface IWidgetReferences {
  * Type-guard testing whether the provided object is an instance of {@link IWidgetDefinition}.
  * @alpha
  */
-export function isWidgetDefinition(obj: any): obj is IWidgetDefinition {
-    return hasWidgetProps(obj) && !isObjRef(obj.ref);
+export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition {
+    return hasWidgetProps(obj) && !isObjRef((obj as any).ref);
 }
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidget}.
  * @alpha
  */
-export function isWidget(obj: any): obj is IWidget {
-    return hasWidgetProps(obj) && isObjRef(obj.ref);
+export function isWidget(obj: unknown): obj is IWidget {
+    return hasWidgetProps(obj) && isObjRef((obj as any).ref);
 }
 
 /**
  * @internal
  */
-function hasWidgetProps(obj: any): boolean {
+function hasWidgetProps(obj: unknown): boolean {
     return !isEmpty(obj) && ((obj as IWidgetBase).type === "kpi" || (obj as IWidgetBase).type === "insight");
 }
 

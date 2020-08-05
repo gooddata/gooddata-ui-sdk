@@ -29,7 +29,7 @@ export interface ILegacyKpiWithComparison extends ILegacyKpiBase {
  * Type-guard testing whether the provided object is an instance of {@link ILegacyKpiWithComparison}.
  * @alpha
  */
-export function isLegacyKpiWithComparison(obj: any): obj is ILegacyKpiWithComparison {
+export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison {
     return (
         !isEmpty(obj) &&
         ((obj as ILegacyKpiWithComparison).comparisonType === "previousPeriod" ||
@@ -49,7 +49,7 @@ export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
  * Type-guard testing whether the provided object is an instance of {@link ILegacyKpiWithoutComparison}.
  * @alpha
  */
-export function isLegacyKpiWithoutComparison(obj: any): obj is ILegacyKpiWithoutComparison {
+export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWithoutComparison {
     return !isEmpty(obj) && (obj as ILegacyKpiWithoutComparison).comparisonType === "none";
 }
 

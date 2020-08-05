@@ -186,35 +186,35 @@ export interface IAllTimeDateFilter extends IDateFilterOption {
  * Type-guard testing whether the provided object is an instance of {@link IAllTimeDateFilter}.
  * @alpha
  */
-export const isAllTimeDateFilter = (obj: any): obj is IAllTimeDateFilter =>
+export const isAllTimeDateFilter = (obj: unknown): obj is IAllTimeDateFilter =>
     !isEmpty(obj) && (obj as IAllTimeDateFilter).type === "allTime";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterForm}.
  * @alpha
  */
-export const isAbsoluteDateFilterForm = (obj: any): obj is IAbsoluteDateFilterForm =>
+export const isAbsoluteDateFilterForm = (obj: unknown): obj is IAbsoluteDateFilterForm =>
     !isEmpty(obj) && (obj as IAbsoluteDateFilterForm).type === "absoluteForm";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterPreset}.
  * @alpha
  */
-export const isAbsoluteDateFilterPreset = (obj: any): obj is IAbsoluteDateFilterPreset =>
+export const isAbsoluteDateFilterPreset = (obj: unknown): obj is IAbsoluteDateFilterPreset =>
     !isEmpty(obj) && (obj as IAbsoluteDateFilterPreset).type === "absolutePreset";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IRelativeDateFilterForm}.
  * @alpha
  */
-export const isRelativeDateFilterForm = (obj: any): obj is IRelativeDateFilterForm =>
+export const isRelativeDateFilterForm = (obj: unknown): obj is IRelativeDateFilterForm =>
     !isEmpty(obj) && (obj as IRelativeDateFilterForm).type === "relativeForm";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IRelativeDateFilterPreset}.
  * @alpha
  */
-export const isRelativeDateFilterPreset = (obj: any): obj is IRelativeDateFilterPreset =>
+export const isRelativeDateFilterPreset = (obj: unknown): obj is IRelativeDateFilterPreset =>
     !isEmpty(obj) && (obj as IRelativeDateFilterPreset).type === "relativePreset";
 
 /**

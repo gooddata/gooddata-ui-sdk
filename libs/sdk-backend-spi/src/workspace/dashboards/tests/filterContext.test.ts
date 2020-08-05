@@ -65,17 +65,6 @@ describe("filter context type guards", () => {
         });
     });
 
-    describe("isDashboardDateFilterReference", () => {
-        const Scenarios: Array<[boolean, string, any]> = [
-            ...InvalidInputTestCases,
-            [true, "dashboard date filter reference", dashboardDateFilterReference],
-        ];
-
-        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isDashboardDateFilterReference(input)).toBe(expectedResult);
-        });
-    });
-
     describe("isFilterContext", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
