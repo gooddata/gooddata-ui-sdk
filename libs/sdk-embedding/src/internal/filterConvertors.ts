@@ -65,7 +65,7 @@ export function isValidDateFilterFormat(
     }
 }
 
-function isValidAttributeFilterFormat(filterItem: EmbeddedGdc.AttributeFilterItem): boolean {
+function isValidAttributeFilterFormat(filterItem: unknown): boolean {
     if (!EmbeddedGdc.isAttributeFilter(filterItem)) {
         return false;
     }
@@ -93,7 +93,7 @@ function isValidAttributeFilterFormat(filterItem: EmbeddedGdc.AttributeFilterIte
 // `dataSet` is required in AD only.
 // In AD, we call this function with `shouldValidateDataSet = true`
 // In KD, we call this function with `shouldValidateDataSet = false`
-export function isValidFilterItemFormat(filterItem: any, shouldValidateDataSet: boolean = true): boolean {
+export function isValidFilterItemFormat(filterItem: unknown, shouldValidateDataSet: boolean = true): boolean {
     if (EmbeddedGdc.isDateFilter(filterItem)) {
         return isValidDateFilterFormat(filterItem, shouldValidateDataSet);
     } else {
@@ -101,7 +101,7 @@ export function isValidFilterItemFormat(filterItem: any, shouldValidateDataSet: 
     }
 }
 
-export function isValidRemoveFilterItemFormat(filterItem: any): boolean {
+export function isValidRemoveFilterItemFormat(filterItem: unknown): boolean {
     if (EmbeddedGdc.isRemoveDateFilter(filterItem)) {
         const { dataSet } = filterItem;
         const { uri, identifier } = getObjectUriIdentifier(dataSet);
@@ -115,14 +115,13 @@ export function isValidRemoveFilterItemFormat(filterItem: any): boolean {
     return false;
 }
 
-export function isValidRemoveFiltersFormat(filters: any[]): boolean {
+export function isValidRemoveFiltersFormat(filters: unknown[]): boolean {
     return !isEmpty(filters) && filters.every(isValidRemoveFilterItemFormat);
 }
 
-export function isValidFiltersFormat(filters: any[], shouldValidateDataSet: boolean = true): boolean {
+export function isValidFiltersFormat(filters: unknown[], shouldValidateDataSet: boolean = true): boolean {
     return (
-        !isEmpty(filters) &&
-        filters.every((filter: any) => isValidFilterItemFormat(filter, shouldValidateDataSet))
+        !isEmpty(filters) && filters.every((filter) => isValidFilterItemFormat(filter, shouldValidateDataSet))
     );
 }
 
