@@ -39,7 +39,7 @@
         "@gooddata/sdk-model": "^8.0.0-beta.30",
         "@gooddata/sdk-ui": "^8.0.0-beta.30",
         "@gooddata/sdk-ui-vis-commons": "^8.0.0-beta.30",
-        "@gooddata/utilities": "^8.0.0-beta.30",
+        "@gooddata/util": "^8.0.0-beta.30",
         "classnames": "^2.2.6",
         "custom-event": "^1.0.1",
         "date-fns": "^2.8.1",

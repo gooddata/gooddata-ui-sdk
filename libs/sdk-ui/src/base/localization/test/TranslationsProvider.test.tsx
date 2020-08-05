@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
-import { testUtils } from "@gooddata/utilities";
+import { testUtils } from "@gooddata/util";
 import { IntlTranslationsProvider, ITranslationsComponentProps } from "../TranslationsProvider";
 import { IntlWrapper } from "../IntlWrapper";
 

@@ -39,7 +39,7 @@
         "@gooddata/sdk-backend-spi": "^8.0.0-beta.30",
         "@gooddata/sdk-model": "^8.0.0-beta.30",
         "@gooddata/sdk-ui": "^8.0.0-beta.30",
-        "@gooddata/utilities": "^8.0.0-beta.30",
+        "@gooddata/util": "^8.0.0-beta.30",
         "classnames": "^2.2.6",
         "downshift": "^3.4.7",
         "fixed-data-table-2": "^0.7.17",

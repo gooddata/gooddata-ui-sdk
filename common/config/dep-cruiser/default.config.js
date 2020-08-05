@@ -159,23 +159,19 @@ const DefaultRules = [
 ];
 
 const DefaultOptions = {
-    /* conditions specifying which files not to follow further when encountered:
-   - path: a regular expression to match
-   - dependencyTypes: see https://github.com/sverweij/dependency-cruiser/blob/develop/doc/rules-reference.md#dependencytypes
-     for a complete list
-*/
+    /*
+     * Explicitly do not follow & exclude dependencies to:
+     *
+     * - node_modules, mocks, test code - obvious
+     * - other libraries in monorepo, which the dep cruiser will see as "../<lib>"
+     */
     doNotFollow: {
-        path: ".*(node_modules|api-|sdk-|utilities|__mocks__|test|tests).*",
+        path: "((.*(node_modules|__mocks__|test|tests).*)|../(api-|sdk-|util/).*)",
         dependencyTypes: ["npm", "npm-dev", "npm-optional", "npm-peer", "npm-bundled", "npm-no-pkg"],
     },
 
-    /* conditions specifying which dependencies to exclude
-       - path: a regular expression to match
-       - dynamic: a boolean indicating whether to ignore dynamic (true) or static (false) dependencies.
-                leave out if you want to exclude neither (recommended!)
-    */
     exclude: {
-        path: ".*(node_modules|api-|sdk-|utilities|__mocks__|test|tests).*",
+        path: "((.*(node_modules|__mocks__|test|tests).*)|../(api-|sdk-|util/).*)",
         //, dynamic: true
     },
 

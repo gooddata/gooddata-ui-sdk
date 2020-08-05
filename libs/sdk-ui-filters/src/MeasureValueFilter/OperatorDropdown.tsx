@@ -4,7 +4,7 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
-import { stringUtils } from "@gooddata/utilities";
+import { stringUtils } from "@gooddata/util";
 
 import OperatorDropdownBody from "./OperatorDropdownBody";
 import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator";

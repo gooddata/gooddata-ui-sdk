@@ -37,7 +37,7 @@
         "@gooddata/goodstrap": "^68.18.1",
         "@gooddata/numberjs": "^3.2.4",
         "@gooddata/sdk-ui": "^8.0.0-beta.30",
-        "@gooddata/utilities": "^8.0.0-beta.30",
+        "@gooddata/util": "^8.0.0-beta.30",
         "classnames": "^2.2.6",
         "codemirror": "^5.54.0",
         "lodash": "^4.17.15",

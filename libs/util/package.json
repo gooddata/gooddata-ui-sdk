@@ -1,9 +1,9 @@
 {
-    "name": "@gooddata/utilities",
+    "name": "@gooddata/util",
     "version": "8.0.0-beta.30",
     "author": "GoodData",
     "description": "GoodData Utility Functions",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/utilities",
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/util",
     "license": "LicenseRef-LICENSE",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",

@@ -38,7 +38,7 @@
         "@gooddata/numberjs": "^3.2.4",
         "@gooddata/sdk-backend-spi": "^8.0.0-beta.30",
         "@gooddata/sdk-model": "^8.0.0-beta.30",
-        "@gooddata/utilities": "^8.0.0-beta.30",
+        "@gooddata/util": "^8.0.0-beta.30",
         "custom-event": "^1.0.1",
         "hoist-non-react-statics": "^3.3.0",
         "http-status-codes": "^1.3.0",

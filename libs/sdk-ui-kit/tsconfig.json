@@ -19,7 +19,7 @@
         "baseUrl": "..",
         "paths": {
             "@gooddata/sdk-ui": ["sdk-ui/src"],
-            "@gooddata/utilities": ["utilities/src"]
+            "@gooddata/util": ["util/src"]
         }
     },
     "compileOnSave": false,

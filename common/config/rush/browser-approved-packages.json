@@ -159,7 +159,7 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@gooddata/utilities",
+      "name": "@gooddata/util",
       "allowedCategories": [ "production" ]
     },
     {

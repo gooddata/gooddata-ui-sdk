@@ -301,8 +301,8 @@
      */
     "projects": [
         {
-            "packageName": "@gooddata/utilities",
-            "projectFolder": "libs/utilities",
+            "packageName": "@gooddata/util",
+            "projectFolder": "libs/util",
             "reviewCategory": "production",
             "versionPolicyName": "sdk",
             "shouldPublish": true

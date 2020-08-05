@@ -17,7 +17,6 @@ dependencies:
   '@gooddata/eslint-config': 2.0.0_b7dcd9519c3aa34f8004998e9ab9cf7f
   '@gooddata/frontend-npm-scripts': 1.2.0
   '@gooddata/goodstrap': 68.18.1
-  '@gooddata/js-utils': 3.10.6
   '@gooddata/numberjs': 3.2.4
   '@microsoft/api-documenter': 7.8.13
   '@microsoft/api-extractor': 7.8.1
@@ -50,7 +49,7 @@ dependencies:
   '@rush-temp/sdk-ui-pivot': 'file:projects/sdk-ui-pivot.tgz'
   '@rush-temp/sdk-ui-tests': 'file:projects/sdk-ui-tests.tgz_webpack@4.43.0'
   '@rush-temp/sdk-ui-vis-commons': 'file:projects/sdk-ui-vis-commons.tgz'
-  '@rush-temp/utilities': 'file:projects/utilities.tgz'
+  '@rush-temp/util': 'file:projects/util.tgz'
   '@storybook/addon-actions': 5.3.19_@types+react@16.9.38
   '@storybook/addon-options': 5.3.19
   '@storybook/addons': 5.3.19
@@ -18729,6 +18728,7 @@ packages:
     dependencies:
       '@gooddata/eslint-config': 2.0.0_b7dcd9519c3aa34f8004998e9ab9cf7f
       '@gooddata/tslint-config': 1.0.0_typescript@3.9.5
+      '@microsoft/api-extractor': 7.8.1
       '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
       '@types/jest': 25.2.3
       '@types/lodash': 4.14.155
@@ -18762,7 +18762,7 @@ packages:
     dev: false
     name: '@rush-temp/api-client-tiger'
     resolution:
-      integrity: sha512-GueWOAsSBnEY/kVpKZLpOi8c8hQqcGPn8KS60w/0/Vic8QqtGPTWOUKber55VlE25D2JKbvVildbUqYOcU5l3g==
+      integrity: sha512-dFS+QFQSkhEdsY6rh098Ix0p8INVI2+VkSWHVj33ye39N366umqKk6rmchoaSfsvyzw4CP3PIFJ5X9KovrwTew==
       tarball: 'file:projects/api-client-tiger.tgz'
     version: 0.0.0
   'file:projects/api-model-bear.tgz':
@@ -18872,7 +18872,7 @@ packages:
     dev: false
     name: '@rush-temp/live-examples-workspace'
     resolution:
-      integrity: sha512-j/cY3aRJY+3D2atugwLkJt7ne+XKGasbpRdOIdYIxVd4gS7LFYetEOJ62H4y+gSB28JSDFvKZ74v8O+CanAqcw==
+      integrity: sha512-tRuDsKF2ERo+qwSp4vGTMbPctP0J5RSthiDzKwRDtmIAxXBge385JPdD/Lqj6V5UHAbysdTS+vfF2bgf9kdB/g==
       tarball: 'file:projects/live-examples-workspace.tgz'
     version: 0.0.0
   'file:projects/mock-handling.tgz':
@@ -19513,7 +19513,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-charts'
     resolution:
-      integrity: sha512-UGfiCKZ9l/fGPbUKVzidZu0hX5rTiV9agcp8BlyWSfMGCdA4KyLaBGUOOJQ/lfhfXHzBLw/ZE/uusR6vyNY8+A==
+      integrity: sha512-ZI7m0cTF9sO0QYDhZg9zbI1vaf0T0bP2Zjs/fzc6W0mITCtTflKZl6mL3VKh+davgz7MY3OKvVcY+/GNUeNJxw==
       tarball: 'file:projects/sdk-ui-charts.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-ext.tgz':
@@ -19576,7 +19576,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-ext'
     resolution:
-      integrity: sha512-1X7xqShDrI87FoXLdXnm6+CD2ONV8inqimOnlJVm1sy0NWz2rLAR/YftMyxqTPXDtx+vxvtxQeLF/7flKu3Gew==
+      integrity: sha512-AXHLz+RtyUx65RBBJMM8OoLiGYDqjbOrkXgxAA/UEOS3J3cNkuvsMY6e/6rUZ1KuBeLjQiIQm+0TVOTA4RCeWg==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz':
@@ -19642,7 +19642,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-filters'
     resolution:
-      integrity: sha512-0qDdYImSXv3Dkl9zQMSp0F0FgzhJQvNpDANOuVlutgwBcLsu5s/8d30gcccWpwacNkfsWRMgXW6NJsUmf9T52Q==
+      integrity: sha512-mkiS/gtiAV2vB33N0qhWe+pxIfZVf0Hh61x6maT3GMel48AZcrYTVtLGFukzOE1gr1aGYakTKMtsFijYk2TTZA==
       tarball: 'file:projects/sdk-ui-filters.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-geo.tgz':
@@ -19759,7 +19759,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-kit'
     resolution:
-      integrity: sha512-wojv4GKMzwRWMQnyeEj9k5IwPqq1ZfzlRRv0J0j1LFxqqNkmwfOdA3hqKqcmm995BDvJYVP4Vh8kc0ip2aLDhQ==
+      integrity: sha512-VaLSdyuZJ2uRtiR7jcVS2+yMANT7IPcFjXt25BKRqBpA7kLKdOk5RPb6jXjEXwZz3VSsEJDzrtemYatJd6WYEw==
       tarball: 'file:projects/sdk-ui-kit.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-pivot.tgz':
@@ -19822,7 +19822,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-pivot'
     resolution:
-      integrity: sha512-4exM+Iq1uk3pnlNJvLuanbb8I0S9udcBiVbfx0LLDTfVB+rwUarSrxBgVLDrTO3twkTKukArQL/L/oTQaM+KAg==
+      integrity: sha512-C3+1gY/Qa+YRXygHIuF4OjXbFLGoyPS67qtXjr5KPwMP2bajrY6abdSo9GJieMQcR9i5sxU/9+xfSbIBtcRdXA==
       tarball: 'file:projects/sdk-ui-pivot.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-tests.tgz_webpack@4.43.0':
@@ -20000,10 +20000,10 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui'
     resolution:
-      integrity: sha512-QoVE4quoG8Db4s6u6xViCwgOXRLHXw45xjoluIho5aNjiSMrzp+wvN5HqO6dsygcAZ9vUdsDVuX7uAR52ihKvA==
+      integrity: sha512-xvJG6bM2jcmwKlg17lJ6rjG3PZyxyC++QGBKOk9ZBXjtbxbZP7wT8VZ/IE+K3LM+5LLjvQmYspsfdZvjB2h6xw==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
-  'file:projects/utilities.tgz':
+  'file:projects/util.tgz':
     dependencies:
       '@gooddata/eslint-config': 2.0.0_b7dcd9519c3aa34f8004998e9ab9cf7f
       '@microsoft/api-extractor': 7.8.1
@@ -20025,10 +20025,10 @@ packages:
       tslib: 2.0.0
       typescript: 3.9.5
     dev: false
-    name: '@rush-temp/utilities'
+    name: '@rush-temp/util'
     resolution:
-      integrity: sha512-u0smuLVGwSIvGnxxiX188byP41K08uz+A7zwelxBHrDgdXv5odrEg0aThC90gTMS0N0f3eRk2GtKdGN6DrztJw==
-      tarball: 'file:projects/utilities.tgz'
+      integrity: sha512-gg6c/X0Pp/Igp5G22Fp5cRH65X3zYPhYwgFjU8YZuW7NXWbvynfa/Q6q7sJLXIPmxsMxnrDulAPGEm5lUl3g1Q==
+      tarball: 'file:projects/util.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
@@ -20050,7 +20050,6 @@ specifiers:
   '@gooddata/eslint-config': ^2.0.0
   '@gooddata/frontend-npm-scripts': 1.2.0
   '@gooddata/goodstrap': ^68.18.1
-  '@gooddata/js-utils': ^3.4.0
   '@gooddata/numberjs': ^3.2.4
   '@microsoft/api-documenter': ^7.3.16
   '@microsoft/api-extractor': 7.8.1
@@ -20083,7 +20082,7 @@ specifiers:
   '@rush-temp/sdk-ui-pivot': 'file:./projects/sdk-ui-pivot.tgz'
   '@rush-temp/sdk-ui-tests': 'file:./projects/sdk-ui-tests.tgz'
   '@rush-temp/sdk-ui-vis-commons': 'file:./projects/sdk-ui-vis-commons.tgz'
-  '@rush-temp/utilities': 'file:./projects/utilities.tgz'
+  '@rush-temp/util': 'file:./projects/util.tgz'
   '@storybook/addon-actions': ^5.2.6
   '@storybook/addon-options': ^5.2.6
   '@storybook/addons': ^5.2.6

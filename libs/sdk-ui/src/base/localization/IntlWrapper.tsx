@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import { IntlProvider } from "react-intl";
-import { translationUtils } from "@gooddata/utilities";
+import { translationUtils } from "@gooddata/util";
 import { DefaultLocale } from "./Locale";
 
 import * as enUS from "./bundles/en-US.json";

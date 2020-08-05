@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { ISeparators } from "@gooddata/sdk-ui";
-import { stringUtils } from "@gooddata/utilities";
+import { stringUtils } from "@gooddata/util";
 
 import { IFormatPreset } from "../typings";
 import { FormattedPreview } from "../customFormatDialog/shared/FormattedPreview";

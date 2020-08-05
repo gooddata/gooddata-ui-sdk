@@ -4,7 +4,7 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize";
 import noop from "lodash/noop";
-import { stringUtils } from "@gooddata/utilities";
+import { stringUtils } from "@gooddata/util";
 
 import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator";
 import { MeasureValueFilterOperator } from "./types";

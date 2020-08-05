@@ -2,7 +2,7 @@
 import isEmpty from "lodash/isEmpty";
 
 import { IntlShape, createIntl } from "react-intl";
-import { translationUtils } from "@gooddata/utilities";
+import { translationUtils } from "@gooddata/util";
 
 import * as enUS from "./bundles/en-US.json";
 import * as deDE from "./bundles/de-DE.json";
