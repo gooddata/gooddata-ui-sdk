@@ -16,6 +16,7 @@
         "noImplicitReturns": true,
         "baseUrl": "..",
         "paths": {
+            "@gooddata/sdk-embedding": ["sdk-embedding/src"],
             "@gooddata/sdk-model": ["sdk-model/src"],
             "@gooddata/sdk-backend-base": ["sdk-backend-base/src"],
             "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],

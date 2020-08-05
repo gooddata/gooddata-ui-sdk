@@ -6,14 +6,18 @@ The SDK follows layered architecture with several packages (modules) on each lay
 and constraints.
 
 -   Layer 1: Platform-specific API clients and their supporting code (models, DTOs and the like)
--   Layer 2: Platform-agnostic domain model and analytical backend SPI; SPI realizations are on this layer as well
+-   Layer 2: Platform-agnostic domain model, analytical backend SPI, application APIs;
+    > Note: SPI realizations are on this layer as well
 -   Layer 3: UI SDK - React components
+-   Utility Layer: Standalone, minimum dependency packages containing code utilities and convenience functions that
+    can be used in any other SDK package
 
 The main constraints - hard rules - in the architecture are:
 
 1.  Packages on lower layers MUST NOT depend on packages on higher layers
-2.  Packages on one layer MUST depend only on packages either on same layer or one layer down
+2.  Packages on one layer MUST depend only on packages either on same layer, one layer down or on utility layer
 3.  Packages on one layer MUST NOT have cyclic dependencies
+4.  Utility Layer MUST NOT depend on any other SDK package
 
 > Also check out [Technology & architecture decisions log](./decisions.md) to get more background information about
 > various decisions we did as part of this project.
@@ -62,7 +66,7 @@ is highly likely that the function SHOULD be located here as well.
 REST API Client for the GoodData 'tiger' platform is implemented here. Majority of the client is generated from
 the OpenAPI documents supplied by tiger.
 
-### Layer 2: Platform agnostic data model and backend interfaces
+### Layer 2: Platform agnostic data model, backend interfaces and application interfaces
 
 The real GoodData.UI SDK starts here. On the lowest layer are the packages defining and realizing the platform
 agnostic Analytical Backend SPIs. On top of this stand the various `sdk-ui-*` packages which are React components
@@ -100,6 +104,11 @@ Code in this package realizes Analytical Backend SPI using the GoodData 'tiger' 
 
 Code in this package realizes Analytical Backend SPI using mocks. It is great for testing in
 dev and CI environments.
+
+##### @gooddata/sdk-embedding
+
+Code in this package defines APIs and contracts for embedding and interfacing with GoodData applications using
+Post Message API.
 
 ### Layer 3: React-land
 
@@ -147,6 +156,20 @@ can be production code but with alpha-quality API, or non-production code that w
 ##### @gooddata/sdk-ui-all
 
 Umbrella for all packages.
+
+### Utility Layer
+
+Packages on this layer start with prefix `util`. The packages are intended to hold utility and convenience
+functions used across different SDK packages - thus reducing code duplication when addressing cross-cutting
+concerns.
+
+There are couple of hard rules for utility package(s):
+
+1.  Adding new third party dependencies into existing utility packages is prohibited
+    -   Naturally, third party dependencies are essential when writing utility code on top of a 3rd party library.
+    -   Instead of adding dependency, create a new util package specific for that third party library
+    -   This rule is in place to prevent util dependency bloat
+2.  Utilities must never depend on SDK packages
 
 ## TypeScript setup
 

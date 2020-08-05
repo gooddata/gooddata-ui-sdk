@@ -21,7 +21,8 @@
             "@gooddata/sdk-ui": ["sdk-ui/src"],
             "@gooddata/sdk-model": ["sdk-model/src"],
             "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
-            "@gooddata/sdk-backend-mockingbird": ["sdk-backend-mockingbird/src"]
+            "@gooddata/sdk-backend-mockingbird": ["sdk-backend-mockingbird/src"],
+            "@gooddata/util": ["util/src"]
         }
     },
     "compileOnSave": false,

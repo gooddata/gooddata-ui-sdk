@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
 import { IUriIdentifierPair } from "@gooddata/api-client-bear";
-import { IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
 import includes from "lodash/includes";
 import isArray from "lodash/isArray";
 import uniq from "lodash/uniq";
+import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 
 const getUriFromPairByIdentifier = (
     identifier: string,
@@ -23,9 +23,9 @@ const getUriFromPairByIdentifier = (
  */
 export const sanitizeDrillingActivationPostMessageData = async (
     workspace: string,
-    postMessageData: IDrillingActivationPostMessageData,
+    postMessageData: IDrillableItemsCommandBody,
     idToUriConverter: (workspace: string, identifiers: string[]) => Promise<IUriIdentifierPair[]>,
-): Promise<IDrillingActivationPostMessageData> => {
+): Promise<IDrillableItemsCommandBody> => {
     const { uris, identifiers, composedFrom } = postMessageData;
 
     const simpleUris = isArray(uris) ? uris : [];

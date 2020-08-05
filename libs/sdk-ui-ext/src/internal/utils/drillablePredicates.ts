@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
-import { IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 import isArray from "lodash/isArray";
 import uniq from "lodash/uniq";
+import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 
 /**
  * Converts post message with drilling specification into header predicates. Given the message with
@@ -13,7 +13,7 @@ import uniq from "lodash/uniq";
  * @internal
  */
 export async function convertPostMessageToDrillablePredicates(
-    postMessageData: IDrillingActivationPostMessageData,
+    postMessageData: IDrillableItemsCommandBody,
 ): Promise<IHeaderPredicate[]> {
     const { uris, identifiers, composedFrom } = postMessageData;
 

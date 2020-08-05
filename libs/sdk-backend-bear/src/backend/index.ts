@@ -13,7 +13,7 @@ import {
     IWorkspaceQueryFactory,
     IUserService,
 } from "@gooddata/sdk-backend-spi";
-import { IInsight, IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import { convertApiError, isApiResponseError } from "../utils/errorHandling";
@@ -31,6 +31,7 @@ import {
     AuthProviderCallGuard,
     TelemetryData,
 } from "@gooddata/sdk-backend-base";
+import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -77,8 +78,8 @@ type BearLegacyFunctions = {
     updateProfileCurrentWorkspace?(workspace: string, profileSetting: GdcUser.IProfileSetting): Promise<void>;
     sanitizeDrillingActivationPostMessageData?(
         workspace: string,
-        postMessageData: IDrillingActivationPostMessageData,
-    ): Promise<IDrillingActivationPostMessageData>;
+        postMessageData: IDrillableItemsCommandBody,
+    ): Promise<IDrillableItemsCommandBody>;
     getProjectDashboards?(workspace: string): Promise<GdcProjectDashboard.IWrappedProjectDashboard[]>;
 };
 

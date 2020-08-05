@@ -1,7 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { GdcExecution } from "@gooddata/api-model-bear";
-import { IExportConfig as GdcExportConfig } from "@gooddata/api-client-bear";
+import { GdcExecution, GdcExport } from "@gooddata/api-model-bear";
 import {
     DataValue,
     IDataView,
@@ -66,7 +65,7 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
-        const optionsForBackend: GdcExportConfig = {
+        const optionsForBackend: GdcExport.IExportConfig = {
             format: options.format,
             mergeHeaders: options.mergeHeaders,
             title: options.title,

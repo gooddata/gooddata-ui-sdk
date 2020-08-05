@@ -1,9 +1,8 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { ReportModule } from "../report";
 import { XhrModule, ApiResponseError } from "../../xhr";
-import { IExportConfig, IExportResponse } from "../../interfaces";
 import { mockPollingRequest, mockPollingRequestWithStatus } from "../../tests/utils/polling";
 import {
     SUCCESS_REQUEST_STATUS,
@@ -12,6 +11,7 @@ import {
     BAD_REQUEST_MESSAGE,
     ERROR_RESTRICTED_MESSAGE,
 } from "../../constants/errors";
+import { GdcExport } from "@gooddata/api-model-bear";
 
 const mockedReportModule = () => new ReportModule(new XhrModule(fetch, {}));
 
@@ -38,7 +38,7 @@ describe("report", () => {
                 const runningTask = mockTask(ACCEPTED_REQUEST_STATUS);
                 mockPollingRequest(createdReport, runningTask, finishedTask);
 
-                const exportConfig: IExportConfig = {
+                const exportConfig: GdcExport.IExportConfig = {
                     title: "title",
                     format: "xlsx",
                     mergeHeaders: false,
@@ -46,7 +46,7 @@ describe("report", () => {
 
                 return mockedReportModule()
                     .exportResult(projectId, executionResult, exportConfig, { pollStep: 1 })
-                    .then((result: IExportResponse) => {
+                    .then((result: GdcExport.IExportResponse) => {
                         expect(result.uri).toEqual(createdReport);
 
                         const [, settings] = fetchMock.lastCall(
@@ -73,7 +73,7 @@ describe("report", () => {
 
                 mockPollingRequestWithStatus(createdReport, runningTask, finishedTask);
 
-                const exportConfig: IExportConfig = {
+                const exportConfig: GdcExport.IExportConfig = {
                     title: "title",
                     format: "xlsx",
                     mergeHeaders: false,
@@ -97,7 +97,7 @@ describe("report", () => {
 
                 mockPollingRequest(createdReport, runningTask, finishedTask);
 
-                const exportConfig: IExportConfig = {
+                const exportConfig: GdcExport.IExportConfig = {
                     title: "title",
                     format: "xlsx",
                     mergeHeaders: false,

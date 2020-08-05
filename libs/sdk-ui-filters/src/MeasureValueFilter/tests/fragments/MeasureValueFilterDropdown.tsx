@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { ReactWrapper } from "enzyme";
-import { string as stringUtils } from "@gooddata/js-utils";
+import { stringUtils } from "@gooddata/util";
 
 const CLASS_APPLY_BUTTON = ".s-mvf-dropdown-apply";
 const CLASS_CANCEL_BUTTON = ".s-mvf-dropdown-cancel";

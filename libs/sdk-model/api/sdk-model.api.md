@@ -676,13 +676,6 @@ export const idMatchMeasure: (id: string) => MeasurePredicate;
 export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 
 // @public
-export interface IDrillingActivationPostMessageData {
-    composedFrom?: IDrillingActivationPostMessageData;
-    identifiers?: string[];
-    uris?: string[];
-}
-
-// @public
 export interface IExecutionDefinition {
     readonly attributes: IAttribute[];
     readonly buckets: IBucket[];

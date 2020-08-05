@@ -2,9 +2,9 @@
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { mockPollingRequestWithStatus } from "./utils/polling";
-import { IExportResponse } from "../interfaces";
 import { getIn, handleHeadPolling, IPollingOptions, queryString, parseSettingItemValue } from "../util";
 import { ApiResponse, XhrModule } from "../xhr";
+import { GdcExport } from "@gooddata/api-model-bear";
 
 describe("util", () => {
     const testObj = {
@@ -90,7 +90,7 @@ describe("util", () => {
             mockPollingRequestWithStatus(URI, runningTask, finishedTask);
 
             await handleHeadPolling(mockedXHR(), URI, isPollingDone, options).then(
-                (result: IExportResponse) => {
+                (result: GdcExport.IExportResponse) => {
                     expect(result.uri).toEqual(URI);
                     done();
                 },

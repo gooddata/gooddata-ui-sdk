@@ -1,12 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
-import { GdcFilterContext } from "@gooddata/api-model-bear";
+import { GdcFilterContext, GdcExport } from "@gooddata/api-model-bear";
 import { DashboardModule } from "../dashboard";
 import { XhrModule } from "../../xhr";
 import { ACCEPTED_REQUEST_STATUS, BAD_REQUEST_STATUS, SUCCESS_REQUEST_STATUS } from "../../constants/errors";
 import { mockPollingRequest, mockPollingRequestWithStatus } from "../../tests/utils/polling";
-import { IExportResponse } from "../../interfaces";
 
 const dashboardExportModuleMock = () => new DashboardModule(new XhrModule(fetch, {}));
 
@@ -104,7 +103,7 @@ describe("exportDashboard", () => {
         });
 
         it("should return pdf uri", async () => {
-            const response: IExportResponse = await dashboardExportModuleMock().exportToPdf(
+            const response: GdcExport.IExportResponse = await dashboardExportModuleMock().exportToPdf(
                 projectId,
                 dashboardUri,
                 [],

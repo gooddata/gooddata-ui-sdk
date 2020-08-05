@@ -301,6 +301,20 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/util",
+            "projectFolder": "libs/util",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/sdk-embedding",
+            "projectFolder": "libs/sdk-embedding",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-kit",
             "projectFolder": "libs/sdk-ui-kit",
             "reviewCategory": "production",
