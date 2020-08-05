@@ -55,6 +55,6 @@ export type DataRecorderConfig = {
     backend: BackendType | null;
 };
 
-export function isDataRecorderError(obj: any): obj is DataRecorderError {
+export function isDataRecorderError(obj: unknown): obj is DataRecorderError {
     return !isEmpty(obj) && (obj as DataRecorderError).rc !== undefined;
 }

@@ -14,7 +14,7 @@
         "dist"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts ./{src,test}/**/*.ts"
+        "eslint": "-c .eslintrc.js --ext ts src/"
     },
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
