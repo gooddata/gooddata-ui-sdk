@@ -8,7 +8,16 @@ import { Execution } from "./gd-tiger-model/Execution";
  * Tiger execution client factory
  *
  */
-export const tigerExecutionClientFactory = (axios: AxiosInstance) => {
+export const tigerExecutionClientFactory = (
+    axios: AxiosInstance,
+): {
+    executeAfm: (execution: ExecuteAFM.IExecution) => Promise<Execution.IExecutionResponse>;
+    executionResult: (
+        resultId: string,
+        offset?: number[] | undefined,
+        size?: number[] | undefined,
+    ) => Promise<Execution.IExecutionResult>;
+} => {
     /**
      * Starts a new AFM execution.
      *
