@@ -62,7 +62,7 @@
         "typescript": "3.9.5",
         "webpack-cli": "^3.3.7",
         "webpack-dev-server": "^3.8.0",
-        "webpack": "^4.39.2"
+        "webpack": "^4.44.1"
     },
     "dependencies": {
         "@gooddata/api-client-bear": "^8.0.0-beta.33",
