@@ -57,7 +57,8 @@ export function randomString(len: number): string {
 }
 
 /**
- * Replaces non-alphanumerical characters with underscore.
+ * Replaces non-alphanumerical characters with underscore and lower-cases all characters.
+ *
  * @param value - string to perform replacement on
  * @returns simplified string
  *

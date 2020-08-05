@@ -1,13 +1,13 @@
 // (C) 2007-2020 GoodData Corporation
 import { randomString, shortenText, simplifyText, parseStringToArray, hashCodeString } from "../stringUtils";
 
-describe("#randomString", () => {
+describe("randomString", () => {
     it("should generate alphanumeric string with correct length", () => {
         expect(randomString(10)).toEqual(expect.stringMatching(/^[0-9a-zA-Z]{10}$/));
     });
 });
 
-describe("#shortenText", () => {
+describe("shortenText", () => {
     it("should shorten text to maximum length and add ellipsis", () => {
         const shortened = shortenText("Lorem ipsum dolor sit amet", { maxLength: 11 });
         expect(shortened).toEqual("Lorem ipsum…");
@@ -24,37 +24,38 @@ describe("#shortenText", () => {
     });
 });
 
-describe("#simplifyText", () => {
-    it("should simplify text", () => {
-        expect(simplifyText("")).toEqual("");
-        expect(simplifyText(123)).toEqual("123");
-        expect(simplifyText(" - ")).toEqual("___");
-        expect(simplifyText("123456")).toEqual("123456");
-        expect(simplifyText("Too long")).toEqual("too_long");
-        expect(simplifyText(null)).toEqual("");
+describe("simplifyText", () => {
+    const Scenarios: Array<[string | number | null, string]> = [
+        ["", ""],
+        [123, "123"],
+        [" - ", "___"],
+        ["123456", "123456"],
+        ["Text with space", "text_with_space"],
+        [null, ""],
+    ];
+
+    it.each(Scenarios)("should simply '%s' correctly", (input, expected) => {
+        expect(simplifyText(input)).toEqual(expected);
     });
 });
 
 describe("parseStringToArray", () => {
-    it("should parse string to array correctly", () => {
-        const tagsConfigs = [
-            // valid are empty [] and a-zA-Z0-9 separated by comma [asdf], [asdf,qwer], [asdf,2]
-            { tag: "[]", result: [] },
-            { tag: "[asdf]", result: ["asdf"] },
-            { tag: "[asdf,qwer]", result: ["asdf", "qwer"] },
-            { tag: "[asdf,2]", result: ["asdf", "2"] },
-            // invalid
-            { tag: "[asdf", result: null },
-            { tag: "asdf]", result: null },
-            { tag: "[asdf, qwer]", result: null },
-            { tag: "[asdf#]", result: null },
-            { tag: "[asdf?]", result: null },
-            { tag: "[asdf&]", result: null },
-        ];
+    const Scenarios: Array<[string, string[] | null]> = [
+        ["[]", []],
+        ["[asdf]", ["asdf"]],
+        ["[asdf,qwer]", ["asdf", "qwer"]],
+        ["[asdf,2]", ["asdf", "2"]],
+        // invalid
+        ["[asdf", null],
+        ["asdf]", null],
+        ["[asdf, qwer]", null],
+        ["[asdf#]", null],
+        ["[asdf?]", null],
+        ["[asdf&]", null],
+    ];
 
-        tagsConfigs.forEach((tagConfig) => {
-            expect(parseStringToArray(tagConfig.tag)).toEqual(tagConfig.result);
-        });
+    it.each(Scenarios)("should parse %s correctly", (input, expected) => {
+        expect(parseStringToArray(input)).toEqual(expected);
     });
 });
 
