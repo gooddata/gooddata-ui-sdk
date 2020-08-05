@@ -16,6 +16,7 @@ import {
     IVisualizationCallbacks,
     OverTimeComparisonType,
     VisualizationEnvironment,
+    IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 
 export type RenderFunction = (component: any, target: Element) => void;
@@ -38,7 +39,7 @@ export interface IVisConstruct {
 
 export interface ICustomProps {
     stickyHeaderOffset?: number;
-    drillableItems?: IDrillableItem[];
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     totalsEditAllowed?: boolean;
 }
 

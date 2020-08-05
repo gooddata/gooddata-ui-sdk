@@ -11,6 +11,7 @@ import {
     OnExportReady,
     OnLoadingChanged,
     VisualizationEnvironment,
+    IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import {
     ConfigPanelClassName,
@@ -42,7 +43,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     stickyHeaderOffset?: number;
     height?: number;
     locale?: ILocale;
-    drillableItems: IDrillableItem[];
+    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     totalsEditAllowed?: boolean;
     featureFlags?: ISettings;
     visualizationCatalog?: IVisualizationCatalog;
