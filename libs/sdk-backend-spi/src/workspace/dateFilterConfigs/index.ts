@@ -42,4 +42,4 @@ export interface IWorkspaceDateFilterConfigsQuery {
  *
  * @public
  */
-export interface IDateFilterConfigsQueryResult extends IPagedResource<IDateFilterConfig> {}
+export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig>;

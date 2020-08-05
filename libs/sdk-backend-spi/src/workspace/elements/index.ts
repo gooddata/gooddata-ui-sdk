@@ -119,4 +119,4 @@ export interface IElementQuery {
  *
  * @public
  */
-export interface IElementQueryResult extends IPagedResource<IAttributeElement> {}
+export type IElementQueryResult = IPagedResource<IAttributeElement>;

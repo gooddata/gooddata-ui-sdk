@@ -146,8 +146,6 @@ export namespace EmbeddedGdc {
     // (undocumented)
     export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
     // (undocumented)
-    export type CompatibilityFilter = FilterItem | GdcExecuteAFM.IExpressionFilter | GdcExecuteAFM.IMeasureValueFilter;
-    // (undocumented)
     export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
     // (undocumented)
     export type FilterItem = DateFilterItem | AttributeFilterItem;
@@ -207,17 +205,17 @@ export namespace EmbeddedGdc {
         filters: RemoveFilterItem[];
     }
     // (undocumented)
-    export function isAbsoluteDateFilter(filter: CompatibilityFilter): filter is IAbsoluteDateFilter;
+    export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter;
     // (undocumented)
-    export function isAttributeFilter(filter: CompatibilityFilter): filter is AttributeFilterItem;
+    export function isAttributeFilter(filter: unknown): filter is AttributeFilterItem;
     // (undocumented)
-    export function isDateFilter(filter: CompatibilityFilter): filter is DateFilterItem;
+    export function isDateFilter(filter: unknown): filter is DateFilterItem;
     // (undocumented)
-    export function isNegativeAttributeFilter(filter: CompatibilityFilter): filter is INegativeAttributeFilter;
+    export function isNegativeAttributeFilter(filter: unknown): filter is INegativeAttributeFilter;
     // (undocumented)
-    export function isPositiveAttributeFilter(filter: CompatibilityFilter): filter is IPositiveAttributeFilter;
+    export function isPositiveAttributeFilter(filter: unknown): filter is IPositiveAttributeFilter;
     // (undocumented)
-    export function isRelativeDateFilter(filter: CompatibilityFilter): filter is IRelativeDateFilter;
+    export function isRelativeDateFilter(filter: unknown): filter is IRelativeDateFilter;
     const // (undocumented)
     isObjIdentifierQualifier: typeof GdcExecuteAFM.isObjIdentifierQualifier;
     const // (undocumented)
@@ -230,7 +228,6 @@ export namespace EmbeddedGdc {
     export type ObjQualifier = GdcExecuteAFM.ObjQualifier;
     // (undocumented)
     export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem;
-    {};
 }
 
 // @public

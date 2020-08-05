@@ -99,16 +99,20 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
 
         const emptyResult: IInsightQueryResult = {
             items: [],
+            // TODO default to some backend limit here
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             limit: options?.limit!,
-            offset: options?.offset!,
+            offset: options?.offset ?? 0,
             totalCount,
             next: () => Promise.resolve(emptyResult),
         };
 
         const result: IInsightQueryResult = {
             items: insights,
+            // TODO default to some backend limit here
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             limit: options?.limit!,
-            offset: options?.offset!,
+            offset: options?.offset ?? 0,
             totalCount,
             next: hasNextPage
                 ? () => this.getInsights({ ...options, offset: (options?.offset ?? 0) + insights.length })

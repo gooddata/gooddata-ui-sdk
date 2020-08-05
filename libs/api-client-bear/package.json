@@ -12,7 +12,7 @@
         "umd"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts ./src/**/*.ts"
+        "eslint": "-c .eslintrc.js --ext ts src/"
     },
     "scripts": {
         "clean": "rm -rf ci umd coverage *.log && jest --clearCache",

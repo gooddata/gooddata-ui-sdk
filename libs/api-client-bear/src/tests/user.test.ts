@@ -229,7 +229,7 @@ describe("user", () => {
                 return createUser()
                     .getCurrentProfile()
                     .then((accountSetting) => {
-                        expect(accountSetting.links.self).toEqual(profileUri);
+                        expect(accountSetting.links!.self).toEqual(profileUri);
                     });
             });
         });

@@ -129,7 +129,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         return this.withOptions({ insight });
     }
 
-    public async load() {
+    public async load(): Promise<TigerWorkspaceCatalogWithAvailableItems> {
         const { items = [], insight, types } = this.options;
         if (items.length === 0 && !insight) {
             throw new InvariantError("No items or insight was specified!");

@@ -369,14 +369,14 @@ export const convertWidget = (
 const convertAbsoluteDateFilterPreset = (
     preset: IAbsoluteDateFilterPreset,
 ): GdcExtendedDateFilters.IDateFilterAbsolutePreset => {
-    const { type, ...rest } = preset;
+    const { type: _, ...rest } = preset;
     return rest;
 };
 
 const convertRelativeDateFilterPreset = (
     preset: IRelativeDateFilterPreset,
 ): GdcExtendedDateFilters.IDateFilterRelativePreset => {
-    const { type, ...rest } = preset;
+    const { type: _, ...rest } = preset;
     return rest;
 };
 

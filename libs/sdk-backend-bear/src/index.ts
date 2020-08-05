@@ -12,6 +12,7 @@ import { FixedLoginAndPasswordAuthProvider, ContextDeferredAuthProvider, BearAut
  * @param implConfig - bear client specific configuration, may be omitted at this point but it cannot be provided later
  * @public
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
     return new BearBackend(config, implConfig);
 }

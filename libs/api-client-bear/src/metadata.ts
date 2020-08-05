@@ -61,10 +61,12 @@ export class MetadataModule {
     }
 
     /**
-     * Get default display form of provided atrribute uri
+     * Get default display form of provided attribute uri
      * @param attributeUri string
      */
-    public async getAttributeDefaultDisplayForm(attributeUri: string) {
+    public async getAttributeDefaultDisplayForm(
+        attributeUri: string,
+    ): Promise<GdcMetadata.IAttributeDisplayForm> {
         const object = await this.xhr.getParsed<GdcMetadataObject.WrappedObject>(attributeUri);
         if (!GdcMetadata.isWrappedAttribute(object)) {
             throw new Error("Provided uri is not attribute uri!");
@@ -83,7 +85,7 @@ export class MetadataModule {
      */
     public async getObjectByIdentifier<
         T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject
-    >(projectId: string, identifier: string) {
+    >(projectId: string, identifier: string): Promise<T> {
         const uri = await this.getObjectUri(projectId, identifier);
         return this.xhr.getParsed<T>(uri);
     }
@@ -95,7 +97,7 @@ export class MetadataModule {
      */
     public async getObjectsByIdentifiers<
         T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject
-    >(projectId: string, identifiers: string[]) {
+    >(projectId: string, identifiers: string[]): Promise<T[]> {
         const uriIdentifierPairs = await this.getUrisFromIdentifiers(projectId, identifiers);
         const uris = uriIdentifierPairs.map((pair) => pair.uri);
         const objects: T[] = await this.getObjects(projectId, uris);
@@ -431,7 +433,7 @@ export class MetadataModule {
      * @param {String} type - Optional, possible values are `metric`, `fact`, `attribute`
      * @return {Array} An array of dimension objects
      */
-    public getFolders(projectId: string, type: string) {
+    public getFolders(projectId: string, type: string): Promise<any> {
         // TODO enum?
         const getFolderEntries = (pId: string, t: string) => {
             const typeURL = t ? `?type=${t}` : "";
@@ -610,7 +612,7 @@ export class MetadataModule {
      * @return {Array} Array of folder object, each containing title and
      * corresponding items.
      */
-    public getFoldersWithItems(projectId: string, type: string) {
+    public getFoldersWithItems(projectId: string, type: string): Promise<any> {
         // fetch all folders of given type and process them
         return this.getFolders(projectId, type).then((folders) => {
             // Helper public to get details for each metric in the given
@@ -754,7 +756,7 @@ export class MetadataModule {
      * @param uri uri of the metadata object for which the identifier is to be retrieved
      * @return {String} object identifier
      */
-    public getObjectIdentifier(uri: string) {
+    public getObjectIdentifier(uri: string): Promise<string> {
         function idFinder(obj: any) {
             // TODO
             if (obj.attribute) {
@@ -784,7 +786,7 @@ export class MetadataModule {
      * @param identifier identifier of the metadata object
      * @return {String} uri of the metadata object
      */
-    public getObjectUri(projectId: string, identifier: string) {
+    public getObjectUri(projectId: string, identifier: string): Promise<string> {
         return this.xhr
             .post(`/gdc/md/${projectId}/identifiers`, {
                 body: {
@@ -815,7 +817,7 @@ export class MetadataModule {
      * @param {Array} identifiers identifiers of the metadata objects
      * @return {Array} array of identifier + uri pairs
      */
-    public getUrisFromIdentifiers(projectId: string, identifiers: string[]) {
+    public getUrisFromIdentifiers(projectId: string, identifiers: string[]): Promise<IUriIdentifierPair[]> {
         if (!identifiers.length) {
             return Promise.resolve([]);
         }
@@ -840,7 +842,7 @@ export class MetadataModule {
      * @param {Array} uris of the metadata objects
      * @return {Array} array of identifier + uri pairs
      */
-    public getIdentifiersFromUris(projectId: string, uris: string[]) {
+    public getIdentifiersFromUris(projectId: string, uris: string[]): Promise<IUriIdentifierPair[]> {
         return this.xhr
             .post(`/gdc/md/${projectId}/identifiers`, {
                 body: {
@@ -862,6 +864,7 @@ export class MetadataModule {
      * @param {('EXACT'|'WILD')} mode match mode, currently only EXACT supported
      * @return {Array} array of elementLabelUri objects
      */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public translateElementLabelsToUris(
         projectId: string,
         labelUri: string,
@@ -905,7 +908,11 @@ export class MetadataModule {
      *      - paging {Object}
      *      - elementsMeta {Object}
      */
-    public getValidElements(projectId: string, id: string, options: GdcMetadata.IValidElementsParams = {}) {
+    public getValidElements(
+        projectId: string,
+        id: string,
+        options: GdcMetadata.IValidElementsParams = {},
+    ): Promise<GdcMetadata.IValidElementsResponse> {
         const query = pickBy(
             pick(options, ["limit", "offset", "order", "filter", "prompt"]),
             (val) => val !== undefined,
@@ -972,7 +979,12 @@ export class MetadataModule {
      * @method saveVisualization
      * @param {String} visualizationUri
      */
-    public saveVisualization(projectId: string, visualization: GdcVisualizationObject.IVisualization) {
+    public saveVisualization(
+        projectId: string,
+        visualization: GdcVisualizationObject.IVisualization,
+    ): Promise<{
+        visualizationObject: GdcVisualizationObject.IVisualizationObject;
+    }> {
         return this.createObject(projectId, { visualizationObject: visualization.visualizationObject });
     }
 
@@ -999,7 +1011,7 @@ export class MetadataModule {
      * @method deleteVisualization
      * @param {String} visualizationUri
      */
-    public deleteVisualization(visualizationUri: string) {
+    public deleteVisualization(visualizationUri: string): Promise<ApiResponse<any>> {
         return this.deleteObject(visualizationUri);
     }
 
@@ -1010,7 +1022,7 @@ export class MetadataModule {
      * @method deleteObject
      * @param {String} uri of the object to be deleted
      */
-    public deleteObject(uri: string) {
+    public deleteObject(uri: string): Promise<ApiResponse<any>> {
         return this.xhr.del(uri);
     }
 
@@ -1044,7 +1056,7 @@ export class MetadataModule {
     public createObject<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
         projectId: string,
         obj: T,
-    ) {
+    ): Promise<T> {
         return this.xhr.postParsed<T>(`/gdc/md/${projectId}/obj?createAndGet=true`, {
             body: obj,
         });
@@ -1059,7 +1071,8 @@ export class MetadataModule {
      * @param {String} objectId
      * @param {String} obj object definition
      */
-    public updateObject(projectId: string, objectId: string, obj: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public updateObject(projectId: string, objectId: string, obj: any): Promise<any> {
         return this.xhr
             .put(`/gdc/md/${projectId}/obj/${objectId}`, {
                 body: obj,
@@ -1094,6 +1107,7 @@ export class MetadataModule {
      * @param {String} maql
      * @param {Object} options for polling (maxAttempts, pollStep)
      */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public ldmManage(projectId: string, maql: string, options = {}) {
         return this.xhr
             .post(`/gdc/md/${projectId}/ldm/manage2`, { body: { manage: { maql } } })
@@ -1119,6 +1133,7 @@ export class MetadataModule {
      * @param {String} uploadsDir
      * @param {Object} options for polling (maxAttempts, pollStep)
      */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public etlPull(projectId: string, uploadsDir: string, options = {}) {
         return this.xhr
             .post(`/gdc/md/${projectId}/etl/pull2`, { body: { pullIntegration: uploadsDir } })

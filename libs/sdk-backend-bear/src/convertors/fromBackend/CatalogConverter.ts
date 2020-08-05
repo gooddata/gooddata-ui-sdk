@@ -43,10 +43,10 @@ export const convertItemType = (type: CompatibleCatalogItemType): GdcCatalog.Cat
     return bearItemType;
 };
 
-export const bearObjectMetaToBearRef = (obj: GdcMetadata.IObjectMeta) => uriRef(obj.uri);
-export const bearCatalogItemToBearRef = (obj: GdcCatalog.CatalogItem) => uriRef(obj.links.self);
+export const bearObjectMetaToBearRef = (obj: GdcMetadata.IObjectMeta): ObjRef => uriRef(obj.uri);
+export const bearCatalogItemToBearRef = (obj: GdcCatalog.CatalogItem): ObjRef => uriRef(obj.links.self);
 
-export const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }) => {
+export const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }): ObjRef[] => {
     const { groups = [] } = item;
     return groups.map((tagId) => idRef(tagId));
 };

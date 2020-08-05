@@ -11,7 +11,7 @@
         "dist"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts ./src/**/*.ts"
+        "eslint": "-c .eslintrc.js --ext ts src/"
     },
     "scripts": {
         "clear-recordings": "rm -rf ./tests/wiremock/recordings/*",

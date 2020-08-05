@@ -340,8 +340,7 @@ export interface IDateFilterConfig {
 }
 
 // @public
-export interface IDateFilterConfigsQueryResult extends IPagedResource<IDateFilterConfig> {
-}
+export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig>;
 
 // @alpha
 export interface IDateFilterOption {
@@ -455,8 +454,7 @@ export interface IElementQueryOptions {
 }
 
 // @public
-export interface IElementQueryResult extends IPagedResource<IAttributeElement> {
-}
+export type IElementQueryResult = IPagedResource<IAttributeElement>;
 
 // @public
 export interface IExecutionFactory {
@@ -581,8 +579,7 @@ export interface IInsightQueryOptions {
 }
 
 // @public
-export interface IInsightQueryResult extends IPagedResource<IInsight> {
-}
+export type IInsightQueryResult = IPagedResource<IInsight>;
 
 // @public
 export interface IInsightReferences {
@@ -743,19 +740,19 @@ export interface IResultTotalHeader {
 }
 
 // @alpha
-export const isAbsoluteDateFilterForm: (obj: any) => obj is IAbsoluteDateFilterForm;
+export const isAbsoluteDateFilterForm: (obj: unknown) => obj is IAbsoluteDateFilterForm;
 
 // @alpha
-export const isAbsoluteDateFilterPreset: (obj: any) => obj is IAbsoluteDateFilterPreset;
+export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateFilterPreset;
 
 // @alpha
-export const isAllTimeDateFilter: (obj: any) => obj is IAllTimeDateFilter;
+export const isAllTimeDateFilter: (obj: unknown) => obj is IAllTimeDateFilter;
 
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
 
 // @public
-export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor;
+export function isAttributeDescriptor(obj: unknown): obj is IAttributeDescriptor;
 
 // @alpha
 export interface IScheduledMail extends IScheduledMailBase, IDashboardObjectIdentity {
@@ -785,34 +782,34 @@ export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<ID
 }
 
 // @alpha
-export function isDashboardAttributeFilter(obj: any): obj is IDashboardAttributeFilter;
+export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter;
 
 // @alpha
-export function isDashboardAttributeFilterReference(obj: any): obj is IDashboardAttributeFilterReference;
+export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference;
 
 // @alpha
-export function isDashboardDateFilter(obj: any): obj is IDashboardDateFilter;
+export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter;
 
 // @alpha
-export function isDashboardDateFilterReference(obj: any): obj is IDashboardDateFilterReference;
+export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
 
 // @public
 export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError;
 
 // @alpha
-export function isDrillToAttributeUrl(obj: any): obj is IDrillToAttributeUrl;
+export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
 
 // @alpha
-export function isDrillToCustomUrl(obj: any): obj is IDrillToCustomUrl;
+export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
 
 // @alpha
-export function isDrillToDashboard(obj: any): obj is IDrillToDashboard;
+export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
 
 // @alpha
-export function isDrillToInsight(obj: any): obj is IDrillToInsight;
+export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 
 // @alpha
-export function isDrillToLegacyDashboard(obj: any): obj is IDrillToLegacyDashboard;
+export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
 // @alpha
 export interface ISectionDescription {
@@ -832,34 +829,34 @@ export interface ISettings {
 }
 
 // @alpha
-export function isFilterContext(obj: any): obj is IFilterContext;
+export function isFilterContext(obj: unknown): obj is IFilterContext;
 
 // @alpha
-export function isFilterContextDefinition(obj: any): obj is IFilterContextDefinition;
+export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
 
 // @alpha
-export function isFluidLayout(obj: any): obj is IFluidLayout;
+export function isFluidLayout(obj: unknown): obj is IFluidLayout;
 
 // @alpha
-export function isFluidLayoutDefinition(obj: any): obj is IFluidLayoutDefinition;
+export function isFluidLayoutDefinition(obj: unknown): obj is IFluidLayoutDefinition;
 
 // @alpha
-export function isLayoutWidget(obj: any): obj is ILayoutWidget;
+export function isLayoutWidget(obj: unknown): obj is ILayoutWidget;
 
 // @alpha
-export function isLayoutWidgetDefinition(obj: any): obj is ILayoutWidgetDefinition;
+export function isLayoutWidgetDefinition(obj: unknown): obj is ILayoutWidgetDefinition;
 
 // @alpha
-export function isLegacyKpiWithComparison(obj: any): obj is ILegacyKpiWithComparison;
+export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison;
 
 // @alpha
-export function isLegacyKpiWithoutComparison(obj: any): obj is ILegacyKpiWithoutComparison;
+export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWithoutComparison;
 
 // @public
-export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor;
+export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor;
 
 // @public
-export function isMeasureGroupDescriptor(obj: any): obj is IMeasureGroupDescriptor;
+export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor;
 
 // @public
 export function isNoDataError(obj: unknown): obj is NoDataError;
@@ -877,25 +874,25 @@ export function isNotSupported(obj: unknown): obj is NotSupported;
 export function isProtectedDataError(obj: unknown): obj is ProtectedDataError;
 
 // @alpha
-export const isRelativeDateFilterForm: (obj: any) => obj is IRelativeDateFilterForm;
+export const isRelativeDateFilterForm: (obj: unknown) => obj is IRelativeDateFilterForm;
 
 // @alpha
-export const isRelativeDateFilterPreset: (obj: any) => obj is IRelativeDateFilterPreset;
+export const isRelativeDateFilterPreset: (obj: unknown) => obj is IRelativeDateFilterPreset;
 
 // @public
-export function isResultAttributeHeader(obj: any): obj is IResultAttributeHeader;
+export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
 
 // @public
-export function isResultMeasureHeader(obj: any): obj is IResultMeasureHeader;
+export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader;
 
 // @public
-export function isResultTotalHeader(obj: any): obj is IResultTotalHeader;
+export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader;
 
 // @alpha
-export function isTempFilterContext(obj: any): obj is ITempFilterContext;
+export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
 
 // @public
-export function isTotalDescriptor(obj: any): obj is ITotalDescriptor;
+export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor;
 
 // @public
 export function isUnexpectedError(obj: unknown): obj is UnexpectedError;
@@ -904,16 +901,16 @@ export function isUnexpectedError(obj: unknown): obj is UnexpectedError;
 export function isUnexpectedResponseError(obj: unknown): obj is UnexpectedResponseError;
 
 // @alpha
-export function isWidget(obj: any): obj is IWidget;
+export function isWidget(obj: unknown): obj is IWidget;
 
 // @alpha
-export function isWidgetAlert(obj: any): obj is IWidgetAlert;
+export function isWidgetAlert(obj: unknown): obj is IWidgetAlert;
 
 // @alpha
-export function isWidgetAlertDefinition(obj: any): obj is IWidgetAlertDefinition;
+export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition;
 
 // @alpha
-export function isWidgetDefinition(obj: any): obj is IWidgetDefinition;
+export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition;
 
 // @alpha
 export interface ITempFilterContext {

@@ -113,7 +113,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
         return this.withOptions({ insight });
     }
 
-    public async load() {
+    public async load(): Promise<BearWorkspaceCatalogWithAvailableItems> {
         const tempVisualizationObj = createVisObjectForAvailability(this.options, this.mappings);
 
         const [availableCatalogItems, availableDateDatasets] = await Promise.all([

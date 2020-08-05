@@ -59,7 +59,9 @@ export const useDemoProjectAuth = (): {
         };
 
         if (profileUri) {
-            getProjects().then(setProjects).catch(setCheckProjectAvailabilityError);
+            getProjects()
+                .then(setProjects as any)
+                .catch(setCheckProjectAvailabilityError);
         }
     }, [profileUri]);
 

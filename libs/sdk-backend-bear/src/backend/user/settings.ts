@@ -19,7 +19,7 @@ export class BearUserSettingsService implements IUserSettingsService {
 
             return {
                 userId: userLoginMd5,
-                locale: language,
+                locale: language!,
                 ...flags,
             };
         });

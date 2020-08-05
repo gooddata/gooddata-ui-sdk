@@ -115,7 +115,7 @@
         "yup": "^0.24.1"
     },
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts,tsx ./src/**/*.{ts,tsx}"
+        "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",

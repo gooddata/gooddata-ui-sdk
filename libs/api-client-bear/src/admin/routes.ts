@@ -40,9 +40,9 @@ export const USER_CONTRACTS = `${ROOT}/users/:userId/contracts`;
 
 export const DEPLOY_SEGMENT = `${CONTRACT_DOMAIN}/dataProducts/:dataProductId/segments/:segmentId/deploy`;
 
-// parse params in route string accoring to template
+// parse params in route string according to template
 // returns params as plain object
-export const parse = (route: string, template: string) => {
+export const parse = (route: string, template: string): Record<string, unknown> => {
     let parsedRoute: string = "";
     if (route.startsWith("http")) {
         const routeMatch = route.match(
@@ -68,7 +68,7 @@ export const parse = (route: string, template: string) => {
 
 // interpolates specified parameters from params into
 // the specified route string and returns the result
-export const interpolate = (route: string, params: any, query: any = null) =>
+export const interpolate = (route: string, params: Record<string, unknown>, query: any = null): string =>
     route
         .split("/")
         .map((view) => (view[0] === ":" ? params[view.substr(1)] : view))

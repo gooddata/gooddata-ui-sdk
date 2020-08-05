@@ -9,7 +9,7 @@ import { DateFormatter } from "./types";
  * @public
  */
 export function createDateValueFormatter(dateFormatter: DateFormatter) {
-    return (value: string, granularity: DateAttributeGranularity) => {
+    return (value: string, granularity: DateAttributeGranularity): string => {
         const parsed = parseDateValue(value, granularity);
         return dateFormatter(parsed, granularity);
     };

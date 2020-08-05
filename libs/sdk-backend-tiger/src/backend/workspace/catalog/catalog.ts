@@ -11,6 +11,10 @@ import {
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
+    ICatalogAttribute,
+    ICatalogMeasure,
+    ICatalogFact,
+    ICatalogDateDataset,
 } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory";
@@ -24,27 +28,27 @@ export class TigerWorkspaceCatalog implements IWorkspaceCatalog {
         private readonly options: IWorkspaceCatalogFactoryOptions,
     ) {}
 
-    public getGroups() {
+    public getGroups(): ICatalogGroup[] {
         return this.groups;
     }
 
-    public getItems() {
+    public getItems(): CatalogItem[] {
         return this.items;
     }
 
-    public getAttributes() {
+    public getAttributes(): ICatalogAttribute[] {
         return this.items.filter(isCatalogAttribute);
     }
 
-    public getMeasures() {
+    public getMeasures(): ICatalogMeasure[] {
         return this.items.filter(isCatalogMeasure);
     }
 
-    public getFacts() {
+    public getFacts(): ICatalogFact[] {
         return this.items.filter(isCatalogFact);
     }
 
-    public getDateDatasets() {
+    public getDateDatasets(): ICatalogDateDataset[] {
         return this.items.filter(isCatalogDateDataset);
     }
 

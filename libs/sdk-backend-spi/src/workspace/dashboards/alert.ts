@@ -62,10 +62,11 @@ export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashb
  * Type-guard testing whether the provided object is an instance of {@link IWidgetAlertDefinition}.
  * @alpha
  */
-export function isWidgetAlertDefinition(obj: any): obj is IWidgetAlertDefinition {
+export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition {
     return (
         hasWidgetAlertBaseProps(obj) &&
-        (!isObjRef(obj.ref) || isFilterContextDefinition((obj as IWidgetAlertDefinition).filterContext))
+        (!isObjRef((obj as any).ref) ||
+            isFilterContextDefinition((obj as IWidgetAlertDefinition).filterContext))
     );
 }
 
@@ -100,14 +101,14 @@ export interface IWidgetAlertCount {
  * Type-guard testing whether the provided object is an instance of {@link IWidgetAlert}.
  * @alpha
  */
-export function isWidgetAlert(obj: any): obj is IWidgetAlert {
+export function isWidgetAlert(obj: unknown): obj is IWidgetAlert {
     return hasWidgetAlertBaseProps(obj) && !isWidgetAlertDefinition(obj);
 }
 
 /**
  * @internal
  */
-function hasWidgetAlertBaseProps(obj: any): boolean {
+function hasWidgetAlertBaseProps(obj: unknown): boolean {
     return (
         !isEmpty(obj) &&
         ((obj as IWidgetAlertBase).whenTriggered === "underThreshold" ||

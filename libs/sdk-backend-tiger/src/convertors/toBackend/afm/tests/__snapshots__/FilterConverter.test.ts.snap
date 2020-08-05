@@ -254,6 +254,6 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;
+exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying negative attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;
 
-exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying attribute elements by value 2`] = `"Tiger backend only allows specifying attribute elements by value"`;
+exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying positive attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;

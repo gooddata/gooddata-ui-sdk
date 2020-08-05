@@ -94,13 +94,13 @@ describe("tiger filter converter from model to AFM", () => {
             expect(convertVisualizationObjectFilter(input)).toMatchSnapshot();
         });
 
-        it("should throw an error since tiger database only supports specifying attribute elements by value", () => {
+        it("should throw an error since tiger database only supports specifying positive attribute elements by value", () => {
             expect(() =>
                 convertVisualizationObjectFilter(visualizationObjectFilter.positiveAttributeFilter),
             ).toThrowErrorMatchingSnapshot();
         });
 
-        it("should throw an error since tiger database only supports specifying attribute elements by value", () => {
+        it("should throw an error since tiger database only supports specifying negative attribute elements by value", () => {
             expect(() =>
                 convertVisualizationObjectFilter(visualizationObjectFilter.negativeAttributeFilter),
             ).toThrowErrorMatchingSnapshot();

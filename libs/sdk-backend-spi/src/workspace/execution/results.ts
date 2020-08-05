@@ -172,7 +172,7 @@ export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IRes
  *
  * @public
  */
-export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor {
+export function isAttributeDescriptor(obj: unknown): obj is IAttributeDescriptor {
     return !isEmpty(obj) && (obj as IAttributeDescriptor).attributeHeader !== undefined;
 }
 
@@ -181,7 +181,7 @@ export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor {
  *
  * @public
  */
-export function isMeasureGroupDescriptor(obj: any): obj is IMeasureGroupDescriptor {
+export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor {
     return !isEmpty(obj) && (obj as IMeasureGroupDescriptor).measureGroupHeader !== undefined;
 }
 
@@ -190,7 +190,7 @@ export function isMeasureGroupDescriptor(obj: any): obj is IMeasureGroupDescript
  *
  * @public
  */
-export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor {
+export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor {
     return !isEmpty(obj) && (obj as IMeasureDescriptor).measureHeaderItem !== undefined;
 }
 
@@ -199,7 +199,7 @@ export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor {
  *
  * @public
  */
-export function isTotalDescriptor(obj: any): obj is ITotalDescriptor {
+export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor {
     return !isEmpty(obj) && (obj as ITotalDescriptor).totalHeaderItem !== undefined;
 }
 
@@ -208,7 +208,7 @@ export function isTotalDescriptor(obj: any): obj is ITotalDescriptor {
  *
  * @public
  */
-export function isResultAttributeHeader(obj: any): obj is IResultAttributeHeader {
+export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader {
     return !isEmpty(obj) && (obj as IResultAttributeHeader).attributeHeaderItem !== undefined;
 }
 
@@ -217,7 +217,7 @@ export function isResultAttributeHeader(obj: any): obj is IResultAttributeHeader
  *
  * @public
  */
-export function isResultMeasureHeader(obj: any): obj is IResultMeasureHeader {
+export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader {
     return (
         !isEmpty(obj) &&
         (obj as IResultMeasureHeader).measureHeaderItem !== undefined &&
@@ -230,7 +230,7 @@ export function isResultMeasureHeader(obj: any): obj is IResultMeasureHeader {
  *
  * @public
  */
-export function isResultTotalHeader(obj: any): obj is IResultTotalHeader {
+export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader {
     return (
         !isEmpty(obj) &&
         (obj as IResultTotalHeader).totalHeaderItem !== undefined &&

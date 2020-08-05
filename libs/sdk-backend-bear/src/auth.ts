@@ -37,7 +37,7 @@ export abstract class BearAuthProviderBase implements IAuthenticationProvider {
         const currentProfile = await sdk.user.getCurrentProfile();
 
         this.principal = {
-            userId: currentProfile.login,
+            userId: currentProfile.login!,
             userMeta: currentProfile,
         };
     }

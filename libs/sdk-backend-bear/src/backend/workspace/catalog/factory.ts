@@ -148,7 +148,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         });
     }
 
-    public async load() {
+    public async load(): Promise<BearWorkspaceCatalog> {
         const [{ allCatalogItems, mappings }, catalogGroups] = await Promise.all([
             this.loadAllCatalogItemsAndMappings(),
             this.loadCatalogGroups(),

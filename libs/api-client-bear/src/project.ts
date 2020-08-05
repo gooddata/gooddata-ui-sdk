@@ -65,7 +65,7 @@ export class ProjectModule {
      * @method getCurrentProjectId
      * @return {String} current project identifier
      */
-    public getCurrentProjectId() {
+    public getCurrentProjectId(): Promise<string> {
         return this.xhr
             .get("/gdc/app/account/bootstrap")
             .then((r) => r.getData())
@@ -87,7 +87,7 @@ export class ProjectModule {
      * @param {String} profileId - User profile identifier
      * @return {Array} An Array of projects
      */
-    public getProjects(profileId: string) {
+    public getProjects(profileId: string): Promise<GdcUser.IProject[]> {
         return getAllPagesByOffsetLimit(
             this.xhr,
             `/gdc/account/profile/${profileId}/projects`,
@@ -130,6 +130,7 @@ export class ProjectModule {
      * @param {String} projectId - GD project identifier
      * @return {Array} An array of objects containing datasets metadata
      */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public getDatasets(projectId: string) {
         return this.xhr
             .get(`/gdc/md/${projectId}/query/datasets`)
@@ -146,6 +147,7 @@ export class ProjectModule {
      * @return {Array} An array of objects with r, g, b fields representing a project's
      * color palette
      */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public getColorPalette(projectId: string) {
         return this.xhr
             .get(`/gdc/projects/${projectId}/styleSettings`)
@@ -252,6 +254,7 @@ export class ProjectModule {
             });
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public setTimezone(projectId: string, timezone: ITimezone) {
         const timezoneServiceUrl = `/gdc/md/${projectId}/service/timezone`;
         const data = {
@@ -276,6 +279,7 @@ export class ProjectModule {
      * @param {Object} options for project creation (summary, projectTemplate, ...)
      * @return {Object} created project object
      */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public createProject(title: string, authorizationToken: string, options: any = {}) {
         const {
             summary,
@@ -323,6 +327,7 @@ export class ProjectModule {
      * @method deleteProject
      * @param {String} projectId
      */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public deleteProject(projectId: string) {
         return this.xhr.del(`/gdc/projects/${projectId}`);
     }

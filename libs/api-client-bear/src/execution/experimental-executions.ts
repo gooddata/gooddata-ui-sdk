@@ -642,7 +642,7 @@ export class ExperimentalExecutionsModule {
     public mdToExecutionDefinitionsAndColumns(
         projectId: string,
         mdObj: GdcVisualizationObject.IVisualizationObjectContent,
-        options: { attributesMap?: object; removeDateItems?: boolean } = {},
+        options: { attributesMap?: Record<string, unknown>; removeDateItems?: boolean } = {},
     ): Promise<GdcCatalog.IColumnsAndDefinitions> {
         const allDfUris = getAttributesDisplayForms(mdObj);
         const attributesMapPromise = this.getAttributesMap(options, allDfUris, projectId);
@@ -653,7 +653,7 @@ export class ExperimentalExecutionsModule {
     }
 
     private getAttributesMap(
-        options: { attributesMap?: object } = {},
+        options: { attributesMap?: Record<string, unknown> } = {},
         displayFormUris: string[],
         projectId: string,
     ) {

@@ -162,4 +162,4 @@ export interface IInsightQueryOptions {
  *
  * @public
  */
-export interface IInsightQueryResult extends IPagedResource<IInsight> {}
+export type IInsightQueryResult = IPagedResource<IInsight>;

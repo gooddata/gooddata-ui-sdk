@@ -48,8 +48,8 @@ export type JsonApiId = {
     type: string;
 };
 
-export function isJsonApiId(obj: any): obj is JsonApiId {
-    return !isEmpty(obj) && obj?.id !== undefined && obj?.type !== undefined;
+export function isJsonApiId(obj: unknown): obj is JsonApiId {
+    return !isEmpty(obj) && (obj as any)?.id !== undefined && (obj as any)?.type !== undefined;
 }
 
 export function jsonApiIdToObjRef(idAndType: JsonApiId): ObjRef {

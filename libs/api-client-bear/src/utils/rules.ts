@@ -18,7 +18,8 @@ export class Rules {
         this.rules.push([tests, callback]);
     }
 
-    public match(subject: any, params: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public match(subject: any, params: any): any {
         const [, callback] = find(this.rules, ([tests]) => every(tests, (test) => test(subject, params)));
 
         invariant(callback, "No suitable rule to handle the parameters found.");

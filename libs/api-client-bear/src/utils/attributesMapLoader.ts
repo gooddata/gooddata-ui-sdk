@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import get from "lodash/get";
 import set from "lodash/set";
 import { MetadataModule } from "../metadata";
@@ -22,7 +22,10 @@ function createAttributesMap(displayForms: any[], attributes: any) {
     }, {});
 }
 
-export function getMissingUrisInAttributesMap(displayFormsUris: string[], attributesMap: any) {
+export function getMissingUrisInAttributesMap(
+    displayFormsUris: string[],
+    attributesMap: Record<string, unknown>,
+): string[] {
     const uris = displayFormsUris || [];
     return uris.filter((uri: string) => !attributesMap[uri]);
 }
@@ -30,7 +33,10 @@ export function getMissingUrisInAttributesMap(displayFormsUris: string[], attrib
 export class AttributesMapLoaderModule {
     constructor(private md: MetadataModule) {}
 
-    public loadAttributesMap(projectId: string, attributeDisplayFormUris: string[]) {
+    public loadAttributesMap(
+        projectId: string,
+        attributeDisplayFormUris: string[],
+    ): Promise<Record<string, unknown>> {
         if (attributeDisplayFormUris.length === 0) {
             return Promise.resolve({});
         }

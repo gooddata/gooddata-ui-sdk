@@ -7,6 +7,10 @@ import {
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
+    ICatalogAttribute,
+    ICatalogMeasure,
+    ICatalogFact,
+    ICatalogDateDataset,
 } from "@gooddata/sdk-model";
 
 export class TigerWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAvailableItems {
@@ -16,47 +20,47 @@ export class TigerWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalo
         private readonly availableItems: CatalogItem[],
     ) {}
 
-    public getGroups() {
+    public getGroups(): ICatalogGroup[] {
         return this.groups;
     }
 
-    public getItems() {
+    public getItems(): CatalogItem[] {
         return this.items;
     }
 
-    public getAttributes() {
+    public getAttributes(): ICatalogAttribute[] {
         return this.items.filter(isCatalogAttribute);
     }
 
-    public getMeasures() {
+    public getMeasures(): ICatalogMeasure[] {
         return this.items.filter(isCatalogMeasure);
     }
 
-    public getFacts() {
+    public getFacts(): ICatalogFact[] {
         return this.items.filter(isCatalogFact);
     }
 
-    public getDateDatasets() {
+    public getDateDatasets(): ICatalogDateDataset[] {
         return this.items.filter(isCatalogDateDataset);
     }
 
-    public getAvailableItems() {
+    public getAvailableItems(): CatalogItem[] {
         return this.availableItems;
     }
 
-    public getAvailableAttributes() {
+    public getAvailableAttributes(): ICatalogAttribute[] {
         return this.availableItems.filter(isCatalogAttribute);
     }
 
-    public getAvailableMeasures() {
+    public getAvailableMeasures(): ICatalogMeasure[] {
         return this.availableItems.filter(isCatalogMeasure);
     }
 
-    public getAvailableFacts() {
+    public getAvailableFacts(): ICatalogFact[] {
         return this.availableItems.filter(isCatalogFact);
     }
 
-    public getAvailableDateDatasets() {
+    public getAvailableDateDatasets(): ICatalogDateDataset[] {
         return this.availableItems.filter(isCatalogDateDataset);
     }
 }

@@ -63,6 +63,7 @@ function enrichSettingWithCustomDomain(originalUrl: string, originalSettings: an
 
 export function handlePolling(
     url: string,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     settings: any,
     sendRequest: (url: string, settings: any) => any,
 ): Promise<ApiResponse> {
@@ -80,7 +81,7 @@ export interface IPackageHeaders {
     version: string;
 }
 
-export function originPackageHeaders({ name, version }: IPackageHeaders) {
+export function originPackageHeaders({ name, version }: IPackageHeaders): object {
     return {
         "X-GDC-JS-PKG": name,
         "X-GDC-JS-PKG-VERSION": version,
@@ -88,6 +89,7 @@ export function originPackageHeaders({ name, version }: IPackageHeaders) {
 }
 
 export class ApiError extends Error {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor(message: string, public cause: any) {
         super(message);
 
@@ -96,6 +98,7 @@ export class ApiError extends Error {
 }
 
 export class ApiResponseError extends ApiError {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor(message: string, public response: any, public responseBody: any) {
         super(message, null);
     }
@@ -128,7 +131,7 @@ export class ApiResponse<T = any> {
         }
     }
 
-    public getHeaders() {
+    public getHeaders(): Response {
         return this.response;
     }
 }
@@ -139,6 +142,7 @@ let shouldLogDeprecatedRestApiCall = true;
 export class XhrModule {
     private tokenRequest?: any;
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor(private fetch: any, private configStorage: any) {
         defaults(configStorage, { xhrSettings: {} });
     }
@@ -150,6 +154,7 @@ export class XhrModule {
      *
      * @param settings object XHR settings as
      */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public ajaxSetup(settings: any) {
         Object.assign(this.configStorage.xhrSettings, settings);
     }
@@ -221,14 +226,15 @@ export class XhrModule {
     /**
      * Wrapper for xhr.ajax method GET
      */
-    public get(url: string, settings?: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public get(url: string, settings?: any): Promise<ApiResponse<any>> {
         return this.ajax(url, merge({ method: "GET" }, settings));
     }
 
     /**
      * Wrapper for xhr.ajax method GET, returns parsed JSON response body
      */
-    public getParsed<T>(url: string, settings: any = {}) {
+    public getParsed<T>(url: string, settings: any = {}): Promise<T> {
         const { data, ...restSettings } = settings;
         let urlWithParams = url;
         if (data) {
@@ -242,35 +248,40 @@ export class XhrModule {
     /**
      * Wrapper for xhr.ajax method HEAD
      */
-    public head(url: string, settings?: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public head(url: string, settings?: any): Promise<ApiResponse<any>> {
         return this.ajax(url, merge({ method: "HEAD" }, settings));
     }
 
     /**
      * Wrapper for xhr.ajax method POST
      */
-    public post(url: string, settings?: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public post(url: string, settings?: any): Promise<ApiResponse<any>> {
         return this.ajax(url, merge({ method: "POST" }, settings));
     }
 
     /**
      * Wrapper for xhr.ajax method POST, returns parsed JSON response body
      */
-    public postParsed<T>(url: string, settings?: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public postParsed<T>(url: string, settings?: any): Promise<T> {
         return this.ajax<T>(url, merge({ method: "POST" }, settings)).then((response) => response.getData());
     }
 
     /**
      * Wrapper for xhr.ajax method PUT
      */
-    public put(url: string, settings: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public put(url: string, settings: any): Promise<ApiResponse<any>> {
         return this.ajax(url, merge({ method: "PUT" }, settings));
     }
 
     /**
      * Wrapper for xhr.ajax method DELETE
      */
-    public del(url: string, settings?: any) {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public del(url: string, settings?: any): Promise<ApiResponse<any>> {
         return this.ajax(url, merge({ method: "DELETE" }, settings));
     }
 

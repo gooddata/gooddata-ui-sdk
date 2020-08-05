@@ -3,7 +3,7 @@
 import { ITigerClient, newAxios, tigerClientFactory } from "@gooddata/api-client-tiger";
 
 export const DefaultGetOptions = {
-    contentType: "application/json" as "application/json",
+    contentType: "application/json" as const,
     include: "tags",
 };
 

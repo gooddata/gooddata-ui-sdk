@@ -63,7 +63,6 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 }
 
-// @ts-ignore
-function checkDefIsExecutable(def: IExecutionDefinition): void {
+function checkDefIsExecutable(_def: IExecutionDefinition): void {
     return;
 }

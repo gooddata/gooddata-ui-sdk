@@ -12,6 +12,7 @@ import { withNormalization } from "@gooddata/sdk-backend-base";
  * @param implConfig - tiger client specific configuration, may be omitted at this point but it cannot be provided later
  * @public
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
     return withNormalization(new TigerBackend(config, implConfig));
 }

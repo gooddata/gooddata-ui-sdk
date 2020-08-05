@@ -36,8 +36,8 @@ export interface ILayoutWidget {
  * Type-guard testing whether the provided object is an instance of {@link ILayoutWidget}.
  * @alpha
  */
-export function isLayoutWidget(obj: any): obj is ILayoutWidget {
-    return !isEmpty(obj) && isWidget(obj.widget);
+export function isLayoutWidget(obj: unknown): obj is ILayoutWidget {
+    return !isEmpty(obj) && isWidget((obj as any).widget);
 }
 
 /**
@@ -67,22 +67,22 @@ export interface IFluidLayout {
  * Type-guard testing whether the provided object is an instance of {@link IFluidLayout}.
  * @alpha
  */
-export function isFluidLayout(obj: any): obj is IFluidLayout {
-    return hasFluidLayoutProps(obj) && layoutWidgets(obj).every(isWidget);
+export function isFluidLayout(obj: unknown): obj is IFluidLayout {
+    return hasFluidLayoutProps(obj) && layoutWidgets(obj as any).every(isWidget);
 }
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IFluidLayoutDefinition}.
  * @alpha
  */
-export function isFluidLayoutDefinition(obj: any): obj is IFluidLayoutDefinition {
-    return hasFluidLayoutProps(obj) && layoutWidgets(obj).some(isWidgetDefinition);
+export function isFluidLayoutDefinition(obj: unknown): obj is IFluidLayoutDefinition {
+    return hasFluidLayoutProps(obj) && layoutWidgets(obj as any).some(isWidgetDefinition);
 }
 
 /**
  * @internal
  */
-function hasFluidLayoutProps(obj: any): boolean {
+function hasFluidLayoutProps(obj: unknown): boolean {
     return !isEmpty(obj) && !!(obj as IFluidLayoutDefinition | IFluidLayout)?.fluidLayout?.rows;
 }
 
@@ -306,8 +306,8 @@ export interface ILayoutWidgetDefinition {
  * Type-guard testing whether the provided object is an instance of {@link ILayoutWidgetDefinition}.
  * @alpha
  */
-export function isLayoutWidgetDefinition(obj: any): obj is ILayoutWidgetDefinition {
-    return !isEmpty(obj) && isWidgetDefinition(obj.widget);
+export function isLayoutWidgetDefinition(obj: unknown): obj is ILayoutWidgetDefinition {
+    return !isEmpty(obj) && isWidgetDefinition((obj as any).widget);
 }
 
 /**
