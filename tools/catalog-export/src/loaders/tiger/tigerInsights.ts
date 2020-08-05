@@ -1,13 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
 
-// @ts-ignore
 import { ObjectMeta } from "../../base/types";
 import { DefaultGetOptions } from "./tigerClient";
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import { convertTags, createTagMap } from "./tigerCommon";
 
 /**
- * Load insights that are stored in workspace's metadata so that their links can be included
+ * Load insights that are stored in workspace metadata so that their links can be included
  * in the generated output for easy embedding access.
  *
  * @param _projectId - project id, ignored for now as tiger is single-workspace
