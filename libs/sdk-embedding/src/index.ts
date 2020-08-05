@@ -24,5 +24,3 @@ export {
 export { EmbeddedAnalyticalDesigner } from "./iframe/ad";
 
 export { EmbeddedKpiDashboard } from "./iframe/kd";
-
-export { IHost, setConfig, setHost, addListener, postEvent, removeListener } from "./iframe/messagingUtils";

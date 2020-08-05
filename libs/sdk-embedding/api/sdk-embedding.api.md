@@ -8,9 +8,6 @@ import { GdcExecuteAFM } from '@gooddata/api-model-bear';
 import { GdcExport } from '@gooddata/api-model-bear';
 import { GdcVisualizationObject } from '@gooddata/api-model-bear';
 
-// @internal (undocumented)
-export function addListener(listener: GdcMessageEventListener, target?: Window & typeof globalThis): void;
-
 // @public
 export type CommandFailed<Product> = IGdcMessageEvent<Product, GdcEventType.AppCommandFailed, ICommandFailedBody>;
 
@@ -168,9 +165,23 @@ export namespace EmbeddedGdc {
         filters: FilterItem[];
     }
     // (undocumented)
-    export type INegativeAttributeFilter = GdcExecuteAFM.INegativeAttributeFilter;
+    export interface INegativeAttributeFilter {
+        // (undocumented)
+        negativeAttributeFilter: {
+            displayForm: ObjQualifier;
+            notIn: string[];
+            textFilter?: boolean;
+        };
+    }
     // (undocumented)
-    export type IPositiveAttributeFilter = GdcExecuteAFM.IPositiveAttributeFilter;
+    export interface IPositiveAttributeFilter {
+        // (undocumented)
+        positiveAttributeFilter: {
+            displayForm: ObjQualifier;
+            in: string[];
+            textFilter?: boolean;
+        };
+    }
     // (undocumented)
     export interface IRelativeDateFilter {
         // (undocumented)
@@ -198,15 +209,15 @@ export namespace EmbeddedGdc {
     // (undocumented)
     export function isAbsoluteDateFilter(filter: CompatibilityFilter): filter is IAbsoluteDateFilter;
     // (undocumented)
+    export function isAttributeFilter(filter: CompatibilityFilter): filter is AttributeFilterItem;
+    // (undocumented)
     export function isDateFilter(filter: CompatibilityFilter): filter is DateFilterItem;
     // (undocumented)
+    export function isNegativeAttributeFilter(filter: CompatibilityFilter): filter is INegativeAttributeFilter;
+    // (undocumented)
+    export function isPositiveAttributeFilter(filter: CompatibilityFilter): filter is IPositiveAttributeFilter;
+    // (undocumented)
     export function isRelativeDateFilter(filter: CompatibilityFilter): filter is IRelativeDateFilter;
-    const // (undocumented)
-    isAttributeFilter: typeof GdcExecuteAFM.isAttributeFilter;
-    const // (undocumented)
-    isPositiveAttributeFilter: typeof GdcExecuteAFM.isPositiveAttributeFilter;
-    const // (undocumented)
-    isNegativeAttributeFilter: typeof GdcExecuteAFM.isNegativeAttributeFilter;
     const // (undocumented)
     isObjIdentifierQualifier: typeof GdcExecuteAFM.isObjIdentifierQualifier;
     const // (undocumented)
@@ -500,14 +511,6 @@ export interface IGdcMessageEventListenerConfig {
     validReceivedPostEvents: string[];
 }
 
-// @internal (undocumented)
-export interface IHost {
-    // (undocumented)
-    parent?: IHost;
-    // (undocumented)
-    postMessage?: Window["postMessage"];
-}
-
 // @public
 export interface IObjectMeta {
     identifier: string;
@@ -531,18 +534,6 @@ export interface ISimpleDrillableItemsCommandBody {
     identifiers?: string[];
     uris?: string[];
 }
-
-// @internal (undocumented)
-export function postEvent(product: string, name: string, data: object, contextId?: string): void;
-
-// @internal (undocumented)
-export function removeListener(listener: GdcMessageEventListener, target?: Window & typeof globalThis): void;
-
-// @internal (undocumented)
-export function setConfig(product: string, validReceivedPostEvents: string[]): void;
-
-// @internal
-export const setHost: (h: IHost) => void;
 
 
 // (No @packageDocumentation comment for this package)

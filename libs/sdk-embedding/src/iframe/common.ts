@@ -254,9 +254,27 @@ export interface IDrillableItemsCommandBody extends ISimpleDrillableItemsCommand
  * @public
  */
 export namespace EmbeddedGdc {
-    // re-export from AFM namespace
-    export type IPositiveAttributeFilter = GdcExecuteAFM.IPositiveAttributeFilter;
-    export type INegativeAttributeFilter = GdcExecuteAFM.INegativeAttributeFilter;
+    /*
+     * Attribute filters were exposed in the 'old' format that did not match backend and used the
+     * textFilter boolean indicator. We have to honor this for the public API.
+     */
+
+    export interface IPositiveAttributeFilter {
+        positiveAttributeFilter: {
+            displayForm: ObjQualifier;
+            in: string[];
+            textFilter?: boolean;
+        };
+    }
+
+    export interface INegativeAttributeFilter {
+        negativeAttributeFilter: {
+            displayForm: ObjQualifier;
+            notIn: string[];
+            textFilter?: boolean;
+        };
+    }
+
     export interface IAbsoluteDateFilter {
         absoluteDateFilter: {
             // dataSet is required in AD only
@@ -265,6 +283,7 @@ export namespace EmbeddedGdc {
             to: string;
         };
     }
+
     export interface IRelativeDateFilter {
         relativeDateFilter: {
             // dataSet is required in AD only
@@ -298,9 +317,21 @@ export namespace EmbeddedGdc {
     export function isAbsoluteDateFilter(filter: CompatibilityFilter): filter is IAbsoluteDateFilter {
         return !isEmpty(filter) && (filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
     }
-    export const isAttributeFilter = GdcExecuteAFM.isAttributeFilter;
-    export const isPositiveAttributeFilter = GdcExecuteAFM.isPositiveAttributeFilter;
-    export const isNegativeAttributeFilter = GdcExecuteAFM.isNegativeAttributeFilter;
+    export function isAttributeFilter(filter: CompatibilityFilter): filter is AttributeFilterItem {
+        return !isEmpty(filter) && (isPositiveAttributeFilter(filter) || isNegativeAttributeFilter(filter));
+    }
+
+    export function isPositiveAttributeFilter(
+        filter: CompatibilityFilter,
+    ): filter is IPositiveAttributeFilter {
+        return !isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+    }
+
+    export function isNegativeAttributeFilter(
+        filter: CompatibilityFilter,
+    ): filter is INegativeAttributeFilter {
+        return !isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
+    }
     export const isObjIdentifierQualifier = GdcExecuteAFM.isObjIdentifierQualifier;
     export const isObjectUriQualifier = GdcExecuteAFM.isObjectUriQualifier;
 

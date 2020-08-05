@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import get from "lodash/get";
-import { GdcMessageEventListener, IGdcMessageEventListenerConfig, IGdcMessageEvent } from "./common";
+import { GdcMessageEventListener, IGdcMessageEventListenerConfig, IGdcMessageEvent } from "../iframe/common";
 
 /**
  * @internal
