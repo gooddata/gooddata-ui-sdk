@@ -4,7 +4,7 @@ import uuid from "uuid";
 import { render } from "react-dom";
 import noop from "lodash/noop";
 import isEqual from "lodash/isEqual";
-
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAnalyticalBackend, IExportResult, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -32,6 +32,9 @@ import {
     IDrillableItem,
     IExportFunction,
     IExtendedExportConfig,
+    IErrorDescriptors,
+    IntlWrapper,
+    newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
@@ -116,7 +119,10 @@ const visualizationUriRootStyle = {
     height: "100%",
 };
 
-class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewState> {
+class RenderInsightView extends React.Component<
+    IInsightViewProps & WrappedComponentProps,
+    IInsightViewState
+> {
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
     private insight: IInsight | undefined;
@@ -124,8 +130,9 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     private settings: IWorkspaceSettings | undefined;
     private containerRef = React.createRef<HTMLDivElement>();
     private locale: string | undefined;
+    private errorMap: IErrorDescriptors;
 
-    public static defaultProps: Partial<IInsightViewProps> = {
+    public static defaultProps: Partial<IInsightViewProps & WrappedComponentProps> = {
         ErrorComponent,
         filters: [],
         drillableItems: [],
@@ -133,10 +140,16 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
         pushData: noop,
     };
 
-    public state: IInsightViewState = {
-        isLoading: false,
-        error: undefined,
-    };
+    constructor(props: IInsightViewProps & WrappedComponentProps) {
+        super(props);
+
+        this.errorMap = newErrorMapping(props.intl);
+
+        this.state = {
+            isLoading: false,
+            error: undefined,
+        };
+    }
 
     private startLoading = () => {
         this.setIsLoading(true);
@@ -353,8 +366,14 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
         return this.updateVisualization();
     };
 
-    public componentDidUpdate(prevProps: IInsightViewProps): void {
+    public componentDidUpdate(prevProps: IInsightViewProps & WrappedComponentProps): void {
+        const { intl } = this.props;
+
         this.componentDidUpdateInner(prevProps);
+
+        if (!isEqual(prevProps.intl, intl)) {
+            this.errorMap = newErrorMapping(intl);
+        }
     }
 
     public componentWillUnmount() {
@@ -363,10 +382,12 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
 
     public render(): React.ReactNode {
         const { ErrorComponent, LoadingComponent } = this.props;
+        const { error } = this.state;
+        const errorProps = this.errorMap[error ? error.getMessage() : undefined];
         return (
             <>
                 {this.state.isLoading && <LoadingComponent />}
-                {this.state.error && <ErrorComponent message={this.state.error.message} />}
+                {this.state.error && <ErrorComponent {...errorProps} />}
                 <div
                     className="visualization-uri-root"
                     id={this.elementId}
@@ -378,9 +399,19 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     }
 }
 
+export const IntlInsightView = withContexts(injectIntl(RenderInsightView));
+
 /**
  * Renders insight which was previously created and saved in the Analytical Designer.
  *
  * @public
  */
-export const InsightView = withContexts(RenderInsightView);
+export class InsightView extends React.Component<IInsightViewProps, IInsightViewState> {
+    public render() {
+        return (
+            <IntlWrapper locale={this.props.locale}>
+                <IntlInsightView {...this.props} />
+            </IntlWrapper>
+        );
+    }
+}
