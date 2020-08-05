@@ -36,7 +36,7 @@ export class GoodDataAuthProvider implements IAuthenticationProvider {
         const user = await sdk.user.getCurrentProfile();
 
         return {
-            userId: user.login,
+            userId: user.login!,
             userMeta: user,
         };
     }
