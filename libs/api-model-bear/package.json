@@ -23,7 +23,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts ./src/**/*.ts"
+        "eslint": "-c .eslintrc.js --ext ts src/"
     },
     "files": [
         "dist"

@@ -144,7 +144,7 @@ export namespace GdcCatalog {
     // (undocumented)
     export interface ILoadDateDataSetsParams {
         // (undocumented)
-        attributesMap?: Record<string, string>;
+        attributesMap?: Record<string, unknown>;
         // (undocumented)
         bucketItems?: GdcVisualizationObject.IVisualizationObjectContent;
         // (undocumented)

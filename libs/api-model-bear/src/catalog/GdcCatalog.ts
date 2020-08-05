@@ -131,6 +131,6 @@ export namespace GdcCatalog {
         includeUnavailableDateDataSetsCount?: boolean;
         returnAllDateDataSets?: boolean;
         returnAllRelatedDateDataSets?: boolean;
-        attributesMap?: Record<string, string>;
+        attributesMap?: Record<string, unknown>;
     }
 }
