@@ -67,7 +67,7 @@
         "@types/stringify-object": "^3.2.0",
         "@typescript-eslint/eslint-plugin": "^3.7.1",
         "@typescript-eslint/parser": "^3.7.1",
-        "dependency-cruiser": "^8.0.1",
+        "dependency-cruiser": "^9.9.5",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.15.1",
         "eslint": "^7.5.0",
