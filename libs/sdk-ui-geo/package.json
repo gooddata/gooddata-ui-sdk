@@ -11,7 +11,7 @@
         "styles"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts,tsx ./src/**/*.{ts,tsx}"
+        "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
         "clean": "rm -rf ci dist styles/css coverage *.log && jest --clearCache",
