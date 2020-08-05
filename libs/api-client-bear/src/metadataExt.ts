@@ -46,7 +46,7 @@ export function createTranslator(
  * @experimental
  */
 export function updateContent(
-    analyticalDashboard: any,
+    analyticalDashboard: GdcDashboard.IAnalyticalDashboard,
     uriTranslator: UriTranslator,
     filterContext: string,
 ): GdcDashboard.IAnalyticalDashboardContent {

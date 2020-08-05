@@ -1,4 +1,4 @@
-// (C) 2007-2014 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import set from "lodash/set";
 import get from "lodash/get";
 
@@ -16,7 +16,7 @@ import get from "lodash/get";
 
 const URL_REGEXP = "(?:(https)://+|(www\\.)?)\\w[:;,\\.?\\[\\]\\w/~%&=+#-@!]*";
 
-export function sanitizeDomain(domain: string | null) {
+export function sanitizeDomain(domain: string | null): string | undefined {
     if (domain === null) {
         return undefined;
     }
@@ -37,7 +37,8 @@ export function sanitizeDomain(domain: string | null) {
  * @method sanitizeConfig
  * @return {object|undefined} config with sanitized domain
  */
-export function sanitizeConfig(config: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function sanitizeConfig(config: any): any {
     const sanitized = { ...config };
     if (config.domain) {
         sanitized.domain = sanitizeDomain(config.domain);
@@ -78,7 +79,7 @@ export class ConfigModule {
      * @param {String|null} domain valid domain starting with https:// or null for removing
      * @method setCustomDomain
      */
-    public setCustomDomain(domain: string) {
+    public setCustomDomain(domain: string): void {
         this.configStorage.domain = sanitizeDomain(domain);
     }
 
@@ -87,7 +88,7 @@ export class ConfigModule {
      *
      * @method getCustomDomain
      */
-    public getCustomDomain() {
+    public getCustomDomain(): string | undefined {
         return this.configStorage.domain;
     }
 
@@ -99,7 +100,7 @@ export class ConfigModule {
      * @param {String} version package version (semver)
      * @private
      */
-    public setJsPackage(name: string, version: string) {
+    public setJsPackage(name: string, version: string): void {
         if (!this.configStorage.originPackage) {
             // only set the first (topmost) package
             this.configStorage.originPackage = { name, version };
@@ -113,15 +114,15 @@ export class ConfigModule {
      * @return {object} with 'name' and 'version' properties
      * @private
      */
-    public getJsPackage() {
+    public getJsPackage(): IOriginPackage | undefined {
         return this.configStorage.originPackage;
     }
 
-    public setRequestHeader(key: string, value: string) {
+    public setRequestHeader(key: string, value: string): void {
         set(this.configStorage, ["xhrSettings", "headers", key], value);
     }
 
-    public getRequestHeader(key: string) {
+    public getRequestHeader(key: string): string {
         return get(this.configStorage, ["xhrSettings", "headers", key]);
     }
 }

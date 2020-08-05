@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { ExperimentalExecutionsModule } from "./execution/experimental-executions";
 import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
 import { ExecuteAfmModule } from "./execution/execute-afm";
@@ -42,7 +42,12 @@ export class ExecutionModule {
         this.md = md;
     }
 
-    public getData(projectId: string, columns: any[], executionConfiguration: any = {}, settings: any = {}) {
+    public getData(
+        projectId: string,
+        columns: any[],
+        executionConfiguration: any = {},
+        settings: any = {},
+    ): Promise<any> {
         return this.getExperimentalExecutionsModule().getData(
             projectId,
             columns,
@@ -54,7 +59,7 @@ export class ExecutionModule {
     public mdToExecutionDefinitionsAndColumns(
         projectId: string,
         mdObj: GdcVisualizationObject.IVisualizationObjectContent,
-        options: { attributesMap?: {}; removeDateItems?: boolean } = {},
+        options: { attributesMap?: Record<string, unknown>; removeDateItems?: boolean } = {},
     ): Promise<GdcCatalog.IColumnsAndDefinitions> {
         return this.getExperimentalExecutionsModule().mdToExecutionDefinitionsAndColumns(
             projectId,

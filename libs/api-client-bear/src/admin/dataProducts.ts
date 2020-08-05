@@ -1,4 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
     interpolate,
     parse,

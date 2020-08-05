@@ -62,12 +62,12 @@ export class UserModule {
      *                   resolves with false if user logged in and project not available,
      *                   rejects if user not logged in
      */
-    public isLoggedInProject(projectId: string) {
+    public isLoggedInProject(projectId: string): Promise<boolean> {
         return this.getCurrentProfile().then((profile) => {
             return new Promise((resolve, reject) => {
                 const projectModule = new ProjectModule(this.xhr);
 
-                projectModule.getProjects(profile.links.self.split("/")[4]).then(
+                projectModule.getProjects(profile!.links!.self!.split("/")![4]).then(
                     (projects) => {
                         if (projects.find((p: any) => p.links.self === `/gdc/projects/${projectId}`)) {
                             resolve(true);
@@ -92,7 +92,7 @@ export class UserModule {
      * @param {String} username
      * @param {String} password
      */
-    public login(username: string, password: string) {
+    public login(username: string, password: string): Promise<any> {
         return this.xhr
             .post("/gdc/account/login", {
                 body: JSON.stringify({
@@ -117,7 +117,11 @@ export class UserModule {
      * @param {String} ssoProvider
      * @param {String} targetUrl
      */
-    public loginSso(encryptedClaims: string, ssoProvider: string, targetUrl: string) {
+    public loginSso(
+        encryptedClaims: string,
+        ssoProvider: string,
+        targetUrl: string,
+    ): Promise<ApiResponse<any>> {
         return this.xhr.post("/gdc/account/customerlogin", {
             data: {
                 pgpLoginRequest: {
@@ -140,7 +144,7 @@ export class UserModule {
                     return this.xhr.get("/gdc/app/account/bootstrap").then((result: any) => {
                         const data = result.getData();
                         const userUri = data.bootstrapResource.accountSetting.links.self;
-                        const userId = userUri.match(/([^\/]+)\/?$/)[1];
+                        const userId = userUri.match(/([^/]+)\/?$/)[1];
 
                         return this.xhr.del(`/gdc/account/login/${userId}`);
                     });
@@ -157,7 +161,7 @@ export class UserModule {
      * @method getCurrentProfile
      * @return {Promise} Resolves with account setting object
      */
-    public getCurrentProfile() {
+    public getCurrentProfile(): Promise<GdcUser.IAccountSetting> {
         return this.xhr.get("/gdc/account/profile/current").then((r) => r.getData().accountSetting);
     }
 
@@ -167,6 +171,7 @@ export class UserModule {
      * @param {String} profileId - User profile identifier
      * @param {Object} profileSetting
      */
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public updateProfileSettings(profileId: string, profileSetting: any): Promise<ApiResponse> {
         // TODO
         return this.xhr.put(`/gdc/account/profile/${profileId}/settings`, {
@@ -178,7 +183,14 @@ export class UserModule {
      * Returns info about currently logged in user from bootstrap resource
      * @method getAccountInfo
      */
-    public getAccountInfo() {
+    public getAccountInfo(): Promise<{
+        login: string;
+        loginMD5: string;
+        firstName: string;
+        lastName: string;
+        organizationName: string;
+        profileUri: string;
+    }> {
         return this.xhr.get("/gdc/app/account/bootstrap").then((result: any) => {
             const { bootstrapResource } = result.getData();
             return {
@@ -236,7 +248,7 @@ export class UserModule {
      * Returns the feature flags valid for the currently logged in user.
      * @method getFeatureFlags
      */
-    public getFeatureFlags() {
+    public getFeatureFlags(): Promise<GdcUser.IFeatureFlags> {
         return this.xhr
             .get("/gdc/app/account/bootstrap")
             .then((r: any) => r.getData())
@@ -266,8 +278,8 @@ export class UserModule {
      * Initiates SPI SAML SSO
      * @param relayState URL of the page where the user is redirected after a successful login
      */
-    public initiateSamlSso(relayState: string) {
-        this.xhr
+    public initiateSamlSso(relayState: string): Promise<void> {
+        return this.xhr
             .get(`/gdc/account/samlrequest?${qs.stringify({ relayState })}`)
             .then((data) => data.getData())
             .then((response) => {

@@ -1,4 +1,4 @@
-// (C) 2007-2014 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { DataProductsModule } from "../dataProducts";
@@ -151,16 +151,19 @@ describe("dataProducts", () => {
                         },
                     }),
                 });
-                return createDataProductsModule()
-                    .createDataProduct("contractId", "dataproductId", [
-                        "data-admin-test1",
-                        "data-admin-test2",
-                    ])
-                    .then((r: ApiResponse) => r.response)
-                    .then((result: any) => {
-                        expect(result.status).toBe(201);
-                    })
-                    .catch((error: any) => console.log(error)); // tslint:disable-line:no-console
+                return (
+                    createDataProductsModule()
+                        .createDataProduct("contractId", "dataproductId", [
+                            "data-admin-test1",
+                            "data-admin-test2",
+                        ])
+                        .then((r: ApiResponse) => r.response)
+                        .then((result: any) => {
+                            expect(result.status).toBe(201);
+                        })
+                        // eslint-disable-next-line no-console
+                        .catch((error: any) => console.log(error))
+                );
             });
         });
     });

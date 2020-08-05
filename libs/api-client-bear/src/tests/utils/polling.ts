@@ -1,8 +1,9 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 
-export function mockPollingRequest(uri: string, pendingResponse: any, finalResponse: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function mockPollingRequest(uri: string, pendingResponse: any, finalResponse: any): void {
     let counter = 0;
     fetchMock.mock(uri, () => {
         counter += 1;
@@ -14,7 +15,8 @@ export function mockPollingRequest(uri: string, pendingResponse: any, finalRespo
     });
 }
 
-export function mockPollingRequestWithStatus(uri: string, pendingResponse: any, finalResponse: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function mockPollingRequestWithStatus(uri: string, pendingResponse: any, finalResponse: any): void {
     let counter = 0;
     fetchMock.mock(uri, () => {
         counter += 1;

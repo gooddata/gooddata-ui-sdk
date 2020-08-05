@@ -36,6 +36,7 @@ export const omitEmpty = omitBy((val) => {
  * @method getIn
  * @private
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getIn = (path: string) => (object: any) => get(object, path);
 
 export interface IPollingOptions {
@@ -54,11 +55,12 @@ export interface IPollingOptions {
  * @private
  */
 export const handlePolling = (
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     xhrRequest: any,
     uri: string,
     isPollingDone: (response: any) => boolean,
     options: IPollingOptions = {},
-) => {
+): Promise<any> => {
     // TODO
     const { attempts = 0, maxAttempts = 50, pollStep = 5000 } = options;
 
@@ -89,11 +91,12 @@ export const handlePolling = (
  * @private
  */
 export const handleHeadPolling = (
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     xhrRequest: any,
     uri: string,
     isPollingDone: (responseHeaders: Response, response: ApiResponse) => boolean,
     options: IPollingOptions = {},
-) => {
+): Promise<any> => {
     const { attempts = 0, maxAttempts = 50, pollStep = 5000 } = options;
 
     return xhrRequest(uri).then((response: any) => {
@@ -125,7 +128,7 @@ const REG_URI_OBJ = /\/gdc\/md\/(\S+)\/obj\/\d+/;
  * @param value - string to test
  * @public
  */
-export const isUri = (value: string) => REG_URI_OBJ.test(value);
+export const isUri = (value: string): boolean => REG_URI_OBJ.test(value);
 
 /**
  * Builds query string from plain object
@@ -134,7 +137,8 @@ export const isUri = (value: string) => REG_URI_OBJ.test(value);
  * @param {Object} query parameters possibly including arrays inside
  * @returns {string} querystring
  */
-export function queryString(query: any) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function queryString(query: any): string {
     function getSingleParam(key: string, value: string) {
         return Array.isArray(value)
             ? value.map((item) => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`).join("&")
@@ -159,12 +163,13 @@ export function queryString(query: any) {
  * @param pagesData optional data to be pre-filled
  */
 export function getAllPagesByOffsetLimit(
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     xhr: any,
     uri: string,
     itemKey: string,
     offset: number = 0,
     pagesData: any[] = [],
-) {
+): Promise<any> {
     const PAGE_LIMIT = 100;
     return new Promise((resolve: any, reject: any) => {
         xhr.get(`${uri}?offset=${offset}&limit=${PAGE_LIMIT}`)

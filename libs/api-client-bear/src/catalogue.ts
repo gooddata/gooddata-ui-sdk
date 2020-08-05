@@ -119,7 +119,10 @@ export class CatalogueModule {
      * @param projectId string
      * @param options GdcCatalog.ILoadCatalogItemsParams
      */
-    public async loadAllItems(projectId: string, options: GdcCatalog.ILoadCatalogItemsParams = {}) {
+    public async loadAllItems(
+        projectId: string,
+        options: GdcCatalog.ILoadCatalogItemsParams = {},
+    ): Promise<GdcCatalog.CatalogItem[]> {
         const sanitizedOptions = omitEmpty(options);
 
         const loadAll = async (
@@ -159,7 +162,10 @@ export class CatalogueModule {
      * @param projectId string
      * @param options GdcCatalog.ILoadCatalogGroupsParams
      */
-    public async loadGroups(projectId: string, options: GdcCatalog.ILoadCatalogGroupsParams = {}) {
+    public async loadGroups(
+        projectId: string,
+        options: GdcCatalog.ILoadCatalogGroupsParams = {},
+    ): Promise<GdcCatalog.ICatalogGroup[]> {
         const result = await this.xhr.getParsed<GdcCatalog.ILoadCatalogGroupsResponse>(
             `/gdc/internal/projects/${projectId}/catalog/groups`,
             {
@@ -178,7 +184,7 @@ export class CatalogueModule {
     public async loadAvailableItemUris(
         projectId: string,
         options: GdcCatalog.ILoadAvailableCatalogItemsParams,
-    ) {
+    ): Promise<string[]> {
         const sanitizedCatalogQueryRequest = omitBy(options.catalogQueryRequest, isEmpty);
         const result = await this.xhr.postParsed<GdcCatalog.ILoadAvailableCatalogItemsResponse>(
             `/gdc/internal/projects/${projectId}/catalog/query`,
@@ -191,6 +197,7 @@ export class CatalogueModule {
         return result.catalogAvailableItems.items;
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public loadItems(projectId: string, options = {}) {
         const request = omit(
             {
@@ -213,10 +220,16 @@ export class CatalogueModule {
         return this.loadCatalog(projectId, request);
     }
 
-    public async loadDateDataSets(projectId: string, options: GdcCatalog.ILoadDateDataSetsParams) {
+    public async loadDateDataSets(
+        projectId: string,
+        options: GdcCatalog.ILoadDateDataSetsParams,
+    ): Promise<{
+        dateDataSets: GdcDateDataSets.IDateDataSet[];
+        unavailableDateDataSetsCount?: number | undefined;
+    }> {
         const mdObj = cloneDeep(options).bucketItems;
         const bucketItems = mdObj
-            ? await this.loadItemDescriptions(projectId, mdObj, get(options, "attributesMap"), true)
+            ? await this.loadItemDescriptions(projectId, mdObj, get(options, "attributesMap")!, true)
             : undefined;
 
         const omittedOptions = [
@@ -287,8 +300,9 @@ export class CatalogueModule {
      */
     public async loadItemDescriptions(
         projectId: string,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         mdObj: any,
-        attributesMap: any,
+        attributesMap: Record<string, unknown>,
         removeDateItems = false,
     ): Promise<string[]> {
         const itemDescriptions = await this.loadItemDescriptionObjects(

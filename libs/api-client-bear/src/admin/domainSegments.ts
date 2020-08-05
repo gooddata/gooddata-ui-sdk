@@ -1,4 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import omit from "lodash/omit";
 
 import {

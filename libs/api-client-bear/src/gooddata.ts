@@ -71,7 +71,7 @@ export class SDK {
         };
     }
 
-    public clone() {
+    public clone(): SDK {
         return new SDK(this.fetchMethod, cloneDeep(this.configStorage));
     }
 }
@@ -82,4 +82,5 @@ export class SDK {
  * @param {object|null} config object to be passed to SDK constructor
  * @method setCustomDomain
  */
-export const factory = (fetchMethod: typeof fetch) => (config = {}) => new SDK(fetchMethod, config);
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const factory = (fetchMethod: typeof fetch) => (config: any = {}) => new SDK(fetchMethod, config);
