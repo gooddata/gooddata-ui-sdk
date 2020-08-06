@@ -469,8 +469,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
                 >(exportFilterContextUri);
             } catch (err) {
                 if (err?.response?.status === 404) {
-                    // Error can sign, that export filter context expired
-                    // TODO: investigate if the status is correct https://jira.intgdc.com/browse/RAIL-2364
+                    // Export filter context has expired
                     result = undefined;
                 }
 
