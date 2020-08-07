@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "8.0.0-beta.34",
+    "version": "8.0.0-beta.35",
     "author": "GoodData",
     "description": "API Client for the Tiger backend",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-client-tiger",
@@ -33,8 +33,8 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.0.0-beta.34",
-        "@gooddata/sdk-model": "^8.0.0-beta.34",
+        "@gooddata/sdk-backend-spi": "^8.0.0-beta.35",
+        "@gooddata/sdk-model": "^8.0.0-beta.35",
         "axios": "^0.19.0",
         "lodash": "^4.17.19",
         "qs": "^6.8.0",
@@ -43,7 +43,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.0.0",
-        "@gooddata/reference-workspace": "^8.0.0-beta.34",
+        "@gooddata/reference-workspace": "^8.0.0-beta.35",
         "@microsoft/api-extractor": "^7.3.8",
         "@openapitools/openapi-generator-cli": "^1.0.10-4.2.3",
         "@types/jest": "^25.1.2",
