@@ -15,9 +15,12 @@ const PreviewNumberRow: React.FC<IPreviewNumberRowProps> = ({ previewNumber, for
         <div className="gd-measure-format-extended-preview-number">
             <span>{previewNumber}</span>
         </div>
-        <div className="s-number-format-preview-formatted gd-measure-format-extended-preview-formatted">
-            <FormattedPreview previewNumber={previewNumber} format={format} separators={separators} />
-        </div>
+        <FormattedPreview
+            previewNumber={previewNumber}
+            format={format}
+            separators={separators}
+            className="s-number-format-preview-formatted gd-measure-format-extended-preview-formatted"
+        />
     </div>
 );
 

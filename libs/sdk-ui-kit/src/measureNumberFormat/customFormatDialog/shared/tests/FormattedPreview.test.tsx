@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import { shallow } from "enzyme";
-import { FormattedPreview, IFormattedPreviewProps } from "../FormattedPreview";
+import { FormattedPreview, IFormattedPreviewProps, Label } from "../FormattedPreview";
 
 describe("FormattedPreview", () => {
     function renderComponent(props: Partial<IFormattedPreviewProps> = {}) {
@@ -24,17 +24,17 @@ describe("FormattedPreview", () => {
 
     it("should render empty span when no format is provided", () => {
         const wrapper = renderComponent({ format: "" });
-        expect(wrapper.text()).toEqual("");
+        expect(wrapper.find(Label).render().text()).toEqual("");
     });
 
     it("should render formatted number with colors when coloring is enabled", () => {
         const wrapper = renderComponent({ format: "[>1][green]#,##" });
-        expect(wrapper.props().style).toMatchObject({ color: "#00AA00" });
+        expect(wrapper.find(Label).props().style).toMatchObject({ color: "#00AA00" });
     });
 
     it("should render formatted number without colors when coloring is disabled", () => {
         const wrapper = renderComponent({ format: "[>1][GREEN]#,##", colors: false });
-        expect(wrapper.props().style).toEqual(undefined);
+        expect(wrapper.find(Label).props().style).toEqual(undefined);
     });
 
     it("should format null value properly if no value is provided", () => {
@@ -43,6 +43,6 @@ describe("FormattedPreview", () => {
             format: "[=NULL]value is null",
             colors: false,
         });
-        expect(wrapper.text()).toEqual("value is null");
+        expect(wrapper.find(Label).render().text()).toEqual("value is null");
     });
 });

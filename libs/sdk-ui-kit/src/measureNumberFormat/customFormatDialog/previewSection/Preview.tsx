@@ -46,17 +46,12 @@ export class Preview extends React.PureComponent<ICustomFormatPreviewProps, ICus
                         onChange={this.onPreviewChange}
                         separators={separators}
                     />
-                    <div
-                        className={
-                            "s-custom-format-dialog-preview-formatted gd-measure-custom-format-dialog-preview-string"
-                        }
-                    >
-                        <FormattedPreview
-                            previewNumber={this.state.preview}
-                            format={format}
-                            separators={separators}
-                        />
-                    </div>
+                    <FormattedPreview
+                        previewNumber={this.state.preview}
+                        format={format}
+                        separators={separators}
+                        className="s-custom-format-dialog-preview-formatted gd-measure-custom-format-dialog-preview-string"
+                    />
                 </div>
                 <ExtendedPreview format={format} separators={separators} />
             </div>

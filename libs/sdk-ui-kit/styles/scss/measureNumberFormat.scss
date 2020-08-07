@@ -38,21 +38,10 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
         border-bottom: 1px solid $border-color;
 
         & > span {
-            flex: 1 0 auto;
-            line-height: 23px;
             color: $gd-color-state-blank;
             text-transform: uppercase;
             font-size: 11px;
             font-weight: bold;
-        }
-
-        .gd-dialog-close {
-            flex: 0 0 auto;
-
-            > button {
-                width: 21px;
-                height: 21px;
-            }
         }
     }
 
@@ -93,8 +82,6 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
                 flex: 0 0 58%;
                 padding-left: 8px;
                 font-weight: bold;
-                overflow: hidden;
-                text-overflow: ellipsis;
             }
         }
 
@@ -162,16 +149,6 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
 .gd-measure-format-extended-preview-row {
     display: flex;
     line-height: 20px;
-
-    span {
-        white-space: nowrap;
-    }
-}
-
-.gd-measure-format-extended-preview-number,
-.gd-measure-format-extended-preview-formatted {
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .gd-measure-format-extended-preview-number {
@@ -182,9 +159,7 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
     box-sizing: border-box;
     flex: 0 0 58%;
     padding-left: 8px;
-    overflow: hidden;
     font-weight: bold;
-    text-overflow: ellipsis;
 }
 
 .gd-measure-format-template-preview-bubble {
@@ -221,5 +196,14 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
         .gd-format-template-help {
             display: block;
         }
+    }
+}
+
+.gd-measure-format-preview-formatted {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    > span {
+        white-space: nowrap;
     }
 }

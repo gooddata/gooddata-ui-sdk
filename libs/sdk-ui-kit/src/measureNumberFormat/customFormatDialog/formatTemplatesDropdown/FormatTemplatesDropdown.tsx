@@ -37,7 +37,7 @@ export class FormatTemplatesDropdown extends React.Component<
                         closeOnOutsideClick={true}
                         closeOnParentScroll={true}
                         alignTo=".gd-measure-custom-format-dialog-section-title"
-                        alignPoints={[{ align: "br tr" }]}
+                        alignPoints={[{ align: "br tr" }, { align: "cr cl", offset: { x: 10 } }]}
                         onClose={this.closeDropdown}
                     >
                         <div className="gd-dropdown overlay">
