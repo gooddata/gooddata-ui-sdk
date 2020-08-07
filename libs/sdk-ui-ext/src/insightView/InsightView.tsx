@@ -382,12 +382,15 @@ class RenderInsightView extends React.Component<
 
     public render(): React.ReactNode {
         const { ErrorComponent, LoadingComponent } = this.props;
-        const { error } = this.state;
-        const errorProps = this.errorMap[error ? error.getMessage() : undefined];
+        const { error, isLoading } = this.state;
+        const errorProps = this.errorMap[error ? error.getMessage() : undefined] ?? {
+            message: error?.message,
+        };
+
         return (
             <>
-                {this.state.isLoading && <LoadingComponent />}
-                {this.state.error && <ErrorComponent {...errorProps} />}
+                {isLoading && <LoadingComponent />}
+                {error && !isLoading && <ErrorComponent {...errorProps} />}
                 <div
                     className="visualization-uri-root"
                     id={this.elementId}

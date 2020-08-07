@@ -460,6 +460,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                             );
 
                             this.props.pushData({ availableDrillTargets });
+                            this.onLoadingChanged({ isLoading: false });
                         }
 
                         this.onError(convertError(error));
