@@ -715,9 +715,16 @@ describe("createPivotTableConfig", () => {
             undefined,
         ],
         [
-            "config with growToFit if feature flag on",
+            "config with growToFit if feature flag on and environment !== dashboards",
             {},
             "none",
+            { enableTableColumnsGrowToFit: true },
+            undefined,
+        ],
+        [
+            "config with growToFit if feature flag on and environment === dashboards",
+            {},
+            "dashboards",
             { enableTableColumnsGrowToFit: true },
             undefined,
         ],

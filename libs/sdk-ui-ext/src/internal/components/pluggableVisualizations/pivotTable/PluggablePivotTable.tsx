@@ -446,7 +446,11 @@ export function createPivotTableConfig(
     }
 
     const autoSize = settings[SettingCatalog.enableTableColumnsAutoResizing];
-    const growToFit = settings[SettingCatalog.enableTableColumnsGrowToFit];
+
+    // the growToFit can only be enabled in dashboards
+    const growToFit =
+        environment === DASHBOARDS_ENVIRONMENT && settings[SettingCatalog.enableTableColumnsGrowToFit];
+
     const manualResizing = settings[SettingCatalog.enableTableColumnsManualResizing];
 
     let columnSizing: Partial<IColumnSizing> = {};
