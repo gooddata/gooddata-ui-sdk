@@ -61,6 +61,8 @@ export class CustomFormatDialog extends React.PureComponent<
         return (
             <Overlay
                 closeOnParentScroll={true}
+                closeOnMouseDrag={true}
+                closeOnOutsideClick={true}
                 alignTo={anchorEl}
                 alignPoints={positioningToAlignPoints(positioning!)} // positioning is declared in defaultProps so it is always defined
                 onClose={onCancel}
@@ -69,13 +71,6 @@ export class CustomFormatDialog extends React.PureComponent<
                     <div className="gd-measure-custom-format-dialog-body s-custom-format-dialog-body">
                         <div className="gd-measure-custom-format-dialog-header">
                             <span>{intl.formatMessage({ id: "measureNumberCustomFormatDialog.title" })}</span>
-                            <div className="gd-dialog-close">
-                                <Button
-                                    className="gd-button-link gd-button-icon-only icon-cross s-dialog-close-button"
-                                    value=""
-                                    onClick={onCancel}
-                                />
-                            </div>
                         </div>
                         <div className="gd-measure-custom-format-dialog-content">
                             <FormatInput

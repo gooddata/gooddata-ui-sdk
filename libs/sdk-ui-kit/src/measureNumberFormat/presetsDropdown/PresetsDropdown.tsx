@@ -37,6 +37,7 @@ export class PresetsDropdown extends React.PureComponent<IMeasureNumberFormatDro
             <Overlay
                 closeOnOutsideClick={true}
                 closeOnParentScroll={true}
+                closeOnMouseDrag={true}
                 alignTo={anchorEl}
                 alignPoints={positioningToAlignPoints(positioning!)} // positioning is declared in defaultProps so it is always defined
                 onClose={onClose}

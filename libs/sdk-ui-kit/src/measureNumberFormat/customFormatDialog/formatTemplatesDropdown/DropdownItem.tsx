@@ -57,7 +57,7 @@ export default class DropdownItem extends React.Component<
                         className={`gd-measure-format-template-preview-bubble bubble-light s-measure-format-template-help-bubble-${stringUtils.simplifyText(
                             template.name,
                         )}`}
-                        alignPoints={[{ align: "cr cl" }]}
+                        alignPoints={[{ align: "cr cl" }, { align: "cr bl" }, { align: "cr tl" }]}
                     >
                         <h3 className={"gd-measure-format-template-preview-bubble-title"}>{template.name}</h3>
                         <div
