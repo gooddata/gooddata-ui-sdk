@@ -45,12 +45,28 @@ export interface IVisualizationCatalog {
     forUri(uri: string): PluggableVisualizationFactory;
 
     /**
+     * Looks up whether there is a pluggable visualization factory for a given vis class URI.
+     *
+     * @param uri - visualization URI (in format such as local:<type>)
+     * @alpha
+     */
+    hasFactoryForUri(uri: string): boolean;
+
+    /**
      * Looks up pluggable visualization implementation that should render the provided insight.
      *
      * @param insight - insight to render
      * @alpha
      */
     forInsight(insight: IInsightDefinition): PluggableVisualizationFactory;
+
+    /**
+     * Looks up whether there is a pluggable visualization factory for the provided insight.
+     *
+     * @param insight - insight to query for
+     * @alpha
+     */
+    hasFactoryForInsight(insight: IInsightDefinition): boolean;
 }
 
 type TypeToClassMapping = {
@@ -64,15 +80,17 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
     constructor(private readonly mapping: TypeToClassMapping) {}
 
     public forUri(uri: string): PluggableVisualizationFactory {
-        const split = uri.split(":");
-        const key = last(split) as keyof typeof DefaultVisualizations;
-        const VisType = this.mapping[key];
+        const VisType = this.findInMapping(uri);
 
         if (!VisType) {
             throw new GoodDataSdkError(`Unknown visualization class URI: ${uri}`);
         }
 
         return (params) => new VisType(params);
+    }
+
+    public hasFactoryForUri(uri: string): boolean {
+        return !!this.findInMapping(uri);
     }
 
     public forInsight(insight: IInsightDefinition): PluggableVisualizationFactory {
@@ -82,6 +100,17 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
         const visClassUri = insightVisualizationUrl(insight);
 
         return this.forUri(visClassUri);
+    }
+
+    public hasFactoryForInsight(insight: IInsightDefinition): boolean {
+        const visClassUri = insightVisualizationUrl(insight);
+        return this.hasFactoryForUri(visClassUri);
+    }
+
+    private findInMapping(uri: string): any | undefined {
+        const split = uri.split(":");
+        const key = last(split) as keyof typeof DefaultVisualizations;
+        return this.mapping[key];
     }
 }
 
