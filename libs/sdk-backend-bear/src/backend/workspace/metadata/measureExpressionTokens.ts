@@ -15,7 +15,7 @@ const REMOVE_BRACKETS_REGEXP = /[[\]{}]/g;
 const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
     ["text", /^[^{}[\]]+/],
     ["quoted_text", /^"(?:[^"\\]|\\\\.)*"/],
-    ["identifier", /^\{.*\}/],
+    ["identifier", /^\{[^}]+\}/],
     ["element_uri", /^\[[a-zA-Z0-9\\/]+elements\?id=\d+]/],
     ["uri", /^\[[a-zA-Z0-9\\/]+]/],
 ];
