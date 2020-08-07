@@ -935,6 +935,7 @@ export function insightVisualizationUrl(insight: IInsightDefinition): string;
 
 // @public
 export interface IObjectExpressionToken {
+    ref: ObjRef;
     type: ObjectType;
     value: string;
 }

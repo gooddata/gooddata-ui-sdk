@@ -176,6 +176,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
                     return {
                         type: meta.type,
                         value: meta.title,
+                        ref: meta.ref,
                     };
                 }
 

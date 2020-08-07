@@ -72,7 +72,12 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
         }
         const [type, id] = regexToken.value.split("/");
         if (type === "metric" || type === "fact" || type === "attribute" || type === "label") {
-            return this.resolveObjectToken(id, type, metricMetadata.data.included || []);
+            return this.resolveObjectToken(
+                id,
+                type,
+                metricMetadata.data.included || [],
+                metricMetadata.data.data.id,
+            );
         }
         throw new Error(`Cannot resolve title of object type ${type}`);
     }
@@ -81,6 +86,7 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
         objectId: string,
         objectType: "metric" | "fact" | "attribute" | "label",
         includedObjects: ReadonlyArray<SuccessIncluded>,
+        identifier: string,
     ): IMeasureExpressionToken {
         const includedObject = includedObjects.find((includedObject) => {
             return includedObject.id === objectId && includedObject.type === objectType;
@@ -100,6 +106,7 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
         return {
             type: typeMapping[objectType],
             value,
+            ref: idRef(identifier),
         };
     }
 }
