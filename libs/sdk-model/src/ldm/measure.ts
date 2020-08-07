@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { ObjectType } from "../objRef";
+import { ObjectType, ObjRef } from "../objRef";
 
 /**
  * Token representing part of parsed MAQL measure expression
@@ -54,6 +54,11 @@ export interface IObjectExpressionToken {
      * Title of the object
      */
     value: string;
+
+    /**
+     * Ref of the object
+     */
+    ref: ObjRef;
 }
 
 /**
