@@ -22,7 +22,7 @@ import { IAttributeFilter, IBucketFilter, IBucketItem } from "../../../interface
 import { BucketNames } from "@gooddata/sdk-ui";
 import { isAttributeFilter } from "../../../utils/bucketHelper";
 
-function adaptSortItemsToPivotTable(
+function filterInvalidSortItems(
     originalSortItems: ISortItem[],
     measureLocalIdentifiers: string[],
     rowAttributeLocalIdentifiers: string[],
@@ -97,7 +97,7 @@ export function adaptReferencePointSortItemsToPivotTable(
         (columnAttribute) => columnAttribute.localIdentifier,
     );
 
-    return adaptSortItemsToPivotTable(
+    return filterInvalidSortItems(
         originalSortItems,
         measureLocalIdentifiers,
         rowAttributeLocalIdentifiers,
@@ -105,10 +105,7 @@ export function adaptReferencePointSortItemsToPivotTable(
     );
 }
 
-export function adaptMdObjectSortItemsToPivotTable(
-    originalSortItems: ISortItem[],
-    buckets: IBucket[],
-): ISortItem[] {
+export function sanitizePivotTableSorts(originalSortItems: ISortItem[], buckets: IBucket[]): ISortItem[] {
     const measureLocalIdentifiers = bucketsMeasures(buckets).map(measureLocalId);
 
     const rowBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
@@ -119,7 +116,7 @@ export function adaptMdObjectSortItemsToPivotTable(
         ? bucketAttributes(columnBucket).map(attributeLocalId)
         : [];
 
-    return adaptSortItemsToPivotTable(
+    return filterInvalidSortItems(
         originalSortItems,
         measureLocalIdentifiers,
         rowAttributeLocalIdentifiers,

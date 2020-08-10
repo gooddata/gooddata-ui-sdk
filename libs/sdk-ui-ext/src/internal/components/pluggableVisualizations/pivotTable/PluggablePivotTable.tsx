@@ -71,7 +71,7 @@ import {
     adaptMdObjectWidthItemsToPivotTable,
 } from "./widthItemsHelpers";
 import {
-    adaptMdObjectSortItemsToPivotTable,
+    sanitizePivotTableSorts,
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
 } from "./sortItemsHelpers";
@@ -341,10 +341,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             const sanitizedProperties = properties.sortItems
                 ? {
                       ...properties,
-                      sortItems: adaptMdObjectSortItemsToPivotTable(
-                          properties.sortItems,
-                          insightBuckets(insight),
-                      ),
+                      sortItems: sanitizePivotTableSorts(properties.sortItems, insightBuckets(insight)),
                   }
                 : properties;
 
@@ -492,7 +489,16 @@ function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] {
     const sorts = insightSorts(insight);
 
     if (!isEmpty(sorts)) {
-        return sorts;
+        /*
+         * This is here to ensure that when rendering pivot table in KD, all invalid sort items
+         * are filtered out. At this moment, core pivot table does not handle invalid sorts so well and
+         * they can knock it off balance and it won't show up (interplay with resizing).
+         *
+         * Fixing core pivot to strip out invalid sorts has to happen one day - however regardless of that,
+         * it is still the responsibility of the PluggablePivotTable to call the CorePivot correctly and so this
+         * sanitization here also makes sense.
+         */
+        return sanitizePivotTableSorts(sorts, insightBuckets(insight));
     }
 
     const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
