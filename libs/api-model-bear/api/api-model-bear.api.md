@@ -2532,6 +2532,8 @@ export namespace GdcVisualizationWidget {
             dateDataSet?: string;
             ignoreDashboardFilters: Array<GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference>;
             drills?: IDrillDefinition[];
+            properties?: string;
+            references?: GdcVisualizationObject.IReferenceItems;
         };
         // (undocumented)
         meta: GdcMetadata.IObjectMeta;
