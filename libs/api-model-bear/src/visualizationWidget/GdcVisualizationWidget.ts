@@ -18,6 +18,8 @@ export namespace GdcVisualizationWidget {
                 GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference
             >;
             drills?: IDrillDefinition[];
+            properties?: string;
+            references?: GdcVisualizationObject.IReferenceItems;
         };
     }
 
