@@ -379,7 +379,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const adaptedColumnWidths = adaptMdObjectWidthItemsToPivotTable(columnWidths, insight);
 
         if (!isEqual(columnWidths, adaptedColumnWidths)) {
-            this.visualizationProperties.properties.controls.columnWidths = adaptedColumnWidths;
+            this.visualizationProperties.controls.columnWidths = adaptedColumnWidths;
             this.pushData({
                 properties: {
                     controls: {
