@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { SortDirection, IAttributeElement, ObjRef } from "@gooddata/sdk-model";
+import { SortDirection, IAttributeElement, ObjRef, IAttributeFilter } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
 /**
@@ -56,6 +56,20 @@ export interface IElementQueryOptions {
 }
 
 /**
+ * Attribute filter limiting the elements. To be able to filter elements, the current attribute
+ * and the filter attribute must be connected in the data model. The property "overAttribute" identifies
+ * the connecting table in the logical data model. For method providing all possible connecting attributes
+ * see "getCommonAttributes"
+ *
+ * @public
+ */
+
+export interface IElementQueryAttributeFilter {
+    attributeFilter: IAttributeFilter;
+    overAttribute: ObjRef;
+}
+
+/**
  * The attribute itself contains no view data, it's just a sequence of id's.
  * To get data that is useful to users, we need to represent these id's with specific values.
  * For this purpose, we pair the attribute with it's display form (specific representation of attribute values).
@@ -97,6 +111,14 @@ export interface IElementQuery {
      * @returns element query
      */
     withOffset(offset: number): IElementQuery;
+
+    /**
+     * Sets the attribute filters that will limit the available elements
+     *
+     * @param arrtibuteRef - corresponding attribute to the current display form (specified in forDisplayForm)
+     * @param filters - attribute filters limiting the elements
+     */
+    withAttributeFilters(arrtibuteRef: ObjRef, filters: IElementQueryAttributeFilter[]): IElementQuery;
 
     /**
      * Allows to specify advanced options for the elements query.

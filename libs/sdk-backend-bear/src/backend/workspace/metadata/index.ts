@@ -24,7 +24,7 @@ import {
     SupportedMetadataObject,
     SupportedWrappedMetadataObject,
 } from "../../../convertors/fromBackend/MetaConverter";
-import { getObjectIdFromUri, objRefToUri } from "../../../utils/api";
+import { getObjectIdFromUri, objRefToUri, objRefsToUris } from "../../../utils/api";
 
 export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -203,5 +203,21 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
 
             return convertMetadataObjectXrefEntry("dataSet", usedBy.entries[0]);
         });
+    }
+
+    public async getCommonAttributes(attributesRefs: ObjRef[]): Promise<ObjRef[]> {
+        const inputAttributeUris = await objRefsToUris(attributesRefs, this.workspace, this.authCall);
+        const returnAttributeUris = await this.authCall((sdk) =>
+            sdk.ldm.getCommonAttributes(this.workspace, inputAttributeUris),
+        );
+        return returnAttributeUris.map(uriRef);
+    }
+
+    public async getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
+        return await Promise.all(
+            attributesRefsBatch.map(async (attributeRefs) => {
+                return this.getCommonAttributes(attributeRefs);
+            }),
+        );
     }
 }

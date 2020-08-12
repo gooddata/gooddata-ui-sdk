@@ -1,9 +1,12 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcExecuteAFM as AFM } from "../GdcExecuteAFM";
 
 export const expressionFilter: AFM.CompatibilityFilter = {
-    value: "MAQL",
+    expression: {
+        value: "MAQL",
+    },
 };
+
 export const relativeDateFilter: AFM.CompatibilityFilter = {
     relativeDateFilter: {
         dataSet: {

@@ -40,4 +40,22 @@ export interface IWorkspaceMetadata {
      * @returns promise of attribute metadata object
      */
     getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
+
+    /**
+     * Request list of attributes that are "center of star" for the input attributes in the data model
+     *
+     * @param attributeRefs - input list of attribute references
+     * @returns promise returning list of attribute references.
+     * It can be one of the input attributes or another attribute(s)
+     * that connects the input attributes in the data model.
+     */
+    getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
+
+    /**
+     * Request the "center of star" for multiple series of attributes.
+     *
+     * @param attributesRefsBatch - input batch of list of attribute references
+     * @returns promise returning batch of attribute references.
+     */
+    getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
 }

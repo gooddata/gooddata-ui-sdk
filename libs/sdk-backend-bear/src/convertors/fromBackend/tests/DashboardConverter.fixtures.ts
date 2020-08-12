@@ -29,6 +29,23 @@ export const filterContext: GdcFilterContext.IWrappedFilterContext = {
                         attributeElements: ["/test", "/test2"],
                         displayForm: "/displayForm",
                         negativeSelection: false,
+                        localIdentifier: "parent",
+                    },
+                },
+                {
+                    attributeFilter: {
+                        attributeElements: ["/test3", "/test4"],
+                        displayForm: "/displayForm34",
+                        negativeSelection: false,
+                        filterElementsBy: [
+                            {
+                                filterLocalIdentifier: "parent",
+                                over: {
+                                    attributes: ["attribute/uri"],
+                                },
+                            },
+                        ],
+                        localIdentifier: "child",
                     },
                 },
                 {

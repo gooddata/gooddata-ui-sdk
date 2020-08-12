@@ -4,12 +4,26 @@ import {
     IElementQuery,
     IElementQueryOptions,
     IElementQueryResult,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
+import {
+    IAttributeElement,
+    isAttributeElementsByRef,
+    isNegativeAttributeFilter,
+    isUriRef,
+    ObjRef,
+    filterAttributeElements,
+    filterObjRef,
+    isIdentifierRef,
+    Uri,
+    Identifier,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { objRefToUri, getObjectIdFromUri } from "../../../utils/api";
+import { IElementQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 
 export class BearWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -23,13 +37,15 @@ class BearWorkspaceElementsQuery implements IElementQuery {
     private limit: number | undefined;
     private offset: number | undefined;
     private options: IElementQueryOptions | undefined;
+    private attributeRef: ObjRef | undefined;
+    private attributeFilters: IElementQueryAttributeFilter[] | undefined;
 
     // cached value of objectId corresponding to identifier
     private objectId: string | undefined;
 
     constructor(
         private readonly authCall: BearAuthenticatedCallGuard,
-        private readonly ref: ObjRef,
+        private readonly displayFormRef: ObjRef,
         private readonly workspace: string,
     ) {}
 
@@ -46,6 +62,15 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         return this;
     }
 
+    public withAttributeFilters(
+        attributeRef: ObjRef,
+        filters: IElementQueryAttributeFilter[],
+    ): IElementQuery {
+        this.attributeRef = attributeRef;
+        this.attributeFilters = filters;
+        return this;
+    }
+
     public withOptions(options: IElementQueryOptions): IElementQuery {
         this.options = options;
         return this;
@@ -57,7 +82,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
 
     private async getObjectId(): Promise<string> {
         if (!this.objectId) {
-            const uri = await objRefToUri(this.ref, this.workspace, this.authCall);
+            const uri = await objRefToUri(this.displayFormRef, this.workspace, this.authCall);
             this.objectId = getObjectIdFromUri(uri);
         }
 
@@ -69,7 +94,11 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         limit: number | undefined,
         options: IElementQueryOptions | undefined,
     ): Promise<IElementQueryResult> {
-        const mergedOptions = { ...options, limit, offset };
+        let filtersAfm;
+        if (this.attributeRef && this.attributeFilters && this.attributeFilters.length !== 0) {
+            filtersAfm = await this.createAfmForAttributeFilters(this.attributeRef, this.attributeFilters);
+        }
+        const mergedOptions = { ...options, limit, offset, afm: filtersAfm };
         const objectId = await this.getObjectId();
         const data = await this.authCall((sdk) =>
             sdk.md.getValidElements(this.workspace, objectId, mergedOptions),
@@ -99,5 +128,102 @@ class BearWorkspaceElementsQuery implements IElementQuery {
                 ? () => this.queryWorker(offset + count, limit, options)
                 : () => Promise.resolve(emptyResult),
         };
+    }
+
+    private async createAfmForAttributeFilters(
+        attributeRef: ObjRef,
+        attributeFilters: IElementQueryAttributeFilter[],
+    ): Promise<GdcExecuteAFM.IAfm> {
+        const displayFormUri = await objRefToUri(this.displayFormRef, this.workspace, this.authCall);
+        return {
+            attributes: [{ localIdentifier: "a1", displayForm: { uri: displayFormUri } }],
+            filters: [
+                {
+                    expression: {
+                        value: await this.createFiltersExpressionFromAttributeFilters(
+                            attributeRef,
+                            attributeFilters,
+                        ),
+                    },
+                },
+            ],
+        };
+    }
+
+    private async createFiltersExpressionFromAttributeFilters(
+        attributeRef: ObjRef,
+        attributeFilters: IElementQueryAttributeFilter[],
+    ) {
+        interface IFiltersGroupedByUri {
+            [overAttributeUri: string]: IElementQueryAttributeFilter[];
+        }
+
+        const identifiersToUriPairs = await this.authCall((sdk) =>
+            sdk.md.getUrisFromIdentifiers(
+                this.workspace,
+                this.getAllIdentifiersUsedInAttributeFilters(attributeFilters),
+            ),
+        );
+
+        const getUriForIdentifier = (objRef: ObjRef): Uri => {
+            if (isUriRef(objRef)) {
+                return objRef.uri;
+            } else {
+                const foundUri = identifiersToUriPairs.find((pair) => pair.identifier === objRef.identifier);
+                if (foundUri === undefined) {
+                    throw new Error(`URI for identifier ${objRef.identifier} have not been found`);
+                }
+                return foundUri.uri;
+            }
+        };
+
+        const groupsByOverAttribute = attributeFilters.reduce<IFiltersGroupedByUri>((groups, filter) => {
+            const overAttributeUri = getUriForIdentifier(filter.overAttribute);
+            groups[overAttributeUri] = groups[overAttributeUri]
+                ? groups[overAttributeUri].concat(filter)
+                : [filter];
+            return groups;
+        }, {});
+
+        const attributeRefUri = await objRefToUri(attributeRef, this.workspace, this.authCall);
+
+        const expressionsByOverAttribute = Object.keys(groupsByOverAttribute).map((overAttribute) => {
+            const filterGroupExpression = groupsByOverAttribute[overAttribute]
+                .map((parentFilter) => {
+                    const isNegativeFilter = isNegativeAttributeFilter(parentFilter.attributeFilter);
+                    const filterElements = filterAttributeElements(parentFilter.attributeFilter);
+                    const filterDisplayForm = filterObjRef(parentFilter.attributeFilter);
+
+                    if (!isAttributeElementsByRef(filterElements)) {
+                        throw new NotSupported(
+                            "Only attribute elements by ref are supported in elements attribute filter",
+                        );
+                    }
+                    const parentFilterFisplayFormUri = getUriForIdentifier(filterDisplayForm);
+                    const elementsString = filterElements.uris
+                        .map((attributeElementUri) => `[${attributeElementUri}]`)
+                        .join(", ");
+                    const operatorString = isNegativeFilter ? "NOT IN" : "IN";
+                    return `[${parentFilterFisplayFormUri}] ${operatorString} (${elementsString})`;
+                })
+                .join(" AND ");
+
+            return `((${filterGroupExpression}) OVER [${overAttribute}] TO [${attributeRefUri}])`;
+        });
+
+        return expressionsByOverAttribute.join(" AND ");
+    }
+
+    private getAllIdentifiersUsedInAttributeFilters(attributeFilters: IElementQueryAttributeFilter[]) {
+        return attributeFilters.reduce<Identifier[]>((acc, filter) => {
+            if (isIdentifierRef(filter.overAttribute)) {
+                acc.push(filter.overAttribute.identifier);
+            }
+            const parentFilterObjRef = filterObjRef(filter.attributeFilter);
+            if (isIdentifierRef(parentFilterObjRef)) {
+                acc.push(parentFilterObjRef.identifier);
+            }
+            return acc;
+        }, []);
     }
 }
