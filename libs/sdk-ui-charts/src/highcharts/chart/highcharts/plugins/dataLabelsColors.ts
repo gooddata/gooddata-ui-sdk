@@ -18,6 +18,9 @@ const setBlackColor = (point: any) => {
     point.dataLabel.element.childNodes[0].style["text-shadow"] = "none";
 };
 
+const changeDataLabelsColor = (condition: boolean, point: any) =>
+    condition ? setWhiteColor(point) : setBlackColor(point);
+
 function getVisiblePointsWithLabel(chart: any) {
     return flatMap(getVisibleSeries(chart), (series: any) => series.points).filter(
         (point: any) => point.dataLabel && point.graphic,
@@ -51,6 +54,28 @@ function setBarDataLabelsColor(chart: any) {
     });
 }
 
+function setColumnDataLabelsColor(chart: any) {
+    const points = getVisiblePointsWithLabel(chart);
+
+    return points
+        .filter((point: any) => point.shapeArgs) // skip if shapeArgs missing (such as line points in line/column combo chart)
+        .forEach((point: any) => {
+            const labelDimensions = getDataLabelAttributes(point);
+            const columnDimensions = getShapeAttributes(point);
+            const columnTop = columnDimensions.y + columnDimensions.height;
+            const columnDown = columnDimensions.y;
+            const labelDown = labelDimensions.y;
+
+            if (point.negative) {
+                changeDataLabelsColor(labelDown < columnDown, point);
+            } else if (!isStacked(chart)) {
+                changeDataLabelsColor(labelDown > columnTop, point);
+            } else {
+                changeDataLabelsColor(labelDown < columnTop, point);
+            }
+        });
+}
+
 export function isWhiteNotContrastEnough(color: string): boolean {
     // to keep first 17 colors from our default palette with white labels
     const HIGHCHARTS_CONTRAST_THRESHOLD = 530;
@@ -79,9 +104,13 @@ export function extendDataLabelColors(Highcharts: any): void {
         const type: string = getChartType(chart);
 
         const changeLabelColor = () => {
-            if (type === VisualizationTypes.BAR && !isStacked(chart)) {
+            if (type === VisualizationTypes.BAR) {
                 setTimeout(() => {
                     setBarDataLabelsColor(chart);
+                }, 500);
+            } else if (isOneOfTypes(type, [VisualizationTypes.COLUMN, VisualizationTypes.PIE])) {
+                setTimeout(() => {
+                    setColumnDataLabelsColor(chart);
                 }, 500);
             } else if (isOneOfTypes(type, [VisualizationTypes.HEATMAP, VisualizationTypes.TREEMAP])) {
                 setContrastLabelsColor(chart);
