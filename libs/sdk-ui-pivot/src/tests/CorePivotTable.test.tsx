@@ -319,7 +319,7 @@ describe("CorePivotTable", () => {
     });
 
     describe("getAvailableDrillTargets", () => {
-        it("should return attributes and measures for pivot table", () => {
+        it("should return attributes (row only) and measures for pivot table", () => {
             const table = getTableInstance();
             const fixture = recordedDataFacade(
                 ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
@@ -327,7 +327,7 @@ describe("CorePivotTable", () => {
             );
             const targets = table.getAvailableDrillTargets(fixture);
             expect(targets.measures.length).toEqual(1);
-            expect(targets.attributes.length).toEqual(2);
+            expect(targets.attributes.length).toEqual(1);
         });
     });
 

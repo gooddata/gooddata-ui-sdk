@@ -51,7 +51,6 @@ export interface IAvailableDrillTargetMeasure {
 }
 
 export interface IAvailableDrillTargetAttribute {
-    dimension: number;
     attribute: IAttributeDescriptor;
 }
 
