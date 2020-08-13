@@ -9,6 +9,8 @@ import {
     IDashboardAttributeFilterReference,
 } from "@gooddata/sdk-backend-spi";
 import { convertVisualizationWidgetDrill, convertKpiDrill } from "./drills";
+import { convertReferencesToUris } from "../ReferenceConverter";
+import { deserializeProperties } from "../PropertiesConverter";
 
 export const convertFilterReference = (
     filterReference:
@@ -36,10 +38,15 @@ export const convertVisualizationWidget = (
 ): IWidget => {
     const {
         visualizationWidget: {
-            content: { visualization, ignoreDashboardFilters, dateDataSet, drills },
+            content: { visualization, ignoreDashboardFilters, dateDataSet, drills, references, properties },
             meta: { identifier, uri, title, summary },
         },
     } = visualizationWidget;
+
+    const { properties: convertedProperties } = convertReferencesToUris({
+        properties: deserializeProperties(properties),
+        references: references || {},
+    });
 
     const convertedWidget: IWidget = {
         type: "insight",
@@ -54,6 +61,7 @@ export const convertVisualizationWidget = (
             ? ignoreDashboardFilters.map(convertFilterReference)
             : [],
         drills: drills ? drills.map(convertVisualizationWidgetDrill) : [],
+        properties: convertedProperties,
     };
 
     return convertedWidget;

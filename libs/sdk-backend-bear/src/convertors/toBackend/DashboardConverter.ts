@@ -59,6 +59,9 @@ import {
 } from "@gooddata/api-model-bear";
 import { ObjRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
+import { omitBy, isEmpty } from "lodash";
+import { serializeProperties } from "../fromBackend/PropertiesConverter";
 
 const refToUri = (ref: ObjRef) => {
     if (isUriRef(ref)) {
@@ -308,7 +311,17 @@ export function convertDrill(
 export const convertWidget = (
     widget: IWidget | IWidgetDefinition,
 ): GdcVisualizationWidget.IWrappedVisualizationWidget | GdcKpi.IWrappedKPI => {
-    const { type, insight, kpi, ignoreDashboardFilters, dateDataSet, title, description, drills } = widget;
+    const {
+        type,
+        insight,
+        kpi,
+        ignoreDashboardFilters,
+        dateDataSet,
+        title,
+        description,
+        drills,
+        properties: widgetProperties = {},
+    } = widget;
     const meta = {
         ...(isWidget(widget)
             ? {
@@ -349,6 +362,13 @@ export const convertWidget = (
         return kpiWidget;
     }
 
+    const { properties, references } = convertUrisToReferences({
+        properties: widgetProperties,
+        references: {},
+    });
+
+    const nonEmptyProperties = omitBy(properties, (value, key) => key !== "controls" && isEmpty(value));
+
     const visualizationWidget: GdcVisualizationWidget.IWrappedVisualizationWidget = {
         visualizationWidget: {
             content: {
@@ -358,6 +378,10 @@ export const convertWidget = (
                 drills: drills
                     ? (drills as Array<IDrillToDashboard | IDrillToInsight>).map(convertDrill)
                     : [],
+                ...(!isEmpty(nonEmptyProperties) && {
+                    properties: serializeProperties(nonEmptyProperties),
+                }),
+                ...(!isEmpty(references) && { references }),
             },
             meta,
         },

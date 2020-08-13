@@ -21,6 +21,9 @@ export const BackendToBearConvertors: {
     convertVisualizationWidgetDrill: (drill: import("@gooddata/api-model-bear").GdcVisualizationWidget.IDrillDefinition) => import("@gooddata/sdk-backend-spi").DrillDefinition;
     convertScheduledMail: (scheduledMail: import("@gooddata/api-model-bear").GdcScheduledMail.IWrappedScheduledMail) => import("@gooddata/sdk-backend-spi").IScheduledMailDefinition | import("@gooddata/sdk-backend-spi").IScheduledMail;
     convertDashboardDateFilterConfig: (dateFilterConfig: import("@gooddata/api-model-bear").GdcDashboard.IDashboardDateFilterConfig) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig;
+    convertUrisToReferences: import("./convertors/fromBackend/ReferenceConverter").ReferenceConverter;
+    serializeProperties: (properties: import("@gooddata/sdk-model").VisualizationProperties) => string;
+    deserializeProperties: (properties: string | undefined) => import("@gooddata/sdk-model").VisualizationProperties;
 };
 
 // @public
