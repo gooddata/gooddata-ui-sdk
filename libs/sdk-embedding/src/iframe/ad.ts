@@ -176,6 +176,11 @@ export namespace EmbeddedAnalyticalDesigner {
          * Type represent that the remove filter context action is finished
          */
         RemoveFilterContextFinished = "removeFilterContextFinished",
+
+        /**
+         * Type notify KD that the insight editing has been cancelled
+         */
+        InsightEditingCancelled = "insightEditingCancelled",
     }
 
     /**
