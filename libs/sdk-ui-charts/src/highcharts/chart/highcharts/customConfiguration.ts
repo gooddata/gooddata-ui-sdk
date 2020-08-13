@@ -113,8 +113,12 @@ export function formatOverlappingForParentAttribute(category: any): string {
         return formatOverlapping.call(this);
     }
 
-    const chartHeight = get(this, "axis.chart.chartHeight", 1);
     const categoriesCount = get(this, "axis.categoriesTree", []).length;
+    if (categoriesCount === 1) {
+        // Let the width be auto to make sure "this.value" is displayed on screen
+        return `<div style="overflow: hidden; text-overflow: ellipsis">${this.value}</div>`;
+    }
+    const chartHeight = get(this, "axis.chart.chartHeight", 1);
     const width = Math.floor(chartHeight / categoriesCount);
     const pixelOffset = 40; // parent attribute should have more space than its children
 
@@ -124,8 +128,12 @@ export function formatOverlappingForParentAttribute(category: any): string {
 }
 
 export function formatOverlapping(): string {
-    const chartHeight = get(this, "chart.chartHeight", 1);
     const categoriesCount = get(this, "axis.categories", []).length;
+    if (categoriesCount === 1) {
+        // Let the width be auto to make sure "this.value" is displayed on screen
+        return `<div align="center" style="overflow: hidden; text-overflow: ellipsis">${this.value}</div>`;
+    }
+    const chartHeight = get(this, "chart.chartHeight", 1);
     const width = Math.floor(chartHeight / categoriesCount);
     const pixelOffset = 20;
 
