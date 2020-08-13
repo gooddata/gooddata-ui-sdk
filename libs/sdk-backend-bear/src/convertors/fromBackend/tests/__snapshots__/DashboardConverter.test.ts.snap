@@ -147,6 +147,7 @@ Object {
                   "insight": Object {
                     "uri": "/gdc/md/obj/visualizationHeadline",
                   },
+                  "properties": Object {},
                   "ref": Object {
                     "uri": "/gdc/md/obj/visualizationWidgetHeadline",
                   },
@@ -186,6 +187,7 @@ Object {
                   "insight": Object {
                     "uri": "/gdc/md/obj/visualizationBarChart",
                   },
+                  "properties": Object {},
                   "ref": Object {
                     "uri": "/gdc/md/obj/visualizationWidgetBarChart",
                   },
@@ -288,6 +290,7 @@ Object {
                   "insight": Object {
                     "uri": "/gdc/md/obj/visualizationBarChart",
                   },
+                  "properties": Object {},
                   "ref": Object {
                     "uri": "/gdc/md/obj/visualizationWidgetBarChart",
                   },
@@ -371,6 +374,7 @@ Object {
                   "insight": Object {
                     "uri": "/gdc/md/obj/visualizationHeadline",
                   },
+                  "properties": Object {},
                   "ref": Object {
                     "uri": "/gdc/md/obj/visualizationWidgetHeadline",
                   },

@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { ObjRef, isObjRef, ObjectType, CatalogItem } from "@gooddata/sdk-model";
+import { ObjRef, isObjRef, ObjectType, CatalogItem, VisualizationProperties } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { IDashboardFilterReference } from "./filterContext";
 import { DrillDefinition } from "./drills";
@@ -57,6 +57,16 @@ export interface IWidgetBase {
      * Widget drills
      */
     readonly drills: DrillDefinition[];
+
+    /**
+     * Overrides for visualization-specific properties.
+     * Insight rendered in context of this widget
+     * will use these properties instead of its own.
+     *
+     * This is now only supported for the PivotTable.
+     *
+     */
+    readonly properties?: VisualizationProperties;
 }
 
 /**

@@ -50,7 +50,12 @@ export const BearToBackendConvertors = {
 };
 
 import { convertVisualization } from "./convertors/fromBackend/VisualizationConverter";
-import { convertReferencesToUris } from "./convertors/fromBackend/ReferenceConverter";
+import {
+    convertReferencesToUris,
+    convertUrisToReferences,
+} from "./convertors/fromBackend/ReferenceConverter";
+import { serializeProperties, deserializeProperties } from "./convertors/fromBackend/PropertiesConverter";
+
 import {
     convertFilterContext,
     convertFilterContextItem,
@@ -79,4 +84,7 @@ export const BackendToBearConvertors = {
     convertVisualizationWidgetDrill,
     convertScheduledMail: convertScheduledMailFromBackend,
     convertDashboardDateFilterConfig,
+    convertUrisToReferences,
+    serializeProperties,
+    deserializeProperties,
 };

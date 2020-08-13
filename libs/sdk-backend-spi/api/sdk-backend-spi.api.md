@@ -35,6 +35,7 @@ import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
+import { VisualizationProperties } from '@gooddata/sdk-model';
 import { WorkspacePermission } from '@gooddata/sdk-model';
 
 // @alpha
@@ -987,6 +988,7 @@ export interface IWidgetBase {
     readonly ignoreDashboardFilters: IDashboardFilterReference[];
     readonly insight?: ObjRef;
     readonly kpi?: ILegacyKpi;
+    readonly properties?: VisualizationProperties;
     readonly title: string;
     readonly type: WidgetType;
 }
