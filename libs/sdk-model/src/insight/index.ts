@@ -10,8 +10,8 @@ import {
     BucketItemModifications,
 } from "../execution/buckets";
 import { IFilter } from "../execution/filter";
-import { IMeasure, measureLocalId } from "../execution/measure";
-import { attributeLocalId, IAttribute } from "../execution/attribute";
+import { IMeasure, measureLocalId, MeasurePredicate, anyMeasure } from "../execution/measure";
+import { attributeLocalId, IAttribute, AttributePredicate, anyAttribute } from "../execution/attribute";
 import { ITotal } from "../execution/base/totals";
 import {
     bucketsAttributes,
@@ -271,13 +271,17 @@ export function insightItems(insight: IInsightDefinition): IAttributeOrMeasure[]
  * Gets all measures used in the provided insight.
  *
  * @param insight - insight to work with
+ * @param measurePredicate - predicate to select measures satisfying some conditions
  * @returns empty if none
  * @public
  */
-export function insightMeasures(insight: IInsightDefinition): IMeasure[] {
+export function insightMeasures(
+    insight: IInsightDefinition,
+    measurePredicate: MeasurePredicate = anyMeasure,
+): IMeasure[] {
     invariant(insight, "insight must be specified");
 
-    return bucketsMeasures(insight.insight.buckets);
+    return bucketsMeasures(insight.insight.buckets, measurePredicate);
 }
 
 /**
@@ -297,13 +301,17 @@ export function insightHasMeasures(insight: IInsightDefinition): boolean {
  * Gets all attributes used in the provided insight
  *
  * @param insight - insight to work with
+ * @param attributePredicate - predicate to select attributes satisfying some conditions
  * @returns empty if none
  * @public
  */
-export function insightAttributes(insight: IInsightDefinition): IAttribute[] {
+export function insightAttributes(
+    insight: IInsightDefinition,
+    attributePredicate: AttributePredicate = anyAttribute,
+): IAttribute[] {
     invariant(insight, "insight must be specified");
 
-    return bucketsAttributes(insight.insight.buckets);
+    return bucketsAttributes(insight.insight.buckets, attributePredicate);
 }
 
 /**

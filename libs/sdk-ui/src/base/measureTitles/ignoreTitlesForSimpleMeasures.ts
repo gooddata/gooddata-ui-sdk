@@ -7,6 +7,9 @@ import {
     isAdhocMeasure,
     modifyMeasure,
     insightModifyItems,
+    isDateFilter,
+    insightMeasures,
+    measureFilters,
 } from "@gooddata/sdk-model";
 
 /**
@@ -22,6 +25,15 @@ import {
  * @internal
  */
 export function ignoreTitlesForSimpleMeasures<T extends IInsightDefinition>(insight: T): T {
+    const measuresWithDateFilter = insightMeasures(
+        insight,
+        (measure: IMeasure): boolean => measureFilters(measure)?.some(isDateFilter) ?? false,
+    );
+    if (measuresWithDateFilter.length > 0) {
+        // If the insight contains a measure with a date filter, all other measures are considered adhoc measures
+        // and their titles should be left intact.
+        return insight;
+    }
     return insightModifyItems(
         insight,
         (bucketItem: IAttributeOrMeasure): IAttributeOrMeasure => {

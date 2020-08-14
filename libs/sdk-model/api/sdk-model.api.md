@@ -842,7 +842,7 @@ export interface INegativeAttributeFilter {
 }
 
 // @public
-export function insightAttributes(insight: IInsightDefinition): IAttribute[];
+export function insightAttributes(insight: IInsightDefinition, attributePredicate?: AttributePredicate): IAttribute[];
 
 // @public
 export function insightBucket(insight: IInsightDefinition, idOrFun?: string | BucketPredicate): IBucket | undefined;
@@ -892,7 +892,7 @@ export function insightIsLocked(insight: IInsight): boolean;
 export function insightItems(insight: IInsightDefinition): IAttributeOrMeasure[];
 
 // @public
-export function insightMeasures(insight: IInsightDefinition): IMeasure[];
+export function insightMeasures(insight: IInsightDefinition, measurePredicate?: MeasurePredicate): IMeasure[];
 
 // @internal (undocumented)
 export type InsightModifications = (builder: InsightDefinitionBuilder) => InsightDefinitionBuilder;

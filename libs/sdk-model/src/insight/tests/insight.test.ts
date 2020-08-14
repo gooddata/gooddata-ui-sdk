@@ -13,9 +13,9 @@ import {
 } from "../..";
 import { newInsight } from "../../../__mocks__/insights";
 import { Account, Activity, Velocity, Won } from "../../../__mocks__/model";
-import { IAttribute } from "../../execution/attribute";
+import { IAttribute, AttributePredicate } from "../../execution/attribute";
 import { IBucket, newBucket, BucketItemModifications } from "../../execution/buckets";
-import { IMeasure, isMeasure } from "../../execution/measure";
+import { IMeasure, isMeasure, MeasurePredicate } from "../../execution/measure";
 import {
     insightAttributes,
     insightBucket,
@@ -127,6 +127,7 @@ describe("insightMeasures", () => {
             [Velocity.Sum, Velocity.Min, Won],
         ],
     ];
+    const measurePredicate: MeasurePredicate = (measure: IMeasure): boolean => measure === Velocity.Min;
 
     it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
         expect(insightMeasures(insightArg)).toEqual(expectedResult);
@@ -134,6 +135,10 @@ describe("insightMeasures", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightMeasures(input)).toThrow();
+    });
+
+    it("should return an array containing only one measure Velocity.Min", () => {
+        expect(insightMeasures(InsightWithThreeBuckets, measurePredicate)).toEqual([Velocity.Min]);
     });
 });
 
@@ -164,6 +169,8 @@ describe("insightAttributes", () => {
             [Activity.Subject, Account.Name],
         ],
     ];
+    const attributePredicate: AttributePredicate = (attribute: IAttribute): boolean =>
+        attribute === Account.Name;
 
     it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
         expect(insightAttributes(insightArg)).toEqual(expectedResult);
@@ -171,6 +178,10 @@ describe("insightAttributes", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightAttributes(input)).toThrow();
+    });
+
+    it("should return an array containing only one attribute Account.Name", () => {
+        expect(insightAttributes(InsightWithThreeBuckets, attributePredicate)).toEqual([Account.Name]);
     });
 });
 
