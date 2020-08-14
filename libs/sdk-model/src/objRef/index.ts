@@ -42,7 +42,8 @@ export type ObjectType =
     | "dataSet"
     | "tag"
     | "insight"
-    | "variable";
+    | "variable"
+    | "analyticalDashboard";
 
 /**
  * Model object reference using object's unique identifier.

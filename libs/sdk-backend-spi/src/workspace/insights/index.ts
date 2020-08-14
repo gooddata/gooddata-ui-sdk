@@ -84,6 +84,13 @@ export interface IWorkspaceInsights {
         insight: IInsight,
         types?: SupportedInsightReferenceTypes[],
     ): Promise<IInsightReferences>;
+
+    /**
+     * Get all metadata objects which uses specified object(ie. object is used by these objects) by a given reference.
+     *
+     * @param ref - ref of the insight to get referencing objects for
+     */
+    getObjectsReferencing(ref: ObjRef): Promise<IInsightReferencing>;
 }
 
 /**
@@ -115,6 +122,19 @@ export interface IInsightReferences {
      * If requested, metadata about data sets from which this insight queries data will be returned here.
      */
     dataSetMeta?: IMetadataObject[];
+}
+
+/**
+ * Contains information about objects that may be referencing an insight. The contents of this object
+ * depend on reference of the insight requested at the time of call to getObjectsReferencing.
+ *
+ * @public
+ */
+export interface IInsightReferencing {
+    /**
+     * If requested, metadata about analytical dashboards from which this insight queries data will be returned here.
+     */
+    analyticalDashboards?: IMetadataObject[];
 }
 
 /**

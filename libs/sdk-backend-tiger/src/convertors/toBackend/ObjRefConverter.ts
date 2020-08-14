@@ -7,7 +7,7 @@ import ObjQualifier = ExecuteAFM.ObjQualifier;
 import ILocalIdentifierQualifier = ExecuteAFM.ILocalIdentifierQualifier;
 import { TigerAfmType } from "../../types";
 
-type AfmObjectType = Exclude<ObjectType, "tag" | "insight">;
+type AfmObjectType = Exclude<ObjectType, "tag" | "insight" | "analyticalDashboard">;
 
 const allValidAfmTypes: AfmObjectType[] = ["measure", "displayForm", "fact", "dataSet", "attribute"];
 

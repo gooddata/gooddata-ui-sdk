@@ -55,6 +55,7 @@ export {
     IInsightQueryOptions,
     IInsightQueryResult,
     IInsightReferences,
+    IInsightReferencing,
     InsightReferenceTypes,
     SupportedInsightReferenceTypes,
 } from "./workspace/insights";
