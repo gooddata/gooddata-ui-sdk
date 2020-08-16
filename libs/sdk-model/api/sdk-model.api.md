@@ -86,6 +86,12 @@ export type AttributeInBucket = {
 export function attributeLocalId(attributeOrId: IAttribute | Identifier): string;
 
 // @public
+export function attributeLocatorElement(locator: IAttributeLocatorItem): Identifier;
+
+// @public
+export function attributeLocatorIdentifier(locator: IAttributeLocatorItem): Identifier;
+
+// @public
 export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject = IAttributeMetadataObject> extends MetadataObjectBuilder<T> {
     // (undocumented)
     displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
@@ -1326,6 +1332,9 @@ export function measureItem(measure: IMeasure): ObjRef | undefined;
 export function measureLocalId(measureOrLocalId: MeasureOrLocalId): string;
 
 // @public
+export function measureLocatorIdentifier(locator: IMeasureLocatorItem): Identifier;
+
+// @public
 export function measureMasterIdentifier(measure: IMeasure<IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition>): string;
 
 // @public
@@ -1588,6 +1597,9 @@ export type SortEntityIds = {
 
 // @public
 export function sortEntityIds(sort: ISortItem): SortEntityIds;
+
+// @public
+export function sortMeasureLocators(sort: IMeasureSortItem): ILocatorItem[];
 
 // @public
 export function totalIsNative(total: ITotal): boolean;
