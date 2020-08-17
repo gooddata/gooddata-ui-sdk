@@ -12,7 +12,7 @@
   {
     "definitionName": "lockStepVersion",
     "policyName": "sdk",
-    "version": "8.0.0-beta.39",
+    "version": "8.0.0-beta.40",
     "nextBump": "prerelease"
   }
   // {
