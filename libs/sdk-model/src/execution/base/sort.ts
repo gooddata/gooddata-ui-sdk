@@ -206,6 +206,51 @@ export function sortEntityIds(sort: ISortItem): SortEntityIds {
 }
 
 /**
+ * Given a measure sort item, return the locators which identify the measure (possibly scoped for particular
+ * attribute element).
+ *
+ * @param sort - measure sort items
+ * @returns measure sort locators
+ * @public
+ */
+export function sortMeasureLocators(sort: IMeasureSortItem): ILocatorItem[] {
+    return sort.measureSortItem.locators;
+}
+
+/**
+ * Given attribute locator, return the localId of attribute that it references.
+ *
+ * @param locator - attribute locator
+ * @returns attribute localId
+ * @public
+ */
+export function attributeLocatorIdentifier(locator: IAttributeLocatorItem): Identifier {
+    return locator.attributeLocatorItem.attributeIdentifier;
+}
+
+/**
+ * Given attribute locator, return the element that it references.
+ *
+ * @param locator - attribute locator
+ * @returns attribute element
+ * @public
+ */
+export function attributeLocatorElement(locator: IAttributeLocatorItem): Identifier {
+    return locator.attributeLocatorItem.element;
+}
+
+/**
+ * Given measure locator, return the localId of measure that it references.
+ *
+ * @param locator - measure locator
+ * @returns measure localId
+ * @public
+ */
+export function measureLocatorIdentifier(locator: IMeasureLocatorItem): Identifier {
+    return locator.measureLocatorItem.measureIdentifier;
+}
+
+/**
  * Creates a new attribute sort - sorting the result by values of the provided attribute's elements. The attribute
  * can be either specified by value or by reference using its local identifier.
  *

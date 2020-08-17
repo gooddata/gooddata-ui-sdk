@@ -27,6 +27,7 @@ export class AgGridDatasource implements IDatasource {
     public rowCount: number | undefined;
     private destroyed: boolean = false;
     private currentResult: IExecutionResult;
+    private currentSorts: ISortItem[];
     private grouping: IGroupingProvider;
 
     constructor(
@@ -36,6 +37,7 @@ export class AgGridDatasource implements IDatasource {
         private readonly intl: IntlShape,
     ) {
         this.currentResult = initialDv.result();
+        this.currentSorts = initialDv.meta().effectiveSortItems();
 
         this.resetGroupingProvider();
     }
@@ -119,8 +121,10 @@ export class AgGridDatasource implements IDatasource {
                 newResult
                     .readWindow([startRow, 0], [endRow - startRow, undefined])
                     .then((data) => {
+                        const dv = DataViewFacade.for(data);
                         this.gridApiProvider().setInfiniteRowCount(data.totalCount[0]);
-                        this.processData(DataViewFacade.for(data), params);
+                        this.currentSorts = dv.meta().effectiveSortItems();
+                        this.processData(dv, params);
                     })
                     .catch((err) => {
                         // eslint-disable-next-line no-console
@@ -157,12 +161,11 @@ export class AgGridDatasource implements IDatasource {
 
         const result = this.currentResult;
         const definition = result.definition;
-        const currentSorts = definition.sortBy;
         const desiredSorts = getSortsFromModel(sortModel, result);
         const currentTotals = defTotals(definition, 0);
         const desiredTotals = this.config.getColumnTotals();
 
-        if (!isEqual(currentSorts, desiredSorts) || !isEqual(currentTotals, desiredTotals)) {
+        if (!isEqual(this.currentSorts, desiredSorts) || !isEqual(currentTotals, desiredTotals)) {
             this.transformResult(params, desiredSorts, desiredTotals);
         } else if (!startRow && result.definition === this.initialDv.definition) {
             /*

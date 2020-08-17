@@ -85,6 +85,10 @@ export {
     newAttributeLocator,
     SortEntityIds,
     sortEntityIds,
+    sortMeasureLocators,
+    attributeLocatorElement,
+    attributeLocatorIdentifier,
+    measureLocatorIdentifier,
 } from "./execution/base/sort";
 
 export {

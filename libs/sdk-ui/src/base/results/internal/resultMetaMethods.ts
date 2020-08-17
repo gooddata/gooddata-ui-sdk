@@ -13,7 +13,20 @@ import {
     isMeasureGroupDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
-import { idMatchMeasure, IMeasure, isPoPMeasure, isPreviousPeriodMeasure } from "@gooddata/sdk-model";
+import {
+    attributeLocatorElement,
+    attributeLocatorIdentifier,
+    IAttributeLocatorItem,
+    idMatchMeasure,
+    IMeasure,
+    IMeasureSortItem,
+    isAttributeLocator,
+    isAttributeSort,
+    ISortItem,
+    isPoPMeasure,
+    isPreviousPeriodMeasure,
+    sortMeasureLocators,
+} from "@gooddata/sdk-model";
 
 /**
  * Methods to access result metadata - dimension descriptors and result headers.
@@ -93,6 +106,18 @@ export interface IResultMetaMethods {
      *  period; false otherwise.
      */
     isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean;
+
+    /**
+     * Returns only those sort items from the result's definition which are actually applied on the result.
+     *
+     * The execution definition may contain sorts for measures scoped for particular attribute elements - it may
+     * however happen that at the same time the execution definition contains filters that will remove the
+     * attribute elements in question.
+     *
+     * This method inspects sorts in the definition, metadata and headers in the results and returns only those items
+     * which actually match them.
+     */
+    effectiveSortItems(): ISortItem[];
 }
 
 //
@@ -103,21 +128,29 @@ type MeasureGroupHeaderIndex = {
     [id: string]: IMeasureDescriptor;
 };
 
-function findMeasureGroupHeader(dataView: IDataView): IMeasureGroupDescriptor | undefined {
-    for (const dim of dataView.result.dimensions) {
-        const measureGroupHeader = dim.headers.find(isMeasureGroupDescriptor);
+type MeasureGroupHeaderWithIdx = {
+    dimIdx?: number;
+    measureGroup?: IMeasureGroupDescriptor;
+};
 
-        if (measureGroupHeader) {
-            return measureGroupHeader;
+function findMeasureGroupHeader(dataView: IDataView): MeasureGroupHeaderWithIdx {
+    for (let dimIdx = 0; dimIdx < dataView.result.dimensions.length; dimIdx++) {
+        const dim = dataView.result.dimensions[dimIdx];
+        const measureGroup = dim.headers.find(isMeasureGroupDescriptor);
+
+        if (measureGroup) {
+            return {
+                dimIdx,
+                measureGroup,
+            };
         }
     }
 
-    return undefined;
+    return {};
 }
 
 function buildMeasureHeaderIndex(measureGroup: IMeasureGroupDescriptor | undefined): MeasureGroupHeaderIndex {
-    const items =
-        measureGroup && measureGroup.measureGroupHeader.items ? measureGroup.measureGroupHeader.items : [];
+    const items = measureGroup?.measureGroupHeader?.items ?? [];
 
     return items.reduce((acc: MeasureGroupHeaderIndex, val) => {
         const id = val.measureHeaderItem.localIdentifier;
@@ -129,6 +162,11 @@ function buildMeasureHeaderIndex(measureGroup: IMeasureGroupDescriptor | undefin
 
 class ResultMetaMethods implements IResultMetaMethods {
     /*
+     * Derived property; index of dimension that contains measure group; undefined if no measure group
+     */
+    private readonly _measureGroupHeaderIdx: number | undefined;
+
+    /*
      * Derived property; measure group header found in dimensions
      */
     private readonly _measureGroupHeader: IMeasureGroupDescriptor | undefined;
@@ -138,7 +176,10 @@ class ResultMetaMethods implements IResultMetaMethods {
     private readonly _measureDescriptorByLocalId: MeasureGroupHeaderIndex;
 
     constructor(private readonly dataView: IDataView) {
-        this._measureGroupHeader = findMeasureGroupHeader(dataView);
+        const { dimIdx, measureGroup } = findMeasureGroupHeader(dataView);
+
+        this._measureGroupHeaderIdx = dimIdx;
+        this._measureGroupHeader = measureGroup;
         this._measureDescriptorByLocalId = buildMeasureHeaderIndex(this._measureGroupHeader);
     }
 
@@ -202,6 +243,73 @@ class ResultMetaMethods implements IResultMetaMethods {
 
             return isPoPMeasure(measure) || isPreviousPeriodMeasure(measure);
         });
+    }
+
+    /**
+     * Matches attribute locator against the descriptors and headers in the data view. The attribute is expected
+     * to be located in the same dimension as the measure group. The element specified in the locator must be
+     * found within the respective attribute's headers.
+     *
+     * @param locator - locator to match
+     */
+    private matchAttributeLocator = (locator: IAttributeLocatorItem): boolean => {
+        if (this._measureGroupHeaderIdx === undefined) {
+            return false;
+        }
+
+        const attributeId = attributeLocatorIdentifier(locator);
+        const attributeIdx = this.dimensionItemDescriptors(this._measureGroupHeaderIdx).findIndex(
+            (descriptor) => {
+                return (
+                    isAttributeDescriptor(descriptor) &&
+                    descriptor.attributeHeader.localIdentifier === attributeId
+                );
+            },
+        );
+
+        if (attributeIdx === -1) {
+            return false;
+        }
+
+        const headers = this.allHeaders()[this._measureGroupHeaderIdx][attributeIdx];
+        const attributeElement = attributeLocatorElement(locator);
+
+        return (
+            headers.find(
+                (header) =>
+                    isResultAttributeHeader(header) && header.attributeHeaderItem.uri === attributeElement,
+            ) !== undefined
+        );
+    };
+
+    private matchMeasureSortItem = (sortItem: IMeasureSortItem): boolean => {
+        if (!this._measureGroupHeader) {
+            /*
+             * Measure sort exists but there are no measures in the result. This is unlike as
+             * at latest the backend would bomb that the sort references invalid measure.
+             */
+            return false;
+        }
+
+        return sortMeasureLocators(sortItem).every((locator) => {
+            if (isAttributeLocator(locator)) {
+                return this.matchAttributeLocator(locator);
+            } else {
+                return this._measureDescriptorByLocalId[locator.measureLocatorItem.measureIdentifier];
+            }
+        });
+    };
+
+    private matchSortItem = (sortItem: ISortItem): boolean => {
+        if (isAttributeSort(sortItem)) {
+            return true;
+        }
+
+        return this.matchMeasureSortItem(sortItem);
+    };
+
+    public effectiveSortItems(): ISortItem[] {
+        return this.dataView.definition.sortBy.filter(this.matchSortItem);
     }
 }
 
