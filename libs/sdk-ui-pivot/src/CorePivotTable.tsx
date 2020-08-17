@@ -181,20 +181,20 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private unmounted: boolean = false;
 
-    private gridApi: GridApi = null;
-    private columnApi: ColumnApi = null;
-    private gridOptions: ICustomGridOptions = null;
-    private tableHeaders: TableHeaders = null;
-    private agGridDataSource: AgGridDatasource = null;
+    private gridApi: GridApi | null = null;
+    private columnApi: ColumnApi | null = null;
+    private gridOptions: ICustomGridOptions | null = null;
+    private tableHeaders: TableHeaders | null = null;
+    private agGridDataSource: AgGridDatasource | null = null;
 
-    private currentResult: IExecutionResult = null;
-    private visibleData: DataViewFacade = null;
-    private currentFingerprint: string = null;
+    private currentResult: IExecutionResult | null = null;
+    private visibleData: DataViewFacade | null = null;
+    private currentFingerprint: string | null = null;
 
     /**
      * Fingerprint of the last execution definition the initialize was called with.
      */
-    private lastInitRequestFingerprint: string = null;
+    private lastInitRequestFingerprint: string | null = null;
 
     private lastScrollPosition: IScrollPosition = {
         top: 0,
@@ -529,7 +529,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private applyColumnSizes(columnWidths: ColumnWidthItem[]) {
-        if (!this.columnApi) {
+        if (!this.columnApi || !this.visibleData) {
             return;
         }
 
