@@ -18,6 +18,7 @@ import omit from "lodash/omit";
 import flatMap from "lodash/fp/flatMap";
 import filter from "lodash/fp/filter";
 import flow from "lodash/fp/flow";
+import uniqBy from "lodash/fp/uniqBy";
 import {
     IExportFunction,
     ILoadingState,
@@ -194,6 +195,10 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         }
 
         private getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
+            const attributes = uniqBy(
+                (attributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier,
+                dv.meta().attributeDescriptors(),
+            );
             return {
                 measures: dv
                     .meta()
@@ -201,7 +206,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     .map(
                         (measure: IMeasureDescriptor): IAvailableDrillTargetMeasure => ({
                             measure,
-                            attributes: dv.meta().attributeDescriptors(),
+                            attributes,
                         }),
                     ),
             };
@@ -213,6 +218,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             const attributeDescriptors: IAttributeDescriptor[] = flow(
                 flatMap((dimensionDescriptor: IDimensionDescriptor) => dimensionDescriptor.headers),
                 filter(isAttributeDescriptor),
+                uniqBy((attributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier),
             )(executionResult.dimensions);
 
             const measureDescriptors: IMeasureDescriptor[] = flow(
