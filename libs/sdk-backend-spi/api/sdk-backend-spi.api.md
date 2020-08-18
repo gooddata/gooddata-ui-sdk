@@ -588,6 +588,11 @@ export interface IInsightReferences {
     dataSetMeta?: IMetadataObject[];
 }
 
+// @public
+export interface IInsightReferencing {
+    analyticalDashboards?: IMetadataObject[];
+}
+
 // @alpha
 export interface ILayoutWidget {
     widget: IWidget;
@@ -1122,6 +1127,7 @@ export interface IWorkspaceInsights {
     deleteInsight(ref: ObjRef): Promise<void>;
     getInsight(ref: ObjRef): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
+    getObjectsReferencing(ref: ObjRef): Promise<IInsightReferencing>;
     getReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(): Promise<IVisualizationClass[]>;

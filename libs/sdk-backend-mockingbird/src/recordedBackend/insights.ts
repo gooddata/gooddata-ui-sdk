@@ -6,6 +6,7 @@ import {
     IInsightReferences,
     InsightOrdering,
     IWorkspaceInsights,
+    IInsightReferencing,
     SupportedInsightReferenceTypes,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
@@ -131,6 +132,10 @@ export class RecordedInsights implements IWorkspaceInsights {
         _insight: IInsight,
         _types?: SupportedInsightReferenceTypes[],
     ): Promise<IInsightReferences> => {
+        return {};
+    };
+
+    public getObjectsReferencing = async (_ref: ObjRef): Promise<IInsightReferencing> => {
         return {};
     };
 

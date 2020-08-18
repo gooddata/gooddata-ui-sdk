@@ -3,6 +3,7 @@ import {
     IInsightQueryOptions,
     IInsightQueryResult,
     IInsightReferences,
+    IInsightReferencing,
     IWorkspaceInsights,
     SupportedInsightReferenceTypes,
     UnexpectedError,
@@ -207,6 +208,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
         _insight: IInsight,
         _types?: SupportedInsightReferenceTypes[],
     ): Promise<IInsightReferences> => {
+        return Promise.resolve({});
+    };
+
+    public getObjectsReferencing = async (_ref: ObjRef): Promise<IInsightReferencing> => {
         return Promise.resolve({});
     };
 }

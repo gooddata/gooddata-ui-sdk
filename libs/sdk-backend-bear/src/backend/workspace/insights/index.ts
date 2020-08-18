@@ -7,10 +7,11 @@ import {
     IInsightQueryOptions,
     IInsightQueryResult,
     IInsightReferences,
+    IInsightReferencing,
     IWorkspaceInsights,
     SupportedInsightReferenceTypes,
 } from "@gooddata/sdk-backend-spi";
-import { GdcVisualizationClass, GdcVisualizationObject } from "@gooddata/api-model-bear";
+import { GdcVisualizationClass, GdcVisualizationObject, GdcMetadata } from "@gooddata/api-model-bear";
 import {
     IInsight,
     IInsightDefinition,
@@ -21,8 +22,9 @@ import {
 } from "@gooddata/sdk-model";
 import { convertVisualizationClass } from "../../../convertors/fromBackend/VisualizationClassConverter";
 import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
+import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
 import { convertInsight, convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter";
-import { objRefToUri } from "../../../utils/api";
+import { objRefToUri, getObjectIdFromUri } from "../../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { InsightReferencesQuery } from "./insightReferences";
 
@@ -174,6 +176,22 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
         types: SupportedInsightReferenceTypes[] = ["dataSet", "measure", "fact", "attribute"],
     ): Promise<IInsightReferences> => {
         return new InsightReferencesQuery(this.authCall, this.workspace, insight, types).run();
+    };
+
+    public getObjectsReferencing = async (ref: ObjRef): Promise<IInsightReferencing> => {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+        const objectId = getObjectIdFromUri(uri);
+        return this.authCall(async (sdk) => {
+            const usedBy = await sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
+                `/gdc/md/${this.workspace}/usedby2/${objectId}?types=analyticalDashboard`,
+            );
+
+            return {
+                analyticalDashboards: usedBy.entries.map((entry: GdcMetadata.IObjectXrefEntry) =>
+                    convertMetadataObjectXrefEntry("analyticalDashboard", entry),
+                ),
+            };
+        });
     };
 
     private getVisualizationClassByUrl = async (url: string): Promise<IVisualizationClass | undefined> => {
