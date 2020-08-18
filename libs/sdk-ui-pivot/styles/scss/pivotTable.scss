@@ -31,10 +31,10 @@ $header-cell-resize-width: 20px;
 
         .ag-root {
             border: none;
-        }
 
-        .ag-font-style {
-            user-select: auto;
+            // workaround for https://www.ag-grid.com/ag-grid-changelog/ issue AG-4088 that is fixed in ag-grid 23.1.0 which has styles breaking changes which makes migration not feasible for now
+            // ideally we should use enableCellTextSelection: true in CorePivotTable
+            user-select: auto !important;
         }
 
         .ag-header-cell,
