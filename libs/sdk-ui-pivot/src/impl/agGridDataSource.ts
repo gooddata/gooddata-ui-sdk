@@ -122,7 +122,7 @@ export class AgGridDatasource implements IDatasource {
                     .readWindow([startRow, 0], [endRow - startRow, undefined])
                     .then((data) => {
                         const dv = DataViewFacade.for(data);
-                        this.gridApiProvider().setInfiniteRowCount(data.totalCount[0]);
+                        this.gridApiProvider()?.setInfiniteRowCount(data.totalCount[0]);
                         this.currentSorts = dv.meta().effectiveSortItems();
                         this.processData(dv, params);
                     })
