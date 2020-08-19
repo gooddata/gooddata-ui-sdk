@@ -771,7 +771,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.autoresizeColumnsByColumnId(columnApi, newColumnIds);
 
         await sleep(COLUMN_RESIZE_TIMEOUT);
-        this.autoresizeVisibleColumns(columnApi, autoWidthColumnIds, false);
+        return this.autoresizeVisibleColumns(columnApi, autoWidthColumnIds, false);
     };
 
     private autoresizeColumnsByColumnId(columnApi: ColumnApi, columnIds: string[]) {
