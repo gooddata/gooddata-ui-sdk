@@ -209,14 +209,20 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                             attributes,
                         }),
                     ),
+                attributes: dv
+                    .meta()
+                    .attributeDescriptors()
+                    .map((attribute) => ({ attribute })),
             };
         }
 
         private getAvailableDrillTargetsFromExecutionResult(
             executionResult: IExecutionResult,
         ): IAvailableDrillTargets {
+            const getDimensionHeaders = (dimensionDescriptor: IDimensionDescriptor) =>
+                dimensionDescriptor.headers;
             const attributeDescriptors: IAttributeDescriptor[] = flow(
-                flatMap((dimensionDescriptor: IDimensionDescriptor) => dimensionDescriptor.headers),
+                flatMap(getDimensionHeaders),
                 filter(isAttributeDescriptor),
                 uniqBy((attributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier),
             )(executionResult.dimensions);
@@ -237,6 +243,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                         attributes: attributeDescriptors,
                     }),
                 ),
+                attributes: attributeDescriptors.map((attribute) => ({ attribute })),
             };
         }
 

@@ -48,7 +48,6 @@ import {
     GoodDataSdkError,
     IAvailableDrillTargets,
     IAvailableDrillTargetMeasure,
-    IAvailableDrillTargetAttribute,
     IDrillEvent,
     IDrillEventContextTable,
     IDrillEventIntersectionElement,
@@ -282,21 +281,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         );
     };
 
-    private getAttributeItemsForDimension = (
-        dv: DataViewFacade,
-        dimension: number,
-    ): IAvailableDrillTargetAttribute[] => {
-        return dv
-            .meta()
-            .attributeDescriptorsForDim(dimension)
-            .map((attribute: IAttributeDescriptor) => {
-                return {
-                    dimension,
-                    attribute,
-                };
-            });
-    };
-
     private getAvailableDrillTargets = (dv: DataViewFacade): IAvailableDrillTargets => {
         const measureDescriptors = dv
             .meta()
@@ -308,11 +292,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 }),
             );
 
-        const rowAttributeItems = this.getAttributeItemsForDimension(dv, 0);
-        const columnAttributeItems = this.getAttributeItemsForDimension(dv, 1);
+        const rowAttributeItems = dv
+            .meta()
+            .attributeDescriptorsForDim(0)
+            .map((attribute: IAttributeDescriptor) => ({
+                attribute,
+            }));
+
         return {
             measures: measureDescriptors,
-            attributes: [...rowAttributeItems, ...columnAttributeItems],
+            attributes: rowAttributeItems,
         };
     };
 
