@@ -50,6 +50,7 @@ export namespace EmbeddedAnalyticalDesigner {
         Drill = "drill",
         ExportFinished = "exportInsightFinished",
         FilterContextChanged = "filterContextChanged",
+        InsightEditingCancelled = "insightEditingCancelled",
         InsightOpened = "insightOpened",
         InsightSaved = "visualizationSaved",
         ListeningForDrillableItems = "listeningForDrillableItems",
