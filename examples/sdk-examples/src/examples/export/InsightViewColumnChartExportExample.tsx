@@ -9,15 +9,6 @@ import { Ldm, LdmExt } from "../../ldm";
 const filters = [newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, "2017-01-01", "2017-12-31")];
 
 const style = { height: 300 };
-// TODO: SDK8 Decide whether add dimension prop to InsightView
-// const insightViewProps = {
-//     custom: {
-//         drillableItems: [],
-//     },
-//     dimensions: {
-//         height: 300,
-//     },
-// };
 
 export const insightViewColumnChartExportExample = (): JSX.Element => {
     return (

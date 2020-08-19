@@ -169,13 +169,6 @@ export const hiddenPaths = [
         title: "Pivot Table Sizing",
         Component: PivotTableSizing,
     },
-    // TODO BB-1694 - Add Measure Value Filter example to the menu
-    // { path: "/hidden/measure-value-filter", title: "Measure Value Filter", Component: MeasureValueFilter },
-    // {
-    //     path: "/hidden/measure-value-filter-component",
-    //     title: "Measure Value Filter Component",
-    //     Component: MeasureValueFilterComponent,
-    // },
     { path: "/hidden/on-drill-drilling", title: "New drill handling by onDrill", Component: OnDrillHandling },
 ];
 
