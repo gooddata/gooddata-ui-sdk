@@ -7,7 +7,7 @@ export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     opened: boolean;
     openAction?: OpenAction;
     closeOnScroll: boolean;
-    portalTarget: Element;
+    portalTarget: Element | undefined;
     onOpenedChange: OnOpenedChange;
     toggler: React.ReactNode;
     togglerWrapperClassName?: string;

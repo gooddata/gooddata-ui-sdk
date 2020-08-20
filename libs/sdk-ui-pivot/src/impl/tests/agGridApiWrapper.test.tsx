@@ -128,7 +128,7 @@ describe("agGridApiWrapper", () => {
                 const cellElement = ApiWrapper.getCellElement(api, firstAttributeColumnId, 0);
 
                 expect(cellElement instanceof HTMLElement).toBe(true);
-                expect(cellElement.classList.contains("ag-cell")).toBe(true);
+                expect(cellElement!.classList.contains("ag-cell")).toBe(true);
             });
         });
 
@@ -140,7 +140,9 @@ describe("agGridApiWrapper", () => {
                 ApiWrapper.addCellClass(api, firstAttributeColumnId, 0, newClassName);
 
                 const cellElement = ApiWrapper.getCellElement(api, firstAttributeColumnId, 0);
-                expect(cellElement.classList.contains(newClassName)).toBe(true);
+
+                expect(cellElement).toBeDefined();
+                expect(cellElement!.classList.contains(newClassName)).toBe(true);
             });
         });
 
@@ -153,7 +155,9 @@ describe("agGridApiWrapper", () => {
                 ApiWrapper.removeCellClass(api, firstAttributeColumnId, 0, newClassName);
 
                 const cellElement = ApiWrapper.getCellElement(api, firstAttributeColumnId, 0);
-                expect(cellElement.classList.contains(newClassName)).toBe(false);
+
+                expect(cellElement).toBeDefined();
+                expect(cellElement!.classList.contains(newClassName)).toBe(false);
             });
         });
     });
@@ -165,8 +169,8 @@ describe("agGridApiWrapper", () => {
 
                 const element = ApiWrapper.getPinnedTopRowElement(api);
 
-                expect(element.classList.contains("ag-floating-top")).toBe(true);
                 expect(element instanceof HTMLElement).toBe(true);
+                expect(element!.classList.contains("ag-floating-top")).toBe(true);
             });
         });
 
@@ -178,7 +182,9 @@ describe("agGridApiWrapper", () => {
                 ApiWrapper.addPinnedTopRowClass(api, newPinnedRowClassName);
 
                 const pinnedTopRowElement = ApiWrapper.getPinnedTopRowElement(api);
-                expect(pinnedTopRowElement.classList.contains(newPinnedRowClassName)).toBe(true);
+
+                expect(pinnedTopRowElement).toBeDefined();
+                expect(pinnedTopRowElement!.classList.contains(newPinnedRowClassName)).toBe(true);
             });
         });
 
@@ -191,7 +197,9 @@ describe("agGridApiWrapper", () => {
                 ApiWrapper.removePinnedTopRowClass(api, newPinnedRowClassName);
 
                 const pinnedTopRowElement = ApiWrapper.getPinnedTopRowElement(api);
-                expect(pinnedTopRowElement.classList.contains(newPinnedRowClassName)).toBe(false);
+
+                expect(pinnedTopRowElement).toBeDefined();
+                expect(pinnedTopRowElement!.classList.contains(newPinnedRowClassName)).toBe(false);
             });
         });
 
@@ -202,7 +210,9 @@ describe("agGridApiWrapper", () => {
                 ApiWrapper.setPinnedTopRowStyle(api, "max-width", "123px");
 
                 const pinnedTopRowElement = ApiWrapper.getPinnedTopRowElement(api);
-                expect(pinnedTopRowElement.style["max-width"]).toEqual("123px");
+
+                expect(pinnedTopRowElement).toBeDefined();
+                expect(pinnedTopRowElement!.style["max-width"]).toEqual("123px");
             });
         });
     });
@@ -215,8 +225,8 @@ describe("agGridApiWrapper", () => {
                 const cellElement = ApiWrapper.getPinnedTopRowCellElementWrapper(api, firstAttributeColumnId);
 
                 expect(cellElement instanceof HTMLElement).toBe(true);
-                expect(!!cellElement.querySelector("span")).toEqual(true);
-                expect(cellElement.classList.contains("ag-cell")).toBe(true);
+                expect(!!cellElement!.querySelector("span")).toEqual(true);
+                expect(cellElement!.classList.contains("ag-cell")).toBe(true);
             });
         });
 
@@ -226,7 +236,8 @@ describe("agGridApiWrapper", () => {
 
                 const cellElement = ApiWrapper.getPinnedTopRowCellElement(api, firstAttributeColumnId);
 
-                expect(cellElement.innerHTML).toEqual(firstAttributePinnedTopValue);
+                expect(cellElement).toBeDefined();
+                expect(cellElement!.innerHTML).toEqual(firstAttributePinnedTopValue);
             });
         });
 
@@ -241,7 +252,9 @@ describe("agGridApiWrapper", () => {
                     api,
                     firstAttributeColumnId,
                 );
-                expect(pinnedTopRowElement.classList.contains(newPinnedRowCellClassName)).toBe(true);
+
+                expect(pinnedTopRowElement).toBeDefined();
+                expect(pinnedTopRowElement!.classList.contains(newPinnedRowCellClassName)).toBe(true);
             });
         });
 
@@ -261,7 +274,9 @@ describe("agGridApiWrapper", () => {
                     api,
                     firstAttributeColumnId,
                 );
-                expect(pinnedTopRowElement.classList.contains(newPinnedRowCellClassName)).toBe(false);
+
+                expect(pinnedTopRowElement).toBeDefined();
+                expect(pinnedTopRowElement!.classList.contains(newPinnedRowCellClassName)).toBe(false);
             });
         });
 
@@ -276,7 +291,8 @@ describe("agGridApiWrapper", () => {
                     firstAttributeColumnId,
                 );
 
-                expect(pinnedTopRowElement.innerText).toEqual("new_text");
+                expect(pinnedTopRowElement).toBeDefined();
+                expect(pinnedTopRowElement!.innerText).toEqual("new_text");
             });
         });
     });

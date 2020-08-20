@@ -13,7 +13,7 @@ export const areTotalsChanged = (gridApi: GridApi | undefined, newTotals: IGridT
     }
 
     for (let i = 0; i < currentTotalsCount; i++) {
-        if (!isEqual(gridApi.getPinnedBottomRow(i).data, newTotals[i])) {
+        if (!isEqual(gridApi?.getPinnedBottomRow(i).data, newTotals[i])) {
             return true;
         }
     }

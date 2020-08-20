@@ -28,16 +28,16 @@ export interface IHeaderCellProps extends ICommonHeaderParams {
     defaultSortDirection?: SortDirection;
     menuPosition?: AlignPositions;
     textAlign?: AlignPositions;
-    sortDirection?: SortDirection;
+    sortDirection?: SortDirection | null;
     onSortClick?: (direction: SortDirection) => void;
-    menu?: IMenu;
+    menu?: IMenu | null;
     colId?: string;
 }
 
 export interface IHeaderCellState {
     isMenuOpen: boolean;
     isMenuButtonVisible: boolean;
-    currentSortDirection: SortDirection;
+    currentSortDirection: SortDirection | null;
 }
 
 export default class HeaderCell extends React.Component<IHeaderCellProps, IHeaderCellState> {
@@ -60,14 +60,14 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
 
     public componentDidMount(): void {
         this.setState({
-            currentSortDirection: this.props.sortDirection,
+            currentSortDirection: this.props.sortDirection!,
         });
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: IHeaderCellProps): void {
         if (nextProps.sortDirection !== this.props.sortDirection) {
             this.setState({
-                currentSortDirection: this.props.sortDirection,
+                currentSortDirection: this.props.sortDirection!,
             });
         }
     }
@@ -104,13 +104,13 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
 
         return (
             <AggregationsMenu
-                intl={intl}
-                colId={colId}
+                intl={intl!}
+                colId={colId!}
                 isMenuOpened={isMenuOpen}
                 isMenuButtonVisible={isMenuButtonVisible}
-                showSubmenu={menu.aggregationsSubMenu}
-                getExecutionDefinition={getExecutionDefinition}
-                getDataView={getDataView}
+                showSubmenu={menu.aggregationsSubMenu!}
+                getExecutionDefinition={getExecutionDefinition!}
+                getDataView={getDataView!}
                 getTotals={getColumnTotals}
                 onMenuOpenedChange={this.handleMenuOpenedChange}
                 onAggregationSelect={this.menuItemClick}
@@ -172,7 +172,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
             const { sortDirection } = this.props;
             if (sortDirection === null) {
                 return this.setState({
-                    currentSortDirection: this.props.defaultSortDirection,
+                    currentSortDirection: this.props.defaultSortDirection!,
                 });
             } else if (sortDirection === "asc") {
                 return this.setState({
@@ -192,7 +192,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
 
     private onMouseLeaveHeaderCellText = () => {
         this.setState({
-            currentSortDirection: this.props.sortDirection,
+            currentSortDirection: this.props.sortDirection!,
         });
     };
 
@@ -203,11 +203,11 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
             return;
         }
         if (sortDirection === null) {
-            const nextSortDirection = defaultSortDirection;
+            const nextSortDirection = defaultSortDirection!;
             this.setState({
-                currentSortDirection: nextSortDirection,
+                currentSortDirection: nextSortDirection!,
             });
-            onSortClick(nextSortDirection);
+            onSortClick!(nextSortDirection);
             return;
         }
 
@@ -215,7 +215,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         this.setState({
             currentSortDirection: nextSort,
         });
-        onSortClick(nextSort);
+        onSortClick!(nextSort);
     };
 
     private showMenuButton = () => {

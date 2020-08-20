@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import invariant from "ts-invariant";
+import invariant, { InvariantError } from "ts-invariant";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
 import {
@@ -79,7 +79,7 @@ export class ResizedColumnsStore {
         this.weakMeasuresColumnWidths = weakMeasuresColumnWidths;
     }
 
-    public getManuallyResizedColumn(item: Column | ColDef): IManuallyResizedColumnsItem {
+    public getManuallyResizedColumn(item: Column | ColDef): IManuallyResizedColumnsItem | undefined {
         const colId = getColumnIdentifier(item);
 
         if (this.manuallyResizedColumns[colId]) {
@@ -128,7 +128,7 @@ export class ResizedColumnsStore {
 
     public addWeekMeasureColumn(column: Column): void {
         const width = column.getActualWidth();
-        const measureHeaderLocalIdentifier: string = getMappingHeaderMeasureItemLocalIdentifier(column);
+        const measureHeaderLocalIdentifier = getMappingHeaderMeasureItemLocalIdentifier(column);
         if (measureHeaderLocalIdentifier) {
             this.weakMeasuresColumnWidths[measureHeaderLocalIdentifier] = {
                 measureColumnWidthItem: {
@@ -212,10 +212,10 @@ export class ResizedColumnsStore {
         return result.concat(weakColumnWidthItems);
     }
 
-    public updateColumnWidths(columnWidths: ColumnWidthItem[], dv: DataViewFacade): void {
+    public updateColumnWidths(columnWidths: ColumnWidthItem[] | undefined, dv: DataViewFacade): void {
         const allMeasureWidthItem = this.filterAllMeasureColumnWidthItem(columnWidths);
 
-        if (isAllMeasureColumnWidthItem(allMeasureWidthItem)) {
+        if (allMeasureWidthItem && isAllMeasureColumnWidthItem(allMeasureWidthItem)) {
             const validatedAllMeasureColumnWidth = defaultWidthValidator(
                 allMeasureWidthItem.measureColumnWidthItem.width,
             );
@@ -235,7 +235,7 @@ export class ResizedColumnsStore {
     }
 
     public getMatchingColumnsByMeasure(targetColumn: Column, allColumns: Column[]): Column[] {
-        const targetMeasureLocalIdentifier: string = getMappingHeaderMeasureItemLocalIdentifier(targetColumn);
+        const targetMeasureLocalIdentifier = getMappingHeaderMeasureItemLocalIdentifier(targetColumn);
 
         if (targetMeasureLocalIdentifier) {
             return allColumns.filter((col: Column) => {
@@ -246,21 +246,23 @@ export class ResizedColumnsStore {
         return [];
     }
 
-    public getMatchedWeakMeasuresColumnWidth(item: Column | ColDef): IWeakMeasureColumnWidthItem {
-        const measureHeaderLocalIdentifier: string = getMappingHeaderMeasureItemLocalIdentifier(item);
+    public getMatchedWeakMeasuresColumnWidth(item: Column | ColDef): IWeakMeasureColumnWidthItem | undefined {
+        const measureHeaderLocalIdentifier = getMappingHeaderMeasureItemLocalIdentifier(item);
 
         if (measureHeaderLocalIdentifier) {
             return this.weakMeasuresColumnWidths[measureHeaderLocalIdentifier];
         }
     }
 
-    private filterAllMeasureColumnWidthItem(columnWidths: ColumnWidthItem[]): IAllMeasureColumnWidthItem {
+    private filterAllMeasureColumnWidthItem(
+        columnWidths: ColumnWidthItem[] | undefined,
+    ): IAllMeasureColumnWidthItem | undefined {
         if (columnWidths) {
             return columnWidths.filter(isAllMeasureColumnWidthItem)[0];
         }
     }
 
-    private filterStrongColumnWidthItems(columnWidths: ColumnWidthItem[]) {
+    private filterStrongColumnWidthItems(columnWidths: ColumnWidthItem[] | undefined) {
         if (columnWidths) {
             return columnWidths.filter(
                 (item) => isAttributeColumnWidthItem(item) || isMeasureColumnWidthItem(item),
@@ -269,7 +271,9 @@ export class ResizedColumnsStore {
         return [];
     }
 
-    private filterWeakColumnWidthItems(columnWidths: ColumnWidthItem[]): IWeakMeasureColumnWidthItemsMap {
+    private filterWeakColumnWidthItems(
+        columnWidths: ColumnWidthItem[] | undefined,
+    ): IWeakMeasureColumnWidthItemsMap {
         if (columnWidths) {
             const onlyWeakWidthItems: IWeakMeasureColumnWidthItem[] = columnWidths.filter(
                 isWeakMeasureColumnWidthItem,
@@ -302,7 +306,7 @@ export class ResizedColumnsStore {
         return {};
     }
 
-    private convertItem(item: IResizedColumnsCollectionItem): IManuallyResizedColumnsItem {
+    private convertItem(item: IResizedColumnsCollectionItem): IManuallyResizedColumnsItem | undefined {
         // columns with width.value = auto are hidden
         if (isAbsoluteColumnWidth(item.width)) {
             const { width } = item;
@@ -324,7 +328,7 @@ export class ResizedColumnsStore {
     }
 
     private getAutoSizeItem(column: Column): IResizedColumnsCollectionItem {
-        const measureHeaderLocalIdentifier: string = getMappingHeaderMeasureItemLocalIdentifier(column);
+        const measureHeaderLocalIdentifier = getMappingHeaderMeasureItemLocalIdentifier(column);
         const result: IResizedColumnsCollectionItem = { width: { value: "auto" } };
         if (measureHeaderLocalIdentifier) {
             result.measureIdentifier = measureHeaderLocalIdentifier;
@@ -333,14 +337,14 @@ export class ResizedColumnsStore {
     }
 
     private getAllMeasureColumMapItem(): IManuallyResizedColumnsItem {
-        return { width: this.allMeasureColumnWidth };
+        return { width: this.allMeasureColumnWidth! };
     }
 
     private getAllMeasureColumnWidth(): IAllMeasureColumnWidthItem {
         return {
             measureColumnWidthItem: {
                 width: {
-                    value: this.allMeasureColumnWidth,
+                    value: this.allMeasureColumnWidth!,
                 },
             },
         };
@@ -410,8 +414,8 @@ const getAttributeColumnWidthItemFieldAndWidth = (
     );
     invariant(attributeHeader, `Could not find attributeHeader with localIdentifier "${localIdentifier}"`);
 
-    const field = identifyResponseHeader(attributeHeader);
-    return [field, columnWidthItem.attributeColumnWidthItem.width];
+    const field = identifyResponseHeader(attributeHeader!);
+    return [field!, columnWidthItem.attributeColumnWidthItem.width];
 };
 
 const getMeasureColumnWidthItemFieldAndWidth = (
@@ -432,7 +436,7 @@ const getMeasureColumnWidthItemFieldAndWidth = (
             );
             keys.push(`m${ID_SEPARATOR}${measureColumnWidthHeaderIndex}`);
         } else {
-            const key = `a${ID_SEPARATOR}${getIdsFromUri(locator.attributeLocatorItem.element).join(
+            const key = `a${ID_SEPARATOR}${getIdsFromUri(locator.attributeLocatorItem.element!).join(
                 ID_SEPARATOR,
             )}`;
             keys.push(key);
@@ -461,7 +465,9 @@ const getSizeItemByColId = (dv: DataViewFacade, colId: string, width: ColumnWidt
                         },
                     };
                 } else {
-                    invariant(false, `width value for attributeColumnWidthItem has to be number ${colId}`);
+                    throw new InvariantError(
+                        `width value for attributeColumnWidthItem has to be number ${colId}`,
+                    );
                 }
             }
         }
@@ -479,7 +485,7 @@ const getSizeItemByColId = (dv: DataViewFacade, colId: string, width: ColumnWidt
             };
         }
 
-        invariant(false, `could not find attribute header matching ${colId}`);
+        throw new InvariantError(`could not find attribute header matching ${colId}`);
     } else if (lastFieldType === FIELD_TYPE_MEASURE) {
         const colDescriptors = dv.meta().attributeDescriptorsForDim(1);
         const measureDescriptors = dv.meta().measureDescriptors();
@@ -500,7 +506,7 @@ const getSizeItemByColId = (dv: DataViewFacade, colId: string, width: ColumnWidt
             },
         };
     }
-    invariant(false, `could not find header matching ${colId}`);
+    throw new InvariantError(`could not find header matching ${colId}`);
 };
 
 export const getColumnWidthsFromMap = (
@@ -607,7 +613,9 @@ export const resetColumnsWidthToDefault = (
 
         if (resizedColumnsStore.isColumnManuallyResized(col)) {
             const manuallyResizedColumn = resizedColumnsStore.getManuallyResizedColumn(col);
-            columnApi.setColumnWidth(col, manuallyResizedColumn.width);
+            if (manuallyResizedColumn) {
+                columnApi.setColumnWidth(col, manuallyResizedColumn.width);
+            }
         } else if (isColumnAutoResized(autoResizedColumns, id)) {
             columnApi.setColumnWidth(col, autoResizedColumns[id].width);
         } else {
@@ -648,5 +656,5 @@ export const resizeWeakMeasureColumns = (
     });
 };
 
-export const getAllowGrowToFitProp = (allowGrowToFit: boolean): { allowGrowToFit?: boolean } =>
+export const getAllowGrowToFitProp = (allowGrowToFit: boolean | undefined): { allowGrowToFit?: boolean } =>
     allowGrowToFit ? { allowGrowToFit } : {};

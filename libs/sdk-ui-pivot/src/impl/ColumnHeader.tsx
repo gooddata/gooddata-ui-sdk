@@ -21,7 +21,7 @@ export const DESC: SortDirection = "desc";
 
 class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderState> {
     public state: IColumnHeaderState = {
-        sorting: null,
+        sorting: undefined,
     };
 
     public UNSAFE_componentWillMount(): void {
@@ -66,7 +66,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
                 defaultSortDirection={this.getDefaultSortDirection()}
                 onSortClick={this.onSortRequested}
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
-                menu={menu()}
+                menu={menu?.()}
                 colId={column.getColDef().field}
                 getExecutionDefinition={this.props.getExecutionDefinition}
                 getColumnTotals={this.props.getColumnTotals}
@@ -78,7 +78,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
 
     private getFieldType() {
         const colId = this.props.column.getColDef().field;
-        const fields = getParsedFields(colId);
+        const fields = getParsedFields(colId!);
         const [lastFieldType] = fields[fields.length - 1];
 
         return lastFieldType;

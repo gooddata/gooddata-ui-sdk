@@ -41,6 +41,7 @@ describe("Menu state", () => {
             onOpenedChange: expect.any(Function),
         });
 
+        // @ts-expect-error the value is assigned at this point
         fnOnOpenedChange({ opened: true, source: "TOGGLER_BUTTON_CLICK" });
 
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(2);
@@ -51,6 +52,7 @@ describe("Menu state", () => {
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(1);
         expect(fnOnOpenedChangeProp).toHaveBeenCalledWith({ opened: true, source: "TOGGLER_BUTTON_CLICK" });
 
+        // @ts-expect-error the value is assigned at this point
         fnOnOpenedChange({ opened: false, source: "TOGGLER_BUTTON_CLICK" });
 
         expect(fnMenuStateChildren).toHaveBeenCalledTimes(3);
@@ -94,6 +96,7 @@ describe("Menu state", () => {
         });
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(0);
 
+        // @ts-expect-error the value is assigned at this point
         fnOnOpenedChange(false);
 
         expect(fnOnOpenedChangeProp).toHaveBeenCalledTimes(1);

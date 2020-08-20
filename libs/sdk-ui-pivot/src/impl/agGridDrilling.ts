@@ -32,7 +32,7 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: strin
                     ...drillRow,
                     {
                         // Unlike fields, drilling data should not be sanitized, because it is not used in HTML properties
-                        id: getIdsFromUri(drillItemUri, false)[1],
+                        id: getIdsFromUri(drillItemUri!, false)[1],
                         name: rowData[colDef.field],
                     },
                 ];
@@ -45,7 +45,7 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: strin
 export const getMeasureDrillItem = (
     responseHeaders: IDimensionItemDescriptor[],
     header: IResultMeasureHeader,
-): IMeasureDescriptor => {
+): IMeasureDescriptor | null => {
     const measureGroupHeader = responseHeaders.find(isMeasureGroupDescriptor);
 
     return get(measureGroupHeader, ["measureGroupHeader", "items", header.measureHeaderItem.order], null);
@@ -72,7 +72,10 @@ export const assignDrillItemsAndType = (
     } else if (isResultMeasureHeader(currentHeader)) {
         // measure uri and identifier
         header.type = MEASURE_COLUMN;
-        drillItems.push(getMeasureDrillItem(responseHeaders, currentHeader));
+        const drillItem = getMeasureDrillItem(responseHeaders, currentHeader);
+        if (drillItem) {
+            drillItems.push(drillItem);
+        }
         header.drillItems = drillItems;
         header.measureIndex = currentHeader.measureHeaderItem.order;
     }

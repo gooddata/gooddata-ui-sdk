@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { MenuAlignment } from "../MenuSharedTypes";
 
 export interface IDimensions {
@@ -116,11 +116,11 @@ export function calculateMenuPosition({
         left:
             typeof coordinates.left === "number"
                 ? coordinates.left
-                : toggler.width - menu.width - coordinates.right,
+                : toggler.width - menu.width - coordinates.right!,
         top:
             typeof coordinates.top === "number"
                 ? coordinates.top
-                : toggler.height - menu.height - coordinates.bottom,
+                : toggler.height - menu.height - coordinates.bottom!,
     };
 
     // Returned coordinates are relative to toggler.

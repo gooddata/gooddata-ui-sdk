@@ -31,7 +31,7 @@ const Menu: React.SFC<IMenuProps> = (props: IMenuProps) => (
                 toggler={props.toggler}
                 togglerWrapperClassName={props.togglerWrapperClassName}
                 portalTarget={props.portalTarget}
-                closeOnScroll={props.closeOnScroll}
+                closeOnScroll={props.closeOnScroll!}
             >
                 {isFunction(props.children)
                     ? props.children({

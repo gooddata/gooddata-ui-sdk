@@ -90,7 +90,7 @@ describe("getDrillIntersection", () => {
 
     it("should return intersection of row attribute and row attribute value for row header cell", async () => {
         const rowColDef = columnDefs[0]; // row header
-        const drillItems = [rowData[0].headerItemMap[rowColDef.field], ...rowColDef.drillItems];
+        const drillItems = [rowData[0].headerItemMap[rowColDef.field!], ...rowColDef.drillItems];
         const intersection = getDrillIntersection(drillItems);
         expect(intersection).toMatchSnapshot();
     });

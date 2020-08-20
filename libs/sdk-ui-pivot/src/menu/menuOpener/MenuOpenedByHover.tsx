@@ -6,7 +6,7 @@ import MenuPosition from "../positioning/MenuPosition";
 export default class MenuOpenedByHover extends React.Component<IMenuOpenedBySharedProps> {
     private static openCloseDelayMs = 200;
 
-    private timerCloseDelay: number = null;
+    private timerCloseDelay: number | null = null;
 
     public componentWillUnmount(): void {
         this.clearCloseDelayTimer();
@@ -36,7 +36,9 @@ export default class MenuOpenedByHover extends React.Component<IMenuOpenedByShar
     }
 
     private clearCloseDelayTimer = (): void => {
-        window.clearTimeout(this.timerCloseDelay);
+        if (this.timerCloseDelay) {
+            window.clearTimeout(this.timerCloseDelay);
+        }
     };
 
     private hoverStart = (): void => {

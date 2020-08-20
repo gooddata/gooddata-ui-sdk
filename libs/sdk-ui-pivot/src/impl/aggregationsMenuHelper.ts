@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { ITotal, TotalType } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
+import invariant, { InvariantError } from "ts-invariant";
 import { IMenuAggregationClickConfig } from "../types";
 
 import { AVAILABLE_TOTALS, FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "./agGridConst";
@@ -91,8 +91,8 @@ function getHeaderMeasureLocalIdentifiers(
     } else if (lastFieldType === FIELD_TYPE_ATTRIBUTE) {
         return measureGroupHeaderItems.map((item) => item.measureHeaderItem.localIdentifier);
     }
-    invariant(
-        false,
+
+    throw new InvariantError(
         `Unknown field type '${lastFieldType}' provided (valid types: ${[
             FIELD_TYPE_MEASURE,
             FIELD_TYPE_ATTRIBUTE,

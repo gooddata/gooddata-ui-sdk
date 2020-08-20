@@ -41,7 +41,7 @@ export interface IAggregationsMenuProps {
     colId: string;
     getExecutionDefinition: () => IExecutionDefinition;
     getDataView: () => DataViewFacade;
-    getTotals: () => ITotal[];
+    getTotals?: () => ITotal[];
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
     onMenuOpenedChange: ({ opened, source }: IOnOpenedChangeParams) => void;
 }
@@ -109,7 +109,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     }
 
     private getColumnTotals(measureLocalIdentifiers: string[], isAttributeHeader: boolean): IColumnTotal[] {
-        const columnTotals = this.props.getTotals() || [];
+        const columnTotals = this.props.getTotals?.() ?? [];
 
         if (isAttributeHeader) {
             return menuHelper.getTotalsForAttributeHeader(columnTotals, measureLocalIdentifiers);

@@ -221,7 +221,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.state = {
             tableReady: false,
             columnTotals: cloneDeep(defTotals(execution.definition, 0)),
-            desiredHeight: config.maxHeight,
+            desiredHeight: config!.maxHeight,
             resized: false,
         };
 
@@ -271,7 +271,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 tableReady: false,
                 columnTotals: cloneDeep(defTotals(execution.definition, 0)),
                 error: undefined,
-                desiredHeight: this.props.config.maxHeight,
+                desiredHeight: this.props.config!.maxHeight,
                 resized: false,
             },
             () => {
@@ -368,12 +368,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.agGridDataSource = createAgGridDatasource(
             {
                 headers: this.tableHeaders,
-                getGroupRows: () => this.props.groupRows,
+                getGroupRows: () => this.props.groupRows!,
                 getColumnTotals: this.getColumnTotals,
                 onPageLoaded: this.onPageLoaded,
             },
             this.visibleData,
-            this.getGridApi,
+            this.getGridApi as () => GridApi,
             this.props.intl,
         );
 
@@ -387,7 +387,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             .execute()
             .then((result) => {
                 result
-                    .readWindow([0, 0], [this.props.pageSize, COLS_PER_PAGE])
+                    .readWindow([0, 0], [this.props.pageSize!, COLS_PER_PAGE])
                     .then((dataView) => {
                         if (this.unmounted) {
                             /*
@@ -413,13 +413,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                         this.initializeNonReactState(result, dataView);
 
                         this.onLoadingChanged({ isLoading: false });
-                        this.props.onExportReady(
-                            createExportFunction(this.currentResult, this.props.exportTitle),
+                        this.props.onExportReady!(
+                            createExportFunction(this.currentResult!, this.props.exportTitle),
                         );
                         this.setState({ tableReady: true });
 
-                        const availableDrillTargets = this.getAvailableDrillTargets(this.visibleData);
-                        this.props.pushData({ dataView, availableDrillTargets });
+                        const availableDrillTargets = this.getAvailableDrillTargets(this.visibleData!);
+                        this.props.pushData!({ dataView, availableDrillTargets });
                     })
                     .catch((error) => {
                         if (this.unmounted) {
@@ -436,7 +436,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                                 result,
                             );
 
-                            this.props.pushData({ availableDrillTargets });
+                            this.props.pushData!({ availableDrillTargets });
                         }
 
                         /*
@@ -448,7 +448,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                                 DataViewFacade.for(error.dataView),
                             );
 
-                            this.props.pushData({ availableDrillTargets });
+                            this.props.pushData!({ availableDrillTargets });
                             this.onLoadingChanged({ isLoading: false });
                         }
 
@@ -501,11 +501,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
              */
 
             if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
-                this.gridApi.refreshHeader();
+                this.gridApi?.refreshHeader();
             }
 
             if (this.isGrowToFitEnabled() && !this.isGrowToFitEnabled(prevProps)) {
-                this.growToFit(this.columnApi);
+                this.growToFit(this.columnApi!);
             }
 
             const prevColumnWidths = this.getColumnWidths(prevProps);
@@ -517,7 +517,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     }
 
-    private applyColumnSizes(columnWidths: ColumnWidthItem[]) {
+    private applyColumnSizes(columnWidths: ColumnWidthItem[] | undefined) {
         if (!this.columnApi || !this.visibleData) {
             return;
         }
@@ -646,9 +646,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (this.props.execution.fingerprint() === execution.fingerprint()) {
             this.setState({ error: error.getMessage() });
 
-            if (onExportReady) {
-                onExportReady(createExportErrorFunction(error));
-            }
+            onExportReady!(createExportErrorFunction(error));
 
             this.props.onError?.(error);
         }
@@ -714,7 +712,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private getColumnWidths = (props: ICorePivotTableProps): ColumnWidthItem[] | undefined => {
-        return props.config?.columnSizing?.columnWidths;
+        return props.config!.columnSizing?.columnWidths;
     };
 
     private hasColumnWidths = () => {
@@ -804,7 +802,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private isPivotTableReady = (api: GridApi) => {
         const noRowHeadersOrRows = () => {
-            return this.visibleData.rawData().isEmpty() && this.visibleData.meta().hasNoHeadersInDim(0);
+            return Boolean(
+                this.visibleData?.rawData().isEmpty() && this.visibleData.meta().hasNoHeadersInDim(0),
+            );
         };
         const dataRendered = () => {
             return noRowHeadersOrRows() || api.getRenderedNodes().length > 0;
@@ -837,8 +837,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             if (this.isGrowToFitEnabled()) {
                 this.growToFit(event.columnApi);
             } else if (this.shouldPerformAutoresize() && this.isColumnAutoresizeEnabled()) {
-                const columns = this.columnApi.getAllColumns();
-                this.resetColumnsWidthToDefault(this.columnApi, columns);
+                const columns = this.columnApi!.getAllColumns();
+                this.resetColumnsWidthToDefault(this.columnApi!, columns);
             }
             this.resizing = false;
             this.setState({
@@ -893,7 +893,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (sumOfWidths < clientWidth) {
             const columnIds = this.getColumnIds(columns);
             setColumnMaxWidth(columnApi, columnIds, undefined);
-            this.gridApi.sizeColumnsToFit();
+            this.gridApi?.sizeColumnsToFit();
             setColumnMaxWidthIf(
                 columnApi,
                 columnIds,
@@ -933,8 +933,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private onPageLoaded = (dv: DataViewFacade): void => {
         const currentResult = dv.result();
-        if (!this.currentResult.equals(currentResult)) {
-            this.props.onExportReady(currentResult.export.bind(currentResult));
+        if (!this.currentResult?.equals(currentResult)) {
+            this.props.onExportReady!(currentResult.export.bind(currentResult));
         }
         this.currentResult = currentResult;
         this.visibleData = dv;
@@ -946,7 +946,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
         const newColumnTotals = getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig);
 
-        this.props.pushData({
+        this.props.pushData!({
             properties: {
                 totals: newColumnTotals,
             },
@@ -955,7 +955,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.setState({ columnTotals: newColumnTotals }, () => {
             // make ag-grid refresh data
             // see: https://www.ag-grid.com/javascript-grid-infinite-scrolling/#changing-the-datasource
-            this.setGridDataSource(this.agGridDataSource);
+            this.setGridDataSource(this.agGridDataSource!);
         });
     };
 
@@ -963,17 +963,19 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const missingContainerRef = !this.containerRef; // table having no data will be unmounted, it causes ref null
         const isTableRendered = this.shouldAutoResizeColumns()
             ? this.state.resized
-            : this.isPivotTableReady(this.gridApi);
+            : this.isPivotTableReady(this.gridApi!);
         if (missingContainerRef || isTableRendered) {
             this.stopWatchingTableRendered();
         }
     };
 
     private stopWatchingTableRendered = () => {
-        clearInterval(this.watchingIntervalId);
-        this.watchingIntervalId = null;
+        if (this.watchingIntervalId) {
+            clearInterval(this.watchingIntervalId);
+            this.watchingIntervalId = null;
+        }
 
-        this.props.afterRender();
+        this.props.afterRender!();
     };
 
     //
@@ -983,7 +985,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private onGridReady = (event: GridReadyEvent) => {
         this.gridApi = event.api;
         this.columnApi = event.columnApi;
-        this.setGridDataSource(this.agGridDataSource);
+        this.setGridDataSource(this.agGridDataSource!);
         this.updateDesiredHeight(this.visibleData);
 
         if (this.props.groupRows) {
@@ -1043,17 +1045,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.updateStickyRow();
     };
 
-    private getAttributeHeader(colId: string, columnDefs: IGridHeader[]): IAttributeDescriptor {
-        const matchingColDef: IGridHeader = columnDefs.find(
-            (columnDef: IGridHeader) => columnDef.field === colId,
-        );
+    private getAttributeHeader(colId: string, columnDefs: IGridHeader[]): IAttributeDescriptor | undefined {
+        const matchingColDef = columnDefs.find((columnDef: IGridHeader) => columnDef.field === colId);
         if (matchingColDef && matchingColDef.drillItems.length === 1) {
             const drillItemHeader = matchingColDef.drillItems[0];
             if (isAttributeDescriptor(drillItemHeader)) {
                 return drillItemHeader;
             }
         }
-        return null;
+        return undefined;
     }
 
     private getItemAndAttributeHeaders = (
@@ -1097,7 +1097,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private getRowDrillItem = (cellEvent: IGridCellEvent) =>
-        get(cellEvent, ["data", "headerItemMap", cellEvent.colDef.field]);
+        get(cellEvent, ["data", "headerItemMap", cellEvent.colDef.field!]);
 
     private getDrillItems = (cellEvent: IGridCellEvent): IMappingHeader[] => {
         const { colDef } = cellEvent;
@@ -1119,8 +1119,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private cellClicked = (cellEvent: IGridCellEvent) => {
         const { onDrill } = this.props;
-        const tableHeaders = this.tableHeaders;
-        const dv = this.visibleData;
+        const tableHeaders = this.tableHeaders!;
+        const dv = this.visibleData!;
         const drillablePredicates = this.getDrillablePredicates();
         const { colDef, rowIndex } = cellEvent;
         const rowType = get(cellEvent, ["data", "type"], "");
@@ -1155,14 +1155,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             drillContext,
         };
 
-        if (onDrill(drillEvent)) {
+        if (onDrill!(drillEvent)) {
             // This is needed for /analyze/embedded/ drilling with post message
             // More info: https://github.com/gooddata/gdc-analytical-designer/blob/develop/test/drillEventing/drillEventing_page.html
             const event = new CustomEvent("drill", {
                 detail: drillEvent,
                 bubbles: true,
             });
-            cellEvent.event.target.dispatchEvent(event);
+            cellEvent.event?.target?.dispatchEvent(event);
             return true;
         }
 
@@ -1187,12 +1187,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         column.getColDef().suppressSizeToFit = false;
 
         if (this.isColumnAutoResized(id)) {
-            this.columnApi.setColumnWidth(column, this.autoResizedColumns[id].width);
+            this.columnApi?.setColumnWidth(column, this.autoResizedColumns[id].width);
             return;
         }
 
-        this.autoresizeColumnsByColumnId(this.columnApi, this.getColumnIds([column]));
-        if (isColumnDisplayed(this.columnApi.getAllDisplayedVirtualColumns(), column)) {
+        this.autoresizeColumnsByColumnId(this.columnApi!, this.getColumnIds([column]));
+        if (isColumnDisplayed(this.columnApi!.getAllDisplayedVirtualColumns(), column)) {
             // skip columns out of viewport because these can not be autoresized
             this.resizedColumnsStore.addToManuallyResizedColumn(column, true);
         }
@@ -1211,16 +1211,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
             if (this.numberOfColumnResizedCalls === UIClick.DOUBLE_CLICK) {
                 this.numberOfColumnResizedCalls = 0;
-                await this.onColumnsManualReset(columnEvent.columns);
+                await this.onColumnsManualReset(columnEvent.columns!);
             } else if (this.numberOfColumnResizedCalls === UIClick.CLICK) {
                 this.numberOfColumnResizedCalls = 0;
-                this.onColumnsManualResized(columnEvent.columns);
+                this.onColumnsManualResized(columnEvent.columns!);
             }
         }
     };
 
     private getAllMeasureColumns() {
-        return this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
+        return this.columnApi!.getAllColumns().filter((col) => isMeasureColumn(col));
     }
 
     private onColumnsManualReset = async (columns: Column[]) => {
@@ -1256,9 +1256,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private onColumnsManualResized = (columns: Column[]) => {
         if (this.isAllMeasureResizeOperation(columns)) {
-            resizeAllMeasuresColumns(this.columnApi, this.resizedColumnsStore, columns[0]);
+            resizeAllMeasuresColumns(this.columnApi!, this.resizedColumnsStore, columns[0]);
         } else if (this.isWeakMeasureResizeOperation(columns)) {
-            resizeWeakMeasureColumns(this.columnApi, this.resizedColumnsStore, columns[0]);
+            resizeWeakMeasureColumns(this.columnApi!, this.resizedColumnsStore, columns[0]);
         } else {
             columns.forEach((column) => {
                 this.resizedColumnsStore.addToManuallyResizedColumn(column);
@@ -1269,9 +1269,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private afterOnResizeColumns() {
-        this.growToFit(this.columnApi);
-        const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap(this.visibleData);
-        this.props.onColumnResized(columnWidths);
+        this.growToFit(this.columnApi!);
+        const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap(this.visibleData!);
+        this.props.onColumnResized!(columnWidths);
     }
 
     private sortChanged = (event: SortChangedEvent): void => {
@@ -1285,13 +1285,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             .getAllColumns()
             .filter((col) => col.getSort() !== undefined && col.getSort() !== null)
             .map((col) => ({
-                colId: col.getColDef().field,
+                colId: col.getColDef().field!,
                 sort: col.getSort() as SortDirection,
             }));
 
         const sortItems = getSortsFromModel(sortModel, this.currentResult);
 
-        this.props.pushData({
+        this.props.pushData!({
             properties: {
                 sortItems,
             },
@@ -1321,7 +1321,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private createGridOptions = (): ICustomGridOptions => {
         const tableHeaders = this.tableHeaders;
         const { pageSize } = this.props;
-        const totalRowCount = this.visibleData.rawData().firstDimSize();
+        const totalRowCount = this.visibleData!.rawData().firstDimSize();
         const separators = get(this.props, ["config", "separators"], undefined);
 
         /*
@@ -1338,7 +1338,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
          * and shrinking, it will not be so big.
          */
         const extraTotalsBuffer = this.props.config && this.props.config.menu ? 10 : 0;
-        const effectivePageSize = Math.min(pageSize, totalRowCount + extraTotalsBuffer);
+        const effectivePageSize = Math.min(pageSize!, totalRowCount + extraTotalsBuffer);
 
         const commonHeaderComponentParams = {
             onMenuAggregationClick: this.onMenuAggregationClick,
@@ -1350,10 +1350,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         return {
             // Initial data
-            columnDefs: tableHeaders.allHeaders,
+            columnDefs: tableHeaders!.allHeaders,
             rowData: [],
             defaultColDef: {
-                cellClass: this.getCellClass(null),
+                cellClass: this.getCellClass(),
                 headerComponentFramework: ColumnHeader as any,
                 headerComponentParams: {
                     menu: this.getMenuConfig,
@@ -1365,7 +1365,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 resizable: true,
             },
             defaultColGroupDef: {
-                headerClass: this.getHeaderClass(null),
+                headerClass: this.getHeaderClass(),
                 children: [],
                 headerGroupComponentFramework: ColumnGroupHeader as any,
                 headerGroupComponentParams: {
@@ -1435,16 +1435,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     ),
                     // wrong params type from ag-grid, we need any
                     valueFormatter: (params: any) => {
-                        return params.value !== undefined
+                        return params.value !== undefined && this.currentResult
                             ? getMeasureCellFormattedValue(
                                   params.value,
                                   getMeasureFormat(params.colDef, this.currentResult),
                                   separators,
                               )
-                            : null;
+                            : (null as any);
                     },
                     cellStyle: (params) => {
-                        return params.value !== undefined
+                        return params.value !== undefined && this.currentResult
                             ? getMeasureCellStyle(
                                   params.value,
                                   getMeasureFormat(params.colDef, this.currentResult),
@@ -1473,9 +1473,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     /**
      * getCellClass returns class for drillable cells. (maybe format in the future as well)
      */
-    private getCellClass = (classList: string) => (cellClassParams: CellClassParams): string => {
+    private getCellClass = (classList?: string) => (cellClassParams: CellClassParams): string => {
         const { rowIndex } = cellClassParams;
-        const dv = this.visibleData;
+        const dv = this.visibleData!;
         const colDef = cellClassParams.colDef as IGridHeader;
         const drillablePredicates = this.getDrillablePredicates();
         // return none if no drillableItems are specified
@@ -1487,7 +1487,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const isRowSubtotal = rowType === ROW_SUBTOTAL;
 
         if (drillablePredicates.length !== 0 && !isRowTotal && !isRowSubtotal) {
-            const rowDrillItem = get(cellClassParams, ["data", "headerItemMap", colDef.field]);
+            const rowDrillItem = get(cellClassParams, ["data", "headerItemMap", colDef.field!]);
             const headers: IMappingHeader[] = rowDrillItem
                 ? [...colDef.drillItems, rowDrillItem]
                 : colDef.drillItems;
@@ -1497,7 +1497,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             );
         }
 
-        const attributeId = colDef.field;
+        const attributeId = colDef.field!;
         const isPinnedRow = cellClassParams.node.isRowPinned();
         const hiddenCell = !isPinnedRow && this.getGroupingProvider().isRepeatedValue(attributeId, rowIndex);
         const rowSeparator = !hiddenCell && this.getGroupingProvider().isGroupBoundary(rowIndex);
@@ -1505,7 +1505,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         return cx(
             classList,
-            getCellClassNames(rowIndex, colDef.index, hasDrillableHeader),
+            getCellClassNames(rowIndex, colDef.index!, hasDrillableHeader),
             colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
             colDef.measureIndex !== undefined ? `gd-column-measure-${colDef.measureIndex}` : null,
             isRowTotal ? "gd-row-total" : null,
@@ -1515,13 +1515,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         );
     };
 
-    private getHeaderClass = (classList: string) => (headerClassParams: any): string => {
+    private getHeaderClass = (classList?: string) => (headerClassParams: any): string => {
         const colDef: IGridHeader = headerClassParams.colDef;
         const { field, measureIndex, index } = colDef;
         const treeIndexes = colDef
             ? indexOfTreeNode(
                   colDef,
-                  this.tableHeaders.allHeaders,
+                  this.tableHeaders!.allHeaders,
                   (nodeA, nodeB) => nodeA.field !== undefined && nodeA.field === nodeB.field,
               )
             : null;
@@ -1546,16 +1546,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     // misc :)
     //
     private getGroupingProvider(): IGroupingProvider {
-        return this.agGridDataSource.getGroupingProvider();
+        return this.agGridDataSource!.getGroupingProvider();
     }
 
     private getDrillablePredicates(): IHeaderPredicate[] {
-        return convertDrillableItemsToPredicates(this.props.drillableItems);
+        return convertDrillableItemsToPredicates(this.props.drillableItems!);
     }
 
     private isStickyRowAvailable(): boolean {
         const gridApi = this.getGridApi();
-        return this.props.groupRows && gridApi && stickyRowExists(gridApi);
+        return Boolean(this.props.groupRows && gridApi && stickyRowExists(gridApi));
     }
 
     private updateStickyRow(): void {
@@ -1591,7 +1591,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const aggregationCount = sumBy(dv.rawData().totals(), (total) => total.length);
         const rowCount = dv.rawData().firstDimSize();
 
-        const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
+        const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi!);
 
         // add small room for error to avoid scrollbars that scroll one, two pixels
         // increased in order to resolve issue BB-1509
@@ -1623,8 +1623,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return this.scrollBarExists() ? getScrollbarWidth() : 0;
     }
 
-    private calculateDesiredHeight(dv: DataViewFacade): number {
-        const { maxHeight } = this.props.config;
+    private calculateDesiredHeight(dv: DataViewFacade): number | undefined {
+        const { maxHeight } = this.props.config!;
         if (!maxHeight) {
             return;
         }

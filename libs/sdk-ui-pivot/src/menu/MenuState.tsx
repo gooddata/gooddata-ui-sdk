@@ -13,7 +13,7 @@ export interface IMenuStateProps extends IMenuStateConfig {
 }
 
 export interface IMenuStateState {
-    opened: boolean;
+    opened?: boolean;
 }
 
 export default class MenuState extends React.Component<IMenuStateProps, IMenuStateState> {
@@ -25,13 +25,13 @@ export default class MenuState extends React.Component<IMenuStateProps, IMenuSta
         super(props);
 
         this.state = {
-            opened: this.isControlled() ? this.props.opened : this.props.defaultOpened,
+            opened: this.isControlled() ? this.props.opened : this.props.defaultOpened!,
         };
     }
 
     public render(): React.ReactNode {
         return this.props.children({
-            opened: this.isControlled() ? this.props.opened : this.state.opened,
+            opened: (this.isControlled() ? this.props.opened : this.state.opened) ?? false,
             onOpenedChange: this.onOpenedChange,
         });
     }
