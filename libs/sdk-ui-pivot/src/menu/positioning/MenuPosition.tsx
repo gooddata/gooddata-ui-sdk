@@ -47,7 +47,7 @@ export default class MenuPosition extends React.Component<IMenuPositionProps, IM
         togglerElInitialized: false,
     };
 
-    private togglerEl: HTMLElement = null;
+    private togglerEl: HTMLElement | null = null;
 
     // React Measure is not used because it cannot detect the left/top coordinate
     // changes of absolute positioned blocks. This caused problems where left/top
@@ -71,7 +71,7 @@ export default class MenuPosition extends React.Component<IMenuPositionProps, IM
         // any element specified in targetElement prop). Any submenus are rendered
         // inside of previous menu, so they do not need any portals.
 
-        const ContentWrapper = contentWrapper;
+        const ContentWrapper = contentWrapper as React.ComponentType;
 
         const MaybeWrapper = topLevelMenu ? React.Fragment : Wrapper;
 
@@ -100,7 +100,7 @@ export default class MenuPosition extends React.Component<IMenuPositionProps, IM
         );
     }
 
-    private setTogglerEl = (el: HTMLElement) => {
+    private setTogglerEl = (el: HTMLElement | null) => {
         this.togglerEl = el;
         this.setState({
             togglerElInitialized: true,

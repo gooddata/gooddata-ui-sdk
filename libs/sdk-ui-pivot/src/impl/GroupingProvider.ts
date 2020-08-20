@@ -40,7 +40,7 @@ class DefaultGroupingProvider implements IGroupingProvider {
 class AttributeGroupingProvider implements IGroupingProvider {
     private itemUris: IAttributesRowItemUris;
     private itemRepetitions: IAttributesRowItemRepetitions;
-    private repetitionsCounts: number[];
+    private repetitionsCounts: number[] | null;
     private maxRepetitions: number;
 
     constructor() {
@@ -94,7 +94,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
     private update() {
         this.repetitionsCounts = null;
         this.maxRepetitions = 0;
-        let previousColumnId: string = null;
+        let previousColumnId: string | null = null;
 
         Object.keys(this.itemUris).forEach((columnId) => {
             const rowCount = this.itemUris[columnId].length;
@@ -112,15 +112,15 @@ class AttributeGroupingProvider implements IGroupingProvider {
             previousColumnId = columnId;
         });
 
-        this.maxRepetitions = max(this.repetitionsCounts);
+        this.maxRepetitions = max(this.repetitionsCounts) ?? 0;
     }
 
     private updateAttributeColumn(
         itemUris: string[],
         itemRepetitions: boolean[],
-        previousAttributeItemRepetitions: boolean[],
+        previousAttributeItemRepetitions: boolean[] | null,
     ) {
-        let previousItemUri: string = null;
+        let previousItemUri: string | null = null;
         itemUris.forEach((itemUri, rowIndex) => {
             let repeatedItem = previousItemUri === itemUri;
             if (previousAttributeItemRepetitions !== null) {
@@ -129,7 +129,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
 
             if (repeatedItem) {
                 itemRepetitions[rowIndex] = true;
-                this.repetitionsCounts[rowIndex] += 1;
+                this.repetitionsCounts![rowIndex] += 1;
             }
 
             previousItemUri = itemUri;

@@ -39,7 +39,7 @@ export const sanitizeField = (field: string): string =>
 // returns [attributeId, attributeValueId]
 // attributeValueId can be null if supplied with attribute uri instead of attribute value uri
 export const getIdsFromUri = (uri: string, sanitize = true): (string | null)[] => {
-    const [, attributeId, , attributeValueId = null] = uri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)?$/);
+    const [, attributeId, , attributeValueId = null] = uri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)?$/)!;
     return [attributeId, attributeValueId].map((id: string | null) =>
         id && sanitize ? sanitizeField(id) : id,
     );
@@ -65,7 +65,7 @@ export const getRowNodeId = (item: IGridRow["headerItemMap"]): string => {
             }
 
             const uri = getMappingHeaderUri(mappingHeader);
-            const ids = getIdsFromUri(uri);
+            const ids = getIdsFromUri(uri!);
             return `${key}${ID_SEPARATOR}${ids[1]}`;
         })
         .join(FIELD_SEPARATOR);
@@ -86,7 +86,7 @@ export const cellRenderer = (params: ICellRendererParams): string => {
         params.data &&
         params.data.rowTotalActiveMeasures &&
         params.data.rowTotalActiveMeasures.some((measureColId: string) =>
-            params.colDef.field.endsWith(measureColId),
+            params.colDef.field!.endsWith(measureColId),
         );
 
     const formattedValue =
@@ -101,14 +101,14 @@ export const getTreeLeaves = (
     tree: IGridHeader[] | IGridHeader,
     getChildren = (node: any) => node && node.children,
 ): IGridHeader[] => {
-    const leaves = [];
+    const leaves: IGridHeader[] = [];
     const nodes = Array.isArray(tree) ? [...tree] : [tree];
     let node;
     let children;
     while (
         ((node = nodes.shift()),
         (children = getChildren(node)),
-        (children && children.length) || (leaves.push(node) && nodes.length))
+        (children && children.length) || (leaves.push(node!) && nodes.length))
     ) {
         if (children) {
             nodes.push(...children);
@@ -123,7 +123,7 @@ export const indexOfTreeNode = (
     matchNode = (nodeA: any, nodeB: any) => nodeA === nodeB,
     getChildren = (node: any) => (node && node.children) || [],
     indexes: number[] = [],
-): number[] => {
+): number[] | null => {
     const nodes = Array.isArray(tree) ? [...tree] : [tree];
     for (let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
         const currentNode = nodes[nodeIndex];
@@ -151,20 +151,19 @@ export function getMeasureFormat(gridHeader: IGridHeader, result: IExecutionResu
         throw new Error(`Cannot get measure format from header ${Object.keys(header)}`);
     }
 
-    const measureIndex = gridHeader.measureIndex;
+    const measureIndex = gridHeader.measureIndex!;
     return header.measureGroupHeader.items[measureIndex].measureHeaderItem.format;
 }
 
-export function getSubtotalStyles(dimension: IDimension): string[] {
+export function getSubtotalStyles(dimension: IDimension | undefined): (string | null)[] {
     if (!dimension || !dimension.totals) {
         return [];
     }
 
     let even = false;
     const subtotalStyles = dimension.itemIdentifiers.slice(1).map((attributeIdentifier) => {
-        const hasSubtotal = dimension.totals.some(
-            (total) => total.attributeIdentifier === attributeIdentifier,
-        );
+        const hasSubtotal =
+            dimension.totals?.some((total) => total.attributeIdentifier === attributeIdentifier) ?? false;
 
         if (hasSubtotal) {
             even = !even;
@@ -204,8 +203,8 @@ export function getAttributeLocators(
         );
         return {
             attributeLocatorItem: {
-                attributeIdentifier: attributeHeaderMatch.attributeHeader.localIdentifier,
-                element: `${attributeHeaderMatch.attributeHeader.formOf.uri}/elements?id=${fieldValueId}`,
+                attributeIdentifier: attributeHeaderMatch!.attributeHeader.localIdentifier,
+                element: `${attributeHeaderMatch!.attributeHeader.formOf.uri}/elements?id=${fieldValueId}`,
             },
         };
     });
@@ -213,7 +212,7 @@ export function getAttributeLocators(
 
 export const getColumnIdentifierFromDef = (colDef: IGridHeader | ColDef): string => {
     // field should be always present, fallback to colId could happen for empty columns
-    return colDef.field || colDef.colId;
+    return colDef.field || colDef.colId!;
 };
 
 export const getColumnIdentifier = (item: Column | IGridHeader | ColDef): string => {

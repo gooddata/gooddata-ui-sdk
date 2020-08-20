@@ -46,15 +46,17 @@ const getCell = (
     rowHeader: IGridHeader,
     rowHeaderIndex: number,
     intl: IntlShape,
-): {
-    field: string;
-    value: string;
-    rowHeaderDataItem: IResultHeader;
-    isSubtotal: boolean;
-} => {
+):
+    | {
+          field: string;
+          value: string | null;
+          rowHeaderDataItem: IResultHeader;
+          isSubtotal: boolean;
+      }
+    | undefined => {
     const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
     const cell = {
-        field: rowHeader.field,
+        field: rowHeader.field!,
         rowHeaderDataItem,
         isSubtotal: false,
     };
@@ -90,7 +92,7 @@ export function getRow(
     columnFields: string[],
     rowHeaders: IGridHeader[],
     rowHeaderData: IResultHeader[][],
-    subtotalStyles: string[],
+    subtotalStyles: (string | null)[],
     intl: IntlShape,
 ): IGridRow {
     const row: IGridRow = {
@@ -104,12 +106,12 @@ export function getRow(
             rowHeader,
             rowHeaderIndex,
             intl,
-        );
+        )!;
         if (isSubtotal) {
             row.type = ROW_SUBTOTAL;
 
             if (!row.subtotalStyle) {
-                row.subtotalStyle = subtotalStyles[rowHeaderIndex];
+                row.subtotalStyle = subtotalStyles[rowHeaderIndex] ?? undefined;
             }
         }
 
@@ -126,7 +128,11 @@ export function getRow(
     return row;
 }
 
-export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: IntlShape): IGridTotalsRow[] => {
+export const getRowTotals = (
+    dv: DataViewFacade,
+    columnKeys: string[],
+    intl: IntlShape,
+): IGridTotalsRow[] | null => {
     if (!dv.rawData().hasTotals()) {
         return null;
     }
@@ -139,7 +145,7 @@ export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: Int
         .map((m) => m.measureHeaderItem.localIdentifier);
     const totalDefs = dv.definition.dimensions[0].totals;
 
-    return totals[0].map((totalRow: string[], totalIndex: number) => {
+    return totals![0].map((totalRow: string[], totalIndex: number) => {
         const attributeKeys: string[] = [];
         const measureKeys: string[] = [];
 
@@ -156,7 +162,7 @@ export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: Int
         });
 
         const [totalAttributeKey] = attributeKeys;
-        const totalAttributeId: string = totalAttributeKey.split(ID_SEPARATOR).pop();
+        const totalAttributeId: string = totalAttributeKey.split(ID_SEPARATOR).pop()!;
 
         const totalAttrDescriptor: IAttributeDescriptor = headers.find(
             (dimItem: IDimensionItemDescriptor) =>
@@ -168,14 +174,14 @@ export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: Int
 
         const measureCells = zipObject(measureKeys, totalRow);
 
-        const grandTotalName =
-            totalAttrDescriptor.attributeHeader.totalItems[totalIndex].totalHeaderItem.name;
+        const grandTotalName = totalAttrDescriptor.attributeHeader.totalItems![totalIndex].totalHeaderItem
+            .name;
         const grandTotalAttributeIdentifier = totalAttrDescriptor.attributeHeader.localIdentifier;
 
         // create measure ids in the form of "m_index" for measures having the current type of grand total
         // this makes it easier to match against in the cell renderer
         const rowTotalActiveMeasures = totalDefs
-            .filter(
+            ?.filter(
                 (t) => t.type === grandTotalName && t.attributeIdentifier === grandTotalAttributeIdentifier,
             )
             .map((t) => `m_${measureIds.indexOf(t.measureIdentifier)}`);
@@ -216,14 +222,14 @@ export function createRowData(
 
     const minimalRowData: DataValue[][] = getMinimalRowData(dv);
 
-    const subtotalStyles = getSubtotalStyles(dimensions ? dimensions[0] : null);
+    const subtotalStyles = getSubtotalStyles(dimensions?.[0]);
     const rowData = minimalRowData.map((dataRow: DataValue[], dataRowIndex: number) =>
         getRow(dataRow, dataRowIndex, colFields, rowHeaders, headerItems[0], subtotalStyles, intl),
     );
 
     const columnKeys = [...rowFields, ...colFields];
 
-    const rowTotals = getRowTotals(dv, columnKeys, intl);
+    const rowTotals = getRowTotals(dv, columnKeys, intl)!;
 
     return {
         columnDefs: allHeaders,

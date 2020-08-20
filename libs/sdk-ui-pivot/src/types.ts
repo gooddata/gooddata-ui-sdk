@@ -114,7 +114,7 @@ export interface ITableCellStyleAndFormattedValue {
 }
 
 export function isAttributeCell(cell: TableCell): cell is IAttributeCell {
-    return cell && (cell as IAttributeCell).uri !== undefined;
+    return (cell as IAttributeCell)?.uri !== undefined;
 }
 
 /**

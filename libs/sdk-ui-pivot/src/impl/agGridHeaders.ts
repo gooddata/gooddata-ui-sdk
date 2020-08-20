@@ -35,7 +35,7 @@ import {
 import { ColDef } from "@ag-grid-community/all-modules";
 import range from "lodash/range";
 import clone from "lodash/clone";
-import invariant from "ts-invariant";
+import invariant, { InvariantError } from "ts-invariant";
 
 /*
  * All code related to transforming headers from our backend to ag-grid specific data structures
@@ -51,19 +51,19 @@ export const identifyHeader = (header: IResultHeader): string => {
     if (isResultTotalHeader(header)) {
         return `t${ID_SEPARATOR}${header.totalHeaderItem.type}`;
     }
-    invariant(false, `Unknown header type: ${JSON.stringify(header)}`);
+    throw new InvariantError(`Unknown header type: ${JSON.stringify(header)}`);
 };
 
-export const identifyResponseHeader = (header: IDimensionItemDescriptor): string | null => {
+export const identifyResponseHeader = (header: IDimensionItemDescriptor): string | undefined => {
     if (isAttributeDescriptor(header)) {
         // response headers have no value id
         return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeader.uri)[0]}`;
     }
     if (isMeasureGroupDescriptor(header)) {
         // trying to identify a measure group would be ambiguous
-        return null;
+        return undefined;
     }
-    invariant(false, `Unknown response header type: ${JSON.stringify(header)}`);
+    throw new InvariantError(`Unknown response header type: ${JSON.stringify(header)}`);
 };
 
 export const headerToGrid = (
@@ -121,7 +121,7 @@ export const getColumnHeaders = (
     columnDefOptions: IColumnDefOptions = {},
     headerIndex = 0,
     headerItemStartIndex = 0,
-    headerValueEnd: number = undefined,
+    headerValueEnd?: number,
     fieldPrefix = "",
     parentDrillItems: IMappingHeader[] = [],
 ): IGridHeader[] => {
@@ -239,7 +239,7 @@ export function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
 }
 
 const assignSorting = (colDef: ColDef, sortingMap: { [key: string]: string }): void => {
-    const direction = sortingMap[colDef.field];
+    const direction = sortingMap[colDef.field!];
     if (direction) {
         colDef.sort = direction;
     }
@@ -260,8 +260,8 @@ export const getAttributeSortItemFieldAndDirection = (
     );
     invariant(sortHeader, `Could not find sortHeader with localIdentifier ${localIdentifier}`);
 
-    const field = identifyResponseHeader(sortHeader);
-    return [field, sortItem.attributeSortItem.direction];
+    const field = identifyResponseHeader(sortHeader!);
+    return [field!, sortItem.attributeSortItem.direction];
 };
 
 /**
@@ -343,7 +343,7 @@ export function createTableHeaders(dataView: IDataView, options: IGridAdapterOpt
 
     const rowHeaders: IGridHeader[] =
         // There are supposed to be only attribute headers on the first dimension
-        getRowHeaders(dimensions[0].headers as IAttributeDescriptor[], columnDefOptions, makeRowGroups);
+        getRowHeaders(dimensions[0].headers as IAttributeDescriptor[], columnDefOptions!, makeRowGroups);
 
     const allHeaders: IGridHeader[] = [...rowHeaders, ...groupColumnHeaders].map((column, index) => {
         if (column.children) {
@@ -358,7 +358,7 @@ export function createTableHeaders(dataView: IDataView, options: IGridAdapterOpt
     });
 
     const colFields: string[] = getFields(headerItems[1]);
-    const rowFields: string[] = rowHeaders.map((header) => header.field);
+    const rowFields: string[] = rowHeaders.map((header) => header.field!);
 
     const leafColumnDefs = getTreeLeaves(allHeaders);
     if (leafColumnDefs[0]) {

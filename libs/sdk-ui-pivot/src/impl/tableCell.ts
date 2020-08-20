@@ -13,7 +13,11 @@ import {
 } from "../types";
 import { isMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
-function getFormattedNumber(cellContent: MeasureCell, format: string, separators: ISeparators): string {
+function getFormattedNumber(
+    cellContent: MeasureCell,
+    format: string,
+    separators: ISeparators | undefined,
+): string {
     const parsedNumber: string | number =
         cellContent === null ? "" : typeof cellContent === "string" ? parseFloat(cellContent) : cellContent;
 
@@ -34,7 +38,7 @@ export function getCellClassNames(rowIndex: number, columnIndex: number, isDrill
 export function getMeasureCellFormattedValue(
     cellContent: MeasureCell,
     format: string,
-    separators: ISeparators,
+    separators: ISeparators | undefined,
 ): string {
     const formattedNumber = getFormattedNumber(cellContent, format, separators);
     const { label } = colors2Object(formattedNumber);
@@ -45,7 +49,7 @@ export function getMeasureCellFormattedValue(
 export function getMeasureCellStyle(
     cellContent: MeasureCell,
     format: string,
-    separators: ISeparators,
+    separators: ISeparators | undefined,
     applyColor: boolean,
 ): ITableCellStyle {
     const formattedNumber = getFormattedNumber(cellContent, format, separators);

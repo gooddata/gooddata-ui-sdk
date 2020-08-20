@@ -42,7 +42,7 @@ Object {
       },
     },
   },
-  "subtotalStyle": null,
+  "subtotalStyle": undefined,
   "type": "rowSubtotal",
 }
 `;

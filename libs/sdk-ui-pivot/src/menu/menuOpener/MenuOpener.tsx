@@ -9,7 +9,7 @@ export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     opened: boolean;
     onOpenedChange: OnOpenedChange;
     openAction?: OpenAction;
-    portalTarget?: Element;
+    portalTarget?: Element | null;
     toggler: React.ReactNode;
     togglerWrapperClassName?: string;
     children: React.ReactNode;
@@ -27,7 +27,7 @@ export default class MenuOpener extends React.Component<IMenuOpenerProps> {
     };
 
     public render(): React.ReactNode {
-        const Component = this.getComponentByOpenAction();
+        const Component = this.getComponentByOpenAction() as React.ElementType;
 
         return (
             <Component

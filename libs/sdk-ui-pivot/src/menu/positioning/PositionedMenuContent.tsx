@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import React from "react";
+import React, { createRef } from "react";
 import {
     getViewportDimensionsAndCoords,
     getElementDimensions,
@@ -10,7 +10,7 @@ import { IMenuPositionConfig } from "../MenuSharedTypes";
 
 export interface IPositionedMenuContentProps extends IMenuPositionConfig {
     topLevelMenu: boolean;
-    togglerEl: HTMLElement;
+    togglerEl: HTMLElement | null;
     children: React.ReactNode;
 }
 
@@ -28,7 +28,7 @@ export default class PositionedMenuContent extends React.Component<
         top: 0,
     };
 
-    private menuEl: HTMLElement = null;
+    private menuElRef = createRef<HTMLDivElement>();
 
     public componentDidUpdate(prevProps: IPositionedMenuContentProps): void {
         if (
@@ -60,7 +60,7 @@ export default class PositionedMenuContent extends React.Component<
                     left: this.state.left,
                     top: this.state.top,
                 }}
-                ref={this.setElMenu}
+                ref={this.menuElRef}
             >
                 {this.props.children}
             </div>
@@ -77,18 +77,14 @@ export default class PositionedMenuContent extends React.Component<
         window.removeEventListener("scroll", this.positionMenu, true);
     }
 
-    private setElMenu = (el: HTMLElement) => {
-        this.menuEl = el;
-    };
-
     private positionMenu = () => {
-        if (!this.props.togglerEl || !this.menuEl) {
+        if (!this.props.togglerEl || !this.menuElRef.current) {
             return;
         }
 
         const { left, top } = calculateMenuPosition({
             toggler: getElementDimensionsAndCoords(this.props.togglerEl),
-            menu: getElementDimensions(this.menuEl),
+            menu: getElementDimensions(this.menuElRef.current),
             viewport: getViewportDimensionsAndCoords(),
             alignment: this.props.alignment,
             spacing: this.props.spacing,

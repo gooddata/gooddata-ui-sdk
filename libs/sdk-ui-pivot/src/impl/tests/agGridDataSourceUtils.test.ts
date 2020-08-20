@@ -54,7 +54,7 @@ describe("getGridDataSourceUtils", () => {
             },
         };
         const emptyTotalRows: IGridTotalsRow[] = [];
-        const noTotalRows: IGridTotalsRow[] = null;
+        const noTotalRows: IGridTotalsRow[] | null = null;
         const oneTotalRows: IGridTotalsRow[] = [totalSum];
 
         it.each([

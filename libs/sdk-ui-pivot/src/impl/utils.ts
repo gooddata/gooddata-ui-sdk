@@ -19,7 +19,7 @@ const getScrollbarWidthBody = (): number => {
     const widthWithScroll = inner.offsetWidth;
 
     // remove divs
-    outer.parentNode.removeChild(outer);
+    outer.parentNode?.removeChild(outer);
 
     return widthNoScroll - widthWithScroll;
 };

@@ -57,7 +57,7 @@ export class AgGridDatasource implements IDatasource {
 
     private processData = (dv: DataViewFacade, params: IGetRowsParams): void => {
         if (!dv) {
-            return null;
+            return;
         }
 
         const { successCallback } = params;
@@ -71,7 +71,7 @@ export class AgGridDatasource implements IDatasource {
 
         const rowAttributeIds = columnDefs
             .filter((columnDef) => columnDef.type === ROW_ATTRIBUTE_COLUMN)
-            .map((columnDef) => columnDef.field);
+            .map((columnDef) => columnDef.field!);
 
         this.grouping.processPage(rowData, offset[0], rowAttributeIds);
 
@@ -83,7 +83,7 @@ export class AgGridDatasource implements IDatasource {
 
         // set totals
         if (areTotalsChanged(this.gridApiProvider(), rowTotals)) {
-            this.gridApiProvider().setPinnedBottomRowData(rowTotals);
+            this.gridApiProvider()?.setPinnedBottomRowData(rowTotals);
         }
     };
 
@@ -119,7 +119,8 @@ export class AgGridDatasource implements IDatasource {
                 this.currentResult = newResult;
 
                 newResult
-                    .readWindow([startRow, 0], [endRow - startRow, undefined])
+                    // the as any cast is fishy but I did not want to change if as it could have unforeseen consequences
+                    .readWindow([startRow, 0], [endRow - startRow, undefined as any])
                     .then((data) => {
                         const dv = DataViewFacade.for(data);
                         this.gridApiProvider()?.setInfiniteRowCount(data.totalCount[0]);

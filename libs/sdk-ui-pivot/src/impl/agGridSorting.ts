@@ -20,7 +20,7 @@ import {
     SortDirection,
 } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import invariant from "ts-invariant";
+import invariant, { InvariantError } from "ts-invariant";
 
 /*
  * All code related to sorting the ag-grid backed Pivot Table is concentrated here
@@ -61,7 +61,7 @@ export const getSortItemByColId = (
                     : newAttributeSort(attributeLocalId, direction);
             }
         }
-        invariant(false, `could not find attribute header matching ${colId}`);
+        throw new InvariantError(`could not find attribute header matching ${colId}`);
     } else if (lastFieldType === FIELD_TYPE_MEASURE) {
         const headerItem = measureDescriptors[parseInt(lastFieldId, 10)];
         const attributeLocators = getAttributeLocators(fields, attributeDescriptors);
@@ -80,7 +80,7 @@ export const getSortItemByColId = (
             },
         };
     }
-    invariant(false, `could not find header matching ${colId}`);
+    throw new InvariantError(`could not find header matching ${colId}`);
 };
 
 export function getSortsFromModel(sortModel: ISortModelItem[], result: IExecutionResult): ISortItem[] {

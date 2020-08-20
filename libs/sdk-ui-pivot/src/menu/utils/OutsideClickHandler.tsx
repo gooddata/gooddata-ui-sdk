@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import React from "react";
+import React, { createRef } from "react";
 
 export interface IOutsideClickHandlerProps {
     onOutsideClick: (e: MouseEvent) => void;
@@ -13,7 +13,7 @@ export default class OutsideClickHandler extends React.Component<IOutsideClickHa
         useCapture: true,
     };
 
-    private wrapperEl: HTMLElement = null;
+    private wrapperElRef = createRef<HTMLDivElement>();
 
     public componentDidUpdate(prevProps: IOutsideClickHandlerProps): void {
         if (
@@ -34,20 +34,16 @@ export default class OutsideClickHandler extends React.Component<IOutsideClickHa
     }
 
     public render(): React.ReactNode {
-        return <div ref={this.setWrapperEl}>{this.props.children}</div>;
+        return <div ref={this.wrapperElRef}>{this.props.children}</div>;
     }
 
-    private setWrapperEl = (el: HTMLElement) => {
-        this.wrapperEl = el;
-    };
-
     private handleClick = (e: MouseEvent) => {
-        if (!this.wrapperEl) {
+        if (!this.wrapperElRef.current) {
             // In IE11 the wrapperEl is not initialized for some reason.
             return;
         }
 
-        if (this.wrapperEl.contains(e.target as HTMLElement)) {
+        if (this.wrapperElRef.current.contains(e.target as HTMLElement)) {
             return;
         }
 

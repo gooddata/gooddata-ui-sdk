@@ -30,7 +30,7 @@ export default class ColumnGroupHeader extends React.Component<IProps> {
                 enableSorting={false}
                 menuPosition={ALIGN_LEFT}
                 textAlign={ALIGN_LEFT}
-                menu={showMenu ? menu() : null}
+                menu={showMenu ? menu?.() : undefined}
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
                 colId={columnGroupDef.field}
                 getExecutionDefinition={this.props.getExecutionDefinition}
