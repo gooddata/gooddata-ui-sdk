@@ -42,10 +42,12 @@ export class GoodDataAuthProvider implements IAuthenticationProvider {
     }
 
     public async deauthenticate(): Promise<void> {
+        // eslint-disable-next-line no-warning-comments
         // TODO: SDK8 Decide whether to implement this or remove it
     }
 
     public async getCurrentPrincipal(): Promise<AuthenticatedPrincipal | null> {
+        // eslint-disable-next-line no-warning-comments
         // TODO: SDK8 Decide whether to implement this or remove it
         return null;
     }

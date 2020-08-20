@@ -566,15 +566,19 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
 
-        if (this.isTableInitializing()) {
-            return this.renderLoading();
-        }
-
         const style: React.CSSProperties = {
             height: desiredHeight || "100%",
             position: "relative",
             overflow: "hidden",
         };
+
+        if (this.isTableInitializing()) {
+            return (
+                <div className="gd-table-component" style={style}>
+                    {this.renderLoading()}
+                </div>
+            );
+        }
 
         if (!this.gridOptions) {
             this.gridOptions = this.createGridOptions();

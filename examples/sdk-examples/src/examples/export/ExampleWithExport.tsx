@@ -82,8 +82,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
             mergeHeaders,
         };
         if (includeFilterContext && filters) {
-            // TODO: RAIL-2260 Make exports work
-            // exportConfig.showFilters = filters;
+            exportConfig.showFilters = true;
         }
         setState((oldState) => ({ ...oldState, showExportDialog: false, exportConfig }));
     };

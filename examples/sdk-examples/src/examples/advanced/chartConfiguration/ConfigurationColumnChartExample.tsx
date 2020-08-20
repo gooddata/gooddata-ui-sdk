@@ -11,6 +11,8 @@ interface IConfigurationColumnChartExampleState {
     customSeparatorUsed: boolean;
 }
 
+const style = { height: 300 };
+
 export class ConfigurationColumnChartExample extends Component<
     unknown,
     IConfigurationColumnChartExampleState
@@ -70,7 +72,7 @@ export class ConfigurationColumnChartExample extends Component<
     };
 
     public render(): React.ReactNode {
-        // const { config } = this.state;
+        const { config } = this.state;
 
         return (
             <div>
@@ -87,12 +89,8 @@ export class ConfigurationColumnChartExample extends Component<
                         Change separator
                     </button>
 
-                    <div style={{ height: 300 }}>
-                        <InsightView
-                            insight={Ldm.Insights.ColumnsChart}
-                            // TODO: SDK8 Decide whether add dimesion prop to InsightView
-                            // config={config}
-                        />
+                    <div style={style}>
+                        <InsightView insight={Ldm.Insights.ColumnsChart} config={config} />
                     </div>
                 </div>
             </div>

@@ -9,5 +9,8 @@ module.exports = {
         "plugin:import/typescript",
         "../../.eslintrc.react.js",
     ],
+    rules: {
+        "no-warning-comments": "error",
+    },
     parserOptions: { tsconfigRootDir: __dirname },
 };
