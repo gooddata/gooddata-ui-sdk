@@ -100,7 +100,7 @@ export const PUSHPIN_SIZE_OPTIONS_MAP = {
 };
 export const DEFAULT_CLUSTER_RADIUS = 50; // inside this Radius, points will be clustered (defaults to 50)
 
-export const DEFAULT_DATA_POINTS_LIMIT = 2000;
+export const DEFAULT_DATA_POINTS_LIMIT = 25000;
 export const DEFAULT_DATA_SOURCE_NAME = "gdcPushpinsData";
 export const DEFAULT_LAYER_NAME = "gdcPushpins";
 
