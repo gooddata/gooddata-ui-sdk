@@ -87,7 +87,7 @@ function getDefaultBarChartSort(
         return [newAttributeAreaSort(viewBy[0], SORT_DIR_DESC)];
     }
 
-    return !isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];
+    return isEmpty(stackBy) && !isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];
 }
 
 export function getDefaultTreemapSortFromBuckets(

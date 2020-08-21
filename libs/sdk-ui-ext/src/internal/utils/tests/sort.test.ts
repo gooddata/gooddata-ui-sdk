@@ -156,21 +156,8 @@ describe("createSorts", () => {
                 expect(createSorts("bar", insightWithTwoMeasuresAndTwoViewBy, true)).toEqual(expectedSort);
             });
 
-            it("should return area sort for stacked bar chart", () => {
-                const expectedSort: ISortItem[] = [
-                    {
-                        measureSortItem: {
-                            direction: "desc",
-                            locators: [
-                                {
-                                    measureLocatorItem: {
-                                        measureIdentifier: "m1",
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                ];
+            it("should return no sort for stacked bar chart with only measure", () => {
+                const expectedSort: ISortItem[] = [];
                 expect(createSorts("bar", insightWithSingleMeasureAndStack)).toEqual(expectedSort);
             });
         });
