@@ -114,7 +114,7 @@
         "eslint-plugin-prettier": "^3.1.4",
         "eslint-plugin-react": "^7.20.5",
         "eslint-plugin-react-hooks": "^4.0.8",
-        "mapbox-gl": "^1.6.1",
+        "mapbox-gl": "^1.9.1",
         "prettier": "~2.0.5",
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
