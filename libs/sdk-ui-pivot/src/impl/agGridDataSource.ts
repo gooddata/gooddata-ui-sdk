@@ -9,8 +9,16 @@ import { GroupingProviderFactory, IGroupingProvider } from "./GroupingProvider";
 import { createRowData } from "./agGridData";
 import { areTotalsChanged, isInvalidGetRowsRequest } from "./agGridDataSourceUtils";
 import isEqual from "lodash/isEqual";
-import { dimensionSetTotals, ITotal, ISortItem, defTotals } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import {
+    dimensionSetTotals,
+    ITotal,
+    ISortItem,
+    defTotals,
+    bucketAttributes,
+    isAttributeSort,
+    attributeLocalId,
+} from "@gooddata/sdk-model";
+import { DataViewFacade, BucketNames } from "@gooddata/sdk-ui";
 
 export function createAgGridDatasource(
     config: DatasourceConfig,
@@ -39,16 +47,23 @@ export class AgGridDatasource implements IDatasource {
         this.currentResult = initialDv.result();
         this.currentSorts = initialDv.meta().effectiveSortItems();
 
-        this.resetGroupingProvider();
+        // we do not have a sortModel yet so we need to check the dataView itself if the sorting makes sense
+        const isInitialDvSortedByFirstAttribute = isDataViewSortedByFirstAttribute(initialDv);
+
+        this.setGroupingProvider(isInitialDvSortedByFirstAttribute);
     }
 
-    private resetGroupingProvider = (sortModel: ISortModelItem[] = []): void => {
-        const sortedByFirst = isSortedByFirstAttribute(this.config.headers, sortModel);
-
+    private setGroupingProvider = (isSortedByFirst: boolean) => {
         // grouping happens under two conditions: it is desired & the data is sorted by first column
-        const shouldGroup = this.config.getGroupRows() && sortedByFirst;
+        const shouldGroup = this.config.getGroupRows() && isSortedByFirst;
 
         this.grouping = GroupingProviderFactory.createProvider(shouldGroup);
+    };
+
+    private resetGroupingProvider = (sortModel: ISortModelItem[] = []): void => {
+        const isSortedByFirst = isSortedByFirstAttribute(this.config.headers, sortModel);
+
+        this.setGroupingProvider(isSortedByFirst);
     };
 
     private onDestroy = (): void => {
@@ -215,4 +230,34 @@ function isSortedByFirstAttribute(headers: TableHeaders, sortModel: ISortModelIt
     }
 
     return headers.allHeaders[0].field === sortModel[0].colId;
+}
+
+function isDataViewSortedByFirstAttribute(dv: DataViewFacade): boolean {
+    const { sortBy } = dv.definition;
+    if (!sortBy || !sortBy.length) {
+        // this is somewhat dangerous assumption: no explicit sort == sorted by first col
+        //  (bear backend behaves thusly)
+        return true;
+    }
+
+    if (sortBy.length > 1) {
+        return false;
+    }
+
+    const firstSortBy = sortBy[0];
+    if (!isAttributeSort(firstSortBy)) {
+        return false;
+    }
+
+    const attributeBucket = dv.def().bucket(BucketNames.ATTRIBUTE);
+    if (!attributeBucket) {
+        return false;
+    }
+
+    const firstAttribute = bucketAttributes(attributeBucket)[0];
+    if (!firstAttribute) {
+        return false;
+    }
+
+    return firstSortBy.attributeSortItem.attributeIdentifier === attributeLocalId(firstAttribute);
 }
