@@ -7,5 +7,6 @@ import customization from "./customization";
 import sorting from "./sorting";
 import totals from "./totals";
 import drilling from "./drilling";
+import grouping from "./grouping";
 
-export default [base, autoresize, ...manualSizing, customization, sorting, totals, drilling];
+export default [base, autoresize, ...manualSizing, customization, sorting, totals, drilling, grouping];
