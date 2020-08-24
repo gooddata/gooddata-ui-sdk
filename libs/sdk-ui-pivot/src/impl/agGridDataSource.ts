@@ -14,7 +14,7 @@ import {
     ITotal,
     ISortItem,
     defTotals,
-    bucketAttributes,
+    bucketAttribute,
     isAttributeSort,
     attributeLocalId,
 } from "@gooddata/sdk-model";
@@ -254,7 +254,7 @@ function isDataViewSortedByFirstAttribute(dv: DataViewFacade): boolean {
         return false;
     }
 
-    const firstAttribute = bucketAttributes(attributeBucket)[0];
+    const firstAttribute = bucketAttribute(attributeBucket);
     if (!firstAttribute) {
         return false;
     }
