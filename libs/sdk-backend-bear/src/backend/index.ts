@@ -21,7 +21,7 @@ import { BearWorkspace } from "./workspace";
 import { BearWorkspaceQueryFactory } from "./workspaces";
 import { BearUserService } from "./user";
 import { convertInsight } from "../convertors/toBackend/InsightConverter";
-import { GdcUser, GdcProjectDashboard } from "@gooddata/api-model-bear";
+import { GdcUser, GdcProjectDashboard, GdcMetadataObject } from "@gooddata/api-model-bear";
 import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
 import {
     IAuthProviderCallGuard,
@@ -65,6 +65,8 @@ export type BearBackendConfig = {
 
 /**
  * BearBackend-specific legacy functions.
+ * Do not use these functions to implement any new functionality! These are here only to support certain
+ * legacy cases where migration to proper sdk-backend-spi API is not feasible/wanted.
  */
 type BearLegacyFunctions = {
     openAsReport?(workspace: string, insight: IInsight): Promise<string>;
@@ -81,6 +83,11 @@ type BearLegacyFunctions = {
         postMessageData: IDrillableItemsCommandBody,
     ): Promise<IDrillableItemsCommandBody>;
     getProjectDashboards?(workspace: string): Promise<GdcProjectDashboard.IWrappedProjectDashboard[]>;
+    getUrisFromIdentifiers?(
+        workspace: string,
+        identifiers: string[],
+    ): Promise<{ uri: string; identifier: string }[]>;
+    getObjectsByUri?(workspace: string, uris: string[]): Promise<GdcMetadataObject.WrappedObject[]>;
 };
 
 /**
@@ -169,8 +176,16 @@ export class BearBackend implements IAnalyticalBackend {
                             this.authApiCall((sdk) => sdk.md.getUrisFromIdentifiers(workspace, identifiers)),
                     ),
 
-                getProjectDashboards: (workspace: string) => {
+                getProjectDashboards: (workspace) => {
                     return this.authApiCall((sdk) => sdk.md.getProjectDashboards(workspace));
+                },
+
+                getUrisFromIdentifiers: (workspace, identifiers) => {
+                    return this.authApiCall((sdk) => sdk.md.getUrisFromIdentifiers(workspace, identifiers));
+                },
+
+                getObjectsByUri: (workspace, uris) => {
+                    return this.authApiCall((sdk) => sdk.md.getObjects(workspace, uris));
                 },
             };
 
