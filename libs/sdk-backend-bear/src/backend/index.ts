@@ -21,7 +21,12 @@ import { BearWorkspace } from "./workspace";
 import { BearWorkspaceQueryFactory } from "./workspaces";
 import { BearUserService } from "./user";
 import { convertInsight } from "../convertors/toBackend/InsightConverter";
-import { GdcUser, GdcProjectDashboard, GdcMetadataObject } from "@gooddata/api-model-bear";
+import {
+    GdcUser,
+    GdcProjectDashboard,
+    GdcMetadataObject,
+    GdcVisualizationObject,
+} from "@gooddata/api-model-bear";
 import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
 import {
     IAuthProviderCallGuard,
@@ -88,6 +93,7 @@ type BearLegacyFunctions = {
         identifiers: string[],
     ): Promise<{ uri: string; identifier: string }[]>;
     getObjectsByUri?(workspace: string, uris: string[]): Promise<GdcMetadataObject.WrappedObject[]>;
+    getVisualizationObject?(workspace: string, uri: string): Promise<GdcVisualizationObject.IVisualization>;
 };
 
 /**
@@ -186,6 +192,17 @@ export class BearBackend implements IAnalyticalBackend {
 
                 getObjectsByUri: (workspace, uris) => {
                     return this.authApiCall((sdk) => sdk.md.getObjects(workspace, uris));
+                },
+
+                getVisualizationObject: (workspace, uri) => {
+                    return this.authApiCall(async (sdk) => {
+                        const [visObject] = await sdk.md.getObjects<GdcVisualizationObject.IVisualization>(
+                            workspace,
+                            [uri],
+                        );
+
+                        return visObject;
+                    });
                 },
             };
 
