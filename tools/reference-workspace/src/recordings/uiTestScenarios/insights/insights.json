@@ -1798,5 +1798,26 @@
         "visName": "PivotTable",
         "scenarioName": "two measures with three rows and two column attributes",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with three rows and two column attributes."
+    },
+    "PivotTable.7ed44fbdacb32c831096274a514d13e1": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with drill on all row atributes."
+    },
+    "PivotTable.a67421af5053da63004557acae0d9187": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with drill on all row attributes and measures."
+    },
+    "PivotTable.f859c3e05d9f78d4722bb20eabda7fc2": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure pivot with grouping sorted by first row attr",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot with grouping sorted by first row attr."
+    },
+    "PivotTable.030d176493ffa73f59df782329af3482": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure pivot with grouping sorted by second row attr",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot with grouping sorted by second row attr."
+    },
+    "PivotTable.142aa83b4fe0fffb84f1ce365e5bc35e": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure pivot with grouping sorted by measure",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot with grouping sorted by measure."
     }
 }
