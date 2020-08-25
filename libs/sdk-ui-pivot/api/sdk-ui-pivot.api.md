@@ -9,7 +9,6 @@ import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
-import { IMeasureLocatorItem } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -18,6 +17,9 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { WrappedComponentProps } from 'react-intl';
+
+// @public (undocumented)
+export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator;
 
 // @public (undocumented)
 export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
@@ -44,6 +46,15 @@ export interface IAllMeasureColumnWidthItem {
     // (undocumented)
     measureColumnWidthItem: {
         width: IAbsoluteColumnWidth;
+    };
+}
+
+// @public
+export interface IAttributeColumnLocator {
+    // (undocumented)
+    attributeLocatorItem: {
+        attributeIdentifier: Identifier;
+        element?: string;
     };
 }
 
@@ -75,12 +86,20 @@ export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedCompo
     execution: IPreparedExecution;
 }
 
+// @public
+export interface IMeasureColumnLocator {
+    // (undocumented)
+    measureLocatorItem: {
+        measureIdentifier: Identifier;
+    };
+}
+
 // @public (undocumented)
 export interface IMeasureColumnWidthItem {
     // (undocumented)
     measureColumnWidthItem: {
         width: ColumnWidth;
-        locators: LocatorItem[];
+        locators: ColumnLocator[];
     };
 }
 
@@ -88,15 +107,6 @@ export interface IMeasureColumnWidthItem {
 export interface IMenu {
     aggregations?: boolean;
     aggregationsSubMenu?: boolean;
-}
-
-// @public (undocumented)
-export interface IPivotTableAttributeLocatorItem {
-    // (undocumented)
-    attributeLocatorItem: {
-        attributeIdentifier: Identifier;
-        element?: string;
-    };
 }
 
 // @public (undocumented)
@@ -131,32 +141,29 @@ export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucke
     workspace?: string;
 }
 
-// @public (undocumented)
+// @public
 export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is IAbsoluteColumnWidth;
 
-// @public (undocumented)
-export function isAllMeasureColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IAllMeasureColumnWidthItem;
+// @public
+export function isAllMeasureColumnWidthItem(obj: unknown): obj is IAllMeasureColumnWidthItem;
 
-// @public (undocumented)
-export function isAttributeColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IAttributeColumnWidthItem;
+// @public
+export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColumnWidthItem;
 
-// @public (undocumented)
-export function isMeasureColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IMeasureColumnWidthItem;
+// @public
+export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWidthItem;
 
-// @public (undocumented)
-export function isWeakMeasureColumnWidthItem(columnWidthItem: ColumnWidthItem): columnWidthItem is IWeakMeasureColumnWidthItem;
+// @public
+export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem;
 
 // @public (undocumented)
 export interface IWeakMeasureColumnWidthItem {
     // (undocumented)
     measureColumnWidthItem: {
         width: IAbsoluteColumnWidth;
-        locator: IMeasureLocatorItem;
+        locator: IMeasureColumnLocator;
     };
 }
-
-// @public (undocumented)
-export type LocatorItem = IPivotTableAttributeLocatorItem | IMeasureLocatorItem;
 
 // @public
 export const PivotTable: React_2.ComponentType<IPivotTableProps>;

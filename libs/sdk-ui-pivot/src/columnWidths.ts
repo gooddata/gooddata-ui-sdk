@@ -1,33 +1,46 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { Identifier, IMeasureLocatorItem } from "@gooddata/sdk-model";
+import { Identifier } from "@gooddata/sdk-model";
 
+//
+// types used in implementation internals
+//
+
+/**
+ * @internal
+ */
 export enum ColumnEventSourceType {
     AUTOSIZE_COLUMNS = "autosizeColumns",
     UI_DRAGGED = "uiColumnDragged",
     FIT_GROW = "growToFit",
 }
 
+/**
+ * @internal
+ */
 export enum UIClick {
     CLICK = 1,
     DOUBLE_CLICK = 2,
 }
 
+/**
+ * @internal
+ */
 export interface IResizedColumns {
     [columnIdentifier: string]: IManuallyResizedColumnsItem;
 }
 
+/**
+ * @internal
+ */
 export interface IManuallyResizedColumnsItem {
     width: number;
     allowGrowToFit?: boolean;
 }
 
-/**
- * @public
- */
-export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is IAbsoluteColumnWidth {
-    return Number(columnWidth.value) === columnWidth.value;
-}
+//
+//
+//
 
 /**
  * @public
@@ -65,7 +78,7 @@ export interface IAttributeColumnWidthItem {
 export interface IMeasureColumnWidthItem {
     measureColumnWidthItem: {
         width: ColumnWidth;
-        locators: LocatorItem[];
+        locators: ColumnLocator[];
     };
 }
 
@@ -84,7 +97,7 @@ export interface IAllMeasureColumnWidthItem {
 export interface IWeakMeasureColumnWidthItem {
     measureColumnWidthItem: {
         width: IAbsoluteColumnWidth;
-        locator: IMeasureLocatorItem;
+        locator: IMeasureColumnLocator;
     };
 }
 
@@ -100,67 +113,114 @@ export type ColumnWidthItem =
 /**
  * @public
  */
-export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
+export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator;
 
 /**
+ * Locates table column by column measure's localId.
+ *
  * @public
  */
-export interface IAttributeLocatorItem {
-    attributeLocatorItem: {
-        attributeIdentifier: Identifier;
-        element?: string; // this is difference from AFM.IAttributeLocatorItem
+export interface IMeasureColumnLocator {
+    measureLocatorItem: {
+        /**
+         * Local identifier of the measure.
+         */
+        measureIdentifier: Identifier;
     };
 }
 
 /**
+ * Locates all columns for an attribute or columns for particular attribute element.
+ *
  * @public
  */
-export function isAttributeColumnWidthItem(
-    columnWidthItem: ColumnWidthItem,
-): columnWidthItem is IAttributeColumnWidthItem {
+export interface IAttributeColumnLocator {
+    attributeLocatorItem: {
+        /**
+         * Local identifier of the attribute
+         */
+        attributeIdentifier: Identifier;
+
+        /**
+         * Optionally attribute element URI / primary key.
+         */
+        element?: string;
+    };
+}
+
+/**
+ * Tests whether object is an instance of {@link IMeasureColumnLocator}
+ *
+ * @public
+ */
+export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocator {
+    return !isEmpty(obj) && (obj as IMeasureColumnLocator).measureLocatorItem !== undefined;
+}
+
+/**
+ * Tests whether object is an instance of {@link IAttributeColumnLocator}
+ *
+ * @public
+ */
+export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnLocator {
+    return !isEmpty(obj) && (obj as IAttributeColumnLocator).attributeLocatorItem !== undefined;
+}
+
+/**
+ * Tests whether object is an instance of {@link IAbsoluteColumnWidth}
+ *
+ * @public
+ */
+export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is IAbsoluteColumnWidth {
+    return Number(columnWidth.value) === columnWidth.value;
+}
+
+/**
+ * Tests whether object is an instance of {@link IAttributeColumnWidthItem}
+ *
+ * @public
+ */
+export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColumnWidthItem {
+    return !isEmpty(obj) && (obj as IAttributeColumnWidthItem).attributeColumnWidthItem !== undefined;
+}
+
+/**
+ * Tests whether object is an instance of {@link IMeasureColumnWidthItem}
+ *
+ * @public
+ */
+export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWidthItem {
     return (
-        !isEmpty(columnWidthItem) &&
-        (columnWidthItem as IAttributeColumnWidthItem).attributeColumnWidthItem !== undefined
+        !isEmpty(obj) &&
+        (obj as IMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
+        (obj as IMeasureColumnWidthItem).measureColumnWidthItem.locators !== undefined
     );
 }
 
 /**
+ * Tests whether object is an instance of {@link IAllMeasureColumnWidthItem}
+ *
  * @public
  */
-export function isMeasureColumnWidthItem(
-    columnWidthItem: ColumnWidthItem,
-): columnWidthItem is IMeasureColumnWidthItem {
+export function isAllMeasureColumnWidthItem(obj: unknown): obj is IAllMeasureColumnWidthItem {
     return (
-        !isEmpty(columnWidthItem) &&
-        (columnWidthItem as IMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
-        (columnWidthItem as IMeasureColumnWidthItem).measureColumnWidthItem.locators !== undefined
+        !isEmpty(obj) &&
+        (obj as IAllMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
+        (obj as IMeasureColumnWidthItem).measureColumnWidthItem.locators === undefined &&
+        (obj as IWeakMeasureColumnWidthItem).measureColumnWidthItem.locator === undefined
     );
 }
 
 /**
+ * Tests whether object is an instance of {@link IWeakMeasureColumnWidthItem}
+ *
  * @public
  */
-export function isAllMeasureColumnWidthItem(
-    columnWidthItem: ColumnWidthItem,
-): columnWidthItem is IAllMeasureColumnWidthItem {
+export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem {
     return (
-        !isEmpty(columnWidthItem) &&
-        (columnWidthItem as IAllMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
-        (columnWidthItem as IMeasureColumnWidthItem).measureColumnWidthItem.locators === undefined &&
-        (columnWidthItem as IWeakMeasureColumnWidthItem).measureColumnWidthItem.locator === undefined
-    );
-}
-
-/**
- * @public
- */
-export function isWeakMeasureColumnWidthItem(
-    columnWidthItem: ColumnWidthItem,
-): columnWidthItem is IWeakMeasureColumnWidthItem {
-    return (
-        !isEmpty(columnWidthItem) &&
-        (columnWidthItem as IWeakMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
-        (columnWidthItem as IWeakMeasureColumnWidthItem).measureColumnWidthItem.locator !== undefined
+        !isEmpty(obj) &&
+        (obj as IWeakMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
+        (obj as IWeakMeasureColumnWidthItem).measureColumnWidthItem.locator !== undefined
     );
 }
 

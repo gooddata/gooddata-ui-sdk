@@ -34,10 +34,11 @@ import {
     IManuallyResizedColumnsItem,
     IWeakMeasureColumnWidthItem,
     isWeakMeasureColumnWidthItem,
+    isMeasureColumnLocator,
+    IMeasureColumnLocator,
 } from "../columnWidths";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import { IMeasureLocatorItem, isMeasureLocator } from "@gooddata/sdk-model";
 
 export const MIN_WIDTH = 60;
 export const AUTO_SIZED_MAX_WIDTH = 500;
@@ -390,8 +391,8 @@ export const convertColumnWidthsToMap = (
         if (isMeasureColumnWidthItem(columnWidth)) {
             const [field, width] = getMeasureColumnWidthItemFieldAndWidth(columnWidth, measureDescriptors);
 
-            const locator: IMeasureLocatorItem = columnWidth.measureColumnWidthItem.locators.filter(
-                isMeasureLocator,
+            const locator: IMeasureColumnLocator = columnWidth.measureColumnWidthItem.locators.filter(
+                isMeasureColumnLocator,
             )[0];
             const measureIdentifier = locator ? locator.measureLocatorItem.measureIdentifier : undefined;
             columnWidthsMap[field] = {
@@ -424,7 +425,7 @@ const getMeasureColumnWidthItemFieldAndWidth = (
 ): [string, ColumnWidth] => {
     const keys: string[] = [];
     columnWidthItem.measureColumnWidthItem.locators.forEach((locator) => {
-        if (isMeasureLocator(locator)) {
+        if (isMeasureColumnLocator(locator)) {
             const measureColumnWidthHeaderIndex = measureHeaderItems.findIndex(
                 (measureHeaderItem) =>
                     measureHeaderItem.measureHeaderItem.localIdentifier ===

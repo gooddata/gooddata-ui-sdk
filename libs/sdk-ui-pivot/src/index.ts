@@ -27,6 +27,9 @@ export {
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     IAutoColumnWidth,
-    IAttributeLocatorItem as IPivotTableAttributeLocatorItem,
-    LocatorItem,
+    ColumnLocator,
+    IAttributeColumnLocator,
+    IMeasureColumnLocator,
+    isMeasureColumnLocator,
+    isAttributeColumnLocator,
 } from "./columnWidths";
