@@ -34,7 +34,7 @@
     },
     "typings": "dist/index.d.ts",
     "dependencies": {
-        "@gooddata/goodstrap": "^68.18.1",
+        "@gooddata/goodstrap": "^68.20.1",
         "@gooddata/numberjs": "^3.2.4",
         "@gooddata/sdk-backend-spi": "^8.0.0-beta.52",
         "@gooddata/sdk-model": "^8.0.0-beta.52",
@@ -42,7 +42,6 @@
         "@gooddata/util": "^8.0.0-beta.52",
         "classnames": "^2.2.6",
         "downshift": "^3.4.7",
-        "fixed-data-table-2": "^0.7.17",
         "hoist-non-react-statics": "^3.3.0",
         "lodash": "^4.17.19",
         "moment": "^2.24.0",
