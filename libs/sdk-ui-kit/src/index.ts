@@ -3,3 +3,4 @@
 export * from "./typings/positioning";
 export * from "./measureNumberFormat";
 export * from "./syntaxHighlightingInput";
+export * from "./button";
