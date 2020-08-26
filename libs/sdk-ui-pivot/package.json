@@ -46,7 +46,7 @@
         "@gooddata/sdk-ui-vis-commons": "^8.0.0-beta.53",
         "classnames": "^2.2.6",
         "custom-event": "^1.0.1",
-        "fixed-data-table-2": "^0.7.17",
+        "fixed-data-table-2": "^0.8.21",
         "lodash": "^4.17.19",
         "react-intl": "^3.6.0",
         "ts-invariant": "^0.4.4",
