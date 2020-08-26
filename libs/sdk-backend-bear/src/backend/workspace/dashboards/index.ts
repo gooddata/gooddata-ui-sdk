@@ -40,6 +40,7 @@ import {
     GdcFilterContext,
     GdcVisualizationClass,
     GdcMetadataObject,
+    GdcVisualizationWidget,
 } from "@gooddata/api-model-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter";
@@ -52,6 +53,7 @@ import { objRefToUri, getObjectIdFromUri, userUriFromAuthenticatedPrincipal } fr
 import keyBy from "lodash/keyBy";
 import { WidgetReferencesQuery } from "./widgetReferences";
 import invariant from "ts-invariant";
+import { convertVisualizationWidget } from "../../../convertors/fromBackend/DashboardConverter";
 
 type DashboardDependencyCategory = Extract<
     GdcMetadata.ObjectCategory,
@@ -306,6 +308,16 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         );
 
         return new WidgetReferencesQuery(this.authCall, this.workspace, widget, types).run();
+    };
+
+    public getWidget = async (ref: ObjRef): Promise<IWidget> => {
+        const widgetUri = await objRefToUri(ref, this.workspace, this.authCall);
+        const [widget] = await this.authCall((sdk) =>
+            sdk.md.getObjects<GdcVisualizationWidget.IWrappedVisualizationWidget>(this.workspace, [
+                widgetUri,
+            ]),
+        );
+        return convertVisualizationWidget(widget);
     };
 
     // Alerts

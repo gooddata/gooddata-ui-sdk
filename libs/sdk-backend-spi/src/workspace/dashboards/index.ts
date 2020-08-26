@@ -146,4 +146,11 @@ export interface IWorkspaceDashboards {
         widget: IWidget,
         types?: SupportedWidgetReferenceTypes[],
     ): Promise<IWidgetReferences>;
+
+    /**
+     * Get widget object
+     *
+     * @param ref - widget reference
+     */
+    getWidget(ref: ObjRef): Promise<IWidget>;
 }
