@@ -57,12 +57,12 @@ class XirrTransformation extends React.Component<IXirrTransformationProps & Wrap
     private getDisableDrillUnderlineFromConfig = (): boolean =>
         this.props.config ? this.props.config.disableDrillUnderline : false;
 
-    private handleFiredDrillEvent(item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) {
+    private handleFiredDrillEvent = (item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) => {
         const { onDrill, dataView } = this.props;
         const drillEventData = buildDrillEventData(item, dataView);
 
         fireDrillEvent(onDrill, drillEventData, target);
-    }
+    };
 }
 
 export default injectIntl(XirrTransformation);
