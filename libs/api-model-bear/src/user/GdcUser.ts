@@ -340,6 +340,12 @@ export namespace GdcUser {
         currentOffsetMs: number;
     }
 
+    export interface IProjectLcm {
+        clientId?: string;
+        dataProductId?: string;
+        segmentId?: string;
+    }
+
     export interface IBootstrapResource {
         bootstrapResource: {
             accountSetting: IAccountSetting;
@@ -349,6 +355,7 @@ export namespace GdcUser {
             current?: {
                 mapboxToken?: string;
                 project: IProject | null;
+                projectLcm?: IProjectLcm;
                 featureFlags?: IFeatureFlags;
                 projectPermissions: IProjectPermissions | null;
                 projectTemplates: ITemplateInfo[] | null;
