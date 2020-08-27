@@ -34,18 +34,22 @@ import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinCo
 import {
     BucketNames,
     GoodDataSdkError,
-    VisualizationTypes,
     IAvailableDrillTargetAttribute,
+    VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import {
+    attributeAlias,
     attributeDisplayFormRef,
     bucketAttribute,
+    bucketsItems,
+    IAttribute,
     idRef,
     IInsightDefinition,
     insightBucket,
     insightBuckets,
     insightFilters,
     insightHasDataDefined,
+    isAttribute,
     ISortItem,
     isUriRef,
     newAttribute,
@@ -53,13 +57,9 @@ import {
     newBucket,
     ObjRef,
     uriRef,
-    attributeAlias,
-    bucketsItems,
-    IAttribute,
-    isAttribute,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IGeoConfig, CoreGeoChart, getGeoChartDimensions } from "@gooddata/sdk-ui-geo";
+import { CoreGeoChart, getGeoChartDimensions, IGeoConfig } from "@gooddata/sdk-ui-geo";
 import get from "lodash/get";
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
@@ -322,20 +322,20 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         };
     }
 
+    // This is effectively calling super.handlePushData()
+    // https://stackoverflow.com/questions/31088947/inheritance-method-call-triggers-typescript-compiler-error
+    // https://github.com/basarat/typescript-book/blob/master/docs/arrow-functions.md#tip-arrow-functions-and-inheritance
     private superHandlePushData = this.handlePushData;
+
     protected handlePushData = (data: any): void => {
-        if (data.availableDrillTargets) {
-            // For pushpin chart we want to allow drill only on the
-            // location attribute. Filter out other attributes.
-            this.pushData({
+        // For pushpin chart we want to allow drill only on the
+        // location attribute. Filter out other attributes.
+        this.superHandlePushData({
+            ...data,
+            ...(data.availableDrillTargets && {
                 availableDrillTargets: this.onlyLocationAttributeTargets(data),
-            });
-        } else {
-            // This is effectively calling super.handlePushData()
-            // https://stackoverflow.com/questions/31088947/inheritance-method-call-triggers-typescript-compiler-error
-            // https://github.com/basarat/typescript-book/blob/master/docs/arrow-functions.md#tip-arrow-functions-and-inheritance
-            this.superHandlePushData(data);
-        }
+            }),
+        });
     };
 
     private sanitizeMeasures(extendedReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
