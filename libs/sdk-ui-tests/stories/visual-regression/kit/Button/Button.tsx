@@ -2,8 +2,7 @@
 import { Button } from "@gooddata/sdk-ui-kit";
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { ThemeProvider } from "styled-components";
-// import { action } from "@storybook/addon-actions";
+import { ThemeProvider, DefaultTheme } from "styled-components";
 import { UiKit } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -11,10 +10,28 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 storiesOf(`${UiKit}/Button`, module).add("full-featured", () => {
-    const goodDataTheme = {
-        gdColorHighlight: "#14b2e2",
-        gdColorPositive: "#00c18d",
-        gdColorNegative: "#e54d42",
+    const goodDataTheme: DefaultTheme = {
+        colors: {
+            primary: {
+                main: "#14b2e2",
+                contrast: "#fff",
+            },
+            positive: {
+                main: "#00c18d",
+                contrast: "#fff",
+            },
+            negative: {
+                main: "#e54d42",
+                contrast: "#fff",
+            },
+        },
+        typography: {
+            button: {
+                fontSize: "14px",
+                lineHeight: "20px",
+                fontFamily: "avenir, \"Helvetica Neue\", arial, sans-serif",
+            }
+        }
     };
 
     return (
@@ -32,41 +49,5 @@ storiesOf(`${UiKit}/Button`, module).add("full-featured", () => {
                 <Button disabled type="negative" value={"I am GoodData negative button!"} />
             </ThemeProvider>
         </div>
-    ); /*
-        {
-            closed: {}
-            opened: {
-                clickSelector: ".s-measure-number-format-button",
-                postInteractionWait: 2000 },
-            "custom-editor": {
-                clickSelectors: [".s-measure-number-format-button", ".s-format-preset-customFormat"],
-                postInteractionWait: 2000,
-            },
-            "custom-editor-extended-preview": {
-                clickSelectors: [
-                    ".s-measure-number-format-button",
-                    ".s-format-preset-customFormat",
-                    ".s-custom-format-dialog-extended-preview-button",
-                ],
-                postInteractionWait: 2000,
-            },
-            "custom-editor-templates": {
-                clickSelectors: [
-                    ".s-measure-number-format-button",
-                    ".s-format-preset-customFormat",
-                    ".s-measure-format-templates-toggle-button",
-                ],
-                postInteractionWait: 2000,
-            },
-            "custom-editor-templates-selected": {
-                clickSelectors: [
-                    ".s-measure-number-format-button",
-                    ".s-format-preset-customFormat",
-                    ".s-measure-format-templates-toggle-button",
-                    ".s-measure-format-template-decimal_number",
-                ],
-                postInteractionWait: 2000,
-            },
-        },
-    );*/
+    );
 });
