@@ -3,7 +3,7 @@ import React from "react";
 import classNames from "classnames";
 import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { transparentize, darken, lighten } from "polished";
 import { transition, gradientLinear } from "../utils/mixins";
 import ButtonText from "./ButtonText";
@@ -92,9 +92,7 @@ export class BareButton extends React.PureComponent<IButtonProps> {
     }
 }
 
-const gdColorPositive = "#00c18d";
 const gdColorText = "#464e56";
-const gdColorTextLight = "#fff";
 const gdColorLight = "#fcfcfd";
 const gdColorDisabled = "#b0beca";
 const gdColorTextDimmed = gdColorDisabled;
@@ -102,205 +100,118 @@ const gdColorTextDimmed = gdColorDisabled;
 // const buttonIconWidth = "18px";
 // const buttonSmallIconWidth = "16px";
 
-const buttonNormalBg = gdColorLight;
-const buttonNormalColor = "#778491";
-const buttonNormalBorderColor = "#ccd8e2";
-const buttonNormalHoverBg = "#f5f8fa";
-const buttonNormalHoverBorderColor = transparentize(0.8, "#1f3449");
-const buttonNormalActiveGradientTop = "#dee6ef";
-const buttonNormalActiveGradientBottom = "#ecf0f5";
-const buttonNormalActiveBorderColor = "#b1c1d1";
-const buttonNormalActiveShadow = transparentize(0.35, buttonNormalActiveBorderColor);
-const buttonNormalHoverBoxShadow = transparentize(0.4, buttonNormalActiveBorderColor);
+const buttonNormalHoverBoxShadow = transparentize(0.4, "#b1c1d1");
 
 const buttonShadowColor = "#14385d";
 const buttonShadowLighter = transparentize(0.91, buttonShadowColor);
 const buttonShadowDarker = transparentize(0.85, buttonShadowColor);
 
-const buttonPositiveBg = gdColorPositive;
-const buttonPositiveDisabledBg = transparentize(0.5, lighten(0.06, buttonPositiveBg));
-const buttonPositiveHoverBg = darken(0.06, buttonPositiveBg);
-const buttonPositiveFocusShadow = transparentize(0.5, lighten(0.06, buttonPositiveBg));
-const buttonPositiveActiveGradientTop = darken(0.12, buttonPositiveBg);
-const buttonPositiveActiveGradientBottom = buttonPositiveHoverBg;
+const getNormalButtonStyles = (fontWeight: number, theme: any) => `
+    color: "#778491";
+    background-color: "#fcfcfd";
+    border-color: "#ccd8e2";
+    box-shadow: 0 1px 1px 0 ${buttonShadowDarker};
+    font-weight: ${fontWeight};
 
-const normalButtonBase = css`
-    ${(props) => {
-        const { theme } = props;
-        return `
-            color: ${buttonNormalColor};
-            background-color: ${buttonNormalBg};
-            border-color: ${buttonNormalBorderColor};
-            box-shadow: 0 1px 1px 0 ${buttonShadowDarker};
-        
-            &:hover {
-                box-shadow: 0 1px 1px 0 ${buttonShadowDarker}, inset 0 -1px 0 0 ${buttonNormalHoverBoxShadow};
-                color: ${gdColorText};
-                background: ${buttonNormalHoverBg};
-                border-color: ${buttonNormalHoverBorderColor};
-            }
-        
-            &:focus,
-            &.is-focus {
-                box-shadow: 0 0 3px 1px ${transparentize(0.5, lighten(0.12, props.theme.colors.primary.main))}, 0 1px 2px 0 ${buttonShadowDarker},
-                    inset 0 -1px 0 0 ${buttonNormalHoverBoxShadow};
-                border-color: ${transparentize(0.25, theme.colors.primary.main)});
-            }
-        
-            &:active,
-            &.is-active {
-                box-shadow: inset 0 1px 0 0 ${buttonNormalActiveShadow};
-                color: ${gdColorText};
-                border-color: ${buttonNormalActiveBorderColor};
-                ${gradientLinear(buttonNormalActiveGradientTop, buttonNormalActiveGradientBottom)};
-            }
-        
-            &.disabled {
-                cursor: default;
-        
-                &,
-                &:hover,
-                &:focus,
-                &:active {
-                    color: ${gdColorDisabled};
-                    background: ${transparentize(0.7, gdColorLight)};
-                    border-color: rgba(210, 219, 227, 0.75);
-                }
-            }
-        `;
-    }}
+    &:hover {
+        box-shadow: 0 1px 1px 0 ${buttonShadowDarker}, inset 0 -1px 0 0 ${buttonNormalHoverBoxShadow};
+        color: ${gdColorText};
+        background: "#f5f8fa";
+        border-color: transparentize(0.8, "#1f3449");
+    }
+
+    &:focus,
+    &.is-focus {
+        box-shadow: 0 0 3px 1px ${transparentize(
+    0.5,
+    lighten(0.12, theme.colors.primary.main),
+)}, 0 1px 2px 0 ${buttonShadowDarker},
+            inset 0 -1px 0 0 ${buttonNormalHoverBoxShadow};
+        border-color: ${transparentize(0.25, theme.colors.primary.main)});
+    }
+
+    &:active,
+    &.is-active {
+        box-shadow: inset 0 1px 0 0 ${transparentize(0.35, "#b1c1d1")};
+        color: ${gdColorText};
+        border-color: "#b1c1d1";
+        ${gradientLinear("#dee6ef", "#ecf0f5")};
+    }
+
+    &.disabled {
+        cursor: default;
+
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+            color: ${gdColorDisabled};
+            background: ${transparentize(0.7, gdColorLight)};
+            border-color: rgba(210, 219, 227, 0.75);
+        }
+    }
 `;
 
-const buttonVariants = {
-    primary: css`
-        ${normalButtonBase}
-        font-weight: 700;
-    `,
-    secondary: css`
-        ${normalButtonBase}
-        font-weight: 400;
-    `,
-    action: css`
-        ${(props) => {
-            const { main: color, contrast } = props.theme.colors.primary;
-            return `
-                color: ${contrast};
-                background-color: ${transparentize(0.25, color)};
-                border: 1px solid rgba(0, 0, 0, 0.1);
-                font-weight: 700;
-                box-shadow: 1px 1px 0 ${buttonShadowLighter};
-                
-                &:hover {
-                    box-shadow: 0 1px 1px 0 ${buttonShadowDarker}, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
-                    background: ${darken(0.06, color)}; 
-                }
-                
-                &:focus {
-                    box-shadow: 0 0 3px 1px ${transparentize(
-                        0.4,
-                        lighten(0.06, color),
-                    )}, 0 1px 1px 0 ${buttonShadowDarker};
-                    inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
-                }
-                
-                &:active,
-                &.is-active {
-                    box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
-                    ${gradientLinear(
-                        darken(0.12, color),
-                        darken(0.06, color),
-                    )}
-                }
-                
-                &.disabled {
-                    cursor: default;
-            
-                    &,
-                    &:hover,
-                    &:focus,
-                    &:active {
-                        color: ${contrast};
-                        background: ${transparentize(0.4, lighten(0.12, color))};
-                    }
-                }
-            `;
-        }}
-    `,
-    negative: css`
-        ${(props) => {
-            const { main: color, contrast } = props.theme.colors.negative;
-            return `
-                color: ${contrast};
-                background-color: ${color};
-                border: 1px solid rgba(0, 0, 0, 0.1);
-                font-weight: 700;
-                box-shadow: 0 1px 0 0 ${buttonShadowLighter};
-                
-                &:hover {
-                    box-shadow: 0 1px 1px 0 ${buttonShadowDarker}, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
-                    background: ${darken(0.1, color)};
-                }
-                
-                &:focus {
-                    box-shadow: 0 0 3px 1px ${transparentize(0.4, lighten(0.1, color))}, 0 1px 1px 0 ${buttonShadowDarker};
-                    inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
-                }
-                
-                &:active,
-                &.is-active {
-                    box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
-                    ${gradientLinear(darken(0.2, color), darken(0.1, color))}
-                }
-                
-                &.disabled {
-                    cursor: default;
-            
-                    &,
-                    &:hover,
-                    &:focus,
-                    &:active {
-                        color: ${contrast};
-                        background: ${transparentize(0.4, lighten(0.2, color))};
-                    }
-                }
-            `;
-        }}
-    `,
-    positive: css`
-        color: ${gdColorTextLight};
-        background-color: ${buttonPositiveBg};
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        font-weight: 700;
-        box-shadow: 0 1px 0 0 ${buttonShadowLighter};
-        
-        &:hover {
-            box-shadow: 0 1px 1px 0 ${buttonShadowDarker}, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
-            background: ${buttonPositiveHoverBg};
-        }
-        
-        &:focus {
-            box-shadow: 0 0 3px 1px ${buttonPositiveFocusShadow}, 0 1px 1px 0 ${buttonShadowDarker};
-            inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
-        }
-        
-        &:active,
-        &.is-active {
-            box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
-            ${gradientLinear(buttonPositiveActiveGradientTop, buttonPositiveActiveGradientBottom)}
-        }
-        
-        &.disabled {
-            cursor: default;
+const getButtonStyles = (color: string, contrast: string) => `
+    color: ${contrast};
+    background-color: ${color};
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+    box-shadow: 0 1px 0 0 ${buttonShadowLighter};
     
-            &,
-            &:hover,
-            &:focus,
-            &:active {
-                color: ${gdColorTextLight};
-                background: ${buttonPositiveDisabledBg};
-            }
+    &:hover {
+        box-shadow: 0 1px 1px 0 ${buttonShadowDarker}, inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+        background: ${darken(0.1, color)};
+    }
+    
+    &:focus {
+        box-shadow: 0 0 3px 1px ${transparentize(
+            0.4,
+            lighten(0.1, color),
+        )}, 0 1px 1px 0 ${buttonShadowDarker};
+        inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+    }
+    
+    &:active,
+    &.is-active {
+        box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
+        ${gradientLinear(darken(0.2, color), darken(0.1, color))}
+    }
+    
+    &.disabled {
+        cursor: default;
+
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+            color: ${contrast};
+            background: ${transparentize(0.4, lighten(0.2, color))};
         }
-    `,
+    }
+`;
+
+const getButtonVariant = (type: IButtonType, theme: any) => {
+    switch (type) {
+        case "primary":
+            return getNormalButtonStyles(700, theme);
+        case "secondary":
+            return getNormalButtonStyles(400, theme);
+        case "action":
+            return getButtonStyles(theme.colors.primary.main, theme.colors.primary.contrast);
+        case "negative":
+        case "positive":
+            return getButtonStyles(theme.colors[type].main, theme.colors[type].contrast);
+    }
+};
+
+const getFont = (theme: any) => {
+    const { fontSize, fontFamily, lineHeight } = theme.typography.button;
+    return `
+        font-size: ${fontSize};
+        font-family: ${fontFamily};
+        line-height: ${lineHeight};
+    `;
 };
 
 /**
@@ -313,9 +224,7 @@ export const Button = styled(BareButton)`
     align-items: center;
     padding: 5px 14px;
     border: 1px solid transparent;
-    font-size: ${props => props.theme.typography.button.fontSize}
-    font-family: ${props => props.theme.typography.button.fontFamily};
-    line-height: ${props => props.theme.typography.button.lineHeight}
+    ${(props) => getFont(props.theme)}
     white-space: nowrap;
     vertical-align: middle;
     cursor: pointer;
@@ -376,5 +285,5 @@ export const Button = styled(BareButton)`
         }
     }
 
-    ${(props) => buttonVariants[props.type]}
+    ${(props) => getButtonVariant(props.type, props.theme)}
 `;
