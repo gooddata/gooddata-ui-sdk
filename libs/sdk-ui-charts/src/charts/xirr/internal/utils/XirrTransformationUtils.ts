@@ -37,7 +37,7 @@ const computeXirr = (executionData: IXirrExecutionData[]): number => {
 
     const transactions = executionData
         .map((datum) => ({
-            amount: Number.parseFloat(datum.value.toString()),
+            amount: datum.value != null ? Number.parseFloat(datum.value.toString()) : 0,
             date: datum.date,
         }))
         .filter((datum) => datum.amount !== 0) // zero values are irrelevant to XIRR computation, filter them out here to avoid useless Date parsing later
