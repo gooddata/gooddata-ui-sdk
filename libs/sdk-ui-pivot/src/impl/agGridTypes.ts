@@ -2,6 +2,7 @@
 import { IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
 import { CellEvent, ColDef, GridOptions } from "@ag-grid-community/all-modules";
 import { ITotal, SortDirection } from "@gooddata/sdk-model";
+import { IDataView } from "@gooddata/sdk-backend-spi";
 
 export interface IGridRow {
     headerItemMap: {
@@ -77,6 +78,7 @@ export type DatasourceConfig = {
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
     onPageLoaded: OnPageLoaded;
+    dataViewTransform: (dv: IDataView) => IDataView;
 };
 
 export type OnPageLoaded = (dv: DataViewFacade) => void;

@@ -137,8 +137,9 @@ export class AgGridDatasource implements IDatasource {
                     // the as any cast is fishy but I did not want to change if as it could have unforeseen consequences
                     .readWindow([startRow, 0], [endRow - startRow, undefined as any])
                     .then((data) => {
-                        const dv = DataViewFacade.for(data);
-                        this.gridApiProvider()?.setInfiniteRowCount(data.totalCount[0]);
+                        const dataView = this.config.dataViewTransform(data);
+                        const dv = DataViewFacade.for(dataView);
+                        this.gridApiProvider()?.setInfiniteRowCount(dataView.totalCount[0]);
                         this.currentSorts = dv.meta().effectiveSortItems();
                         this.processData(dv, params);
                     })

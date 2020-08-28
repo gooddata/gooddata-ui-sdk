@@ -340,6 +340,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     };
 
+    private fixEmptyHeaders = (dataView: IDataView): void => {
+        fixEmptyHeaderItems(
+            dataView,
+            `(${this.props.intl.formatMessage({ id: "visualization.emptyValue" })})`,
+        );
+    };
+
     private initializeNonReactState = (result: IExecutionResult, dataView: IDataView) => {
         this.currentResult = result;
         this.visibleData = DataViewFacade.for(dataView);
@@ -371,6 +378,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 getGroupRows: () => this.props.groupRows!,
                 getColumnTotals: this.getColumnTotals,
                 onPageLoaded: this.onPageLoaded,
+                dataViewTransform: (dataView) => {
+                    this.fixEmptyHeaders(dataView);
+                    return dataView;
+                },
             },
             this.visibleData,
             this.getGridApi as () => GridApi,
@@ -405,10 +416,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                             return;
                         }
 
-                        fixEmptyHeaderItems(
-                            dataView,
-                            `(${this.props.intl.formatMessage({ id: "visualization.emptyValue" })})`,
-                        );
+                        this.fixEmptyHeaders(dataView);
 
                         this.initializeNonReactState(result, dataView);
 
