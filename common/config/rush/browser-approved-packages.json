@@ -335,6 +335,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@types/styled-components",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/uuid",
       "allowedCategories": [ "production" ]
     },
@@ -615,6 +619,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "polished",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "prettier",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -729,6 +737,10 @@
     {
       "name": "style-loader",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "styled-components",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "styled-jsx",

@@ -8,12 +8,60 @@ import { ISeparators } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 
 // @internal (undocumented)
+export class BareButton extends React_2.PureComponent<IButtonProps> {
+    // (undocumented)
+    buttonNode: HTMLElement;
+    // (undocumented)
+    static defaultProps: {
+        className: string;
+        disabled: boolean;
+        onClick: (...args: any[]) => void;
+        tabIndex: number;
+        tagName: string;
+        title: string;
+        type: string;
+    };
+    // (undocumented)
+    render(): JSX.Element;
+    }
+
+// @internal (undocumented)
+export const Button: import("styled-components").StyledComponent<typeof BareButton, any, {}, never>;
+
+// @internal (undocumented)
 export interface IAlignPoint {
     // (undocumented)
     align: string;
     // (undocumented)
     offset: IOffset;
 }
+
+// @internal (undocumented)
+export interface IButtonProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    iconLeft?: string;
+    // (undocumented)
+    iconRight?: string;
+    // (undocumented)
+    onClick?(e: React_2.MouseEvent): void;
+    // (undocumented)
+    tabIndex?: number;
+    // (undocumented)
+    tagName?: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    type?: IButtonType;
+    // (undocumented)
+    value?: string;
+}
+
+// @internal (undocumented)
+export type IButtonType = "primary" | "secondary" | "action" | "positive" | "negative";
 
 // @internal (undocumented)
 export interface IFormatPreset {
