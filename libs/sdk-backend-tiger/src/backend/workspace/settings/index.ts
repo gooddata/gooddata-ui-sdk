@@ -7,6 +7,8 @@ import {
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
 const HardcodedSettings = {
+    // AD specific
+    analyticalDesigner: true,
     enablePushpinGeoChart: true,
     enableBulletChart: true,
     enableComboChart: true,
@@ -14,6 +16,10 @@ const HardcodedSettings = {
     enableMeasureValueFilters: true,
     enableMetricDateFilter: true,
     ADMeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",
+
+    // KD specific
+    enableAnalyticalDashboards: true,
+    hidePixelPerfectExperience: true,
 };
 
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
