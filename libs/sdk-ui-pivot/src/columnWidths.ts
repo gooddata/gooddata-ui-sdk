@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { Identifier } from "@gooddata/sdk-model";
+import { attributeLocalId, IAttribute, Identifier, IMeasure, measureLocalId } from "@gooddata/sdk-model";
 
 //
 // types used in implementation internals
@@ -224,4 +224,146 @@ export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureC
     );
 }
 
-// TODO: add factory functions
+function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasureColumnLocator {
+    const measureIdentifier = measureLocalId(measureOrId);
+
+    return {
+        measureLocatorItem: {
+            measureIdentifier,
+        },
+    };
+}
+
+/**
+ * Creates width item that will set width of a column which contains values of a row attribute.
+ *
+ * @param attributeOrId - attribute specified by value or by localId reference
+ * @param width - width in pixels
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @public
+ */
+export function newWidthForAttributeColumn(
+    attributeOrId: IAttribute | string,
+    width: number,
+    allowGrowToFit?: boolean,
+): IAttributeColumnWidthItem {
+    const growToFitProp = allowGrowToFit !== undefined ? { allowGrowToFit } : {};
+
+    return {
+        attributeColumnWidthItem: {
+            attributeIdentifier: attributeLocalId(attributeOrId),
+            width: {
+                value: width,
+                ...growToFitProp,
+            },
+        },
+    };
+}
+
+/**
+ * Creates width item that will set width for all measure columns in the table.
+ *
+ * @param width - width in pixels
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @public
+ */
+export function newWidthForAllMeasureColumns(
+    width: number,
+    allowGrowToFit?: boolean,
+): IAllMeasureColumnWidthItem {
+    const growToFitProp = allowGrowToFit !== undefined ? { allowGrowToFit } : {};
+
+    return {
+        measureColumnWidthItem: {
+            width: {
+                value: width,
+                ...growToFitProp,
+            },
+        },
+    };
+}
+
+/**
+ * Creates width item that will set width for all columns containing values of the provided measure.
+ *
+ * @param measureOrId - measure specified either by value or by localId reference
+ * @param width - width in pixels
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @public
+ */
+export function newWidthForAllColumnsForMeasure(
+    measureOrId: IMeasure | string,
+    width: number,
+    allowGrowToFit?: boolean,
+): IWeakMeasureColumnWidthItem {
+    const locator = newMeasureColumnLocator(measureOrId);
+    const growToFitProp = allowGrowToFit !== undefined ? { allowGrowToFit } : {};
+
+    return {
+        measureColumnWidthItem: {
+            width: {
+                value: width,
+                ...growToFitProp,
+            },
+            locator,
+        },
+    };
+}
+
+/**
+ * Creates width item that will set width for all columns containing values of the provided measure.
+ *
+ * See also {@link newAttributeColumnLocator} to learn more about the attribute column locators.
+ *
+ * @param measureOrId - measure specified either by value or by localId reference
+ * @param locators - attribute locators to narrow down selection
+ * @param width - width in pixels
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @public
+ */
+export function newWidthForSelectedColumns(
+    measureOrId: IMeasure | string,
+    locators: IAttributeColumnLocator[],
+    width: number | "auto",
+    allowGrowToFit?: boolean,
+): IMeasureColumnWidthItem {
+    const measureLocator = newMeasureColumnLocator(measureOrId);
+    const growToFitProp = allowGrowToFit !== undefined && width !== "auto" ? { allowGrowToFit } : {};
+
+    // Note: beware here. The attribute locators _must_ come first for some obscure, impl dependent reason
+    return {
+        measureColumnWidthItem: {
+            width: {
+                value: width,
+                ...growToFitProp,
+            },
+            locators: [...locators, measureLocator],
+        },
+    };
+}
+
+/**
+ * Creates a new attribute column locator - this is used to narrow down location of measure columns in pivot table, where
+ * measures are further scoped by different attribute elements - imagine pivot table with defined for measure 'Amount' and column
+ * attribute 'Product'. The table will have multiple columns for the 'Amount' measure - each for different element of the
+ * 'Product' attribute. In this context, identifying particular measure columns needs to be more specific.
+ *
+ * The attribute column locator can match either single element of particular attribute, or all elements of particular
+ * attribute.
+ *
+ * @param attributeOrId - column attribute specified by either value or by localId reference
+ * @param element - optionally specify attribute element URI or primary key; if not specified, the locator will match
+ *  all elements of the attribute
+ * @public
+ */
+export function newAttributeColumnLocator(
+    attributeOrId: IAttribute | string,
+    element?: string,
+): IAttributeColumnLocator {
+    return {
+        attributeLocatorItem: {
+            attributeIdentifier: attributeLocalId(attributeOrId),
+            element,
+        },
+    };
+}

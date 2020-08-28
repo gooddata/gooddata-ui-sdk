@@ -32,4 +32,9 @@ export {
     IMeasureColumnLocator,
     isMeasureColumnLocator,
     isAttributeColumnLocator,
+    newAttributeColumnLocator,
+    newWidthForAllColumnsForMeasure,
+    newWidthForAllMeasureColumns,
+    newWidthForAttributeColumn,
+    newWidthForSelectedColumns,
 } from "./columnWidths";

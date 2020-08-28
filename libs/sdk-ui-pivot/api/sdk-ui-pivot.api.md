@@ -9,6 +9,7 @@ import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
+import { IMeasure } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -148,7 +149,13 @@ export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is 
 export function isAllMeasureColumnWidthItem(obj: unknown): obj is IAllMeasureColumnWidthItem;
 
 // @public
+export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnLocator;
+
+// @public
 export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColumnWidthItem;
+
+// @public
+export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocator;
 
 // @public
 export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWidthItem;
@@ -164,6 +171,21 @@ export interface IWeakMeasureColumnWidthItem {
         locator: IMeasureColumnLocator;
     };
 }
+
+// @public
+export function newAttributeColumnLocator(attributeOrId: IAttribute | string, element?: string): IAttributeColumnLocator;
+
+// @public
+export function newWidthForAllColumnsForMeasure(measureOrId: IMeasure | string, width: number, allowGrowToFit?: boolean): IWeakMeasureColumnWidthItem;
+
+// @public
+export function newWidthForAllMeasureColumns(width: number, allowGrowToFit?: boolean): IAllMeasureColumnWidthItem;
+
+// @public
+export function newWidthForAttributeColumn(attributeOrId: IAttribute | string, width: number, allowGrowToFit?: boolean): IAttributeColumnWidthItem;
+
+// @public
+export function newWidthForSelectedColumns(measureOrId: IMeasure | string, locators: IAttributeColumnLocator[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
 
 // @public
 export const PivotTable: React_2.ComponentType<IPivotTableProps>;
