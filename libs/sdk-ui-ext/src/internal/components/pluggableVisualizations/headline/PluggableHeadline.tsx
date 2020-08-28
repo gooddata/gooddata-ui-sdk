@@ -121,6 +121,8 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         const measureBucket = insightBucket(insight, BucketNames.MEASURES);
 
         if (!measureBucket || bucketIsEmpty(measureBucket)) {
+            // unmount on error because currently AD cannot recover in certain cases (RAIL-2625)
+            this.unmount();
             throw new GoodDataSdkError(PluggableVisualizationErrorCodes.INVALID_BUCKETS);
         }
 
