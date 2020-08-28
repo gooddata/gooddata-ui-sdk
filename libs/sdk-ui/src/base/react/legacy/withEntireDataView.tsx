@@ -171,19 +171,17 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.setState(state);
         }
 
-        private onError(error: GoodDataSdkError, execution = this.props.execution) {
+        private onError(error: GoodDataSdkError) {
             const { onExportReady } = this.props;
 
-            if (this.props.execution.fingerprint() === execution.fingerprint()) {
-                this.setState({ error: error.getMessage(), dataView: null });
-                this.onLoadingChanged({ isLoading: false });
+            this.setState({ error: error.getMessage(), dataView: null });
+            this.onLoadingChanged({ isLoading: false });
 
-                if (onExportReady) {
-                    onExportReady(createExportErrorFunction(error));
-                }
-
-                this.props.onError?.(error);
+            if (onExportReady) {
+                onExportReady(createExportErrorFunction(error));
             }
+
+            this.props.onError?.(error);
         }
 
         private onDataTooLarge() {
