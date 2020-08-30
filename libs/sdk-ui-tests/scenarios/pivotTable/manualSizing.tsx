@@ -1,47 +1,25 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { copyWithModifiedProps, scenariosFor } from "../../src";
-import { IPivotTableProps, IWeakMeasureColumnWidthItem, PivotTable } from "@gooddata/sdk-ui-pivot";
+import {
+    IPivotTableProps,
+    newWidthForAllColumnsForMeasure,
+    newWidthForAttributeColumn,
+    newWidthForSelectedColumns,
+    PivotTable,
+} from "@gooddata/sdk-ui-pivot";
 import {
     PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
 } from "./base";
-import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 
 const ATTRIBUTE_WIDTH = 400;
 const MEASURE_WIDTH = 60;
 
-const attributeColumnWidthItem = {
-    attributeColumnWidthItem: {
-        width: { value: ATTRIBUTE_WIDTH },
-        attributeIdentifier: attributeLocalId(ReferenceLdm.Product.Name),
-    },
-};
-
-const measureColumnWidthItemSimple = {
-    measureColumnWidthItem: {
-        width: { value: MEASURE_WIDTH },
-        locators: [
-            {
-                measureLocatorItem: {
-                    measureIdentifier: measureLocalId(ReferenceLdm.Amount),
-                },
-            },
-        ],
-    },
-};
-
-const weakMeasureColumnWidthItem: IWeakMeasureColumnWidthItem = {
-    measureColumnWidthItem: {
-        width: { value: MEASURE_WIDTH },
-        locator: {
-            measureLocatorItem: {
-                measureIdentifier: measureLocalId(ReferenceLdm.Amount),
-            },
-        },
-    },
-};
+const attributeColumnWidthItem = newWidthForAttributeColumn(ReferenceLdm.Product.Name, ATTRIBUTE_WIDTH);
+const measureColumnWidthItemSimple = newWidthForSelectedColumns(ReferenceLdm.Amount, [], MEASURE_WIDTH);
+const weakMeasureColumnWidthItem = newWidthForAllColumnsForMeasure(ReferenceLdm.Amount, MEASURE_WIDTH);
 
 const justManualResizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("manual-resizing", "no other options")
