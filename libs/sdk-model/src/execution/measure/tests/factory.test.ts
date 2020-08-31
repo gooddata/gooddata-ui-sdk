@@ -3,6 +3,8 @@ import { Velocity, Won } from "../../../../__mocks__/model";
 import { newPositiveAttributeFilter } from "../../filter/factory";
 import {
     modifyMeasure,
+    modifyPopMeasure,
+    modifyPreviousPeriodMeasure,
     modifySimpleMeasure,
     newArithmeticMeasure,
     newMeasure,
@@ -111,6 +113,30 @@ describe("measure factories", () => {
         });
     });
 
+    describe("modifyPopMeasure", () => {
+        const ExistingMeasure = newPopMeasure("masterMeasure1", "attrId1", (m) => m.localId("measure1"));
+
+        it("should not modify input measure", () => {
+            modifyPopMeasure(ExistingMeasure, (m) => m.localId("measure2"));
+
+            expect(measureLocalId(ExistingMeasure)).toEqual("measure1");
+        });
+
+        it("should keep local id from the existing measure if new localid not provided", () => {
+            const newMeasure = modifyPopMeasure(ExistingMeasure);
+
+            expect(measureLocalId(ExistingMeasure)).toEqual(measureLocalId(newMeasure));
+        });
+
+        it("should change master measure and pop attribute", () => {
+            expect(
+                modifyPopMeasure(ExistingMeasure, (m) =>
+                    m.masterMeasure("otherMaster").popAttribute("attrId2"),
+                ),
+            ).toMatchSnapshot();
+        });
+    });
+
     describe("newPreviousPeriodMeasure", () => {
         it("should return a simple PP measure when supplied with strings", () => {
             expect(newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }])).toMatchSnapshot();
@@ -118,6 +144,34 @@ describe("measure factories", () => {
 
         it("should return a simple PP measure when supplied with objects", () => {
             expect(newPreviousPeriodMeasure(Won, [{ dataSet: "bar", periodsAgo: 3 }])).toMatchSnapshot();
+        });
+    });
+
+    describe("modifyPreviousPeriodMeasure", () => {
+        const ExistingMeasure = newPreviousPeriodMeasure(
+            "masterMeasure1",
+            [{ dataSet: "dataset", periodsAgo: 1 }],
+            (m) => m.localId("measure1"),
+        );
+
+        it("should not modify input measure", () => {
+            modifyPreviousPeriodMeasure(ExistingMeasure, (m) => m.localId("measure2"));
+
+            expect(measureLocalId(ExistingMeasure)).toEqual("measure1");
+        });
+
+        it("should keep local id from the existing measure if new localid not provided", () => {
+            const newMeasure = modifyPreviousPeriodMeasure(ExistingMeasure);
+
+            expect(measureLocalId(ExistingMeasure)).toEqual(measureLocalId(newMeasure));
+        });
+
+        it("should change master measure and pop attribute", () => {
+            expect(
+                modifyPreviousPeriodMeasure(ExistingMeasure, (m) =>
+                    m.masterMeasure("otherMaster").dateDataSets([{ dataSet: "dataset2", periodsAgo: -1 }]),
+                ),
+            ).toMatchSnapshot();
         });
     });
 });
