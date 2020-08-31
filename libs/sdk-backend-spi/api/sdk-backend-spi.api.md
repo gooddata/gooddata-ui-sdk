@@ -327,6 +327,7 @@ export interface IDataView {
     readonly result: IExecutionResult;
     readonly totalCount: number[];
     readonly totals?: DataValue[][][];
+    readonly warnings?: IResultWarning[];
 }
 
 // @alpha
@@ -743,6 +744,13 @@ export interface IResultTotalHeader {
         name: string;
         type: string;
     };
+}
+
+// @public
+export interface IResultWarning {
+    message: string;
+    parameters?: (ObjRef | string)[];
+    warningCode: string;
 }
 
 // @alpha

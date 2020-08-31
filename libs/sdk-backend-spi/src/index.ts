@@ -35,6 +35,7 @@ export {
     IResultMeasureHeader,
     IResultTotalHeader,
     ITotalDescriptor,
+    IResultWarning,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
     isTotalDescriptor,
