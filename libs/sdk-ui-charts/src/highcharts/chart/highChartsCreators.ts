@@ -25,6 +25,7 @@ import { getHeatmapConfiguration } from "./highcharts/heatmapConfiguration";
 import { getBubbleConfiguration } from "./highcharts/bubbleConfiguration";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IChartOptions } from "../typings/unsafe";
+import { IntlShape } from "react-intl";
 
 const chartConfigurationMap = {
     [VisualizationTypes.LINE]: getLineConfiguration,
@@ -48,6 +49,7 @@ export function getHighchartsOptions(
     drillConfig: IDrillConfig,
     config?: IChartConfig,
     definition?: IExecutionDefinition,
+    intl?: IntlShape,
 ): any {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type];
     invariant(
@@ -58,7 +60,7 @@ export function getHighchartsOptions(
         {},
         getCommonConfiguration(chartOptions, drillConfig),
         getConfigurationByType.call(null, config, definition),
-        getCustomizedConfiguration(chartOptions, config, drillConfig),
+        getCustomizedConfiguration(chartOptions, config, drillConfig, intl),
     );
 }
 

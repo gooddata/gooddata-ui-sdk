@@ -53,6 +53,7 @@ import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigur
 import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartCapabilities";
 import { IAxis, IChartOptions, IPointData, ISeriesItem } from "../../typings/unsafe";
 import { AXIS_LINE_COLOR } from "../../utils/color";
+import { IntlShape } from "react-intl";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -343,12 +344,13 @@ const isTooltipShownInFullScreen = () => {
     return document.documentElement.clientWidth <= TOOLTIP_FULLSCREEN_THRESHOLD;
 };
 
-function formatTooltip(tooltipCallback: any) {
+function formatTooltip(tooltipCallback: any, intl?: IntlShape) {
     const { chart } = this.series;
     const { color: pointColor } = this.point;
     const chartWidth = chart.spacingBox.width;
     const isFullScreenTooltip = isTooltipShownInFullScreen();
     const maxTooltipContentWidth = isFullScreenTooltip ? chartWidth : Math.min(chartWidth, TOOLTIP_MAX_WIDTH);
+    const isDrillable = this.point.drilldown;
 
     // when brushing, do not show tooltip
     if (chart.mouseIsDown) {
@@ -360,15 +362,22 @@ function formatTooltip(tooltipCallback: any) {
 
     // null disables whole tooltip
     const tooltipContent: string = tooltipCallback(this.point, maxTooltipContentWidth, this.percentage);
+    const interactionMessage = getInteractionMessage(isDrillable, intl);
 
     return tooltipContent !== null
         ? `<div class="hc-tooltip gd-viz-tooltip" style="${tooltipStyle}">
             <span class="stroke gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
             <div class="content gd-viz-tooltip-content" style="max-width: ${maxTooltipContentWidth}px;">
                 ${tooltipContent}
+                ${interactionMessage}
             </div>
         </div>`
         : null;
+}
+
+function getInteractionMessage(isDrillable: boolean, intl: IntlShape) {
+    const message = intl ? intl.formatMessage({ id: "visualization.tooltip.interaction" }) : null;
+    return isDrillable && intl ? `<div class="gd-viz-tooltip-interaction">${message}</div>` : "";
 }
 
 function formatLabel(value: any, format: any, config: IChartConfig = {}) {
@@ -469,7 +478,13 @@ function stackLabelFormatter(config?: IChartConfig) {
         : null;
 }
 
-function getTooltipConfiguration(chartOptions: IChartOptions) {
+function getTooltipConfiguration(
+    chartOptions: IChartOptions,
+    _config?: any,
+    _chartConfig?: IChartConfig,
+    _drillConfig?: IDrillConfig,
+    intl?: IntlShape,
+) {
     const tooltipAction = get(chartOptions, "actions.tooltip");
     const chartType = chartOptions.type;
     const { stacking } = chartOptions;
@@ -487,7 +502,7 @@ function getTooltipConfiguration(chartOptions: IChartOptions) {
                   useHTML: true,
                   outside: true,
                   positioner: partial(getTooltipPositionInViewPort, chartType, stacking),
-                  formatter: partial(formatTooltip, tooltipAction),
+                  formatter: partial(formatTooltip, tooltipAction, intl),
                   ...followPointer,
               },
           }
@@ -1164,6 +1179,7 @@ export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
     chartConfig?: IChartConfig,
     drillConfig?: IDrillConfig,
+    intl?: IntlShape,
 ): any {
     const configurators = [
         getAxesConfiguration,
@@ -1187,7 +1203,7 @@ export function getCustomizedConfiguration(
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {
-        return merge(config, configurator(chartOptions, config, chartConfig, drillConfig));
+        return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl));
     }, {});
 
     return merge({}, commonData);
