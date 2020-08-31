@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import noop from "lodash/noop";
 import get from "lodash/get";
 
@@ -10,7 +10,7 @@ import { IChartConfig } from "../../../interfaces";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
 import Chart from "../Chart";
-import { VisualizationTypes, IntlWrapper } from "@gooddata/sdk-ui";
+import { VisualizationTypes, IntlWrapper, withIntl } from "@gooddata/sdk-ui";
 import { TOP, BOTTOM, MIDDLE } from "../../constants/alignments";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import * as fixtures from "../../../../__mocks__/fixtures";
@@ -44,7 +44,8 @@ describe("ChartTransformation", () => {
 
     function createComponent(customProps: any = {}) {
         const props = { ...defaultProps, ...customProps };
-        return <ChartTransformation {...props} />;
+        const Wrapped = withIntl(ChartTransformation);
+        return <Wrapped {...props} />;
     }
 
     it("should use custom renderer", () => {
@@ -186,7 +187,7 @@ describe("ChartTransformation", () => {
                     },
                 },
             };
-            const wrapper = shallow(createComponent(props));
+            const wrapper = mount(createComponent(props));
             expect(wrapper.find(HighChartsRenderer)).toHaveLength(0);
             expect(onDataTooLarge).toHaveBeenCalledTimes(1);
         });
@@ -203,7 +204,7 @@ describe("ChartTransformation", () => {
                     },
                 },
             };
-            const wrapper = shallow(createComponent());
+            const wrapper = mount(createComponent());
             expect(wrapper.find(HighChartsRenderer)).toHaveLength(1);
 
             wrapper.setProps(props);
@@ -277,7 +278,7 @@ describe("ChartTransformation", () => {
                 onNegativeValues,
                 ...pieChartPropsWithNegativeValue,
             };
-            const wrapper = shallow(createComponent(props));
+            const wrapper = mount(createComponent(props));
             expect(wrapper.find(HighChartsRenderer)).toHaveLength(0);
             expect(onNegativeValues).toHaveBeenCalledTimes(1);
         });
@@ -288,7 +289,7 @@ describe("ChartTransformation", () => {
                 onNegativeValues,
                 ...pieChartPropsWithNegativeValue,
             };
-            const wrapper = shallow(createComponent());
+            const wrapper = mount(createComponent());
             expect(wrapper.find(HighChartsRenderer)).toHaveLength(1);
 
             wrapper.setProps(props);

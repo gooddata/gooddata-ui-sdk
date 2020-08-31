@@ -21,12 +21,13 @@ import HighChartsRenderer, {
 import getLegend from "./legend/legendBuilder";
 import noop from "lodash/noop";
 import { IChartOptions } from "../typings/unsafe";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 
 export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     return <HighChartsRenderer {...props} />;
 }
 
-export interface IChartTransformationProps {
+export interface IChartTransformationProps extends WrappedComponentProps {
     config: IChartConfig;
     drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     height: number;
@@ -50,10 +51,7 @@ export interface IChartTransformationState {
     hasNegativeValue: boolean;
 }
 
-export default class ChartTransformation extends React.Component<
-    IChartTransformationProps,
-    IChartTransformationState
-> {
+class ChartTransformation extends React.Component<IChartTransformationProps, IChartTransformationState> {
     public static defaultProps = {
         drillableItems: [] as IDrillableItem[],
         renderer: renderHighCharts,
@@ -79,9 +77,19 @@ export default class ChartTransformation extends React.Component<
 
     public getRendererProps(): Omit<IHighChartsRendererProps, "legendRenderer" | "chartRenderer"> {
         const { chartOptions, legendOptions } = this;
-        const { dataView, height, width, afterRender, onDrill, onLegendReady, locale, config } = this.props;
+        const {
+            dataView,
+            height,
+            width,
+            afterRender,
+            onDrill,
+            onLegendReady,
+            locale,
+            config,
+            intl,
+        } = this.props;
         const drillConfig = { dataView, onDrill };
-        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, config, dataView.definition);
+        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, config, dataView.definition, intl);
 
         return {
             chartOptions,
@@ -141,3 +149,5 @@ export default class ChartTransformation extends React.Component<
         return this.props.renderer({ ...this.getRendererProps(), chartRenderer, legendRenderer });
     }
 }
+
+export default injectIntl(ChartTransformation);
