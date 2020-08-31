@@ -119,7 +119,8 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
                 return execution === nextExecution;
             }
 
-            return execution.fingerprint() === nextExecution.fingerprint();
+            // we need equals here (not just fingerprint) for cases where measure is moved from one bucket to another
+            return execution.equals(nextExecution);
         }
     }
 
