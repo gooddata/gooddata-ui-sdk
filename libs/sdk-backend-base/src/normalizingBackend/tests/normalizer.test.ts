@@ -1,22 +1,24 @@
 // (C) 2007-2020 GoodData Corporation
 
 import {
-    defWithDimensions,
-    newDefForItems,
     defaultDimensionsGenerator,
+    defWithDimensions,
     IExecutionDefinition,
-    newMeasureValueFilter,
-    newNegativeAttributeFilter,
     IMeasure,
     IMeasureValueFilter,
+    measureFilters,
     measureLocalId,
-    newDefForBuckets,
-    newBucket,
+    measureMasterIdentifier,
     modifyAttribute,
     modifyMeasure,
+    modifyPopMeasure,
     modifySimpleMeasure,
-    measureFilters,
     newArithmeticMeasure,
+    newBucket,
+    newDefForBuckets,
+    newDefForItems,
+    newMeasureValueFilter,
+    newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { Normalizer } from "../normalizer";
@@ -173,5 +175,19 @@ describe("Normalizer", () => {
 
         const result = Normalizer.normalize(def);
         expect(result.normalized.buckets).not.toEqual(result.original.buckets);
+    });
+
+    it("should correctly assign localIds and not hit RAIL-2631", () => {
+        const def = newDefForItems("test", [
+            modifyPopMeasure(ReferenceLdmExt.WonPopClosedYear, (m) =>
+                m.localId("previousPeriodLocalId").masterMeasure("someCustomLocalId"),
+            ),
+            modifyMeasure(ReferenceLdm.Won, (m) => m.localId("someCustomLocalId")),
+        ]);
+        const result = Normalizer.normalize(def);
+
+        expect(measureMasterIdentifier(result.normalized.measures[0])).toEqual(
+            measureLocalId(result.normalized.measures[1]),
+        );
     });
 });
