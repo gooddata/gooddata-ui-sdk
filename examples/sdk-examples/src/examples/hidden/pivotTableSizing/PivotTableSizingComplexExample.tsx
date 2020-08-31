@@ -1,21 +1,19 @@
 // (C) 2020 GoodData Corporation
 import React, { Component } from "react";
 import {
-    PivotTable,
+    IAllMeasureColumnWidthItem,
+    IAttributeColumnWidthItem,
+    IMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
-    IAllMeasureColumnWidthItem,
-    IMeasureColumnWidthItem,
-    IAttributeColumnWidthItem,
+    PivotTable,
+    newWidthForAttributeColumn,
+    newWidthForAllMeasureColumns,
+    newWidthForSelectedColumns,
 } from "@gooddata/sdk-ui-pivot";
-import { ILocatorItem, IAttributeLocatorItem, IMeasureLocatorItem } from "@gooddata/sdk-model";
+import { IAttributeLocatorItem, ILocatorItem, IMeasureLocatorItem } from "@gooddata/sdk-model";
 
 import { LdmExt } from "../../../ldm";
-import {
-    attributeColumnWidthItem,
-    measureColumnWidthItemSimple,
-    allMeasureColumnWidthItem,
-} from "../../pivotTable/utils/widthItems";
 
 const measures = [LdmExt.FranchiseFees];
 
@@ -23,9 +21,9 @@ const attributes = [LdmExt.LocationState];
 
 const columns = [LdmExt.quaterDate];
 
-const attributeWidth = (width: number) => attributeColumnWidthItem(attributes[0], width);
+const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 
-const allMeasureWidth = (width: number) => allMeasureColumnWidthItem(width);
+const allMeasureWidth = (width: number) => newWidthForAllMeasureColumns(width);
 
 const isAllMeasureColumnWidthItem = (columnWidthItem: IMeasureColumnWidthItem) => {
     return (
@@ -65,7 +63,7 @@ const isSameWidthItem = (item: any, newItem: any) => {
     return false;
 };
 
-const measureWidth = (width: number) => measureColumnWidthItemSimple(measures[0], width);
+const measureWidth = (width: number) => newWidthForSelectedColumns(measures[0], [], width);
 
 export class PivotTableSizingComplexExample extends Component {
     public state = {

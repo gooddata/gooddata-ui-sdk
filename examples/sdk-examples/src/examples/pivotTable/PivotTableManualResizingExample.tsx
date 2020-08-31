@@ -5,10 +5,12 @@ import {
     IAllMeasureColumnWidthItem,
     IMeasureColumnWidthItem,
     IAttributeColumnWidthItem,
+    newWidthForAttributeColumn,
+    newWidthForSelectedColumns,
+    newAttributeColumnLocator,
 } from "@gooddata/sdk-ui-pivot";
 import { LdmExt } from "../../ldm";
 import { workspace } from "../../constants/fixtures";
-import { attributeColumnWidthItem, measureColumnWidthItemSimple } from "./utils/widthItems";
 
 const measures = [LdmExt.FranchiseFees];
 
@@ -16,17 +18,14 @@ const attributes = [LdmExt.LocationState];
 
 const columns = [LdmExt.quaterDate];
 
-const attributeWidth = (width: number) => attributeColumnWidthItem(attributes[0], width);
+const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 
 const measureWidth = (width: number) =>
-    measureColumnWidthItemSimple(LdmExt.FranchiseFees, width, [
-        {
-            attributeLocatorItem: {
-                attributeIdentifier: "quarterDate",
-                element: `/gdc/md/${workspace}/obj/2009/elements?id=1`,
-            },
-        },
-    ]);
+    newWidthForSelectedColumns(
+        LdmExt.FranchiseFees,
+        [newAttributeColumnLocator(LdmExt.quaterDate, `/gdc/md/${workspace}/obj/2009/elements?id=1`)],
+        width,
+    );
 
 export class PivotTableManualResizingExample extends Component {
     public state = {

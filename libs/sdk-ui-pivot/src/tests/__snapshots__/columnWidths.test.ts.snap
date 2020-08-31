@@ -1,0 +1,212 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`newWidthForAllColumnsForMeasure should create width item when measure as localId and without grow to fit prop 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "locator": Object {
+      "measureLocatorItem": Object {
+        "measureIdentifier": "localId",
+      },
+    },
+    "width": Object {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAllColumnsForMeasure should create width item when measure as value and without grow to fit prop 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "locator": Object {
+      "measureLocatorItem": Object {
+        "measureIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    "width": Object {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAllColumnsForMeasure should create width item with grow to fit prop false 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "locator": Object {
+      "measureLocatorItem": Object {
+        "measureIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    "width": Object {
+      "allowGrowToFit": false,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAllColumnsForMeasure should create width item with grow to fit prop true 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "locator": Object {
+      "measureLocatorItem": Object {
+        "measureIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    "width": Object {
+      "allowGrowToFit": true,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAllMeasureColumns should create width item without grow to fit prop if not specified on factory call 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "width": Object {
+      "value": 1,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAttributeColumn should create width item when attribute as localId and without grow to fit prop 1`] = `
+Object {
+  "attributeColumnWidthItem": Object {
+    "attributeIdentifier": "localId",
+    "width": Object {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAttributeColumn should create width item when attribute as value and without grow to fit prop 1`] = `
+Object {
+  "attributeColumnWidthItem": Object {
+    "attributeIdentifier": "a_label.product.id.name",
+    "width": Object {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAttributeColumn should create width item with grow to fit prop false 1`] = `
+Object {
+  "attributeColumnWidthItem": Object {
+    "attributeIdentifier": "a_label.product.id.name",
+    "width": Object {
+      "allowGrowToFit": false,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForAttributeColumn should create width item with grow to fit prop true 1`] = `
+Object {
+  "attributeColumnWidthItem": Object {
+    "attributeIdentifier": "a_label.product.id.name",
+    "width": Object {
+      "allowGrowToFit": true,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForSelectedColumns should create width item when measure as localId and without grow to fit prop 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "localId",
+        },
+      },
+    ],
+    "width": Object {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForSelectedColumns should create width item when measure as value and without grow to fit prop 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+    "width": Object {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForSelectedColumns should create width item with attr locators in front of measure locator 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "locators": Array [
+      Object {
+        "attributeLocatorItem": Object {
+          "attributeIdentifier": "a_label.product.id.name",
+          "element": "uri",
+        },
+      },
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+    "width": Object {
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForSelectedColumns should create width item with grow to fit prop false 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+    "width": Object {
+      "allowGrowToFit": false,
+      "value": 10,
+    },
+  },
+}
+`;
+
+exports[`newWidthForSelectedColumns should create width item with grow to fit prop true 1`] = `
+Object {
+  "measureColumnWidthItem": Object {
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+    "width": Object {
+      "allowGrowToFit": true,
+      "value": 10,
+    },
+  },
+}
+`;
