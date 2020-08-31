@@ -13,12 +13,14 @@ import {
     IResultHeader,
     NoDataError,
     UnexpectedError,
+    IResultWarning,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
+import { convertWarning } from "../../../convertors/fromBackend/ExecutionResultConverter";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
@@ -142,6 +144,7 @@ class BearDataView implements IDataView {
     public readonly offset: number[];
     public readonly result: IExecutionResult;
     public readonly totals?: DataValue[][][];
+    public readonly warnings?: IResultWarning[];
     private readonly _fingerprint: string;
 
     constructor(result: IExecutionResult, dataResult: GdcExecution.IExecutionResult) {
@@ -153,6 +156,7 @@ class BearDataView implements IDataView {
         this.totalCount = dataResult.paging.total;
         this.count = dataResult.paging.count;
         this.offset = dataResult.paging.offset;
+        this.warnings = dataResult.warnings?.map(convertWarning) ?? [];
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
     }

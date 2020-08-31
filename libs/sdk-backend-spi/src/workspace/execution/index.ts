@@ -10,7 +10,7 @@ import {
     DimensionGenerator,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export";
-import { DataValue, IDimensionDescriptor, IResultHeader } from "./results";
+import { DataValue, IDimensionDescriptor, IResultHeader, IResultWarning } from "./results";
 
 /**
  * Execution factory provides several methods to create a prepared execution from different types
@@ -314,6 +314,16 @@ export interface IDataView {
      * Result of the execution that calculated data for this view.
      */
     readonly result: IExecutionResult;
+
+    /**
+     * Result warnings.
+     *
+     * Backend MAY return warnings to indicate that the result is different compared to what the caller can expect.
+     * For example, the caller executes a definition with particular filter,
+     * but the backend determines that the filter has no effect on the computation.
+     * Backend runs the execution and communicates by warning that the filter was useless.
+     */
+    readonly warnings?: IResultWarning[];
 
     /**
      * Tests if this data view is same as the other data view.

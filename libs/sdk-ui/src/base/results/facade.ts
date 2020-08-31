@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { IDataView, IExecutionResult, IResultWarning } from "@gooddata/sdk-backend-spi";
 import { DataAccessConfig } from "./dataAccessConfig";
 import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods";
 import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods";
@@ -60,6 +60,14 @@ export class DataViewFacade {
      */
     public result(): IExecutionResult {
         return this.dataView.result;
+    }
+
+    /**
+     * @returns execution result warnings
+     * @alpha
+     */
+    public warnings(): IResultWarning[] {
+        return this.dataView.warnings ?? [];
     }
 
     /**

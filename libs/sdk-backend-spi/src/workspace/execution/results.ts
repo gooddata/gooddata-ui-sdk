@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
+import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -162,6 +163,32 @@ export interface IResultTotalHeader {
  * @public
  */
 export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
+
+/**
+ * Represents an execution result warning.
+ * (e.g. when execution was executed successfully, but backend didn't take something into the account)
+ *
+ * @public
+ */
+export interface IResultWarning {
+    /**
+     * Unique identifier of the execution warning
+     */
+    warningCode: string;
+
+    /**
+     * Human readable representation of the execution warning, with C-like printf parameter placehodlers.
+     * The values for the placeholders are in the parameters array in the order in which they should replace the placeholders.
+     *
+     * Example: "metric filter on dimension [%s] not applied"
+     */
+    message: string;
+
+    /**
+     * Execution warning parameters (e.g. when filter was not applied - its ObjRef)
+     */
+    parameters?: (ObjRef | string)[];
+}
 
 //
 // Type guards
