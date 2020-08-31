@@ -70,6 +70,37 @@ Object {
           "displayForm": Object {
             "uri": "/displayForm",
           },
+          "filterElementsBy": Array [],
+          "localIdentifier": "parent",
+          "negativeSelection": false,
+        },
+      },
+      Object {
+        "attributeFilter": Object {
+          "attributeElements": Array [
+            Object {
+              "uri": "/test3",
+            },
+            Object {
+              "uri": "/test4",
+            },
+          ],
+          "displayForm": Object {
+            "uri": "/displayForm34",
+          },
+          "filterElementsBy": Array [
+            Object {
+              "filterLocalIdentifier": "parent",
+              "over": Object {
+                "attributes": Array [
+                  Object {
+                    "uri": "attribute/uri",
+                  },
+                ],
+              },
+            },
+          ],
+          "localIdentifier": "child",
           "negativeSelection": false,
         },
       },

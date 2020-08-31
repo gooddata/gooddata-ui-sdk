@@ -13,6 +13,7 @@ import { sanitizeConfig, IConfigStorage, ConfigModule } from "./config";
 import { CatalogueModule } from "./catalogue";
 import { AdminModule } from "./admin";
 import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
+import { LdmModule } from "./ldm";
 
 /**
  * # JS SDK
@@ -43,6 +44,7 @@ export class SDK {
     public dashboard: DashboardModule;
     public catalogue: CatalogueModule;
     public admin: AdminModule;
+    public ldm: LdmModule;
     public configStorage: IConfigStorage;
     public utils: {
         loadAttributesMap: any;
@@ -63,6 +65,7 @@ export class SDK {
         this.dashboard = new DashboardModule(this.xhr);
         this.catalogue = new CatalogueModule(this.xhr, this.execution);
         this.admin = new AdminModule(this.xhr);
+        this.ldm = new LdmModule(this.xhr);
 
         const attributesMapLoaderModule = new AttributesMapLoaderModule(this.md);
         this.utils = {

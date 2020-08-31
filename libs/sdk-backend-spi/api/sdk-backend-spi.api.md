@@ -9,6 +9,7 @@ import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
+import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
@@ -249,6 +250,16 @@ export interface IDashboardAttributeFilter {
         displayForm: ObjRef;
         negativeSelection: boolean;
         attributeElements: ObjRef[];
+        localIdentifier?: string;
+        filterElementsBy?: IDashboardAttributeFilterParent[];
+    };
+}
+
+// @alpha
+export interface IDashboardAttributeFilterParent {
+    filterLocalIdentifier: string;
+    over: {
+        attributes: ObjRef[];
     };
 }
 
@@ -433,9 +444,18 @@ export interface IDrillToLegacyDashboard extends IDrill {
 // @public
 export interface IElementQuery {
     query(): Promise<IElementQueryResult>;
+    withAttributeFilters(arrtibuteRef: ObjRef, filters: IElementQueryAttributeFilter[]): IElementQuery;
     withLimit(limit: number): IElementQuery;
     withOffset(offset: number): IElementQuery;
     withOptions(options: IElementQueryOptions): IElementQuery;
+}
+
+// @public
+export interface IElementQueryAttributeFilter {
+    // (undocumented)
+    attributeFilter: IAttributeFilter;
+    // (undocumented)
+    overAttribute: ObjRef;
 }
 
 // @public
@@ -1146,6 +1166,8 @@ export interface IWorkspaceInsights {
 export interface IWorkspaceMetadata {
     getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
+    getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
+    getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
 }

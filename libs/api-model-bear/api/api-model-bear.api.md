@@ -554,10 +554,12 @@ export namespace GdcExecuteAFM {
             resultSpec?: IResultSpec;
         };
     }
-    // (undocumented)
+    // @deprecated (undocumented)
     export interface IExpressionFilter {
         // (undocumented)
-        value: string;
+        expression: {
+            value: string;
+        };
     }
     // (undocumented)
     export interface ILocalIdentifierQualifier {
@@ -1067,6 +1069,13 @@ export namespace GdcFilterContext {
             displayForm: string;
             negativeSelection: boolean;
             attributeElements: string[];
+            localIdentifier?: string;
+            filterElementsBy?: Array<{
+                filterLocalIdentifier: string;
+                over: {
+                    attributes: Array<string>;
+                };
+            }>;
         };
     }
     // (undocumented)

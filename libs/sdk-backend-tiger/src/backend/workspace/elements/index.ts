@@ -5,6 +5,7 @@ import {
     IElementQueryOptions,
     IElementQueryResult,
     UnexpectedError,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, isIdentifierRef, IAttributeElement } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -40,6 +41,10 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
     public withOffset(offset: number): IElementQuery {
         this.offset = offset;
         return this;
+    }
+
+    public withAttributeFilters(): IElementQuery {
+        throw new NotSupported("not supported");
     }
 
     public withOptions(options: IElementQueryOptions): IElementQuery {

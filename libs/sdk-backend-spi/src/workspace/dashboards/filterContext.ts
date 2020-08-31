@@ -23,6 +23,23 @@ export type AbsoluteType = "absolute";
 export type DateFilterType = RelativeType | AbsoluteType;
 
 /**
+ * Parent filter of an attribute filter of the filter context
+ * @alpha
+ */
+export interface IDashboardAttributeFilterParent {
+    /**
+     * Local identifier of the parent filter
+     */
+    filterLocalIdentifier: string;
+    /**
+     * Specification of the connection point(s) between the parent and child filter in the data model
+     */
+    over: {
+        attributes: ObjRef[];
+    };
+}
+
+/**
  * Attribute filter of the filter context
  * @alpha
  */
@@ -42,6 +59,16 @@ export interface IDashboardAttributeFilter {
          * Selected attribute elements object refs
          */
         attributeElements: ObjRef[];
+
+        /**
+         * Identifier of the filter which is valid in the scope of the filter context
+         */
+        localIdentifier?: string;
+
+        /**
+         * Parent filters that are limiting elements available in this filter
+         */
+        filterElementsBy?: IDashboardAttributeFilterParent[];
     };
 }
 

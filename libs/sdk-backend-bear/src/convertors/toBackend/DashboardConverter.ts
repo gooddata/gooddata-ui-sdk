@@ -152,15 +152,33 @@ export const convertFilterContextItem = (
     }
 
     const {
-        attributeFilter: { attributeElements, displayForm, negativeSelection },
+        attributeFilter: {
+            attributeElements,
+            displayForm,
+            negativeSelection,
+            localIdentifier,
+            filterElementsBy = [],
+        },
     } = filterContextItem;
     const attributeElementsUris = attributeElements.map(refToUri);
     const displayFormUri = refToUri(displayForm);
+
+    const convertedAttributeFilterParents = filterElementsBy.map((filterElementsByItem) => {
+        return {
+            filterLocalIdentifier: filterElementsByItem.filterLocalIdentifier,
+            over: {
+                attributes: filterElementsByItem.over.attributes.map(refToUri),
+            },
+        };
+    });
+
     const convertedAttributeFilter: GdcFilterContext.IAttributeFilter = {
         attributeFilter: {
             negativeSelection,
             attributeElements: attributeElementsUris,
             displayForm: displayFormUri,
+            localIdentifier,
+            filterElementsBy: convertedAttributeFilterParents,
         },
     };
 

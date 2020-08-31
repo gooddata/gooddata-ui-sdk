@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceMetadata } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceMetadata, NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     MetricResourceResponseSchema,
     MetricResourceSchema,
@@ -108,5 +108,13 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
             value,
             ref: idRef(identifier),
         };
+    }
+
+    getCommonAttributes(): Promise<ObjRef[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getCommonAttributesBatch(): Promise<ObjRef[][]> {
+        throw new NotSupported("not supported");
     }
 }

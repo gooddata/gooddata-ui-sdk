@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import isArray from "lodash/isArray";
 import isEmpty from "lodash/isEmpty";
 
@@ -195,9 +195,13 @@ export namespace GdcExecuteAFM {
         };
     }
 
-    // Might be removed, as we don't know if expression filter is needed
+    /**
+     * @deprecated Expression filter in AFM can be used only by legacy code
+     */
     export interface IExpressionFilter {
-        value: string;
+        expression: {
+            value: string;
+        };
     }
 
     export interface ITotalItem {
@@ -406,7 +410,7 @@ export namespace GdcExecuteAFM {
     export function isExpressionFilter(
         filter: GdcExecuteAFM.CompatibilityFilter,
     ): filter is GdcExecuteAFM.IExpressionFilter {
-        return !isEmpty(filter) && (filter as GdcExecuteAFM.IExpressionFilter).value !== undefined;
+        return !isEmpty(filter) && (filter as GdcExecuteAFM.IExpressionFilter).expression !== undefined;
     }
 
     export function isAttributeElementsArray(

@@ -76,4 +76,10 @@ export class RecordedMetadata implements IWorkspaceMetadata {
     public getFactDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");
     }
+    public getCommonAttributes(): Promise<ObjRef[]> {
+        throw new NotSupported("not supported");
+    }
+    public getCommonAttributesBatch(): Promise<ObjRef[][]> {
+        throw new NotSupported("not supported");
+    }
 }

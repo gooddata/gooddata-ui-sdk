@@ -6,6 +6,7 @@ import {
     IElementQueryOptions,
     IElementQueryResult,
     NotImplemented,
+    NotSupported,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, isUriRef, ObjRef } from "@gooddata/sdk-model";
@@ -79,5 +80,9 @@ class RecordedElements implements IElementQuery {
         this.options = options;
 
         return this;
+    }
+
+    public withAttributeFilters(): IElementQuery {
+        throw new NotSupported("not supported");
     }
 }

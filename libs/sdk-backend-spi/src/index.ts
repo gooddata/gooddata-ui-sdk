@@ -81,6 +81,7 @@ export {
     IElementQueryResult,
     IElementQuery,
     IElementQueryOptions,
+    IElementQueryAttributeFilter,
 } from "./workspace/elements";
 
 export { IExportConfig, IExportResult } from "./workspace/execution/export";
@@ -160,6 +161,7 @@ export {
     AbsoluteType,
     DateFilterType,
     FilterContextItem,
+    IDashboardAttributeFilterParent,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     IFilterContextDefinition,

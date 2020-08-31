@@ -1,5 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-
 import { GdcFilterContext } from "@gooddata/api-model-bear";
 import { uriRef } from "@gooddata/sdk-model";
 import {
@@ -10,6 +9,7 @@ import {
     ITempFilterContext,
     isDashboardDateFilter,
     IFilterContextDefinition,
+    IDashboardAttributeFilterParent,
 } from "@gooddata/sdk-backend-spi";
 
 function isNotTemporaryAllTimeDateFilter(filter: FilterContextItem): boolean {
@@ -37,14 +37,33 @@ export const convertFilterContextItem = (
 ): FilterContextItem => {
     if (GdcFilterContext.isAttributeFilter(filterContextItem)) {
         const {
-            attributeFilter: { attributeElements, displayForm, negativeSelection },
+            attributeFilter: {
+                attributeElements,
+                displayForm,
+                negativeSelection,
+                localIdentifier,
+                filterElementsBy = [],
+            },
         } = filterContextItem;
+
+        const convertedFilterElementsBy: IDashboardAttributeFilterParent[] = filterElementsBy.map(
+            (filterBy) => {
+                return {
+                    filterLocalIdentifier: filterBy.filterLocalIdentifier,
+                    over: {
+                        attributes: filterBy.over.attributes.map(uriRef),
+                    },
+                };
+            },
+        );
 
         const convertedFilterContextItem: IDashboardAttributeFilter = {
             attributeFilter: {
                 attributeElements: attributeElements.map(uriRef),
                 displayForm: uriRef(displayForm),
                 negativeSelection,
+                localIdentifier,
+                filterElementsBy: convertedFilterElementsBy,
             },
         };
 
