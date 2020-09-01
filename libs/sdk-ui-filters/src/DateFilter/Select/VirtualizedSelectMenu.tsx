@@ -34,40 +34,42 @@ const optionGetter = <V extends {}>({
     highlightedIndex,
     getItemProps,
     optionClassName,
-}: IOptionGetterProps<V>) => ({ index, style }: ListChildComponentProps) => {
-    const selectableOptions = getSelectableItems(items);
-    const item = items[index];
-    if (item.type === "option") {
-        return (
-            <SelectOption
-                {...getItemProps({
-                    key: `${item.type}-${item.value}`,
-                    item,
-                    index: selectableOptions.indexOf(item),
-                    isSelected: selectedItem && item ? selectedItem.value === item.value : false,
-                    className: optionClassName,
-                })}
-                isFocused={
-                    selectableOptions[highlightedIndex] && item
-                        ? selectableOptions[highlightedIndex].value === item.value
-                        : false
-                }
-                style={style}
-            >
-                {item.label}
-            </SelectOption>
-        );
-    } else if (item.type === "heading" || item.type === "error") {
-        // for now errors look the same as headings
-        return (
-            <SelectHeading key={`${item.type}-${item.label}`} style={style}>
-                {item.label}
-            </SelectHeading>
-        );
-    } else if (item.type === "separator") {
-        return <SelectSeparator key={`${item.type}-${index}`} style={style} />;
-    }
-    return null;
+}: IOptionGetterProps<V>) => {
+    return function WrappedSelectOption({ index, style }: ListChildComponentProps) {
+        const selectableOptions = getSelectableItems(items);
+        const item = items[index];
+        if (item.type === "option") {
+            return (
+                <SelectOption
+                    {...getItemProps({
+                        key: `${item.type}-${item.value}`,
+                        item,
+                        index: selectableOptions.indexOf(item),
+                        isSelected: selectedItem && item ? selectedItem.value === item.value : false,
+                        className: optionClassName,
+                    })}
+                    isFocused={
+                        selectableOptions[highlightedIndex] && item
+                            ? selectableOptions[highlightedIndex].value === item.value
+                            : false
+                    }
+                    style={style}
+                >
+                    {item.label}
+                </SelectOption>
+            );
+        } else if (item.type === "heading" || item.type === "error") {
+            // for now errors look the same as headings
+            return (
+                <SelectHeading key={`${item.type}-${item.label}`} style={style}>
+                    {item.label}
+                </SelectHeading>
+            );
+        } else if (item.type === "separator") {
+            return <SelectSeparator key={`${item.type}-${index}`} style={style} />;
+        }
+        return null;
+    };
 };
 
 const itemHeightByTypeMap: { [key in SelectItemTypes]: number } = {

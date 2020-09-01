@@ -21,6 +21,7 @@ import { IFormatTemplate, IToggleButtonProps } from "../typings";
     };
 });
 
+// eslint-disable-next-line react/display-name
 const getButtonComponent = (): React.FC<IToggleButtonProps> => ({ isOpened, text, toggleDropdown }) => {
     return (
         <div
