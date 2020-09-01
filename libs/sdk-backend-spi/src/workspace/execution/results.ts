@@ -32,11 +32,28 @@ export interface IMeasureGroupDescriptor {
 export interface IMeasureDescriptor {
     // TODO: rename this to measureDescriptor ... the goal is to get rid of the overused 'header' nomenclature
     measureHeaderItem: {
+        localIdentifier: string;
+
+        /**
+         * Measure name. Backend must fill the name according to the following rules:
+         *
+         * -  If measure definition contained 'title', then name MUST equal to 'title',
+         * -  Else if measure definition contained 'alias', then name MUST equal to 'alias',
+         * -  Else if the backend has a name of the measure in its records, then it MUST include that name
+         * -  Otherwise the name must default to value of localIdentifier
+         */
+        name: string;
+
+        /**
+         * Measure format. Backend must fill the name according to the following rules:
+         *
+         * -  If measure definition contained 'format', then the format from the definition MUST be used
+         * -  Else if backend has a format for the measure in its records, then it MUST include that format
+         * -  Otherwise the format must be defaulted
+         */
+        format: string;
         uri?: string;
         identifier?: string;
-        localIdentifier: string;
-        name: string;
-        format: string;
     };
 }
 
@@ -137,7 +154,19 @@ export interface IResultAttributeHeader {
  */
 export interface IResultMeasureHeader {
     measureHeaderItem: {
+        /**
+         * Measure name - equals to the measure name contained in the respective measure descriptor, included here
+         * for convenience and easy access.
+         *
+         * Note: check out the contract for measure name as described in {@link IMeasureDescriptor} - it is
+         * somewhat more convoluted than one would expect.
+         */
         name: string;
+
+        /**
+         * Index of this measure's descriptor within the measure group description. The measure group descriptor
+         * is included in the execution result.
+         */
         order: number;
     };
 }

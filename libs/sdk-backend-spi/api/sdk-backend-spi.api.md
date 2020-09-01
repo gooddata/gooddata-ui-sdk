@@ -671,11 +671,11 @@ export interface IListedDashboard {
 export interface IMeasureDescriptor {
     // (undocumented)
     measureHeaderItem: {
-        uri?: string;
-        identifier?: string;
         localIdentifier: string;
         name: string;
         format: string;
+        uri?: string;
+        identifier?: string;
     };
 }
 
