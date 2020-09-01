@@ -21,6 +21,10 @@ import {
     ObjRef,
     visClassId,
     visClassUri,
+    IFilter,
+    mergeFilters,
+    insightFilters,
+    insightSetFilters,
 } from "@gooddata/sdk-model";
 import { InsightRecording, RecordingIndex } from "./types";
 import { identifierToRecording, RecordingPager } from "./utils";
@@ -137,6 +141,20 @@ export class RecordedInsights implements IWorkspaceInsights {
 
     public getObjectsReferencing = async (_ref: ObjRef): Promise<IInsightReferencing> => {
         return {};
+    };
+
+    public getInsightWithAddedFilters = async <T extends IInsightDefinition>(
+        insight: T,
+        filters: IFilter[],
+    ): Promise<T> => {
+        if (!filters.length) {
+            return insight;
+        }
+
+        // we assume that all the filters already use idRefs exclusively
+        const mergedFilters = mergeFilters(insightFilters(insight), filters);
+
+        return insightSetFilters(insight, mergedFilters);
     };
 
     private async getVisualizationClassByUri(uri: string): Promise<IVisualizationClass> {

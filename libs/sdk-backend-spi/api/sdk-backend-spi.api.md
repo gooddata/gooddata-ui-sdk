@@ -1155,6 +1155,7 @@ export interface IWorkspaceInsights {
     deleteInsight(ref: ObjRef): Promise<void>;
     getInsight(ref: ObjRef): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
+    getInsightWithAddedFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[]): Promise<T>;
     getObjectsReferencing(ref: ObjRef): Promise<IInsightReferencing>;
     getReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;

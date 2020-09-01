@@ -16,6 +16,10 @@ import {
     objRefToString,
     insightTitle,
     insightId,
+    IFilter,
+    mergeFilters,
+    insightFilters,
+    insightSetFilters,
 } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/api-client-tiger";
 import uuid4 from "uuid/v4";
@@ -213,5 +217,19 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
 
     public getObjectsReferencing = async (_ref: ObjRef): Promise<IInsightReferencing> => {
         return Promise.resolve({});
+    };
+
+    public getInsightWithAddedFilters = async <T extends IInsightDefinition>(
+        insight: T,
+        filters: IFilter[],
+    ): Promise<T> => {
+        if (!filters.length) {
+            return insight;
+        }
+
+        // we assume that all the filters in tiger already use idRefs exclusively
+        const mergedFilters = mergeFilters(insightFilters(insight), filters);
+
+        return insightSetFilters(insight, mergedFilters);
     };
 }

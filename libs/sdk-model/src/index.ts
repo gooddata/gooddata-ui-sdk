@@ -142,6 +142,8 @@ export {
     newMeasureValueFilter,
 } from "./execution/filter/factory";
 
+export { mergeFilters } from "./execution/filter/filterMerge";
+
 export {
     IMeasureTitle,
     IMeasureDefinitionType,

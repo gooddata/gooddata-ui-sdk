@@ -1387,6 +1387,9 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 // @public
 export function measureValueFilterOperator(filter: IMeasureValueFilter): ComparisonConditionOperator | RangeConditionOperator | undefined;
 
+// @internal
+export function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[] | undefined): IFilter[];
+
 // @public
 export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject;
 
