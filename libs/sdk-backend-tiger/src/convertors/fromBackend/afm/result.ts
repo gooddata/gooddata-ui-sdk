@@ -78,6 +78,12 @@ function transformHeaderItems(
                         const primaryLabel =
                             header.attributeHeader.primaryLabelValue ?? header.attributeHeader.labelValue;
 
+                        /*
+                         * Funny stuff #1 - we have to set 'uri' to some made-up value resembling the URIs sent by bear. This
+                         * is because pivot table relies on the format of URIs. Ideally we would refactor pivot table to
+                         * not care about this however this aspect is like a couple of eggs that hold the pivot spaghetti
+                         * together - cannot be easily untangled.
+                         */
                         return {
                             attributeHeaderItem: {
                                 uri: `/obj/${headerGroupIndex}/elements?id=${primaryLabel}`,
@@ -90,8 +96,9 @@ function transformHeaderItems(
 
                     if (isResultMeasureHeader(header)) {
                         /*
-                         * Tiger sends just the measure index in the measure headers. This is the index of the
-                         * measure descriptor within the measure group.
+                         * Funny stuff #2 - Tiger sends just the measure index in the measure headers. This is the index of the
+                         * measure descriptor within the measure group. The code looks up the measure descriptor so that
+                         * it can then fill in the `name` to the one in the descriptor
                          */
                         const measureIndex = header.measureHeader.measureIndex;
 
