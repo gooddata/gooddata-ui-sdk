@@ -227,6 +227,8 @@ export class Normalizer {
 
     private readonly originalMeasures: Map<string, IMeasure> = new Map<string, IMeasure>();
 
+    private readonly alreadyNormalized: IMeasure[] = [];
+
     private constructor(public readonly original: IExecutionDefinition) {
         const copy = cloneDeep(this.original);
 
@@ -335,29 +337,26 @@ export class Normalizer {
     };
 
     private normalizeMeasure = (measure: IMeasure, path: Set<string> = new Set()): string => {
-        const originalLocalId = measureLocalId(measure);
+        const localId = measureLocalId(measure);
         const definition = measure.measure.definition;
 
         /*
-         * don't do anything if the measure is already normalized; this can be determined by testing
-         * whether there is already a originalLocalId -> normalizedLocalId entry.
+         * don't do anything if the measure is already normalized;
          *
          * this can happen as master / derived / arithmetic measures can be mixed in the measures array
-         * in any order & the recursive algorithm goes after the leaves first.
+         * in any order & the recursive algorithm goes after the leaves first and then gets to the measure
+         * once again as it walks the array
          */
-        const alreadyNormalized = this.maybeNormalizedLocalId(originalLocalId);
-        if (alreadyNormalized) {
-            return alreadyNormalized;
+        if (this.alreadyNormalized.find((m) => m === measure)) {
+            // if already normalized, the measure has been mutated and the localId is the normalized one
+            return localId;
         }
 
         /*
          * circular dependency detection and bail-out.
          */
-        invariant(
-            !path.has(originalLocalId),
-            `circular dependency on measure with localId ${originalLocalId}`,
-        );
-        path.add(originalLocalId);
+        invariant(!path.has(localId), `circular dependency on measure with localId ${localId}`);
+        path.add(localId);
 
         if (isPoPMeasureDefinition(definition)) {
             this.normalizePoP(definition, path);
@@ -374,9 +373,11 @@ export class Normalizer {
         delete measure.measure.format;
 
         const newLocalId = measureLocalId(modifyMeasure(measure, (m) => m.defaultLocalId()));
-        const newUniqueLocalId = this.createUniqueMapping(originalLocalId, newLocalId);
+        const newUniqueLocalId = this.createUniqueMapping(localId, newLocalId);
 
         measure.measure.localIdentifier = newUniqueLocalId;
+
+        this.alreadyNormalized.push(measure);
 
         return newUniqueLocalId;
     };

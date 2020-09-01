@@ -15,6 +15,44 @@ Object {
 }
 `;
 
+exports[`measure factories modifyPopMeasure should change master measure and pop attribute 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "popMeasureDefinition": Object {
+        "measureIdentifier": "otherMaster",
+        "popAttribute": Object {
+          "identifier": "attrId2",
+          "type": "attribute",
+        },
+      },
+    },
+    "localIdentifier": "measure1",
+  },
+}
+`;
+
+exports[`measure factories modifyPreviousPeriodMeasure should change master measure and pop attribute 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "previousPeriodMeasure": Object {
+        "dateDataSets": Array [
+          Object {
+            "dataSet": Object {
+              "identifier": "dataset2",
+            },
+            "periodsAgo": -1,
+          },
+        ],
+        "measureIdentifier": "otherMaster",
+      },
+    },
+    "localIdentifier": "measure1",
+  },
+}
+`;
+
 exports[`measure factories modifySimpleMeasure should create new measure with cleaned up customizations and same localId 1`] = `
 Object {
   "measure": Object {

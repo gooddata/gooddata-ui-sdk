@@ -1418,7 +1418,10 @@ export function modifyAttribute(attribute: IAttribute, modifications?: Attribute
 export function modifyMeasure<T extends IMeasureDefinitionType>(measure: IMeasure<T>, modifications?: MeasureModifications<MeasureBuilderBase<IMeasureDefinitionType>>): IMeasure<T>;
 
 // @public
-export function modifyPopMeasure(measure: IMeasure<IPoPMeasureDefinition>, modifications: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
+export function modifyPopMeasure(measure: IMeasure<IPoPMeasureDefinition>, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
+
+// @public
+export function modifyPreviousPeriodMeasure(measure: IMeasure<IPreviousPeriodMeasureDefinition>, modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @public
 export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;

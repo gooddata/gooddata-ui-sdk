@@ -196,6 +196,7 @@ export {
     modifyMeasure,
     modifySimpleMeasure,
     modifyPopMeasure,
+    modifyPreviousPeriodMeasure,
     newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
