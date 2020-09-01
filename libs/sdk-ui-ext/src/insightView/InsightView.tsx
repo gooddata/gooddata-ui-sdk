@@ -17,7 +17,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { IVisualization, IVisCallbacks, FullVisualizationCatalog, IVisProps } from "../internal";
-import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
 import {
     GoodDataSdkError,
     fillMissingTitles,
@@ -297,13 +296,18 @@ class RenderInsightView extends React.Component<
         }
     };
 
-    private getInsight = (): Promise<IInsight> => {
+    private getInsight = async (): Promise<IInsight> => {
         const ref =
             typeof this.props.insight === "string"
                 ? idRef(this.props.insight, "insight")
                 : this.props.insight;
 
-        return this.getRemoteResource((loader) => loader.getInsight(this.props.backend, ref));
+        const insight = await this.getRemoteResource((loader) => loader.getInsight(this.props.backend, ref));
+
+        return this.props
+            .backend!.workspace(this.props.workspace!)
+            .insights()
+            .getInsightWithAddedFilters(insight, this.props.filters ?? []);
     };
 
     private getColorPalette = (): Promise<IColorPalette> => {
@@ -333,10 +337,7 @@ class RenderInsightView extends React.Component<
     };
 
     private getExecutionFactory = () => {
-        return new ExecutionFactoryWithPresetFilters(
-            this.props.backend.workspace(this.props.workspace).execution(),
-            this.props.filters,
-        );
+        return this.props.backend.workspace(this.props.workspace).execution();
     };
 
     private componentDidMountInner = async () => {
@@ -353,7 +354,10 @@ class RenderInsightView extends React.Component<
 
     private componentDidUpdateInner = async (prevProps: IInsightViewProps) => {
         const needsNewSetup =
-            !isEqual(this.props.insight, prevProps.insight) || this.props.workspace !== prevProps.workspace;
+            !isEqual(this.props.insight, prevProps.insight) ||
+            !isEqual(this.props.filters, prevProps.filters) ||
+            this.props.workspace !== prevProps.workspace;
+
         if (needsNewSetup) {
             await this.setupVisualization();
         }
