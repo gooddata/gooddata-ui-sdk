@@ -14,6 +14,21 @@ import { withNormalization } from "@gooddata/sdk-backend-base";
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
+    /*
+     * Execution normalization is applied by default for tiger. This is so that tiger does not have to support
+     * questionable mechanics of measure name and format assignment and attribute name assigment; tiger does not
+     * accept those parameters on input to AFM.
+     *
+     * Normalizing decorator takes care of this transparently - it will modify the execution definition under the
+     * covers, remove the nonsense and then send the execution to the real tiger impl. Once tiger impl returns data,
+     * the decorator will apply denormalization and reinstate the detail it stripped away.
+     *
+     * IMPORTANT: in order for the decorator to work without issues, it is important that the results provided by the
+     * tiger backend match the contracts for result dimension and data view header items. To this end, there are
+     * couple of alternations / enrichment of tiger's descriptors and header items. Those are done during
+     * conversion. See `src/convertors/fromBackend/dimensions.ts` and `result.ts` in the same dir.
+     */
+
     return withNormalization(new TigerBackend(config, implConfig));
 }
 
