@@ -12,9 +12,10 @@ import {
     IVisualizationOptions,
     IVisualizationProperties,
     PluggableVisualizationErrorCodes,
+    IDrillDownContext,
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
-import { IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     DefaultLocale,
@@ -286,5 +287,20 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
             resultItems.push(bucketItem);
             return resultItems;
         }, []);
+    }
+
+    /**
+     * Default no-op implementation of the drill down, which just returns the original visualization.
+     *
+     * @param sourceVisualization drill down source {@link IInsight}
+     * @param _drillDownContext drill context (unused in this implementation)
+     * @returns the {@code sourceVisualization}
+     * @see {@link IVisualization.getInsightWithDrillDownApplied} for more information
+     */
+    public getInsightWithDrillDownApplied(
+        sourceVisualization: IInsight,
+        _drillDownContext: IDrillDownContext,
+    ): IInsight {
+        return sourceVisualization;
     }
 }

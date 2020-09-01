@@ -129,6 +129,7 @@ export {
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
     getDrillIntersection,
+    getIntersectionPartAfter,
     fireDrillEvent,
 } from "./vis/drilling";
 export { createExportFunction, createExportErrorFunction } from "./vis/export";

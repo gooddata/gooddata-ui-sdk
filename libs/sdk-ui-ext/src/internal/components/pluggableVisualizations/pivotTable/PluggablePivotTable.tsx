@@ -1,4 +1,6 @@
 // (C) 2019 GoodData Corporation
+
+import { modifyBucketsAttributesForDrillDown, sanitizeTableProperties } from "../drillDownUtil";
 import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
 import get from "lodash/get";
@@ -9,11 +11,13 @@ import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-back
 import {
     bucketAttribute,
     IDimension,
+    IInsight,
     IInsightDefinition,
     insightBucket,
     insightBuckets,
     insightHasDataDefined,
     insightProperties,
+    insightSanitize,
     insightSorts,
     ISortItem,
     newAttributeSort,
@@ -45,6 +49,7 @@ import {
     IVisProps,
     IVisualizationProperties,
     RenderFunction,
+    IDrillDownContext,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -67,13 +72,13 @@ import UnsupportedConfigurationPanel from "../../configurationPanels/Unsupported
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import {
-    adaptReferencePointWidthItemsToPivotTable,
     adaptMdObjectWidthItemsToPivotTable,
+    adaptReferencePointWidthItemsToPivotTable,
 } from "./widthItemsHelpers";
 import {
-    sanitizePivotTableSorts,
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
+    sanitizePivotTableSorts,
 } from "./sortItemsHelpers";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
@@ -213,6 +218,17 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         );
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
+    }
+
+    public getInsightWithDrillDownApplied(
+        sourceVisualization: IInsight,
+        drillDownContext: IDrillDownContext,
+    ): IInsight {
+        const insight = modifyBucketsAttributesForDrillDown(
+            sourceVisualization,
+            drillDownContext.drillDefinition,
+        );
+        return sanitizeTableProperties(insightSanitize(insight));
     }
 
     private createCorePivotTableProps = () => {

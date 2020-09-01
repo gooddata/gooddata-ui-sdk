@@ -3,5 +3,6 @@
 import * as stringUtils from "./stringUtils";
 import * as testUtils from "./testUtils";
 import * as translationUtils from "./translationUtils";
+import * as arrayUtils from "./arrayUtils";
 
-export { stringUtils, testUtils, translationUtils };
+export { stringUtils, testUtils, translationUtils, arrayUtils };

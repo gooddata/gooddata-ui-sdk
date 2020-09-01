@@ -1,16 +1,34 @@
 // (C) 2019 GoodData Corporation
 import get from "lodash/get";
 import set from "lodash/set";
-import { bucketsItems, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    IInsight,
+    bucketsItems,
+    IInsightDefinition,
+    insightBuckets,
+    bucketsFind,
+    IBucket,
+    idMatchBucket,
+    bucketIsEmpty,
+} from "@gooddata/sdk-model";
+import { arrayUtils } from "@gooddata/util";
+import {
+    BucketNames,
+    IDrillEvent,
+    IDrillEventIntersectionElement,
+    getIntersectionPartAfter,
+} from "@gooddata/sdk-ui";
 import { AXIS } from "../../constants/axis";
 import { BUCKETS } from "../../constants/bucket";
 import { MAX_CATEGORIES_COUNT, MAX_STACKS_COUNT, UICONFIG, UICONFIG_AXIS } from "../../constants/uiConfig";
+import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper";
 import {
     IBucketOfFun,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
+    IImplicitDrillDown,
+    IDrillDownContext,
 } from "../../interfaces/Visualization";
 import {
     getAllCategoriesAttributeItems,
@@ -29,6 +47,7 @@ import {
 } from "../../utils/propertiesHelper";
 import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper";
 import { PluggableBaseChart } from "./baseChart/PluggableBaseChart";
+import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "./drillDownUtil";
 
 export class PluggableColumnBarCharts extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -65,6 +84,35 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
             !isStackingMeasure(this.visualizationProperties) &&
             !isStackingToPercent(this.visualizationProperties)
         );
+    }
+
+    private adjustIntersectionForColumnBar(
+        source: IInsight,
+        event: IDrillEvent,
+    ): IDrillEventIntersectionElement[] {
+        const hasStackByAttributes = bucketsFind(insightBuckets(source), (bucket: IBucket) => {
+            return idMatchBucket(BucketNames.STACK) && !bucketIsEmpty(bucket);
+        });
+
+        const intersection = event.drillContext.intersection;
+        return hasStackByAttributes ? arrayUtils.shiftArrayRight(intersection) : intersection;
+    }
+
+    private addFiltersForColumnBar(source: IInsight, drillConfig: IImplicitDrillDown, event: IDrillEvent) {
+        const clicked = drillDownFromAttributeLocalId(drillConfig);
+
+        const reorderedIntersection = this.adjustIntersectionForColumnBar(source, event);
+        const cutIntersection = getIntersectionPartAfter(reorderedIntersection, clicked);
+        return addIntersectionFiltersToInsight(source, cutIntersection);
+    }
+
+    public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
+        const withFilters = this.addFiltersForColumnBar(
+            source,
+            drillDownContext.drillDefinition,
+            drillDownContext.event,
+        );
+        return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {

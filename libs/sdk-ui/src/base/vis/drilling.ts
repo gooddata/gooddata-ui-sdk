@@ -14,6 +14,7 @@ import {
     isDrillableItemUri,
     IDrillEventCallback,
     IDrillEvent,
+    isDrillIntersectionAttributeItem,
 } from "./DrillEvents";
 import { IHeaderPredicate } from "../headerMatching/HeaderPredicate";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
@@ -41,6 +42,19 @@ export function convertDrillableItemsToPredicates(
             return drillableItem;
         }
     });
+}
+
+export function getIntersectionPartAfter(
+    intersection: IDrillEventIntersectionElement[],
+    localIdentifier: string,
+): IDrillEventIntersectionElement[] {
+    const index = intersection.findIndex(
+        (item: IDrillEventIntersectionElement) =>
+            isDrillIntersectionAttributeItem(item.header) &&
+            item.header.attributeHeader.localIdentifier === localIdentifier,
+    );
+
+    return intersection.slice(index);
 }
 
 // shared by charts and table

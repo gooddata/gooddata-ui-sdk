@@ -1,17 +1,23 @@
 // (C) 2019 GoodData Corporation
 import { IAnalyticalBackend, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { IInsightDefinition, insightProperties, IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
+import {
+    IInsight,
+    IInsightDefinition,
+    insightProperties,
+    IVisualizationClass,
+    visClassUrl,
+} from "@gooddata/sdk-model";
 import React from "react";
 import { render } from "react-dom";
 import uuid from "uuid";
 import {
     IDrillableItem,
+    IHeaderPredicate,
     ILocale,
     OnError,
     OnExportReady,
     OnLoadingChanged,
     VisualizationEnvironment,
-    IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import {
     ConfigPanelClassName,
@@ -21,6 +27,7 @@ import {
     IVisCallbacks,
     IVisConstruct,
     IVisualization,
+    IDrillDownContext,
 } from "../interfaces/Visualization";
 import {
     FullVisualizationCatalog,
@@ -54,8 +61,11 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     onLoadingChanged: OnLoadingChanged;
     isMdObjectValid?: boolean;
     configPanelClassName?: string;
+
     onExtendedReferencePointChanged?(): void;
+
     onNewDerivedBucketItemsPlaced?(): void;
+
     renderer?(component: any, target: Element): void;
 }
 
@@ -245,5 +255,12 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         nextReferencePoint: IReferencePoint,
     ) {
         return !isEqual(omit(currentReferencePoint, "properties"), omit(nextReferencePoint, "properties"));
+    }
+
+    public getInsightWithDrillDownApplied(
+        sourceVisualization: IInsight,
+        drillDownContext: IDrillDownContext,
+    ): IInsight {
+        return this.visualization.getInsightWithDrillDownApplied(sourceVisualization, drillDownContext);
     }
 }

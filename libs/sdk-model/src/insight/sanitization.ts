@@ -1,11 +1,11 @@
 // (C) 2020 GoodData Corporation
 import { InvariantError } from "ts-invariant";
 
-import { insightSorts, IInsightDefinition, insightBuckets, insightSetBuckets } from ".";
-import { bucketTotals, IBucket, bucketAttributeIndex, bucketSetTotals } from "../execution/buckets";
-import { ISortItem, isAttributeSort, sortEntityIds, isMeasureSort } from "../execution/base/sort";
+import { IInsightDefinition, insightAttributes, insightBuckets, insightSetBuckets, insightSorts } from ".";
+import { bucketAttributeIndex, bucketSetTotals, bucketTotals, IBucket } from "../execution/buckets";
+import { isAttributeSort, isMeasureSort, ISortItem, sortEntityIds } from "../execution/base/sort";
 import { ITotal } from "../execution/base/totals";
-
+import { attributeLocalId } from "../execution/attribute";
 /**
  * Makes sure the insight does not have any nonsensical data (like totals that no longer make sense, etc.), before it is saved.
  *
@@ -19,14 +19,24 @@ export function insightSanitize<T extends IInsightDefinition>(insight: T): T {
 function removeInvalidTotals<T extends IInsightDefinition>(insight: T): T {
     const sortItems = insightSorts(insight);
 
+    const attributeIdentifiers = insightAttributes(insight).map(attributeLocalId);
     const sanitizedBuckets = insightBuckets(insight).map((bucket) => {
         const totals = bucketTotals(bucket);
+
         if (totals.length && isSortedOnDifferentThanFirstAttributeInBucket(bucket, sortItems)) {
             bucket.totals = getBucketTotalsWithoutSubtotals(bucket);
-            if (bucket.totals.length === 0) {
+            if (totals.length === 0) {
                 return bucketSetTotals(bucket, []);
             }
         }
+
+        const sanitizedTotals = totals.filter((total) =>
+            attributeIdentifiers.includes(total.attributeIdentifier),
+        );
+        if (sanitizedTotals.length !== totals.length) {
+            return bucketSetTotals(bucket, sanitizedTotals);
+        }
+
         return bucket;
     });
 

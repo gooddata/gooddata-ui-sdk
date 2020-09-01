@@ -3,7 +3,7 @@ import { insightSanitize } from "../sanitization";
 import { newTotal, ITotal } from "../../execution/base/totals";
 import { newMeasureSort, newAttributeSort, ISortItem } from "../../execution/base/sort";
 import { newInsightDefinition } from "../factory";
-import { bucketTotals } from "../../execution/buckets";
+import { bucketTotals, newBucket } from "../../execution/buckets";
 import { insightBucket } from "..";
 import { Account, ActivityType, Department, Velocity, Won } from "../../../__mocks__/model";
 
@@ -29,10 +29,7 @@ describe("insightSanitize", () => {
     const getInsight = (totals: ITotal[], sorts: ISortItem[]) => {
         return newInsightDefinition("foo", (m) =>
             m
-                .buckets([
-                    { localIdentifier: "measures", items: [m1, m2] },
-                    { localIdentifier: "attributes", items: [a1, a2, a3], totals },
-                ])
+                .buckets([newBucket("measures", m1, m2), newBucket("attributes", a1, a2, a3, ...totals)])
                 .sorts(sorts),
         );
     };
@@ -59,17 +56,9 @@ describe("insightSanitize", () => {
         const insight = newInsightDefinition("foo", (m) =>
             m
                 .buckets([
-                    { localIdentifier: "measures", items: [m1, m2] },
-                    {
-                        localIdentifier: "attributes",
-                        items: [a1, a2, a3],
-                        totals: [grandTotal, a2m1SubtotalSum, a3SubtotalSum],
-                    },
-                    {
-                        localIdentifier: "attributes2",
-                        items: [a1, a2, a3],
-                        totals: [grandTotal, a2m1SubtotalSum, a3SubtotalSum],
-                    },
+                    newBucket("measures", m1, m2),
+                    newBucket("attributes", a1, a2, a3, grandTotal, a2m1SubtotalSum, a3SubtotalSum),
+                    newBucket("attributes2", a1, a2, a3, grandTotal, a2m1SubtotalSum, a3SubtotalSum),
                 ])
                 .sorts([a2SortItem]),
         );
