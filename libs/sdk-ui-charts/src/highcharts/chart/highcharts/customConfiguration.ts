@@ -667,6 +667,18 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
     };
 }
 
+function getDataPointsConfiguration() {
+    return {
+        plotOptions: {
+            line: {
+                marker: {
+                    enabled: false,
+                },
+            },
+        },
+    };
+}
+
 function getStackingConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type } = chartOptions;
     let labelsConfig = {};
@@ -1192,6 +1204,7 @@ export function getCustomizedConfiguration(
         getHoverStyles,
         getGridConfiguration,
         getLabelsConfiguration,
+        getDataPointsConfiguration,
         // should be after 'getDataConfiguration' to modify 'series'
         // and should be after 'getStackingConfiguration' to get stackLabels config
         getOptionalStackingConfiguration,

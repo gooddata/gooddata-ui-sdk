@@ -6,6 +6,7 @@ import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigge
 import ConfigSection from "../configurationControls/ConfigSection";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";
+import DataPointsControl from "../configurationControls/DataPointsControl";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
@@ -35,6 +36,12 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                         pushData={pushData}
                     >
                         <DataLabelsControl
+                            pushData={pushData}
+                            properties={properties}
+                            isDisabled={controlsDisabled}
+                            defaultValue={false}
+                        />
+                        <DataPointsControl
                             pushData={pushData}
                             properties={properties}
                             isDisabled={controlsDisabled}

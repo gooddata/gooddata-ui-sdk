@@ -265,13 +265,20 @@ export function getSeriesItemData(
             };
         }
 
-        const pointData: IPointData = {
-            ...valueProp,
-            format: unwrap(measureGroup.items[measureIndex]).format,
-            marker: {
-                enabled: pointValue !== null,
+        const pointData: IPointData = Object.assign(
+            {
+                ...valueProp,
+                format: unwrap(measureGroup.items[measureIndex]).format,
             },
-        };
+            pointValue === null
+                ? {
+                      marker: {
+                          enabled: false,
+                      },
+                  }
+                : {},
+        );
+
         if (stackByAttribute) {
             // if there is a stackBy attribute, then seriesIndex corresponds to stackBy label index
             pointData.name = unwrap(stackByAttribute.items[seriesIndex]).name;
