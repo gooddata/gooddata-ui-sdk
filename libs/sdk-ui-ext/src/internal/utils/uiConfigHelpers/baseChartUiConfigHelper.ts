@@ -14,7 +14,7 @@ import {
 } from "../../interfaces/Visualization";
 
 import { UICONFIG, RECOMMENDATIONS, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
-import { BUCKETS } from "../../constants/bucket";
+import { BUCKETS, FILTERS } from "../../constants/bucket";
 
 import {
     comparisonAndTrendingRecommendationEnabled,
@@ -140,12 +140,12 @@ export function setBaseChartUiConfigRecommendations(
     visualizationType: string,
     weekFiltersEnabled: boolean,
 ): IExtendedReferencePoint {
-    // Recommendations
     if (visualizationType === VisualizationTypes.COLUMN) {
         const newReferencePoint = cloneDeep(referencePoint);
         const buckets = get(newReferencePoint, BUCKETS);
+        const filters = get(newReferencePoint, FILTERS);
 
-        const percentEnabled = percentRecommendationEnabled(buckets);
+        const percentEnabled = percentRecommendationEnabled(buckets, filters);
         const comparisonAndTrending = comparisonAndTrendingRecommendationEnabled(buckets);
         const overTimeComparison = overTimeComparisonRecommendationEnabled(
             newReferencePoint,

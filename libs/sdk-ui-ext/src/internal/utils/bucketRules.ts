@@ -4,6 +4,7 @@ import some from "lodash/some";
 import every from "lodash/every";
 import isEmpty from "lodash/isEmpty";
 import reduce from "lodash/reduce";
+import flatMap from "lodash/flatMap";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 import {
@@ -23,6 +24,7 @@ import {
     getAllItemsByType,
     getAttributeItemsWithoutStacks,
     isDateBucketItem,
+    isMeasureValueFilter,
 } from "./bucketHelper";
 
 import { FILTERS, GRANULARITY, ALL_TIME, ATTRIBUTE, BUCKETS, METRIC } from "../constants/bucket";
@@ -42,6 +44,23 @@ export function getMasterMeasuresCount(buckets: IBucketOfFun[], bucketLocalIdent
 
 export function hasOneMasterMeasureInBucket(buckets: IBucketOfFun[], bucketLocalIdentifier: string): boolean {
     return getMasterMeasuresCount(buckets, bucketLocalIdentifier) === 1;
+}
+
+export function filteredByDerivedMeasure(buckets: IBucketOfFun[], filters: IFilters): boolean {
+    const measures = getAllItemsByType(buckets, [METRIC]);
+    const derivedMeasuresLocalIdentifiers = measures.reduce((acc, measure) => {
+        if (measure.masterLocalIdentifier) {
+            acc.push(measure.localIdentifier);
+        }
+        return acc;
+    }, []);
+
+    const allBucketFilters = flatMap(filters.items, (filterItem) => filterItem.filters);
+    return allBucketFilters
+        .filter(isMeasureValueFilter)
+        .some((measureValueFilter) =>
+            derivedMeasuresLocalIdentifiers.includes(measureValueFilter.measureLocalIdentifier),
+        );
 }
 
 export function hasNoMeasures(buckets: IBucketOfFun[]): boolean {
@@ -174,7 +193,9 @@ export function isShowInPercentAllowed(
     const rules = [hasNoStacks, hasSomeCategories];
 
     return (
-        allRulesMet(rules, buckets, filters) && hasOneMasterMeasureInBucket(buckets, bucketLocalIdentifier)
+        allRulesMet(rules, buckets, filters) &&
+        hasOneMasterMeasureInBucket(buckets, bucketLocalIdentifier) &&
+        !filteredByDerivedMeasure(buckets, filters)
     );
 }
 
@@ -214,7 +235,7 @@ export function comparisonAndTrendingRecommendationEnabled(buckets: IBucketOfFun
     return allRulesMet(rules, buckets);
 }
 
-export function percentRecommendationEnabled(buckets: IBucketOfFun[]): boolean {
+export function percentRecommendationEnabled(buckets: IBucketOfFun[], filters: IFilters): boolean {
     const rules = [
         isShowPercentageUnselected,
         hasNotFirstDate,
@@ -223,7 +244,7 @@ export function percentRecommendationEnabled(buckets: IBucketOfFun[]): boolean {
         hasNoStacks,
     ];
 
-    return allRulesMet(rules, buckets);
+    return allRulesMet(rules, buckets) && !filteredByDerivedMeasure(buckets, filters);
 }
 
 export function previousPeriodRecommendationEnabled(buckets: IBucketOfFun[]): boolean {

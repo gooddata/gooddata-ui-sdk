@@ -2113,7 +2113,11 @@ export const measureValueFilterReferencePoint: IReferencePoint = {
     buckets: [
         {
             localIdentifier: "measures",
-            items: masterMeasureItems,
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(1),
         },
         {
             localIdentifier: "view",
@@ -2157,6 +2161,57 @@ export const measureValueFilterReferencePoint: IReferencePoint = {
                 filters: [
                     {
                         measureLocalIdentifier: masterMeasureItems[2].localIdentifier,
+                    },
+                ],
+            },
+        ],
+    },
+};
+
+export const measureValueFilterByDerivedReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(1).concat(derivedMeasureItems),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems,
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [
+            {
+                localIdentifier: "filter_by_derived_measure",
+                filters: [
+                    {
+                        measureLocalIdentifier: derivedMeasureItems[0].localIdentifier,
+                        condition: {
+                            comparison: {
+                                operator: "GREATER_THAN",
+                                value: 100,
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: "fbv2",
+                filters: [
+                    {
+                        measureLocalIdentifier: masterMeasureItems[1].localIdentifier,
+                        condition: {
+                            range: {
+                                operator: "BETWEEN",
+                                from: 100,
+                                to: 200,
+                            },
+                        },
                     },
                 ],
             },

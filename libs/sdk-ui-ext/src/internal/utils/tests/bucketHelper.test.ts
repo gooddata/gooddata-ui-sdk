@@ -143,6 +143,7 @@ describe("sanitizeFilters", () => {
     it("should keep just measure value filters based on measures that exist in extended reference point", () => {
         const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
         newReferencePoint.buckets[0].items.splice(1);
+        newReferencePoint.buckets[1].items = [];
         const extendedReferencePoint: IExtendedReferencePoint = {
             ...newReferencePoint,
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
@@ -155,7 +156,7 @@ describe("sanitizeFilters", () => {
 
     it("should remove all measure value filters when there is no attribute or date in buckets", () => {
         const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
-        newReferencePoint.buckets[1].items = [];
+        newReferencePoint.buckets[2].items = [];
         const extendedReferencePoint: IExtendedReferencePoint = {
             ...newReferencePoint,
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
