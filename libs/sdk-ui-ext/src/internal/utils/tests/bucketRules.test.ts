@@ -27,6 +27,26 @@ describe("isShowInPercentAllowed", () => {
             ),
         ).toBeFalsy();
     });
+
+    it("should return true if measure value filter is present", () => {
+        expect(
+            bucketRules.isShowInPercentAllowed(
+                referencePointMocks.measureValueFilterReferencePoint.buckets,
+                referencePointMocks.measureValueFilterReferencePoint.filters,
+                BucketNames.MEASURES,
+            ),
+        ).toBeTruthy();
+    });
+
+    it("should return false if measure value filter by derived measure is present", () => {
+        expect(
+            bucketRules.isShowInPercentAllowed(
+                referencePointMocks.measureValueFilterByDerivedReferencePoint.buckets,
+                referencePointMocks.measureValueFilterByDerivedReferencePoint.filters,
+                BucketNames.MEASURES,
+            ),
+        ).toBeFalsy();
+    });
 });
 
 describe("overTimeComparisonRecommendationEnabled", () => {
@@ -103,6 +123,7 @@ describe("percentRecommendationEnabled", () => {
         expect(
             bucketRules.percentRecommendationEnabled(
                 referencePointMocks.percentRecommendationReferencePoint.buckets,
+                referencePointMocks.percentRecommendationReferencePoint.filters,
             ),
         ).toBeTruthy();
     });
@@ -119,7 +140,12 @@ describe("percentRecommendationEnabled", () => {
 
         set(editedReferencePoint, ["buckets", 2, "items", 0], newStack);
 
-        expect(bucketRules.percentRecommendationEnabled(editedReferencePoint.buckets)).toBeFalsy();
+        expect(
+            bucketRules.percentRecommendationEnabled(
+                editedReferencePoint.buckets,
+                editedReferencePoint.filters,
+            ),
+        ).toBeFalsy();
     });
 });
 
