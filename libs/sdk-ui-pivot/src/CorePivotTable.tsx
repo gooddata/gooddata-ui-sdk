@@ -130,6 +130,7 @@ import noop from "lodash/noop";
 import sumBy from "lodash/sumBy";
 import difference from "lodash/difference";
 import debounce from "lodash/debounce";
+import { DebouncedFunc } from "lodash";
 
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
@@ -212,6 +213,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private numberOfColumnResizedCalls = 0;
     private isMetaOrCtrlKeyPressed = false;
     private isAltKeyPressed = false;
+    private debouncedGridSizeChanged: DebouncedFunc<(gridSizeChangedEvent: any) => Promise<void>> | undefined;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -226,7 +228,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         };
 
         this.errorMap = newErrorMapping(props.intl);
-        this.gridSizeChanged = debounce(this.gridSizeChanged, AGGRID_ON_RESIZE_TIMEOUT);
+        this.debouncedGridSizeChanged = debounce(this.gridSizeChanged, AGGRID_ON_RESIZE_TIMEOUT);
         this.resizedColumnsStore = new ResizedColumnsStore();
     }
 
@@ -918,7 +920,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return columns.filter((d) => fieldIds.includes(getColumnIdentifier(d))).map((d) => d.getColId());
     }
 
-    private gridSizeChanged = async (gridSizeChangedEvent: any) => {
+    private gridSizeChanged = async (gridSizeChangedEvent: any): Promise<void> => {
         if (
             !this.resizing &&
             (this.lastResizedWidth !== gridSizeChangedEvent.clientWidth ||
@@ -1384,7 +1386,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             onCellClicked: this.cellClicked,
             onSortChanged: this.sortChanged,
             onColumnResized: this.onGridColumnResized,
-            onGridSizeChanged: this.gridSizeChanged,
+            onGridSizeChanged: this.debouncedGridSizeChanged,
             onGridColumnsChanged: this.gridColumnsChanged,
             onModelUpdated: this.onModelUpdated,
 

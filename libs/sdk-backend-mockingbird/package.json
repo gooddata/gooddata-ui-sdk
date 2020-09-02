@@ -43,7 +43,7 @@
         "@gooddata/eslint-config": "^2.0.0",
         "@gooddata/reference-workspace": "^8.0.0-beta.63",
         "@microsoft/api-extractor": "^7.3.8",
-        "@types/jest": "^25.1.2",
+        "@types/jest": "^26.0.12",
         "@types/lodash": "^4.14.158",
         "@types/node": "^12.12.26",
         "@typescript-eslint/eslint-plugin": "^3.7.1",
@@ -54,10 +54,10 @@
         "eslint-plugin-import": "^2.22.0",
         "eslint-plugin-jest": "^23.20.0",
         "eslint-plugin-prettier": "^3.1.4",
-        "jest": "^25.1.0",
+        "jest": "^26.4.2",
         "jest-junit": "^3.0.0",
         "prettier": "~2.0.5",
-        "ts-jest": "^25.2.0",
+        "ts-jest": "^26.3.0",
         "typescript": "3.9.5"
     }
 }
