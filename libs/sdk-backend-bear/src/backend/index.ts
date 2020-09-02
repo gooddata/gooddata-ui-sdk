@@ -49,6 +49,7 @@ const CAPABILITIES: BackendCapabilities = {
     supportsObjectUris: true,
     supportsCsvUploader: true,
     supportsLegacyReports: true,
+    supportsRankingFilter: true,
 };
 
 /**

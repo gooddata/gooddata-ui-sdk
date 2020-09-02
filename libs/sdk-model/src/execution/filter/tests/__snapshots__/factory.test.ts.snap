@@ -22,7 +22,7 @@ Object {
       },
     },
     "measure": Object {
-      "localIdentifier": "measureObjLocalId",
+      "identifier": "identifier",
     },
   },
 }
@@ -272,6 +272,159 @@ Object {
         "baz",
       ],
     },
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate bottom filter for measure object 1`] = `
+Object {
+  "rankingFilter": Object {
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+    "operator": "BOTTOM",
+    "value": 10,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate bottom filter for measure object and attribute identifiers 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": Array [
+      Object {
+        "identifier": "label.owner.department",
+      },
+      Object {
+        "identifier": "label.account.id",
+      },
+    ],
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+    "operator": "BOTTOM",
+    "value": 5,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate bottom filter for measure object and attribute local identifiers 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": Array [
+      Object {
+        "localIdentifier": "a_label.owner.department",
+      },
+      Object {
+        "localIdentifier": "a_label.account.id",
+      },
+    ],
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+    "operator": "BOTTOM",
+    "value": 3,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate bottom filter for measure object and attribute local identifiers refs 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": Array [
+      Object {
+        "localIdentifier": "a_label.owner.department",
+      },
+      Object {
+        "localIdentifier": "a_label.account.id",
+      },
+    ],
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+    "operator": "BOTTOM",
+    "value": 3,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate bottom filter for measure object and attribute objects 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": Array [
+      Object {
+        "localIdentifier": "a_label.owner.department",
+      },
+      Object {
+        "localIdentifier": "a_label.account.id.name",
+      },
+    ],
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+    "operator": "BOTTOM",
+    "value": 20,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate bottom filter for measure object and empty array of attributes 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": Array [],
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+    "operator": "BOTTOM",
+    "value": 20,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate top filter for measure identifier 1`] = `
+Object {
+  "rankingFilter": Object {
+    "measure": Object {
+      "identifier": "identifier",
+    },
+    "operator": "BOTTOM",
+    "value": 30,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate top filter for measure local identifier 1`] = `
+Object {
+  "rankingFilter": Object {
+    "measure": Object {
+      "localIdentifier": "measureObjLocalId",
+    },
+    "operator": "TOP",
+    "value": 5,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate top filter for measure local identifier ref 1`] = `
+Object {
+  "rankingFilter": Object {
+    "measure": Object {
+      "localIdentifier": "measureObjLocalId",
+    },
+    "operator": "TOP",
+    "value": 5,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should generate top filter for measure object 1`] = `
+Object {
+  "rankingFilter": Object {
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+    "operator": "TOP",
+    "value": 10,
   },
 }
 `;

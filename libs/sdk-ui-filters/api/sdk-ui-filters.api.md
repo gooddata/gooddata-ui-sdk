@@ -16,11 +16,13 @@ import { IElementQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IElementQueryOptions } from '@gooddata/sdk-backend-spi';
 import { IElementQueryResult } from '@gooddata/sdk-backend-spi';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
+import { IRankingFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-backend-spi';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-backend-spi';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
+import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { RelativeGranularityOffset } from '@gooddata/sdk-backend-spi';
@@ -74,6 +76,16 @@ export type DateFilterRelativeOptionGroup = {
 
 // @beta (undocumented)
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
+
+// @beta (undocumented)
+export interface IAttributeDropdownItem {
+    // (undocumented)
+    ref: ObjRefInScope;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type?: "DATE" | "ATTRIBUTE";
+}
 
 // @public
 export interface IAttributeElementsChildren {
@@ -188,6 +200,16 @@ export interface IExtendedDateFilterErrors {
 }
 
 // @beta (undocumented)
+export interface IMeasureDropdownItem {
+    // (undocumented)
+    ref: ObjRefInScope;
+    // (undocumented)
+    sequenceNumber?: string;
+    // (undocumented)
+    title: string;
+}
+
+// @beta (undocumented)
 export interface IMeasureValueFilterCommonProps {
     // (undocumented)
     displayTreatNullAsZeroOption?: boolean;
@@ -231,6 +253,46 @@ export interface IMeasureValueFilterState {
     displayDropdown: boolean;
 }
 
+// @beta (undocumented)
+export interface IRankingFilterDropdownProps {
+    // (undocumented)
+    anchorEl?: EventTarget | string;
+    // (undocumented)
+    attributeItems: IAttributeDropdownItem[];
+    // (undocumented)
+    filter: IRankingFilter;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    measureItems: IMeasureDropdownItem[];
+    // (undocumented)
+    onApply: (filter: IRankingFilter) => void;
+    // (undocumented)
+    onCancel?: () => void;
+    // (undocumented)
+    onDropDownItemMouseOut?: () => void;
+    // (undocumented)
+    onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
+}
+
+// @beta (undocumented)
+export interface IRankingFilterProps {
+    // (undocumented)
+    attributeItems: IAttributeDropdownItem[];
+    // (undocumented)
+    buttonTitle: string;
+    // (undocumented)
+    filter: IRankingFilter;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    measureItems: IMeasureDropdownItem[];
+    // (undocumented)
+    onApply: (filter: IRankingFilter) => void;
+    // (undocumented)
+    onCancel?: () => void;
+}
+
 // @beta
 export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFilterOption;
 
@@ -267,6 +329,12 @@ export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureVa
     // (undocumented)
     render(): React_2.ReactNode;
 }
+
+// @beta (undocumented)
+export const RankingFilter: React_2.FC<IRankingFilterProps>;
+
+// @beta (undocumented)
+export const RankingFilterDropdown: React_2.FC<IRankingFilterDropdownProps>;
 
 // @beta
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;

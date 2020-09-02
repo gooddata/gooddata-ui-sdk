@@ -191,6 +191,11 @@ export type BackendCapabilities = {
     supportsCsvUploader?: boolean;
 
     /**
+     * Indicates whether backend supports ranking filters.
+     */
+    supportsRankingFilter?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

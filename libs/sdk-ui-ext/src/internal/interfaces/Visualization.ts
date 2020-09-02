@@ -141,7 +141,16 @@ export interface IMeasureValueFilter {
     condition?: IMeasureValueFilterCondition;
 }
 
-export type IBucketFilter = IAttributeFilter | IDateFilter | IMeasureValueFilter;
+export type RankingFilterOperator = "TOP" | "BOTTOM";
+
+export interface IRankingFilter {
+    measure: string;
+    attributes?: string[];
+    operator: RankingFilterOperator;
+    value: number;
+}
+
+export type IBucketFilter = IAttributeFilter | IDateFilter | IMeasureValueFilter | IRankingFilter;
 
 export interface ISort {
     direction: "asc" | "desc";

@@ -109,6 +109,7 @@ export type BackendCapabilities = {
     canTransformExistingResult?: boolean;
     canExecuteByReference?: boolean;
     supportsCsvUploader?: boolean;
+    supportsRankingFilter?: boolean;
     [key: string]: undefined | boolean | number | string;
 };
 

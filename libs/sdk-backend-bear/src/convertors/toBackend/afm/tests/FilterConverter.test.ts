@@ -5,6 +5,7 @@ import {
     convertMeasureValueFilter,
     convertFilter,
     convertMeasureFilter,
+    convertRankingFilter,
 } from "../FilterConverter";
 import {
     absoluteFilter,
@@ -19,6 +20,7 @@ import {
     newPositiveAttributeFilter,
     DateGranularity,
     newNegativeAttributeFilter,
+    newRankingFilter,
 } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 
@@ -106,6 +108,33 @@ describe("bear filter converter from model to AFM", () => {
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
             expect(convertMeasureValueFilter(input)).toMatchSnapshot();
+        });
+    });
+
+    describe("convert ranking filter", () => {
+        const Scenarios: Array<[string, any]> = [
+            ["Ranking filter without attributes", newRankingFilter(ReferenceLdm.Amount, "TOP", 10)],
+            [
+                "Ranking filter without attributes with bottom operator",
+                newRankingFilter(ReferenceLdm.Amount, "BOTTOM", 3),
+            ],
+            [
+                "Ranking filter with 1 attribute",
+                newRankingFilter(ReferenceLdm.Amount, [ReferenceLdm.Department], "TOP", 10),
+            ],
+            [
+                "Ranking filter with multiple attributes",
+                newRankingFilter(
+                    ReferenceLdm.Amount,
+                    [ReferenceLdm.Department, ReferenceLdm.Account.Default],
+                    "TOP",
+                    10,
+                ),
+            ],
+            ["Ranking filter with empty attributes", newRankingFilter(ReferenceLdm.Amount, [], "TOP", 3)],
+        ];
+        it.each(Scenarios)("should return %s", (_desc, input) => {
+            expect(convertRankingFilter(input)).toMatchSnapshot();
         });
     });
 

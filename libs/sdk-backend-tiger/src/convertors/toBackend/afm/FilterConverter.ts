@@ -17,6 +17,7 @@ import {
     isMeasureValueFilter,
     isComparisonCondition,
     isRangeCondition,
+    isRankingFilter,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/api-client-tiger";
 import {
@@ -150,10 +151,13 @@ export function convertVisualizationObjectFilter(filter: IFilter): ExecuteAFM.Fi
         return convertRelativeDateFilter(filter);
     } else if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
-    } else {
+    } else if (isRankingFilter(filter)) {
         // eslint-disable-next-line no-console
         console.warn("Tiger does not support ranking filters. The filter will be ignored");
-
+        return null;
+    } else {
+        // eslint-disable-next-line no-console
+        console.warn("Tiger does not support this filter. The filter will be ignored");
         return null;
     }
 }

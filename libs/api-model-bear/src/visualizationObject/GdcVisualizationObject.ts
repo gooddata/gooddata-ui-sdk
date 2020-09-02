@@ -23,7 +23,7 @@ export namespace GdcVisualizationObject {
 
     export type BucketItem = IMeasure | IAttribute;
 
-    export type ExtendedFilter = Filter | IMeasureValueFilter;
+    export type ExtendedFilter = Filter | IMeasureValueFilter | IRankingFilter;
     export type Filter = DateFilter | AttributeFilter;
 
     export type DateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
@@ -118,6 +118,17 @@ export namespace GdcVisualizationObject {
         measureValueFilter: {
             measure: IObjUriQualifier | ILocalIdentifierQualifier;
             condition?: MeasureValueFilterCondition;
+        };
+    }
+
+    export type RankingFilterOperator = "TOP" | "BOTTOM";
+
+    export interface IRankingFilter {
+        rankingFilter: {
+            measures: (IObjUriQualifier | ILocalIdentifierQualifier)[];
+            attributes?: (IObjUriQualifier | ILocalIdentifierQualifier)[];
+            operator: RankingFilterOperator;
+            value: number;
         };
     }
 
@@ -292,6 +303,10 @@ export namespace GdcVisualizationObject {
 
     export function isMeasureValueFilter(filter: ExtendedFilter): filter is IMeasureValueFilter {
         return !isEmpty(filter) && (filter as IMeasureValueFilter).measureValueFilter !== undefined;
+    }
+
+    export function isRankingFilter(filter: ExtendedFilter): filter is IRankingFilter {
+        return !isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
     }
 
     export function isAbsoluteDateFilter(filter: DateFilter): filter is IAbsoluteDateFilter {

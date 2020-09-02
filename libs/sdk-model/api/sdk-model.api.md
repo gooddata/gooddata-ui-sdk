@@ -705,7 +705,7 @@ export interface IFactMetadataObject extends IMetadataObject {
 }
 
 // @public
-export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter;
+export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter;
 
 // @public
 export interface IGroupableCatalogItemBase extends ICatalogItemBase {
@@ -1006,6 +1006,17 @@ export interface IRangeCondition {
     };
 }
 
+// @public (undocumented)
+export interface IRankingFilter {
+    // (undocumented)
+    rankingFilter: {
+        measure: ObjRefInScope;
+        attributes?: ObjRefInScope[];
+        operator: RankingFilterOperator;
+        value: number;
+    };
+}
+
 // @public
 export type IRelativeDateFilter = {
     relativeDateFilter: {
@@ -1188,6 +1199,9 @@ export function isRangeCondition(obj: unknown): obj is IRangeCondition;
 
 // @public
 export function isRangeConditionOperator(obj: unknown): obj is RangeConditionOperator;
+
+// @public
+export function isRankingFilter(obj: unknown): obj is IRankingFilter;
 
 // @public
 export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter;
@@ -1562,6 +1576,12 @@ export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef |
 export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @public
+export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, attributesOrRefs: Array<IAttribute | ObjRefInScope | string>, operator: RankingFilterOperator, value: number): IRankingFilter;
+
+// @public
+export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: RankingFilterOperator, value: number): IRankingFilter;
+
+// @public
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number): IRelativeDateFilter;
 
 // @public
@@ -1623,6 +1643,9 @@ export type PreviousPeriodMeasureBuilderInput = {
 
 // @public (undocumented)
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
+
+// @public (undocumented)
+export type RankingFilterOperator = "TOP" | "BOTTOM";
 
 // @public
 export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues;

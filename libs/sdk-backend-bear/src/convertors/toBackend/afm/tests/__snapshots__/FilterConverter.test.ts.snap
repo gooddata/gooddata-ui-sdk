@@ -277,6 +277,92 @@ Object {
 
 exports[`bear filter converter from model to AFM convert measure value filter should return null when condition is undefined 1`] = `null`;
 
+exports[`bear filter converter from model to AFM convert ranking filter should return Ranking filter with 1 attribute 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": Array [
+      Object {
+        "localIdentifier": "a_label.owner.department",
+      },
+    ],
+    "measures": Array [
+      Object {
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    ],
+    "operator": "TOP",
+    "value": 10,
+  },
+}
+`;
+
+exports[`bear filter converter from model to AFM convert ranking filter should return Ranking filter with empty attributes 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": Array [],
+    "measures": Array [
+      Object {
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    ],
+    "operator": "TOP",
+    "value": 3,
+  },
+}
+`;
+
+exports[`bear filter converter from model to AFM convert ranking filter should return Ranking filter with multiple attributes 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": Array [
+      Object {
+        "localIdentifier": "a_label.owner.department",
+      },
+      Object {
+        "localIdentifier": "a_label.account.id",
+      },
+    ],
+    "measures": Array [
+      Object {
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    ],
+    "operator": "TOP",
+    "value": 10,
+  },
+}
+`;
+
+exports[`bear filter converter from model to AFM convert ranking filter should return Ranking filter without attributes 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": undefined,
+    "measures": Array [
+      Object {
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    ],
+    "operator": "TOP",
+    "value": 10,
+  },
+}
+`;
+
+exports[`bear filter converter from model to AFM convert ranking filter should return Ranking filter without attributes with bottom operator 1`] = `
+Object {
+  "rankingFilter": Object {
+    "attributes": undefined,
+    "measures": Array [
+      Object {
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    ],
+    "operator": "BOTTOM",
+    "value": 3,
+  },
+}
+`;
+
 exports[`bear filter converter from model to AFM convert relative date filter should return AFM relative date filter with date granularity 1`] = `
 Object {
   "relativeDateFilter": Object {

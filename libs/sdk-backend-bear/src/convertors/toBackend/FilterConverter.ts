@@ -20,8 +20,18 @@ import {
     IMeasureFilter,
     relativeDateFilterValues,
     absoluteDateFilterValues,
+    isRankingFilter,
+    IRankingFilter,
+    ObjRefInScope,
 } from "@gooddata/sdk-model";
 import { toBearRef } from "./ObjRefConverter";
+
+const convertObjRefInScopeToRefWithoutIdentifier = (ref: ObjRefInScope) => {
+    if (isIdentifierRef(ref)) {
+        throw new Error("Cannot convert ref specified by identifier");
+    }
+    return ref;
+};
 
 const convertMeasureValueFilter = (
     filter: IMeasureValueFilter,
@@ -36,6 +46,19 @@ const convertMeasureValueFilter = (
         measureValueFilter: {
             measure: measureObjQualifier,
             condition: measureValueFilterCondition(filter),
+        },
+    };
+};
+
+const convertRankingFilter = (filter: IRankingFilter): GdcVisualizationObject.IRankingFilter => {
+    const { measure, attributes, operator, value } = filter.rankingFilter;
+
+    return {
+        rankingFilter: {
+            measures: [convertObjRefInScopeToRefWithoutIdentifier(measure)],
+            attributes: attributes?.map(convertObjRefInScopeToRefWithoutIdentifier),
+            operator,
+            value,
         },
     };
 };
@@ -89,6 +112,8 @@ const convertPositiveAttributeFilter = (
 export const convertExtendedFilter = (filter: IFilter): GdcVisualizationObject.ExtendedFilter => {
     if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
+    } else if (isRankingFilter(filter)) {
+        return convertRankingFilter(filter);
     } else {
         return convertFilter(filter);
     }

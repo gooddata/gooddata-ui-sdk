@@ -14,6 +14,8 @@ import {
     isMeasureValueFilter,
     isPositiveAttributeFilter,
     MeasureValueFilterCondition,
+    isRankingFilter,
+    IRankingFilter,
 } from "@gooddata/sdk-model";
 import isNil from "lodash/isNil";
 import { toBearRef, toScopedBearRef } from "../ObjRefConverter";
@@ -131,9 +133,25 @@ export function convertMeasureValueFilter(
     };
 }
 
+export function convertRankingFilter(filter: IRankingFilter): GdcExecuteAFM.IRankingFilter | null {
+    const { measure, attributes, operator, value } = filter.rankingFilter;
+    return {
+        rankingFilter: {
+            measures: [toScopedBearRef(measure)],
+            attributes: attributes?.map(toScopedBearRef),
+            operator,
+            value,
+        },
+    };
+}
+
 export function convertFilter(filter: IFilter): GdcExecuteAFM.ExtendedFilter | null {
     if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
+    }
+
+    if (isRankingFilter(filter)) {
+        return convertRankingFilter(filter);
     }
 
     return convertMeasureFilter(filter);

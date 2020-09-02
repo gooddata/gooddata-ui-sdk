@@ -19,6 +19,7 @@ import { ChartConfiguration } from "../examples/advanced/chartConfiguration";
 import { Responsive } from "../examples/advanced/responsive";
 import { Export } from "../examples/export";
 import { AttributeFilter } from "../examples/attributeFilter";
+import { RankingFilter } from "../examples/rankingFilter";
 
 import { MeasureValueFilter } from "../examples/measureValueFilter/measureValueFilterByValue";
 import { MeasureValueFilterComponent } from "../examples/measureValueFilter/measureValueFilterComponent";
@@ -134,6 +135,12 @@ export const sideNavigationRoutes = [
         redirectTo: measureValueFilterUseCasesRoutes[0].path,
         title: "Measure Value Filter",
         Component: MeasureValueFilterUseCasesRoutes,
+    },
+    {
+        path: "/ranking-filter",
+        pathMatch: "full",
+        title: "Ranking Filter",
+        Component: RankingFilter,
     },
     {
         path: "/date-filter-component",
