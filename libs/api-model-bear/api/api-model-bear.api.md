@@ -1814,6 +1814,7 @@ export namespace GdcUser {
             current?: {
                 mapboxToken?: string;
                 project: IProject | null;
+                projectLcm?: IProjectLcm;
                 featureFlags?: IFeatureFlags;
                 projectPermissions: IProjectPermissions | null;
                 projectTemplates: ITemplateInfo[] | null;
@@ -1977,6 +1978,15 @@ export namespace GdcUser {
         icon: string;
         // (undocumented)
         integration: Uri;
+    }
+    // (undocumented)
+    export interface IProjectLcm {
+        // (undocumented)
+        clientId?: string;
+        // (undocumented)
+        dataProductId?: string;
+        // (undocumented)
+        segmentId?: string;
     }
     // (undocumented)
     export interface IProjectPermissions {
