@@ -1,0 +1,49 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "acugFHNJgsBy",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "name": "Won",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1272"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.opportunity.id",
+                            "name": "Opportunity",
+                            "uri": "/gdc/md/referenceworkspace/obj/1066"
+                        },
+                        "identifier": "label.opportunity.id.name",
+                        "localIdentifier": "a_label.opportunity.id.name",
+                        "name": "Opportunity Name",
+                        "uri": "/gdc/md/referenceworkspace/obj/1067"
+                    }
+                }
+            ]
+        }
+    ]
+}

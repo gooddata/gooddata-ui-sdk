@@ -2,7 +2,7 @@
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
-import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
+import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const LineChartTwoMeasuresWithTrendyBy = {
@@ -18,6 +18,12 @@ export const LineChartWithArithmeticMeasuresAndViewBy = {
         ReferenceLdmExt.CalculatedWonLostRatio,
     ],
     trendBy: ReferenceLdm.CreatedQuarterYear,
+};
+
+export const LineChartWithManyDataPoints = {
+    measures: [ReferenceLdm.Amount],
+    filters: [newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 100000)],
+    trendBy: ReferenceLdm.Opportunity.Name,
 };
 
 export default scenariosFor<ILineChartProps>("LineChart", LineChart)

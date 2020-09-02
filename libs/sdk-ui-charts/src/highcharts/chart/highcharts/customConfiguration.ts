@@ -17,7 +17,7 @@ import cx from "classnames";
 
 import { styleVariables } from "../../styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
+import { IChartConfig, IDataLabelsVisible, IDataPointsVisible } from "../../../interfaces";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
@@ -667,6 +667,22 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
     };
 }
 
+function getDataPointsConfiguration(_chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
+    const dataPointsVisible: IDataPointsVisible = get(chartConfig, "dataPoints.visible", true);
+    const dataPointsConfig = {
+        marker: {
+            enabled: dataPointsVisible === "auto" ? undefined : dataPointsVisible,
+        },
+    };
+
+    return {
+        plotOptions: {
+            line: dataPointsConfig,
+            area: dataPointsConfig,
+        },
+    };
+}
+
 function getStackingConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type } = chartOptions;
     let labelsConfig = {};
@@ -1192,6 +1208,7 @@ export function getCustomizedConfiguration(
         getHoverStyles,
         getGridConfiguration,
         getLabelsConfiguration,
+        getDataPointsConfiguration,
         // should be after 'getDataConfiguration' to modify 'series'
         // and should be after 'getStackingConfiguration' to get stackLabels config
         getOptionalStackingConfiguration,

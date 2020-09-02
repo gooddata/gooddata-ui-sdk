@@ -2,7 +2,7 @@
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
-import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
+import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export type ComboChartTypes = "area" | "column" | "line";
@@ -38,6 +38,13 @@ export const ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy = {
     primaryMeasures: [ReferenceLdmExt.MinAmount, ReferenceLdmExt.MedianAmount, ReferenceLdmExt.MaxAmount],
     secondaryMeasures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.CalculatedLost],
     viewBy: [ReferenceLdm.Product.Name],
+};
+
+export const ComboChartWithManyDataPoints = {
+    primaryMeasures: [ReferenceLdm.Amount],
+    secondaryMeasures: [ReferenceLdm.Won],
+    filters: [newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 100000)],
+    viewBy: ReferenceLdm.Opportunity.Name,
 };
 
 export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)

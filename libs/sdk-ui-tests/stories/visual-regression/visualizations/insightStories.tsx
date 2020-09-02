@@ -75,6 +75,7 @@ import { PlugVizStories } from "../../_infra/storyGroups";
 
 const DefaultSettings: ISettings = {
     enableAxisNameConfiguration: true,
+    enableHidingOfDataPoints: true,
 };
 
 //

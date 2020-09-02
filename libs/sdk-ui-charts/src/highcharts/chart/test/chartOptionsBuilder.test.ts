@@ -359,14 +359,14 @@ describe("chartOptionsBuilder", () => {
                 ]);
             });
 
-            it("should enable markers for all non-null pointData values", () => {
-                expect(seriesItemData.map((pointData: any) => pointData.marker.enabled)).toEqual([
+            it("should disable markers for all null pointData values", () => {
+                expect(seriesItemData.map((pointData: any) => pointData.marker?.enabled)).toEqual([
                     false,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
                 ]);
             });
         });
@@ -409,9 +409,9 @@ describe("chartOptionsBuilder", () => {
                 expect(seriesItemData.map((pointData: any) => pointData.y)).toEqual([24000, null]);
             });
 
-            it("should enable markers for all non-null pointData values", () => {
-                expect(seriesItemData.map((pointData: any) => pointData.marker.enabled)).toEqual([
-                    true,
+            it("should disable markers for all null pointData values", () => {
+                expect(seriesItemData.map((pointData: any) => pointData.marker?.enabled)).toEqual([
+                    undefined,
                     false,
                 ]);
             });
@@ -1220,7 +1220,6 @@ describe("chartOptionsBuilder", () => {
                         format: "#,##0.00",
                         legendIndex: 0,
                         name: "Amount",
-                        marker: expect.any(Object),
                     });
                 });
             });
@@ -1265,7 +1264,6 @@ describe("chartOptionsBuilder", () => {
                         format: "#,##0.00",
                         legendIndex: 0,
                         name: "Direct Sales",
-                        marker: expect.any(Object),
                     });
 
                     expect(seriesData[0].data[1]).toMatchObject({
@@ -1274,7 +1272,6 @@ describe("chartOptionsBuilder", () => {
                         format: "#,##0.00",
                         legendIndex: 1,
                         name: "Inside Sales",
-                        marker: expect.any(Object),
                     });
                 });
             });

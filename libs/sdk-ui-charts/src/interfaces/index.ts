@@ -7,6 +7,7 @@ export {
     IChartLimits,
     IAxisConfig,
     IDataLabelsConfig,
+    IDataPointsVisible,
     IAxisNameConfig,
     ChartAlignTypes,
     IDataLabelsVisible,

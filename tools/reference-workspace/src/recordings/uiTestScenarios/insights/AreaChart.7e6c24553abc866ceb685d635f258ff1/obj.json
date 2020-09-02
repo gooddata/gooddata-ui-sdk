@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.opportunity.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.opportunity.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            { "items": [], "localIdentifier": "stack" }
+        ],
+        "filters": [
+            {
+                "measureValueFilter": {
+                    "condition": { "comparison": { "operator": "GREATER_THAN", "value": 100000 } },
+                    "measure": { "localIdentifier": "m_aangOxLSeztu" }
+                }
+            }
+        ],
+        "identifier": "AreaChart.7e6c24553abc866ceb685d635f258ff1",
+        "properties": { "controls": { "dataPoints": { "visible": true } } },
+        "sorts": [],
+        "title": "AreaChart - data points - dense chart - forced visible",
+        "uri": "AreaChart.7e6c24553abc866ceb685d635f258ff1",
+        "visualizationUrl": "local:area"
+    }
+}

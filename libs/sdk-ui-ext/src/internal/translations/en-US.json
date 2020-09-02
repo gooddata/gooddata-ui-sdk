@@ -439,6 +439,26 @@
         "comment": "",
         "limit": 0
     },
+    "properties.canvas.dataPoints": {
+        "value": "Data Points",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.dataPoints.auto": {
+        "value": "auto (default)",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.dataPoints.show": {
+        "value": "show",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.dataPoints.hide": {
+        "value": "hide",
+        "comment": "",
+        "limit": 0
+    },
     "properties.yaxis.title": {
         "value": "Y-Axis",
         "comment": "Vertical axis of a plot.",

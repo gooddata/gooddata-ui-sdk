@@ -34,7 +34,7 @@
         ],
         "filters": [],
         "identifier": "GeoPushpinChart.290531583e3619bf47883f3b20e1c334",
-        "properties": { "controls": {} },
+        "properties": { "controls": { "showLabels": false } },
         "sorts": [],
         "title": "GeoPushpinChart - location and segment",
         "uri": "GeoPushpinChart.290531583e3619bf47883f3b20e1c334",

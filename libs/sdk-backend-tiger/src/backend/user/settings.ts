@@ -30,6 +30,7 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 enableWeekFilters: true,
                 enableCustomMeasureFormatting: true,
                 enableAnalyticalDashboards: true,
+                enableHidingOfDataPoints: true,
             };
         });
     }
