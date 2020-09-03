@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
 import {
     convertAbsoluteDateFilter,
+    convertMeasureValueFilter,
     convertRelativeDateFilter,
     convertVisualizationObjectFilter,
 } from "../FilterConverter";
@@ -12,10 +13,49 @@ import {
     newPositiveAttributeFilter,
     newNegativeAttributeFilter,
     newMeasureValueFilter,
+    IMeasureValueFilter,
+    idRef,
+    uriRef,
 } from "@gooddata/sdk-model";
 import { ReferenceLdmExt, ReferenceLdm } from "@gooddata/reference-workspace";
 
 describe("tiger filter converter from model to AFM", () => {
+    describe("convert measure value filter", () => {
+        const Scenarios: Array<[string, IMeasureValueFilter]> = [
+            [
+                "specified using id of metric",
+                newMeasureValueFilter(idRef("measureId", "measure"), "GREATER_THAN", 10),
+            ],
+            [
+                "specified using id of metric",
+                newMeasureValueFilter(idRef("factId", "fact"), "GREATER_THAN", 10),
+            ],
+            [
+                "specified using localId of metric specified as string",
+                newMeasureValueFilter("localId", "GREATER_THAN", 10),
+            ],
+            [
+                "specified using localId of metric specified by value",
+                newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 10),
+            ],
+        ];
+
+        it.each(Scenarios)("should convert %s", (_desc, filter) => {
+            expect(convertMeasureValueFilter(filter)).toMatchSnapshot();
+        });
+
+        it("should throw exception if filter has idRef without type", () => {
+            expect(() => {
+                convertMeasureValueFilter(newMeasureValueFilter(idRef("ambiguous"), "GREATER_THAN", 10));
+            }).toThrow();
+        });
+
+        it("should throw exception if filter is using uriRef", () => {
+            expect(() => {
+                convertMeasureValueFilter(newMeasureValueFilter(uriRef("unsupported"), "GREATER_THAN", 10));
+            }).toThrow();
+        });
+    });
     describe("convert absolute date filter", () => {
         const Scenarios: Array<[string, any]> = [
             ["absolute date filter without 'to' attribute", absoluteFilter.withoutTo],

@@ -19,6 +19,64 @@ exports[`tiger filter converter from model to AFM convert absolute date filter s
 
 exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter without 'to' attribute 1`] = `null`;
 
+exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using id of metric 1`] = `
+Object {
+  "comparisonMeasureValueFilter": Object {
+    "measure": Object {
+      "identifier": Object {
+        "id": "measureId",
+        "type": "metric",
+      },
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 10,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using id of metric 2`] = `
+Object {
+  "comparisonMeasureValueFilter": Object {
+    "measure": Object {
+      "identifier": Object {
+        "id": "factId",
+        "type": "fact",
+      },
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 10,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using localId of metric specified as string 1`] = `
+Object {
+  "comparisonMeasureValueFilter": Object {
+    "measure": Object {
+      "localIdentifier": "localId",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 10,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using localId of metric specified by value 1`] = `
+Object {
+  "comparisonMeasureValueFilter": Object {
+    "measure": Object {
+      "localIdentifier": "m_aangOxLSeztu",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 10,
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with date granularity 1`] = `
 Object {
   "relativeDateFilter": Object {

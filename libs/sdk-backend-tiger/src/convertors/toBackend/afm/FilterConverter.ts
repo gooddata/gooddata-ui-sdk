@@ -151,6 +151,9 @@ export function convertVisualizationObjectFilter(filter: IFilter): ExecuteAFM.Fi
     } else if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
     } else {
-        throw new NotSupported("Tiger backend does not support measure value filters");
+        // eslint-disable-next-line no-console
+        console.warn("Tiger does not support ranking filters. The filter will be ignored");
+
+        return null;
     }
 }

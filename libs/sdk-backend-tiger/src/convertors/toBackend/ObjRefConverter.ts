@@ -1,11 +1,18 @@
 // (C) 2007-2020 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isUriRef, ObjRef, ObjectType, isLocalIdRef, ObjRefInScope, isObjRef } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/api-client-tiger";
-import ObjQualifier = ExecuteAFM.ObjQualifier;
-import ILocalIdentifierQualifier = ExecuteAFM.ILocalIdentifierQualifier;
+import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import {
+    isIdentifierRef,
+    isLocalIdRef,
+    isUriRef,
+    ObjectType,
+    ObjRef,
+    ObjRefInScope,
+} from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
 import { TigerAfmType } from "../../types";
+import ILocalIdentifierQualifier = ExecuteAFM.ILocalIdentifierQualifier;
+import ObjQualifier = ExecuteAFM.ObjQualifier;
 
 type AfmObjectType = Exclude<ObjectType, "tag" | "insight" | "analyticalDashboard">;
 
@@ -95,7 +102,12 @@ export function toMeasureValueFilterMeasureQualifier(
 ): ExecuteAFM.ILocalIdentifierQualifier | ExecuteAFM.IObjIdentifierQualifier {
     if (isLocalIdRef(ref)) {
         return toLocalIdentifier(ref.localIdentifier);
-    } else if (isObjRef(ref)) {
+    } else if (isIdentifierRef(ref)) {
+        if (!ref.type) {
+            throw new UnexpectedError(
+                "Please explicitly specify idRef for measure value filter. You must provide both identifier and type of object you want to reference.",
+            );
+        }
         return toObjQualifier(ref);
     } else {
         throw new UnexpectedError(
