@@ -89,6 +89,7 @@ module.exports = async (env, argv) => {
         new SimplestProgressPlugin(),
         new Dotenv({
             silent: true,
+            systemvars: true,
         }),
         new ForkTsCheckerWebpackPlugin({
             reportFiles: ["src/**/*.{ts,tsx}"],

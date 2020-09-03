@@ -1,1 +1,1 @@
-web: yarn examples-server
+web: npm run examples-server
