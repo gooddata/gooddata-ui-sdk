@@ -30,7 +30,7 @@ export default bearFactory;
 // Exports to support legacy state in AD / KD
 //
 
-import { convertScheduledMail } from "./convertors/toBackend/DashboardConverter";
+import { convertScheduledMail, convertWidget } from "./convertors/toBackend/DashboardConverter";
 import { convertInsight, convertInsightDefinition } from "./convertors/toBackend/InsightConverter";
 import { toAfmExecution } from "./convertors/toBackend/afm/ExecutionConverter";
 
@@ -47,6 +47,7 @@ export const BearToBackendConvertors = {
     convertInsightDefinition,
     toAfmExecution,
     convertScheduledMail,
+    convertWidget,
 };
 
 import { convertVisualization } from "./convertors/fromBackend/VisualizationConverter";
