@@ -19,37 +19,68 @@ import {
     newNegativeAttributeFilter,
     isNegativeAttributeFilter,
     isMeasureValueFilter,
+    mergeFilters,
 } from "@gooddata/sdk-model";
 import partition from "lodash/fp/partition";
 import zip from "lodash/fp/zip";
 
 /**
+ * Appends a set of filters to an existing set making sure that all the filters compared regardless of their ObjRef types.
+ * Uses {@link mergeFilters} internally, see its docs for details on the merging logic.
+ *
+ * @param originalFilters - original filter set
+ * @param addedFilters - filters to append
+ * @param objRefNormalizer - function that converts any ObjRef type to uri
+ */
+export async function appendFilters(
+    originalFilters: IFilter[],
+    addedFilters: IFilter[],
+    objRefNormalizer: (refs: ObjRef[]) => Promise<string[]>,
+): Promise<IFilter[]> {
+    const [normalizedOriginalFilters, normalizedAddedFilters] = allUseSameRefType([
+        ...originalFilters,
+        ...addedFilters,
+    ])
+        ? [originalFilters, addedFilters]
+        : await Promise.all([
+              normalizeFilterRefs(originalFilters, objRefNormalizer),
+              normalizeFilterRefs(addedFilters, objRefNormalizer),
+          ]);
+
+    return mergeFilters(normalizedOriginalFilters, normalizedAddedFilters);
+}
+
+/**
+ * Detects if all the filters with refs use the same ObjRef type.
+ *
+ * @param filters - the filters to check
+ */
+function allUseSameRefType(filters: IFilter[]): boolean {
+    const filtersWithRefs = filters.filter((f) => !isMeasureValueFilter(f));
+
+    return (
+        filtersWithRefs.every((f) => isIdentifierRef(filterObjRef(f))) ||
+        filtersWithRefs.every((f) => isUriRef(filterObjRef(f)))
+    );
+}
+
+/**
  * Makes sure that all the filters use the same ObjRef type so that they can be compared trivially.
  *
  * @param filters - filters to normalize
- * @param objRefsToUris - function that converts any ObjRef type to uri
+ * @param objRefNormalizer - function that converts any ObjRef type to uri
  */
-export async function normalizeFilterRefs(
+async function normalizeFilterRefs(
     filters: IFilter[],
-    objRefsToUris: (refs: ObjRef[]) => Promise<string[]>,
+    objRefNormalizer: (refs: ObjRef[]) => Promise<string[]>,
 ): Promise<IFilter[]> {
-    const needsNormalization = !(
-        filters.every((f) => isIdentifierRef(filterObjRef(f))) ||
-        filters.every((f) => isUriRef(filterObjRef(f)))
-    );
-
-    if (!needsNormalization) {
-        return filters;
-    }
-
     const [measureValueFilters, filtersWithRefs] = partition(isMeasureValueFilter, filters);
 
     const refs = filtersWithRefs.map(filterObjRef) as ObjRef[];
-    const uris = await objRefsToUris(refs);
 
-    const normalized = zip(filters, uris).map((pair) => {
-        const [filter, uri] = pair;
+    const uris = await objRefNormalizer(refs);
 
+    const normalized = zip(filters, uris).map(([filter, uri]) => {
         if (isAbsoluteDateFilter(filter)) {
             const { from, to } = absoluteDateFilterValues(filter);
             return newAbsoluteDateFilter(uriRef(uri!), from, to);
