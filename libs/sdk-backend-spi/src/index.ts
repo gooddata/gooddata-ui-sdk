@@ -263,7 +263,7 @@ export {
     DateString,
     IAbsoluteDateFilterForm,
     IAbsoluteDateFilterPreset,
-    IAllTimeDateFilter,
+    IAllTimeDateFilterOption,
     IDateFilterOption,
     IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
@@ -274,7 +274,7 @@ export {
     RelativePresetType,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
-    isAllTimeDateFilter,
+    isAllTimeDateFilterOption,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
 } from "./workspace/dateFilterConfigs/types";

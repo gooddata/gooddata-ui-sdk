@@ -8,7 +8,7 @@ import {
     IRelativeDateFilterPreset,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-    IAllTimeDateFilter,
+    IAllTimeDateFilterOption,
     DateFilterGranularity,
     IRelativeDateFilterPresetOfGranularity,
     DateString,
@@ -79,7 +79,7 @@ export const isRelativeDateFilterOption = (obj: unknown): obj is RelativeDateFil
  * Represents any option in the date filter dropdown
  * @beta
  */
-export type DateFilterOption = IAllTimeDateFilter | AbsoluteDateFilterOption | RelativeDateFilterOption;
+export type DateFilterOption = IAllTimeDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
 
 /**
  * Relative date filter options grouped by their granularity
@@ -97,7 +97,7 @@ export interface IDateFilterOptionsByType {
     /**
      * Global all time date filter options
      */
-    allTime?: IAllTimeDateFilter;
+    allTime?: IAllTimeDateFilterOption;
     /**
      * Global absolute date filter options
      */

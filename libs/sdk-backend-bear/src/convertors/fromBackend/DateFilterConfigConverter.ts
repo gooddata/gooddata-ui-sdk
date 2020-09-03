@@ -2,7 +2,7 @@
 import { GdcExtendedDateFilters } from "@gooddata/api-model-bear";
 import {
     IDateFilterConfig,
-    IAllTimeDateFilter,
+    IAllTimeDateFilterOption,
     IAbsoluteDateFilterForm,
     IRelativeDateFilterForm,
     IAbsoluteDateFilterPreset,
@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { uriRef } from "@gooddata/sdk-model";
 
-const convertAllTime = (allTime: GdcExtendedDateFilters.IDateFilterAllTime): IAllTimeDateFilter => {
+const convertAllTime = (allTime: GdcExtendedDateFilters.IDateFilterAllTime): IAllTimeDateFilterOption => {
     return {
         type: "allTime",
         ...allTime,

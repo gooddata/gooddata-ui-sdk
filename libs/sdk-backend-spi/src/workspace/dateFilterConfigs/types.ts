@@ -175,7 +175,7 @@ export interface IRelativeDateFilterForm extends IDateFilterOption {
  * Customized options for the global all time date filter
  * @alpha
  */
-export interface IAllTimeDateFilter extends IDateFilterOption {
+export interface IAllTimeDateFilterOption extends IDateFilterOption {
     /**
      * Type to identify the global all time date filter
      */
@@ -183,11 +183,11 @@ export interface IAllTimeDateFilter extends IDateFilterOption {
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link IAllTimeDateFilter}.
+ * Type-guard testing whether the provided object is an instance of {@link IAllTimeDateFilterOption}.
  * @alpha
  */
-export const isAllTimeDateFilter = (obj: unknown): obj is IAllTimeDateFilter =>
-    !isEmpty(obj) && (obj as IAllTimeDateFilter).type === "allTime";
+export const isAllTimeDateFilterOption = (obj: unknown): obj is IAllTimeDateFilterOption =>
+    !isEmpty(obj) && (obj as IAllTimeDateFilterOption).type === "allTime";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterForm}.
@@ -234,7 +234,7 @@ export interface IDateFilterConfig {
     /**
      * Options to customize displaying of the global all time date filter
      */
-    allTime?: IAllTimeDateFilter;
+    allTime?: IAllTimeDateFilterOption;
     /**
      * Options to customize displaying of the global absolute date filter
      */
