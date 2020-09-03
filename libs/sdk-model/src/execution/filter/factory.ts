@@ -127,6 +127,24 @@ export function newRelativeDateFilter(
 }
 
 /**
+ * Creates a new all time date filter. This filter is used to indicate that there should be no filtering on the given date data set.
+ *
+ * @param dateDataSet - ref or identifier of the date data set to filter on
+ * @public
+ */
+export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDateFilter {
+    const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
+    return {
+        relativeDateFilter: {
+            dataSet,
+            granularity: "ALL_TIME_GRANULARITY",
+            from: 0,
+            to: 0,
+        },
+    };
+}
+
+/**
  * Creates a new measure value filter.
  *
  * @param measureOrRef - instance of measure to filter, or reference of the measure object; if instance of measure is

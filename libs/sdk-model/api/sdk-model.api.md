@@ -8,6 +8,9 @@
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
 
 // @public
+export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
+
+// @public
 export const anyAttribute: AttributePredicate;
 
 // @public
@@ -71,6 +74,9 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
 
 // @public
 export function attributeDisplayFormRef(attribute: IAttribute): ObjRef;
+
+// @internal
+export function attributeElementsIsEmpty(attributeElements: IAttributeElements): boolean;
 
 // @public
 export function attributeIdentifier(attribute: IAttribute): string | undefined;
@@ -1001,15 +1007,21 @@ export interface IRangeCondition {
 }
 
 // @public
-export interface IRelativeDateFilter {
-    // (undocumented)
+export type IRelativeDateFilter = {
     relativeDateFilter: {
         dataSet: ObjRef;
         granularity: DateAttributeGranularity;
         from: number;
         to: number;
     };
-}
+} | {
+    relativeDateFilter: {
+        dataSet: ObjRef;
+        granularity: AllTimeGranularity;
+        from: 0;
+        to: 0;
+    };
+};
 
 // @public
 export interface IRelativeDateFilterValues {
@@ -1044,6 +1056,9 @@ export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter;
 
 // @public
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
+
+// @public
+export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter;
 
 // @public
 export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMeasureDefinition>;
@@ -1431,6 +1446,9 @@ export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modif
 
 // @public
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string): IAbsoluteDateFilter;
+
+// @public
+export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDateFilter;
 
 // @public
 export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;

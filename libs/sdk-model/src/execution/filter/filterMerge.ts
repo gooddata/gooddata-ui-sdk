@@ -8,11 +8,9 @@ import {
     isAttributeFilter,
     isDateFilter,
     filterObjRef,
-    isRelativeDateFilter,
-    relativeDateFilterValues,
+    isAllTimeDateFilter,
 } from "./index";
 import groupBy from "lodash/groupBy";
-import isNil from "lodash/isNil";
 import last from "lodash/last";
 import invariant from "ts-invariant";
 
@@ -59,6 +57,9 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
  * they can be compared without involving the backend. Otherwise, the results might be unexpected
  * (especially for date filters).
  *
+ * There is also a function in backend insights service called getInsightWithAddedFilters that can help you
+ * do this that takes care of the ObjRef normalization.
+ *
  * @param originalFilters - original filters to merge with
  * @param addedFilters - new filters to add on top of original
  * @internal
@@ -95,12 +96,7 @@ function mergeDateFilters(originalFilters: IDateFilter[], addedFilters: IDateFil
         const lastFilterForDimension = last(filtersForDimension)!;
 
         // if the last filter is all time, clear filters for this dimension, otherwise use the last filter
-        const isAddedFilterAllTime =
-            isRelativeDateFilter(lastFilterForDimension) &&
-            (isNil(relativeDateFilterValues(lastFilterForDimension).from) ||
-                isNil(relativeDateFilterValues(lastFilterForDimension).to));
-
-        if (!isAddedFilterAllTime) {
+        if (!isAllTimeDateFilter(lastFilterForDimension)) {
             filters.push(lastFilterForDimension);
         }
 
