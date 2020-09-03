@@ -8,7 +8,7 @@ import {
     DateFilterOption,
     isRelativeDateFilterOption,
 } from "../interfaces";
-import { isAllTimeDateFilter } from "@gooddata/sdk-backend-spi";
+import { isAllTimeDateFilterOption } from "@gooddata/sdk-backend-spi";
 
 export const mapAbsoluteFilterToAfm = (
     value: AbsoluteDateFilterOption,
@@ -40,7 +40,7 @@ export const mapOptionToAfm = (
 ): IDateFilter => {
     const excludeApplied = applyExcludeCurrentPeriod(value, excludeCurrentPeriod);
 
-    if (isAllTimeDateFilter(excludeApplied)) {
+    if (isAllTimeDateFilterOption(excludeApplied)) {
         return null;
     }
 
@@ -52,5 +52,5 @@ export const mapOptionToAfm = (
         return mapRelativeFilterToAfm(excludeApplied, dateDataSet);
     }
 
-    throw new Error("Uknown date filter value provided");
+    throw new Error("Unknown date filter value provided");
 };

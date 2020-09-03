@@ -5,33 +5,14 @@ import {
     IDateFilter,
     IFilter,
     IMeasureValueFilter,
-    isAbsoluteDateFilter,
     isAttributeFilter,
     isDateFilter,
-    isMeasureValueFilter,
-    isPositiveAttributeFilter,
+    filterObjRef,
+    isAllTimeDateFilter,
 } from "./index";
-import unionBy from "lodash/unionBy";
+import groupBy from "lodash/groupBy";
+import last from "lodash/last";
 import invariant from "ts-invariant";
-
-function filterObjectRef(filter: IFilter): string {
-    if (isMeasureValueFilter(filter)) {
-        return objRefToString(filter.measureValueFilter.measure);
-    }
-
-    if (isDateFilter(filter)) {
-        if (isAbsoluteDateFilter(filter)) {
-            return objRefToString(filter.absoluteDateFilter.dataSet);
-        }
-        return objRefToString(filter.relativeDateFilter.dataSet);
-    }
-
-    if (isPositiveAttributeFilter(filter)) {
-        return objRefToString(filter.positiveAttributeFilter.displayForm);
-    }
-
-    return objRefToString(filter.negativeAttributeFilter.displayForm);
-}
 
 type FilterByType = {
     attribute: IAttributeFilter[];
@@ -62,17 +43,22 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
 /**
  * Merges two sets of filters.
  *
- * - Attribute from both sets are simply concatenated => bunch of ANDed filters
+ * - Attribute filters and measure value filters from both sets are simply concatenated resulting
+ *   in the filters being ANDed together.
  * - Date filters are merged based on date data set they filter on
- * - For Date filters for the same date data set:
- *   -  filters from the addedFilters list override filters in the original list
+ *   - For Date filters for the same date data set:
+ *     - the filters are ordered putting original filters first
+ *     - the last filter in this ordering is taken
+ *        - if it is All time, all filters for the dimension are cleared
+ *        - else the last filter is used
  *
- * TODO: we seem to be missing the original logic that was cleaning up filters if the new filter was ALL_TIME?
+ * @remarks
+ * It is the responsibility of the caller to make sure all the filters use the same ObjRef type so that
+ * they can be compared without involving the backend. Otherwise, the results might be unexpected
+ * (especially for date filters).
  *
- * TODO: this logic is not in the right place; filter merging needs to be done by backend implementation
- *  to be able to correctly identify objects being filtered on - regardless of how they are referenced. this
- *  function will return bogus if one filter references say display form by URI and the other references
- *  the same display form by identifier.
+ * There is also a function in backend insights service called getInsightWithAddedFilters that can help you
+ * do this that takes care of the ObjRef normalization.
  *
  * @param originalFilters - original filters to merge with
  * @param addedFilters - new filters to add on top of original
@@ -92,11 +78,28 @@ export function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[]
     const attributeFilters = [...original.attribute, ...added.attribute];
 
     // merge date filters by date dataset qualifier
-    // added date filters should win, so they are specified first, unionBy prefers items from the first argument
-    const dateFilters = unionBy(added.date, original.date, filterObjectRef);
+    const dateFilters = mergeDateFilters(original.date, added.date);
 
     // concat measure value filters
     const measureValueFilters = [...original.measureValue, ...added.measureValue];
 
     return [...attributeFilters, ...dateFilters, ...measureValueFilters];
+}
+
+function mergeDateFilters(originalFilters: IDateFilter[], addedFilters: IDateFilter[]): IDateFilter[] {
+    const allFilters = [...originalFilters, ...addedFilters];
+    const grouped = groupBy(allFilters, (f) => objRefToString(filterObjRef(f)));
+
+    return Object.values(grouped).reduce((filters: IDateFilter[], filtersForDimension) => {
+        // use the last filter for the dimension specified.
+        // this makes sure that the added filter wins if it is specified
+        const lastFilterForDimension = last(filtersForDimension)!;
+
+        // if the last filter is all time, clear filters for this dimension, otherwise use the last filter
+        if (!isAllTimeDateFilter(lastFilterForDimension)) {
+            filters.push(lastFilterForDimension);
+        }
+
+        return filters;
+    }, []);
 }

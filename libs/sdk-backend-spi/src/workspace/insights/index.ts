@@ -8,6 +8,7 @@ import {
     IMetadataObject,
     ObjectType,
     CatalogItem,
+    IFilter,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
@@ -91,6 +92,15 @@ export interface IWorkspaceInsights {
      * @param ref - ref of the insight to get referencing objects for
      */
     getObjectsReferencing(ref: ObjRef): Promise<IInsightReferencing>;
+
+    /**
+     * Get insight with the filters provided merged with the filters specified by the insight itself.
+     *
+     * @param insight - insight to start with
+     * @param filters - filters to merge
+     * @returns promise of new insight with the filters merged in
+     */
+    getInsightWithAddedFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[]): Promise<T>;
 }
 
 /**

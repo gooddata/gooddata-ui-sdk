@@ -11,7 +11,7 @@ import {
     IRelativeDateFilterPreset,
     isAbsoluteDateFilterForm,
     isRelativeDateFilterForm,
-    isAllTimeDateFilter,
+    isAllTimeDateFilterOption,
     isAbsoluteDateFilterPreset,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-backend-spi";
@@ -168,7 +168,7 @@ const getDateFilterRepresentationByFilterType = (
     if (isAbsoluteDateFilterForm(filter) || isRelativeDateFilterForm(filter)) {
         return getDateFilterRepresentationUsingTranslator(filter, translator);
     } else if (
-        isAllTimeDateFilter(filter) ||
+        isAllTimeDateFilterOption(filter) ||
         isAbsoluteDateFilterPreset(filter) ||
         isRelativeDateFilterPreset(filter)
     ) {
@@ -217,7 +217,7 @@ const getDateFilterRepresentationUsingTranslator = (
         return getAbsoluteFormFilterRepresentation(filter, translator);
     } else if (isAbsoluteDateFilterPreset(filter)) {
         return getAbsolutePresetFilterRepresentation(filter, translator);
-    } else if (isAllTimeDateFilter(filter)) {
+    } else if (isAllTimeDateFilterOption(filter)) {
         return getAllTimeFilterRepresentation(translator);
     } else if (isRelativeDateFilterForm(filter)) {
         return getRelativeFormFilterRepresentation(filter, translator);

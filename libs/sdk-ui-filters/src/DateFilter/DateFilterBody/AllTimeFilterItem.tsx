@@ -3,11 +3,11 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { ListItem } from "../ListItem/ListItem";
-import { IAllTimeDateFilter } from "@gooddata/sdk-backend-spi";
+import { IAllTimeDateFilterOption } from "@gooddata/sdk-backend-spi";
 import { DateFilterOption } from "../interfaces";
 
 export const AllTimeFilterItem: React.FC<{
-    filterOption: IAllTimeDateFilter;
+    filterOption: IAllTimeDateFilterOption;
     selectedFilterOption: DateFilterOption;
     className?: string;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;

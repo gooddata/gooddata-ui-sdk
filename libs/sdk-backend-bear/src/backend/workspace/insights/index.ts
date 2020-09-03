@@ -19,14 +19,18 @@ import {
     insightVisualizationUrl,
     IVisualizationClass,
     ObjRef,
+    IFilter,
+    insightFilters,
+    insightSetFilters,
 } from "@gooddata/sdk-model";
 import { convertVisualizationClass } from "../../../convertors/fromBackend/VisualizationClassConverter";
 import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
 import { convertInsight, convertInsightDefinition } from "../../../convertors/toBackend/InsightConverter";
-import { objRefToUri, getObjectIdFromUri } from "../../../utils/api";
+import { objRefToUri, objRefsToUris, getObjectIdFromUri } from "../../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { InsightReferencesQuery } from "./insightReferences";
+import { appendFilters } from "./filterMerging";
 
 export class BearWorkspaceInsights implements IWorkspaceInsights {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -192,6 +196,21 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
                 ),
             };
         });
+    };
+
+    public getInsightWithAddedFilters = async <T extends IInsightDefinition>(
+        insight: T,
+        filters: IFilter[],
+    ): Promise<T> => {
+        if (!filters.length) {
+            return insight;
+        }
+
+        const mergedFilters = await appendFilters(insightFilters(insight), filters, (refs) =>
+            objRefsToUris(refs, this.workspace, this.authCall),
+        );
+
+        return insightSetFilters(insight, mergedFilters);
     };
 
     private getVisualizationClassByUrl = async (url: string): Promise<IVisualizationClass | undefined> => {

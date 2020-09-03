@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    IAllTimeDateFilter,
+    IAllTimeDateFilterOption,
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
 } from "@gooddata/sdk-backend-spi";
@@ -10,7 +10,7 @@ import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm } from "../../inte
 const dataSet = {
     uri: "foo",
 };
-const allTimeDateFilterValue: IAllTimeDateFilter = {
+const allTimeDateFilterValue: IAllTimeDateFilterOption = {
     localIdentifier: "baz",
     name: "bar",
     visible: true,

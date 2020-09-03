@@ -2,7 +2,7 @@
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 import { LocalIdRef, ObjRef, ObjRefInScope, UriRef } from "../../objRef";
-import { DateAttributeGranularity } from "../../base/dateGranularities";
+import { DateAttributeGranularity, AllTimeGranularity } from "../../base/dateGranularities";
 
 /**
  * Attribute elements specified by their URI.
@@ -106,17 +106,26 @@ export interface IAbsoluteDateFilter {
  * Filters results to a relative date range. The relative filtering is always done on some granularity - this specifies
  * the units in the 'from' and 'to' fields.
  *
- * See {@link DateAttributeGranularity} and {@link DateGranularity} for further detail.
+ * See {@link DateAttributeGranularity}, {@link AllTimeGranularity} and {@link DateGranularity} for further detail.
  * @public
  */
-export interface IRelativeDateFilter {
-    relativeDateFilter: {
-        dataSet: ObjRef;
-        granularity: DateAttributeGranularity;
-        from: number;
-        to: number;
-    };
-}
+export type IRelativeDateFilter =
+    | {
+          relativeDateFilter: {
+              dataSet: ObjRef;
+              granularity: DateAttributeGranularity;
+              from: number;
+              to: number;
+          };
+      }
+    | {
+          relativeDateFilter: {
+              dataSet: ObjRef;
+              granularity: AllTimeGranularity;
+              from: 0;
+              to: 0;
+          };
+      };
 
 /**
  * Attribute filters limit results of execution to data pertaining to attributes that are or are not specified
@@ -248,6 +257,18 @@ export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter {
  */
 export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter {
     return !isEmpty(obj) && (obj as IRelativeDateFilter).relativeDateFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is an all time date filter.
+ *
+ * @public
+ */
+export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter {
+    return (
+        !isEmpty(obj) &&
+        (obj as IRelativeDateFilter).relativeDateFilter?.granularity === "ALL_TIME_GRANULARITY"
+    );
 }
 
 /**

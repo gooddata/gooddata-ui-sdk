@@ -166,7 +166,7 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
 }
 
 // @alpha
-export interface IAllTimeDateFilter extends IDateFilterOption {
+export interface IAllTimeDateFilterOption extends IDateFilterOption {
     type: AllTimeType;
 }
 
@@ -345,7 +345,7 @@ export interface IDataView {
 export interface IDateFilterConfig {
     absoluteForm?: IAbsoluteDateFilterForm;
     absolutePresets?: IAbsoluteDateFilterPreset[];
-    allTime?: IAllTimeDateFilter;
+    allTime?: IAllTimeDateFilterOption;
     ref: ObjRef;
     relativeForm?: IRelativeDateFilterForm;
     relativePresets?: IRelativeDateFilterPreset[];
@@ -780,7 +780,7 @@ export const isAbsoluteDateFilterForm: (obj: unknown) => obj is IAbsoluteDateFil
 export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateFilterPreset;
 
 // @alpha
-export const isAllTimeDateFilter: (obj: unknown) => obj is IAllTimeDateFilter;
+export const isAllTimeDateFilterOption: (obj: unknown) => obj is IAllTimeDateFilterOption;
 
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
@@ -1155,6 +1155,7 @@ export interface IWorkspaceInsights {
     deleteInsight(ref: ObjRef): Promise<void>;
     getInsight(ref: ObjRef): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
+    getInsightWithAddedFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[]): Promise<T>;
     getObjectsReferencing(ref: ObjRef): Promise<IInsightReferencing>;
     getReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;

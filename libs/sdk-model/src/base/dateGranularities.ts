@@ -30,6 +30,13 @@ export type DateAttributeGranularity =
     | "GDC.time.date";
 
 /**
+ * Special granularity used to indicate there should be no date filtering for the given dimension.
+ *
+ * @public
+ */
+export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
+
+/**
  * Defines shortcuts for commonly used date dataset attribute granularities.
  *
  * @public

@@ -9,7 +9,7 @@ import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-backend-spi';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-backend-spi';
-import { IAllTimeDateFilter } from '@gooddata/sdk-backend-spi';
+import { IAllTimeDateFilterOption } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IElementQueryOptions } from '@gooddata/sdk-backend-spi';
@@ -64,7 +64,7 @@ export const DateFilterHelpers: {
 };
 
 // @beta
-export type DateFilterOption = IAllTimeDateFilter | AbsoluteDateFilterOption | RelativeDateFilterOption;
+export type DateFilterOption = IAllTimeDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
 
 // @beta
 export type DateFilterRelativeOptionGroup = {
@@ -130,7 +130,7 @@ export interface IDateFilterCallbackProps {
 export interface IDateFilterOptionsByType {
     absoluteForm?: IUiAbsoluteDateFilterForm;
     absolutePreset?: IAbsoluteDateFilterPreset[];
-    allTime?: IAllTimeDateFilter;
+    allTime?: IAllTimeDateFilterOption;
     relativeForm?: IUiRelativeDateFilterForm;
     relativePreset?: DateFilterRelativeOptionGroup;
 }

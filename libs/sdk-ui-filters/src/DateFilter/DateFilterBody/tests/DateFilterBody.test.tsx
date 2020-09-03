@@ -8,10 +8,10 @@ import {
     DateFilterButtonLocalized,
     IDateFilterButtonLocalizedProps,
 } from "../../DateFilterButtonLocalized/DateFilterButtonLocalized";
-import { IAllTimeDateFilter } from "@gooddata/sdk-backend-spi";
+import { IAllTimeDateFilterOption } from "@gooddata/sdk-backend-spi";
 
 describe("ExtendedDateFilterBody", () => {
-    const allTime: IAllTimeDateFilter = {
+    const allTime: IAllTimeDateFilterOption = {
         type: "allTime",
         localIdentifier: "ALL_TIME",
         name: "",

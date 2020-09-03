@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 
 import {
-    isAllTimeDateFilter,
+    isAllTimeDateFilterOption,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isRelativeDateFilterForm,
@@ -21,7 +21,7 @@ export const applyExcludeCurrentPeriod = (
     }
 
     if (
-        isAllTimeDateFilter(dateFilterOption) ||
+        isAllTimeDateFilterOption(dateFilterOption) ||
         isAbsoluteDateFilterForm(dateFilterOption) ||
         isAbsoluteDateFilterPreset(dateFilterOption) ||
         isRelativeDateFilterForm(dateFilterOption)

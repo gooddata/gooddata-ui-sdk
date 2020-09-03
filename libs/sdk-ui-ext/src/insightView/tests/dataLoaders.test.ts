@@ -148,6 +148,7 @@ describe("InsightViewDataLoader", () => {
                     getVisualizationClasses: noop as any,
                     updateInsight: noop as any,
                     getObjectsReferencing: noop as any,
+                    getInsightWithAddedFilters: noop as any,
                 }),
             }),
         });

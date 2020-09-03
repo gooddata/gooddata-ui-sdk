@@ -1,130 +1,49 @@
 // (C) 2019-2020 GoodData Corporation
-
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
 import {
-    isAllTimeDateFilter,
-    isAbsoluteDateFilterForm,
-    isAbsoluteDateFilterOption,
-    isAbsoluteDateFilterPreset,
-    isRelativeDateFilterForm,
-    isRelativeDateFilterOption,
-    isRelativeDateFilterPreset,
+    IAllTimeDateFilterOption,
+    IAbsoluteDateFilterForm,
+    IAbsoluteDateFilterPreset,
+    IRelativeDateFilterForm,
+    IRelativeDateFilterPreset,
 } from "../types";
-import {
-    allTimeDateFilter,
-    absoluteDateFilterForm,
-    absoluteDateFilterOption,
-    absoluteDateFilterPreset,
-    relativeDateFilterForm,
-    relativeDateFilterOption,
-    relativeDateFilterPreset,
-} from "./typeGuards";
 
-describe("dashboard extended date filters type guards", () => {
-    describe("isAllTimeDateFilter", () => {
-        const Scenarios: Array<[boolean, string, any]> = [
-            ...InvalidInputTestCases,
-            [true, "all time date filter", allTimeDateFilter],
-            [false, "absolute date filter form", absoluteDateFilterForm],
-            [false, "absolute date filter preset", absoluteDateFilterPreset],
-            [false, "relative date filter form", relativeDateFilterForm],
-            [false, "relative date filter preset", relativeDateFilterPreset],
-        ];
+export const allTimeDateFilter: IAllTimeDateFilterOption = {
+    localIdentifier: "allTimeDateFilter",
+    name: "allTimeDateFilter",
+    type: "allTime",
+    visible: true,
+};
 
-        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isAllTimeDateFilter(input)).toBe(expectedResult);
-        });
-    });
+export const absoluteDateFilterForm: IAbsoluteDateFilterForm = {
+    localIdentifier: "absoluteDateFilterForm",
+    name: "absoluteDateFilterForm",
+    type: "absoluteForm",
+    visible: true,
+};
 
-    describe("isAbsoluteDateFilterForm", () => {
-        const Scenarios: Array<[boolean, string, any]> = [
-            ...InvalidInputTestCases,
-            [false, "all time date filter", allTimeDateFilter],
-            [true, "absolute date filter form", absoluteDateFilterForm],
-            [false, "absolute date filter preset", absoluteDateFilterPreset],
-            [false, "relative date filter form", relativeDateFilterForm],
-            [false, "relative date filter preset", relativeDateFilterPreset],
-        ];
+export const absoluteDateFilterPreset: IAbsoluteDateFilterPreset = {
+    localIdentifier: "absoluteDateFilterForm",
+    name: "absoluteDateFilterForm",
+    type: "absolutePreset",
+    visible: true,
+    from: "2020-01-01",
+    to: "2020-05-05",
+};
 
-        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isAbsoluteDateFilterForm(input)).toBe(expectedResult);
-        });
-    });
+export const relativeDateFilterForm: IRelativeDateFilterForm = {
+    localIdentifier: "relativeDateFilterForm",
+    name: "relativeDateFilterForm",
+    type: "relativeForm",
+    visible: true,
+    availableGranularities: ["GDC.time.month"],
+};
 
-    describe("isAbsoluteDateFilterPreset", () => {
-        const Scenarios: Array<[boolean, string, any]> = [
-            ...InvalidInputTestCases,
-            [false, "all time date filter", allTimeDateFilter],
-            [false, "absolute date filter form", absoluteDateFilterForm],
-            [true, "absolute date filter preset", absoluteDateFilterPreset],
-            [false, "relative date filter form", relativeDateFilterForm],
-            [false, "relative date filter preset", relativeDateFilterPreset],
-        ];
-
-        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isAbsoluteDateFilterPreset(input)).toBe(expectedResult);
-        });
-    });
-
-    describe("isAbsoluteDateFilterOption", () => {
-        const Scenarios: Array<[boolean, string, any]> = [
-            ...InvalidInputTestCases,
-            [false, "all time date filter", allTimeDateFilter],
-            [true, "absolute date filter form", absoluteDateFilterForm],
-            [true, "absolute date filter preset", absoluteDateFilterPreset],
-            [false, "relative date filter form", relativeDateFilterForm],
-            [false, "relative date filter preset", relativeDateFilterPreset],
-        ];
-
-        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isAbsoluteDateFilterOption(input)).toBe(expectedResult);
-        });
-    });
-
-    describe("isRelativeDateFilterForm", () => {
-        const Scenarios: Array<[boolean, string, any]> = [
-            ...InvalidInputTestCases,
-            [false, "all time date filter", allTimeDateFilter],
-            [false, "absolute date filter form", absoluteDateFilterForm],
-            [false, "absolute date filter preset", absoluteDateFilterPreset],
-            [true, "relative date filter form", relativeDateFilterForm],
-            [false, "relative date filter preset", relativeDateFilterPreset],
-        ];
-
-        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isRelativeDateFilterForm(input)).toBe(expectedResult);
-        });
-    });
-
-    describe("isRelativeDateFilterPreset", () => {
-        const Scenarios: Array<[boolean, string, any]> = [
-            ...InvalidInputTestCases,
-            [false, "all time date filter", allTimeDateFilter],
-            [false, "absolute date filter form", absoluteDateFilterForm],
-            [false, "absolute date filter preset", absoluteDateFilterPreset],
-            [false, "relative date filter form", relativeDateFilterForm],
-            [true, "relative date filter preset", relativeDateFilterPreset],
-        ];
-
-        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isRelativeDateFilterPreset(input)).toBe(expectedResult);
-        });
-    });
-
-    describe("isRelativeDateFilterOption", () => {
-        const Scenarios: Array<[boolean, string, any]> = [
-            ...InvalidInputTestCases,
-            [false, "all time date filter", allTimeDateFilter],
-            [false, "absolute date filter form", absoluteDateFilterForm],
-            [false, "absolute date filter preset", absoluteDateFilterPreset],
-            [false, "absolute date filter option", absoluteDateFilterOption],
-            [true, "relative date filter form", relativeDateFilterForm],
-            [true, "relative date filter preset", relativeDateFilterPreset],
-            [true, "relative date filter option", relativeDateFilterOption],
-        ];
-
-        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isRelativeDateFilterOption(input)).toBe(expectedResult);
-        });
-    });
-});
+export const relativeDateFilterPreset: IRelativeDateFilterPreset = {
+    localIdentifier: "relativeDateFilterForm",
+    name: "relativeDateFilterForm",
+    type: "relativePreset",
+    visible: true,
+    from: -12,
+    to: -1,
+    granularity: "GDC.time.year",
+};

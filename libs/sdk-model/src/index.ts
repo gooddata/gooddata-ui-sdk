@@ -8,7 +8,7 @@ export {
     builderFactory,
 } from "./base/builder";
 
-export { DateAttributeGranularity, DateGranularity } from "./base/dateGranularities";
+export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities";
 
 export {
     IAttribute,
@@ -106,6 +106,8 @@ export {
     IAttributeFilter,
     isAbsoluteDateFilter,
     isRelativeDateFilter,
+    isAllTimeDateFilter,
+    attributeElementsIsEmpty,
     isPositiveAttributeFilter,
     isNegativeAttributeFilter,
     isDateFilter,
@@ -139,8 +141,11 @@ export {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
+    newAllTimeFilter,
     newMeasureValueFilter,
 } from "./execution/filter/factory";
+
+export { mergeFilters } from "./execution/filter/filterMerge";
 
 export {
     IMeasureTitle,
