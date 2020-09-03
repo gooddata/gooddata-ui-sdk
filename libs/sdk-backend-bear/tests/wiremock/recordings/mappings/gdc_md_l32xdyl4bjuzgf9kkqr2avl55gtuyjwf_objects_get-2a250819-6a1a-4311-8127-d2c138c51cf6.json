@@ -1,0 +1,43 @@
+{
+    "id": "2a250819-6a1a-4311-8127-d2c138c51cf6",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_get",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/get",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008\",\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_get-2a250819-6a1a-4311-8127-d2c138c51cf6.json",
+        "headers": {
+            "Date": "Thu, 03 Sep 2020 14:57:23 GMT",
+            "Server": "GoodData WebApp",
+            "Keep-Alive": "timeout=5, max=4",
+            "X-GDC-LOG-HEADER": "",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "146",
+            "X-GDC-REQUEST": "BubUwep7TMkbl4HW",
+            "vary": "Accept-Encoding,origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "2a250819-6a1a-4311-8127-d2c138c51cf6",
+    "persistent": true,
+    "insertionIndex": 9
+}

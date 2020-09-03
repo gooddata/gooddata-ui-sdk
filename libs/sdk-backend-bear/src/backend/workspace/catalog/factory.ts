@@ -103,6 +103,9 @@ type TagsAndDataSetIds = {
     dataSetId: Identifier;
 };
 
+const groupableCatalogItemTypes: CatalogItemType[] = ["attribute", "measure", "fact"];
+const isGroupableCatalogItemType = (type: CatalogItemType) => groupableCatalogItemTypes.includes(type);
+
 export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     private tagsAndDatasetIdsPromise: Promise<TagsAndDataSetIds> | null = null;
 
@@ -312,6 +315,12 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         bearCatalogItems: GdcCatalog.CatalogItem[],
         dateDatasetAttributes: IDateDataSetAttribute[],
     ): Promise<BearDisplayFormOrAttribute[]> => {
+        const { types } = this.options;
+        const shouldLoadAttributes = types.some((type) => type === "attribute" || type === "dateDataset");
+        if (!shouldLoadAttributes) {
+            return [];
+        }
+
         const bearCatalogAttributes = bearCatalogItems.filter(GdcCatalog.isCatalogAttribute);
         const attributeUris = bearCatalogAttributes.map((attr) => attr.links.self);
         const displayFormUris = flatMap(bearCatalogAttributes, (attr) => {
@@ -320,17 +329,22 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             return [attr.links.defaultDisplayForm, ...geoPins];
         });
         const dateAttributeUris = dateDatasetAttributes.map((attr) => attr.attributeMeta.uri);
-        const dateDisplayFormUris = dateDatasetAttributes.map((attr) => attr.defaultDisplayFormMeta.uri);
 
         return this.authCall((sdk) =>
             sdk.md.getObjects<BearDisplayFormOrAttribute>(
                 this.workspace,
-                uniq([...attributeUris, ...displayFormUris, ...dateAttributeUris, ...dateDisplayFormUris]),
+                uniq([...attributeUris, ...displayFormUris, ...dateAttributeUris]),
             ),
         );
     };
 
     private loadCatalogGroups = async (): Promise<ICatalogGroup[]> => {
+        const { types } = this.options;
+        const shouldLoadGroups = types.some(isGroupableCatalogItemType);
+        if (!shouldLoadGroups) {
+            return [];
+        }
+
         const { dataset } = this.options;
 
         const { includeTagsIds, excludeTagsIds, dataSetId } = await this.getTagsAndDatasetIds();
