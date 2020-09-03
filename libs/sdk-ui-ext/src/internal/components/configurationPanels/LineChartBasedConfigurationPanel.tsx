@@ -39,13 +39,13 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             pushData={pushData}
                             properties={properties}
                             isDisabled={controlsDisabled}
-                            defaultValue={false}
+                            defaultValue={"auto"}
                         />
                         <DataPointsControl
                             pushData={pushData}
                             properties={properties}
                             isDisabled={controlsDisabled}
-                            defaultValue={false}
+                            defaultValue={"auto"}
                         />
                         <CheckboxControl
                             valuePath="grid.enabled"

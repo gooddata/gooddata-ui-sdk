@@ -1,4 +1,6 @@
 // (C) 2019 GoodData Corporation
+import React from "react";
+import { render } from "react-dom";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -48,7 +50,9 @@ import {
 import { removeSort } from "../../../utils/sort";
 
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper";
+import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import { IInsightDefinition } from "@gooddata/sdk-model";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableComboChart extends PluggableBaseChart {
@@ -231,5 +235,27 @@ export class PluggableComboChart extends PluggableBaseChart {
 
         // disable percent if there is more than one measure on primary/secondary y-axis
         return primaryMasterMeasures + secondaryMasterMeasures > 1;
+    }
+
+    protected renderConfigurationPanel(insight: IInsightDefinition): void {
+        if (document.querySelector(this.configPanelElement)) {
+            render(
+                <LineChartBasedConfigurationPanel
+                    locale={this.locale}
+                    references={this.references}
+                    properties={this.visualizationProperties}
+                    propertiesMeta={this.propertiesMeta}
+                    insight={insight}
+                    colors={this.colors}
+                    pushData={this.handlePushData}
+                    type={this.type}
+                    isError={this.getIsError()}
+                    isLoading={this.isLoading}
+                    featureFlags={this.featureFlags}
+                    axis={this.axis}
+                />,
+                document.querySelector(this.configPanelElement),
+            );
+        }
     }
 }

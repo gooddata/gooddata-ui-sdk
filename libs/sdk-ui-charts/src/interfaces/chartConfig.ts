@@ -210,6 +210,16 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 export type IDataLabelsVisible = boolean | string;
 
 /**
+ * Data points visibility options.
+ *
+ * - false: no points
+ * - true: datapoints shown, datapoints can overlap when rendered
+ * - "auto": datapoints shown, datapoints will not overlap when rendered
+ * @public
+ */
+export type IDataPointsVisible = boolean | string;
+
+/**
  * Vertical chart alignment options.
  *
  * @public
