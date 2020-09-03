@@ -232,6 +232,7 @@ class RenderInsightView extends React.Component<
             callbacks: {
                 onError: (error) => {
                     this.setError(error);
+                    this.setIsLoading(false);
                     if (this.props.onError) {
                         this.props.onError(error);
                     }
@@ -410,7 +411,7 @@ export const IntlInsightView = withContexts(injectIntl(RenderInsightView));
  * @public
  */
 export class InsightView extends React.Component<IInsightViewProps, IInsightViewState> {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <IntlWrapper locale={this.props.locale}>
                 <IntlInsightView {...this.props} />

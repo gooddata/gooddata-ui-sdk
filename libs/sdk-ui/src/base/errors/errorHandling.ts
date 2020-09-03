@@ -32,12 +32,15 @@ export interface IErrorDescriptors {
  * @public
  */
 export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
+    const tooLargeDescriptor: IErrorDescriptors["any"] = {
+        icon: "icon-cloud-rain",
+        message: intl.formatMessage({ id: "visualization.ErrorMessageDataTooLarge" }),
+        description: intl.formatMessage({ id: "visualization.ErrorDescriptionDataTooLarge" }),
+    };
+
     return {
-        [ErrorCodes.DATA_TOO_LARGE_TO_DISPLAY]: {
-            icon: "icon-cloud-rain",
-            message: intl.formatMessage({ id: "visualization.ErrorMessageDataTooLarge" }),
-            description: intl.formatMessage({ id: "visualization.ErrorDescriptionDataTooLarge" }),
-        },
+        [ErrorCodes.DATA_TOO_LARGE_TO_DISPLAY]: tooLargeDescriptor,
+        [ErrorCodes.DATA_TOO_LARGE_TO_COMPUTE]: tooLargeDescriptor,
         [ErrorCodes.NOT_FOUND]: {
             message: intl.formatMessage({ id: "visualization.ErrorMessageNotFound" }),
             description: intl.formatMessage({ id: "visualization.ErrorDescriptionNotFound" }),
