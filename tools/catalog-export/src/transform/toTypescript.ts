@@ -20,7 +20,7 @@ export type TypescriptOutput = {
 // Constants
 //
 
-const FILE_DIRECTIVES = ["/* eslint-disable header/header */"];
+const FILE_DIRECTIVES = ["/* eslint-disable */"];
 const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 const INSIGHT_MAP_VARNAME = "Insights";
 const FACT_AGGREGATIONS = ["sum", "count", "avg", "min", "max", "median", "runsum"];
