@@ -815,7 +815,7 @@ export interface IMeasureTitle {
 export interface IMeasureValueFilter {
     // (undocumented)
     measureValueFilter: {
-        measure: UriRef | LocalIdRef;
+        measure: ObjRefInScope;
         condition?: MeasureValueFilterCondition;
     };
 }
