@@ -1,7 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual";
-import { IAnalyticalBackend, IElementQueryOptions, IElementQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IElementQueryOptions,
+    IElementQueryResult,
+    IElementQueryAttributeFilter,
+} from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { defaultErrorHandler, OnError, withContexts } from "@gooddata/sdk-ui";
 
@@ -53,6 +58,11 @@ export interface IAttributeElementsProps {
      */
     onError?: OnError;
 
+    /**
+     * Optionally specify filters that restrict the elements.
+     */
+    filters?: IElementQueryAttributeFilter[];
+
     children?(props: IAttributeElementsChildren): React.ReactNode;
 }
 
@@ -75,6 +85,8 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
         error: null,
     };
 
+    private attributeObjRef: ObjRef | null;
+
     private getBackend = () => {
         return this.props.backend.withTelemetry("AttributeElements", this.props);
     };
@@ -90,6 +102,7 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
             !isEqual(this.props.options, prevProps.options);
 
         if (needsInvalidation) {
+            this.attributeObjRef = null;
             this.getValidElements();
         }
     }
@@ -120,25 +133,47 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
     };
 
     public getValidElements = async () => {
-        const { workspace, options, displayForm, offset, limit } = this.props;
+        const { workspace, options, displayForm, offset, limit, filters } = this.props;
 
         this.setState({ isLoading: true, error: null });
 
         try {
-            const elements = await this.getBackend()
+            const attributeRef = filters?.length ? await this.getAttributeRef() : null;
+
+            let loader = this.getBackend()
                 .workspace(workspace)
                 .elements()
                 .forDisplayForm(displayForm)
                 .withOffset(offset || 0)
                 .withLimit(limit || 50)
-                .withOptions(options)
-                .query();
+                .withOptions(options);
+
+            if (attributeRef) {
+                loader = loader.withAttributeFilters(attributeRef, filters);
+            }
+
+            const elements = await loader.query();
 
             this.setState({ validElements: elements, isLoading: false });
         } catch (error) {
             this.setState({ isLoading: false, error });
             this.props.onError(error);
         }
+    };
+
+    private getAttributeRef = async () => {
+        if (!this.attributeObjRef) {
+            const { workspace, displayForm } = this.props;
+
+            const displayFormData = await this.getBackend()
+                .workspace(workspace)
+                .metadata()
+                .getAttributeDisplayForm(displayForm);
+
+            this.attributeObjRef = displayFormData.attribute;
+        }
+
+        return this.attributeObjRef;
     };
 
     public render() {

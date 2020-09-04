@@ -115,10 +115,10 @@ export interface IElementQuery {
     /**
      * Sets the attribute filters that will limit the available elements
      *
-     * @param arrtibuteRef - corresponding attribute to the current display form (specified in forDisplayForm)
+     * @param attributeRef - corresponding attribute to the current display form (specified in forDisplayForm)
      * @param filters - attribute filters limiting the elements
      */
-    withAttributeFilters(arrtibuteRef: ObjRef, filters: IElementQueryAttributeFilter[]): IElementQuery;
+    withAttributeFilters(attributeRef: ObjRef, filters: IElementQueryAttributeFilter[]): IElementQuery;
 
     /**
      * Allows to specify advanced options for the elements query.

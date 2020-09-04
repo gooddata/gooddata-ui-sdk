@@ -12,6 +12,7 @@ import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-backend-spi';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeFilter } from '@gooddata/sdk-model';
+import { IElementQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IElementQueryOptions } from '@gooddata/sdk-backend-spi';
 import { IElementQueryResult } from '@gooddata/sdk-backend-spi';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
@@ -88,6 +89,7 @@ export interface IAttributeElementsProps {
     // (undocumented)
     children?(props: IAttributeElementsChildren): React_2.ReactNode;
     displayForm: ObjRef;
+    filters?: IElementQueryAttributeFilter[];
     limit?: number;
     offset?: number;
     onError?: OnError;
