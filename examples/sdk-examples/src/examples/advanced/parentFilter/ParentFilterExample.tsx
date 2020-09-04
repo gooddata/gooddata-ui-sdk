@@ -46,15 +46,15 @@ export class ParentFilterExample extends Component<unknown, IParentFilterExample
         cityFilterValues: [],
     };
 
-    public onStateChange = (stateFilterValues: IFilterValue[]): void => {
+    public onStateChange = (stateFilterValues: IFilterValue[] | null): void => {
         this.setState({
-            stateFilterValues,
+            stateFilterValues: stateFilterValues ?? [],
         });
     };
 
-    public onCityChange = (cityFilterValues: IFilterValue[]): void => {
+    public onCityChange = (cityFilterValues: IFilterValue[] | null): void => {
         this.setState({
-            cityFilterValues,
+            cityFilterValues: cityFilterValues ?? [],
         });
     };
 
