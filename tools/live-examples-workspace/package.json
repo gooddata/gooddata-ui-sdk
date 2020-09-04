@@ -16,7 +16,7 @@
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
-        "copy-data": "cp -R src/recordings/* dist/recordings && rm -f dist/recordings/index.ts dist/recordings/dataSample.ts",
+        "copy-data": "mkdir -p dist/recordings && cp -R src/recordings/* dist/recordings && rm -f dist/recordings/index.ts dist/recordings/dataSample.ts",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run copy-data",
         "test": "jest --watch",
         "test-once": "jest --passWithNoTests",
