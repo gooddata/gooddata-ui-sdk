@@ -12,7 +12,7 @@ import {
     RangeConditionOperator,
 } from "./index";
 import { attributeDisplayFormRef, IAttribute } from "../attribute";
-import { Identifier, isObjRef, LocalIdRef, ObjRef, UriRef } from "../../objRef";
+import { Identifier, isObjRef, LocalIdRef, ObjRef, ObjRefInScope } from "../../objRef";
 import { IMeasure, isMeasure, measureLocalId } from "../measure";
 import { idRef, localIdRef } from "../../objRef/factory";
 import { DateAttributeGranularity } from "../../base/dateGranularities";
@@ -156,7 +156,7 @@ export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDat
  * @public
  */
 export function newMeasureValueFilter(
-    measureOrRef: IMeasure | UriRef | LocalIdRef | string,
+    measureOrRef: IMeasure | ObjRefInScope | string,
     operator: ComparisonConditionOperator,
     value: number,
     treatNullValuesAs?: number,
@@ -175,7 +175,7 @@ export function newMeasureValueFilter(
  * @public
  */
 export function newMeasureValueFilter(
-    measureOrRef: IMeasure | UriRef | LocalIdRef | string,
+    measureOrRef: IMeasure | ObjRefInScope | LocalIdRef | string,
     operator: RangeConditionOperator,
     from: number,
     to: number,
@@ -195,13 +195,13 @@ export function newMeasureValueFilter(
  * @public
  */
 export function newMeasureValueFilter(
-    measureOrRef: IMeasure | UriRef | LocalIdRef | string,
+    measureOrRef: IMeasure | ObjRefInScope | string,
     operator: ComparisonConditionOperator | RangeConditionOperator,
     val1: number,
     val2OrTreatNullValuesAsInComparison?: number,
     treatNullValuesAsInRange?: number,
 ): IMeasureValueFilter {
-    const ref: UriRef | LocalIdRef = isMeasure(measureOrRef)
+    const ref: ObjRefInScope = isMeasure(measureOrRef)
         ? { localIdentifier: measureLocalId(measureOrRef) }
         : typeof measureOrRef === "string"
         ? localIdRef(measureOrRef)

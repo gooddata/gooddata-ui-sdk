@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
-import { LocalIdRef, ObjRef, ObjRefInScope, UriRef } from "../../objRef";
+import { ObjRef, ObjRefInScope } from "../../objRef";
 import { DateAttributeGranularity, AllTimeGranularity } from "../../base/dateGranularities";
 
 /**
@@ -191,7 +191,7 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
  */
 export interface IMeasureValueFilter {
     measureValueFilter: {
-        measure: UriRef | LocalIdRef; // keeping UriRef for the sake of legacy code
+        measure: ObjRefInScope;
         condition?: MeasureValueFilterCondition;
     };
 }
