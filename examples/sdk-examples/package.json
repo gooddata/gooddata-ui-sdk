@@ -22,7 +22,9 @@
         "@babel/preset-react": "^7.7.2",
         "@babel/preset-typescript": "^7.7.2",
         "@babel/runtime": "^7.7.2",
+        "@babel/cli": "^7.7.2",
         "@gooddata/catalog-export": "^8.0.0-beta.66",
+        "@babel/plugin-transform-typescript": "^7.7.2",
         "@gooddata/eslint-config": "^2.0.0",
         "@types/classnames": "2.2.3",
         "@types/react-dom": "^16.9.3",
@@ -118,6 +120,8 @@
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
+        "prepare?": "# Called before `npm publish` and on local `npm install`. Temporarily also for deleting obsolete node_modules. Ends with `true` to continue gracefully.",
+        "prepare": "cd server && npm install --frozen-lockfile && cd ..",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",
         "eslint": "eslint $npm_package_config_eslint",
@@ -126,8 +130,8 @@
         "validate-ci": "npm run eslint-ci && npm run prettier-check",
         "test": "jest --watch",
         "test-once": "jest",
-        "examples?": "# Default is developer domain, other options: yarn examples [sec,secure,stg,stg2,stg3,demo,developer or URL]",
-        "start": "npm run refresh-examplesjs && bash scripts/run-examples.sh",
+        "examples?": "# Default is developer domain, other options: npm run examples [sec,secure,stg,stg2,stg3,demo,developer or URL]",
+        "examples": "npm run refresh-examplesjs && bash scripts/run-examples.sh",
         "build": "npm run refresh-examplesjs && bash scripts/build-examples.sh",
         "examples-server": "node server/src/index.js",
         "examples-testcafe": "./scripts/run-testcafe.sh visual",
@@ -135,6 +139,6 @@
         "examples-testcafe-ci": "./scripts/run-testcafe.sh ci",
         "refresh-ldm": "./scripts/refresh-ldm.sh && npm run build",
         "refresh-examplesjs": "bash ./scripts/refresh-examplesJS.sh",
-        "heroku-postbuild": "npm run examples-build developer"
+        "heroku-postbuild": "npm run build developer"
     }
 }
