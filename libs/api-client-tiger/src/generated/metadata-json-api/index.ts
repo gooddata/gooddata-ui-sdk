@@ -1,4 +1,3 @@
-// (C) 2020 GoodData Corporation
 /* eslint-disable */
 /**
  * Metadata JSON:API
