@@ -38,6 +38,11 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
         description: intl.formatMessage({ id: "visualization.ErrorDescriptionDataTooLarge" }),
     };
 
+    const genericDescriptor: IErrorDescriptors["any"] = {
+        message: intl.formatMessage({ id: "visualization.ErrorMessageGeneric" }),
+        description: intl.formatMessage({ id: "visualization.ErrorDescriptionGeneric" }),
+    };
+
     return {
         [ErrorCodes.DATA_TOO_LARGE_TO_DISPLAY]: tooLargeDescriptor,
         [ErrorCodes.DATA_TOO_LARGE_TO_COMPUTE]: tooLargeDescriptor,
@@ -58,10 +63,8 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
             message: intl.formatMessage({ id: "visualization.ErrorDescriptionMissingMapboxToken" }),
             description: intl.formatMessage({ id: "visualization.ErrorDescriptionMissingMapboxToken" }),
         },
-        [ErrorCodes.UNKNOWN_ERROR]: {
-            message: intl.formatMessage({ id: "visualization.ErrorMessageGeneric" }),
-            description: intl.formatMessage({ id: "visualization.ErrorDescriptionGeneric" }),
-        },
+        [ErrorCodes.BAD_REQUEST]: genericDescriptor,
+        [ErrorCodes.UNKNOWN_ERROR]: genericDescriptor,
     };
 }
 
