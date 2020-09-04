@@ -85,8 +85,6 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
         error: null,
     };
 
-    private attributeObjRef: ObjRef | null;
-
     private getBackend = () => {
         return this.props.backend.withTelemetry("AttributeElements", this.props);
     };
@@ -102,7 +100,6 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
             !isEqual(this.props.options, prevProps.options);
 
         if (needsInvalidation) {
-            this.attributeObjRef = null;
             this.getValidElements();
         }
     }
@@ -138,8 +135,6 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
         this.setState({ isLoading: true, error: null });
 
         try {
-            const attributeRef = filters?.length ? await this.getAttributeRef() : null;
-
             let loader = this.getBackend()
                 .workspace(workspace)
                 .elements()
@@ -148,8 +143,8 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
                 .withLimit(limit || 50)
                 .withOptions(options);
 
-            if (attributeRef) {
-                loader = loader.withAttributeFilters(attributeRef, filters);
+            if (filters?.length) {
+                loader = loader.withAttributeFilters(filters);
             }
 
             const elements = await loader.query();
@@ -159,21 +154,6 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
             this.setState({ isLoading: false, error });
             this.props.onError(error);
         }
-    };
-
-    private getAttributeRef = async () => {
-        if (!this.attributeObjRef) {
-            const { workspace, displayForm } = this.props;
-
-            const displayFormData = await this.getBackend()
-                .workspace(workspace)
-                .metadata()
-                .getAttributeDisplayForm(displayForm);
-
-            this.attributeObjRef = displayFormData.attribute;
-        }
-
-        return this.attributeObjRef;
     };
 
     public render() {

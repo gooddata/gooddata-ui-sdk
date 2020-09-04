@@ -7,6 +7,7 @@ import {
     attributeIdentifier,
     attributeDisplayFormRef,
     ObjRef,
+    idRef,
 } from "@gooddata/sdk-model";
 import Select from "react-select";
 import { Ldm, LdmExt } from "../../../ldm";
@@ -102,7 +103,23 @@ export class ParentFilterExample extends Component<unknown, IParentFilterExample
         onChange: any,
     ): React.ReactNode => {
         return (
-            <AttributeElements key={key} displayForm={displayForm} options={options}>
+            <AttributeElements
+                key={key}
+                displayForm={displayForm}
+                options={options}
+                filters={
+                    key === "city" && this.state.stateFilterValues.length
+                        ? [
+                              {
+                                  attributeFilter: newPositiveAttributeFilter(Ldm.LocationState, {
+                                      uris: this.state.stateFilterValues.map((filter) => filter.value),
+                                  }),
+                                  overAttribute: idRef(LdmExt.locationIdAttributeIdentifier),
+                              },
+                          ]
+                        : undefined
+                }
+            >
                 {({ validElements, isLoading, error }) => {
                     if (error) {
                         // eslint-disable-next-line no-console
