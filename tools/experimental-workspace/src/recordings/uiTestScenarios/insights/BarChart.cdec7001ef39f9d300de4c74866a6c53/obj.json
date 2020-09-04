@@ -1,0 +1,51 @@
+{
+    "insight": {
+        "identifier": "BarChart.cdec7001ef39f9d300de4c74866a6c53",
+        "uri": "BarChart.cdec7001ef39f9d300de4c74866a6c53",
+        "visualizationUrl": "local:bar",
+        "title": "BarChart - first experimental scenario",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aaEGaXAEgB7U",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aaEGaXAEgB7U",
+                                        "type": "measure"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.restaurantlocation.locationname",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.restaurantlocation.locationname"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {}
+        }
+    }
+}

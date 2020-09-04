@@ -1,0 +1,40 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "$ Franchise Fees",
+                                    "format": "[>=0]$#,##0;[<0]-$#,##0",
+                                    "localIdentifier": "m_aaEGaXAEgB7U",
+                                    "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6685",
+                                    "identifier": "aaEGaXAEgB7U"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "name": "Location Name",
+                        "localIdentifier": "a_label.restaurantlocation.locationname",
+                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205",
+                        "identifier": "label.restaurantlocation.locationname",
+                        "formOf": {
+                            "name": "Location Name",
+                            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204",
+                            "identifier": "attr.restaurantlocation.locationname"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

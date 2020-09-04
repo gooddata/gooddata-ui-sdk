@@ -1,0 +1,87 @@
+[
+    {
+        "vis": "BarChart",
+        "scenario": "first experimental scenario",
+        "originalExecution": {
+            "workspace": "experimental-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aaEGaXAEgB7U",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aaEGaXAEgB7U",
+                                            "type": "measure"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.restaurantlocation.locationname",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.restaurantlocation.locationname"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "stack",
+                    "items": []
+                }
+            ],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.restaurantlocation.locationname",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.restaurantlocation.locationname"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_aaEGaXAEgB7U",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aaEGaXAEgB7U",
+                                    "type": "measure"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": ["a_label.restaurantlocation.locationname"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "a_label.restaurantlocation.locationname": "a_label.restaurantlocation.locationname",
+            "m_aaEGaXAEgB7U": "m_aaEGaXAEgB7U"
+        }
+    }
+]

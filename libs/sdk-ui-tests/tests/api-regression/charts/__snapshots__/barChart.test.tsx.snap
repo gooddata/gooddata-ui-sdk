@@ -4259,6 +4259,100 @@ Object {
 }
 `;
 
+exports[`BarChart with first experimental scenario should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.restaurantlocation.locationname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.restaurantlocation.locationname",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aaEGaXAEgB7U",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aaEGaXAEgB7U",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.restaurantlocation.locationname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.restaurantlocation.locationname",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.restaurantlocation.locationname",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aaEGaXAEgB7U",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aaEGaXAEgB7U",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "experimental-workspace",
+}
+`;
+
+exports[`BarChart with first experimental scenario should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+}
+`;
+
 exports[`BarChart with force disable drill on axes should create expected execution definition 1`] = `
 Object {
   "attributes": Array [

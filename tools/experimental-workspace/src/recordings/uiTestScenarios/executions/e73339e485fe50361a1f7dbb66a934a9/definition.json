@@ -1,0 +1,40 @@
+{
+    "workspace": "experimental-workspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.restaurantlocation.locationname",
+                    "type": "displayForm"
+                },
+                "localIdentifier": "a_label.restaurantlocation.locationname"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "m_aaEGaXAEgB7U",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aaEGaXAEgB7U",
+                            "type": "measure"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["a_label.restaurantlocation.locationname"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}
