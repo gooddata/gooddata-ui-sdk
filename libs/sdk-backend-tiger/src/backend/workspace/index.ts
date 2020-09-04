@@ -26,6 +26,7 @@ import { TigerWorkspaceMetadata } from "./metadata";
 import { TigerWorkspacePermissionsFactory } from "./permissions";
 import { TigerWorkspaceStyling } from "./styling";
 import { TigerWorkspaceInsights } from "./insights";
+import { TigerWorkspaceDashboards } from "./dashboards";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
@@ -52,7 +53,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public dashboards(): IWorkspaceDashboards {
-        throw new NotSupported("Not supported");
+        return new TigerWorkspaceDashboards(this.authCall, this.workspace);
     }
 
     public metadata(): IWorkspaceMetadata {
