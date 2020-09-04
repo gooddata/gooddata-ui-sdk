@@ -117,7 +117,7 @@
     "properties.legend.position.right": "derecha",
     "properties.legend.position.left": "izquierda",
     "properties.points.title": "Puntos",
-    "properties.points.groupNearbyPoints": "Grupo cerca de los puntos",
+    "properties.points.groupNearbyPoints": "Agrupar puntos cercanos",
     "properties.points.size.title": "Tamaño del punto",
     "properties.points.size.extra_small": "x 0,5",
     "properties.points.size.small": "x 0,75",
