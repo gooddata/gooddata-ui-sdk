@@ -12,4 +12,5 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames("experiments")
     .withDefaultWorkspaceType("experimental-workspace")
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
+    .withDefaultTestTypes("api") // << only api-level tests; no stories or visual regression
     .addScenario("with single measure and view by", BarChartWithSingleMeasureAndViewBy);
