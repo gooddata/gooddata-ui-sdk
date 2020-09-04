@@ -8,6 +8,6 @@ OUTPUT="${ROOTDIR}/src/ldm/full.ts"
 
 $EXPORTER \
   --hostname "staging3.intgdc.com" \
-  --project-id "mbuumy476p78ybcceiru61hcyr8i8lo8" \
+  --project-id "d79dpgty2b4ydewi6kbzqm4fq1be2ltm" \
   --accept-untrusted-ssl \
   --output "${OUTPUT}"

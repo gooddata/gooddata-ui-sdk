@@ -4,12 +4,12 @@ import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 
 export const BarChartWithSingleMeasureAndViewBy = {
-    measures: [ExperimentalLdm.$FranchiseFees],
-    viewBy: [ExperimentalLdm.LocationName.Default],
+    measures: [ExperimentalLdm.Amount],
+    viewBy: [ExperimentalLdm.Product.Name],
 };
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames("experiments")
     .withDefaultWorkspaceType("experimental-workspace")
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
-    .addScenario("first experimental scenario", BarChartWithSingleMeasureAndViewBy);
+    .addScenario("with single measure and view by", BarChartWithSingleMeasureAndViewBy);

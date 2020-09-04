@@ -1,20 +1,20 @@
 {
     "insight": {
-        "identifier": "BarChart.cdec7001ef39f9d300de4c74866a6c53",
-        "uri": "BarChart.cdec7001ef39f9d300de4c74866a6c53",
+        "identifier": "BarChart.564ea8165123e96acf75d9605248f694",
+        "uri": "BarChart.564ea8165123e96acf75d9605248f694",
         "visualizationUrl": "local:bar",
-        "title": "BarChart - first experimental scenario",
+        "title": "BarChart - with single measure and view by",
         "buckets": [
             {
                 "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aaEGaXAEgB7U",
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
-                                        "identifier": "aaEGaXAEgB7U",
+                                        "identifier": "aangOxLSeztu",
                                         "type": "measure"
                                     }
                                 }
@@ -29,10 +29,10 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.restaurantlocation.locationname",
+                                "identifier": "label.product.id.name",
                                 "type": "displayForm"
                             },
-                            "localIdentifier": "a_label.restaurantlocation.locationname"
+                            "localIdentifier": "a_label.product.id.name"
                         }
                     }
                 ]
