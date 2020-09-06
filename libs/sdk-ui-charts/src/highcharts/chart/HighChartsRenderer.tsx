@@ -249,10 +249,11 @@ export default class HighChartsRenderer extends React.PureComponent<
             type = VisualizationTypes.PIE;
         }
 
-        const legendProps = {
+        const legendProps: ILegendProps = {
             position: legend.position,
             responsive: legend.responsive,
-            chartType: type,
+            enableBorderRadius: legend.enableBorderRadius,
+            seriesMapper: legend.seriesMapper,
             series: items,
             onItemClick: this.onLegendItemClick,
             legendItemsEnabled: this.state.legendItemsEnabled,

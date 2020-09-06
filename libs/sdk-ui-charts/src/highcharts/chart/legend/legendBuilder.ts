@@ -4,6 +4,7 @@ import set from "lodash/set";
 import get from "lodash/get";
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import {
+    isAreaChart,
     isBubbleChart,
     isComboChart,
     isHeatmap,
@@ -16,7 +17,12 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { isStackedChart } from "./helpers";
 import { supportedDualAxesChartTypes } from "../chartCapabilities";
 import { IChartOptions } from "../../typings/unsafe";
-import { LegendOptionsItemType, ILegendOptions, DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
+import {
+    LegendOptionsItemType,
+    ILegendOptions,
+    DEFAULT_LEGEND_CONFIG,
+    ItemBorderRadiusPredicate,
+} from "@gooddata/sdk-ui-vis-commons";
 
 function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;
@@ -154,5 +160,33 @@ export default function buildLegendOptions(
         toggleEnabled: isLegendEnabled,
         format: get(chartOptions, "title.format", ""),
         items: getLegendItems(chartOptions),
+        enableBorderRadius: createItemBorderRadiusPredicate(chartOptions.type),
     };
+}
+
+/**
+ * Given chart type, this creates predicate to turn legend item border radius on or off. The border
+ * radius is set to make legend item indicators appear as circles instead of squares.
+ *
+ * The predicate is crafted so that line and area charts have indicators as circles. This also stands for
+ * combo chart - line or area items within combo must use circles.
+ *
+ * @param chartType - top-level chart type (combo chart will have legend items of different types)
+ */
+function createItemBorderRadiusPredicate(chartType: string): boolean | ItemBorderRadiusPredicate {
+    if (isLineChart(chartType) || isAreaChart(chartType)) {
+        /*
+         * It is clear that all items are of same type and should have indicators as circles.
+         */
+        return true;
+    } else if (isComboChart(chartType)) {
+        /*
+         * For combo chart, determine item-by-item
+         */
+        return (item: any) => {
+            return isLineChart(item.type) || isAreaChart(item.type);
+        };
+    }
+
+    return false;
 }
