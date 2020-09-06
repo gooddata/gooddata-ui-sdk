@@ -13,7 +13,7 @@ import cx from "classnames";
 import { IChartConfig, OnLegendReady } from "../../interfaces";
 import Chart, { IChartProps } from "./Chart";
 import { TOP, LEFT, BOTTOM, RIGHT } from "./legend/PositionTypes";
-import { isPieOrDonutChart, isOneOfTypes } from "../utils/common";
+import { isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { alignChart } from "./highcharts/helpers";
@@ -257,6 +257,7 @@ export default class HighChartsRenderer extends React.PureComponent<
             series: items,
             onItemClick: this.onLegendItemClick,
             legendItemsEnabled: this.state.legendItemsEnabled,
+            heatmapLegend: isHeatmap(type),
             height,
             format,
             locale,
