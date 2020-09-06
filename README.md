@@ -43,7 +43,7 @@ the projects managed in the repository. After that run `rush build`.
 In case the pull brings in new projects or large bulk of changes, it is safer (albeit more time-consuming) to run
 `rush install && rush link --force && rush clean && rush rebuild`.
 
-> You can find more technical information in [contributor manual](./docs/contributing.md).
+> You can find more technical information in [contributor manual](./docs/contributing.md) and in [developer guide](./docs/sdk-dev.md).
 
 ## License
 
