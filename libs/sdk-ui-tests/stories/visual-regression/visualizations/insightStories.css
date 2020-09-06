@@ -69,3 +69,14 @@
     padding: 40px;
     margin: 10px;
 }
+
+/*
+ * container of size similar to dashboard container for widgets that occupy 4 cols
+ */
+.dashboard-like-4 {
+    width: 400px;
+    height: 362px;
+    border: 2px black solid;
+    padding: 40px;
+    margin: 10px;
+}
