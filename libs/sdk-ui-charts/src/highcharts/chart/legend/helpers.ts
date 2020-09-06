@@ -494,6 +494,12 @@ export function getComboChartSeries(series: any[]): any[] {
     ];
 }
 
+export function createDualAxesSeriesMapper(chartType: string) {
+    return (series: any[]): any[] => {
+        return transformToDualAxesSeries(series, chartType);
+    };
+}
+
 export function transformToDualAxesSeries(series: any[], chartType: string): any[] {
     const { itemsOnFirstAxis, itemsOnSecondAxis } = separateLegendItems(series);
 

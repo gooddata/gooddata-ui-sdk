@@ -14,7 +14,7 @@ import {
     isTreemap,
 } from "../../utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { isStackedChart } from "./helpers";
+import { isStackedChart, getComboChartSeries, createDualAxesSeriesMapper } from "./helpers";
 import { supportedDualAxesChartTypes } from "../chartCapabilities";
 import { IChartOptions } from "../../typings/unsafe";
 import {
@@ -161,6 +161,7 @@ export default function buildLegendOptions(
         format: get(chartOptions, "title.format", ""),
         items: getLegendItems(chartOptions),
         enableBorderRadius: createItemBorderRadiusPredicate(chartOptions.type),
+        seriesMapper: createSeriesMapper(chartOptions.type),
     };
 }
 
@@ -189,4 +190,23 @@ function createItemBorderRadiusPredicate(chartType: string): boolean | ItemBorde
     }
 
     return false;
+}
+
+/**
+ * Given chart type, this function creates a series mapper which will alter previously created legend
+ * items. This code was previously insight the legend implementation. It is extracted here to make legends
+ * visualization agnostic.
+ *
+ * The big question is - why is this mapper even needed, why not creating the legend items correctly the first time?
+ * It is likely that the code was glued-in while implementing combo and dual axes charts. Perhaps better way is to
+ * refactor the legend builders (which can be chart-specific) to create the legend items correctly.
+ *
+ * @param chartType
+ */
+function createSeriesMapper(chartType: string) {
+    if (isComboChart(chartType)) {
+        return getComboChartSeries;
+    }
+
+    return createDualAxesSeriesMapper(chartType);
 }
