@@ -286,6 +286,7 @@ export default class HighChartsRenderer extends React.PureComponent<
 
         const classes = cx(
             "viz-line-family-chart-wrap",
+            "s-viz-line-family-chart-wrap",
             legend.responsive ? "responsive-legend" : "non-responsive-legend",
             {
                 [`flex-direction-${this.getFlexDirection()}`]: true,
@@ -294,7 +295,7 @@ export default class HighChartsRenderer extends React.PureComponent<
         );
 
         const isLegendRenderedFirst: boolean =
-            legend.position === TOP || (legend.position === LEFT && !showFluidLegend);
+            legend.position === TOP || legend.position === LEFT || showFluidLegend;
 
         return (
             <div className={classes} ref={this.highchartsRendererRef}>

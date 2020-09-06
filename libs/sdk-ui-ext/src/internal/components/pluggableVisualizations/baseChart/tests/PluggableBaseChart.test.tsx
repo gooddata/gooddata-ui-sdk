@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
-import { BucketNames, VisualizationEnvironment, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
+import { BucketNames, DefaultLocale, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
 import { IBaseChartProps } from "@gooddata/sdk-ui-charts";
 import { PluggableBaseChart } from "../PluggableBaseChart";
 import * as testMocks from "../../../../tests/mocks/testMocks";
@@ -11,9 +11,9 @@ import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartC
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
+import { DASHBOARDS_ENVIRONMENT } from "../../../../constants/properties";
 
 describe("PluggableBaseChart", () => {
-    const dashboardEnvironment: VisualizationEnvironment = "dashboards";
     const noneEnvironment: VisualizationEnvironment = "none";
     const dummyLocale: ILocale = "en-US";
     const backend = dummyBackend();
@@ -121,72 +121,6 @@ describe("PluggableBaseChart", () => {
 
         expect(mockRenderFun).toHaveBeenCalledTimes(0);
         expect(onError).toHaveBeenCalled();
-    });
-
-    it("should render chart with height and right legend position when environment is dashboards", () => {
-        const mockRenderFun = jest.fn();
-        const props = { ...defaultProps, environment: dashboardEnvironment, renderFun: mockRenderFun };
-        const expectedHeight = 5;
-
-        const visualization = createComponent(props);
-        const options: IVisProps = {
-            dimensions: { height: expectedHeight },
-            locale: dummyLocale,
-            custom: {
-                stickyHeaderOffset: 3,
-            },
-        };
-
-        visualization.update(
-            options,
-            testMocks.insightWithSingleMeasureAndViewBy,
-            emptyPropertiesMeta,
-            executionFactory,
-        );
-
-        const renderCallsCount = mockRenderFun.mock.calls.length;
-        expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
-
-        const renderProps: IBaseChartProps = (mockRenderFun.mock.calls[renderCallsCount - 1][0] as any)
-            .props as IBaseChartProps;
-        expect(renderProps.config.legend.position).toEqual("right");
-        expect(renderProps.height).toEqual(5);
-    });
-
-    it("should render chart with legend on right when it is auto positioned and environment is dashboards", () => {
-        const mockRenderFun = jest.fn();
-        const props = { ...defaultProps, environment: dashboardEnvironment, renderFun: mockRenderFun };
-        const expectedHeight = 5;
-
-        const visualization = createComponent(props);
-        const options: IVisProps = {
-            dimensions: { height: expectedHeight },
-            locale: dummyLocale,
-            custom: {
-                stickyHeaderOffset: 3,
-            },
-        };
-
-        const visualizationProperties = {
-            controls: {
-                legend: {
-                    position: "auto",
-                },
-            },
-        };
-        const testInsight = insightSetProperties(
-            testMocks.insightWithSingleMeasureAndViewBy,
-            visualizationProperties,
-        );
-
-        visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
-
-        const renderCallsCount = mockRenderFun.mock.calls.length;
-        expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
-
-        const renderProps: IBaseChartProps = (mockRenderFun.mock.calls[renderCallsCount - 1][0] as any)
-            .props as IBaseChartProps;
-        expect(renderProps.config.legend.position).toEqual("right");
     });
 
     it("should render chart with legend on right when it is auto positioned and visualization is stacked", () => {
@@ -764,5 +698,53 @@ describe("PluggableBaseChart", () => {
 
             expect(extendedReferencePoint.uiConfig.supportedOverTimeComparisonTypes).toEqual([]);
         });
+    });
+
+    describe("legend position", () => {
+        it.each([
+            ["auto", 1000, "auto"],
+            ["right", 1000, "right"],
+            ["auto", 600, "top"],
+            ["right", 600, "right"],
+            ["auto", 400, "top"],
+            ["right", 400, "top"],
+        ])(
+            "should set legend position to %s when width is %s",
+            (desiredPosition: string, width: number, expectedPosition: string) => {
+                const mockRenderFun = jest.fn();
+                const props = {
+                    ...defaultProps,
+                    environment: DASHBOARDS_ENVIRONMENT,
+                    renderFun: mockRenderFun,
+                };
+
+                const visualization = createComponent(props);
+                const options: IVisProps = {
+                    dimensions: { height: 5, width },
+                    locale: dummyLocale,
+                    custom: {
+                        stickyHeaderOffset: 3,
+                    },
+                };
+
+                const visualizationProperties = {
+                    controls: {
+                        legend: {
+                            position: desiredPosition,
+                        },
+                    },
+                };
+                const insightWithProperties = insightSetProperties(
+                    testMocks.insightWithSingleMeasureAndStack,
+                    visualizationProperties,
+                );
+                visualization.update(options, insightWithProperties, {}, executionFactory);
+
+                const renderCallsCount = mockRenderFun.mock.calls.length;
+                expect(
+                    (mockRenderFun.mock.calls[renderCallsCount - 1][0] as any).props.config.legend.position,
+                ).toEqual(expectedPosition);
+            },
+        );
     });
 });
