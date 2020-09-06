@@ -9,6 +9,7 @@ import { FluidLegend } from "./FluidLegend";
 import { StaticLegend } from "./StaticLegend";
 import { HeatmapLegend } from "./HeatmapLegend";
 import { IntlWrapper, IntlTranslationsProvider, ITranslationsComponentProps } from "@gooddata/sdk-ui";
+import { ItemBorderRadiusPredicate } from "./types";
 
 /**
  * @internal
@@ -24,7 +25,7 @@ export interface ILegendProps {
     format?: string;
     locale?: string;
     showFluidLegend?: boolean;
-    enableBorderRadius?: boolean;
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     onItemClick(item: any): void;
     validateOverHeight(legendClient: Rect): void;
 }

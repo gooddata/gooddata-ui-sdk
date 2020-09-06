@@ -182,7 +182,7 @@ export interface IFluidLegendProps {
     // (undocumented)
     containerWidth: number;
     // (undocumented)
-    enableBorderRadius?: boolean;
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     // (undocumented)
     onItemClick?(item: IPushpinCategoryLegendItem): void;
     // (undocumented)
@@ -242,7 +242,7 @@ export interface ILegendOptions {
 // @internal (undocumented)
 export interface ILegendProps {
     // (undocumented)
-    enableBorderRadius?: boolean;
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     // (undocumented)
     format?: string;
     // (undocumented)
@@ -324,6 +324,9 @@ export interface IStaticLegendProps {
 
 // @internal (undocumented)
 export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalette): boolean;
+
+// @internal (undocumented)
+export type ItemBorderRadiusPredicate = (item: any) => boolean;
 
 // @internal (undocumented)
 export class Legend extends React_2.PureComponent<ILegendProps> {

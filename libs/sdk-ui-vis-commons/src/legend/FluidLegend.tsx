@@ -4,7 +4,7 @@ import cx from "classnames";
 import noop from "lodash/noop";
 import { LegendList } from "./LegendList";
 import { calculateFluidLegend } from "./helpers";
-import { IPushpinCategoryLegendItem } from "./types";
+import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types";
 
 /**
  * @internal
@@ -12,7 +12,7 @@ import { IPushpinCategoryLegendItem } from "./types";
 export interface IFluidLegendProps {
     containerWidth: number;
     series: IPushpinCategoryLegendItem[];
-    enableBorderRadius?: boolean;
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     onItemClick?(item: IPushpinCategoryLegendItem): void;
 }
 
