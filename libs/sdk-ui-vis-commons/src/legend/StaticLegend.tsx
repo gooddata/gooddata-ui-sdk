@@ -6,7 +6,7 @@ import { LegendList } from "./LegendList";
 import { Paging } from "./Paging";
 import { BOTTOM, TOP } from "./PositionTypes";
 import { calculateStaticLegend, ITEM_HEIGHT } from "./helpers";
-import { IPushpinCategoryLegendItem } from "./types";
+import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types";
 
 /**
  * @internal
@@ -15,7 +15,7 @@ export interface IStaticLegendProps {
     containerHeight: number;
     position: string;
     series: IPushpinCategoryLegendItem[];
-    enableBorderRadius?: boolean;
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     shouldFillAvailableSpace?: boolean;
     onItemClick?(item: IPushpinCategoryLegendItem): void;
 }

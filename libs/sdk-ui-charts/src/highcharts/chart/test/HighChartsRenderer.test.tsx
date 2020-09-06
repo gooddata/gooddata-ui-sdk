@@ -8,9 +8,9 @@ import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import HighChartsRenderer, { FLUID_LEGEND_THRESHOLD } from "../HighChartsRenderer";
 import { getHighchartsOptions } from "../highChartsCreators";
 import Chart from "../Chart";
-import Legend from "../legend/Legend";
 import { TOP, BOTTOM, LEFT, RIGHT } from "../legend/PositionTypes";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
+import { Legend } from "@gooddata/sdk-ui-vis-commons";
 
 function createComponent(customProps: any = {}) {
     const chartOptions = {

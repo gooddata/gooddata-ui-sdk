@@ -26,6 +26,8 @@ export interface ILegendOptions {
     format: string;
     items: LegendOptionsItemType[];
     responsive?: boolean;
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
+    seriesMapper?: (visibleSeries: any) => any;
 }
 
 /**

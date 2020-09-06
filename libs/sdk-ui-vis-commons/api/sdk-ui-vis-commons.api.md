@@ -226,6 +226,8 @@ export interface IHeatmapLegendProps {
 // @internal (undocumented)
 export interface ILegendOptions {
     // (undocumented)
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
+    // (undocumented)
     enabled: boolean;
     // (undocumented)
     format: string;
@@ -235,6 +237,8 @@ export interface ILegendOptions {
     position: PositionType;
     // (undocumented)
     responsive?: boolean;
+    // (undocumented)
+    seriesMapper?: (visibleSeries: any) => any;
     // (undocumented)
     toggleEnabled: boolean;
 }
@@ -311,7 +315,7 @@ export interface IStaticLegendProps {
     // (undocumented)
     containerHeight: number;
     // (undocumented)
-    enableBorderRadius?: boolean;
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     // (undocumented)
     onItemClick?(item: IPushpinCategoryLegendItem): void;
     // (undocumented)

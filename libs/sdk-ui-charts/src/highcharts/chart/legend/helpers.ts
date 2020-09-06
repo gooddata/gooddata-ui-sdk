@@ -6,12 +6,12 @@ import last from "lodash/last";
 import isEmpty from "lodash/isEmpty";
 import inRange from "lodash/inRange";
 
-import { IHeatmapLegendItem } from "../../typings/legend";
 import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";
 import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from "../../utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { supportedDualAxesChartTypes } from "../chartCapabilities";
 import { ISeriesItem, IChartOptions } from "../../typings/unsafe";
+import { IHeatmapLegendItem } from "@gooddata/sdk-ui-vis-commons";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;

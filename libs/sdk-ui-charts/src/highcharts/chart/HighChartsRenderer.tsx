@@ -11,14 +11,13 @@ import throttle from "lodash/throttle";
 import isNil from "lodash/isNil";
 import cx from "classnames";
 import { IChartConfig, OnLegendReady } from "../../interfaces";
-import { ILegendOptions } from "../typings/legend";
 import Chart, { IChartProps } from "./Chart";
-import Legend, { ILegendProps } from "./legend/Legend";
 import { TOP, LEFT, BOTTOM, RIGHT } from "./legend/PositionTypes";
 import { isPieOrDonutChart, isOneOfTypes } from "../utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { alignChart } from "./highcharts/helpers";
+import { ILegendProps, Legend, ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 
 /**
  * @internal

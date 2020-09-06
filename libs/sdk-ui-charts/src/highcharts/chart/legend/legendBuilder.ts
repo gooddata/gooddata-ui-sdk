@@ -13,10 +13,10 @@ import {
     isTreemap,
 } from "../../utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ILegendOptions, LegendOptionsItemType, DEFAULT_LEGEND_CONFIG } from "../../typings/legend";
 import { isStackedChart } from "./helpers";
 import { supportedDualAxesChartTypes } from "../chartCapabilities";
 import { IChartOptions } from "../../typings/unsafe";
+import { LegendOptionsItemType, ILegendOptions, DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
 
 function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;
@@ -109,7 +109,10 @@ export function getLegendItems(chartOptions: IChartOptions): LegendOptionsItemTy
         .map((legendDataSourceItem: any) => pick(legendDataSourceItem, pickedProps));
 }
 
-export default function getLegend(legendConfig: any = {}, chartOptions: IChartOptions): ILegendOptions {
+export default function buildLegendOptions(
+    legendConfig: any = {},
+    chartOptions: IChartOptions,
+): ILegendOptions {
     const defaultLegendConfigByType = {};
     const rightLegendCharts = [
         VisualizationTypes.SCATTER,
