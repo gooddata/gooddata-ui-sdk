@@ -83,6 +83,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/experimental-workspace",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/goodstrap",
       "allowedCategories": [ "examples", "production" ]
     },

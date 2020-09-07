@@ -301,6 +301,13 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/experimental-workspace",
+            "projectFolder": "tools/experimental-workspace",
+            "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/util",
             "projectFolder": "libs/util",
             "reviewCategory": "production",

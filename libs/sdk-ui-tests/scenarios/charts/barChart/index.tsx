@@ -4,7 +4,8 @@ import axisCustomization from "./axisCustomization";
 import base from "./base";
 import coloring from "./coloring";
 import customization from "./customization";
-import drilling from "./stacking";
-import stacking from "./drilling";
+import stacking from "./stacking";
+import drilling from "./drilling";
+import experimental from "./experimental";
 
-export default [base, ...axisCustomization, ...coloring, ...customization, drilling, stacking];
+export default [base, ...axisCustomization, ...coloring, ...customization, drilling, stacking, experimental];
