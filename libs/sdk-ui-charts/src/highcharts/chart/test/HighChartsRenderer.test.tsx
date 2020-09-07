@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow, mount, ShallowWrapper } from "enzyme";
 import noop from "lodash/noop";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -8,9 +8,9 @@ import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import HighChartsRenderer, { FLUID_LEGEND_THRESHOLD } from "../HighChartsRenderer";
 import { getHighchartsOptions } from "../highChartsCreators";
 import Chart from "../Chart";
-import Legend from "../legend/Legend";
 import { TOP, BOTTOM, LEFT, RIGHT } from "../legend/PositionTypes";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
+import { Legend } from "@gooddata/sdk-ui-vis-commons";
 
 function createComponent(customProps: any = {}) {
     const chartOptions = {
@@ -446,5 +446,51 @@ describe("HighChartsRenderer", () => {
             expect(legendItemsEnabledState).toEqual([true]);
             expect(updatedLegendItemsEnabledState).toEqual([false]);
         });
+    });
+
+    describe("legend position", () => {
+        const getlegendOnPosition = (position: string) => ({
+            enabled: true,
+            items: [
+                {
+                    legendIndex: 0,
+                    name: "test",
+                    color: "rgb(0, 0, 0)",
+                },
+            ],
+            position,
+            onItemClick: noop,
+        });
+
+        const getDocumentMock = (clientWidth: number) => ({
+            ...document,
+            ...{ documentElement: { clientWidth } },
+        });
+
+        it.each([
+            ["before", 1000, TOP],
+            ["before", 1000, LEFT],
+            ["before", 500, BOTTOM],
+            ["after", 1000, BOTTOM],
+            ["after", 1000, RIGHT],
+        ])(
+            "should render legend %s the chart",
+            (position: string, clientWidth: number, legendPosition: string) => {
+                const wrapper: ShallowWrapper = shallow(
+                    createComponent({
+                        legend: getlegendOnPosition(legendPosition),
+                        documentObj: getDocumentMock(clientWidth),
+                    }),
+                );
+
+                const legendChildPosition = position === "before" ? 0 : 1;
+
+                const legendIsRenderedFirst = wrapper
+                    .find(".s-viz-line-family-chart-wrap")
+                    .childAt(legendChildPosition)
+                    .is(Legend);
+                expect(legendIsRenderedFirst).toEqual(true);
+            },
+        );
     });
 });

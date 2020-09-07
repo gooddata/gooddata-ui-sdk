@@ -61,6 +61,7 @@ export {
     IPushpinCategoryLegendItem,
     IRange,
     LegendOptionsItemType,
+    ItemBorderRadiusPredicate,
 } from "./legend/types";
 
 export { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems";

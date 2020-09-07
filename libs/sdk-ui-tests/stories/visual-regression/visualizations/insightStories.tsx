@@ -158,6 +158,10 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
     const visClass = createVisualizationClass(insight);
     const gdcConfig = createGdcConfig(backend, testScenario);
 
+    /*
+     * Note: for KD rendering the story passes width&height explicitly. this is to emulate plug vis behavior where
+     * context sets/determines both and sends them down.
+     */
     return () => {
         return withScreenshot(
             <ScreenshotReadyWrapper className="plugviz-report" resolver={ReportReadyResolver}>
@@ -189,6 +193,8 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             projectId={testScenario.workspaceType}
                             environment="dashboards"
                             insight={insight}
+                            width={1362}
+                            height={362}
                             visualizationClass={visClass}
                             visualizationCatalog={FullVisualizationCatalog}
                             onError={action("onError")}
@@ -207,6 +213,28 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             projectId={testScenario.workspaceType}
                             environment="dashboards"
                             insight={insight}
+                            width={665}
+                            height={362}
+                            visualizationClass={visClass}
+                            visualizationCatalog={FullVisualizationCatalog}
+                            onError={action("onError")}
+                            pushData={action("pushData")}
+                            onLoadingChanged={action("onLoadingChanged")}
+                            configPanelClassName={DoNotRenderConfigPanel}
+                            featureFlags={settings}
+                            config={gdcConfig}
+                        />
+                    </div>
+
+                    <div className="dashboard-like-4">
+                        KD third size
+                        <BaseVisualization
+                            backend={backend}
+                            projectId={testScenario.workspaceType}
+                            environment="dashboards"
+                            insight={insight}
+                            width={400}
+                            height={362}
                             visualizationClass={visClass}
                             visualizationCatalog={FullVisualizationCatalog}
                             onError={action("onError")}

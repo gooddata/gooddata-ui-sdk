@@ -26,6 +26,8 @@ export interface ILegendOptions {
     format: string;
     items: LegendOptionsItemType[];
     responsive?: boolean;
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
+    seriesMapper?: (visibleSeries: any) => any;
 }
 
 /**
@@ -101,3 +103,8 @@ export interface IPushpinCategoryLegendItem {
  * @internal
  */
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
+
+/**
+ * @internal
+ */
+export type ItemBorderRadiusPredicate = (item: any) => boolean;

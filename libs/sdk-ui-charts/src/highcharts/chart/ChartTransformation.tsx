@@ -10,7 +10,6 @@ import {
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import { IChartConfig, OnLegendReady } from "../../interfaces";
-import { ILegendOptions } from "../typings/legend";
 import { getChartOptions, validateData } from "./chartOptionsBuilder";
 import { getHighchartsOptions } from "./highChartsCreators";
 import HighChartsRenderer, {
@@ -18,10 +17,11 @@ import HighChartsRenderer, {
     renderChart as chartRenderer,
     renderLegend as legendRenderer,
 } from "./HighChartsRenderer";
-import getLegend from "./legend/legendBuilder";
+import buildLegendOptions from "./legend/legendBuilder";
 import noop from "lodash/noop";
 import { IChartOptions } from "../typings/unsafe";
 import { WrappedComponentProps, injectIntl } from "react-intl";
+import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 
 export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     return <HighChartsRenderer {...props} />;
@@ -125,7 +125,7 @@ class ChartTransformation extends React.Component<IChartTransformationProps, ICh
             onNegativeValues(this.chartOptions);
         }
 
-        this.legendOptions = getLegend(config.legend, this.chartOptions);
+        this.legendOptions = buildLegendOptions(config.legend, this.chartOptions);
 
         pushData({
             propertiesMeta: {

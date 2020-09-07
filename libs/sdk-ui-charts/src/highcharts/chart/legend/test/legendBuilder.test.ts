@@ -1,12 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
 import { generateChartOptions } from "../../test/helper";
 
-import getLegend, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder";
-import { DEFAULT_LEGEND_CONFIG } from "../../../typings/legend";
+import buildLegendOptions, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
 
 const rec = recordedDataFacade;
 
@@ -239,10 +239,10 @@ describe("getLegendItems", () => {
 
 describe("getLegend", () => {
     const chartOptions = generateChartOptions(rec(ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures));
-    const legend = getLegend({}, chartOptions);
+    const legend = buildLegendOptions({}, chartOptions);
 
     it("should assign enabled: false if disabled by config", () => {
-        const disabledLegend = getLegend({ enabled: false }, chartOptions);
+        const disabledLegend = buildLegendOptions({ enabled: false }, chartOptions);
         expect(disabledLegend.enabled).toBe(false);
     });
 
@@ -255,7 +255,7 @@ describe("getLegend", () => {
     });
 
     it("should be able to override default position", () => {
-        const legendWithCustomPosition = getLegend({ position: "left" }, chartOptions);
+        const legendWithCustomPosition = buildLegendOptions({ position: "left" }, chartOptions);
         expect(legendWithCustomPosition.position).toBe("left");
     });
 

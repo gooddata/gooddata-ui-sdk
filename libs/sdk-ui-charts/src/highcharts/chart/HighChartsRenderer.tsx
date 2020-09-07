@@ -11,14 +11,13 @@ import throttle from "lodash/throttle";
 import isNil from "lodash/isNil";
 import cx from "classnames";
 import { IChartConfig, OnLegendReady } from "../../interfaces";
-import { ILegendOptions } from "../typings/legend";
 import Chart, { IChartProps } from "./Chart";
-import Legend, { ILegendProps } from "./legend/Legend";
 import { TOP, LEFT, BOTTOM, RIGHT } from "./legend/PositionTypes";
-import { isPieOrDonutChart, isOneOfTypes } from "../utils/common";
+import { isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { alignChart } from "./highcharts/helpers";
+import { ILegendProps, Legend, ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 
 /**
  * @internal
@@ -250,13 +249,15 @@ export default class HighChartsRenderer extends React.PureComponent<
             type = VisualizationTypes.PIE;
         }
 
-        const legendProps = {
+        const legendProps: ILegendProps = {
             position: legend.position,
             responsive: legend.responsive,
-            chartType: type,
+            enableBorderRadius: legend.enableBorderRadius,
+            seriesMapper: legend.seriesMapper,
             series: items,
             onItemClick: this.onLegendItemClick,
             legendItemsEnabled: this.state.legendItemsEnabled,
+            heatmapLegend: isHeatmap(type),
             height,
             format,
             locale,
@@ -285,6 +286,7 @@ export default class HighChartsRenderer extends React.PureComponent<
 
         const classes = cx(
             "viz-line-family-chart-wrap",
+            "s-viz-line-family-chart-wrap",
             legend.responsive ? "responsive-legend" : "non-responsive-legend",
             {
                 [`flex-direction-${this.getFlexDirection()}`]: true,
@@ -293,7 +295,7 @@ export default class HighChartsRenderer extends React.PureComponent<
         );
 
         const isLegendRenderedFirst: boolean =
-            legend.position === TOP || (legend.position === LEFT && !showFluidLegend);
+            legend.position === TOP || legend.position === LEFT || showFluidLegend;
 
         return (
             <div className={classes} ref={this.highchartsRendererRef}>

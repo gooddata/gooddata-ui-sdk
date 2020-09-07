@@ -216,7 +216,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
         const { drillableItems } = custom;
-        const supportedControls: IVisualizationProperties = this.getSupportedControls(insight);
+        const supportedControls: IVisualizationProperties = this.getSupportedControls(insight, options);
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
         const fullConfig = this.buildVisualizationConfig(options, configSupportedControls);
 
@@ -374,7 +374,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         };
     }
 
-    private getSupportedControls(insight: IInsightDefinition) {
+    private getSupportedControls(insight: IInsightDefinition, options: IVisProps) {
         let supportedControls = cloneDeep(get(this.visualizationProperties, "controls", {}));
         const defaultControls = getSupportedPropertiesControls(
             this.defaultControlsProperties,
@@ -385,7 +385,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.supportedPropertiesList,
         );
 
-        const legendPosition = this.getLegendPosition(supportedControls, insight);
+        const legendPosition = this.getLegendPosition(supportedControls, insight, options);
 
         // Set legend position by bucket items and environment
         set(supportedControls, "legend.position", legendPosition);
@@ -405,18 +405,19 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         };
     }
 
-    private getLegendPosition(controlProperties: IVisualizationProperties, insight: IInsightDefinition) {
+    private getLegendPosition(
+        controlProperties: IVisualizationProperties,
+        insight: IInsightDefinition,
+        options: IVisProps,
+    ) {
         const legendPosition = get(controlProperties, "legend.position", "auto");
+        const width = options.dimensions.width;
 
-        if (legendPosition === "auto") {
-            // Legend has right position always on dashboards or if report is stacked
-            if (this.type === "heatmap") {
-                return this.environment === DASHBOARDS_ENVIRONMENT ? "right" : "top";
-            }
-            return isStacked(insight) || this.environment === DASHBOARDS_ENVIRONMENT ? "right" : "auto";
+        if (this.environment === DASHBOARDS_ENVIRONMENT) {
+            return width <= getMaxWidthForCollapsedLegend(legendPosition) ? "top" : legendPosition;
         }
 
-        return legendPosition;
+        return legendPosition === "auto" && isStacked(insight) ? "right" : legendPosition;
     }
 }
 
@@ -439,4 +440,11 @@ function canSortStackTotalValue(
     const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
 
     return stackMeasures && allMeasuresOnSingleAxis;
+}
+
+export const MAX_WIDTH_FOR_COLLAPSED_LEGEND = 440;
+export const MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND = 610;
+
+export function getMaxWidthForCollapsedLegend(legendPosition: string) {
+    return legendPosition === "auto" ? MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND : MAX_WIDTH_FOR_COLLAPSED_LEGEND;
 }

@@ -6,9 +6,10 @@ import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 
 import { FluidLegend } from "./FluidLegend";
-import { StaticLegend } from "./StaticLegend";
+import { StaticLegend, IStaticLegendProps } from "./StaticLegend";
 import { HeatmapLegend } from "./HeatmapLegend";
 import { IntlWrapper, IntlTranslationsProvider, ITranslationsComponentProps } from "@gooddata/sdk-ui";
+import { ItemBorderRadiusPredicate } from "./types";
 
 /**
  * @internal
@@ -24,7 +25,7 @@ export interface ILegendProps {
     format?: string;
     locale?: string;
     showFluidLegend?: boolean;
-    enableBorderRadius?: boolean;
+    enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     onItemClick(item: any): void;
     validateOverHeight(legendClient: Rect): void;
 }
@@ -91,17 +92,16 @@ export class Legend extends React.PureComponent<ILegendProps> {
     };
 
     public renderStatic = (): React.ReactNode => {
-        const { position, height, format, locale, responsive } = this.props;
+        const { position, height, enableBorderRadius } = this.props;
 
         const classNames = cx("viz-static-legend-wrap", `position-${position}`);
 
-        const props = {
+        const props: IStaticLegendProps = {
+            containerHeight: 0,
             series: this.getSeries(),
             onItemClick: this.onItemClick,
             position,
-            format,
-            locale,
-            responsive,
+            enableBorderRadius,
         };
 
         return (
