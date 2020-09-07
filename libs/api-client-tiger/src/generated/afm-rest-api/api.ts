@@ -1,4 +1,3 @@
-// (C) 2020 GoodData Corporation
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -30,7 +29,7 @@ const addFlattenedObjectTo = (object: any, target: any): void => {
 };
 
 /**
- *
+ * Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics.
  * @export
  * @interface AFM
  */
@@ -42,20 +41,20 @@ export interface AFM {
      */
     attributes: Array<AttributeItem>;
     /**
-     *
+     * Various filter types to filter execution result.
      * @type {Array<FilterDefinition>}
      * @memberof AFM
      */
     filters: Array<FilterDefinition>;
     /**
-     *
+     * Measures to be computed.
      * @type {Array<MeasureItem>}
      * @memberof AFM
      */
     measures: Array<MeasureItem>;
 }
 /**
- *
+ * A date filter specifying exact from and to dates.
  * @export
  * @interface AbsoluteDateFilter
  */
@@ -105,7 +104,7 @@ export interface AfmExecution {
      */
     execution: AFM;
     /**
-     *
+     * Id of the workspace where analytical request will be executed.
      * @type {string}
      * @memberof AfmExecution
      */
@@ -131,7 +130,7 @@ export interface AfmExecutionResponse {
     executionResponse: ExecutionResponse;
 }
 /**
- *
+ * Entity holding AFM and list of object types whose validity should be computed.
  * @export
  * @interface AfmValidObjectsQuery
  */
@@ -162,20 +161,20 @@ export enum AfmValidObjectsQueryTypesEnum {
 }
 
 /**
- *
+ * All objects of specified types valid with respect to given AFM.
  * @export
  * @interface AfmValidObjectsResponse
  */
 export interface AfmValidObjectsResponse {
     /**
      *
-     * @type {Array<string>}
+     * @type {Array<ObjectIdentifier>}
      * @memberof AfmValidObjectsResponse
      */
-    items: Array<string>;
+    items: Array<ObjectIdentifier>;
 }
 /**
- *
+ * Measure representing arithmetics between measures.
  * @export
  * @interface ArithmeticMeasureDefinition
  */
@@ -194,13 +193,13 @@ export interface ArithmeticMeasureDefinition {
  */
 export interface ArithmeticMeasureDefinitionArithmeticMeasure {
     /**
-     *
+     * List of measures to apply arithmetic operation by chosen operator.
      * @type {Array<LocalIdentifier>}
      * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
      */
     measureIdentifiers: Array<LocalIdentifier>;
     /**
-     *
+     * Arithmetic operator describing operation between measures.
      * @type {string}
      * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
      */
@@ -220,23 +219,80 @@ export enum ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum {
 }
 
 /**
+ *
+ * @export
+ * @interface AttributeExecutionResultHeader
+ */
+export interface AttributeExecutionResultHeader {
+    /**
+     *
+     * @type {AttributeResultHeader}
+     * @memberof AttributeExecutionResultHeader
+     */
+    attributeHeader: AttributeResultHeader;
+}
+/**
  * @type AttributeFilter
  * Abstract filter definition type attributes
  * @export
  */
 export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
 /**
- *
+ * Filter on specific set of label values.
  * @export
  * @interface AttributeFilterElements
  */
 export interface AttributeFilterElements {
     /**
-     *
+     * Set of label values.
      * @type {Array<string>}
      * @memberof AttributeFilterElements
      */
     values: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributeHeader
+ */
+export interface AttributeHeader {
+    /**
+     *
+     * @type {AttributeHeaderAttributeHeader}
+     * @memberof AttributeHeader
+     */
+    attributeHeader: AttributeHeaderAttributeHeader;
+}
+/**
+ *
+ * @export
+ * @interface AttributeHeaderAttributeHeader
+ */
+export interface AttributeHeaderAttributeHeader {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeHeaderAttributeHeader
+     */
+    identifier: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeHeaderAttributeHeader
+     */
+    localIdentifier: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeHeaderAttributeHeader
+     */
+    name: string;
+    /**
+     *
+     * @type {FormOf}
+     * @memberof AttributeHeaderAttributeHeader
+     */
+    formOf: FormOf;
 }
 /**
  *
@@ -256,15 +312,28 @@ export interface AttributeItem {
      * @memberof AttributeItem
      */
     displayForm: ObjectIdentifier;
-    /**
-     *
-     * @type {string}
-     * @memberof AttributeItem
-     */
-    alias?: string;
 }
 /**
- *
+ * Header containing the information related to attributes.
+ * @export
+ * @interface AttributeResultHeader
+ */
+export interface AttributeResultHeader {
+    /**
+     * A value of the current attribute label.
+     * @type {string}
+     * @memberof AttributeResultHeader
+     */
+    labelValue: string;
+    /**
+     * A value of the primary attribute label.
+     * @type {string}
+     * @memberof AttributeResultHeader
+     */
+    primaryLabelValue: string;
+}
+/**
+ * Filter the result by comparing specified measure to given constant value, using given comparison operator.
  * @export
  * @interface ComparisonMeasureValueFilter
  */
@@ -328,17 +397,80 @@ export enum ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum
  */
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 /**
- *
+ * Single dimension description.
  * @export
  * @interface Dimension
  */
 export interface Dimension {
     /**
-     *
+     * List of items in current dimension. Can reference \'localIdentifier\' from \'AttributeItem\', or special pseudo attribute \"measureGroup\" representing list of measures.
      * @type {Array<string>}
      * @memberof Dimension
      */
     itemIdentifiers: Array<string>;
+    /**
+     * Dimension identification within requests. Other entities can reference this dimension by this value.
+     * @type {string}
+     * @memberof Dimension
+     */
+    localIdentifier?: string;
+    /**
+     * List of sorting rules. From most relevant to least relevant (less relevant rule is applied, when more relevant rule compares items as equal).
+     * @type {Array<SortKeyAttribute | SortKeyValue>}
+     * @memberof Dimension
+     */
+    sorting?: Array<SortKeyAttribute | SortKeyValue>;
+}
+/**
+ * Contains the dimension-specific header information.
+ * @export
+ * @interface DimensionHeader
+ */
+export interface DimensionHeader {
+    /**
+     * An array containing header groups.
+     * @type {Array<HeaderGroup>}
+     * @memberof DimensionHeader
+     */
+    headerGroups: Array<HeaderGroup>;
+}
+/**
+ * Locator of data value in one dimension item.
+ * @export
+ * @interface DimensionItemValue
+ */
+export interface DimensionItemValue {
+    /**
+     * Dimension item reference - either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\".
+     * @type {string}
+     * @memberof DimensionItemValue
+     */
+    itemIdentifier: string;
+    /**
+     * Attribute value (in case of \'localIdentifier\' from \'AttributeItem\' in \'itemIdentifier\') or \'localIdentifier\' from \'MeasureItem\' (in case of \"measureGroup\" in \'itemIdentifier\').\'
+     * @type {string}
+     * @memberof DimensionItemValue
+     */
+    itemValue: string;
+}
+/**
+ * Locator of data value in one dimension
+ * @export
+ * @interface DimensionLocator
+ */
+export interface DimensionLocator {
+    /**
+     * Dimension \'localIdentifier\' reference.
+     * @type {string}
+     * @memberof DimensionLocator
+     */
+    dimensionIdentifier: string;
+    /**
+     * List specifying full location of a dimension tuple.
+     * @type {Array<DimensionItemValue>}
+     * @memberof DimensionLocator
+     */
+    locator: Array<DimensionItemValue>;
 }
 /**
  * List of returned elements.
@@ -360,17 +492,17 @@ export interface Element {
     title: string;
 }
 /**
- *
+ * Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging.
  * @export
  * @interface ElementsResponse
  */
 export interface ElementsResponse {
     /**
      *
-     * @type {string}
+     * @type {ObjectIdentifier}
      * @memberof ElementsResponse
      */
-    primaryLabel: string;
+    primaryLabel: ObjectIdentifier;
     /**
      * List of returned elements.
      * @type {Array<Element>}
@@ -389,6 +521,43 @@ export interface ElementsResponse {
      * @memberof ElementsResponse
      */
     totalCountWithoutFilters?: number;
+}
+/**
+ * Contains information about the error.
+ * @export
+ * @interface ErrorMessage
+ */
+export interface ErrorMessage {
+    /**
+     * Error timestamp in ISO 8601.
+     * @type {string}
+     * @memberof ErrorMessage
+     */
+    timestamp: string;
+    /**
+     * HTTP error response status code.
+     * @type {number}
+     * @memberof ErrorMessage
+     */
+    status: number;
+    /**
+     * HTTP error message like: Bad Request, Not Found, etc.
+     * @type {string}
+     * @memberof ErrorMessage
+     */
+    error: string;
+    /**
+     * Error message returned by the server application.
+     * @type {string}
+     * @memberof ErrorMessage
+     */
+    message: string;
+    /**
+     * Path of the failed request.
+     * @type {string}
+     * @memberof ErrorMessage
+     */
+    path: string;
 }
 /**
  *
@@ -423,6 +592,75 @@ export interface ExecutionResponse {
     links: ExecutionLinks;
 }
 /**
+ * Contains the result of an AFM execution.
+ * @export
+ * @interface ExecutionResult
+ */
+export interface ExecutionResult {
+    /**
+     * A multi-dimensional array of computed results. The most common one being a 2-dimensional array. The arrays can be composed of Double or null values.
+     * @type {Array<object>}
+     * @memberof ExecutionResult
+     */
+    data: Array<object>;
+    /**
+     * An array containing dimension headers. The size of the array corresponds to dimension size. Their order corresponds to the dimension order in the execution result spec.
+     * @type {Array<DimensionHeader>}
+     * @memberof ExecutionResult
+     */
+    dimensionHeaders: Array<DimensionHeader>;
+    /**
+     *
+     * @type {ExecutionResultPaging}
+     * @memberof ExecutionResult
+     */
+    paging: ExecutionResultPaging;
+}
+/**
+ * Abstract execution result header
+ * @export
+ * @interface ExecutionResultHeader
+ */
+export interface ExecutionResultHeader {
+    /**
+     *
+     * @type {AttributeResultHeader}
+     * @memberof ExecutionResultHeader
+     */
+    attributeHeader: AttributeResultHeader;
+    /**
+     *
+     * @type {MeasureResultHeader}
+     * @memberof ExecutionResultHeader
+     */
+    measureHeader: MeasureResultHeader;
+}
+/**
+ * A paging information related to the data presented in the execution result. These paging information are multi-dimensional.
+ * @export
+ * @interface ExecutionResultPaging
+ */
+export interface ExecutionResultPaging {
+    /**
+     * A count of the returned results in every dimension.
+     * @type {Array<number>}
+     * @memberof ExecutionResultPaging
+     */
+    count: Array<number>;
+    /**
+     * The offset of the results returned in every dimension.
+     * @type {Array<number>}
+     * @memberof ExecutionResultPaging
+     */
+    offset: Array<number>;
+    /**
+     * A total count of the results in every dimension.
+     * @type {Array<number>}
+     * @memberof ExecutionResultPaging
+     */
+    total: Array<number>;
+}
+/**
  * @type FilterDefinition
  * Abstract filter definition type
  * @export
@@ -430,10 +668,73 @@ export interface ExecutionResponse {
 export type FilterDefinition = AttributeFilter | DateFilter | InlineFilterDefinition | MeasureValueFilter;
 /**
  * @type FilterDefinitionForSimpleMeasure
- * Abstract filter definition type for simple measure
+ * Abstract filter definition type for simple measure.
  * @export
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
+/**
+ *
+ * @export
+ * @interface FormOf
+ */
+export interface FormOf {
+    /**
+     *
+     * @type {string}
+     * @memberof FormOf
+     */
+    identifier: string;
+    /**
+     *
+     * @type {string}
+     * @memberof FormOf
+     */
+    primaryLabelIdentifier: string;
+    /**
+     *
+     * @type {string}
+     * @memberof FormOf
+     */
+    name: string;
+    /**
+     *
+     * @type {string}
+     * @memberof FormOf
+     */
+    granularity?: FormOfGranularityEnum;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum FormOfGranularityEnum {
+    YEAR = "YEAR",
+    DAY = "DAY",
+    QUARTER = "QUARTER",
+    MONTH = "MONTH",
+    WEEK = "WEEK",
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    DAYOFYEAR = "DAY_OF_YEAR",
+    DAYOFWEEK = "DAY_OF_WEEK",
+    DAYOFMONTH = "DAY_OF_MONTH",
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+}
+
+/**
+ * Contains the information specific for a group of headers. These groups correlate to attributes and measure groups.
+ * @export
+ * @interface HeaderGroup
+ */
+export interface HeaderGroup {
+    /**
+     * An array containing headers.
+     * @type {Array<ExecutionResultHeader>}
+     * @memberof HeaderGroup
+     */
+    headers: Array<ExecutionResultHeader>;
+}
 /**
  * @type Identifier
  * Abstract identifier type
@@ -441,7 +742,7 @@ export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
  */
 export type Identifier = LocalIdentifier | ObjectIdentifier;
 /**
- *
+ * Filter in form of direct MAQL query.
  * @export
  * @interface InlineFilterDefinition
  */
@@ -467,7 +768,7 @@ export interface InlineFilterDefinitionInline {
     filter: string;
 }
 /**
- *
+ * Measure defined by the raw MAQL query.
  * @export
  * @interface InlineMeasureDefinition
  */
@@ -493,7 +794,7 @@ export interface InlineMeasureDefinitionInline {
     maql: string;
 }
 /**
- *
+ * String that uniquely identifies the measure in the context of the current AFM.
  * @export
  * @interface LocalIdentifier
  */
@@ -519,6 +820,77 @@ export type MeasureDefinition =
 /**
  *
  * @export
+ * @interface MeasureExecutionResultHeader
+ */
+export interface MeasureExecutionResultHeader {
+    /**
+     *
+     * @type {MeasureResultHeader}
+     * @memberof MeasureExecutionResultHeader
+     */
+    measureHeader: MeasureResultHeader;
+}
+/**
+ *
+ * @export
+ * @interface MeasureGroupHeader
+ */
+export interface MeasureGroupHeader {
+    /**
+     *
+     * @type {Array<MeasureGroupHeaderIn>}
+     * @memberof MeasureGroupHeader
+     */
+    measureGroupHeader: Array<MeasureGroupHeaderIn>;
+}
+/**
+ *
+ * @export
+ * @interface MeasureGroupHeaderIn
+ */
+export interface MeasureGroupHeaderIn {
+    /**
+     *
+     * @type {MeasureHeaderItem}
+     * @memberof MeasureGroupHeaderIn
+     */
+    items: MeasureHeaderItem;
+}
+/**
+ *
+ * @export
+ * @interface MeasureHeaderItem
+ */
+export interface MeasureHeaderItem {
+    /**
+     *
+     * @type {MeasureHeaderItemMeasureHeaderItem}
+     * @memberof MeasureHeaderItem
+     */
+    measureHeaderItem: MeasureHeaderItemMeasureHeaderItem;
+}
+/**
+ *
+ * @export
+ * @interface MeasureHeaderItemMeasureHeaderItem
+ */
+export interface MeasureHeaderItemMeasureHeaderItem {
+    /**
+     *
+     * @type {string}
+     * @memberof MeasureHeaderItemMeasureHeaderItem
+     */
+    localIdentifier: string;
+    /**
+     *
+     * @type {string}
+     * @memberof MeasureHeaderItemMeasureHeaderItem
+     */
+    format?: string;
+}
+/**
+ *
+ * @export
  * @interface MeasureItem
  */
 export interface MeasureItem {
@@ -534,27 +906,28 @@ export interface MeasureItem {
      * @memberof MeasureItem
      */
     definition: MeasureDefinition;
+}
+/**
+ * Header containing the information related to measures.
+ * @export
+ * @interface MeasureResultHeader
+ */
+export interface MeasureResultHeader {
     /**
-     *
-     * @type {string}
-     * @memberof MeasureItem
+     * Measure index. Starts at 0.
+     * @type {number}
+     * @memberof MeasureResultHeader
      */
-    alias?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof MeasureItem
-     */
-    format?: string;
+    measureIndex: number;
 }
 /**
  * @type MeasureValueFilter
- * Abstract filter definition type for measure values
+ * Abstract filter definition type filtering by the value of the measure.
  * @export
  */
 export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
 /**
- *
+ * Filter able to limit element values by displayForm and related selected negated elements.
  * @export
  * @interface NegativeAttributeFilter
  */
@@ -586,7 +959,7 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
     notIn: AttributeFilterElements;
 }
 /**
- *
+ * Identifier of LDM object determined by ID & type.
  * @export
  * @interface ObjectIdentifier
  */
@@ -668,7 +1041,7 @@ export interface PopDataset {
     periodsAgo: number;
 }
 /**
- *
+ * Previous period type of measure.
  * @export
  * @interface PopDatasetMeasureDefinition
  */
@@ -719,7 +1092,7 @@ export interface PopDate {
     periodsAgo: number;
 }
 /**
- *
+ * Period over period type of measure.
  * @export
  * @interface PopDateMeasureDefinition
  */
@@ -751,7 +1124,7 @@ export interface PopDateMeasureDefinitionOverPeriodMeasure {
     dateAttributes: Array<PopDate>;
 }
 /**
- *
+ * Filter able to limit element values by displayForm and related selected elements.
  * @export
  * @interface PositiveAttributeFilter
  */
@@ -783,7 +1156,7 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
     _in: AttributeFilterElements;
 }
 /**
- *
+ * Filter the result by comparing specified measure to given range of values.
  * @export
  * @interface RangeMeasureValueFilter
  */
@@ -856,7 +1229,7 @@ export interface RelativeDateFilter {
     relativeDateFilter: RelativeDateFilterRelativeDateFilter;
 }
 /**
- *
+ * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension.
  * @export
  * @interface RelativeDateFilterRelativeDateFilter
  */
@@ -868,19 +1241,19 @@ export interface RelativeDateFilterRelativeDateFilter {
      */
     dataset: ObjectIdentifier;
     /**
-     *
+     * Date granularity specifying particular date attribute in given dimension.
      * @type {string}
      * @memberof RelativeDateFilterRelativeDateFilter
      */
     granularity: string;
     /**
-     *
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      * @type {number}
      * @memberof RelativeDateFilterRelativeDateFilter
      */
     from: number;
     /**
-     *
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
      * @type {number}
      * @memberof RelativeDateFilterRelativeDateFilter
      */
@@ -894,13 +1267,13 @@ export interface RelativeDateFilterRelativeDateFilter {
 export interface ResultDimension {
     /**
      *
-     * @type {Array<object>}
+     * @type {Array<MeasureGroupHeader | AttributeHeader>}
      * @memberof ResultDimension
      */
-    headers: Array<object>;
+    headers: Array<MeasureGroupHeader | AttributeHeader>;
 }
 /**
- *
+ * Structure holding array of dimensions related to the request.
  * @export
  * @interface ResultSpec
  */
@@ -938,19 +1311,19 @@ export interface SimpleMeasureDefinitionMeasure {
      */
     item: ObjectIdentifier;
     /**
-     *
+     * Definition of aggregation type of the measure.
      * @type {string}
      * @memberof SimpleMeasureDefinitionMeasure
      */
     aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
     /**
-     *
+     * If true compute the percentage of given measure values (broken down by AFM attributes) to the total (not broken down).
      * @type {boolean}
      * @memberof SimpleMeasureDefinitionMeasure
      */
     computeRatio?: boolean;
     /**
-     *
+     * Measure can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
      * @type {Array<FilterDefinitionForSimpleMeasure>}
      * @memberof SimpleMeasureDefinitionMeasure
      */
@@ -972,15 +1345,90 @@ export enum SimpleMeasureDefinitionMeasureAggregationEnum {
 }
 
 /**
+ * Sorting elements - ascending/descending order.
+ * @export
+ * @enum {string}
+ */
+export enum SortDirection {
+    ASC = "ASC",
+    DESC = "DESC",
+}
+/**
+ * Sorting rule for sorting by attribute value in current dimension.
+ * @export
+ * @interface SortKeyAttribute
+ */
+export interface SortKeyAttribute {
+    /**
+     *
+     * @type {SortKeyAttributeAttribute}
+     * @memberof SortKeyAttribute
+     */
+    attribute: SortKeyAttributeAttribute;
+}
+/**
+ *
+ * @export
+ * @interface SortKeyAttributeAttribute
+ */
+export interface SortKeyAttributeAttribute {
+    /**
+     *
+     * @type {SortDirection}
+     * @memberof SortKeyAttributeAttribute
+     */
+    direction?: SortDirection;
+    /**
+     * One of the \'Dimension.itemIdentifiers\' referencing the attribute which should be used for sorting the dimension.s
+     * @type {string}
+     * @memberof SortKeyAttributeAttribute
+     */
+    attributeIdentifier: string;
+}
+/**
+ *
+ * @export
+ * @interface SortKeyValue
+ */
+export interface SortKeyValue {
+    /**
+     *
+     * @type {SortKeyValueValue}
+     * @memberof SortKeyValue
+     */
+    value: SortKeyValueValue;
+}
+/**
+ *
+ * @export
+ * @interface SortKeyValueValue
+ */
+export interface SortKeyValueValue {
+    /**
+     *
+     * @type {SortDirection}
+     * @memberof SortKeyValueValue
+     */
+    direction?: SortDirection;
+    /**
+     * For each other dimension, specifies location, which value should be used for sorting.
+     * @type {Array<DimensionLocator>}
+     * @memberof SortKeyValueValue
+     */
+    dataColumnLocators: Array<DimensionLocator>;
+}
+
+/**
  * AfmControllerApi - axios parameter creator
  * @export
  */
 export const AfmControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
+         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+         * @summary Executes analytical request and returns link to the result
          * @param {AfmExecution} afmExecution
-         * @param {boolean} [skipCache]
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {string} [timestamp]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1038,7 +1486,8 @@ export const AfmControllerApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         *
+         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
          * @param {AfmValidObjectsQuery} afmValidObjectsQuery
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1095,9 +1544,10 @@ export const AfmControllerApiAxiosParamCreator = function (configuration?: Confi
 export const AfmControllerApiFp = function (configuration?: Configuration) {
     return {
         /**
-         *
+         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+         * @summary Executes analytical request and returns link to the result
          * @param {AfmExecution} afmExecution
-         * @param {boolean} [skipCache]
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {string} [timestamp]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1123,7 +1573,8 @@ export const AfmControllerApiFp = function (configuration?: Configuration) {
             };
         },
         /**
-         *
+         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
          * @param {AfmValidObjectsQuery} afmValidObjectsQuery
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1159,9 +1610,10 @@ export const AfmControllerApiFactory = function (
 ) {
     return {
         /**
-         *
+         * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+         * @summary Executes analytical request and returns link to the result
          * @param {AfmExecution} afmExecution
-         * @param {boolean} [skipCache]
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {string} [timestamp]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1177,7 +1629,8 @@ export const AfmControllerApiFactory = function (
             return AfmControllerApiFp(configuration).processAfmRequest(params, options)(axios, basePath);
         },
         /**
-         *
+         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
          * @param {AfmValidObjectsQuery} afmValidObjectsQuery
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1203,9 +1656,10 @@ export const AfmControllerApiFactory = function (
  */
 export interface AfmControllerApiInterface {
     /**
-     *
+     * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+     * @summary Executes analytical request and returns link to the result
      * @param {AfmExecution} afmExecution
-     * @param {boolean} [skipCache]
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {string} [timestamp]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1221,7 +1675,8 @@ export interface AfmControllerApiInterface {
     ): AxiosPromise<AfmExecutionResponse>;
 
     /**
-     *
+     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+     * @summary Valid objects
      * @param {AfmValidObjectsQuery} afmValidObjectsQuery
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1243,9 +1698,10 @@ export interface AfmControllerApiInterface {
  */
 export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterface {
     /**
-     *
+     * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
+     * @summary Executes analytical request and returns link to the result
      * @param {AfmExecution} afmExecution
-     * @param {boolean} [skipCache]
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {string} [timestamp]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1266,7 +1722,8 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
     }
 
     /**
-     *
+     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+     * @summary Valid objects
      * @param {AfmValidObjectsQuery} afmValidObjectsQuery
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1292,7 +1749,8 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
 export const ElementsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values.
          * @param {string} workspace Workspace on which to run request.
          * @param {string} label Requested label.
          * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
@@ -1301,7 +1759,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
          * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
-         * @param {boolean} [skipCache]
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1442,7 +1900,8 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
 export const ElementsControllerApiFp = function (configuration?: Configuration) {
     return {
         /**
-         *
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values.
          * @param {string} workspace Workspace on which to run request.
          * @param {string} label Requested label.
          * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
@@ -1451,7 +1910,7 @@ export const ElementsControllerApiFp = function (configuration?: Configuration) 
          * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
-         * @param {boolean} [skipCache]
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1494,7 +1953,8 @@ export const ElementsControllerApiFactory = function (
 ) {
     return {
         /**
-         *
+         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+         * @summary Listing of label values.
          * @param {string} workspace Workspace on which to run request.
          * @param {string} label Requested label.
          * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
@@ -1503,7 +1963,7 @@ export const ElementsControllerApiFactory = function (
          * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
-         * @param {boolean} [skipCache]
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1536,7 +1996,8 @@ export const ElementsControllerApiFactory = function (
  */
 export interface ElementsControllerApiInterface {
     /**
-     *
+     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+     * @summary Listing of label values.
      * @param {string} workspace Workspace on which to run request.
      * @param {string} label Requested label.
      * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
@@ -1545,7 +2006,7 @@ export interface ElementsControllerApiInterface {
      * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
      * @param {number} [offset] Request page with this offset.
      * @param {number} [limit] Return only this number of items.
-     * @param {boolean} [skipCache]
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ElementsControllerApiInterface
@@ -1574,7 +2035,8 @@ export interface ElementsControllerApiInterface {
  */
 export class ElementsControllerApi extends BaseAPI implements ElementsControllerApiInterface {
     /**
-     *
+     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
+     * @summary Listing of label values.
      * @param {string} workspace Workspace on which to run request.
      * @param {string} label Requested label.
      * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
@@ -1583,7 +2045,7 @@ export class ElementsControllerApi extends BaseAPI implements ElementsController
      * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
      * @param {number} [offset] Request page with this offset.
      * @param {number} [limit] Return only this number of items.
-     * @param {boolean} [skipCache]
+     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ElementsControllerApi
@@ -1603,6 +2065,199 @@ export class ElementsControllerApi extends BaseAPI implements ElementsController
         options?: any,
     ) {
         return ElementsControllerApiFp(this.configuration).processElementsRequest(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+}
+
+/**
+ * ResultServiceControllerApi - axios parameter creator
+ * @export
+ */
+export const ResultServiceControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Gets a single execution result.
+         * @summary Get a single execution result
+         * @param {string} resultId Result ID
+         * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+         * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResult(
+            params: {
+                resultId: string;
+                offset?: Array<number>;
+                limit?: Array<number>;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { resultId, offset, limit } = params;
+            // verify required parameter 'resultId' is not null or undefined
+            if (resultId === null || resultId === undefined) {
+                throw new RequiredError(
+                    "resultId",
+                    "Required parameter resultId was null or undefined when calling getResult.",
+                );
+            }
+            const localVarPath = `/api/result/{resultId}`.replace(
+                `{${"resultId"}}`,
+                encodeURIComponent(String(resultId)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * ResultServiceControllerApi - functional programming interface
+ * @export
+ */
+export const ResultServiceControllerApiFp = function (configuration?: Configuration) {
+    return {
+        /**
+         * Gets a single execution result.
+         * @summary Get a single execution result
+         * @param {string} resultId Result ID
+         * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+         * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResult(
+            params: {
+                resultId: string;
+                offset?: Array<number>;
+                limit?: Array<number>;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult> {
+            const localVarAxiosArgs = ResultServiceControllerApiAxiosParamCreator(configuration).getResult(
+                params,
+                options,
+            );
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    };
+};
+
+/**
+ * ResultServiceControllerApi - factory interface
+ * @export
+ */
+export const ResultServiceControllerApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    return {
+        /**
+         * Gets a single execution result.
+         * @summary Get a single execution result
+         * @param {string} resultId Result ID
+         * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+         * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getResult(
+            params: {
+                resultId: string;
+                offset?: Array<number>;
+                limit?: Array<number>;
+            },
+            options?: any,
+        ): AxiosPromise<ExecutionResult> {
+            return ResultServiceControllerApiFp(configuration).getResult(params, options)(axios, basePath);
+        },
+    };
+};
+
+/**
+ * ResultServiceControllerApi - interface
+ * @export
+ * @interface ResultServiceControllerApi
+ */
+export interface ResultServiceControllerApiInterface {
+    /**
+     * Gets a single execution result.
+     * @summary Get a single execution result
+     * @param {string} resultId Result ID
+     * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+     * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResultServiceControllerApiInterface
+     */
+    getResult(
+        params: {
+            resultId: string;
+            offset?: Array<number>;
+            limit?: Array<number>;
+        },
+        options?: any,
+    ): AxiosPromise<ExecutionResult>;
+}
+
+/**
+ * ResultServiceControllerApi - object-oriented interface
+ * @export
+ * @class ResultServiceControllerApi
+ * @extends {BaseAPI}
+ */
+export class ResultServiceControllerApi extends BaseAPI implements ResultServiceControllerApiInterface {
+    /**
+     * Gets a single execution result.
+     * @summary Get a single execution result
+     * @param {string} resultId Result ID
+     * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
+     * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResultServiceControllerApi
+     */
+    public getResult(
+        params: {
+            resultId: string;
+            offset?: Array<number>;
+            limit?: Array<number>;
+        },
+        options?: any,
+    ) {
+        return ResultServiceControllerApiFp(this.configuration).getResult(params, options)(
             this.axios,
             this.basePath,
         );
