@@ -41,7 +41,7 @@
     "devDependencies": {
         "@gooddata/catalog-export": "^8.0.0-beta.66",
         "@gooddata/eslint-config": "^2.0.0",
-        "@gooddata/mock-handling": "8.0.0-beta.66",
+        "@gooddata/mock-handling": "^8.0.0-beta.66",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^26.0.12",
         "@types/lodash": "^4.14.158",

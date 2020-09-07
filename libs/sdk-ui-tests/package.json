@@ -49,7 +49,7 @@
         "@babel/runtime": "^7.7.2",
         "@gooddata/experimental-workspace": "^8.0.0-beta.66",
         "@gooddata/live-examples-workspace": "^8.0.0-beta.66",
-        "@gooddata/mock-handling": "8.0.0-beta.66",
+        "@gooddata/mock-handling": "^8.0.0-beta.66",
         "@gooddata/numberjs": "^3.2.4",
         "@gooddata/reference-workspace": "^8.0.0-beta.66",
         "@gooddata/sdk-backend-base": "^8.0.0-beta.66",

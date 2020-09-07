@@ -41,7 +41,7 @@
     "devDependencies": {
         "@gooddata/catalog-export": "^8.0.0-beta.66",
         "@gooddata/eslint-config": "^2.0.0",
-        "@gooddata/mock-handling": "8.0.0-beta.66",
+        "@gooddata/mock-handling": "^8.0.0-beta.66",
         "@types/jest": "^26.0.12",
         "@types/lodash": "^4.14.158",
         "@types/node": "^12.12.26",
