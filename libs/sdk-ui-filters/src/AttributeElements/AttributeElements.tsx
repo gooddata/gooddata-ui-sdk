@@ -96,6 +96,7 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
     public componentDidUpdate(prevProps: IAttributeElementsProps): void {
         const needsInvalidation =
             !areObjRefsEqual(this.props.displayForm, prevProps.displayForm) ||
+            !isEqual(this.props.filters, prevProps.filters) ||
             this.props.workspace !== prevProps.workspace ||
             !isEqual(this.props.options, prevProps.options);
 
@@ -135,19 +136,15 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
         this.setState({ isLoading: true, error: null });
 
         try {
-            let loader = this.getBackend()
+            const elements = await this.getBackend()
                 .workspace(workspace)
                 .elements()
                 .forDisplayForm(displayForm)
                 .withOffset(offset || 0)
                 .withLimit(limit || 50)
-                .withOptions(options);
-
-            if (filters?.length) {
-                loader = loader.withAttributeFilters(filters);
-            }
-
-            const elements = await loader.query();
+                .withOptions(options)
+                .withAttributeFilters(filters ?? [])
+                .query();
 
             this.setState({ validElements: elements, isLoading: false });
         } catch (error) {
