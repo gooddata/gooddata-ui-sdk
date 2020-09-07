@@ -33,7 +33,8 @@ export type WorkspacePermission =
     | "canManageAnalyticalDashboard"
     | "canManageProject"
     | "canCreateScheduledMail"
-    | "canListUsersInProject";
+    | "canListUsersInProject"
+    | "canManageDomain";
 
 /**
  * Dictionary of workspace permissions
