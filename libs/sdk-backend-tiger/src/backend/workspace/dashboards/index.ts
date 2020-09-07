@@ -1,7 +1,9 @@
 // (C) 2020 GoodData Corporation
 import { IWorkspaceDashboards, IListedDashboard, NotSupported } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
+import { objRefToIdentifier } from "../../../utils/api";
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboards {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -29,8 +31,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboards {
         throw new NotSupported("Not supported");
     };
 
-    public deleteDashboard = async () => {
-        throw new NotSupported("Not supported");
+    public deleteDashboard = async (ref: ObjRef): Promise<void> => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+
+        await this.authCall((sdk) =>
+            sdk.metadata.analyticalDashboardsIdDelete({
+                contentType: "application/json",
+                id,
+            }),
+        );
     };
 
     public exportDashboardToPdf = async () => {
