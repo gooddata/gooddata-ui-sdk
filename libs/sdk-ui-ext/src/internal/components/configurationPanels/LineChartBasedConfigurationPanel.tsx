@@ -15,12 +15,15 @@ import {
 } from "../../constants/bubble";
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
 
+export const CHARTS_SUPPORTING_DATAPOINT_CTRL = ["line", "area"];
+
 export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel {
     protected renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
         const { properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
+        const dataPointsControlDisabled = this.isDataPointsControlDisabled();
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -44,7 +47,8 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                         <DataPointsControl
                             pushData={pushData}
                             properties={properties}
-                            isDisabled={controlsDisabled}
+                            isDisabled={controlsDisabled || dataPointsControlDisabled}
+                            showDisabledMessage={true}
                             defaultValue={"auto"}
                         />
                         <CheckboxControl
@@ -65,6 +69,16 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                     <FormattedMessage id="properties.config.not_applicable" />
                 </Bubble>
             </BubbleHoverTrigger>
+        );
+    }
+
+    protected isDataPointsControlDisabled(): boolean {
+        const properties = this.props.properties.controls;
+
+        return (
+            this.props.type === "combo" &&
+            properties.primaryChartType === "column" &&
+            properties.secondaryChartType === "column"
         );
     }
 }
