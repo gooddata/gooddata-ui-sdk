@@ -233,7 +233,8 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const supportedControls: IVisualizationProperties = this.visualizationProperties.controls || {};
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
 
-        const buckets = insightBuckets(insight);
+        // we need to shallow copy the buckets so that we can add more without mutating the original array
+        const buckets = [...insightBuckets(insight)];
 
         if (supportedControls && supportedControls?.tooltipText) {
             const tooltipText: string = supportedControls?.tooltipText;
@@ -327,6 +328,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     // https://github.com/basarat/typescript-book/blob/master/docs/arrow-functions.md#tip-arrow-functions-and-inheritance
     private superHandlePushData = this.handlePushData;
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     protected handlePushData = (data: any): void => {
         // For pushpin chart we want to allow drill only on the
         // location attribute. Filter out other attributes.
