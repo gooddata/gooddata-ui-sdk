@@ -1,8 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import fs from "fs";
+import stringify from "json-stable-stringify";
 
 function toJsonString(obj: any): string {
-    return JSON.stringify(obj, null, 4);
+    return stringify(obj);
 }
 
 export function writeAsJsonSync(file: string, obj: any) {
