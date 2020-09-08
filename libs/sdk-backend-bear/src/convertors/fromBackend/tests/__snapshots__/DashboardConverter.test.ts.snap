@@ -256,6 +256,13 @@ Object {
                   ],
                   "identifier": "kpiWidget",
                   "ignoreDashboardFilters": Array [],
+                  "kpi": Object {
+                    "comparisonDirection": "growIsGood",
+                    "comparisonType": "previousPeriod",
+                    "metric": Object {
+                      "uri": "/measure",
+                    },
+                  },
                   "ref": Object {
                     "uri": "/gdc/md/obj/kpiWidget",
                   },
@@ -359,6 +366,13 @@ Object {
                   ],
                   "identifier": "kpiWidget",
                   "ignoreDashboardFilters": Array [],
+                  "kpi": Object {
+                    "comparisonDirection": "growIsGood",
+                    "comparisonType": "previousPeriod",
+                    "metric": Object {
+                      "uri": "/measure",
+                    },
+                  },
                   "ref": Object {
                     "uri": "/gdc/md/obj/kpiWidget",
                   },
