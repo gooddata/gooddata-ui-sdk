@@ -3,6 +3,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import fs = require("fs");
 import pick = require("lodash/pick");
 import isEmpty = require("lodash/isEmpty");
+import stringify from "json-stable-stringify";
 
 /**
  * A mapping of recording file type to file name. The file type is opaque - it is not handled in any way and
@@ -64,10 +65,10 @@ export interface IRecording {
 
 export function toJsonString(obj: object, keys?: string[]): string {
     if (keys) {
-        return JSON.stringify(pick(obj, keys), null, 4);
+        return stringify(pick(obj, keys));
     }
 
-    return JSON.stringify(obj, null, 4);
+    return stringify(obj);
 }
 
 export function writeAsJsonSync(file: string, obj: object, keys?: string[]): void {

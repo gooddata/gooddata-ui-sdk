@@ -240,7 +240,7 @@
     },
     {
       "name": "@types/json-stable-stringify",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@types/lodash",
@@ -568,7 +568,7 @@
     },
     {
       "name": "json-stable-stringify",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "lodash",
