@@ -22,6 +22,7 @@ Object {
               "measureDefinition": Object {
                 "item": Object {
                   "identifier": "aadpHDMBecIy",
+                  "type": "measure",
                 },
               },
             },
@@ -62,6 +63,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "aadpHDMBecIy",
+              "type": "measure",
             },
           },
         },
@@ -103,6 +105,7 @@ Object {
               "measureDefinition": Object {
                 "item": Object {
                   "identifier": "aadpHDMBecIy",
+                  "type": "measure",
                 },
               },
             },
@@ -143,6 +146,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "aadpHDMBecIy",
+              "type": "measure",
             },
           },
         },
@@ -187,6 +191,7 @@ Object {
               "measureDefinition": Object {
                 "item": Object {
                   "identifier": "aadpHDMBecIy",
+                  "type": "measure",
                 },
               },
             },
@@ -227,6 +232,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "aadpHDMBecIy",
+              "type": "measure",
             },
           },
         },
@@ -264,6 +270,7 @@ Object {
               "measureDefinition": Object {
                 "item": Object {
                   "identifier": "aadpHDMBecIy",
+                  "type": "measure",
                 },
               },
             },
@@ -293,6 +300,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "aadpHDMBecIy",
+              "type": "measure",
             },
           },
         },
@@ -334,6 +342,7 @@ Object {
               "measureDefinition": Object {
                 "item": Object {
                   "identifier": "abYgDBRagANw",
+                  "type": "measure",
                 },
               },
             },
@@ -374,6 +383,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "abYgDBRagANw",
+              "type": "measure",
             },
           },
         },

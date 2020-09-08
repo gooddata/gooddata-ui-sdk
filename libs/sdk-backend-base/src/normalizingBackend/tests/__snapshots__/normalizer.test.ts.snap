@@ -22,6 +22,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "acugFHNJgsBy",
+              "type": "measure",
             },
           },
         },
@@ -34,6 +35,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "aangOxLSeztu",
+              "type": "measure",
             },
           },
         },
@@ -96,6 +98,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "aangOxLSeztu",
+              "type": "measure",
             },
           },
         },
@@ -122,6 +125,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "acugFHNJgsBy",
+              "type": "measure",
             },
           },
         },
@@ -156,6 +160,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "acugFHNJgsBy",
+              "type": "measure",
             },
           },
         },
@@ -244,6 +249,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "acugFHNJgsBy",
+              "type": "measure",
             },
           },
         },
@@ -256,6 +262,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "acugFHNJgsBy",
+              "type": "measure",
             },
           },
         },
@@ -304,6 +311,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "acugFHNJgsBy",
+              "type": "measure",
             },
           },
         },
@@ -316,6 +324,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "aangOxLSeztu",
+              "type": "measure",
             },
           },
         },
@@ -400,6 +409,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "acugFHNJgsBy",
+              "type": "measure",
             },
           },
         },
@@ -413,6 +423,7 @@ Object {
             "aggregation": "max",
             "item": Object {
               "identifier": "fact.opportunitysnapshot.amount",
+              "type": "fact",
             },
           },
         },
@@ -426,6 +437,7 @@ Object {
             "computeRatio": true,
             "item": Object {
               "identifier": "aangOxLSeztu",
+              "type": "measure",
             },
           },
         },
@@ -460,6 +472,7 @@ Object {
           "measureDefinition": Object {
             "item": Object {
               "identifier": "acugFHNJgsBy",
+              "type": "measure",
             },
           },
         },
@@ -487,6 +500,7 @@ Object {
             ],
             "item": Object {
               "identifier": "acugFHNJgsBy",
+              "type": "measure",
             },
           },
         },
