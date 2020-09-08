@@ -154,27 +154,8 @@ describe("agGridColumnSizing", () => {
                 },
             };
 
-            const expectedColumnWidths: ColumnWidthItem[] = [
-                {
-                    measureColumnWidthItem: {
-                        width: {
-                            value: 400,
-                        },
-                        locators: [
-                            {
-                                attributeLocatorItem: {
-                                    attributeIdentifier: "a_label.product.id.name",
-                                    element:
-                                        "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=1",
-                                },
-                            },
-                        ],
-                    },
-                },
-            ];
-
             const result = getColumnWidthsFromMap(columnAttributeColumnMap, ColumnOnlyResult);
-            expect(result).toEqual(expectedColumnWidths);
+            expect(result).toMatchSnapshot();
         });
     });
 
