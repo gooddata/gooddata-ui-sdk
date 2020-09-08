@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2020 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import get from "lodash/get";
@@ -26,7 +26,7 @@ class DataPointsControl extends React.Component<IDataPointsControlProps & Wrappe
         const dataPoints = get(properties, "controls.dataPoints.visible", defaultValue);
 
         return (
-            <div className="s-data-labels-config">
+            <div className="s-data-points-config">
                 <DropdownControl
                     value={dataPoints}
                     valuePath="dataPoints.visible"

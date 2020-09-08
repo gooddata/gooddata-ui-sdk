@@ -15,8 +15,6 @@ import {
 } from "../../constants/bubble";
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
 
-export const CHARTS_SUPPORTING_DATAPOINT_CTRL = ["line", "area"];
-
 export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel {
     protected renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
@@ -42,7 +40,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             pushData={pushData}
                             properties={properties}
                             isDisabled={controlsDisabled}
-                            defaultValue={"auto"}
+                            defaultValue={false}
                         />
                         <DataPointsControl
                             pushData={pushData}
