@@ -46,11 +46,11 @@
                 "colorMapping": [
                     {
                         "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 0 } },
-                        "id": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488"
+                        "id": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
                     },
                     {
                         "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 255 } },
-                        "id": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460489"
+                        "id": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
                     }
                 ]
             }

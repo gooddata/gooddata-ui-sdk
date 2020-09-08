@@ -6,8 +6,7 @@ import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "
 import { coloringCustomizer } from "../_infra/coloringVariants";
 import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
-import { Product } from "../../_infra/data";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IPieChartProps>("PieChart", PieChart)
@@ -57,7 +56,13 @@ const colorAssignment = scenariosFor<IPieChartProps>("PieChart", PieChart)
                 ],
             },
         },
-        (m) => m.withInsightConverter(replaceMappingPredicates(Product.WonderKid, Product.Explorer)),
+        (m) =>
+            m.withInsightConverter(
+                replaceMappingPredicates(
+                    ReferenceData.ProductName.WonderKid.uri,
+                    ReferenceData.ProductName.Explorer.uri,
+                ),
+            ),
     );
 
 export default [colorsAndPalette, colorAssignment];
