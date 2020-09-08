@@ -1,35 +1,26 @@
 {
     "insight": {
-        "identifier": "PivotTable.1892e5c001ce80d560a10d6ec5ef748d",
-        "uri": "PivotTable.1892e5c001ce80d560a10d6ec5ef748d",
-        "visualizationUrl": "local:table",
-        "title": "PivotTable - single column",
         "buckets": [
+            { "items": [], "localIdentifier": "measures" },
+            { "items": [], "localIdentifier": "attribute" },
             {
-                "localIdentifier": "measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "attribute",
-                "items": []
-            },
-            {
-                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "columns"
             }
         ],
         "filters": [],
+        "identifier": "PivotTable.1892e5c001ce80d560a10d6ec5ef748d",
+        "properties": {},
         "sorts": [],
-        "properties": {}
+        "title": "PivotTable - single column",
+        "uri": "PivotTable.1892e5c001ce80d560a10d6ec5ef748d",
+        "visualizationUrl": "local:table"
     }
 }

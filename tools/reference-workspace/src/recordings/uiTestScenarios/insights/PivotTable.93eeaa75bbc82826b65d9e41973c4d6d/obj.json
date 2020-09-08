@@ -1,79 +1,66 @@
 {
     "insight": {
-        "identifier": "PivotTable.93eeaa75bbc82826b65d9e41973c4d6d",
-        "uri": "PivotTable.93eeaa75bbc82826b65d9e41973c4d6d",
-        "visualizationUrl": "local:table",
-        "title": "PivotTable - two measures with two row and one column attributes",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.department",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.department"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "attribute"
             },
             {
-                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "columns"
             }
         ],
         "filters": [],
+        "identifier": "PivotTable.93eeaa75bbc82826b65d9e41973c4d6d",
+        "properties": {},
         "sorts": [],
-        "properties": {}
+        "title": "PivotTable - two measures with two row and one column attributes",
+        "uri": "PivotTable.93eeaa75bbc82826b65d9e41973c4d6d",
+        "visualizationUrl": "local:table"
     }
 }

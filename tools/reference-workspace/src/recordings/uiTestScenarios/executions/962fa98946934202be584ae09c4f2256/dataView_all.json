@@ -1,0 +1,65 @@
+{
+    "count": [6, 6],
+    "data": [
+        ["-159600", "-159600", "-400000", "0.4", "-70000", "-40000"],
+        ["4000", "3403.01", "3862.56", "4468.8", "4160", "4380.16"],
+        ["3849780", "558800", "13139625.29", "550946.94", "1280000.4", "527418.34"],
+        ["27222899.64", "22946895.47", "38596194.86", "8042031.92", "9525857.91", "10291576.74"],
+        ["9237969.87", "8857607.06", "9247539.62", "3973206.21", "3374392.19", "3620038.5"],
+        ["17984929.77", "14089288.41", "29348655.24", "4068825.71", "6151465.72", "6671538.24"]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "m_fact.opportunitysnapshot.amount_min", "order": 0 } },
+                { "measureHeaderItem": { "name": "m_fact.opportunitysnapshot.amount_median", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_fact.opportunitysnapshot.amount_max", "order": 2 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 3 } },
+                { "measureHeaderItem": { "name": "Won", "order": 4 } },
+                { "measureHeaderItem": { "name": "m_f72796b0fbc7c0dc4d17a1e68c1a9933", "order": 5 } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [6, 6]
+}

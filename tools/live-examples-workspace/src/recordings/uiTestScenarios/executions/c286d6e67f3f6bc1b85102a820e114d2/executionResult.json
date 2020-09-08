@@ -7,9 +7,9 @@
                         "items": [
                             {
                                 "measureHeaderItem": {
-                                    "name": "m_fact.uscities.population_sum",
                                     "format": "#,##0.00",
-                                    "localIdentifier": "m_fact.uscities.population_sum"
+                                    "localIdentifier": "m_fact.uscities.population_sum",
+                                    "name": "m_fact.uscities.population_sum"
                                 }
                             }
                         ]
@@ -21,15 +21,15 @@
             "headers": [
                 {
                     "attributeHeader": {
-                        "name": "location",
-                        "localIdentifier": "a_label.uscities.city.location",
-                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9459",
-                        "identifier": "label.uscities.city.location",
                         "formOf": {
+                            "identifier": "attr.uscities.city",
                             "name": "City",
-                            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458",
-                            "identifier": "attr.uscities.city"
-                        }
+                            "uri": "/gdc/md/liveexamplesworkspace/obj/9458"
+                        },
+                        "identifier": "label.uscities.city.location",
+                        "localIdentifier": "a_label.uscities.city.location",
+                        "name": "location",
+                        "uri": "/gdc/md/liveexamplesworkspace/obj/9459"
                     }
                 }
             ]

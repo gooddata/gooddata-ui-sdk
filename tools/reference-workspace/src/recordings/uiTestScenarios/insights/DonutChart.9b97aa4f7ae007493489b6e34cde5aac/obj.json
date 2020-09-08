@@ -1,69 +1,49 @@
 {
     "insight": {
-        "identifier": "DonutChart.9b97aa4f7ae007493489b6e34cde5aac",
-        "uri": "DonutChart.9b97aa4f7ae007493489b6e34cde5aac",
-        "visualizationUrl": "local:donut",
-        "title": "DonutChart - assign color to measures",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
-            {
-                "localIdentifier": "view",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "view" }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "DonutChart.9b97aa4f7ae007493489b6e34cde5aac",
         "properties": {
             "controls": {
                 "colorMapping": [
                     {
-                        "id": "m_aangOxLSeztu",
-                        "color": {
-                            "type": "rgb",
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0
-                            }
-                        }
+                        "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 0 } },
+                        "id": "m_aangOxLSeztu"
                     },
-                    {
-                        "id": "m_acugFHNJgsBy",
-                        "color": {
-                            "type": "guid",
-                            "value": "05"
-                        }
-                    }
+                    { "color": { "type": "guid", "value": "05" }, "id": "m_acugFHNJgsBy" }
                 ]
             }
-        }
+        },
+        "sorts": [],
+        "title": "DonutChart - assign color to measures",
+        "uri": "DonutChart.9b97aa4f7ae007493489b6e34cde5aac",
+        "visualizationUrl": "local:donut"
     }
 }

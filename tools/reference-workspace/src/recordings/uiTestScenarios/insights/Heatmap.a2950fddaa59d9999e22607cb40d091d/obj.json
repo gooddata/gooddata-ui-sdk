@@ -1,71 +1,52 @@
 {
     "insight": {
-        "identifier": "Heatmap.a2950fddaa59d9999e22607cb40d091d",
-        "uri": "Heatmap.a2950fddaa59d9999e22607cb40d091d",
-        "visualizationUrl": "local:heatmap",
-        "title": "Heatmap - legend position - legend on left",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
             {
-                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "stack"
             }
         ],
         "filters": [],
+        "identifier": "Heatmap.a2950fddaa59d9999e22607cb40d091d",
+        "properties": { "controls": { "legend": { "position": "left" } } },
         "sorts": [
-            {
-                "attributeSortItem": {
-                    "attributeIdentifier": "a_label.product.id.name",
-                    "direction": "desc"
-                }
-            }
+            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
         ],
-        "properties": {
-            "controls": {
-                "legend": {
-                    "position": "left"
-                }
-            }
-        }
+        "title": "Heatmap - legend position - legend on left",
+        "uri": "Heatmap.a2950fddaa59d9999e22607cb40d091d",
+        "visualizationUrl": "local:heatmap"
     }
 }

@@ -1,53 +1,35 @@
 {
-    "workspace": "experimental-workspace",
-    "buckets": [],
     "attributes": [
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.product.id.name",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                 "localIdentifier": "a_label.product.id.name"
             }
         }
     ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["a_label.product.id.name"] }
+    ],
+    "filters": [],
     "measures": [
         {
             "measure": {
-                "localIdentifier": "m_aangOxLSeztu",
                 "definition": {
-                    "measureDefinition": {
-                        "item": {
-                            "identifier": "aangOxLSeztu",
-                            "type": "measure"
-                        }
-                    }
-                }
+                    "measureDefinition": { "item": { "identifier": "aangOxLSeztu", "type": "measure" } }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
             }
         }
     ],
-    "dimensions": [
-        {
-            "itemIdentifiers": ["measureGroup"]
-        },
-        {
-            "itemIdentifiers": ["a_label.product.id.name"]
-        }
-    ],
-    "filters": [],
     "sortBy": [
         {
             "measureSortItem": {
                 "direction": "desc",
-                "locators": [
-                    {
-                        "measureLocatorItem": {
-                            "measureIdentifier": "m_aangOxLSeztu"
-                        }
-                    }
-                ]
+                "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
             }
         }
-    ]
+    ],
+    "workspace": "experimental-workspace"
 }

@@ -1,54 +1,41 @@
 {
     "insight": {
-        "identifier": "BubbleChart.2e768324a3104fbbd53ae6c4475858ee",
-        "uri": "BubbleChart.2e768324a3104fbbd53ae6c4475858ee",
-        "visualizationUrl": "local:bubble",
-        "title": "BubbleChart - x axis measure with viewBy",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
+            { "items": [], "localIdentifier": "secondary_measures" },
+            { "items": [], "localIdentifier": "tertiary_measures" },
             {
-                "localIdentifier": "secondary_measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "tertiary_measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "BubbleChart.2e768324a3104fbbd53ae6c4475858ee",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "BubbleChart - x axis measure with viewBy",
+        "uri": "BubbleChart.2e768324a3104fbbd53ae6c4475858ee",
+        "visualizationUrl": "local:bubble"
     }
 }

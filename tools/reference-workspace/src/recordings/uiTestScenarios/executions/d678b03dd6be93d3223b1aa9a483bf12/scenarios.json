@@ -1,16 +1,18 @@
 [
     {
-        "vis": "PivotTable",
-        "scenario": "single attribute",
+        "n2oMap": { "a_label.product.id.name": "a_label.product.id.name" },
         "originalExecution": {
-            "workspace": "reference-workspace",
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
             "buckets": [
+                { "items": [], "localIdentifier": "measures" },
                 {
-                    "localIdentifier": "measures",
-                    "items": []
-                },
-                {
-                    "localIdentifier": "attribute",
                     "items": [
                         {
                             "attribute": {
@@ -21,38 +23,18 @@
                                 "localIdentifier": "a_label.product.id.name"
                             }
                         }
-                    ]
+                    ],
+                    "localIdentifier": "attribute"
                 },
-                {
-                    "localIdentifier": "columns",
-                    "items": []
-                }
+                { "items": [], "localIdentifier": "columns" }
             ],
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "label.product.id.name",
-                            "type": "displayForm"
-                        },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
-            "measures": [],
-            "dimensions": [
-                {
-                    "itemIdentifiers": ["a_label.product.id.name"]
-                },
-                {
-                    "itemIdentifiers": []
-                }
-            ],
+            "dimensions": [{ "itemIdentifiers": ["a_label.product.id.name"] }, { "itemIdentifiers": [] }],
             "filters": [],
-            "sortBy": []
+            "measures": [],
+            "sortBy": [],
+            "workspace": "reference-workspace"
         },
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name"
-        }
+        "scenario": "single attribute",
+        "vis": "PivotTable"
     }
 ]

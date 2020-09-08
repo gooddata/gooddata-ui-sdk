@@ -1,0 +1,217 @@
+[
+    {
+        "n2oMap": { "m_aangOxLSeztu": "m_aangOxLSeztu" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" },
+                { "items": [], "localIdentifier": "stack" }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }, { "itemIdentifiers": [] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "AreaChart"
+    },
+    {
+        "n2oMap": { "m_aangOxLSeztu": "m_aangOxLSeztu" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" },
+                { "items": [], "localIdentifier": "stack" }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }, { "itemIdentifiers": [] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "BarChart"
+    },
+    {
+        "n2oMap": { "m_aangOxLSeztu": "m_aangOxLSeztu" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" },
+                { "items": [], "localIdentifier": "stack" }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }, { "itemIdentifiers": [] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "ColumnChart"
+    },
+    {
+        "n2oMap": { "m_aangOxLSeztu": "m_aangOxLSeztu" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "secondary_measures" },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }, { "itemIdentifiers": [] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "one primary measure",
+        "vis": "ComboChart"
+    },
+    {
+        "n2oMap": { "m_aangOxLSeztu": "m_aangOxLSeztu" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "trend" },
+                { "items": [], "localIdentifier": "segment" }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }, { "itemIdentifiers": [] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ],
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure",
+        "vis": "LineChart"
+    }
+]

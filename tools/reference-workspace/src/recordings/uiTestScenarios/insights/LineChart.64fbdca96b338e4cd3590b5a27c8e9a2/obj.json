@@ -1,76 +1,59 @@
 {
     "insight": {
-        "identifier": "LineChart.64fbdca96b338e4cd3590b5a27c8e9a2",
-        "uri": "LineChart.64fbdca96b338e4cd3590b5a27c8e9a2",
-        "visualizationUrl": "local:line",
-        "title": "LineChart - assign color to measures",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "trend",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "created.aci81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "created.aci81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_created.aci81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "trend"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "LineChart.64fbdca96b338e4cd3590b5a27c8e9a2",
         "properties": {
             "controls": {
                 "colorMapping": [
                     {
-                        "id": "m_aangOxLSeztu",
-                        "color": {
-                            "type": "rgb",
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0
-                            }
-                        }
+                        "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 0 } },
+                        "id": "m_aangOxLSeztu"
                     }
                 ]
             }
-        }
+        },
+        "sorts": [],
+        "title": "LineChart - assign color to measures",
+        "uri": "LineChart.64fbdca96b338e4cd3590b5a27c8e9a2",
+        "visualizationUrl": "local:line"
     }
 }

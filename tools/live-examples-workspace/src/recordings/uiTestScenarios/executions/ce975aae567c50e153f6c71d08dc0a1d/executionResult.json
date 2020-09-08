@@ -4,28 +4,28 @@
             "headers": [
                 {
                     "attributeHeader": {
-                        "name": "location",
-                        "localIdentifier": "a_label.uscities.city.location",
-                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9459",
-                        "identifier": "label.uscities.city.location",
                         "formOf": {
+                            "identifier": "attr.uscities.city",
                             "name": "City",
-                            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9458",
-                            "identifier": "attr.uscities.city"
-                        }
+                            "uri": "/gdc/md/liveexamplesworkspace/obj/9458"
+                        },
+                        "identifier": "label.uscities.city.location",
+                        "localIdentifier": "a_label.uscities.city.location",
+                        "name": "location",
+                        "uri": "/gdc/md/liveexamplesworkspace/obj/9459"
                     }
                 },
                 {
                     "attributeHeader": {
-                        "name": "state_name",
-                        "localIdentifier": "a_label.uscities.state_name",
-                        "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9462",
-                        "identifier": "label.uscities.state_name",
                         "formOf": {
+                            "identifier": "attr.uscities.state_name",
                             "name": "State Name",
-                            "uri": "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/9461",
-                            "identifier": "attr.uscities.state_name"
-                        }
+                            "uri": "/gdc/md/liveexamplesworkspace/obj/9461"
+                        },
+                        "identifier": "label.uscities.state_name",
+                        "localIdentifier": "a_label.uscities.state_name",
+                        "name": "state_name",
+                        "uri": "/gdc/md/liveexamplesworkspace/obj/9462"
                     }
                 }
             ]

@@ -1,36 +1,25 @@
 {
-    "workspace": "live-examples-workspace",
-    "buckets": [],
     "attributes": [
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.uscities.city.location",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.uscities.city.location", "type": "displayForm" },
                 "localIdentifier": "a_label.uscities.city.location"
             }
         },
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.uscities.state_name",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.uscities.state_name", "type": "displayForm" },
                 "localIdentifier": "a_label.uscities.state_name"
             }
         },
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.uscities.city",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.uscities.city", "type": "displayForm" },
                 "localIdentifier": "a_label.uscities.city"
             }
         }
     ],
-    "measures": [],
+    "buckets": [],
     "dimensions": [
         {
             "itemIdentifiers": [
@@ -41,12 +30,9 @@
         }
     ],
     "filters": [],
+    "measures": [],
     "sortBy": [
-        {
-            "attributeSortItem": {
-                "attributeIdentifier": "a_label.uscities.state_name",
-                "direction": "asc"
-            }
-        }
-    ]
+        { "attributeSortItem": { "attributeIdentifier": "a_label.uscities.state_name", "direction": "asc" } }
+    ],
+    "workspace": "live-examples-workspace"
 }

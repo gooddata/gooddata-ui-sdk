@@ -1,44 +1,38 @@
 {
     "insight": {
-        "identifier": "Headline.346303855acfc20de32fcfcef4a77a57",
-        "uri": "Headline.346303855acfc20de32fcfcef4a77a57",
-        "visualizationUrl": "local:headline",
-        "title": "Headline - two measures",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             }
         ],
         "filters": [],
+        "identifier": "Headline.346303855acfc20de32fcfcef4a77a57",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "Headline - two measures",
+        "uri": "Headline.346303855acfc20de32fcfcef4a77a57",
+        "visualizationUrl": "local:headline"
     }
 }

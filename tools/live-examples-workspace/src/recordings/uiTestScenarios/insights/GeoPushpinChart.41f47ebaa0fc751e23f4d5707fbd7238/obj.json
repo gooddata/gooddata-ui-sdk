@@ -1,20 +1,9 @@
 {
     "insight": {
-        "identifier": "GeoPushpinChart.41f47ebaa0fc751e23f4d5707fbd7238",
-        "uri": "GeoPushpinChart.41f47ebaa0fc751e23f4d5707fbd7238",
-        "visualizationUrl": "local:pushpin",
-        "title": "GeoPushpinChart - location only",
         "buckets": [
+            { "items": [], "localIdentifier": "size" },
+            { "items": [], "localIdentifier": "color" },
             {
-                "localIdentifier": "size",
-                "items": []
-            },
-            {
-                "localIdentifier": "color",
-                "items": []
-            },
-            {
-                "localIdentifier": "location",
                 "items": [
                     {
                         "attribute": {
@@ -25,17 +14,17 @@
                             "localIdentifier": "a_label.uscities.city.location"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "location"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "GeoPushpinChart.41f47ebaa0fc751e23f4d5707fbd7238",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "GeoPushpinChart - location only",
+        "uri": "GeoPushpinChart.41f47ebaa0fc751e23f4d5707fbd7238",
+        "visualizationUrl": "local:pushpin"
     }
 }

@@ -1,53 +1,10 @@
 [
     {
-        "vis": "GeoPushpinChart",
-        "scenario": "location and color",
+        "n2oMap": {
+            "a_label.uscities.city.location": "a_label.uscities.city.location",
+            "m_fact.uscities.density_sum": "m_35a08895_fact.uscities.density_sum"
+        },
         "originalExecution": {
-            "workspace": "live-examples-workspace",
-            "buckets": [
-                {
-                    "localIdentifier": "size",
-                    "items": []
-                },
-                {
-                    "localIdentifier": "color",
-                    "items": [
-                        {
-                            "measure": {
-                                "localIdentifier": "m_35a08895_fact.uscities.density_sum",
-                                "definition": {
-                                    "measureDefinition": {
-                                        "item": {
-                                            "identifier": "fact.uscities.density"
-                                        },
-                                        "aggregation": "sum"
-                                    }
-                                },
-                                "format": "#,##0.00",
-                                "alias": "Density"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "localIdentifier": "location",
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.uscities.city.location",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.uscities.city.location"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "localIdentifier": "segment",
-                    "items": []
-                }
-            ],
             "attributes": [
                 {
                     "attribute": {
@@ -59,37 +16,66 @@
                     }
                 }
             ],
+            "buckets": [
+                { "items": [], "localIdentifier": "size" },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Density",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "fact.uscities.density" }
+                                    }
+                                },
+                                "format": "#,##0.00",
+                                "localIdentifier": "m_35a08895_fact.uscities.density_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.uscities.city.location",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.uscities.city.location"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "location"
+                },
+                { "items": [], "localIdentifier": "segment" }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.uscities.city.location"] }
+            ],
+            "filters": [],
             "measures": [
                 {
                     "measure": {
-                        "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+                        "alias": "Density",
                         "definition": {
                             "measureDefinition": {
-                                "item": {
-                                    "identifier": "fact.uscities.density"
-                                },
-                                "aggregation": "sum"
+                                "aggregation": "sum",
+                                "item": { "identifier": "fact.uscities.density" }
                             }
                         },
                         "format": "#,##0.00",
-                        "alias": "Density"
+                        "localIdentifier": "m_35a08895_fact.uscities.density_sum"
                     }
                 }
             ],
-            "dimensions": [
-                {
-                    "itemIdentifiers": ["measureGroup"]
-                },
-                {
-                    "itemIdentifiers": ["a_label.uscities.city.location"]
-                }
-            ],
-            "filters": [],
-            "sortBy": []
+            "sortBy": [],
+            "workspace": "live-examples-workspace"
         },
-        "n2oMap": {
-            "a_label.uscities.city.location": "a_label.uscities.city.location",
-            "m_fact.uscities.density_sum": "m_35a08895_fact.uscities.density_sum"
-        }
+        "scenario": "location and color",
+        "vis": "GeoPushpinChart"
     }
 ]

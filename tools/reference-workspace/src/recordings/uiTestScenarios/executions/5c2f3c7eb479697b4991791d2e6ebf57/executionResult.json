@@ -1,0 +1,70 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "acugFHNJgsBy",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "name": "Won",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1272"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                                    "name": "m_m_acugFHNJgsBy_closed.year"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                                    "name": "m_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
+                                    "name": "m_68d94d71b9317a58cd6c5b9a3f71f488"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "closed.year",
+                            "name": "Year (Closed)",
+                            "uri": "/gdc/md/referenceworkspace/obj/497"
+                        },
+                        "identifier": "closed.aag81lMifn6q",
+                        "localIdentifier": "a_closed.aag81lMifn6q",
+                        "name": "Year (Closed)",
+                        "uri": "/gdc/md/referenceworkspace/obj/515"
+                    }
+                }
+            ]
+        }
+    ]
+}

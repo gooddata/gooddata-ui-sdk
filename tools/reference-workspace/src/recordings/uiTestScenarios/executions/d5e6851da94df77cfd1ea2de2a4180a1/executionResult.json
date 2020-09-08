@@ -1,0 +1,36 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "abYgDBRagANw",
+                                    "localIdentifier": "m_abYgDBRagANw",
+                                    "name": "_Timeline [EOP]",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1266"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "timeline.year",
+                            "name": "Year (Timeline)",
+                            "uri": "/gdc/md/referenceworkspace/obj/992"
+                        },
+                        "identifier": "timeline.aag81lMifn6q",
+                        "localIdentifier": "a_timeline.aag81lMifn6q",
+                        "name": "Year (Timeline)",
+                        "uri": "/gdc/md/referenceworkspace/obj/1010"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,66 +1,52 @@
 {
     "insight": {
-        "identifier": "ComboChart.3eaadd3ef95f4900850b1677891bc4ba",
-        "uri": "ComboChart.3eaadd3ef95f4900850b1677891bc4ba",
-        "visualizationUrl": "local:combo2",
-        "title": "ComboChart - discard stacking when primary measures are not specified - secondary is column",
         "buckets": [
+            { "items": [], "localIdentifier": "measures" },
             {
-                "localIdentifier": "measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "secondary_measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "ComboChart.3eaadd3ef95f4900850b1677891bc4ba",
         "properties": {
-            "controls": {
-                "primaryChartType": "line",
-                "secondaryChartType": "column",
-                "stackMeasures": true
-            }
-        }
+            "controls": { "primaryChartType": "line", "secondaryChartType": "column", "stackMeasures": true }
+        },
+        "sorts": [],
+        "title": "ComboChart - discard stacking when primary measures are not specified - secondary is column",
+        "uri": "ComboChart.3eaadd3ef95f4900850b1677891bc4ba",
+        "visualizationUrl": "local:combo2"
     }
 }

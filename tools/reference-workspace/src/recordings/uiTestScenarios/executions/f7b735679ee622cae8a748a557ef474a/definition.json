@@ -1,33 +1,18 @@
 {
-    "workspace": "reference-workspace",
-    "buckets": [],
     "attributes": [
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.product.id.name",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                 "localIdentifier": "a_label.product.id.name"
             }
         }
     ],
-    "measures": [],
-    "dimensions": [
-        {
-            "itemIdentifiers": ["a_label.product.id.name"]
-        },
-        {
-            "itemIdentifiers": []
-        }
-    ],
+    "buckets": [],
+    "dimensions": [{ "itemIdentifiers": ["a_label.product.id.name"] }, { "itemIdentifiers": [] }],
     "filters": [],
+    "measures": [],
     "sortBy": [
-        {
-            "attributeSortItem": {
-                "attributeIdentifier": "a_label.product.id.name",
-                "direction": "asc"
-            }
-        }
-    ]
+        { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "asc" } }
+    ],
+    "workspace": "reference-workspace"
 }

@@ -1,86 +1,71 @@
 {
     "insight": {
-        "identifier": "PivotTable.3e54973168ed50cf728b3c4546bf6ecd",
-        "uri": "PivotTable.3e54973168ed50cf728b3c4546bf6ecd",
-        "visualizationUrl": "local:table",
-        "title": "PivotTable - two measures and multiple subtotals",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.department",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.department"
                         }
                     }
                 ],
+                "localIdentifier": "attribute",
                 "totals": [
                     {
-                        "type": "sum",
+                        "attributeIdentifier": "a_label.owner.department",
                         "measureIdentifier": "m_aangOxLSeztu",
-                        "attributeIdentifier": "a_label.owner.department"
+                        "type": "sum"
                     },
                     {
-                        "type": "med",
+                        "attributeIdentifier": "a_label.owner.department",
                         "measureIdentifier": "m_aangOxLSeztu",
-                        "attributeIdentifier": "a_label.owner.department"
+                        "type": "med"
                     },
                     {
-                        "type": "med",
+                        "attributeIdentifier": "a_label.owner.department",
                         "measureIdentifier": "m_acugFHNJgsBy",
-                        "attributeIdentifier": "a_label.owner.department"
+                        "type": "med"
                     },
                     {
-                        "type": "nat",
+                        "attributeIdentifier": "a_label.owner.department",
                         "measureIdentifier": "m_acugFHNJgsBy",
-                        "attributeIdentifier": "a_label.owner.department"
+                        "type": "nat"
                     }
                 ]
             },
             {
-                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
@@ -93,18 +78,20 @@
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "columns"
             }
         ],
         "filters": [],
+        "identifier": "PivotTable.3e54973168ed50cf728b3c4546bf6ecd",
+        "properties": {},
         "sorts": [],
-        "properties": {}
+        "title": "PivotTable - two measures and multiple subtotals",
+        "uri": "PivotTable.3e54973168ed50cf728b3c4546bf6ecd",
+        "visualizationUrl": "local:table"
     }
 }

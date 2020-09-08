@@ -1,88 +1,59 @@
 {
     "insight": {
-        "identifier": "Heatmap.40e3c62f627ed32f7cad2a66b1cc230a",
-        "uri": "Heatmap.40e3c62f627ed32f7cad2a66b1cc230a",
-        "visualizationUrl": "local:heatmap",
-        "title": "Heatmap - axis name configuration - invisible",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
             {
-                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "stack"
             }
         ],
         "filters": [],
-        "sorts": [
-            {
-                "attributeSortItem": {
-                    "attributeIdentifier": "a_label.product.id.name",
-                    "direction": "desc"
-                }
-            }
-        ],
+        "identifier": "Heatmap.40e3c62f627ed32f7cad2a66b1cc230a",
         "properties": {
             "controls": {
-                "xaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                },
-                "yaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                },
-                "secondary_xaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                },
-                "secondary_yaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                }
+                "secondary_xaxis": { "name": { "position": "center" } },
+                "secondary_yaxis": { "name": { "position": "center" } },
+                "xaxis": { "name": { "position": "center" } },
+                "yaxis": { "name": { "position": "center" } }
             }
-        }
+        },
+        "sorts": [
+            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
+        ],
+        "title": "Heatmap - axis name configuration - invisible",
+        "uri": "Heatmap.40e3c62f627ed32f7cad2a66b1cc230a",
+        "visualizationUrl": "local:heatmap"
     }
 }

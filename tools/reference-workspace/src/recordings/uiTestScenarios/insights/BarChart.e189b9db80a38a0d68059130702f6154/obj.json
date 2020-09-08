@@ -1,67 +1,54 @@
 {
     "insight": {
-        "identifier": "BarChart.e189b9db80a38a0d68059130702f6154",
-        "uri": "BarChart.e189b9db80a38a0d68059130702f6154",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - four measures and PoP",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
                             "alias": "Won Last Year",
                             "definition": {
                                 "popMeasureDefinition": {
                                     "measureIdentifier": "m_acugFHNJgsBy",
-                                    "popAttribute": {
-                                        "identifier": "closed.year",
-                                        "type": "attribute"
-                                    }
+                                    "popAttribute": { "identifier": "closed.year", "type": "attribute" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
                             "alias": "Ratio of Won and Lost",
                             "definition": {
                                 "arithmeticMeasure": {
@@ -71,34 +58,32 @@
                                     ],
                                     "operator": "ratio"
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "closed.aag81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_closed.aag81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "BarChart.e189b9db80a38a0d68059130702f6154",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "BarChart - four measures and PoP",
+        "uri": "BarChart.e189b9db80a38a0d68059130702f6154",
+        "visualizationUrl": "local:bar"
     }
 }

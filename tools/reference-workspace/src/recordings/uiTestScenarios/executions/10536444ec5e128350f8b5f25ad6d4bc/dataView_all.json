@@ -1,0 +1,62 @@
+{
+    "count": [6, 3],
+    "data": [
+        ["10291576.74", "0.522072936660269", "0.569865642994242"],
+        ["9525857.91", "0.580357142857143", "0.615"],
+        ["8042031.92", "0.572277227722772", "0.613465346534653"],
+        ["38596194.86", "0.53037542662116", "0.578634812286689"],
+        ["22946895.47", "0.554385964912281", "0.600140350877193"],
+        ["27222899.64", "0.565963060686016", "0.61087098886706"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Win Rate", "order": 1 } },
+                { "measureHeaderItem": { "name": "Probability", "order": 2 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [6, 3]
+}

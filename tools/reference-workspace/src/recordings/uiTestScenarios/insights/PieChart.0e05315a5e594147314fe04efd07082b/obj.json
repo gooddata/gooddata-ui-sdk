@@ -1,46 +1,39 @@
 {
     "insight": {
-        "identifier": "PieChart.0e05315a5e594147314fe04efd07082b",
-        "uri": "PieChart.0e05315a5e594147314fe04efd07082b",
-        "visualizationUrl": "local:pie",
-        "title": "PieChart - single measure with viewBy",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "PieChart.0e05315a5e594147314fe04efd07082b",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "PieChart - single measure with viewBy",
+        "uri": "PieChart.0e05315a5e594147314fe04efd07082b",
+        "visualizationUrl": "local:pie"
     }
 }

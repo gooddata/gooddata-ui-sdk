@@ -1,0 +1,44 @@
+[
+    {
+        "n2oMap": { "m_aadpHDMBecIy": "m_aadpHDMBecIy" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aadpHDMBecIy"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "attribute" }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aadpHDMBecIy"
+                    }
+                }
+            ],
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "only measure",
+        "vis": "Xirr"
+    }
+]

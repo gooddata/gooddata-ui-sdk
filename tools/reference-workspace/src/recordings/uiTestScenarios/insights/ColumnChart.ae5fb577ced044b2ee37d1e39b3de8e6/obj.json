@@ -1,76 +1,58 @@
 {
     "insight": {
-        "identifier": "ColumnChart.ae5fb577ced044b2ee37d1e39b3de8e6",
-        "uri": "ColumnChart.ae5fb577ced044b2ee37d1e39b3de8e6",
-        "visualizationUrl": "local:column",
-        "title": "ColumnChart - two measures with dual axis ignores stack measures",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "ColumnChart.ae5fb577ced044b2ee37d1e39b3de8e6",
         "properties": {
-            "controls": {
-                "stackMeasures": true,
-                "secondary_yaxis": {
-                    "measures": ["m_aangOxLSeztu"]
-                }
-            }
-        }
+            "controls": { "secondary_yaxis": { "measures": ["m_aangOxLSeztu"] }, "stackMeasures": true }
+        },
+        "sorts": [],
+        "title": "ColumnChart - two measures with dual axis ignores stack measures",
+        "uri": "ColumnChart.ae5fb577ced044b2ee37d1e39b3de8e6",
+        "visualizationUrl": "local:column"
     }
 }

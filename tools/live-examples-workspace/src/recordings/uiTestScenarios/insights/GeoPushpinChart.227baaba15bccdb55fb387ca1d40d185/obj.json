@@ -1,36 +1,26 @@
 {
     "insight": {
-        "identifier": "GeoPushpinChart.227baaba15bccdb55fb387ca1d40d185",
-        "uri": "GeoPushpinChart.227baaba15bccdb55fb387ca1d40d185",
-        "visualizationUrl": "local:pushpin",
-        "title": "GeoPushpinChart - location and color with tooltip",
         "buckets": [
+            { "items": [], "localIdentifier": "size" },
             {
-                "localIdentifier": "size",
-                "items": []
-            },
-            {
-                "localIdentifier": "color",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+                            "alias": "Density",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "fact.uscities.density"
-                                    },
-                                    "aggregation": "sum"
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.uscities.density" }
                                 }
                             },
                             "format": "#,##0.00",
-                            "alias": "Density"
+                            "localIdentifier": "m_35a08895_fact.uscities.density_sum"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "color"
             },
             {
-                "localIdentifier": "location",
                 "items": [
                     {
                         "attribute": {
@@ -41,33 +31,17 @@
                             "localIdentifier": "a_label.uscities.city.location"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "location"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            },
-            {
-                "localIdentifier": "tooltipText",
-                "items": [
-                    {
-                        "attribute": {
-                            "displayForm": {
-                                "identifier": "label.uscities.city",
-                                "type": "displayForm"
-                            },
-                            "localIdentifier": "tooltipText_df"
-                        }
-                    }
-                ]
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "GeoPushpinChart.227baaba15bccdb55fb387ca1d40d185",
+        "properties": { "controls": { "tooltipText": "label.uscities.city" } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "tooltipText": "label.uscities.city"
-            }
-        }
+        "title": "GeoPushpinChart - location and color with tooltip",
+        "uri": "GeoPushpinChart.227baaba15bccdb55fb387ca1d40d185",
+        "visualizationUrl": "local:pushpin"
     }
 }

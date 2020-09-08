@@ -1,40 +1,30 @@
 {
     "insight": {
-        "identifier": "BarChart.45beabdd49035f39271e8476d5b93b49",
-        "uri": "BarChart.45beabdd49035f39271e8476d5b93b49",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - single measure",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
-            {
-                "localIdentifier": "view",
-                "items": []
-            },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "view" },
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "BarChart.45beabdd49035f39271e8476d5b93b49",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "BarChart - single measure",
+        "uri": "BarChart.45beabdd49035f39271e8476d5b93b49",
+        "visualizationUrl": "local:bar"
     }
 }

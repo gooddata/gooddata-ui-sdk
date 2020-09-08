@@ -1,0 +1,62 @@
+{
+    "count": [6, 3],
+    "data": [
+        ["27222899.64", "9237969.87", "17984929.77"],
+        ["22946895.47", "8857607.06", "14089288.41"],
+        ["38596194.86", "9247539.62", "29348655.24"],
+        ["8042031.92", "3973206.21", "4068825.71"],
+        ["9525857.91", "3374392.19", "6151465.72"],
+        ["10291576.74", "3620038.5", "6671538.24"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_f72796b0fbc7c0dc4d17a1e68c1a9933", "order": 2 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [6, 3]
+}

@@ -1,67 +1,54 @@
 {
     "insight": {
-        "identifier": "ScatterPlot.526a6f4fc5b272a9f68da8006bf52e5f",
-        "uri": "ScatterPlot.526a6f4fc5b272a9f68da8006bf52e5f",
-        "visualizationUrl": "local:scatter",
-        "title": "ScatterPlot - data labels - forced visible",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "abZgFKGPaGYM"
-                                    }
+                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "secondary_measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "attribute"
             }
         ],
         "filters": [],
+        "identifier": "ScatterPlot.526a6f4fc5b272a9f68da8006bf52e5f",
+        "properties": { "controls": { "dataLabels": { "visible": true } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "dataLabels": {
-                    "visible": true
-                }
-            }
-        }
+        "title": "ScatterPlot - data labels - forced visible",
+        "uri": "ScatterPlot.526a6f4fc5b272a9f68da8006bf52e5f",
+        "visualizationUrl": "local:scatter"
     }
 }

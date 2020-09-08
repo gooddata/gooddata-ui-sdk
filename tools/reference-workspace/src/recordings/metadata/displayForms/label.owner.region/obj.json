@@ -1,7 +1,9 @@
 {
-    "attribute": {
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086"
-    },
+    "attribute": { "uri": "/gdc/md/referenceworkspace/obj/1086" },
+    "description": "",
     "id": "label.owner.region",
-    "title": "Region"
+    "ref": { "identifier": "label.owner.region" },
+    "title": "Region",
+    "type": "displayForm",
+    "uri": "/gdc/md/referenceworkspace/obj/1087"
 }

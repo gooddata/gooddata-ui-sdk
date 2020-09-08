@@ -1,0 +1,209 @@
+{
+    "count": [4, 18],
+    "data": [
+        [
+            "155062",
+            "454753.91",
+            "1336587.88",
+            "827023.16",
+            "1279125.57",
+            "1881130.72",
+            "2381754.89",
+            "3114457.02",
+            "2226750.11",
+            "8357946.52",
+            "10648545.85",
+            "7907166.61",
+            "13359996.53",
+            "12517790.9",
+            "24506269.93",
+            "9886014.84",
+            "11361393.07",
+            "4423687.03"
+        ],
+        [
+            "9062",
+            "104406.86",
+            "137744.64",
+            "214945.12",
+            "149274.28",
+            "654456.8",
+            "585251.54",
+            "844258.64",
+            "553892.88",
+            "2899331.2",
+            "4793706.39",
+            "4148394.77",
+            "5029095.75",
+            "4027569.38",
+            "5916460.75",
+            "3983919.39",
+            "3339180.66",
+            "919802.4"
+        ],
+        [
+            "146000",
+            "350347.05",
+            "1198843.24",
+            "612078.04",
+            "1129851.29",
+            "1226673.92",
+            "1796503.35",
+            "2270198.38",
+            "1672857.23",
+            "5458615.32",
+            "5854839.46",
+            "3758771.84",
+            "8330900.78",
+            "8490221.52",
+            "18589809.18",
+            "5902095.45",
+            "8022212.41",
+            "3503884.63"
+        ],
+        [
+            "16.1112337232399",
+            "3.35559416306553",
+            "8.70337488268146",
+            "2.84760147148258",
+            "7.5689615786457",
+            "1.87433902436341",
+            "3.06962601072353",
+            "2.68898447992193",
+            "3.0201818626013",
+            "1.88271533793725",
+            "1.22135962941193",
+            "0.90607862761335",
+            "1.65654049835897",
+            "2.10802613659755",
+            "3.14204893187198",
+            "1.48147963656463",
+            "2.40244935115311",
+            "3.80938844038676"
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_f72796b0fbc7c0dc4d17a1e68c1a9933", "order": 2 } },
+                { "measureHeaderItem": { "name": "m_68d94d71b9317a58cd6c5b9a3f71f488", "order": 3 } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2008",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8033"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2008",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8034"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2008",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8035"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2008",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8036"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2009",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8037"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2009",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8038"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2009",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8039"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2009",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8040"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8041"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8042"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8043"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8044"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8045"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8046"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8047"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8048"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8049"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8050"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [4, 18]
+}

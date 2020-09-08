@@ -1,77 +1,62 @@
 {
     "insight": {
-        "identifier": "BarChart.b0d2e37948366d986748d8bbc9e6b270",
-        "uri": "BarChart.b0d2e37948366d986748d8bbc9e6b270",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - viewBy date and PoP measure",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
                             "alias": "Won Last Year",
                             "definition": {
                                 "popMeasureDefinition": {
                                     "measureIdentifier": "m_acugFHNJgsBy",
-                                    "popAttribute": {
-                                        "identifier": "closed.year",
-                                        "type": "attribute"
-                                    }
+                                    "popAttribute": { "identifier": "closed.year", "type": "attribute" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "closed.aag81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_closed.aag81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "BarChart.b0d2e37948366d986748d8bbc9e6b270",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "BarChart - viewBy date and PoP measure",
+        "uri": "BarChart.b0d2e37948366d986748d8bbc9e6b270",
+        "visualizationUrl": "local:bar"
     }
 }

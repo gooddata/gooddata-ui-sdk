@@ -1,76 +1,58 @@
 {
     "insight": {
-        "identifier": "BarChart.04d3e21dab8b8c927c0ac11e0dbc4390",
-        "uri": "BarChart.04d3e21dab8b8c927c0ac11e0dbc4390",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - two measures with dual axis ignores stack measures",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "BarChart.04d3e21dab8b8c927c0ac11e0dbc4390",
         "properties": {
-            "controls": {
-                "stackMeasures": true,
-                "secondary_xaxis": {
-                    "measures": ["m_aangOxLSeztu"]
-                }
-            }
-        }
+            "controls": { "secondary_xaxis": { "measures": ["m_aangOxLSeztu"] }, "stackMeasures": true }
+        },
+        "sorts": [],
+        "title": "BarChart - two measures with dual axis ignores stack measures",
+        "uri": "BarChart.04d3e21dab8b8c927c0ac11e0dbc4390",
+        "visualizationUrl": "local:bar"
     }
 }

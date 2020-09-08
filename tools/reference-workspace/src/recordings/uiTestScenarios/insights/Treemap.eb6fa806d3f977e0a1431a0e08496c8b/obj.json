@@ -1,40 +1,30 @@
 {
     "insight": {
-        "identifier": "Treemap.eb6fa806d3f977e0a1431a0e08496c8b",
-        "uri": "Treemap.eb6fa806d3f977e0a1431a0e08496c8b",
-        "visualizationUrl": "local:treemap",
-        "title": "Treemap - single measure",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
-            {
-                "localIdentifier": "view",
-                "items": []
-            },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "view" },
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "Treemap.eb6fa806d3f977e0a1431a0e08496c8b",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "Treemap - single measure",
+        "uri": "Treemap.eb6fa806d3f977e0a1431a0e08496c8b",
+        "visualizationUrl": "local:treemap"
     }
 }

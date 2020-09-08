@@ -1,0 +1,68 @@
+{
+    "count": [4, 6],
+    "data": [
+        ["38596194.86", "27222899.64", "22946895.47", "10291576.74", "9525857.91", "8042031.92"],
+        ["9247539.62", "9237969.87", "8857607.06", "3620038.5", "3374392.19", "3973206.21"],
+        ["29348655.24", "17984929.77", "14089288.41", "6671538.24", "6151465.72", "4068825.71"],
+        [
+            "3.1736717490268",
+            "1.94684871493308",
+            "1.59064274522017",
+            "1.84294676424021",
+            "1.82298481434074",
+            "1.02406608037593"
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_f72796b0fbc7c0dc4d17a1e68c1a9933", "order": 2 } },
+                { "measureHeaderItem": { "name": "m_68d94d71b9317a58cd6c5b9a3f71f488", "order": 3 } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [4, 6]
+}

@@ -1,0 +1,25 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "timeline.aag81lMifn6q", "type": "displayForm" },
+                "localIdentifier": "a_timeline.aag81lMifn6q"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [{ "itemIdentifiers": ["measureGroup", "a_timeline.aag81lMifn6q"] }],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "abYgDBRagANw", "type": "measure" } }
+                },
+                "localIdentifier": "m_abYgDBRagANw"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}
