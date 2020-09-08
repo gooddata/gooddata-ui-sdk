@@ -82,7 +82,7 @@ Object {
             "item": Object {
               "identifier": Object {
                 "id": "acugFHNJgsBy",
-                "type": "fact",
+                "type": "metric",
               },
             },
           },

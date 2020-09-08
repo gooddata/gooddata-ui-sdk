@@ -444,7 +444,7 @@ export interface IDrillToLegacyDashboard extends IDrill {
 // @public
 export interface IElementQuery {
     query(): Promise<IElementQueryResult>;
-    withAttributeFilters(arrtibuteRef: ObjRef, filters: IElementQueryAttributeFilter[]): IElementQuery;
+    withAttributeFilters(filters: IElementQueryAttributeFilter[]): IElementQuery;
     withLimit(limit: number): IElementQuery;
     withOffset(offset: number): IElementQuery;
     withOptions(options: IElementQueryOptions): IElementQuery;

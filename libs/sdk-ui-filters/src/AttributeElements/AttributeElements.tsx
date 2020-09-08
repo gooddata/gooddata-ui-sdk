@@ -1,7 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual";
-import { IAnalyticalBackend, IElementQueryOptions, IElementQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IElementQueryOptions,
+    IElementQueryResult,
+    IElementQueryAttributeFilter,
+} from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { defaultErrorHandler, OnError, withContexts } from "@gooddata/sdk-ui";
 
@@ -53,6 +58,11 @@ export interface IAttributeElementsProps {
      */
     onError?: OnError;
 
+    /**
+     * Optionally specify filters that restrict the elements.
+     */
+    filters?: IElementQueryAttributeFilter[];
+
     children?(props: IAttributeElementsChildren): React.ReactNode;
 }
 
@@ -86,6 +96,7 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
     public componentDidUpdate(prevProps: IAttributeElementsProps): void {
         const needsInvalidation =
             !areObjRefsEqual(this.props.displayForm, prevProps.displayForm) ||
+            !isEqual(this.props.filters, prevProps.filters) ||
             this.props.workspace !== prevProps.workspace ||
             !isEqual(this.props.options, prevProps.options);
 
@@ -120,7 +131,7 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
     };
 
     public getValidElements = async () => {
-        const { workspace, options, displayForm, offset, limit } = this.props;
+        const { workspace, options, displayForm, offset, limit, filters } = this.props;
 
         this.setState({ isLoading: true, error: null });
 
@@ -132,6 +143,7 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
                 .withOffset(offset || 0)
                 .withLimit(limit || 50)
                 .withOptions(options)
+                .withAttributeFilters(filters ?? [])
                 .query();
 
             this.setState({ validElements: elements, isLoading: false });

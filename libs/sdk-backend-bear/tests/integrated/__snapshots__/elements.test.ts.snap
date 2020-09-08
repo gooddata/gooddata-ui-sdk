@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bear elements should load attribute elements for existing display form 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "title": "1000Bulbs.com",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1426",
+    },
+    Object {
+      "title": "101 Financial",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1427",
+    },
+    Object {
+      "title": "123 Exteriors",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2872",
+    },
+    Object {
+      "title": "14 West",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873",
+    },
+    Object {
+      "title": "1-800 Postcards",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
+    },
+    Object {
+      "title": "1-800 We Answer",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874",
+    },
+    Object {
+      "title": "1-888-OhioComp",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2875",
+    },
+    Object {
+      "title": "1 Source Consulting",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2871",
+    },
+    Object {
+      "title": "1Source International",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1429",
+    },
+    Object {
+      "title": "1st Choice Staffing & Consulting",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2876",
+    },
+    Object {
+      "title": "1st in Video - Music World",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430",
+    },
+    Object {
+      "title": "2HB Software Designs",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1432",
+    },
+    Object {
+      "title": "2 Wheel Bikes",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
+    },
+    Object {
+      "title": "352 Media Group",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433",
+    },
+    Object {
+      "title": "3balls.com",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434",
+    },
+    Object {
+      "title": "3dCart Shopping Cart Software",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435",
+    },
+    Object {
+      "title": "3Degrees",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2877",
+    },
+    Object {
+      "title": "3E",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2878",
+    },
+    Object {
+      "title": "49er Communications",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1436",
+    },
+    Object {
+      "title": "4th Source",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1437",
+    },
+  ],
+  "limit": 20,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 4846,
+}
+`;
+
+exports[`bear elements should load attribute elements for existing display form with a parent filter 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "title": "14 West",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873",
+    },
+    Object {
+      "title": "1-800 Postcards",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
+    },
+    Object {
+      "title": "1-800 We Answer",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874",
+    },
+    Object {
+      "title": "1st in Video - Music World",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430",
+    },
+    Object {
+      "title": "2 Wheel Bikes",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
+    },
+    Object {
+      "title": "352 Media Group",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433",
+    },
+    Object {
+      "title": "3balls.com",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434",
+    },
+    Object {
+      "title": "3dCart Shopping Cart Software",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435",
+    },
+    Object {
+      "title": "49er Communications",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1436",
+    },
+    Object {
+      "title": "614 Media Group",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1438",
+    },
+    Object {
+      "title": "720 Strategies",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1439",
+    },
+    Object {
+      "title": "7-Eleven",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1440",
+    },
+    Object {
+      "title": "A10 Clinical Solutions",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4513",
+    },
+    Object {
+      "title": "A1 Pool Parts",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2888",
+    },
+    Object {
+      "title": "Aaron's Sales and Lease",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=16",
+    },
+    Object {
+      "title": "Aaron's Sales and Lease Ownership",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1446",
+    },
+    Object {
+      "title": "Abacus 24-7",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1448",
+    },
+    Object {
+      "title": "Able Equipment Rental",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2893",
+    },
+    Object {
+      "title": "Abraxas",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1451",
+    },
+    Object {
+      "title": "Absolute Concrete Construction",
+      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1452",
+    },
+  ],
+  "limit": 20,
+  "next": [Function],
+  "offset": 0,
+  "totalCount": 2952,
+}
+`;

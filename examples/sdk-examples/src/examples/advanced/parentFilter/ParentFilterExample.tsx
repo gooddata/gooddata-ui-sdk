@@ -1,222 +1,135 @@
 // (C) 2007-2020 GoodData Corporation
-import React, { Component } from "react";
+import React, { useState, useMemo } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
-import {
-    newPositiveAttributeFilter,
-    attributeIdentifier,
-    attributeDisplayFormRef,
-    ObjRef,
-} from "@gooddata/sdk-model";
+import { newPositiveAttributeFilter, attributeDisplayFormRef, ObjRef, idRef } from "@gooddata/sdk-model";
 import Select from "react-select";
 import { Ldm, LdmExt } from "../../../ldm";
+import { IElementQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 interface IFilterValue {
     value: string;
     label: string;
 }
 
-interface IParentFilterExampleState {
-    stateFilterValues: IFilterValue[];
-    cityFilterValues: IFilterValue[];
+interface ICustomFilterProps {
+    displayForm: ObjRef;
+    filterValues: IFilterValue[];
+    parentFilters?: IElementQueryAttributeFilter[];
+    placeholder: string;
+    onChange: (filters: any) => void;
 }
 
-interface ICityOptions {
-    limit: number;
-    afm:
-        | {
-              attributes: Array<{
-                  displayForm: {
-                      identifier: string | undefined;
-                  };
-                  localIdentifier: string;
-              }>;
-              filters: Array<{
-                  expression: {
-                      value: string;
-                  };
-              }>;
-          }
-        | undefined;
-}
+const CustomFilter: React.FC<ICustomFilterProps> = ({
+    displayForm,
+    filterValues,
+    parentFilters,
+    onChange,
+    placeholder,
+}) => {
+    return (
+        <AttributeElements displayForm={displayForm} filters={parentFilters}>
+            {({ validElements, isLoading, error }) => {
+                if (error) {
+                    // eslint-disable-next-line no-console
+                    console.error("Loading attribute elements failed!", error);
+                }
+                const selectOptions = validElements
+                    ? validElements.items.map((item) => ({
+                          label: item.title,
+                          value: item.uri,
+                      }))
+                    : [];
+                return (
+                    <span
+                        style={{
+                            display: "inline-block",
+                            minWidth: "10em",
+                            verticalAlign: "middle",
+                        }}
+                    >
+                        <Select
+                            onChange={onChange}
+                            options={selectOptions}
+                            isMulti
+                            isLoading={isLoading}
+                            placeholder={placeholder}
+                            value={filterValues}
+                        />
+                        {error && <span style={{ color: "#e54d42" }}>Loading failed!</span>}
+                    </span>
+                );
+            }}
+        </AttributeElements>
+    );
+};
 
-export class ParentFilterExample extends Component<unknown, IParentFilterExampleState> {
-    state: IParentFilterExampleState = {
-        stateFilterValues: [],
-        cityFilterValues: [],
-    };
+export const ParentFilterExample: React.FC = () => {
+    const [stateFilterValues, setStateFilterValues] = useState<IFilterValue[]>([]);
+    const [cityFilterValues, setCityFilterValues] = useState<IFilterValue[]>([]);
 
-    public onStateChange = (stateFilterValues: IFilterValue[]): void => {
-        this.setState({
-            stateFilterValues,
-        });
-    };
-
-    public onCityChange = (cityFilterValues: IFilterValue[]): void => {
-        this.setState({
-            cityFilterValues,
-        });
-    };
-
-    public renderInsightView = (
-        stateFilterValues: IFilterValue[],
-        cityFilterValues: IFilterValue[],
-    ): React.ReactNode => {
-        const visFilters = [];
+    const insightFilters = useMemo(() => {
+        const filters = [];
 
         if (stateFilterValues.length) {
-            visFilters.push(
+            filters.push(
                 newPositiveAttributeFilter(Ldm.LocationState, {
                     uris: stateFilterValues.map((filter) => filter.value),
                 }),
             );
         }
         if (cityFilterValues.length) {
-            visFilters.push(
+            filters.push(
                 newPositiveAttributeFilter(Ldm.LocationCity, {
                     uris: cityFilterValues.map((filter) => filter.value),
                 }),
             );
         }
 
-        return (
+        return filters;
+    }, [stateFilterValues, cityFilterValues]);
+
+    const cityParentFilters = useMemo(() => {
+        return stateFilterValues.length
+            ? [
+                  {
+                      attributeFilter: newPositiveAttributeFilter(Ldm.LocationState, {
+                          uris: stateFilterValues.map((filter) => filter.value),
+                      }),
+                      overAttribute: idRef(LdmExt.locationIdAttributeIdentifier),
+                  },
+              ]
+            : undefined;
+    }, [stateFilterValues]);
+
+    return (
+        <div>
+            <span>Total Sales per site in&emsp;</span>
+            <CustomFilter
+                displayForm={attributeDisplayFormRef(Ldm.LocationState)}
+                filterValues={stateFilterValues}
+                onChange={setStateFilterValues}
+                placeholder="all states"
+            />
+            &emsp;and&emsp;{" "}
+            <CustomFilter
+                displayForm={attributeDisplayFormRef(Ldm.LocationCity)}
+                filterValues={cityFilterValues}
+                onChange={setCityFilterValues}
+                placeholder="all cities"
+                parentFilters={cityParentFilters}
+            />
+            <hr className="separator" />
             <div style={{ height: 500 }}>
                 <BarChart
                     measures={[LdmExt.TotalSales1]}
                     viewBy={Ldm.LocationName.Default}
-                    filters={visFilters}
+                    filters={insightFilters}
                     height={500}
                 />
             </div>
-        );
-    };
-
-    public renderFilter = (
-        key: string,
-        displayForm: ObjRef,
-        filterValues: IFilterValue[],
-        placeholder: string,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-        options: any,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-        onChange: any,
-    ): React.ReactNode => {
-        return (
-            <AttributeElements key={key} displayForm={displayForm} options={options}>
-                {({ validElements, isLoading, error }) => {
-                    if (error) {
-                        // eslint-disable-next-line no-console
-                        console.error("Loading attribute elements failed!", error);
-                    }
-                    const selectOptions = validElements
-                        ? validElements.items.map((item) => ({
-                              label: item.title,
-                              value: item.uri,
-                          }))
-                        : [];
-                    return (
-                        <span
-                            style={{
-                                display: "inline-block",
-                                minWidth: "10em",
-                                verticalAlign: "middle",
-                            }}
-                        >
-                            <Select
-                                onChange={onChange}
-                                className={`s-select-${key}`}
-                                options={selectOptions}
-                                isMulti
-                                isLoading={isLoading}
-                                placeholder={placeholder}
-                                value={filterValues}
-                            />
-                            {error && (
-                                <span
-                                    style={{
-                                        color: "#e54d42",
-                                    }}
-                                >
-                                    Loading failed!
-                                </span>
-                            )}
-                        </span>
-                    );
-                }}
-            </AttributeElements>
-        );
-    };
-
-    public render(): React.ReactNode {
-        const { stateFilterValues, cityFilterValues } = this.state;
-        // State (parent) filter
-        const stateFilter = this.renderFilter(
-            "state",
-            attributeDisplayFormRef(Ldm.LocationState),
-            stateFilterValues,
-            "all states",
-            { limit: 20 },
-            this.onStateChange,
-        );
-
-        // City (child) filter
-        const cityOptions: ICityOptions = {
-            limit: 20,
-            afm: undefined,
-        };
-        if (stateFilterValues.length) {
-            // parent value uris need to be surrounded by '[]' and separated by ','
-            const selectedParentItems = stateFilterValues
-                .map((parentItem) => `[${parentItem.value}]`)
-                .join(", ");
-
-            const afm = {
-                attributes: [
-                    {
-                        displayForm: {
-                            identifier: attributeIdentifier(Ldm.LocationCity),
-                        },
-                        localIdentifier: "childAttribute",
-                    },
-                ],
-                filters: [
-                    {
-                        expression: {
-                            value:
-                                // parent attribute identifier surrounded by '{}'
-                                `({${LdmExt.locationStateAttributeIdentifier}}` +
-                                // selected parent values surrounded by '[]' and separated by ','
-                                ` IN (${selectedParentItems}))` +
-                                // attribute identifier of common attribute between parent
-                                // and child attributes surrounded by '{}'
-                                ` OVER {${LdmExt.locationIdAttributeIdentifier}}` +
-                                // child attribute identifier surrounded by '{}'
-                                ` TO {${LdmExt.locationCityAttributeIdentifier}}`,
-                        },
-                    },
-                ],
-            };
-            cityOptions.afm = afm;
-        }
-        const cityFilter = this.renderFilter(
-            "city",
-            attributeDisplayFormRef(Ldm.LocationCity),
-            cityFilterValues,
-            "all cities",
-            cityOptions,
-            this.onCityChange,
-        );
-
-        return (
-            <div>
-                <span>Total Sales per site in&emsp;</span>
-                {stateFilter}
-                &emsp;and&emsp; {cityFilter}
-                <hr className="separator" />
-                {this.renderInsightView(stateFilterValues, cityFilterValues)}
-            </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 export default ParentFilterExample;
