@@ -23,8 +23,8 @@ export class BearWorkspaceElements implements IElementQueryFactory {
 }
 
 class BearWorkspaceElementsQuery implements IElementQuery {
-    private limit: number | undefined;
-    private offset: number | undefined;
+    private limit: number = 50;
+    private offset: number = 0;
     private options: IElementQueryOptions | undefined;
     private attributeFilters: IElementQueryAttributeFilter[] | undefined;
     // cached AFM used to apply attributeRef and attributeFilters to the element queries
@@ -80,8 +80,8 @@ class BearWorkspaceElementsQuery implements IElementQuery {
     }
 
     private async queryWorker(
-        offset: number | undefined = 0,
-        limit: number | undefined,
+        offset: number,
+        limit: number,
         options: IElementQueryOptions | undefined,
     ): Promise<IElementQueryResult> {
         const mergedOptions = { ...options, limit, offset, afm: this.limitingAfm };
