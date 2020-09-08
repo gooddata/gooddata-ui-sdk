@@ -31,25 +31,17 @@ import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpin
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel";
-import {
-    BucketNames,
-    GoodDataSdkError,
-    IAvailableDrillTargetAttribute,
-    VisualizationTypes,
-} from "@gooddata/sdk-ui";
+import { BucketNames, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     attributeAlias,
     attributeDisplayFormRef,
     bucketAttribute,
-    bucketsItems,
-    IAttribute,
     idRef,
     IInsightDefinition,
     insightBucket,
     insightBuckets,
     insightFilters,
     insightHasDataDefined,
-    isAttribute,
     ISortItem,
     isUriRef,
     newAttribute,
@@ -306,20 +298,10 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         this.renderFun(<CoreGeoChart {...geoPushpinProps} />, document.querySelector(geoPushpinElement));
     }
 
-    private onlyLocationAttributeTargets(data: any) {
-        const locationAttributes: IAttribute[] = bucketsItems(
-            insightBuckets(this.currentInsight, BucketNames.LOCATION),
-        ).filter(isAttribute);
-
-        const locationIdentifier = locationAttributes[0]?.attribute?.localIdentifier;
-        const onlyLocationAttribute = data.availableDrillTargets.attributes.filter(
-            (attribute: IAvailableDrillTargetAttribute) =>
-                attribute.attribute.attributeHeader.localIdentifier === locationIdentifier,
-        );
-
+    private withEmptyAttributeTargets(data: any) {
         return {
             ...data.availableDrillTargets,
-            attributes: onlyLocationAttribute,
+            attributes: [],
         };
     }
 
@@ -330,12 +312,11 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     protected handlePushData = (data: any): void => {
-        // For pushpin chart we want to allow drill only on the
-        // location attribute. Filter out other attributes.
+        // For pushpin chart we do not support drilling from attributes.
         this.superHandlePushData({
             ...data,
             ...(data.availableDrillTargets && {
-                availableDrillTargets: this.onlyLocationAttributeTargets(data),
+                availableDrillTargets: this.withEmptyAttributeTargets(data),
             }),
         });
     };
