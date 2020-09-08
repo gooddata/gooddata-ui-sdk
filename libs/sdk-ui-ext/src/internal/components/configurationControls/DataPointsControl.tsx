@@ -18,7 +18,7 @@ export interface IDataPointsControlProps {
 
 class DataPointsControl extends React.Component<IDataPointsControlProps & WrappedComponentProps> {
     public static defaultProps = {
-        defaultValue: "auto",
+        defaultValue: true,
         showDisabledMessage: false,
     };
     public render() {

@@ -445,12 +445,12 @@
         "limit": 0
     },
     "properties.canvas.dataPoints.auto": {
-        "value": "auto (default)",
+        "value": "auto",
         "comment": "",
         "limit": 0
     },
     "properties.canvas.dataPoints.show": {
-        "value": "show",
+        "value": "show (default)",
         "comment": "",
         "limit": 0
     },
