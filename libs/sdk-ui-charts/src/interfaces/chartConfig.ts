@@ -106,6 +106,12 @@ export interface IChartConfig {
     dataLabels?: IDataLabelsConfig;
 
     /**
+     * Customize visibility of the data points. Data points mark non-extrapolated data in "continuous" charts like line chart, area chart and combo chart made up of these two.
+     * and
+     */
+    dataPoints?: IDataPointsConfig;
+
+    /**
      * Applicable for ComboChart only. When combo chart specifies both primary and secondary measures, it is by default
      * treated as dual-axis chart. Both primary and secondary axis will be visible.
      *
@@ -231,6 +237,13 @@ export type ChartAlignTypes = "top" | "bottom" | "middle";
  */
 export interface IDataLabelsConfig {
     visible?: IDataLabelsVisible;
+}
+
+/**
+ * @public
+ */
+export interface IDataPointsConfig {
+    visible?: IDataPointsVisible;
 }
 
 /**

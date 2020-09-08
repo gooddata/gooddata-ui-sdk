@@ -2,6 +2,7 @@
 import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
+import { dataPointCustomizer } from "../_infra/dataPointVariants";
 import { AreaChartWithTwoMeasuresAndViewBy } from "./base";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { ScenarioGroupNames } from "../_infra/groupNames";
@@ -19,4 +20,11 @@ const dataLabelScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", AreaChartWithTwoMeasuresAndViewBy, dataLabelCustomizer);
 
-export default [legendScenarios, dataLabelScenarios];
+const dataPointScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withGroupNames("customization")
+    .withVisualTestConfig({ groupUnder: "data points" })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("data points", AreaChartWithTwoMeasuresAndViewBy, dataPointCustomizer);
+
+export default [legendScenarios, dataLabelScenarios, dataPointScenarios];
