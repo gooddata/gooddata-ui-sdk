@@ -1,4 +1,10 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
+@import "~@gooddata/goodstrap/lib/core/styles/variables";
+@import "~@gooddata/goodstrap/lib/core/styles/mixins";
+
+$legend-paging-background: #eee;
+$legend-right-width: 190px;
+$paging-button-small-size: 22px;
 $responsive-legend: "only screen and (max-width: 767px)";
 
 @media #{$responsive-legend} {
@@ -135,9 +141,9 @@ $responsive-legend: "only screen and (max-width: 767px)";
 
             .series {
                 flex-flow: row wrap;
+                box-sizing: border-box;
                 justify-content: flex-start;
                 width: auto;
-                box-sizing: border-box;
                 overflow-x: hidden;
                 min-width: 0; // hack for FF
                 max-width: 100%; // hack for IE
@@ -203,8 +209,8 @@ $responsive-legend: "only screen and (max-width: 767px)";
         .labels {
             display: flex;
             font-size: 11px;
-            line-height: 20px;
             overflow: visible;
+            line-height: 20px;
             text-overflow: unset;
             color: $gd-color-link;
         }
@@ -226,6 +232,8 @@ $responsive-legend: "only screen and (max-width: 767px)";
             .boxes {
                 height: 10px;
 
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
                 .box {
                     width: 50px;
                 }
@@ -238,9 +246,13 @@ $responsive-legend: "only screen and (max-width: 767px)";
 
         &.small {
             .boxes {
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
                 .box {
                     width: 40px;
 
+                    // refactor?
+                    // stylelint-disable-next-line max-nesting-depth
                     &.middle {
                         width: 36px;
                     }
@@ -250,10 +262,10 @@ $responsive-legend: "only screen and (max-width: 767px)";
 
         &.position-left,
         &.position-right {
+            flex: 0 0 210px;
             align-items: flex-start;
             margin-right: 5px;
             margin-top: 8px;
-            flex: 0 0 210px;
 
             .labels {
                 display: flex;
@@ -268,6 +280,8 @@ $responsive-legend: "only screen and (max-width: 767px)";
                 width: 10px;
                 margin-left: 20px;
 
+                // refactor?
+                // stylelint-disable-next-line max-nesting-depth
                 .box {
                     height: 30px;
                 }

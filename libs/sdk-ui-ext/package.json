@@ -44,6 +44,7 @@
         "@gooddata/sdk-ui-charts": "^8.0.0-beta.69",
         "@gooddata/sdk-ui-geo": "^8.0.0-beta.69",
         "@gooddata/sdk-ui-pivot": "^8.0.0-beta.69",
+        "@gooddata/sdk-ui-vis-commons": "^8.0.0-beta.69",
         "@gooddata/util": "^8.0.0-beta.69",
         "classnames": "^2.2.6",
         "custom-event": "^1.0.1",

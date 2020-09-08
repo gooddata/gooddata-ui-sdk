@@ -7,7 +7,8 @@
     "author": "GoodData Corporation",
     "license": "LicenseRef-LICENSE",
     "files": [
-        "dist"
+        "dist",
+        "styles"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"

@@ -10,13 +10,9 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 $boder-color-circle-legend: #acaeae;
 
 $insight-small-only: "only screen and (max-width: 480px)";
-$responsive-legend: "only screen and (max-width: 767px)";
 $footer-border: #e2e8ed;
 $footer-border-top: $gd-color-disabled;
 $font-stack-roman: "Avenir", "Helvetica Neue", arial, sans-serif;
-$legend-paging-background: #eee;
-$legend-right-width: 190px;
-$paging-button-small-size: 22px;
 
 //
 //
@@ -244,6 +240,6 @@ $paging-button-small-size: 22px;
     /* stylelint-enable declaration-no-important */
 }
 
-@import "legend";
+@import "~@gooddata/sdk-ui-vis-commons/styles/scss/legend";
 @import "tooltip";
 @import "charts";
