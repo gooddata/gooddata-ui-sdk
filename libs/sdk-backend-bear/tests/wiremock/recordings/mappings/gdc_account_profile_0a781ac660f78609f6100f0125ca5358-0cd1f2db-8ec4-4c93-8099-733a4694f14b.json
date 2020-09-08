@@ -1,0 +1,35 @@
+{
+    "id": "0cd1f2db-8ec4-4c93-8099-733a4694f14b",
+    "name": "gdc_account_profile_0a781ac660f78609f6100f0125ca5358",
+    "request": {
+        "url": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"accountSetting\":{\"links\":{\"self\":\"/gdc/account/profile/0a781ac660f78609f6100f0125ca5358\",\"projects\":\"/gdc/account/profile/0a781ac660f78609f6100f0125ca5358/projects\",\"auditEvents\":\"/gdc/account/profile/0a781ac660f78609f6100f0125ca5358/auditEvents\",\"domain\":\"/gdc/domains/default\"},\"firstName\":\"Dan\",\"lastName\":\"Homola\",\"companyName\":\"GoodData\",\"position\":null,\"created\":\"2018-12-04 13:04:41\",\"updated\":\"2018-12-06 09:58:38\",\"country\":\"\",\"phoneNumber\":\"+420111111111\",\"authenticationModes\":[],\"login\":\"dan.homola@gooddata.com\",\"timezone\":null,\"ssoProvider\":null,\"email\":\"dan.homola@gooddata.com\",\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null}}",
+        "headers": {
+            "X-GDC-LOG-HEADER": "",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json;charset=utf-8",
+            "Date": "Tue, 08 Sep 2020 13:06:39 GMT",
+            "Server": "GoodData WebApp",
+            "X-GDC-REQUEST-TIME": "12",
+            "X-GDC-REQUEST": "19UsV27ZmfyLCfKh",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "0cd1f2db-8ec4-4c93-8099-733a4694f14b",
+    "persistent": true,
+    "insertionIndex": 4
+}

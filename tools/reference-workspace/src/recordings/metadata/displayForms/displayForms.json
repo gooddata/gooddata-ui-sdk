@@ -1,5 +1,6 @@
 {
     "label.product.id.name": {},
     "label.owner.department": {},
-    "label.owner.region": {}
+    "label.owner.region": {},
+    "label.stage.status": {}
 }

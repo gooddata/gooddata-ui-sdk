@@ -1,7 +1,15 @@
-// (C) 2019-2020 GoodData Corporation
-/* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-12-10T13:37:20.314Z; */
-import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition } from "@gooddata/sdk-model";
+// (C) 2020 GoodData Corporation
+
+/* eslint-disable */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-09-08T12:48:52.046Z; */
+import {
+    newAttribute,
+    newMeasure,
+    IAttribute,
+    IMeasure,
+    IMeasureDefinition,
+    idRef,
+} from "@gooddata/sdk-model";
 
 export const Account = {
     /**
@@ -148,55 +156,57 @@ export const Status_1: IAttribute = newAttribute("label.stage.status");
  * Metric ID: abxgDICQav2J
  * Metric Type: MAQL Metric
  */
-export const SnapshotEOP: IMeasure<IMeasureDefinition> = newMeasure("abxgDICQav2J");
+export const SnapshotEOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("abxgDICQav2J", "measure"));
 /**
  * Metric Title: _Timeline [EOP]
  * Metric ID: abYgDBRagANw
  * Metric Type: MAQL Metric
  */
-export const TimelineEOP: IMeasure<IMeasureDefinition> = newMeasure("abYgDBRagANw");
+export const TimelineEOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("abYgDBRagANw", "measure"));
 /**
  * Metric Title: # Of Opportunities
  * Metric ID: abQgDWx4gOUu
  * Metric Type: MAQL Metric
  */
-export const NrOfOpportunities: IMeasure<IMeasureDefinition> = newMeasure("abQgDWx4gOUu");
+export const NrOfOpportunities: IMeasure<IMeasureDefinition> = newMeasure(idRef("abQgDWx4gOUu", "measure"));
 /**
  * Metric Title: # Of Opportunities Won
  * Metric ID: aa4gLlQhcmLO
  * Metric Type: MAQL Metric
  */
-export const NrOfOpportunitiesWon: IMeasure<IMeasureDefinition> = newMeasure("aa4gLlQhcmLO");
+export const NrOfOpportunitiesWon: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aa4gLlQhcmLO", "measure"),
+);
 /**
  * Metric Title: Amount
  * Metric ID: aangOxLSeztu
  * Metric Type: MAQL Metric
  */
-export const Amount: IMeasure<IMeasureDefinition> = newMeasure("aangOxLSeztu");
+export const Amount: IMeasure<IMeasureDefinition> = newMeasure(idRef("aangOxLSeztu", "measure"));
 /**
  * Metric Title: Probability
  * Metric ID: abEgMnq5hyJQ
  * Metric Type: MAQL Metric
  */
-export const Probability: IMeasure<IMeasureDefinition> = newMeasure("abEgMnq5hyJQ");
+export const Probability: IMeasure<IMeasureDefinition> = newMeasure(idRef("abEgMnq5hyJQ", "measure"));
 /**
  * Metric Title: Sample XIRR
  * Metric ID: aadpHDMBecIy
  * Metric Type: MAQL Metric
  */
-export const SampleXIRR: IMeasure<IMeasureDefinition> = newMeasure("aadpHDMBecIy");
+export const SampleXIRR: IMeasure<IMeasureDefinition> = newMeasure(idRef("aadpHDMBecIy", "measure"));
 /**
  * Metric Title: Win Rate
  * Metric ID: abZgFKGPaGYM
  * Metric Type: MAQL Metric
  */
-export const WinRate: IMeasure<IMeasureDefinition> = newMeasure("abZgFKGPaGYM");
+export const WinRate: IMeasure<IMeasureDefinition> = newMeasure(idRef("abZgFKGPaGYM", "measure"));
 /**
  * Metric Title: Won
  * Metric ID: acugFHNJgsBy
  * Metric Type: MAQL Metric
  */
-export const Won: IMeasure<IMeasureDefinition> = newMeasure("acugFHNJgsBy");
+export const Won: IMeasure<IMeasureDefinition> = newMeasure(idRef("acugFHNJgsBy", "measure"));
 /**
  * Fact Title: Activity (Date)
  * Fact ID: dt.activity.activity
@@ -207,37 +217,37 @@ export const ActivityDate = {
      * Fact ID: dt.activity.activity
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("dt.activity.activity", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Activity (Date)
      * Fact ID: dt.activity.activity
      * Fact Aggregation: count
-     */ Count: newMeasure("dt.activity.activity", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Activity (Date)
      * Fact ID: dt.activity.activity
      * Fact Aggregation: avg
-     */ Avg: newMeasure("dt.activity.activity", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Activity (Date)
      * Fact ID: dt.activity.activity
      * Fact Aggregation: min
-     */ Min: newMeasure("dt.activity.activity", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Activity (Date)
      * Fact ID: dt.activity.activity
      * Fact Aggregation: max
-     */ Max: newMeasure("dt.activity.activity", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Activity (Date)
      * Fact ID: dt.activity.activity
      * Fact Aggregation: median
-     */ Median: newMeasure("dt.activity.activity", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Activity (Date)
      * Fact ID: dt.activity.activity
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("dt.activity.activity", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("dt.activity.activity", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Amount
@@ -249,37 +259,37 @@ export const Amount_1 = {
      * Fact ID: fact.opportunitysnapshot.amount
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.opportunitysnapshot.amount", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Amount
      * Fact ID: fact.opportunitysnapshot.amount
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.opportunitysnapshot.amount", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Amount
      * Fact ID: fact.opportunitysnapshot.amount
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.opportunitysnapshot.amount", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Amount
      * Fact ID: fact.opportunitysnapshot.amount
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.opportunitysnapshot.amount", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Amount
      * Fact ID: fact.opportunitysnapshot.amount
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.opportunitysnapshot.amount", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Amount
      * Fact ID: fact.opportunitysnapshot.amount
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.opportunitysnapshot.amount", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Amount
      * Fact ID: fact.opportunitysnapshot.amount
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.opportunitysnapshot.amount", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.opportunitysnapshot.amount", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Days to Close
@@ -291,37 +301,43 @@ export const DaysToClose = {
      * Fact ID: fact.opportunitysnapshot.daystoclose
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.opportunitysnapshot.daystoclose", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Days to Close
      * Fact ID: fact.opportunitysnapshot.daystoclose
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.opportunitysnapshot.daystoclose", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) =>
+        m.aggregation("count"),
+    ),
     /**
      * Fact Title: Days to Close
      * Fact ID: fact.opportunitysnapshot.daystoclose
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.opportunitysnapshot.daystoclose", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Days to Close
      * Fact ID: fact.opportunitysnapshot.daystoclose
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.opportunitysnapshot.daystoclose", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Days to Close
      * Fact ID: fact.opportunitysnapshot.daystoclose
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.opportunitysnapshot.daystoclose", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Days to Close
      * Fact ID: fact.opportunitysnapshot.daystoclose
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.opportunitysnapshot.daystoclose", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) =>
+        m.aggregation("median"),
+    ),
     /**
      * Fact Title: Days to Close
      * Fact ID: fact.opportunitysnapshot.daystoclose
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.opportunitysnapshot.daystoclose", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.opportunitysnapshot.daystoclose", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
 };
 /**
  * Fact Title: Duration
@@ -333,37 +349,37 @@ export const Duration = {
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.stagehistory.duration", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.stagehistory.duration", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Opp. Close (Date)
@@ -375,37 +391,37 @@ export const OppCloseDate = {
      * Fact ID: dt.opportunitysnapshot.closedate
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("dt.opportunitysnapshot.closedate", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Opp. Close (Date)
      * Fact ID: dt.opportunitysnapshot.closedate
      * Fact Aggregation: count
-     */ Count: newMeasure("dt.opportunitysnapshot.closedate", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Opp. Close (Date)
      * Fact ID: dt.opportunitysnapshot.closedate
      * Fact Aggregation: avg
-     */ Avg: newMeasure("dt.opportunitysnapshot.closedate", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Opp. Close (Date)
      * Fact ID: dt.opportunitysnapshot.closedate
      * Fact Aggregation: min
-     */ Min: newMeasure("dt.opportunitysnapshot.closedate", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Opp. Close (Date)
      * Fact ID: dt.opportunitysnapshot.closedate
      * Fact Aggregation: max
-     */ Max: newMeasure("dt.opportunitysnapshot.closedate", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Opp. Close (Date)
      * Fact ID: dt.opportunitysnapshot.closedate
      * Fact Aggregation: median
-     */ Median: newMeasure("dt.opportunitysnapshot.closedate", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Opp. Close (Date)
      * Fact ID: dt.opportunitysnapshot.closedate
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("dt.opportunitysnapshot.closedate", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("dt.opportunitysnapshot.closedate", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Opp. Created (Date)
@@ -417,37 +433,37 @@ export const OppCreatedDate = {
      * Fact ID: dt.opportunity.oppcreated
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("dt.opportunity.oppcreated", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Opp. Created (Date)
      * Fact ID: dt.opportunity.oppcreated
      * Fact Aggregation: count
-     */ Count: newMeasure("dt.opportunity.oppcreated", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Opp. Created (Date)
      * Fact ID: dt.opportunity.oppcreated
      * Fact Aggregation: avg
-     */ Avg: newMeasure("dt.opportunity.oppcreated", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Opp. Created (Date)
      * Fact ID: dt.opportunity.oppcreated
      * Fact Aggregation: min
-     */ Min: newMeasure("dt.opportunity.oppcreated", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Opp. Created (Date)
      * Fact ID: dt.opportunity.oppcreated
      * Fact Aggregation: max
-     */ Max: newMeasure("dt.opportunity.oppcreated", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Opp. Created (Date)
      * Fact ID: dt.opportunity.oppcreated
      * Fact Aggregation: median
-     */ Median: newMeasure("dt.opportunity.oppcreated", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Opp. Created (Date)
      * Fact ID: dt.opportunity.oppcreated
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("dt.opportunity.oppcreated", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("dt.opportunity.oppcreated", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Opp. Snapshot (Date)
@@ -459,37 +475,43 @@ export const OppSnapshotDate = {
      * Fact ID: dt.opportunitysnapshot.snapshotdate
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("dt.opportunitysnapshot.snapshotdate", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Opp. Snapshot (Date)
      * Fact ID: dt.opportunitysnapshot.snapshotdate
      * Fact Aggregation: count
-     */ Count: newMeasure("dt.opportunitysnapshot.snapshotdate", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) =>
+        m.aggregation("count"),
+    ),
     /**
      * Fact Title: Opp. Snapshot (Date)
      * Fact ID: dt.opportunitysnapshot.snapshotdate
      * Fact Aggregation: avg
-     */ Avg: newMeasure("dt.opportunitysnapshot.snapshotdate", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Opp. Snapshot (Date)
      * Fact ID: dt.opportunitysnapshot.snapshotdate
      * Fact Aggregation: min
-     */ Min: newMeasure("dt.opportunitysnapshot.snapshotdate", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Opp. Snapshot (Date)
      * Fact ID: dt.opportunitysnapshot.snapshotdate
      * Fact Aggregation: max
-     */ Max: newMeasure("dt.opportunitysnapshot.snapshotdate", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Opp. Snapshot (Date)
      * Fact ID: dt.opportunitysnapshot.snapshotdate
      * Fact Aggregation: median
-     */ Median: newMeasure("dt.opportunitysnapshot.snapshotdate", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) =>
+        m.aggregation("median"),
+    ),
     /**
      * Fact Title: Opp. Snapshot (Date)
      * Fact ID: dt.opportunitysnapshot.snapshotdate
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("dt.opportunitysnapshot.snapshotdate", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("dt.opportunitysnapshot.snapshotdate", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
 };
 /**
  * Fact Title: Probability
@@ -501,37 +523,43 @@ export const Probability_1 = {
      * Fact ID: fact.opportunitysnapshot.probability
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.opportunitysnapshot.probability", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Probability
      * Fact ID: fact.opportunitysnapshot.probability
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.opportunitysnapshot.probability", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) =>
+        m.aggregation("count"),
+    ),
     /**
      * Fact Title: Probability
      * Fact ID: fact.opportunitysnapshot.probability
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.opportunitysnapshot.probability", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Probability
      * Fact ID: fact.opportunitysnapshot.probability
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.opportunitysnapshot.probability", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Probability
      * Fact ID: fact.opportunitysnapshot.probability
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.opportunitysnapshot.probability", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Probability
      * Fact ID: fact.opportunitysnapshot.probability
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.opportunitysnapshot.probability", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) =>
+        m.aggregation("median"),
+    ),
     /**
      * Fact Title: Probability
      * Fact ID: fact.opportunitysnapshot.probability
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.opportunitysnapshot.probability", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.opportunitysnapshot.probability", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
 };
 /**
  * Fact Title: Timeline (Date)
@@ -543,37 +571,37 @@ export const TimelineDate = {
      * Fact ID: dt.timeline.timeline
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("dt.timeline.timeline", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Timeline (Date)
      * Fact ID: dt.timeline.timeline
      * Fact Aggregation: count
-     */ Count: newMeasure("dt.timeline.timeline", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Timeline (Date)
      * Fact ID: dt.timeline.timeline
      * Fact Aggregation: avg
-     */ Avg: newMeasure("dt.timeline.timeline", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Timeline (Date)
      * Fact ID: dt.timeline.timeline
      * Fact Aggregation: min
-     */ Min: newMeasure("dt.timeline.timeline", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Timeline (Date)
      * Fact ID: dt.timeline.timeline
      * Fact Aggregation: max
-     */ Max: newMeasure("dt.timeline.timeline", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Timeline (Date)
      * Fact ID: dt.timeline.timeline
      * Fact Aggregation: median
-     */ Median: newMeasure("dt.timeline.timeline", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Timeline (Date)
      * Fact ID: dt.timeline.timeline
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("dt.timeline.timeline", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("dt.timeline.timeline", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Velocity
@@ -585,37 +613,37 @@ export const Velocity = {
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.stagehistory.velocity", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.stagehistory.velocity", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Attribute Title: Year (Created)
@@ -1557,4 +1585,62 @@ export const TimelineDate_1 = {
      * Display Form ID: timeline.date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("timeline.date.eddmmyyyy"),
 };
-export const Insights = {};
+export const Insights = {
+    /**
+     * Insight Title: Test Bar Chart
+     * Insight ID: acCgxKCchupK
+     */
+    TestBarChart: "acCgxKCchupK",
+    /**
+     * Insight Title: my insight
+     * Insight ID: acFU8WHNe2JJ
+     */ MyInsight: "acFU8WHNe2JJ",
+    /**
+     * Insight Title: my heatmap
+     * Insight ID: abKVazWBbnx5
+     */ MyHeatmap: "abKVazWBbnx5",
+    /**
+     * Insight Title: my treemap
+     * Insight ID: aaTVeHZ6e5mB
+     */ MyTreemap: "aaTVeHZ6e5mB",
+    /**
+     * Insight Title: my line chart
+     * Insight ID: ab2Va4rig3Cf
+     */ MyLineChart: "ab2Va4rig3Cf",
+    /**
+     * Insight Title: test 2
+     * Insight ID: abHzIZtmcyj1
+     */ Test2: "abHzIZtmcyj1",
+    /**
+     * Insight Title: test
+     * Insight ID: aa7PW2uGdxgt
+     */ Test: "aa7PW2uGdxgt",
+    /**
+     * Insight Title: Test insight
+     * Insight ID: aagaIzlMbxR9
+     */ TestInsight: "aagaIzlMbxR9",
+    /**
+     * Insight Title: test
+     * Insight ID: aaPaKGXCd61w
+     */ Test_1: "aaPaKGXCd61w",
+    /**
+     * Insight Title: test
+     * Insight ID: ab7aDKZAbdBg
+     */ Test_2: "ab7aDKZAbdBg",
+    /**
+     * Insight Title: Longer Table
+     * Insight ID: aaii8nYodE4p
+     */ LongerTable: "aaii8nYodE4p",
+    /**
+     * Insight Title: Simple Sorted Table
+     * Insight ID: ab2pdQnmiqo5
+     */ SimpleSortedTable: "ab2pdQnmiqo5",
+    /**
+     * Insight Title: test insight
+     * Insight ID: acKwfO4Yg9yo
+     */ TestInsight_1: "acKwfO4Yg9yo",
+    /**
+     * Insight Title: test insight
+     * Insight ID: abkBnI1zd28W
+     */ TestInsight_2: "abkBnI1zd28W",
+};
