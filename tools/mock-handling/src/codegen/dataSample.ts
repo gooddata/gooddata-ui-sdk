@@ -3,7 +3,7 @@ import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } fro
 import * as path from "path";
 import { createUniqueVariableName } from "../base/variableNaming";
 import { DisplayFormRecording } from "../recordings/displayForms";
-import groupBy = require("lodash/groupBy");
+import groupBy from "lodash/groupBy";
 
 const DataSampleConstName = "DataSamples";
 

@@ -12,4 +12,5 @@ export const DEFAULT_CONFIG: DataRecorderConfig = {
     password: null,
     recordingDir: null,
     backend: null,
+    replaceProjectId: null,
 };

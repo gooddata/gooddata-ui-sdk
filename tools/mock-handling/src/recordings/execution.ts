@@ -7,10 +7,10 @@ import * as path from "path";
 import { logWarn } from "../cli/loggers";
 import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
 import { DataViewRequests, RecordingFiles, RequestedWindow, ScenarioDescriptor } from "../interface";
-import isArray = require("lodash/isArray");
-import isEmpty = require("lodash/isEmpty");
-import isObject = require("lodash/isObject");
-import pickBy = require("lodash/pickBy");
+import isArray from "lodash/isArray";
+import isEmpty from "lodash/isEmpty";
+import isObject from "lodash/isObject";
+import pickBy from "lodash/pickBy";
 
 //
 // internal constants & types
@@ -167,7 +167,11 @@ export class ExecutionRecording implements IRecording {
         return this.hasResult() && this.hasAllDataViewFiles();
     }
 
-    public async makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void> {
+    public async makeRecording(
+        backend: IAnalyticalBackend,
+        workspace: string,
+        newWorkspaceId?: string,
+    ): Promise<void> {
         // exec definitions are stored with some test workspace in them; make sure the exec definition that will actually
         //  contain ID of workspace specified by the user
         const workspaceBoundDef: IExecutionDefinition = {
@@ -175,17 +179,20 @@ export class ExecutionRecording implements IRecording {
             workspace,
         };
 
+        const replaceString: [string, string] | undefined = newWorkspaceId
+            ? [workspace, newWorkspaceId]
+            : undefined;
+
         const result: IExecutionResult = await backend
             .workspace(workspace)
             .execution()
             .forDefinition(workspaceBoundDef)
             .execute();
 
-        writeAsJsonSync(
-            path.join(this.directory, ExecutionResultFile),
-            result,
-            ExecutionResultPropsToSerialize,
-        );
+        writeAsJsonSync(path.join(this.directory, ExecutionResultFile), result, {
+            pickKeys: ExecutionResultPropsToSerialize,
+            replaceString,
+        });
 
         const missingFiles = Object.entries(this.getMissingDataViewFiles());
 
@@ -198,7 +205,7 @@ export class ExecutionRecording implements IRecording {
                 dataView = await result.readWindow(requestType.offset, requestType.size);
             }
 
-            writeAsJsonSync(filename, dataView, DataViewPropsToSerialize);
+            writeAsJsonSync(filename, dataView, { pickKeys: DataViewPropsToSerialize, replaceString });
         }
 
         return;

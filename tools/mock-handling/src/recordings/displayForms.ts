@@ -80,7 +80,11 @@ export class DisplayFormRecording implements IRecording {
         };
     }
 
-    public async makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void> {
+    public async makeRecording(
+        backend: IAnalyticalBackend,
+        workspace: string,
+        newWorkspaceId?: string,
+    ): Promise<void> {
         const elements = await this.queryValidElements(backend, workspace);
         const obj = await backend
             .workspace(workspace)
@@ -91,9 +95,13 @@ export class DisplayFormRecording implements IRecording {
             fs.mkdirSync(this.directory, { recursive: true });
         }
 
-        writeAsJsonSync(this.requestFile, this.spec);
-        writeAsJsonSync(this.elementFile, elements);
-        writeAsJsonSync(this.objFile, obj);
+        const replaceString: [string, string] | undefined = newWorkspaceId
+            ? [workspace, newWorkspaceId]
+            : undefined;
+
+        writeAsJsonSync(this.requestFile, this.spec, { replaceString });
+        writeAsJsonSync(this.elementFile, elements, { replaceString });
+        writeAsJsonSync(this.objFile, obj, { replaceString });
     }
 
     private async queryValidElements(

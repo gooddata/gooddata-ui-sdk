@@ -4,7 +4,7 @@ import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
 import { createUniqueVariableName, TakenNamesSet } from "../base/variableNaming";
 import { InsightRecording } from "../recordings/insights";
-import groupBy = require("lodash/groupBy");
+import groupBy from "lodash/groupBy";
 
 const InsightIndexConstName = "Insights";
 

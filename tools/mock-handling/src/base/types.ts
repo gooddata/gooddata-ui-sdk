@@ -53,6 +53,12 @@ export type DataRecorderConfig = {
      * Backend type: bear or tiger.
      */
     backend: BackendType | null;
+
+    /**
+     * If specified, projectId will be replaced with this value in all files written by
+     * the mock handling tool.
+     */
+    replaceProjectId: string | null;
 };
 
 export function isDataRecorderError(obj: unknown): obj is DataRecorderError {

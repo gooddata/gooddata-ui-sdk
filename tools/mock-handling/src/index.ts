@@ -32,6 +32,10 @@ program
     .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
     .option("--backend <type>", `Backend (default ${DEFAULT_BACKEND})`)
+    .option(
+        "--replace-project-id <id>",
+        `Replace projectId with this value when writing out recordings. By default not specified and projectId will stay in recordings as-is.`,
+    )
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
 
@@ -111,7 +115,7 @@ async function captureRecordings(
         recordings,
         (rec) => {
             return rec
-                .makeRecording(backend, config.projectId!)
+                .makeRecording(backend, config.projectId!, config.replaceProjectId ?? undefined)
                 .then((_) => {
                     onCaptured(rec);
 

@@ -44,13 +44,21 @@ export class VisClassesRecording implements IRecording {
         };
     }
 
-    public async makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void> {
+    public async makeRecording(
+        backend: IAnalyticalBackend,
+        workspace: string,
+        newWorkspaceId?: string,
+    ): Promise<void> {
         const items = await backend.workspace(workspace).insights().getVisualizationClasses();
 
         if (!fs.existsSync(this.directory)) {
             fs.mkdirSync(this.directory, { recursive: true });
         }
 
-        writeAsJsonSync(this.itemsFile, items);
+        const replaceString: [string, string] | undefined = newWorkspaceId
+            ? [workspace, newWorkspaceId]
+            : undefined;
+
+        writeAsJsonSync(this.itemsFile, items, { replaceString });
     }
 }
