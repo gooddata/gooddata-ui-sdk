@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { GdcExport, GdcFilterContext, sanitizeDateFilters } from "@gooddata/api-model-bear";
+import { GdcExport, GdcFilterContext, sanitizeFiltersForExport } from "@gooddata/api-model-bear";
 import { ApiResponse, XhrModule } from "../xhr";
 import { handleHeadPolling, IPollingOptions } from "../util";
 import { isExportFinished } from "../utils/export";
@@ -20,7 +20,7 @@ export class DashboardModule {
         filters: GdcFilterContext.FilterContextItem[] = [],
         pollingOptions: IPollingOptions = {},
     ): Promise<GdcExport.IExportResponse> {
-        const sanitizedFilters = sanitizeDateFilters(filters);
+        const sanitizedFilters = sanitizeFiltersForExport(filters);
         const payload = this.getDashboardExportPayload(dashboardUri, sanitizedFilters);
 
         const response: ApiResponse = await this.xhr.post(

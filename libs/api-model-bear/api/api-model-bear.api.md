@@ -2577,7 +2577,7 @@ export type MaqlExpression = string;
 export type NumberAsString = string;
 
 // @public (undocumented)
-export function sanitizeDateFilters(filters: GdcFilterContext.FilterContextItem[]): GdcFilterContext.FilterContextItem[];
+export function sanitizeFiltersForExport(filters: GdcFilterContext.FilterContextItem[]): GdcFilterContext.FilterContextItem[];
 
 // @public (undocumented)
 export type TimeIso8601 = string;

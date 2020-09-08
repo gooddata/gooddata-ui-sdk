@@ -34,5 +34,5 @@ export {
     Uri,
 } from "./aliases";
 
-export { sanitizeDateFilters } from "./filterContext/utils";
+export { sanitizeFiltersForExport } from "./filterContext/utils";
 export { getAttributesDisplayForms } from "./visualizationObject/utils";
