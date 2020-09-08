@@ -31,15 +31,6 @@
     },
     {
       "commandKind": "bulk",
-      "name": "populate-ref",
-      "summary": "Makes projects populate reference workspace with recording definitions or recordings themselves.",
-      "safeForSimultaneousRushProcesses": true,
-      "enableParallelism": true,
-      "ignoreDependencyOrder": true,
-      "ignoreMissingScript": true
-    },
-    {
-      "commandKind": "bulk",
       "name": "prettier-write",
       "summary": "Formats code in all projects",
       "safeForSimultaneousRushProcesses": true,
@@ -111,6 +102,13 @@
       "summary": "Performs security audit of all dependencies used by projects in this repository. This command uses pnpm audit which in the end calls out to the npmjs API.",
       "shellCommand": "bash common/scripts/audit-dependencies.sh",
       "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "populate-ref",
+      "summary": "Makes projects populate reference workspace with recording definitions or recordings themselves.",
+      "shellCommand": "bash common/scripts/populate-ref.sh",
+      "safeForSimultaneousRushProcesses": false
     }
     // {
     //   /**
