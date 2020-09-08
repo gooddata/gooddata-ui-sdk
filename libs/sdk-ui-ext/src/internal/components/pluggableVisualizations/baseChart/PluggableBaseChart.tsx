@@ -411,9 +411,9 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         options: IVisProps,
     ) {
         const legendPosition = get(controlProperties, "legend.position", "auto");
-        const width = options.dimensions.width;
 
         if (this.environment === DASHBOARDS_ENVIRONMENT) {
+            const width = options.dimensions?.width ?? 0;
             return width <= getMaxWidthForCollapsedLegend(legendPosition) ? "top" : legendPosition;
         }
 
@@ -445,6 +445,6 @@ function canSortStackTotalValue(
 export const MAX_WIDTH_FOR_COLLAPSED_LEGEND = 440;
 export const MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND = 610;
 
-export function getMaxWidthForCollapsedLegend(legendPosition: string) {
+export function getMaxWidthForCollapsedLegend(legendPosition: string): number {
     return legendPosition === "auto" ? MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND : MAX_WIDTH_FOR_COLLAPSED_LEGEND;
 }
