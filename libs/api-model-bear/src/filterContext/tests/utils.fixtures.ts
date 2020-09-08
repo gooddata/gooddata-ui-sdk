@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcFilterContext } from "../GdcFilterContext";
 
 export const relativeDateFilter: GdcFilterContext.FilterContextItem = {
@@ -24,6 +24,23 @@ export const attributeFilter: GdcFilterContext.FilterContextItem = {
         displayForm: "/gdc/md/testProjectId/obj/700",
         negativeSelection: false,
         attributeElements: ["/gdc/md/testProjectId/obj/750", "/gdc/md/testProjectId/obj/751"],
+    },
+};
+
+export const dependentAttributeFilter: GdcFilterContext.FilterContextItem = {
+    attributeFilter: {
+        displayForm: "/gdc/md/testProjectId/obj/700",
+        negativeSelection: false,
+        attributeElements: ["/gdc/md/testProjectId/obj/750", "/gdc/md/testProjectId/obj/751"],
+        localIdentifier: "locId1",
+        filterElementsBy: [
+            {
+                filterLocalIdentifier: "locId2",
+                over: {
+                    attributes: ["connectiong/attribute"],
+                },
+            },
+        ],
     },
 };
 

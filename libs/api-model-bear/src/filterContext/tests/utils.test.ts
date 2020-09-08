@@ -1,24 +1,29 @@
-// (C) 2019 GoodData Corporation
-import { sanitizeDateFilters } from "../utils";
+// (C) 2019-2020 GoodData Corporation
+import { sanitizeFiltersForExport } from "../utils";
 import {
     absoluteDateFilter,
     attributeFilter,
     relativeDateFilter,
     dateFilterWithUndefinedRange,
+    dependentAttributeFilter,
 } from "./utils.fixtures";
 
 describe("dashboard export utils", () => {
-    describe("sanitizeDateFilters", () => {
-        it("should leave attribute filter as it is", () => {
-            expect(sanitizeDateFilters([attributeFilter])).toEqual([attributeFilter]);
+    describe("sanitizeFiltersForExport", () => {
+        it("should leave valid attribute filter as it is", () => {
+            expect(sanitizeFiltersForExport([attributeFilter])).toEqual([attributeFilter]);
+        });
+
+        it("should remove localIdentifier and filterElementsBy props from attribute filter", () => {
+            expect(sanitizeFiltersForExport([dependentAttributeFilter])).toEqual([attributeFilter]);
         });
 
         it("should leave absolute date filter as it is", () => {
-            expect(sanitizeDateFilters([absoluteDateFilter])).toEqual([absoluteDateFilter]);
+            expect(sanitizeFiltersForExport([absoluteDateFilter])).toEqual([absoluteDateFilter]);
         });
 
         it("should sanitize relative date filter with negative 'from' and zero 'to'", () => {
-            expect(sanitizeDateFilters([relativeDateFilter])).toEqual([
+            expect(sanitizeFiltersForExport([relativeDateFilter])).toEqual([
                 {
                     dateFilter: {
                         type: "relative",
@@ -31,7 +36,7 @@ describe("dashboard export utils", () => {
         });
 
         it("should remove undefined range from relative date filter", () => {
-            expect(sanitizeDateFilters([dateFilterWithUndefinedRange])).toStrictEqual([
+            expect(sanitizeFiltersForExport([dateFilterWithUndefinedRange])).toStrictEqual([
                 {
                     dateFilter: {
                         type: "relative",
