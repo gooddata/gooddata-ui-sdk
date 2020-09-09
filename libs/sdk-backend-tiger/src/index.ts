@@ -16,7 +16,7 @@ import { withNormalization } from "@gooddata/sdk-backend-base";
 function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
     /*
      * Execution normalization is applied by default for tiger. This is so that tiger does not have to support
-     * questionable mechanics of measure name and format assignment and attribute name assigment; tiger does not
+     * questionable mechanics of measure name and format assignment and attribute name assignment; tiger does not
      * accept those parameters on input to AFM.
      *
      * Normalizing decorator takes care of this transparently - it will modify the execution definition under the
