@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { ApiResponseError, ApiExecutionResponseError } from "@gooddata/api-client-bear";
+import { ApiResponseError } from "@gooddata/api-client-bear";
 import {
     AnalyticalBackendError,
     DataTooLargeError,
@@ -16,10 +16,6 @@ import * as HttpStatusCodes from "http-status-codes";
 
 export function isApiResponseError(error: unknown): error is ApiResponseError {
     return (error as ApiResponseError).response !== undefined;
-}
-
-export function isApiExecutionResponseError(error: Error): error is ApiExecutionResponseError {
-    return !!(error as ApiExecutionResponseError).executionResponse;
 }
 
 function getJSONFromText(data: string): object | null {
