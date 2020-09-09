@@ -150,7 +150,7 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = (props) 
                     )}
                 </div>
                 {apiError && !isLoading && <CustomError height={undefined} message={errorMessage} />}
-                {isLoading && <CustomLoading height={undefined} label="Logging in&hellip;" />}
+                {isLoading && <CustomLoading height={100} label="Logging in&hellip;" />}
                 <div className="gd-input buttons">
                     <button
                         type="submit"
