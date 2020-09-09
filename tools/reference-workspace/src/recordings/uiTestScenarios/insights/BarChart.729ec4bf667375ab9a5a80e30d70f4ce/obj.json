@@ -1,52 +1,40 @@
 {
     "insight": {
-        "identifier": "BarChart.729ec4bf667375ab9a5a80e30d70f4ce",
-        "uri": "BarChart.729ec4bf667375ab9a5a80e30d70f4ce",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - single measure with stack to 100%",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "BarChart.729ec4bf667375ab9a5a80e30d70f4ce",
+        "properties": { "controls": { "stackMeasuresToPercent": true } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "stackMeasuresToPercent": true
-            }
-        }
+        "title": "BarChart - single measure with stack to 100%",
+        "uri": "BarChart.729ec4bf667375ab9a5a80e30d70f4ce",
+        "visualizationUrl": "local:bar"
     }
 }

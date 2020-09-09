@@ -1,52 +1,42 @@
 {
     "insight": {
-        "identifier": "LineChart.b387a237e94c58750537dd59d16bbc8d",
-        "uri": "LineChart.b387a237e94c58750537dd59d16bbc8d",
-        "visualizationUrl": "local:line",
-        "title": "LineChart - dual axes with one right measure",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
                             "alias": "Ratio of Won and Lost",
                             "definition": {
                                 "arithmeticMeasure": {
@@ -56,38 +46,34 @@
                                     ],
                                     "operator": "ratio"
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "trend",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "created.aci81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "created.aci81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_created.aci81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "trend"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "LineChart.b387a237e94c58750537dd59d16bbc8d",
         "properties": {
-            "controls": {
-                "secondary_yaxis": {
-                    "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"]
-                }
-            }
-        }
+            "controls": { "secondary_yaxis": { "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"] } }
+        },
+        "sorts": [],
+        "title": "LineChart - dual axes with one right measure",
+        "uri": "LineChart.b387a237e94c58750537dd59d16bbc8d",
+        "visualizationUrl": "local:line"
     }
 }

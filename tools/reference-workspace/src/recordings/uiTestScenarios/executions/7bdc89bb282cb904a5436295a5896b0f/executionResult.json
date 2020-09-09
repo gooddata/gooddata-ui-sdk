@@ -1,0 +1,85 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.product.id",
+                            "name": "Product",
+                            "uri": "/gdc/md/referenceworkspace/obj/1054"
+                        },
+                        "identifier": "label.product.id.name",
+                        "localIdentifier": "a_label.product.id.name",
+                        "name": "Product Name",
+                        "totalItems": [
+                            { "totalHeaderItem": { "name": "sum" } },
+                            { "totalHeaderItem": { "name": "max" } },
+                            { "totalHeaderItem": { "name": "min" } },
+                            { "totalHeaderItem": { "name": "nat" } }
+                        ],
+                        "uri": "/gdc/md/referenceworkspace/obj/1055"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.department",
+                            "name": "Department",
+                            "uri": "/gdc/md/referenceworkspace/obj/1088"
+                        },
+                        "identifier": "label.owner.department",
+                        "localIdentifier": "a_label.owner.department",
+                        "name": "Department",
+                        "uri": "/gdc/md/referenceworkspace/obj/1089"
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.stage.name",
+                            "name": "Stage Name",
+                            "uri": "/gdc/md/referenceworkspace/obj/1091"
+                        },
+                        "identifier": "label.stage.name.stagename",
+                        "localIdentifier": "a_label.stage.name.stagename",
+                        "name": "Stage Name",
+                        "uri": "/gdc/md/referenceworkspace/obj/1092"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.region",
+                            "name": "Region",
+                            "uri": "/gdc/md/referenceworkspace/obj/1086"
+                        },
+                        "identifier": "label.owner.region",
+                        "localIdentifier": "a_label.owner.region",
+                        "name": "Region",
+                        "uri": "/gdc/md/referenceworkspace/obj/1087"
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

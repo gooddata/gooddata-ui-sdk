@@ -1,0 +1,591 @@
+{
+    "count": [12, 16],
+    "data": [
+        [
+            "199908.86",
+            "905327.23",
+            "233620.37",
+            "499747.52",
+            "324710.2",
+            "1109331.81",
+            "18000",
+            "156977.43",
+            "16998.12",
+            "189099.26",
+            "51042.07",
+            "126753.1",
+            "1701549.3",
+            "4410258.72",
+            "1618042.88",
+            "4021328.82"
+        ],
+        [
+            "49974.66",
+            "437144.77",
+            "15765.07",
+            "354403.39",
+            "86386.36",
+            "361476.9",
+            null,
+            null,
+            null,
+            "61693.01",
+            "33826.28",
+            "87510.91",
+            "413922.7",
+            "2712239.15",
+            "335562.67",
+            "6690298.08"
+        ],
+        [
+            "770602.99",
+            "146333.2",
+            "245096.79",
+            "600367.83",
+            "134950.42",
+            "298415.72",
+            "124243.02",
+            "3792.6",
+            "627304.21",
+            "176954.41",
+            "36746.55",
+            "117761.51",
+            "1915470.06",
+            "3962077.3",
+            "1621567.97",
+            "5406453.66"
+        ],
+        [
+            null,
+            "421197.64",
+            "6451.53",
+            "111307.16",
+            "1988",
+            "41150.93",
+            null,
+            "13727.28",
+            "110144.9",
+            "226010.7",
+            "81430.06",
+            "67995.48",
+            "391991.18",
+            "2588068.52",
+            "546234.79",
+            "2151059.06"
+        ],
+        [
+            "14368.81",
+            "13387810.63",
+            "214833.71",
+            "1001196.79",
+            "256841.59",
+            "173255.96",
+            "751477.86",
+            "321532.11",
+            "53792.14",
+            "707188.64",
+            "398641.54",
+            "323372.36",
+            "2095977.22",
+            "4403103.19",
+            "1759859.66",
+            "4166405.93"
+        ],
+        [
+            "18944.52",
+            "58179.79",
+            "151733.47",
+            "92635.89",
+            "4802.5",
+            "1116928.39",
+            "426376.64",
+            "389676.45",
+            "55315.63",
+            "218536.64",
+            "25220.2",
+            "92558.12",
+            "653788.01",
+            "2094671.2",
+            "1387709.18",
+            "1779460.09"
+        ],
+        [
+            "385528.5",
+            "23557.87",
+            null,
+            "190049.75",
+            "175825.58",
+            "122582.54",
+            null,
+            "27508",
+            "60296.04",
+            "45143.31",
+            null,
+            "25229.84",
+            "1085367.08",
+            "1824857.64",
+            "619246.89",
+            "1278779.14"
+        ],
+        [
+            null,
+            "14001.6",
+            "35218.98",
+            "68571.67",
+            "69264.05",
+            "114489.22",
+            null,
+            "104446.8",
+            null,
+            "128550.9",
+            null,
+            "79900.09",
+            "316194.08",
+            "746787.41",
+            "14990.06",
+            "485644.88"
+        ],
+        [
+            "22074.54",
+            "92201.18",
+            "23060.84",
+            "61622.01",
+            "124752.68",
+            "140375.76",
+            "106812.85",
+            "48680.76",
+            null,
+            null,
+            "2339.1",
+            "32683.52",
+            "558681.65",
+            "1733871.93",
+            "1525912.65",
+            "1290172.83"
+        ],
+        [
+            "3601.6",
+            "418741.51",
+            "230.3",
+            "14377.21",
+            null,
+            "28203.56",
+            null,
+            "43160.04",
+            null,
+            "3564.9",
+            "15406.26",
+            "16714.71",
+            "245882.65",
+            "835955.96",
+            "36077.28",
+            "2100699.63"
+        ],
+        [
+            "344436.28",
+            "673215.73",
+            "22442.98",
+            "298467.33",
+            "77113.58",
+            "734258.66",
+            null,
+            "48392.52",
+            null,
+            "211951.28",
+            "22383.68",
+            null,
+            "1027225.71",
+            "1786420.28",
+            "609548.49",
+            "1122761.89"
+        ],
+        [
+            "4350.22",
+            "55764.01",
+            null,
+            "7827.29",
+            "12026.84",
+            "102931.35",
+            "18359.6",
+            "3129.5",
+            "2735.24",
+            "172186.79",
+            null,
+            "224500.35",
+            "136710.01",
+            "669682.5",
+            "329785.44",
+            "1572969.19"
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Interest",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Interest",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Discovery",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Discovery",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Short List",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=168751"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Short List",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=168751"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Risk Assessment",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166425"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Risk Assessment",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166425"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Conviction",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166442"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Conviction",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166442"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Negotiation",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166450"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Negotiation",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166450"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Won",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165679"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Won",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165679"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Lost",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165872"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Lost",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165872"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [12, 16]
+}

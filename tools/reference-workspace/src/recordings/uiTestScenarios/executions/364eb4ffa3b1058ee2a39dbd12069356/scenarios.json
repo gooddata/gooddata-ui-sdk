@@ -1,0 +1,46 @@
+[
+    {
+        "n2oMap": { "m_acugFHNJgsBy": "m_acugFHNJgsBy" },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_acugFHNJgsBy"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "secondary_measures" },
+                { "items": [], "localIdentifier": "tertiary_measures" },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup"] }, { "itemIdentifiers": [] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                }
+            ],
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "primary measure",
+        "vis": "BulletChart"
+    }
+]

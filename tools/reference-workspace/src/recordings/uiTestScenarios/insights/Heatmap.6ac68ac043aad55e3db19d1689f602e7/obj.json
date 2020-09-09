@@ -1,67 +1,52 @@
 {
     "insight": {
-        "identifier": "Heatmap.6ac68ac043aad55e3db19d1689f602e7",
-        "uri": "Heatmap.6ac68ac043aad55e3db19d1689f602e7",
-        "visualizationUrl": "local:heatmap",
-        "title": "Heatmap - measure, rows and columns with null data points",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
             {
-                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "closed.aag81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_closed.aag81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "stack"
             }
         ],
         "filters": [],
+        "identifier": "Heatmap.6ac68ac043aad55e3db19d1689f602e7",
+        "properties": { "controls": {} },
         "sorts": [
-            {
-                "attributeSortItem": {
-                    "attributeIdentifier": "a_label.product.id.name",
-                    "direction": "desc"
-                }
-            }
+            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
         ],
-        "properties": {
-            "controls": {}
-        }
+        "title": "Heatmap - measure, rows and columns with null data points",
+        "uri": "Heatmap.6ac68ac043aad55e3db19d1689f602e7",
+        "visualizationUrl": "local:heatmap"
     }
 }

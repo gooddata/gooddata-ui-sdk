@@ -5,7 +5,7 @@ Array [
   Object {
     "attributeHeaderItem": Object {
       "name": "CompuSci",
-      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
+      "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
     },
   },
   Object {
@@ -13,12 +13,12 @@ Array [
       "formOf": Object {
         "identifier": "attr.product.id",
         "name": "Product",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+        "uri": "/gdc/md/referenceworkspace/obj/1054",
       },
       "identifier": "label.product.id.name",
       "localIdentifier": "a_label.product.id.name",
       "name": "Product Name",
-      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+      "uri": "/gdc/md/referenceworkspace/obj/1055",
     },
   },
 ]
@@ -32,7 +32,7 @@ Array [
       "identifier": "aangOxLSeztu",
       "localIdentifier": "m_aangOxLSeztu",
       "name": "Amount",
-      "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+      "uri": "/gdc/md/referenceworkspace/obj/1271",
     },
   },
 ]
@@ -46,16 +46,16 @@ Array [
         "formOf": Object {
           "identifier": "attr.owner.region",
           "name": "Region",
-          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+          "uri": "/gdc/md/referenceworkspace/obj/1086",
         },
         "identifier": "label.owner.region",
         "localIdentifier": "a_label.owner.region",
         "name": "Region",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+        "uri": "/gdc/md/referenceworkspace/obj/1087",
       },
       "attributeHeaderItem": Object {
         "name": "West Coast",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460489",
+        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489",
       },
     },
   },
@@ -66,7 +66,7 @@ Array [
         "identifier": "aangOxLSeztu",
         "localIdentifier": "m_aangOxLSeztu",
         "name": "Amount",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+        "uri": "/gdc/md/referenceworkspace/obj/1271",
       },
     },
   },
@@ -81,16 +81,16 @@ Array [
         "formOf": Object {
           "identifier": "attr.product.id",
           "name": "Product",
-          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+          "uri": "/gdc/md/referenceworkspace/obj/1054",
         },
         "identifier": "label.product.id.name",
         "localIdentifier": "a_label.product.id.name",
         "name": "Product Name",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+        "uri": "/gdc/md/referenceworkspace/obj/1055",
       },
       "attributeHeaderItem": Object {
         "name": "CompuSci",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
+        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
       },
     },
   },
@@ -115,7 +115,7 @@ Object {
     "identifier": "aangOxLSeztu",
     "localIdentifier": "m_aangOxLSeztu",
     "name": "Amount",
-    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+    "uri": "/gdc/md/referenceworkspace/obj/1271",
   },
 }
 `;

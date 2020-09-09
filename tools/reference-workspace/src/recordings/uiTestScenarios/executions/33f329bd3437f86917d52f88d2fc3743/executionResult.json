@@ -1,0 +1,40 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "created.quarter",
+                            "name": "Quarter/Year (Created)",
+                            "uri": "/gdc/md/referenceworkspace/obj/347"
+                        },
+                        "identifier": "created.aci81lMifn6q",
+                        "localIdentifier": "a_created.aci81lMifn6q",
+                        "name": "US Short (Created)",
+                        "uri": "/gdc/md/referenceworkspace/obj/382"
+                    }
+                }
+            ]
+        }
+    ]
+}

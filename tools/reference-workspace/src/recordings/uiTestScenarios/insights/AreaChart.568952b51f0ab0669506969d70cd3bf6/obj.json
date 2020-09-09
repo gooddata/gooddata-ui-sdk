@@ -1,64 +1,50 @@
 {
     "insight": {
-        "identifier": "AreaChart.568952b51f0ab0669506969d70cd3bf6",
-        "uri": "AreaChart.568952b51f0ab0669506969d70cd3bf6",
-        "visualizationUrl": "local:area",
-        "title": "AreaChart - two measures with viewBy and enabled stacking",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "AreaChart.568952b51f0ab0669506969d70cd3bf6",
+        "properties": { "controls": { "stacking": true } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "stacking": true
-            }
-        }
+        "title": "AreaChart - two measures with viewBy and enabled stacking",
+        "uri": "AreaChart.568952b51f0ab0669506969d70cd3bf6",
+        "visualizationUrl": "local:area"
     }
 }

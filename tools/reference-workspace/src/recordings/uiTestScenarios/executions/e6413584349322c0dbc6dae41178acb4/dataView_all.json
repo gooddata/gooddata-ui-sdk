@@ -1,0 +1,110 @@
+{
+    "count": [6, 7],
+    "data": [
+        ["2333876.94", "4041040.95", "3590450.75", "317648.1", "8560", null, null],
+        ["1180991.26", "4490467.16", "3781098.76", "73300.73", null, null, null],
+        ["1274306.03", "4057609.27", "2181051.93", "529064.69", null, null, null],
+        ["4031202.38", "22624838.5", "9823157.39", "2098929.01", "18067.58", null, null],
+        ["4881614.4", "10027521.44", "7678216.32", "359543.31", null, null, null],
+        ["5237799.51", "8447186.43", "12594390.99", "939878.71", null, null, "3644"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2010"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2011"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2012"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2013",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2013"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2014",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2014"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2016",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2016"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2017",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2017"
+                    }
+                }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [6, 7]
+}

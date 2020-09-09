@@ -1,0 +1,53 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.region",
+                            "name": "Region",
+                            "uri": "/gdc/md/referenceworkspace/obj/1086"
+                        },
+                        "identifier": "label.owner.region",
+                        "localIdentifier": "a_label.owner.region",
+                        "name": "Region",
+                        "uri": "/gdc/md/referenceworkspace/obj/1087"
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "created.quarter",
+                            "name": "Quarter/Year (Created)",
+                            "uri": "/gdc/md/referenceworkspace/obj/347"
+                        },
+                        "identifier": "created.aci81lMifn6q",
+                        "localIdentifier": "a_created.aci81lMifn6q",
+                        "name": "US Short (Created)",
+                        "uri": "/gdc/md/referenceworkspace/obj/382"
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

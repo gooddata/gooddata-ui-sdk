@@ -1,0 +1,63 @@
+{
+    "count": [2, 7],
+    "data": [
+        ["18939790.52", "53688663.75", "39648366.14", "4318364.55", "26627.58", null, "3644"],
+        ["9459230.78", "20528222.66", "8323300.01", null, null, null, null]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2010"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2011"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2012"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2013",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2013"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2014",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2014"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2016",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2016"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2017",
+                        "uri": "/gdc/md/referenceworkspace/obj/497/elements?id=2017"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [2, 7]
+}

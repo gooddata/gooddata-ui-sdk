@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
-/* tslint:disable:file-header */
-/* tslint:disable:variable-name */
-/* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-07-10T08:44:07.811Z; */
+
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable header/header */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-09-08T15:26:38.981Z; */
 
 const fp_0202f0afa9294a9f026be26f8ced8bcb = {
     definition: require("./uiTestScenarios/executions/0202f0afa9294a9f026be26f8ced8bcb/definition.json"),
@@ -151,11 +151,6 @@ const fp_f958fece41c62dfbfe97c4c899332446 = {
     dataView_all: require("./uiTestScenarios/executions/f958fece41c62dfbfe97c4c899332446/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/f958fece41c62dfbfe97c4c899332446/scenarios.json"),
 };
-const fp_46dc78bd23b184d1e627aa76c87135e6 = {
-    definition: require("./uiTestScenarios/executions/46dc78bd23b184d1e627aa76c87135e6/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/46dc78bd23b184d1e627aa76c87135e6/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/46dc78bd23b184d1e627aa76c87135e6/dataView_all.json"),
-};
 export const Scenarios = {
     GeoPushpinChart: {
         LocationAndColor: { scenarioIndex: 0, execution: fp_2db926df36663a8f611d0940e0cadef9 },
@@ -183,156 +178,82 @@ export const Scenarios = {
         LocationOnly: { scenarioIndex: 0, execution: fp_f958fece41c62dfbfe97c4c899332446 },
     },
 };
-const i_GeoPushpinChart_ec83c2c8655c98886d4cd486f404b450 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.ec83c2c8655c98886d4cd486f404b450/obj.json"),
-};
-const i_GeoPushpinChart_942ca22518a29c7aea7aa05e0f717dbb = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.942ca22518a29c7aea7aa05e0f717dbb/obj.json"),
-};
-const i_GeoPushpinChart_729cec5c851b43df7bbfc82007621010 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.729cec5c851b43df7bbfc82007621010/obj.json"),
-};
-const i_GeoPushpinChart_a26d2c1232b0526dc5bfd6e745137f32 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.a26d2c1232b0526dc5bfd6e745137f32/obj.json"),
-};
-const i_GeoPushpinChart_9b14a4f5725745552c3197469ba39972 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.9b14a4f5725745552c3197469ba39972/obj.json"),
-};
-const i_GeoPushpinChart_251fc93f85c60ba0ec9ba679188036d3 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.251fc93f85c60ba0ec9ba679188036d3/obj.json"),
-};
-const i_GeoPushpinChart_59b08fe8f7bba7a914423218e199d0b6 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.59b08fe8f7bba7a914423218e199d0b6/obj.json"),
-};
-const i_GeoPushpinChart_5dc4adaf25a7a42d67d2f0427f552aa7 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.5dc4adaf25a7a42d67d2f0427f552aa7/obj.json"),
-};
-const i_GeoPushpinChart_90f6fd416d55e6262549f5ec4d7297e5 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.90f6fd416d55e6262549f5ec4d7297e5/obj.json"),
-};
-const i_GeoPushpinChart_b90f43349f8eb9ba4538f5b916a3cb54 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.b90f43349f8eb9ba4538f5b916a3cb54/obj.json"),
-};
-const i_GeoPushpinChart_498efceb6d708ac8cb4635f5bfecdcfa = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.498efceb6d708ac8cb4635f5bfecdcfa/obj.json"),
-};
-const i_GeoPushpinChart_37c84ce53e2ac7057f4446318b68ffe3 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.37c84ce53e2ac7057f4446318b68ffe3/obj.json"),
-};
-const i_GeoPushpinChart_ccf9234325310577f5c30e99385173f7 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.ccf9234325310577f5c30e99385173f7/obj.json"),
-};
-const i_GeoPushpinChart_29cd4648b0309b009270d4ce526ae61f = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.29cd4648b0309b009270d4ce526ae61f/obj.json"),
-};
-const i_GeoPushpinChart_9989be7bd4b779e286f5c4fc2877c1af = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.9989be7bd4b779e286f5c4fc2877c1af/obj.json"),
-};
-const i_GeoPushpinChart_504eab0a8cad2926774a29e3077ca958 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.504eab0a8cad2926774a29e3077ca958/obj.json"),
-};
-const i_GeoPushpinChart_0466332859a57217b6ea75b6b2ae4e51 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.0466332859a57217b6ea75b6b2ae4e51/obj.json"),
-};
-const i_GeoPushpinChart_ec215de93f5b56c734a4ae1182dbc803 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.ec215de93f5b56c734a4ae1182dbc803/obj.json"),
-};
-const i_GeoPushpinChart_39e79ef17ff4993e70a4cda58e6522b8 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.39e79ef17ff4993e70a4cda58e6522b8/obj.json"),
-};
-const i_GeoPushpinChart_41f47ebaa0fc751e23f4d5707fbd7238 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.41f47ebaa0fc751e23f4d5707fbd7238/obj.json"),
-};
-const i_GeoPushpinChart_b0ca2a5c013d83ef7698768341d37672 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.b0ca2a5c013d83ef7698768341d37672/obj.json"),
-};
-const i_GeoPushpinChart_dfb05e0df27e923f2f7d20e548a55847 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.dfb05e0df27e923f2f7d20e548a55847/obj.json"),
-};
-const i_GeoPushpinChart_6bbfc0bcf1094830072e693be7f400bf = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.6bbfc0bcf1094830072e693be7f400bf/obj.json"),
-};
-const i_GeoPushpinChart_f884b3e4f2b5f99801a54c39c06e4a4f = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.f884b3e4f2b5f99801a54c39c06e4a4f/obj.json"),
-};
-const i_GeoPushpinChart_a91b77a5378d4493ca942e2b18777139 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.a91b77a5378d4493ca942e2b18777139/obj.json"),
-};
-const i_GeoPushpinChart_227baaba15bccdb55fb387ca1d40d185 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.227baaba15bccdb55fb387ca1d40d185/obj.json"),
-};
-const i_GeoPushpinChart_d1af69504111f68200c3a64e28a29be6 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.d1af69504111f68200c3a64e28a29be6/obj.json"),
-};
-const i_GeoPushpinChart_290531583e3619bf47883f3b20e1c334 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.290531583e3619bf47883f3b20e1c334/obj.json"),
-};
-const i_GeoPushpinChart_ea5a1053a02c0d6d3e2557a7c03dccac = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.ea5a1053a02c0d6d3e2557a7c03dccac/obj.json"),
-};
-const i_GeoPushpinChart_5d8117bcf1f01b69048af8e16a0b7bba = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.5d8117bcf1f01b69048af8e16a0b7bba/obj.json"),
-};
-const i_GeoPushpinChart_809a9030247d0bbb8aa628e6dbd73433 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.809a9030247d0bbb8aa628e6dbd73433/obj.json"),
-};
-const i_GeoPushpinChart_a1fd0803aa190133ab9e61f0472c3077 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.a1fd0803aa190133ab9e61f0472c3077/obj.json"),
-};
-const i_GeoPushpinChart_473fb821f6b3cffad456965f9a0ae3d2 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.473fb821f6b3cffad456965f9a0ae3d2/obj.json"),
-};
-const i_GeoPushpinChart_9de8106770addc9a13d32e441bd831f7 = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.9de8106770addc9a13d32e441bd831f7/obj.json"),
+const i_GeoPushpinChart_015e82486c2e37f778a352000bf4f70b = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.015e82486c2e37f778a352000bf4f70b/obj.json"),
 };
 const i_GeoPushpinChart_0b6ecae9c2a91100c7974e186f39b3a7 = {
     obj: require("./uiTestScenarios/insights/GeoPushpinChart.0b6ecae9c2a91100c7974e186f39b3a7/obj.json"),
 };
+const i_GeoPushpinChart_227baaba15bccdb55fb387ca1d40d185 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.227baaba15bccdb55fb387ca1d40d185/obj.json"),
+};
+const i_GeoPushpinChart_290531583e3619bf47883f3b20e1c334 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.290531583e3619bf47883f3b20e1c334/obj.json"),
+};
+const i_GeoPushpinChart_41f47ebaa0fc751e23f4d5707fbd7238 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.41f47ebaa0fc751e23f4d5707fbd7238/obj.json"),
+};
+const i_GeoPushpinChart_473fb821f6b3cffad456965f9a0ae3d2 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.473fb821f6b3cffad456965f9a0ae3d2/obj.json"),
+};
+const i_GeoPushpinChart_5d8117bcf1f01b69048af8e16a0b7bba = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.5d8117bcf1f01b69048af8e16a0b7bba/obj.json"),
+};
+const i_GeoPushpinChart_6bbfc0bcf1094830072e693be7f400bf = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.6bbfc0bcf1094830072e693be7f400bf/obj.json"),
+};
+const i_GeoPushpinChart_809a9030247d0bbb8aa628e6dbd73433 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.809a9030247d0bbb8aa628e6dbd73433/obj.json"),
+};
 const i_GeoPushpinChart_836eadb3640ca8a82e42fcdd957c8898 = {
     obj: require("./uiTestScenarios/insights/GeoPushpinChart.836eadb3640ca8a82e42fcdd957c8898/obj.json"),
 };
-const i_GeoPushpinChart_015e82486c2e37f778a352000bf4f70b = {
-    obj: require("./uiTestScenarios/insights/GeoPushpinChart.015e82486c2e37f778a352000bf4f70b/obj.json"),
+const i_GeoPushpinChart_9de8106770addc9a13d32e441bd831f7 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.9de8106770addc9a13d32e441bd831f7/obj.json"),
+};
+const i_GeoPushpinChart_a1fd0803aa190133ab9e61f0472c3077 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.a1fd0803aa190133ab9e61f0472c3077/obj.json"),
+};
+const i_GeoPushpinChart_a91b77a5378d4493ca942e2b18777139 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.a91b77a5378d4493ca942e2b18777139/obj.json"),
+};
+const i_GeoPushpinChart_b0ca2a5c013d83ef7698768341d37672 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.b0ca2a5c013d83ef7698768341d37672/obj.json"),
 };
 const i_GeoPushpinChart_ce328d3e8e11cb31aea20cac9963f0d2 = {
     obj: require("./uiTestScenarios/insights/GeoPushpinChart.ce328d3e8e11cb31aea20cac9963f0d2/obj.json"),
 };
+const i_GeoPushpinChart_d1af69504111f68200c3a64e28a29be6 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.d1af69504111f68200c3a64e28a29be6/obj.json"),
+};
+const i_GeoPushpinChart_dfb05e0df27e923f2f7d20e548a55847 = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.dfb05e0df27e923f2f7d20e548a55847/obj.json"),
+};
+const i_GeoPushpinChart_ea5a1053a02c0d6d3e2557a7c03dccac = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.ea5a1053a02c0d6d3e2557a7c03dccac/obj.json"),
+};
+const i_GeoPushpinChart_f884b3e4f2b5f99801a54c39c06e4a4f = {
+    obj: require("./uiTestScenarios/insights/GeoPushpinChart.f884b3e4f2b5f99801a54c39c06e4a4f/obj.json"),
+};
 export const Insights = {
     GeoPushpinChart: {
-        LocationOnly: i_GeoPushpinChart_ec83c2c8655c98886d4cd486f404b450,
-        LocationAndSize: i_GeoPushpinChart_942ca22518a29c7aea7aa05e0f717dbb,
-        LocationAndColor: i_GeoPushpinChart_729cec5c851b43df7bbfc82007621010,
-        LocationSizeAndColor: i_GeoPushpinChart_a26d2c1232b0526dc5bfd6e745137f32,
-        LocationOnlyWithTooltip: i_GeoPushpinChart_9b14a4f5725745552c3197469ba39972,
-        LocationAndSizeWithTooltip: i_GeoPushpinChart_251fc93f85c60ba0ec9ba679188036d3,
-        LocationAndColorWithTooltip: i_GeoPushpinChart_59b08fe8f7bba7a914423218e199d0b6,
-        LocationSizeAndColorWithTooltip: i_GeoPushpinChart_5dc4adaf25a7a42d67d2f0427f552aa7,
-        LocationAndSegment: i_GeoPushpinChart_90f6fd416d55e6262549f5ec4d7297e5,
-        LocationSegmentAndSize: i_GeoPushpinChart_b90f43349f8eb9ba4538f5b916a3cb54,
-        LocationSegmentAndColor: i_GeoPushpinChart_498efceb6d708ac8cb4635f5bfecdcfa,
-        LocationSegmentSizeAndColor: i_GeoPushpinChart_37c84ce53e2ac7057f4446318b68ffe3,
-        LocationAndSegmentWithTooltip: i_GeoPushpinChart_ccf9234325310577f5c30e99385173f7,
-        LocationSegmentSizeWithTooltip: i_GeoPushpinChart_29cd4648b0309b009270d4ce526ae61f,
-        LocationSegmentColorWithTooltip: i_GeoPushpinChart_9989be7bd4b779e286f5c4fc2877c1af,
-        LocationSegmentSizeAndColorWithTooltip: i_GeoPushpinChart_504eab0a8cad2926774a29e3077ca958,
-        LocationSegmentSizeAndColorWithTooltipAndFilter: i_GeoPushpinChart_0466332859a57217b6ea75b6b2ae4e51,
-        LocationOnly_1: i_GeoPushpinChart_41f47ebaa0fc751e23f4d5707fbd7238,
-        LocationAndSize_1: i_GeoPushpinChart_b0ca2a5c013d83ef7698768341d37672,
-        LocationAndColor_1: i_GeoPushpinChart_dfb05e0df27e923f2f7d20e548a55847,
-        LocationSizeAndColor_1: i_GeoPushpinChart_6bbfc0bcf1094830072e693be7f400bf,
-        LocationOnlyWithTooltip_1: i_GeoPushpinChart_f884b3e4f2b5f99801a54c39c06e4a4f,
-        LocationAndSizeWithTooltip_1: i_GeoPushpinChart_a91b77a5378d4493ca942e2b18777139,
-        LocationAndColorWithTooltip_1: i_GeoPushpinChart_227baaba15bccdb55fb387ca1d40d185,
-        LocationSizeAndColorWithTooltip_1: i_GeoPushpinChart_d1af69504111f68200c3a64e28a29be6,
-        LocationAndSegment_1: i_GeoPushpinChart_290531583e3619bf47883f3b20e1c334,
-        LocationSegmentAndSize_1: i_GeoPushpinChart_ea5a1053a02c0d6d3e2557a7c03dccac,
-        LocationSegmentAndColor_1: i_GeoPushpinChart_5d8117bcf1f01b69048af8e16a0b7bba,
-        LocationSegmentSizeAndColor_1: i_GeoPushpinChart_809a9030247d0bbb8aa628e6dbd73433,
-        LocationAndSegmentWithTooltip_1: i_GeoPushpinChart_a1fd0803aa190133ab9e61f0472c3077,
-        LocationSegmentSizeWithTooltip_1: i_GeoPushpinChart_473fb821f6b3cffad456965f9a0ae3d2,
-        LocationSegmentColorWithTooltip_1: i_GeoPushpinChart_9de8106770addc9a13d32e441bd831f7,
-        LocationSegmentSizeAndColorWithTooltip_1: i_GeoPushpinChart_0b6ecae9c2a91100c7974e186f39b3a7,
-        LocationSegmentSizeAndColorWithTooltipAndFilter_1: i_GeoPushpinChart_836eadb3640ca8a82e42fcdd957c8898,
+        LocationSegmentSizeAndColorWithTooltip: i_GeoPushpinChart_0b6ecae9c2a91100c7974e186f39b3a7,
+        LocationAndColorWithTooltip: i_GeoPushpinChart_227baaba15bccdb55fb387ca1d40d185,
+        LocationAndSegment: i_GeoPushpinChart_290531583e3619bf47883f3b20e1c334,
+        LocationOnly: i_GeoPushpinChart_41f47ebaa0fc751e23f4d5707fbd7238,
+        LocationSegmentSizeWithTooltip: i_GeoPushpinChart_473fb821f6b3cffad456965f9a0ae3d2,
+        LocationSegmentAndColor: i_GeoPushpinChart_5d8117bcf1f01b69048af8e16a0b7bba,
+        LocationSizeAndColor: i_GeoPushpinChart_6bbfc0bcf1094830072e693be7f400bf,
+        LocationSegmentSizeAndColor: i_GeoPushpinChart_809a9030247d0bbb8aa628e6dbd73433,
+        LocationSegmentSizeAndColorWithTooltipAndFilter: i_GeoPushpinChart_836eadb3640ca8a82e42fcdd957c8898,
+        LocationSegmentColorWithTooltip: i_GeoPushpinChart_9de8106770addc9a13d32e441bd831f7,
+        LocationAndSegmentWithTooltip: i_GeoPushpinChart_a1fd0803aa190133ab9e61f0472c3077,
+        LocationAndSizeWithTooltip: i_GeoPushpinChart_a91b77a5378d4493ca942e2b18777139,
+        LocationAndSize: i_GeoPushpinChart_b0ca2a5c013d83ef7698768341d37672,
+        LocationSizeAndColorWithTooltip: i_GeoPushpinChart_d1af69504111f68200c3a64e28a29be6,
+        LocationAndColor: i_GeoPushpinChart_dfb05e0df27e923f2f7d20e548a55847,
+        LocationSegmentAndSize: i_GeoPushpinChart_ea5a1053a02c0d6d3e2557a7c03dccac,
+        LocationOnlyWithTooltip: i_GeoPushpinChart_f884b3e4f2b5f99801a54c39c06e4a4f,
     },
 };
 export const Recordings = {
@@ -363,49 +284,29 @@ export const Recordings = {
         fp_e5c89400ca5de733d4cd743df023c4f0,
         fp_f007737731e3721d6f6b4892eb27358b,
         fp_f958fece41c62dfbfe97c4c899332446,
-        fp_46dc78bd23b184d1e627aa76c87135e6,
     },
     metadata: {
         displayForms: {},
         insights: {
-            i_GeoPushpinChart_ec83c2c8655c98886d4cd486f404b450,
-            i_GeoPushpinChart_942ca22518a29c7aea7aa05e0f717dbb,
-            i_GeoPushpinChart_729cec5c851b43df7bbfc82007621010,
-            i_GeoPushpinChart_a26d2c1232b0526dc5bfd6e745137f32,
-            i_GeoPushpinChart_9b14a4f5725745552c3197469ba39972,
-            i_GeoPushpinChart_251fc93f85c60ba0ec9ba679188036d3,
-            i_GeoPushpinChart_59b08fe8f7bba7a914423218e199d0b6,
-            i_GeoPushpinChart_5dc4adaf25a7a42d67d2f0427f552aa7,
-            i_GeoPushpinChart_90f6fd416d55e6262549f5ec4d7297e5,
-            i_GeoPushpinChart_b90f43349f8eb9ba4538f5b916a3cb54,
-            i_GeoPushpinChart_498efceb6d708ac8cb4635f5bfecdcfa,
-            i_GeoPushpinChart_37c84ce53e2ac7057f4446318b68ffe3,
-            i_GeoPushpinChart_ccf9234325310577f5c30e99385173f7,
-            i_GeoPushpinChart_29cd4648b0309b009270d4ce526ae61f,
-            i_GeoPushpinChart_9989be7bd4b779e286f5c4fc2877c1af,
-            i_GeoPushpinChart_504eab0a8cad2926774a29e3077ca958,
-            i_GeoPushpinChart_0466332859a57217b6ea75b6b2ae4e51,
-            i_GeoPushpinChart_ec215de93f5b56c734a4ae1182dbc803,
-            i_GeoPushpinChart_39e79ef17ff4993e70a4cda58e6522b8,
-            i_GeoPushpinChart_41f47ebaa0fc751e23f4d5707fbd7238,
-            i_GeoPushpinChart_b0ca2a5c013d83ef7698768341d37672,
-            i_GeoPushpinChart_dfb05e0df27e923f2f7d20e548a55847,
-            i_GeoPushpinChart_6bbfc0bcf1094830072e693be7f400bf,
-            i_GeoPushpinChart_f884b3e4f2b5f99801a54c39c06e4a4f,
-            i_GeoPushpinChart_a91b77a5378d4493ca942e2b18777139,
-            i_GeoPushpinChart_227baaba15bccdb55fb387ca1d40d185,
-            i_GeoPushpinChart_d1af69504111f68200c3a64e28a29be6,
-            i_GeoPushpinChart_290531583e3619bf47883f3b20e1c334,
-            i_GeoPushpinChart_ea5a1053a02c0d6d3e2557a7c03dccac,
-            i_GeoPushpinChart_5d8117bcf1f01b69048af8e16a0b7bba,
-            i_GeoPushpinChart_809a9030247d0bbb8aa628e6dbd73433,
-            i_GeoPushpinChart_a1fd0803aa190133ab9e61f0472c3077,
-            i_GeoPushpinChart_473fb821f6b3cffad456965f9a0ae3d2,
-            i_GeoPushpinChart_9de8106770addc9a13d32e441bd831f7,
-            i_GeoPushpinChart_0b6ecae9c2a91100c7974e186f39b3a7,
-            i_GeoPushpinChart_836eadb3640ca8a82e42fcdd957c8898,
             i_GeoPushpinChart_015e82486c2e37f778a352000bf4f70b,
+            i_GeoPushpinChart_0b6ecae9c2a91100c7974e186f39b3a7,
+            i_GeoPushpinChart_227baaba15bccdb55fb387ca1d40d185,
+            i_GeoPushpinChart_290531583e3619bf47883f3b20e1c334,
+            i_GeoPushpinChart_41f47ebaa0fc751e23f4d5707fbd7238,
+            i_GeoPushpinChart_473fb821f6b3cffad456965f9a0ae3d2,
+            i_GeoPushpinChart_5d8117bcf1f01b69048af8e16a0b7bba,
+            i_GeoPushpinChart_6bbfc0bcf1094830072e693be7f400bf,
+            i_GeoPushpinChart_809a9030247d0bbb8aa628e6dbd73433,
+            i_GeoPushpinChart_836eadb3640ca8a82e42fcdd957c8898,
+            i_GeoPushpinChart_9de8106770addc9a13d32e441bd831f7,
+            i_GeoPushpinChart_a1fd0803aa190133ab9e61f0472c3077,
+            i_GeoPushpinChart_a91b77a5378d4493ca942e2b18777139,
+            i_GeoPushpinChart_b0ca2a5c013d83ef7698768341d37672,
             i_GeoPushpinChart_ce328d3e8e11cb31aea20cac9963f0d2,
+            i_GeoPushpinChart_d1af69504111f68200c3a64e28a29be6,
+            i_GeoPushpinChart_dfb05e0df27e923f2f7d20e548a55847,
+            i_GeoPushpinChart_ea5a1053a02c0d6d3e2557a7c03dccac,
+            i_GeoPushpinChart_f884b3e4f2b5f99801a54c39c06e4a4f,
         },
     },
 };

@@ -1,79 +1,58 @@
 {
     "insight": {
-        "identifier": "Treemap.7d11b7599f52936b33c02c498ac3c645",
-        "uri": "Treemap.7d11b7599f52936b33c02c498ac3c645",
-        "visualizationUrl": "local:treemap",
-        "title": "Treemap - data labels - default",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
             {
-                "localIdentifier": "segment",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "segment"
             }
         ],
         "filters": [],
+        "identifier": "Treemap.7d11b7599f52936b33c02c498ac3c645",
+        "properties": { "controls": {} },
         "sorts": [
-            {
-                "attributeSortItem": {
-                    "attributeIdentifier": "a_label.product.id.name",
-                    "direction": "asc"
-                }
-            },
+            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "asc" } },
             {
                 "measureSortItem": {
                     "direction": "desc",
-                    "locators": [
-                        {
-                            "measureLocatorItem": {
-                                "measureIdentifier": "m_aangOxLSeztu"
-                            }
-                        }
-                    ]
+                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
                 }
             }
         ],
-        "properties": {
-            "controls": {}
-        }
+        "title": "Treemap - data labels - default",
+        "uri": "Treemap.7d11b7599f52936b33c02c498ac3c645",
+        "visualizationUrl": "local:treemap"
     }
 }

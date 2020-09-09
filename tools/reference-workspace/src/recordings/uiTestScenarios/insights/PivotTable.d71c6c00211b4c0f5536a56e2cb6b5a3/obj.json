@@ -1,60 +1,50 @@
 {
     "insight": {
-        "identifier": "PivotTable.d71c6c00211b4c0f5536a56e2cb6b5a3",
-        "uri": "PivotTable.d71c6c00211b4c0f5536a56e2cb6b5a3",
-        "visualizationUrl": "local:table",
-        "title": "PivotTable - with two measures and row attribute with auto-resizing and grow to fit",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "attribute"
             },
-            {
-                "localIdentifier": "columns",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "columns" }
         ],
         "filters": [],
+        "identifier": "PivotTable.d71c6c00211b4c0f5536a56e2cb6b5a3",
+        "properties": {},
         "sorts": [],
-        "properties": {}
+        "title": "PivotTable - with two measures and row attribute with auto-resizing and grow to fit",
+        "uri": "PivotTable.d71c6c00211b4c0f5536a56e2cb6b5a3",
+        "visualizationUrl": "local:table"
     }
 }

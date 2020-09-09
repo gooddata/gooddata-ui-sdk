@@ -1,0 +1,44 @@
+{
+    "id": "3887855c-e6d6-4545-8fab-76cb3ae83c57",
+    "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_query",
+    "request": {
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"catalogQueryRequest\":{\"bucketItems\":[{\"expression\":\"SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])\"},{\"expression\":\"SELECT (SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])) FOR PREVIOUS ([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497])\"}],\"types\":[\"attribute\",\"metric\",\"fact\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 303,
+        "body": "{\"uri\":\"/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=59759ff64f73b142e35a341c6d6185d7&q=eAFNyzsOAiAMANC7MDv0Q2nxNkDbxMHF4GS8u8TB%2BPb3KmPvx20%2Bd5RrwYCqIaMTOQ5zgZkWnS1U%0AcTrBV5VyKfc4bZ0T6kGqMiA7rUk8V4umLXlJEuDfybH2GWagqZEQpoQNHUW8%2B2DmOrvEb7w%2FtxQq%0AUA%3D%3D%0A\"}",
+        "headers": {
+            "Date": "Tue, 08 Sep 2020 17:50:33 GMT",
+            "Server": "GoodData WebApp",
+            "Location": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=59759ff64f73b142e35a341c6d6185d7&q=eAFNyzsOAiAMANC7MDv0Q2nxNkDbxMHF4GS8u8TB%2BPb3KmPvx20%2Bd5RrwYCqIaMTOQ5zgZkWnS1U%0AcTrBV5VyKfc4bZ0T6kGqMiA7rUk8V4umLXlJEuDfybH2GWagqZEQpoQNHUW8%2B2DmOrvEb7w%2FtxQq%0AUA%3D%3D%0A",
+            "Keep-Alive": "timeout=5, max=38",
+            "X-GDC-LOG-HEADER": "",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "65",
+            "X-GDC-REQUEST": "gDv3y7bl7aIOcdtw",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "3887855c-e6d6-4545-8fab-76cb3ae83c57",
+    "persistent": true,
+    "insertionIndex": 18
+}

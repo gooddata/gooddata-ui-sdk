@@ -1,0 +1,606 @@
+{
+    "count": [30, 8],
+    "data": [
+        [
+            "2174478.26",
+            "883793.08",
+            "5917286.73",
+            "2370306.08",
+            "1989393.54",
+            "817756.22",
+            "5501537.16",
+            "2039952.64"
+        ],
+        [
+            "405767.14",
+            "194123.92",
+            "3156945.21",
+            "1270431.27",
+            "529670.6",
+            "219798.78",
+            "7547821",
+            "1441807.88"
+        ],
+        ["2580245.4", null, "9074231.94", null, "2519064.14", null, "13049358.16", null],
+        [
+            "1290122.7",
+            "538958.5",
+            "4537115.97",
+            "1820368.675",
+            "1259532.07",
+            "518777.5",
+            "6524679.08",
+            "1740880.26"
+        ],
+        [null, "1077917", null, "3640737.35", null, "1037555", null, "3481760.52"],
+        [
+            "2008366.85",
+            "754830.5",
+            "4088621.31",
+            "1350035.81",
+            "3467615.16",
+            "1160639.56",
+            "6623534.92",
+            "2612041.49"
+        ],
+        [
+            "590536.1",
+            "283569.17",
+            "3053141.34",
+            "1746096.06",
+            "547704.36",
+            "108422.01",
+            "2567375.43",
+            "841972.46"
+        ],
+        ["2598902.95", null, "7141762.65", null, "4015319.52", null, "9190910.35", null],
+        [
+            "1299451.475",
+            "519199.835",
+            "3570881.325",
+            "1548065.935",
+            "2007659.76",
+            "634530.785",
+            "4595455.175",
+            "1727006.975"
+        ],
+        [null, "1038399.67", null, "3096131.87", null, "1269061.57", null, "3454013.95"],
+        [
+            "2610784.51",
+            "989426.6",
+            "6011398.61",
+            "2305188",
+            "2935008.02",
+            "1106550.62",
+            "18472467",
+            "2097915.19"
+        ],
+        [
+            "793939.81",
+            "430585.96",
+            "3135777.62",
+            "1226965.38",
+            "1929950.34",
+            "223202.05",
+            "2706868.95",
+            "867705.82"
+        ],
+        ["3404724.32", null, "9147176.23", null, "4864958.36", null, "21179335.95", null],
+        [
+            "1702362.16",
+            "710006.28",
+            "4573588.115",
+            "1766076.69",
+            "2432479.18",
+            "664876.335",
+            "10589667.975",
+            "1482810.505"
+        ],
+        [null, "1420012.56", null, "3532153.38", null, "1329752.67", null, "2965621.01"],
+        [
+            "1964931.93",
+            "826188.69",
+            "1060976.15",
+            "389910.95",
+            "361332.16",
+            "259178.39",
+            "2476731.94",
+            "1434946.69"
+        ],
+        [
+            "268112.52",
+            "167291.74",
+            "877547.53",
+            "510727.21",
+            "167554.65",
+            "148902.34",
+            "864845.04",
+            "236060.2"
+        ],
+        ["2233044.45", null, "1938523.68", null, "528886.81", null, "3341576.98", null],
+        [
+            "1116522.225",
+            "496740.215",
+            "969261.84",
+            "450319.08",
+            "264443.405",
+            "204040.365",
+            "1670788.49",
+            "835503.445"
+        ],
+        [null, "993480.43", null, "900638.16", null, "408080.73", null, "1671006.89"],
+        [
+            "1827108.25",
+            "229646.4",
+            "1980712.38",
+            "1150517.74",
+            "536526.06",
+            "329035.25",
+            "1418895.61",
+            "583354.19"
+        ],
+        [
+            "120416.22",
+            "87001.62",
+            "1358755.87",
+            "272152.06",
+            "180781.87",
+            "158881.03",
+            "2102661.65",
+            "563803.9"
+        ],
+        ["1947524.47", null, "3339468.25", null, "717307.93", null, "3521557.26", null],
+        [
+            "973762.235",
+            "158324.01",
+            "1669734.125",
+            "711334.9",
+            "358653.965",
+            "243958.14",
+            "1760778.63",
+            "573579.045"
+        ],
+        [null, "316648.02", null, "1422669.8", null, "487916.28", null, "1147158.09"],
+        [
+            "1374944.56",
+            "550627.31",
+            "2542872.97",
+            "1109596.41",
+            "728206.16",
+            "476598.4",
+            "2332594.72",
+            "676823.87"
+        ],
+        [
+            "278916.58",
+            "119311.53",
+            "1330301.14",
+            "398431.88",
+            "225050.77",
+            "17398.48",
+            "1478689.84",
+            "271250.62"
+        ],
+        ["1653861.14", null, "3873174.11", null, "953256.93", null, "3811284.56", null],
+        [
+            "826930.57",
+            "334969.42",
+            "1936587.055",
+            "754014.145",
+            "476628.465",
+            "246998.44",
+            "1905642.28",
+            "474037.245"
+        ],
+        [null, "669938.84", null, "1508028.29", null, "493996.88", null, "948074.49"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "max", "type": "max" } },
+                { "totalHeaderItem": { "name": "min", "type": "min" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "med", "type": "med" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } },
+                { "totalHeaderItem": { "name": "sum", "type": "sum" } },
+                { "totalHeaderItem": { "name": "max", "type": "max" } },
+                { "totalHeaderItem": { "name": "min", "type": "min" } },
+                { "totalHeaderItem": { "name": "nat", "type": "nat" } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [30, 8],
+    "totals": [
+        [
+            ["14418302.73", null, "34514336.86", null, "13598793.69", null, "54094023.26", null],
+            [null, "989426.6", null, "2370306.08", null, "1160639.56", null, "2612041.49"],
+            ["120416.22", null, "877547.53", null, "167554.65", null, "864845.04", null],
+            [null, "5516396.52", null, "14100358.85", null, "5026363.13", null, "13667634.95"]
+        ],
+        []
+    ]
+}

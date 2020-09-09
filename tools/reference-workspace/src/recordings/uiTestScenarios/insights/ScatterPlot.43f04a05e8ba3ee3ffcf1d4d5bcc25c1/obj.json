@@ -1,63 +1,54 @@
 {
     "insight": {
-        "identifier": "ScatterPlot.43f04a05e8ba3ee3ffcf1d4d5bcc25c1",
-        "uri": "ScatterPlot.43f04a05e8ba3ee3ffcf1d4d5bcc25c1",
-        "visualizationUrl": "local:scatter",
-        "title": "ScatterPlot - x and y axis measures and attribute with nulls in data",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "abZgFKGPaGYM"
-                                    }
+                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "secondary_measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "closed.aag81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_closed.aag81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "attribute"
             }
         ],
         "filters": [],
+        "identifier": "ScatterPlot.43f04a05e8ba3ee3ffcf1d4d5bcc25c1",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "ScatterPlot - x and y axis measures and attribute with nulls in data",
+        "uri": "ScatterPlot.43f04a05e8ba3ee3ffcf1d4d5bcc25c1",
+        "visualizationUrl": "local:scatter"
     }
 }

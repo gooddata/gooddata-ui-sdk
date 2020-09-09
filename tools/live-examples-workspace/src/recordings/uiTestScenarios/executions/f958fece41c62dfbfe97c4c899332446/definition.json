@@ -1,23 +1,16 @@
 {
-    "workspace": "live-examples-workspace",
-    "buckets": [],
     "attributes": [
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.uscities.city.location",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.uscities.city.location", "type": "displayForm" },
                 "localIdentifier": "a_label.uscities.city.location"
             }
         }
     ],
-    "measures": [],
-    "dimensions": [
-        {
-            "itemIdentifiers": ["a_label.uscities.city.location"]
-        }
-    ],
+    "buckets": [],
+    "dimensions": [{ "itemIdentifiers": ["a_label.uscities.city.location"] }],
     "filters": [],
-    "sortBy": []
+    "measures": [],
+    "sortBy": [],
+    "workspace": "live-examples-workspace"
 }

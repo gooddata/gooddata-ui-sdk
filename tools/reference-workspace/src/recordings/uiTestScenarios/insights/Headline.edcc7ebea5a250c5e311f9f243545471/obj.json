@@ -1,47 +1,40 @@
 {
     "insight": {
-        "identifier": "Headline.edcc7ebea5a250c5e311f9f243545471",
-        "uri": "Headline.edcc7ebea5a250c5e311f9f243545471",
-        "visualizationUrl": "local:headline",
-        "title": "Headline - two measures one PoP",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
                             "alias": "Won Last Year",
                             "definition": {
                                 "popMeasureDefinition": {
                                     "measureIdentifier": "m_acugFHNJgsBy",
-                                    "popAttribute": {
-                                        "identifier": "closed.year",
-                                        "type": "attribute"
-                                    }
+                                    "popAttribute": { "identifier": "closed.year", "type": "attribute" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             }
         ],
         "filters": [],
+        "identifier": "Headline.edcc7ebea5a250c5e311f9f243545471",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "Headline - two measures one PoP",
+        "uri": "Headline.edcc7ebea5a250c5e311f9f243545471",
+        "visualizationUrl": "local:headline"
     }
 }

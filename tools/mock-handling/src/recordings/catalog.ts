@@ -50,7 +50,11 @@ export class CatalogRecording implements IRecording {
         };
     }
 
-    public async makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void> {
+    public async makeRecording(
+        backend: IAnalyticalBackend,
+        workspace: string,
+        newWorkspaceId?: string,
+    ): Promise<void> {
         const catalog = await backend.workspace(workspace).catalog().load();
 
         const items = catalog.getItems();
@@ -60,7 +64,11 @@ export class CatalogRecording implements IRecording {
             fs.mkdirSync(this.directory, { recursive: true });
         }
 
-        writeAsJsonSync(this.itemsFile, items);
-        writeAsJsonSync(this.groupsFile, groups);
+        const replaceString: [string, string] | undefined = newWorkspaceId
+            ? [workspace, newWorkspaceId]
+            : undefined;
+
+        writeAsJsonSync(this.itemsFile, items, { replaceString });
+        writeAsJsonSync(this.groupsFile, groups, { replaceString });
     }
 }

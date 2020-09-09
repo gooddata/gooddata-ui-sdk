@@ -1,84 +1,61 @@
 {
     "insight": {
-        "identifier": "ScatterPlot.ec8ae1e345e59e6252a158353406724a",
-        "uri": "ScatterPlot.ec8ae1e345e59e6252a158353406724a",
-        "visualizationUrl": "local:scatter",
-        "title": "ScatterPlot - axis name configuration - middle",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "abZgFKGPaGYM"
-                                    }
+                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "secondary_measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "attribute"
             }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "ScatterPlot.ec8ae1e345e59e6252a158353406724a",
         "properties": {
             "controls": {
-                "xaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                },
-                "yaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                },
-                "secondary_xaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                },
-                "secondary_yaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                }
+                "secondary_xaxis": { "name": { "position": "center" } },
+                "secondary_yaxis": { "name": { "position": "center" } },
+                "xaxis": { "name": { "position": "center" } },
+                "yaxis": { "name": { "position": "center" } }
             }
-        }
+        },
+        "sorts": [],
+        "title": "ScatterPlot - axis name configuration - middle",
+        "uri": "ScatterPlot.ec8ae1e345e59e6252a158353406724a",
+        "visualizationUrl": "local:scatter"
     }
 }

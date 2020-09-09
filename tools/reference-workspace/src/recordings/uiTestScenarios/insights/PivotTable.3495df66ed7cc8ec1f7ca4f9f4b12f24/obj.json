@@ -1,52 +1,39 @@
 {
     "insight": {
-        "identifier": "PivotTable.3495df66ed7cc8ec1f7ca4f9f4b12f24",
-        "uri": "PivotTable.3495df66ed7cc8ec1f7ca4f9f4b12f24",
-        "visualizationUrl": "local:table",
-        "title": "PivotTable - single measure pivot sorted by second row attr",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.department",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.department"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "attribute"
             },
             {
-                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
@@ -59,17 +46,17 @@
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "columns"
             }
         ],
         "filters": [],
+        "identifier": "PivotTable.3495df66ed7cc8ec1f7ca4f9f4b12f24",
+        "properties": {},
         "sorts": [
             {
                 "attributeSortItem": {
@@ -78,6 +65,8 @@
                 }
             }
         ],
-        "properties": {}
+        "title": "PivotTable - single measure pivot sorted by second row attr",
+        "uri": "PivotTable.3495df66ed7cc8ec1f7ca4f9f4b12f24",
+        "visualizationUrl": "local:table"
     }
 }

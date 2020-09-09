@@ -1,0 +1,2029 @@
+{
+    "count": [100, 8],
+    "data": [
+        ["422324.06", "77638.24", null, null, "345808.08", "198167.47", null, null],
+        ["217006.85", "39101.77", null, null, "187435.77", "27672.52", null, null],
+        ["395242.42", "334489.9", null, null, "269313.53", "134930.25", null, null],
+        ["232724.99", "74604.37", null, null, "158953.66", "121932.16", null, null],
+        ["181182.94", "137488.88", null, null, "240520.02", "143509.53", null, null],
+        ["486251.31", "82329.33", null, null, "247519.66", "32478.93", null, null],
+        ["239745.69", "138140.59", null, null, "539842.82", "159065.36", null, null],
+        [null, null, "529424.27", "77698.44", null, null, "450537.37", "46867.74"],
+        [null, null, "391495.03", "-134992.46", null, null, "268725.93", "98310.09"],
+        [null, null, "508944.86", "165401.75", null, null, "834036.68", "498249.77"],
+        [null, null, "471925.37", "93125.2", null, null, "178746.01", "117134.72"],
+        [null, null, "1617441.14", "1109210.27", null, null, "667126.82", "103450.58"],
+        [null, null, "1036843.75", "527307.81", null, null, "2345363.67", "873701.97"],
+        [null, null, "1361212.31", "532555.07", null, null, "757000.68", "302237.77"],
+        ["192111.93", "63863.06", null, null, "171447.17", "120559.33", null, null],
+        ["213655.21", "130260.86", null, null, "358223.43", "99239.45", null, null],
+        [null, null, "634274.91", "276651.63", null, null, "650854.91", "352744.95"],
+        [null, null, "800014.51", "307431.18", null, null, "1628727.26", "266006.56"],
+        [null, null, "793470.29", "350558.42", null, null, "753187.37", "443400.53"],
+        [null, null, "929185.5", "335790.04", null, null, "4515051.46", "379655.84"],
+        ["338974.87", "24772.79", null, null, "880788.51", "100554.91", null, null],
+        ["340107.4", "115651.97", null, null, "247069.02", "57400.44", null, null],
+        ["192670.13", "127634.71", null, null, "254702.94", "103547.67", null, null],
+        ["272031.31", "164854.52", null, null, "500572.69", "122830.35", null, null],
+        ["525131.53", "109114.73", null, null, "354753.07", "229958.42", null, null],
+        ["216499.23", "101843.14", null, null, "621219.28", "26746.53", null, null],
+        ["122952.38", "110958.64", null, null, "608509.65", "519601.24", null, null],
+        [null, null, "461447.8", "125034.21", null, null, "582301.18", "140901.66"],
+        [null, null, "486397.57", "93252.85", null, null, "217477.84", "99301.09"],
+        [null, null, "352646.43", "108908.64", null, null, "330271.86", "62642.37"],
+        [null, null, "215507.12", "19252.79", null, null, "396644.03", "114268.23"],
+        [null, null, "715591.1", "87799.5", null, null, "1984411.4", "536298.42"],
+        [null, null, "733307.59", "401207.99", null, null, "1229134.37", "640200.54"],
+        [null, null, "1123723.7", "514579.83", null, null, "1883294.24", "1018429.18"],
+        ["352646.88", "168630.77", null, null, "329834.22", "74610.97", null, null],
+        ["237889.22", "114938.4", null, null, "217870.14", "33811.04", null, null],
+        [null, null, "801161.64", "203766.02", null, null, "727765.58", "263550.86"],
+        [null, null, "778970.46", "532443.98", null, null, "787959.92", "253547.79"],
+        [null, null, "745341.29", "523838.19", null, null, "532217.88", "226688.27"],
+        [null, null, "727667.95", "486047.87", null, null, "519432.05", "98185.54"],
+        ["618133.16", "15484.63", null, null, "139040.79", "129300.29", null, null],
+        ["219798.88", "188002.49", null, null, "68824.08", "61796.49", null, null],
+        ["319782.24", "259859.98", null, null, "403564.27", "59271.52", null, null],
+        ["265717.36", "148598.21", null, null, "304901.58", "33810.85", null, null],
+        ["-5950.21", "87280.03", null, null, "561888", "358337.08", null, null],
+        ["567392.83", "102073.4", null, null, "386613.53", "132677.91", null, null],
+        ["625910.25", "188127.86", null, null, "1070175.77", "331356.48", null, null],
+        [null, null, "913584.86", "149079.2", null, null, "644469.89", "220258.68"],
+        [null, null, "227899.04", "106905.29", null, null, "398556.18", "185374.94"],
+        [null, null, "274064.77", "214267.42", null, null, "445090.39", "209267.52"],
+        [null, null, "775052.91", "219323.23", null, null, "577618.09", "269170.41"],
+        [null, null, "1145447.93", "253233.34", null, null, "1112814.25", "580651.2"],
+        [null, null, "1434281.18", "883798.82", null, null, "1456525.71", "371727.69"],
+        [null, null, "1241067.92", "478580.7", null, null, "13837392.49", "261464.75"],
+        ["462831.68", "180478.53", null, null, "1609023.69", "80556.14", null, null],
+        ["331108.13", "250107.43", null, null, "320926.65", "142645.91", null, null],
+        [null, null, "1643513.23", "357091.08", null, null, "520878.88", "-17941.4"],
+        [null, null, "637966.73", "536037.2", null, null, "496348.42", "319356.49"],
+        [null, null, "428089.7", "115109.17", null, null, "443220.44", "223955.21"],
+        [null, null, "426207.96", "218727.93", null, null, "1246421.21", "342335.52"],
+        ["389411.85", "22863.47", null, null, "28356.55", "25729.21", null, null],
+        ["645889.01", "577603.65", null, null, "85922.38", "67792.8", null, null],
+        ["52523.65", "48281.25", null, null, "94211.47", "59184.07", null, null],
+        ["167123.04", "36334.84", null, null, "62058.66", "42155.3", null, null],
+        ["349491.82", "70055.02", null, null, "43439.86", "42327.2", null, null],
+        ["271507.42", "47618.98", null, null, "43832.15", "18996.61", null, null],
+        ["88985.14", "23431.48", null, null, "3511.09", "2993.2", null, null],
+        [null, null, "74273.69", "33825.47", null, null, "178012.6", "79227.86"],
+        [null, null, "107191.08", "53910.28", null, null, "40712.38", "31058.51"],
+        [null, null, "42140.07", "41335.41", null, null, "115330.51", "44312.28"],
+        [null, null, "49966.84", "20253.78", null, null, "11073.66", "8175.26"],
+        [null, null, "97815.06", "27325.96", null, null, "230607.9", "112925.81"],
+        [null, null, "396689.73", "152748.26", null, null, "473361.9", "119557.4"],
+        [null, null, "292899.68", "60511.79", null, null, "1427632.99", "1039689.57"],
+        ["92903.12", "89295.28", null, null, "111241.53", "111241.53", null, null],
+        ["175209.4", "77996.46", null, null, "56313.12", "37660.81", null, null],
+        [null, null, "62637.09", "28698.39", null, null, "182138.13", "125804.83"],
+        [null, null, "418617.99", "346428.19", null, null, "363536.72", "36305.18"],
+        [null, null, "203471.39", "117230.05", null, null, "138403.66", "46836.14"],
+        [null, null, "192821.06", "18370.58", null, null, "180766.53", "27114.05"],
+        ["55638.04", "18469.45", null, null, "114486.77", "8671.9", null, null],
+        ["112628.9", "95324.58", null, null, "77532.02", "63011.99", null, null],
+        ["1393154.25", "53360.8", null, null, "1950.52", "-28049.48", null, null],
+        ["56932.13", "25859.02", null, null, "90664.44", "76769.44", null, null],
+        ["190697.35", "24705.43", null, null, "24892.6", "13965.76", null, null],
+        ["9874.31", "7311.79", null, null, "35891.4", "20562.11", null, null],
+        ["8183.27", "4615.33", null, null, "191108.31", "174103.53", null, null],
+        [null, null, "21494.08", "18211.45", null, null, "49973.41", "16545.72"],
+        [null, null, "377939.7", "283700.72", null, null, "33436.86", "28145.77"],
+        [null, null, "130323.75", "40906.73", null, null, "217855.34", "165593.96"],
+        [null, null, "78173.05", "33183.12", null, null, "7491.19", "7491.19"],
+        [null, null, "313451.94", "202486.22", null, null, "158582.05", "34440.86"],
+        [null, null, "399636.9", "253034.99", null, null, "376976.28", "87536.33"],
+        [null, null, "659692.96", "318994.51", null, null, "574580.48", "243600.36"],
+        ["78548.14", "78546.94", null, null, "100253.37", "82524.4", null, null],
+        ["41868.08", "8454.68", null, null, "80528.5", "76356.63", null, null],
+        [null, null, "304472.94", "141156.58", null, null, "319402.62", "204073.42"],
+        [null, null, "173417.11", "36421.65", null, null, "418130.59", "111222.37"],
+        [null, null, "730829.4", "67842.2", null, null, "987942.84", "177108.28"],
+        [null, null, "150036.42", "26731.63", null, null, "377185.6", "71399.83"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Adam Bradley",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5017"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alejandro Vabiano",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5035"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alexsandr Fyodr",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5159"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Cory Owens",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5905"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dale Perdadtin",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5055"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dave Bostadt",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5371"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ellen Jones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4851"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "John Jovi",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6669"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jon Jons",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6253"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Lea Forbes",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5177"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Monique Babonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5524"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Gomez",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5214"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Jacobs",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4952"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ravi Deetri",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5301"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Huey Jonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5281"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jessica Traven",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4893"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Thomas Gones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5073"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Tom Stickler",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4982"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Trevor Deegan",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Victor Crushetz",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5218"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Adam Bradley",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5017"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alejandro Vabiano",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5035"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alexsandr Fyodr",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5159"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Cory Owens",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5905"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dale Perdadtin",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5055"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dave Bostadt",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5371"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ellen Jones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4851"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "John Jovi",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6669"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jon Jons",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6253"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Lea Forbes",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5177"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Monique Babonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5524"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Gomez",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5214"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Jacobs",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4952"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ravi Deetri",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5301"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Huey Jonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5281"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jessica Traven",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4893"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Thomas Gones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5073"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Tom Stickler",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4982"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Trevor Deegan",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Victor Crushetz",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5218"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Adam Bradley",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5017"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alejandro Vabiano",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5035"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alexsandr Fyodr",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5159"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Cory Owens",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5905"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dale Perdadtin",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5055"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dave Bostadt",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5371"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ellen Jones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4851"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "John Jovi",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6669"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jon Jons",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6253"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Lea Forbes",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5177"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Monique Babonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5524"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Gomez",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5214"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Jacobs",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4952"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ravi Deetri",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5301"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Huey Jonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5281"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jessica Traven",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4893"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Thomas Gones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5073"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Tom Stickler",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4982"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Trevor Deegan",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Victor Crushetz",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5218"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Adam Bradley",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5017"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alejandro Vabiano",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5035"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alexsandr Fyodr",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5159"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Cory Owens",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5905"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dale Perdadtin",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5055"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dave Bostadt",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5371"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ellen Jones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4851"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "John Jovi",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6669"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jon Jons",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6253"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Lea Forbes",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5177"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Monique Babonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5524"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Gomez",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5214"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Jacobs",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4952"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ravi Deetri",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5301"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Huey Jonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5281"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jessica Traven",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4893"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Thomas Gones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5073"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Tom Stickler",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4982"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Trevor Deegan",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Victor Crushetz",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5218"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Adam Bradley",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5017"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alejandro Vabiano",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5035"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Alexsandr Fyodr",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5159"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Cory Owens",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5905"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dale Perdadtin",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5055"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dave Bostadt",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5371"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ellen Jones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4851"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "John Jovi",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6669"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jon Jons",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=6253"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Lea Forbes",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5177"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Monique Babonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5524"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Gomez",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5214"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paul Jacobs",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4952"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ravi Deetri",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5301"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Huey Jonas",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5281"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Jessica Traven",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4893"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Thomas Gones",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5073"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Tom Stickler",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=4982"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Trevor Deegan",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Victor Crushetz",
+                        "uri": "/gdc/md/referenceworkspace/obj/1083/elements?id=5218"
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Exclude",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165680"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Include",
+                        "uri": "/gdc/md/referenceworkspace/obj/1062/elements?id=165682"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [120, 8]
+}

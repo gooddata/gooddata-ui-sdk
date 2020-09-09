@@ -1,62 +1,50 @@
 {
     "insight": {
-        "identifier": "LineChart.e0b1b0c97bdb74bf90a51004c74e49c7",
-        "uri": "LineChart.e0b1b0c97bdb74bf90a51004c74e49c7",
-        "visualizationUrl": "local:line",
-        "title": "LineChart - data labels - default",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "trend",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "created.aci81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "created.aci81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_created.aci81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "trend"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "LineChart.e0b1b0c97bdb74bf90a51004c74e49c7",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "LineChart - data labels - default",
+        "uri": "LineChart.e0b1b0c97bdb74bf90a51004c74e49c7",
+        "visualizationUrl": "local:line"
     }
 }

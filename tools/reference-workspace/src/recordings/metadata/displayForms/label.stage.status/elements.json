@@ -1,14 +1,5 @@
 [
-    {
-        "title": "Lost",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460496"
-    },
-    {
-        "title": "Open",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460494"
-    },
-    {
-        "title": "Won",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495"
-    }
+    { "title": "Lost", "uri": "/gdc/md/referenceworkspace/obj/1100/elements?id=460496" },
+    { "title": "Open", "uri": "/gdc/md/referenceworkspace/obj/1100/elements?id=460494" },
+    { "title": "Won", "uri": "/gdc/md/referenceworkspace/obj/1100/elements?id=460495" }
 ]

@@ -1,8 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import fs = require("fs");
-import pick = require("lodash/pick");
-import isEmpty = require("lodash/isEmpty");
+import fs from "fs";
+import pick from "lodash/pick";
+import isEmpty from "lodash/isEmpty";
+import stringify from "json-stable-stringify";
 
 /**
  * A mapping of recording file type to file name. The file type is opaque - it is not handled in any way and
@@ -49,8 +50,10 @@ export interface IRecording {
      *
      * @param backend - analytical backend to use when making the recording
      * @param workspace - workspace to work with
+     * @param newWorkspaceId - workspace id to use in the captured data; if this is provided then all occurrences of
+     *  `workspace` in the captured data must be replaced with `newWorkspaceId`
      */
-    makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void>;
+    makeRecording(backend: IAnalyticalBackend, workspace: string, newWorkspaceId?: string): Promise<void>;
 
     /**
      * Gets an entry that will represent this recording in the main recording index.
@@ -62,16 +65,30 @@ export interface IRecording {
 //
 //
 
-export function toJsonString(obj: object, keys?: string[]): string {
-    if (keys) {
-        return JSON.stringify(pick(obj, keys), null, 4);
+export function toJsonString(obj: object, options: WriteJsonOptions = {}): string {
+    const { pickKeys, replaceString } = options;
+    let result: string;
+
+    if (pickKeys) {
+        result = stringify(pick(obj, pickKeys));
+    } else {
+        result = stringify(obj);
     }
 
-    return JSON.stringify(obj, null, 4);
+    if (replaceString) {
+        result = result.replace(new RegExp(replaceString[0], "g"), replaceString[1]);
+    }
+
+    return result;
 }
 
-export function writeAsJsonSync(file: string, obj: object, keys?: string[]): void {
-    fs.writeFileSync(file, toJsonString(obj, keys), { encoding: "utf-8" });
+export type WriteJsonOptions = {
+    pickKeys?: string[];
+    replaceString?: [string, string];
+};
+
+export function writeAsJsonSync(file: string, obj: object, options?: WriteJsonOptions): void {
+    fs.writeFileSync(file, toJsonString(obj, options), { encoding: "utf-8" });
 }
 
 export function readJsonSync(file: string): any {

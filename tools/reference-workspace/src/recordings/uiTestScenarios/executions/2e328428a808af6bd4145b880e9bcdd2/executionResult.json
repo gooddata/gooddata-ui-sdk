@@ -1,0 +1,49 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "closed.year",
+                            "name": "Year (Closed)",
+                            "uri": "/gdc/md/referenceworkspace/obj/497"
+                        },
+                        "identifier": "closed.aag81lMifn6q",
+                        "localIdentifier": "a_closed.aag81lMifn6q",
+                        "name": "Year (Closed)",
+                        "uri": "/gdc/md/referenceworkspace/obj/515"
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.0%",
+                                    "identifier": "abZgFKGPaGYM",
+                                    "localIdentifier": "m_abZgFKGPaGYM",
+                                    "name": "Win Rate",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1270"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,37 +1,7 @@
 [
     {
-        "vis": "GeoPushpinChart",
-        "scenario": "location only",
+        "n2oMap": { "a_label.uscities.city.location": "a_label.uscities.city.location" },
         "originalExecution": {
-            "workspace": "live-examples-workspace",
-            "buckets": [
-                {
-                    "localIdentifier": "size",
-                    "items": []
-                },
-                {
-                    "localIdentifier": "color",
-                    "items": []
-                },
-                {
-                    "localIdentifier": "location",
-                    "items": [
-                        {
-                            "attribute": {
-                                "displayForm": {
-                                    "identifier": "label.uscities.city.location",
-                                    "type": "displayForm"
-                                },
-                                "localIdentifier": "a_label.uscities.city.location"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "localIdentifier": "segment",
-                    "items": []
-                }
-            ],
             "attributes": [
                 {
                     "attribute": {
@@ -43,17 +13,32 @@
                     }
                 }
             ],
-            "measures": [],
-            "dimensions": [
+            "buckets": [
+                { "items": [], "localIdentifier": "size" },
+                { "items": [], "localIdentifier": "color" },
                 {
-                    "itemIdentifiers": ["a_label.uscities.city.location"]
-                }
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.uscities.city.location",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.uscities.city.location"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "location"
+                },
+                { "items": [], "localIdentifier": "segment" }
             ],
+            "dimensions": [{ "itemIdentifiers": ["a_label.uscities.city.location"] }],
             "filters": [],
-            "sortBy": []
+            "measures": [],
+            "sortBy": [],
+            "workspace": "live-examples-workspace"
         },
-        "n2oMap": {
-            "a_label.uscities.city.location": "a_label.uscities.city.location"
-        }
+        "scenario": "location only",
+        "vis": "GeoPushpinChart"
     }
 ]

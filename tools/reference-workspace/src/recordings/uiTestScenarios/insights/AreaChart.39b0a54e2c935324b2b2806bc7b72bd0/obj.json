@@ -1,66 +1,50 @@
 {
     "insight": {
-        "identifier": "AreaChart.39b0a54e2c935324b2b2806bc7b72bd0",
-        "uri": "AreaChart.39b0a54e2c935324b2b2806bc7b72bd0",
-        "visualizationUrl": "local:area",
-        "title": "AreaChart - data labels - forced visible and german separators",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "AreaChart.39b0a54e2c935324b2b2806bc7b72bd0",
+        "properties": { "controls": { "dataLabels": { "visible": true } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "dataLabels": {
-                    "visible": true
-                }
-            }
-        }
+        "title": "AreaChart - data labels - forced visible and german separators",
+        "uri": "AreaChart.39b0a54e2c935324b2b2806bc7b72bd0",
+        "visualizationUrl": "local:area"
     }
 }

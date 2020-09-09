@@ -1,0 +1,321 @@
+{
+    "count": [3, 16],
+    "data": [
+        [
+            "199908.86",
+            "905327.23",
+            "233620.37",
+            "499747.52",
+            "324710.2",
+            "1109331.81",
+            "18000",
+            "156977.43",
+            "16998.12",
+            "189099.26",
+            "51042.07",
+            "126753.1",
+            "1701549.3",
+            "4410258.72",
+            "1618042.88",
+            "4021328.82"
+        ],
+        [
+            "49974.66",
+            "437144.77",
+            "15765.07",
+            "354403.39",
+            "86386.36",
+            "361476.9",
+            null,
+            null,
+            null,
+            "61693.01",
+            "33826.28",
+            "87510.91",
+            "413922.7",
+            "2712239.15",
+            "335562.67",
+            "6690298.08"
+        ],
+        [
+            "770602.99",
+            "146333.2",
+            "245096.79",
+            "600367.83",
+            "134950.42",
+            "298415.72",
+            "124243.02",
+            "3792.6",
+            "627304.21",
+            "176954.41",
+            "36746.55",
+            "117761.51",
+            "1915470.06",
+            "3962077.3",
+            "1621567.97",
+            "5406453.66"
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Interest",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Interest",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Discovery",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Discovery",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Short List",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=168751"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Short List",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=168751"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Risk Assessment",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166425"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Risk Assessment",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166425"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Conviction",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166442"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Conviction",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166442"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Negotiation",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166450"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Negotiation",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166450"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Won",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165679"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Won",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165679"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Lost",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165872"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Lost",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165872"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [12, 16]
+}

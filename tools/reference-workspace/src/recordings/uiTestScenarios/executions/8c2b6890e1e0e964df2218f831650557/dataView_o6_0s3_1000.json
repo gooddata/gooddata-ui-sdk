@@ -1,0 +1,321 @@
+{
+    "count": [3, 16],
+    "data": [
+        [
+            "385528.5",
+            "23557.87",
+            null,
+            "190049.75",
+            "175825.58",
+            "122582.54",
+            null,
+            "27508",
+            "60296.04",
+            "45143.31",
+            null,
+            "25229.84",
+            "1085367.08",
+            "1824857.64",
+            "619246.89",
+            "1278779.14"
+        ],
+        [
+            null,
+            "14001.6",
+            "35218.98",
+            "68571.67",
+            "69264.05",
+            "114489.22",
+            null,
+            "104446.8",
+            null,
+            "128550.9",
+            null,
+            "79900.09",
+            "316194.08",
+            "746787.41",
+            "14990.06",
+            "485644.88"
+        ],
+        [
+            "22074.54",
+            "92201.18",
+            "23060.84",
+            "61622.01",
+            "124752.68",
+            "140375.76",
+            "106812.85",
+            "48680.76",
+            null,
+            null,
+            "2339.1",
+            "32683.52",
+            "558681.65",
+            "1733871.93",
+            "1525912.65",
+            "1290172.83"
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Inside Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Direct Sales",
+                        "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487"
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Interest",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Interest",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Discovery",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Discovery",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166647"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Short List",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=168751"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Short List",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=168751"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Risk Assessment",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166425"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Risk Assessment",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166425"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Conviction",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166442"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Conviction",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166442"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Negotiation",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166450"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Negotiation",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=166450"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Won",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165679"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Won",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165679"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Lost",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165872"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Closed Lost",
+                        "uri": "/gdc/md/referenceworkspace/obj/1091/elements?id=165872"
+                    }
+                }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                    }
+                }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } }
+            ]
+        ]
+    ],
+    "offset": [6, 0],
+    "totalCount": [12, 16]
+}

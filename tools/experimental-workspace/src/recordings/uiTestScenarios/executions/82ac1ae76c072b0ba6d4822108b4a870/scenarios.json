@@ -1,30 +1,35 @@
 [
     {
-        "vis": "BarChart",
-        "scenario": "with single measure and view by",
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        },
         "originalExecution": {
-            "workspace": "experimental-workspace",
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
             "buckets": [
                 {
-                    "localIdentifier": "measures",
                     "items": [
                         {
                             "measure": {
-                                "localIdentifier": "m_aangOxLSeztu",
                                 "definition": {
                                     "measureDefinition": {
-                                        "item": {
-                                            "identifier": "aangOxLSeztu",
-                                            "type": "measure"
-                                        }
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                     }
-                                }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
                             }
                         }
-                    ]
+                    ],
+                    "localIdentifier": "measures"
                 },
                 {
-                    "localIdentifier": "view",
                     "items": [
                         {
                             "attribute": {
@@ -35,53 +40,32 @@
                                 "localIdentifier": "a_label.product.id.name"
                             }
                         }
-                    ]
+                    ],
+                    "localIdentifier": "view"
                 },
-                {
-                    "localIdentifier": "stack",
-                    "items": []
-                }
+                { "items": [], "localIdentifier": "stack" }
             ],
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "label.product.id.name",
-                            "type": "displayForm"
-                        },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
             ],
+            "filters": [],
             "measures": [
                 {
                     "measure": {
-                        "localIdentifier": "m_aangOxLSeztu",
                         "definition": {
                             "measureDefinition": {
-                                "item": {
-                                    "identifier": "aangOxLSeztu",
-                                    "type": "measure"
-                                }
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                             }
-                        }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
                     }
                 }
             ],
-            "dimensions": [
-                {
-                    "itemIdentifiers": ["measureGroup"]
-                },
-                {
-                    "itemIdentifiers": ["a_label.product.id.name"]
-                }
-            ],
-            "filters": [],
-            "sortBy": []
+            "sortBy": [],
+            "workspace": "experimental-workspace"
         },
-        "n2oMap": {
-            "a_label.product.id.name": "a_label.product.id.name",
-            "m_aangOxLSeztu": "m_aangOxLSeztu"
-        }
+        "scenario": "with single measure and view by",
+        "vis": "BarChart"
     }
 ]

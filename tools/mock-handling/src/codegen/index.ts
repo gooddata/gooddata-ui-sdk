@@ -22,7 +22,7 @@ import { generateConstantsForExecutions } from "./execution";
 import { generateConstantsForInsights } from "./insight";
 import { generateConstantsForCatalog } from "./catalog";
 import { generateConstantsForVisClasses } from "./visClasses";
-import groupBy = require("lodash/groupBy");
+import groupBy from "lodash/groupBy";
 
 const FILE_DIRECTIVES = [
     "/* eslint-disable @typescript-eslint/no-var-requires */",

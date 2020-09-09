@@ -1,52 +1,43 @@
 {
     "insight": {
-        "identifier": "GeoPushpinChart.d1af69504111f68200c3a64e28a29be6",
-        "uri": "GeoPushpinChart.d1af69504111f68200c3a64e28a29be6",
-        "visualizationUrl": "local:pushpin",
-        "title": "GeoPushpinChart - location, size and color with tooltip",
         "buckets": [
             {
-                "localIdentifier": "size",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+                            "alias": "Population",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "fact.uscities.population"
-                                    },
-                                    "aggregation": "sum"
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.uscities.population" }
                                 }
                             },
                             "format": "#,##0.00",
-                            "alias": "Population"
+                            "localIdentifier": "m_f508857c_fact.uscities.population_sum"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "size"
             },
             {
-                "localIdentifier": "color",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+                            "alias": "Density",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "fact.uscities.density"
-                                    },
-                                    "aggregation": "sum"
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.uscities.density" }
                                 }
                             },
                             "format": "#,##0.00",
-                            "alias": "Density"
+                            "localIdentifier": "m_35a08895_fact.uscities.density_sum"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "color"
             },
             {
-                "localIdentifier": "location",
                 "items": [
                     {
                         "attribute": {
@@ -57,33 +48,17 @@
                             "localIdentifier": "a_label.uscities.city.location"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "location"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            },
-            {
-                "localIdentifier": "tooltipText",
-                "items": [
-                    {
-                        "attribute": {
-                            "displayForm": {
-                                "identifier": "label.uscities.city",
-                                "type": "displayForm"
-                            },
-                            "localIdentifier": "tooltipText_df"
-                        }
-                    }
-                ]
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "GeoPushpinChart.d1af69504111f68200c3a64e28a29be6",
+        "properties": { "controls": { "tooltipText": "label.uscities.city" } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "tooltipText": "label.uscities.city"
-            }
-        }
+        "title": "GeoPushpinChart - location, size and color with tooltip",
+        "uri": "GeoPushpinChart.d1af69504111f68200c3a64e28a29be6",
+        "visualizationUrl": "local:pushpin"
     }
 }

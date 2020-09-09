@@ -1,36 +1,26 @@
 {
     "insight": {
-        "identifier": "GeoPushpinChart.5d8117bcf1f01b69048af8e16a0b7bba",
-        "uri": "GeoPushpinChart.5d8117bcf1f01b69048af8e16a0b7bba",
-        "visualizationUrl": "local:pushpin",
-        "title": "GeoPushpinChart - location, segment and color",
         "buckets": [
+            { "items": [], "localIdentifier": "size" },
             {
-                "localIdentifier": "size",
-                "items": []
-            },
-            {
-                "localIdentifier": "color",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+                            "alias": "Density",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "fact.uscities.density"
-                                    },
-                                    "aggregation": "sum"
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.uscities.density" }
                                 }
                             },
                             "format": "#,##0.00",
-                            "alias": "Density"
+                            "localIdentifier": "m_35a08895_fact.uscities.density_sum"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "color"
             },
             {
-                "localIdentifier": "location",
                 "items": [
                     {
                         "attribute": {
@@ -41,10 +31,10 @@
                             "localIdentifier": "a_label.uscities.city.location"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "location"
             },
             {
-                "localIdentifier": "segment",
                 "items": [
                     {
                         "attribute": {
@@ -55,13 +45,16 @@
                             "localIdentifier": "a_label.uscities.state_name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "segment"
             }
         ],
         "filters": [],
+        "identifier": "GeoPushpinChart.5d8117bcf1f01b69048af8e16a0b7bba",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "GeoPushpinChart - location, segment and color",
+        "uri": "GeoPushpinChart.5d8117bcf1f01b69048af8e16a0b7bba",
+        "visualizationUrl": "local:pushpin"
     }
 }

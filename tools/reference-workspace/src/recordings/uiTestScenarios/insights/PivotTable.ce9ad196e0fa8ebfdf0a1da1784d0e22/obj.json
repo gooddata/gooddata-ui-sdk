@@ -1,86 +1,71 @@
 {
     "insight": {
-        "identifier": "PivotTable.ce9ad196e0fa8ebfdf0a1da1784d0e22",
-        "uri": "PivotTable.ce9ad196e0fa8ebfdf0a1da1784d0e22",
-        "visualizationUrl": "local:table",
-        "title": "PivotTable - two measures and multiple grand totals for each",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.department",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.department"
                         }
                     }
                 ],
+                "localIdentifier": "attribute",
                 "totals": [
                     {
-                        "type": "sum",
+                        "attributeIdentifier": "a_label.product.id.name",
                         "measureIdentifier": "m_aangOxLSeztu",
-                        "attributeIdentifier": "a_label.product.id.name"
+                        "type": "sum"
                     },
                     {
-                        "type": "min",
+                        "attributeIdentifier": "a_label.product.id.name",
                         "measureIdentifier": "m_aangOxLSeztu",
-                        "attributeIdentifier": "a_label.product.id.name"
+                        "type": "min"
                     },
                     {
-                        "type": "max",
+                        "attributeIdentifier": "a_label.product.id.name",
                         "measureIdentifier": "m_acugFHNJgsBy",
-                        "attributeIdentifier": "a_label.product.id.name"
+                        "type": "max"
                     },
                     {
-                        "type": "nat",
+                        "attributeIdentifier": "a_label.product.id.name",
                         "measureIdentifier": "m_acugFHNJgsBy",
-                        "attributeIdentifier": "a_label.product.id.name"
+                        "type": "nat"
                     }
                 ]
             },
             {
-                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
@@ -93,18 +78,20 @@
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "columns"
             }
         ],
         "filters": [],
+        "identifier": "PivotTable.ce9ad196e0fa8ebfdf0a1da1784d0e22",
+        "properties": {},
         "sorts": [],
-        "properties": {}
+        "title": "PivotTable - two measures and multiple grand totals for each",
+        "uri": "PivotTable.ce9ad196e0fa8ebfdf0a1da1784d0e22",
+        "visualizationUrl": "local:table"
     }
 }

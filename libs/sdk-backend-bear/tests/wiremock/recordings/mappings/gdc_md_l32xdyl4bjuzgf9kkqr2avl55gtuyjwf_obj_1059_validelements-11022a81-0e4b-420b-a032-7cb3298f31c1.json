@@ -1,0 +1,43 @@
+{
+    "id": "11022a81-0e4b-420b-a032-7cb3298f31c1",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059/validElements?limit=20&offset=0",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{\"restrictiveDefinitionContent\":{\"format\":\"grid\",\"filters\":[{\"expression\":\"(([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100] IN ([/gdc/md/referenceworkspace/obj/1100/elements?id=460495])) OVER [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064] TO [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057])\"}],\"grid\":{\"columns\":[],\"rows\":[{\"attribute\":{\"uri\":\"/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059\",\"alias\":\"\",\"totals\":[]}}],\"metrics\":[],\"sort\":{\"columns\":[],\"rows\":[]},\"columnWidths\":[]}}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_obj_1059_validelements-11022a81-0e4b-420b-a032-7cb3298f31c1.json",
+        "headers": {
+            "Date": "Tue, 08 Sep 2020 17:50:31 GMT",
+            "Server": "GoodData WebApp",
+            "Keep-Alive": "timeout=5, max=24",
+            "X-GDC-LOG-HEADER": "",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json;charset=UTF-8",
+            "X-GDC-REQUEST-TIME": "61",
+            "X-GDC-REQUEST": "RTidQcMJpnNo9M7Q",
+            "vary": "Accept-Encoding,origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "11022a81-0e4b-420b-a032-7cb3298f31c1",
+    "persistent": true,
+    "insertionIndex": 11
+}

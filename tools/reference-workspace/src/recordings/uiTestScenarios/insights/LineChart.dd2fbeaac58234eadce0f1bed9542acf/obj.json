@@ -1,67 +1,50 @@
 {
     "insight": {
-        "identifier": "LineChart.dd2fbeaac58234eadce0f1bed9542acf",
-        "uri": "LineChart.dd2fbeaac58234eadce0f1bed9542acf",
-        "visualizationUrl": "local:line",
-        "title": "LineChart - Y axis min/max configuration",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "trend",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "created.aci81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "created.aci81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_created.aci81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "trend"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "LineChart.dd2fbeaac58234eadce0f1bed9542acf",
+        "properties": { "controls": { "yaxis": { "max": "25000000", "min": "5000000" } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "yaxis": {
-                    "min": "5000000",
-                    "max": "25000000"
-                }
-            }
-        }
+        "title": "LineChart - Y axis min/max configuration",
+        "uri": "LineChart.dd2fbeaac58234eadce0f1bed9542acf",
+        "visualizationUrl": "local:line"
     }
 }

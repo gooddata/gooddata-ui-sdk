@@ -1,0 +1,38 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00%",
+                                    "localIdentifier": "m_aangOxLSeztu_ratio",
+                                    "name": "m_aangOxLSeztu_ratio"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.product.id",
+                            "name": "Product",
+                            "uri": "/gdc/md/referenceworkspace/obj/1054"
+                        },
+                        "identifier": "label.product.id.name",
+                        "localIdentifier": "a_label.product.id.name",
+                        "name": "Product Name",
+                        "uri": "/gdc/md/referenceworkspace/obj/1055"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
 import { IRecording, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
-import isEmpty = require("lodash/isEmpty");
+import isEmpty from "lodash/isEmpty";
 import { InsightRecordingSpec, RecordingFiles } from "../interface";
 
 //
@@ -49,14 +49,22 @@ export class InsightRecording implements IRecording {
         };
     }
 
-    public async makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void> {
+    public async makeRecording(
+        backend: IAnalyticalBackend,
+        workspace: string,
+        newWorkspaceId?: string,
+    ): Promise<void> {
         const obj = await backend.workspace(workspace).insights().getInsight(idRef(this.insightId));
 
         if (!fs.existsSync(this.directory)) {
             fs.mkdirSync(this.directory, { recursive: true });
         }
 
-        writeAsJsonSync(this.objFile, obj);
+        const replaceString: [string, string] | undefined = newWorkspaceId
+            ? [workspace, newWorkspaceId]
+            : undefined;
+
+        writeAsJsonSync(this.objFile, obj, { replaceString });
     }
 
     public getVisName(): string {

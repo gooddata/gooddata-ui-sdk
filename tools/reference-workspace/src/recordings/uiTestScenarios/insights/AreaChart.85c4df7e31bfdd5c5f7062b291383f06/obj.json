@@ -1,75 +1,57 @@
 {
     "insight": {
-        "identifier": "AreaChart.85c4df7e31bfdd5c5f7062b291383f06",
-        "uri": "AreaChart.85c4df7e31bfdd5c5f7062b291383f06",
-        "visualizationUrl": "local:area",
-        "title": "AreaChart - two measures with viewBy sorted by measure",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "AreaChart.85c4df7e31bfdd5c5f7062b291383f06",
+        "properties": { "controls": {} },
         "sorts": [
             {
                 "measureSortItem": {
                     "direction": "asc",
-                    "locators": [
-                        {
-                            "measureLocatorItem": {
-                                "measureIdentifier": "m_acugFHNJgsBy"
-                            }
-                        }
-                    ]
+                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_acugFHNJgsBy" } }]
                 }
             }
         ],
-        "properties": {
-            "controls": {}
-        }
+        "title": "AreaChart - two measures with viewBy sorted by measure",
+        "uri": "AreaChart.85c4df7e31bfdd5c5f7062b291383f06",
+        "visualizationUrl": "local:area"
     }
 }

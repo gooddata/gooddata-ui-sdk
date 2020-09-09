@@ -6,8 +6,8 @@ import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors";
 import { BubbleChartWithAllMeasuresAndAttribute } from "./base";
 import { AttributeElements } from "../../_infra/predicates";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
-import { Product } from "../../_infra/data";
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { ReferenceData } from "@gooddata/reference-workspace";
 
 const colorsAndPalette = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)
@@ -36,7 +36,13 @@ const colorAssignment = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleCha
                 ],
             },
         },
-        (m) => m.withInsightConverter(replaceMappingPredicates(Product.Explorer, Product.WonderKid)),
+        (m) =>
+            m.withInsightConverter(
+                replaceMappingPredicates(
+                    ReferenceData.ProductName.Explorer.uri,
+                    ReferenceData.ProductName.WonderKid.uri,
+                ),
+            ),
     );
 
 export default [colorsAndPalette, colorAssignment];

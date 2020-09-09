@@ -1,52 +1,43 @@
 {
     "insight": {
-        "identifier": "GeoPushpinChart.ce328d3e8e11cb31aea20cac9963f0d2",
-        "uri": "GeoPushpinChart.ce328d3e8e11cb31aea20cac9963f0d2",
-        "visualizationUrl": "local:pushpin",
-        "title": "GeoPushpinChart - legend on the right",
         "buckets": [
             {
-                "localIdentifier": "size",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_f508857c_fact.uscities.population_sum",
+                            "alias": "Population",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "fact.uscities.population"
-                                    },
-                                    "aggregation": "sum"
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.uscities.population" }
                                 }
                             },
                             "format": "#,##0.00",
-                            "alias": "Population"
+                            "localIdentifier": "m_f508857c_fact.uscities.population_sum"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "size"
             },
             {
-                "localIdentifier": "color",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+                            "alias": "Density",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "fact.uscities.density"
-                                    },
-                                    "aggregation": "sum"
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.uscities.density" }
                                 }
                             },
                             "format": "#,##0.00",
-                            "alias": "Density"
+                            "localIdentifier": "m_35a08895_fact.uscities.density_sum"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "color"
             },
             {
-                "localIdentifier": "location",
                 "items": [
                     {
                         "attribute": {
@@ -57,10 +48,10 @@
                             "localIdentifier": "a_label.uscities.city.location"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "location"
             },
             {
-                "localIdentifier": "segment",
                 "items": [
                     {
                         "attribute": {
@@ -71,33 +62,21 @@
                             "localIdentifier": "a_label.uscities.state_name"
                         }
                     }
-                ]
-            },
-            {
-                "localIdentifier": "tooltipText",
-                "items": [
-                    {
-                        "attribute": {
-                            "displayForm": {
-                                "identifier": "label.uscities.city",
-                                "type": "displayForm"
-                            },
-                            "localIdentifier": "tooltipText_df"
-                        }
-                    }
-                ]
+                ],
+                "localIdentifier": "segment"
             }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "GeoPushpinChart.ce328d3e8e11cb31aea20cac9963f0d2",
         "properties": {
             "controls": {
-                "tooltipText": "label.uscities.city",
-                "legend": {
-                    "enabled": true,
-                    "position": "right"
-                }
+                "legend": { "enabled": true, "position": "right" },
+                "tooltipText": "label.uscities.city"
             }
-        }
+        },
+        "sorts": [],
+        "title": "GeoPushpinChart - legend on the right",
+        "uri": "GeoPushpinChart.ce328d3e8e11cb31aea20cac9963f0d2",
+        "visualizationUrl": "local:pushpin"
     }
 }

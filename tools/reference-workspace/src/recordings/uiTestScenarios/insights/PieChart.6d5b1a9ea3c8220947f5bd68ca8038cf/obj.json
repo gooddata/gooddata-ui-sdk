@@ -1,52 +1,39 @@
 {
     "insight": {
-        "identifier": "PieChart.6d5b1a9ea3c8220947f5bd68ca8038cf",
-        "uri": "PieChart.6d5b1a9ea3c8220947f5bd68ca8038cf",
-        "visualizationUrl": "local:pie",
-        "title": "PieChart - legend position - two measures - disabled",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
-            {
-                "localIdentifier": "view",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "view" }
         ],
         "filters": [],
+        "identifier": "PieChart.6d5b1a9ea3c8220947f5bd68ca8038cf",
+        "properties": { "controls": { "legend": { "enabled": false } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "legend": {
-                    "enabled": false
-                }
-            }
-        }
+        "title": "PieChart - legend position - two measures - disabled",
+        "uri": "PieChart.6d5b1a9ea3c8220947f5bd68ca8038cf",
+        "visualizationUrl": "local:pie"
     }
 }

@@ -9,7 +9,15 @@ function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): 
     return {
         ...prevConfig,
         ...pickBy(
-            pick(config, ["hostname", "projectId", "username", "password", "recordingDir", "backend"]),
+            pick(config, [
+                "hostname",
+                "projectId",
+                "username",
+                "password",
+                "recordingDir",
+                "backend",
+                "replaceProjectId",
+            ]),
             identity,
         ),
     };
@@ -23,6 +31,7 @@ function retrieveConfigFromObject(obj: object): DataRecorderConfig {
         password: get(obj, "password", null),
         recordingDir: get(obj, "recordingDir", null),
         backend: get(obj, "backend", null),
+        replaceProjectId: get(obj, "replaceProjectId", null),
     };
 }
 

@@ -1,46 +1,39 @@
 {
     "insight": {
-        "identifier": "PieChart.f665868dc6c649d4c7da666f101dd926",
-        "uri": "PieChart.f665868dc6c649d4c7da666f101dd926",
-        "visualizationUrl": "local:pie",
-        "title": "PieChart - coloring - custom palette",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "PieChart.f665868dc6c649d4c7da666f101dd926",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "PieChart - coloring - custom palette",
+        "uri": "PieChart.f665868dc6c649d4c7da666f101dd926",
+        "visualizationUrl": "local:pie"
     }
 }

@@ -1,50 +1,39 @@
 {
     "insight": {
-        "identifier": "PieChart.654fbce275b2ed4e58bc79a3faed62f5",
-        "uri": "PieChart.654fbce275b2ed4e58bc79a3faed62f5",
-        "visualizationUrl": "local:pie",
-        "title": "PieChart - data labels - auto visibility",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "PieChart.654fbce275b2ed4e58bc79a3faed62f5",
+        "properties": { "controls": { "dataLabels": { "visible": "auto" } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "dataLabels": {
-                    "visible": "auto"
-                }
-            }
-        }
+        "title": "PieChart - data labels - auto visibility",
+        "uri": "PieChart.654fbce275b2ed4e58bc79a3faed62f5",
+        "visualizationUrl": "local:pie"
     }
 }

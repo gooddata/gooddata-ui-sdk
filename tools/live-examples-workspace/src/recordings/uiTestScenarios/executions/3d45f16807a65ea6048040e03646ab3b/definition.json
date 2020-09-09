@@ -1,54 +1,27 @@
 {
-    "workspace": "live-examples-workspace",
-    "buckets": [],
     "attributes": [
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.uscities.city.location",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.uscities.city.location", "type": "displayForm" },
                 "localIdentifier": "a_label.uscities.city.location"
             }
         },
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.uscities.state_name",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.uscities.state_name", "type": "displayForm" },
                 "localIdentifier": "a_label.uscities.state_name"
             }
         },
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.uscities.city",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.uscities.city", "type": "displayForm" },
                 "localIdentifier": "a_label.uscities.city"
             }
         }
     ],
-    "measures": [
-        {
-            "measure": {
-                "localIdentifier": "m_fact.uscities.density_sum",
-                "definition": {
-                    "measureDefinition": {
-                        "item": {
-                            "identifier": "fact.uscities.density"
-                        },
-                        "aggregation": "sum"
-                    }
-                }
-            }
-        }
-    ],
+    "buckets": [],
     "dimensions": [
-        {
-            "itemIdentifiers": ["measureGroup"]
-        },
+        { "itemIdentifiers": ["measureGroup"] },
         {
             "itemIdentifiers": [
                 "a_label.uscities.city.location",
@@ -58,12 +31,21 @@
         }
     ],
     "filters": [],
-    "sortBy": [
+    "measures": [
         {
-            "attributeSortItem": {
-                "attributeIdentifier": "a_label.uscities.state_name",
-                "direction": "asc"
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "aggregation": "sum",
+                        "item": { "identifier": "fact.uscities.density" }
+                    }
+                },
+                "localIdentifier": "m_fact.uscities.density_sum"
             }
         }
-    ]
+    ],
+    "sortBy": [
+        { "attributeSortItem": { "attributeIdentifier": "a_label.uscities.state_name", "direction": "asc" } }
+    ],
+    "workspace": "live-examples-workspace"
 }

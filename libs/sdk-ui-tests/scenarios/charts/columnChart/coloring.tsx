@@ -11,8 +11,7 @@ import {
 } from "./base";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { Region } from "../../_infra/data";
+import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const colorsAndPalette = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
@@ -84,7 +83,13 @@ const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnCha
                 ],
             },
         },
-        (m) => m.withInsightConverter(replaceMappingPredicates(Region.EastCoast, Region.WestCoast)),
+        (m) =>
+            m.withInsightConverter(
+                replaceMappingPredicates(
+                    ReferenceData.Region.EastCoast.uri,
+                    ReferenceData.Region.WestCoast.uri,
+                ),
+            ),
     );
 
 export default [colorsAndPalette, colorAssignment];

@@ -1,0 +1,25 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                "localIdentifier": "a_label.owner.region"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [{ "itemIdentifiers": ["measureGroup"] }, { "itemIdentifiers": ["a_label.owner.region"] }],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "aangOxLSeztu", "type": "measure" } }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

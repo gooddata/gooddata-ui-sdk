@@ -1,0 +1,142 @@
+{
+    "count": [1, 18],
+    "data": [
+        [
+            "0.142857142857143",
+            "0.15",
+            "0.228571428571429",
+            "0.192307692307692",
+            "0.153846153846154",
+            "0.1875",
+            "0.212765957446809",
+            "0.213740458015267",
+            "0.208530805687204",
+            "0.423180592991914",
+            "0.591251885369532",
+            "0.639741518578352",
+            "0.678353658536585",
+            "0.587596899224806",
+            "0.60699865410498",
+            "0.625386996904025",
+            "0.566246056782334",
+            "0.518041237113402"
+        ]
+    ],
+    "headerItems": [
+        [[{ "measureHeaderItem": { "name": "Win Rate", "order": 0 } }]],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2008",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8033"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2008",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8034"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2008",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8035"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2008",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8036"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2009",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8037"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2009",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8038"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2009",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8039"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2009",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8040"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8041"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8042"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8043"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2010",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8044"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8045"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8046"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8047"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2011",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8048"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8049"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2012",
+                        "uri": "/gdc/md/referenceworkspace/obj/347/elements?id=8050"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 18]
+}

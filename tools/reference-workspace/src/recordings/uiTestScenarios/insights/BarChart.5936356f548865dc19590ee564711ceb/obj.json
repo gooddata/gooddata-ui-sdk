@@ -1,93 +1,63 @@
 {
     "insight": {
-        "identifier": "BarChart.5936356f548865dc19590ee564711ceb",
-        "uri": "BarChart.5936356f548865dc19590ee564711ceb",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - dual axis name customization - low",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "BarChart.5936356f548865dc19590ee564711ceb",
         "properties": {
             "controls": {
-                "secondary_xaxis": {
-                    "measures": ["m_acugFHNJgsBy"],
-                    "name": {
-                        "position": "left"
-                    }
-                },
-                "xaxis": {
-                    "name": {
-                        "position": "left"
-                    }
-                },
-                "yaxis": {
-                    "name": {
-                        "position": "bottom"
-                    }
-                },
-                "secondary_yaxis": {
-                    "name": {
-                        "position": "bottom"
-                    }
-                }
+                "secondary_xaxis": { "measures": ["m_acugFHNJgsBy"], "name": { "position": "left" } },
+                "secondary_yaxis": { "name": { "position": "bottom" } },
+                "xaxis": { "name": { "position": "left" } },
+                "yaxis": { "name": { "position": "bottom" } }
             }
-        }
+        },
+        "sorts": [],
+        "title": "BarChart - dual axis name customization - low",
+        "uri": "BarChart.5936356f548865dc19590ee564711ceb",
+        "visualizationUrl": "local:bar"
     }
 }

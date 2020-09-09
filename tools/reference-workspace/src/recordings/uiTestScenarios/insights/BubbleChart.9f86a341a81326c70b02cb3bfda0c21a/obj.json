@@ -1,85 +1,69 @@
 {
     "insight": {
-        "identifier": "BubbleChart.9f86a341a81326c70b02cb3bfda0c21a",
-        "uri": "BubbleChart.9f86a341a81326c70b02cb3bfda0c21a",
-        "visualizationUrl": "local:bubble",
-        "title": "BubbleChart - X axis min/max configuration",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "abZgFKGPaGYM"
-                                    }
+                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "secondary_measures"
             },
             {
-                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_abEgMnq5hyJQ",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "abEgMnq5hyJQ"
-                                    }
+                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_abEgMnq5hyJQ"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "tertiary_measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "BubbleChart.9f86a341a81326c70b02cb3bfda0c21a",
+        "properties": { "controls": { "xaxis": { "max": "25000000", "min": "5000000" } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "xaxis": {
-                    "min": "5000000",
-                    "max": "25000000"
-                }
-            }
-        }
+        "title": "BubbleChart - X axis min/max configuration",
+        "uri": "BubbleChart.9f86a341a81326c70b02cb3bfda0c21a",
+        "visualizationUrl": "local:bubble"
     }
 }

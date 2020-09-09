@@ -1,10 +1,4 @@
 [
-    {
-        "title": "East Coast",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488"
-    },
-    {
-        "title": "West Coast",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460489"
-    }
+    { "title": "East Coast", "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488" },
+    { "title": "West Coast", "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489" }
 ]

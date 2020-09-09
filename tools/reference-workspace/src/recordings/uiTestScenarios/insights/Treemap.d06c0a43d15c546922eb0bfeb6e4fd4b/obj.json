@@ -1,52 +1,40 @@
 {
     "insight": {
-        "identifier": "Treemap.d06c0a43d15c546922eb0bfeb6e4fd4b",
-        "uri": "Treemap.d06c0a43d15c546922eb0bfeb6e4fd4b",
-        "visualizationUrl": "local:treemap",
-        "title": "Treemap - two measures",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
-            {
-                "localIdentifier": "view",
-                "items": []
-            },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "view" },
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "Treemap.d06c0a43d15c546922eb0bfeb6e4fd4b",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "Treemap - two measures",
+        "uri": "Treemap.d06c0a43d15c546922eb0bfeb6e4fd4b",
+        "visualizationUrl": "local:treemap"
     }
 }

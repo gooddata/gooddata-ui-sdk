@@ -1,20 +1,9 @@
 {
     "insight": {
-        "identifier": "GeoPushpinChart.f884b3e4f2b5f99801a54c39c06e4a4f",
-        "uri": "GeoPushpinChart.f884b3e4f2b5f99801a54c39c06e4a4f",
-        "visualizationUrl": "local:pushpin",
-        "title": "GeoPushpinChart - location only with tooltip",
         "buckets": [
+            { "items": [], "localIdentifier": "size" },
+            { "items": [], "localIdentifier": "color" },
             {
-                "localIdentifier": "size",
-                "items": []
-            },
-            {
-                "localIdentifier": "color",
-                "items": []
-            },
-            {
-                "localIdentifier": "location",
                 "items": [
                     {
                         "attribute": {
@@ -25,33 +14,17 @@
                             "localIdentifier": "a_label.uscities.city.location"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "location"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            },
-            {
-                "localIdentifier": "tooltipText",
-                "items": [
-                    {
-                        "attribute": {
-                            "displayForm": {
-                                "identifier": "label.uscities.city",
-                                "type": "displayForm"
-                            },
-                            "localIdentifier": "tooltipText_df"
-                        }
-                    }
-                ]
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "GeoPushpinChart.f884b3e4f2b5f99801a54c39c06e4a4f",
+        "properties": { "controls": { "tooltipText": "label.uscities.city" } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "tooltipText": "label.uscities.city"
-            }
-        }
+        "title": "GeoPushpinChart - location only with tooltip",
+        "uri": "GeoPushpinChart.f884b3e4f2b5f99801a54c39c06e4a4f",
+        "visualizationUrl": "local:pushpin"
     }
 }

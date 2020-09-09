@@ -1,10 +1,4 @@
 [
-    {
-        "title": "Direct Sales",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088/elements?id=460487"
-    },
-    {
-        "title": "Inside Sales",
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088/elements?id=460490"
-    }
+    { "title": "Direct Sales", "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487" },
+    { "title": "Inside Sales", "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460490" }
 ]

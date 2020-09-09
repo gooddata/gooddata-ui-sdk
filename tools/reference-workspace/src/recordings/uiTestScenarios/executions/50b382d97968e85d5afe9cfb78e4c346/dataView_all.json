@@ -1,0 +1,42 @@
+{
+    "count": [4],
+    "data": ["-123400", "36200", "54800", "48100"],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Sample XIRR", "order": 0 } },
+                { "measureHeaderItem": { "name": "Sample XIRR", "order": 0 } },
+                { "measureHeaderItem": { "name": "Sample XIRR", "order": 0 } },
+                { "measureHeaderItem": { "name": "Sample XIRR", "order": 0 } }
+            ],
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "2018",
+                        "uri": "/gdc/md/referenceworkspace/obj/992/elements?id=2018"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2019",
+                        "uri": "/gdc/md/referenceworkspace/obj/992/elements?id=2019"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2020",
+                        "uri": "/gdc/md/referenceworkspace/obj/992/elements?id=2020"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2021",
+                        "uri": "/gdc/md/referenceworkspace/obj/992/elements?id=2021"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0],
+    "totalCount": [4]
+}

@@ -1,20 +1,9 @@
 {
     "insight": {
-        "identifier": "GeoPushpinChart.290531583e3619bf47883f3b20e1c334",
-        "uri": "GeoPushpinChart.290531583e3619bf47883f3b20e1c334",
-        "visualizationUrl": "local:pushpin",
-        "title": "GeoPushpinChart - location and segment",
         "buckets": [
+            { "items": [], "localIdentifier": "size" },
+            { "items": [], "localIdentifier": "color" },
             {
-                "localIdentifier": "size",
-                "items": []
-            },
-            {
-                "localIdentifier": "color",
-                "items": []
-            },
-            {
-                "localIdentifier": "location",
                 "items": [
                     {
                         "attribute": {
@@ -25,10 +14,10 @@
                             "localIdentifier": "a_label.uscities.city.location"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "location"
             },
             {
-                "localIdentifier": "segment",
                 "items": [
                     {
                         "attribute": {
@@ -39,13 +28,16 @@
                             "localIdentifier": "a_label.uscities.state_name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "segment"
             }
         ],
         "filters": [],
+        "identifier": "GeoPushpinChart.290531583e3619bf47883f3b20e1c334",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "GeoPushpinChart - location and segment",
+        "uri": "GeoPushpinChart.290531583e3619bf47883f3b20e1c334",
+        "visualizationUrl": "local:pushpin"
     }
 }

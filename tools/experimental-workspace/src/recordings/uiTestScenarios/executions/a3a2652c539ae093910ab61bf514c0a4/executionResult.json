@@ -7,11 +7,11 @@
                         "items": [
                             {
                                 "measureHeaderItem": {
-                                    "name": "Amount",
                                     "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
                                     "localIdentifier": "m_aangOxLSeztu",
-                                    "uri": "/gdc/md/d79dpgty2b4ydewi6kbzqm4fq1be2ltm/obj/1271",
-                                    "identifier": "aangOxLSeztu"
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/experimentalworkspace/obj/1271"
                                 }
                             }
                         ]
@@ -23,15 +23,15 @@
             "headers": [
                 {
                     "attributeHeader": {
-                        "name": "Product Name",
-                        "localIdentifier": "a_label.product.id.name",
-                        "uri": "/gdc/md/d79dpgty2b4ydewi6kbzqm4fq1be2ltm/obj/1057",
-                        "identifier": "label.product.id.name",
                         "formOf": {
+                            "identifier": "attr.product.id",
                             "name": "Product",
-                            "uri": "/gdc/md/d79dpgty2b4ydewi6kbzqm4fq1be2ltm/obj/1056",
-                            "identifier": "attr.product.id"
-                        }
+                            "uri": "/gdc/md/experimentalworkspace/obj/1056"
+                        },
+                        "identifier": "label.product.id.name",
+                        "localIdentifier": "a_label.product.id.name",
+                        "name": "Product Name",
+                        "uri": "/gdc/md/experimentalworkspace/obj/1057"
                     }
                 }
             ]

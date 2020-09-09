@@ -1,46 +1,39 @@
 {
     "insight": {
-        "identifier": "Xirr.2dd4cca9665e247c85d40e207b212db7",
-        "uri": "Xirr.2dd4cca9665e247c85d40e207b212db7",
-        "visualizationUrl": "local:xirr",
-        "title": "Xirr - correct config",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aadpHDMBecIy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aadpHDMBecIy"
-                                    }
+                                    "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aadpHDMBecIy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "timeline.aag81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "timeline.aag81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_timeline.aag81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "attribute"
             }
         ],
         "filters": [],
+        "identifier": "Xirr.2dd4cca9665e247c85d40e207b212db7",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "Xirr - correct config",
+        "uri": "Xirr.2dd4cca9665e247c85d40e207b212db7",
+        "visualizationUrl": "local:xirr"
     }
 }

@@ -1,0 +1,67 @@
+[
+    {
+        "n2oMap": {
+            "a_timeline.aag81lMifn6q": "a_timeline.aag81lMifn6q",
+            "m_abYgDBRagANw": "m_abYgDBRagANw"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "timeline.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_timeline.aag81lMifn6q"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "abYgDBRagANw", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_abYgDBRagANw"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "timeline.aag81lMifn6q",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_timeline.aag81lMifn6q"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute"
+                }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup", "a_timeline.aag81lMifn6q"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "abYgDBRagANw", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_abYgDBRagANw"
+                    }
+                }
+            ],
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "semantically wrong measure",
+        "vis": "Xirr"
+    }
+]

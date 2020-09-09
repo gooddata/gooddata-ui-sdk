@@ -1,7 +1,9 @@
 {
-    "attribute": {
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088"
-    },
+    "attribute": { "uri": "/gdc/md/referenceworkspace/obj/1088" },
+    "description": "",
     "id": "label.owner.department",
-    "title": "Department"
+    "ref": { "identifier": "label.owner.department" },
+    "title": "Department",
+    "type": "displayForm",
+    "uri": "/gdc/md/referenceworkspace/obj/1089"
 }

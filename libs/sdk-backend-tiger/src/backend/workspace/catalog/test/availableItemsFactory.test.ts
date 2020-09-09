@@ -45,13 +45,13 @@ describe("available item filtering", () => {
         });
         it("should filter-in simple object if ref matches", () => {
             expect(
-                filterAvailableItems([uriRef("/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267")], AllItems),
+                filterAvailableItems([uriRef("/gdc/md/referenceworkspace/obj/1267")], AllItems),
             ).toMatchSnapshot();
         });
 
         it("should filter-in date dataset if attribute ref matches", () => {
             expect(
-                filterAvailableItems([uriRef("/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827")], AllItems),
+                filterAvailableItems([uriRef("/gdc/md/referenceworkspace/obj/827")], AllItems),
             ).toMatchSnapshot();
         });
     });

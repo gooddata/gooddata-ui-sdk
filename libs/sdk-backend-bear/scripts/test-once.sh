@@ -15,8 +15,10 @@ fi
 jest
 UNIT_RC=$?
 
-NODE_TLS_REJECT_UNAUTHORIZED=0 jest --config "integrated-test.config.js"; npm run stop-wiremock
+NODE_TLS_REJECT_UNAUTHORIZED=0 jest --config "integrated-test.config.js"
 INTEGRATED_RC=$?
+
+npm run stop-wiremock
 
 ${WIREMOCK_DIR}/stop_wiremock.sh
 

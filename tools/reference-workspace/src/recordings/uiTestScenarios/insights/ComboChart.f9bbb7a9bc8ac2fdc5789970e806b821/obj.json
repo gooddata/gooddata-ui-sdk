@@ -1,67 +1,54 @@
 {
     "insight": {
-        "identifier": "ComboChart.f9bbb7a9bc8ac2fdc5789970e806b821",
-        "uri": "ComboChart.f9bbb7a9bc8ac2fdc5789970e806b821",
-        "visualizationUrl": "local:combo2",
-        "title": "ComboChart - data labels - forced visible and german separators",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "secondary_measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "ComboChart.f9bbb7a9bc8ac2fdc5789970e806b821",
+        "properties": { "controls": { "dataLabels": { "visible": true } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "dataLabels": {
-                    "visible": true
-                }
-            }
-        }
+        "title": "ComboChart - data labels - forced visible and german separators",
+        "uri": "ComboChart.f9bbb7a9bc8ac2fdc5789970e806b821",
+        "visualizationUrl": "local:combo2"
     }
 }

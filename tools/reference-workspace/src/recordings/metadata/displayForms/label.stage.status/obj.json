@@ -1,7 +1,9 @@
 {
-    "attribute": {
-        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100"
-    },
+    "attribute": { "uri": "/gdc/md/referenceworkspace/obj/1100" },
+    "description": "",
     "id": "label.stage.status",
-    "title": "Status"
+    "ref": { "identifier": "label.stage.status" },
+    "title": "Status",
+    "type": "displayForm",
+    "uri": "/gdc/md/referenceworkspace/obj/1101"
 }

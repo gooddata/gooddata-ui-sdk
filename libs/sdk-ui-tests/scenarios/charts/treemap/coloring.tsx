@@ -6,8 +6,8 @@ import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors";
 import { TreemapWithMeasureViewByAndSegmentBy } from "./base";
 import { AttributeElements } from "../../_infra/predicates";
 import { replaceMappingPredicates } from "../_infra/insightConverters";
-import { Product } from "../../_infra/data";
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { ReferenceData } from "@gooddata/reference-workspace";
 
 const colorsAndPalette = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(...ScenarioGroupNames.Coloring)
@@ -36,7 +36,13 @@ const colorAssignment = scenariosFor<ITreemapProps>("Treemap", Treemap)
                 ],
             },
         },
-        (m) => m.withInsightConverter(replaceMappingPredicates(Product.WonderKid, Product.Explorer)),
+        (m) =>
+            m.withInsightConverter(
+                replaceMappingPredicates(
+                    ReferenceData.ProductName.WonderKid.uri,
+                    ReferenceData.ProductName.Explorer.uri,
+                ),
+            ),
     );
 
 export default [colorsAndPalette, colorAssignment];

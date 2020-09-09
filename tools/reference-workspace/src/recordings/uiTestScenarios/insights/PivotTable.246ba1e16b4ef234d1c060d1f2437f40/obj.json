@@ -1,74 +1,61 @@
 {
     "insight": {
-        "identifier": "PivotTable.246ba1e16b4ef234d1c060d1f2437f40",
-        "uri": "PivotTable.246ba1e16b4ef234d1c060d1f2437f40",
-        "visualizationUrl": "local:table",
-        "title": "PivotTable - single measure and multiple grand totals",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.department",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.department"
                         }
                     }
                 ],
+                "localIdentifier": "attribute",
                 "totals": [
                     {
-                        "type": "sum",
+                        "attributeIdentifier": "a_label.product.id.name",
                         "measureIdentifier": "m_aangOxLSeztu",
-                        "attributeIdentifier": "a_label.product.id.name"
+                        "type": "sum"
                     },
                     {
-                        "type": "min",
+                        "attributeIdentifier": "a_label.product.id.name",
                         "measureIdentifier": "m_aangOxLSeztu",
-                        "attributeIdentifier": "a_label.product.id.name"
+                        "type": "min"
                     },
                     {
-                        "type": "max",
+                        "attributeIdentifier": "a_label.product.id.name",
                         "measureIdentifier": "m_aangOxLSeztu",
-                        "attributeIdentifier": "a_label.product.id.name"
+                        "type": "max"
                     },
                     {
-                        "type": "nat",
+                        "attributeIdentifier": "a_label.product.id.name",
                         "measureIdentifier": "m_aangOxLSeztu",
-                        "attributeIdentifier": "a_label.product.id.name"
+                        "type": "nat"
                     }
                 ]
             },
             {
-                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
@@ -81,18 +68,20 @@
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "columns"
             }
         ],
         "filters": [],
+        "identifier": "PivotTable.246ba1e16b4ef234d1c060d1f2437f40",
+        "properties": {},
         "sorts": [],
-        "properties": {}
+        "title": "PivotTable - single measure and multiple grand totals",
+        "uri": "PivotTable.246ba1e16b4ef234d1c060d1f2437f40",
+        "visualizationUrl": "local:table"
     }
 }

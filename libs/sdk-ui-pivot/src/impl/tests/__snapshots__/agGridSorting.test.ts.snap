@@ -8,7 +8,7 @@ Object {
       Object {
         "attributeLocatorItem": Object {
           "attributeIdentifier": "a_label.owner.region",
-          "element": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488",
+          "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
         },
       },
       Object {
@@ -39,7 +39,7 @@ Array [
         Object {
           "attributeLocatorItem": Object {
             "attributeIdentifier": "a_label.owner.region",
-            "element": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488",
+            "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
           },
         },
         Object {

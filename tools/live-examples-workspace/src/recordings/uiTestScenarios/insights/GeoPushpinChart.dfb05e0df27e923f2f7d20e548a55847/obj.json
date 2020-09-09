@@ -1,36 +1,26 @@
 {
     "insight": {
-        "identifier": "GeoPushpinChart.dfb05e0df27e923f2f7d20e548a55847",
-        "uri": "GeoPushpinChart.dfb05e0df27e923f2f7d20e548a55847",
-        "visualizationUrl": "local:pushpin",
-        "title": "GeoPushpinChart - location and color",
         "buckets": [
+            { "items": [], "localIdentifier": "size" },
             {
-                "localIdentifier": "size",
-                "items": []
-            },
-            {
-                "localIdentifier": "color",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_35a08895_fact.uscities.density_sum",
+                            "alias": "Density",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "fact.uscities.density"
-                                    },
-                                    "aggregation": "sum"
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "fact.uscities.density" }
                                 }
                             },
                             "format": "#,##0.00",
-                            "alias": "Density"
+                            "localIdentifier": "m_35a08895_fact.uscities.density_sum"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "color"
             },
             {
-                "localIdentifier": "location",
                 "items": [
                     {
                         "attribute": {
@@ -41,17 +31,17 @@
                             "localIdentifier": "a_label.uscities.city.location"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "location"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "GeoPushpinChart.dfb05e0df27e923f2f7d20e548a55847",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "GeoPushpinChart - location and color",
+        "uri": "GeoPushpinChart.dfb05e0df27e923f2f7d20e548a55847",
+        "visualizationUrl": "local:pushpin"
     }
 }

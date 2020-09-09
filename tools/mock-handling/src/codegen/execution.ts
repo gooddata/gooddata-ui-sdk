@@ -3,8 +3,8 @@
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
 import { createUniqueVariableName } from "../base/variableNaming";
-import flatMap = require("lodash/flatMap");
-import groupBy = require("lodash/groupBy");
+import flatMap from "lodash/flatMap";
+import groupBy from "lodash/groupBy";
 import { ExecutionRecording } from "../recordings/execution";
 
 const ScenariosConstName = "Scenarios";
