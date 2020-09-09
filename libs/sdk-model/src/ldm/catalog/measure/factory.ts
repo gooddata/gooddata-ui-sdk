@@ -52,16 +52,3 @@ export class CatalogMeasureBuilder<
 export const newCatalogMeasure = (
     modifications: BuilderModifications<CatalogMeasureBuilder> = identity,
 ): ICatalogMeasure => builderFactory(CatalogMeasureBuilder, { type: "measure" }, modifications);
-
-/**
- * Converts catalog measure to execution measure
- *
- * @param catalogMeasure - catalog measure to convert
- * @param modifications - catalog measure builder modifications to perform before conversion
- * @returns measure converted to the execution model
- * @public
- */
-export const catalogMeasureToExecutionMeasure = (
-    catalogMeasure: ICatalogMeasure,
-    modifications: BuilderModifications<CatalogMeasureBuilder> = identity,
-): IMeasure => new CatalogMeasureBuilder(catalogMeasure).modify(modifications).toExecutionModel();

@@ -60,6 +60,9 @@ export interface IMetadataObject {
     unlisted: boolean;
 }
 
+/**
+ * @public
+ */
 export function isMetadataObject(obj: unknown): obj is IMetadataObject {
     const c = obj as IMetadataObject;
 
