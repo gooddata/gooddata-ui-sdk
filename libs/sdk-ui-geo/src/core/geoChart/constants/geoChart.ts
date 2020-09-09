@@ -115,8 +115,8 @@ export const INTERACTION_EVENTS: string[] = [
 ];
 
 export const DEFAULT_COLORS: string[] = colorPaletteToColors(DefaultColorPalette);
-export const DEFAULT_LATITUDE: number = 34;
-export const DEFAULT_LONGITUDE: number = 5;
+const DEFAULT_LATITUDE: number = 34;
+const DEFAULT_LONGITUDE: number = 5;
 export const DEFAULT_ZOOM: number = 2;
 export const DEFAULT_CENTER: IGeoLngLat = {
     lat: DEFAULT_LATITUDE,
