@@ -29,7 +29,7 @@ import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interface
 
 import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
 
-export function getMeasureSortItems(identifier: string, direction: SortDirection): ISortItem[] {
+function getMeasureSortItems(identifier: string, direction: SortDirection): ISortItem[] {
     return [newMeasureSort(identifier, direction)];
 }
 
@@ -105,7 +105,7 @@ export function getDefaultTreemapSortFromBuckets(
     return [];
 }
 
-export function getDefaultTreemapSort(insight: IInsightDefinition): ISortItem[] {
+function getDefaultTreemapSort(insight: IInsightDefinition): ISortItem[] {
     return getDefaultTreemapSortFromBuckets(
         insightBucket(insight, BucketNames.VIEW),
         insightBucket(insight, BucketNames.SEGMENT),
@@ -113,7 +113,7 @@ export function getDefaultTreemapSort(insight: IInsightDefinition): ISortItem[] 
     );
 }
 
-export function getDefaultHeatmapSortFromBuckets(viewBy: IBucket): ISortItem[] {
+function getDefaultHeatmapSortFromBuckets(viewBy: IBucket): ISortItem[] {
     const viewAttr = viewBy ? bucketAttributes(viewBy) : [];
     if (!isEmpty(viewAttr)) {
         return [newAttributeSort(viewAttr[0], "desc")];
@@ -122,7 +122,7 @@ export function getDefaultHeatmapSortFromBuckets(viewBy: IBucket): ISortItem[] {
     return [];
 }
 
-export function getDefaultHeatmapSort(insight: IInsightDefinition): ISortItem[] {
+function getDefaultHeatmapSort(insight: IInsightDefinition): ISortItem[] {
     const sorts = insightSorts(insight);
     if (sorts && sorts.length > 0) {
         return sorts;

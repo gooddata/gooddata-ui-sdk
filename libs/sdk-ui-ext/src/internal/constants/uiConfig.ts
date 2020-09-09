@@ -15,8 +15,8 @@ export const MAX_VIEW_COUNT = 2;
 export const DEFAULT_HEADLINE_METRICS_COUNT = 1;
 export const DEFAULT_XIRR_METRICS_COUNT = 1;
 export const DEFAULT_XIRR_ATTRIBUTES_COUNT = 1;
-export const DEFAULT_GEO_ATTRIBUTES_COUNT = 1;
-export const DEFAULT_PUSHPIN_METRICS_COUNT = 1;
+const DEFAULT_GEO_ATTRIBUTES_COUNT = 1;
+const DEFAULT_PUSHPIN_METRICS_COUNT = 1;
 
 export const UICONFIG = "uiConfig";
 export const RECOMMENDATIONS = "recommendations";
@@ -25,7 +25,7 @@ export const OPEN_AS_REPORT = "openAsReport";
 export const SUPPORTED = "supported";
 export const UICONFIG_AXIS = "uiConfig.axis";
 
-export const measuresBase = {
+const measuresBase = {
     accepts: [METRIC, FACT, ATTRIBUTE],
     allowsDuplicateItems: true,
     enabled: true,
@@ -36,7 +36,7 @@ export const measuresBase = {
     isShowInPercentVisible: true,
 };
 
-export const viewBase = {
+const viewBase = {
     accepts: [ATTRIBUTE, DATE],
     itemsLimit: MAX_CATEGORIES_COUNT,
     allowsSwapping: true,
@@ -54,7 +54,7 @@ const stackBase = {
     isShowInPercentEnabled: false,
 };
 
-export const defaultFilters = {
+const defaultFilters = {
     filters: {
         accepts: [ATTRIBUTE, DATE],
         itemsLimit: MAX_FILTERS_COUNT,
@@ -64,19 +64,15 @@ export const defaultFilters = {
     },
 };
 
-export const disabledExportConfig = {
+const disabledExportConfig = {
     exportConfig: { supported: false },
 };
 
-export const enabledExportConfig = {
+const enabledExportConfig = {
     exportConfig: { supported: true },
 };
 
-export const disabledNoMetricConfig = {
-    noMetricAccepted: { supported: false },
-};
-
-export const enabledNoMetricConfig = {
+const enabledNoMetricConfig = {
     noMetricAccepted: { supported: true },
 };
 
@@ -84,11 +80,11 @@ export const disabledOpenAsReportConfig = {
     openAsReport: { supported: false },
 };
 
-export const enabledOpenAsReportConfig = {
+const enabledOpenAsReportConfig = {
     openAsReport: { supported: true },
 };
 
-export const defaultRootUiConfigProperties: Partial<IUiConfig> = {
+const defaultRootUiConfigProperties: Partial<IUiConfig> = {
     recommendations: {},
     supportedOverTimeComparisonTypes: [],
     ...disabledOpenAsReportConfig,
@@ -173,28 +169,6 @@ export const DEFAULT_BASE_CHART_UICONFIG: IUiConfig = {
     },
     ...defaultRootUiConfigProperties,
     ...enabledOpenAsReportConfig,
-};
-
-export const DEFAULT_BAR_CHART_UICONFIG: IUiConfig = {
-    buckets: {
-        measures: {
-            ...measuresBase,
-            isShowOnSecondaryAxisVisible: true,
-        },
-        view: {
-            ...viewBase,
-        },
-        stack: {
-            ...stackBase,
-        },
-        ...defaultFilters,
-    },
-    ...defaultRootUiConfigProperties,
-    ...enabledOpenAsReportConfig,
-    supportedOverTimeComparisonTypes: [
-        OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
-        OverTimeComparisonTypes.PREVIOUS_PERIOD,
-    ],
 };
 
 export const COLUMN_BAR_CHART_UICONFIG: IUiConfig = {

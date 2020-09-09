@@ -1,6 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-import { IBucketOfFun } from "../interfaces/Visualization";
-
 // Buckets
 export const FILTERS = "filters";
 
@@ -17,7 +15,6 @@ export const GRANULARITY = {
 export const ALL_TIME = "all_time";
 
 export const BUCKETS = "buckets";
-export const MEASUREGROUP = "measureGroup";
 
 // Types
 export const METRIC = "metric";
@@ -25,5 +22,3 @@ export const FACT = "fact";
 export const DATE = "date";
 export const ATTRIBUTE = "attribute";
 export const GEO_ATTRIBUTE = "geo_attribute";
-
-export const DEFAULT_BUCKETS: IBucketOfFun[] = [];

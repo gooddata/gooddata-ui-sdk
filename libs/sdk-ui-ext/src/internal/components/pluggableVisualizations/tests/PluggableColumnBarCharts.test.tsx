@@ -41,9 +41,7 @@ describe("PluggableColumnBarCharts", () => {
         const options: IVisProps = {
             dimensions: { height: null },
             locale: "en-US",
-            custom: {
-                stickyHeaderOffset: 3,
-            },
+            custom: {},
         };
         const emptyPropertiesMeta = {};
 

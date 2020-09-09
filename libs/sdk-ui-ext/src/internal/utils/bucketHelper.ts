@@ -315,7 +315,7 @@ export function generateBucketTitleId(localIdentifier: string, visualizationType
     return `dashboard.bucket.${localIdentifier}_title.${visualizationType}`;
 }
 
-export function generateBucketSubtitleId(localIdentifier: string, visualizationType: string): string {
+function generateBucketSubtitleId(localIdentifier: string, visualizationType: string): string {
     return `dashboard.bucket.${localIdentifier}_subtitle.${visualizationType}`;
 }
 
@@ -369,11 +369,7 @@ export function getPreferredBucketItems(buckets: IBucketOfFun[], preference: str
     return get(bucket, "items", []);
 }
 
-export function getPreferredBucket(
-    buckets: IBucketOfFun[],
-    preference: string[],
-    type: string[],
-): IBucketOfFun {
+function getPreferredBucket(buckets: IBucketOfFun[], preference: string[], type: string[]): IBucketOfFun {
     return preference.reduce((result: IBucketOfFun, preference: string) => {
         if (result) {
             return result;
@@ -388,7 +384,7 @@ export function getPreferredBucket(
     }, undefined);
 }
 
-export function getAllBucketItemsByType(bucket: IBucketOfFun, types: string[]): IBucketItem[] {
+function getAllBucketItemsByType(bucket: IBucketOfFun, types: string[]): IBucketItem[] {
     return bucket.items.reduce((resultItems: IBucketItem[], item: IBucketItem): IBucketItem[] => {
         if (includes(types, item.type)) {
             resultItems.push(item);
@@ -427,7 +423,7 @@ export function getTotalsFromBucket(buckets: IBucketOfFun[], bucketName: string)
     return get(selectedBucket, "totals", []);
 }
 
-export function getUniqueAttributes(buckets: IBucketOfFun[]): IBucketItem[] {
+function getUniqueAttributes(buckets: IBucketOfFun[]): IBucketItem[] {
     const attributes = getAllItemsByType(buckets, [ATTRIBUTE, DATE]);
     return uniqBy(attributes, (attribute) => get(attribute, "attribute"));
 }
@@ -841,7 +837,7 @@ function pruneBucketMeasureItems(
     );
 }
 
-export function isShowOnSecondaryAxis(item: IBucketItem): boolean {
+function isShowOnSecondaryAxis(item: IBucketItem): boolean {
     return get(item, SHOW_ON_SECONDARY_AXIS, false);
 }
 

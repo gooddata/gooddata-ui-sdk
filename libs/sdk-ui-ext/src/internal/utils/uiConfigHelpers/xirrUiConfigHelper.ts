@@ -13,7 +13,7 @@ import { setBucketTitles, getItemsCount } from "../bucketHelper";
 
 export const getDefaultXirrUiConfig = (): IUiConfig => cloneDeep(DEFAULT_XIRR_UICONFIG);
 
-export function getCustomError(
+function getCustomError(
     { buckets }: Readonly<IReferencePoint>,
     formatMessage: IntlShape["formatMessage"],
 ): ICustomError | undefined {

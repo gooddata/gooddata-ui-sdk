@@ -12,7 +12,7 @@ export interface ILegendSection {
     pushData: (data: any) => any;
 }
 
-export class LegendSection extends React.PureComponent<ILegendSection> {
+class LegendSection extends React.PureComponent<ILegendSection> {
     public render(): React.ReactNode {
         const { controlsDisabled, properties, pushData } = this.props;
 

@@ -40,7 +40,6 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     config?: IGdcConfig;
     visualizationClass: IVisualizationClass;
     environment?: VisualizationEnvironment;
-    stickyHeaderOffset?: number;
     width?: number;
     height?: number;
     locale?: ILocale;
@@ -207,7 +206,6 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                     height: this.props.height,
                 },
                 custom: {
-                    stickyHeaderOffset: this.props.stickyHeaderOffset,
                     drillableItems: this.props.drillableItems,
                     totalsEditAllowed: this.props.totalsEditAllowed,
                 },

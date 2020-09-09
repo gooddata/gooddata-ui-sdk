@@ -278,7 +278,6 @@ describe("BaseVisualization", () => {
         expect(tableUpdateCall).toHaveBeenCalledWith({
             custom: {
                 totalsEditAllowed: undefined,
-                stickyHeaderOffset: undefined,
                 drillableItems: [],
             },
             dimensions: {
@@ -292,13 +291,11 @@ describe("BaseVisualization", () => {
         const { component, tableUpdateCall } = getDummyComponent();
 
         const totalsEditAllowed = true;
-        const stickyHeaderOffset = 123;
         const drillableItems: IDrillableItem[] = [];
 
         component.setProps({
             type: VisualizationTypes.TABLE,
             totalsEditAllowed,
-            stickyHeaderOffset,
             drillableItems,
         });
 
@@ -307,7 +304,6 @@ describe("BaseVisualization", () => {
                 custom: {
                     drillableItems,
                     legendConfig: undefined,
-                    stickyHeaderOffset,
                     totalsEditAllowed,
                 },
                 dimensions: { height: undefined },

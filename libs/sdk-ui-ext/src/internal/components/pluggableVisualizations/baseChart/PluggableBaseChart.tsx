@@ -442,9 +442,9 @@ function canSortStackTotalValue(
     return stackMeasures && allMeasuresOnSingleAxis;
 }
 
-export const MAX_WIDTH_FOR_COLLAPSED_LEGEND = 440;
-export const MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND = 610;
+const MAX_WIDTH_FOR_COLLAPSED_LEGEND = 440;
+const MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND = 610;
 
-export function getMaxWidthForCollapsedLegend(legendPosition: string): number {
+function getMaxWidthForCollapsedLegend(legendPosition: string): number {
     return legendPosition === "auto" ? MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND : MAX_WIDTH_FOR_COLLAPSED_LEGEND;
 }
