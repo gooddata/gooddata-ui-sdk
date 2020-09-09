@@ -10,7 +10,7 @@ import { AttributeListItem } from "./types";
 
 const ITEM_HEIGHT = 28;
 export const MAX_SELECTION_SIZE = 500;
-export const VISIBLE_ITEMS_COUNT = 10;
+const VISIBLE_ITEMS_COUNT = 10;
 
 const ListLoading = () => <LoadingMask style={{ height: 306 }} />;
 
