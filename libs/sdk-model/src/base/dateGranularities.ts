@@ -27,7 +27,11 @@ export type DateAttributeGranularity =
     | "GDC.time.day_in_month"
     | "GDC.time.day_in_week"
     | "GDC.time.day_in_euweek"
-    | "GDC.time.date";
+    | "GDC.time.date"
+    | "GDC.time.hour"
+    | "GDC.time.hour_in_day"
+    | "GDC.time.minute"
+    | "GDC.time.minute_in_hour";
 
 /**
  * Special granularity used to indicate there should be no date filtering for the given dimension.

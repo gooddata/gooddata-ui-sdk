@@ -14,6 +14,9 @@ type SdkToTiger = {
 /*
     Year = "year",
     Day = "day",
+    Hour = "hour",
+    Minute = "minute",
+    Day = "day",
     Quarter = "quarter",
     Month = "month",
     Week = "week",
@@ -22,11 +25,16 @@ type SdkToTiger = {
     DayOfYear = "dayOfYear",
     DayOfWeek = "dayOfWeek",
     DayOfMonth = "dayOfMonth",
+    HourOfDay = "hourOfDay",
+    MinuteOfHour = "minuteOfHour",
     WeekOfYear = "weekOfYear",
  */
 
 const TigerToSdkGranularityMap: TigerToSdk = {
     [AttributeGranularityResourceAttribute.Year]: "GDC.time.year",
+    [AttributeGranularityResourceAttribute.Day]: "GDC.time.date",
+    [AttributeGranularityResourceAttribute.Hour]: "GDC.time.hour",
+    [AttributeGranularityResourceAttribute.Minute]: "GDC.time.minute",
     [AttributeGranularityResourceAttribute.Day]: "GDC.time.date",
     [AttributeGranularityResourceAttribute.Quarter]: "GDC.time.quarter",
     [AttributeGranularityResourceAttribute.Month]: "GDC.time.month",
@@ -38,6 +46,8 @@ const TigerToSdkGranularityMap: TigerToSdk = {
     [AttributeGranularityResourceAttribute.DayOfYear]: "GDC.time.day_in_year",
     [AttributeGranularityResourceAttribute.DayOfWeek]: "GDC.time.day_in_week",
     [AttributeGranularityResourceAttribute.DayOfMonth]: "GDC.time.day_in_month",
+    [AttributeGranularityResourceAttribute.HourOfDay]: "GDC.time.hour_in_day",
+    [AttributeGranularityResourceAttribute.MinuteOfHour]: "GDC.time.minute_in_hour",
     [AttributeGranularityResourceAttribute.WeekOfYear]: "GDC.time.week_in_year",
 };
 
@@ -55,6 +65,8 @@ export function toSdkGranularity(
 const SdkToTigerGranularityMap: SdkToTiger = {
     "GDC.time.year": AttributeGranularityResourceAttribute.Year,
     "GDC.time.date": AttributeGranularityResourceAttribute.Day,
+    "GDC.time.hour": AttributeGranularityResourceAttribute.Hour,
+    "GDC.time.minute": AttributeGranularityResourceAttribute.Minute,
     "GDC.time.quarter": AttributeGranularityResourceAttribute.Quarter,
     "GDC.time.month": AttributeGranularityResourceAttribute.Month,
     "GDC.time.week_us": AttributeGranularityResourceAttribute.Week,
@@ -67,6 +79,8 @@ const SdkToTigerGranularityMap: SdkToTiger = {
     "GDC.time.day_in_week": AttributeGranularityResourceAttribute.DayOfWeek,
     "GDC.time.day_in_month": AttributeGranularityResourceAttribute.DayOfMonth,
     "GDC.time.week_in_year": AttributeGranularityResourceAttribute.WeekOfYear,
+    "GDC.time.hour_in_day": AttributeGranularityResourceAttribute.HourOfDay,
+    "GDC.time.minute_in_hour": AttributeGranularityResourceAttribute.MinuteOfHour,
 
     "GDC.time.day_in_euweek": undefined,
     "GDC.time.day_in_quarter": undefined,
