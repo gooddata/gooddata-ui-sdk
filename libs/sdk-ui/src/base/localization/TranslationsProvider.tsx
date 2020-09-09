@@ -12,7 +12,7 @@ export interface ITranslationsComponentProps {
     intl: IntlShape;
 }
 
-export const getNumericSymbols = (intl: IntlShape): string[] => {
+const getNumericSymbols = (intl: IntlShape): string[] => {
     return [
         "visualization.numericValues.k",
         "visualization.numericValues.m",
