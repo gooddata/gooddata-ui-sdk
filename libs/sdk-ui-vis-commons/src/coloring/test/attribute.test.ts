@@ -1,15 +1,15 @@
 // (C) 2020 GoodData Corporation
 
-import { IColorPaletteItem, RgbType } from "@gooddata/sdk-model";
+import { IColorPaletteItem, RgbType, IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import { AttributeColorStrategy } from "../attribute";
 import { getRgbString } from "../color";
 import { ReferenceData, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../__mocks__/recordings";
-import { getColorsFromStrategy } from "../../../../sdk-ui-charts/src/highcharts/chart/colorStrategies/test/helper";
+import { getColorsFromStrategy } from "./helper";
 import { IColorMapping } from "../types";
 
-export const RgbPalette = [
+const RgbPalette: IColorPalette = [
     {
         guid: "red",
         fill: {
