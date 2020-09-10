@@ -17,14 +17,10 @@ import * as Ldm from "./full";
 
 export const numberOfRestaurantsLocalId = "numberOfRestaurants";
 export const averageRestaurantDailyCostsLocalId = "averageRestaurantDailyCosts";
-export const averageStateDailyCostsLocalId = "averageStateDailyCosts";
 export const totalCostsLocalId = "totalCosts";
 export const totalSalesLocalId = "totalSales";
-export const averageRestaurantSalesLocalId = "averageRestaurantSales";
 export const franchiseFeesAdRoyaltyLocalId = "franchiseFeesAdRoyalty";
 export const franchiseFeesOngoingRoyaltyLocalId = "franchiseFeesOngoingRoyalty";
-export const franchiseFeesSumLocalId = "franchiseFeesSum";
-export const franchiseFeesDifferenceLocalId = "franchiseFeesDifference";
 export const franchiseFeesLocalId = "franchiseFees";
 export const franchiseSalesLocalId = "franchiseSales";
 export const franchiseSalesAsPercentageLocalId = "franchiseSalesFormattedAsPercentage";
@@ -37,7 +33,7 @@ export const LocationResortLocalId = "a1";
 export const MenuCategoryLocalId = "menu";
 export const LocationStateLocalId = "locationState";
 export const LocationCityLocalId = "locationCity";
-export const quaterDateLocalId = "quarter";
+export const quarterDateLocalId = "quarter";
 export const franchiseSalesComputeRatioLocalId = "franchiseSalesComputeRatio";
 
 // ===============================================================================================
@@ -112,7 +108,7 @@ export const LocationCity = modifyAttribute(Ldm.LocationCity, (a) => a.localId(L
 export const monthDate = modifyAttribute(Ldm.DateMonth.Short, (a) =>
     a.alias("Month").localId(monthDateLocalId),
 );
-export const quaterDate = modifyAttribute(Ldm.DateQuarter, (a) => a.localId(quaterDateLocalId));
+export const quarterDate = modifyAttribute(Ldm.DateQuarter, (a) => a.localId(quarterDateLocalId));
 export const MenuItemName = modifyAttribute(Ldm.MenuItemName, (a) => a.alias("Menu Item name"));
 export const AvgDailyTotalSales = modifyMeasure(Ldm.$AvgDailyTotalSales, (m) =>
     m.alias("$ Avg Daily Total Sales").format("$#,##0").localId(averageDailyTotalSalesLocalId),
@@ -124,35 +120,12 @@ export const NrRestaurants = modifyMeasure(Ldm.NrRestaurants, (m) =>
     m.format("#,##0").localId(numberOfRestaurantsLocalId),
 );
 
-export const arithmeticMeasure1 = newArithmeticMeasure(
+export const arithmeticMeasure = newArithmeticMeasure(
     [totalSalesLocalId, numberOfRestaurantsLocalId],
     "ratio",
     (m) => m.format("#,##0").title("$ Avg Restaurant Sales"),
 );
-export const arithmeticMeasure2 = newArithmeticMeasure(
-    [numberOfRestaurantsLocalId, averageRestaurantDailyCostsLocalId],
-    "multiplication",
-    (m) => m.format("#,##0").title("$ Avg State Daily Costs").localId(averageStateDailyCostsLocalId),
-);
-export const arithmeticMeasure3 = newArithmeticMeasure(
-    [numberOfRestaurantsLocalId, totalSalesLocalId],
-    "ratio",
-    (m) => m.format("#,##0").title("$ Avg State Daily Sales").localId(averageRestaurantSalesLocalId),
-);
-export const arithmeticMeasure4 = newArithmeticMeasure(
-    [franchiseFeesOngoingRoyaltyLocalId, franchiseFeesAdRoyaltyLocalId],
-    "sum",
-    (m) => m.format("#,##0").title("$ Ongoing / Ad Royalty Sum").localId(franchiseFeesSumLocalId),
-);
-export const arithmeticMeasure5 = newArithmeticMeasure(
-    [franchiseFeesOngoingRoyaltyLocalId, franchiseFeesAdRoyaltyLocalId],
-    "difference",
-    (m) =>
-        m.format("#,##0").title("$ Ongoing / Ad Royalty Difference").localId(franchiseFeesDifferenceLocalId),
-);
-export const arithmeticMeasure6 = newArithmeticMeasure([FranchisedSales, FranchiseFees], "change", (m) =>
-    m.localId("franchiseFeesFormattedAsPercentage").title("Change formatted as %").format("#,##0%"),
-);
+
 export const averageRestaurantDailyCosts = newMeasure(averageRestaurantDailyCostsIdentifier, (m) =>
     m.format("#,##0").localId(averageRestaurantDailyCostsLocalId),
 );

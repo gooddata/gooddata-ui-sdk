@@ -23,7 +23,7 @@ const measureAdRoyalty = LdmExt.FranchiseFeesAdRoyalty;
 const attributeLocationState = LdmExt.LocationState;
 const attributeLocationName = LdmExt.LocationName;
 const attributeMenuCategory = LdmExt.MenuCategory;
-const attributeQuarter = LdmExt.quaterDate;
+const attributeQuarter = LdmExt.quarterDate;
 const attributeMonth = LdmExt.monthDate;
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
@@ -132,7 +132,7 @@ const drillingPresets: any = {
     attributeQuarter: {
         label: "Attribute Quarter",
         key: "attributeQuarter",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.quaterDate)!),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.quarterDate)!),
     },
     attributeLocationState: {
         label: "Attribute Location state",

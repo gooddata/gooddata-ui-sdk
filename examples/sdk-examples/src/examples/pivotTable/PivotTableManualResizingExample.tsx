@@ -16,14 +16,14 @@ const measures = [LdmExt.FranchiseFees];
 
 const attributes = [LdmExt.LocationState];
 
-const columns = [LdmExt.quaterDate];
+const columns = [LdmExt.quarterDate];
 
 const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 
 const measureWidth = (width: number) =>
     newWidthForSelectedColumns(
         LdmExt.FranchiseFees,
-        [newAttributeColumnLocator(LdmExt.quaterDate, `/gdc/md/${workspace}/obj/2009/elements?id=1`)],
+        [newAttributeColumnLocator(LdmExt.quarterDate, `/gdc/md/${workspace}/obj/2009/elements?id=1`)],
         width,
     );
 

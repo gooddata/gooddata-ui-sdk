@@ -19,7 +19,7 @@ const measures = [LdmExt.FranchiseFees];
 
 const attributes = [LdmExt.LocationState];
 
-const columns = [LdmExt.quaterDate];
+const columns = [LdmExt.quarterDate];
 
 const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 
