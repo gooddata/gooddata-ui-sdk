@@ -14,7 +14,7 @@ interface IFilterValue {
 
 interface ICustomFilterProps {
     displayForm: ObjRef;
-    filterValues: IFilterValue[];
+    filterValues: IFilterValue[] | null;
     parentFilters?: IElementQueryAttributeFilter[];
     placeholder: string;
     onChange: (filters: any) => void;
@@ -34,12 +34,13 @@ const CustomFilter: React.FC<ICustomFilterProps> = ({
                     // eslint-disable-next-line no-console
                     console.error("Loading attribute elements failed!", error);
                 }
-                const selectOptions = validElements
-                    ? validElements.items.map((item) => ({
-                          label: item.title,
-                          value: item.uri,
-                      }))
-                    : [];
+                const selectOptions =
+                    !isLoading && validElements
+                        ? validElements.items.map((item) => ({
+                              label: item.title,
+                              value: item.uri,
+                          }))
+                        : [];
                 return (
                     <span
                         style={{
@@ -65,20 +66,20 @@ const CustomFilter: React.FC<ICustomFilterProps> = ({
 };
 
 export const ParentFilterExample: React.FC = () => {
-    const [stateFilterValues, setStateFilterValues] = useState<IFilterValue[]>([]);
-    const [cityFilterValues, setCityFilterValues] = useState<IFilterValue[]>([]);
+    const [stateFilterValues, setStateFilterValues] = useState<IFilterValue[] | null>([]);
+    const [cityFilterValues, setCityFilterValues] = useState<IFilterValue[] | null>([]);
 
     const insightFilters = useMemo(() => {
         const filters = [];
 
-        if (stateFilterValues.length) {
+        if (stateFilterValues?.length) {
             filters.push(
                 newPositiveAttributeFilter(Ldm.LocationState, {
                     uris: stateFilterValues.map((filter) => filter.value),
                 }),
             );
         }
-        if (cityFilterValues.length) {
+        if (cityFilterValues?.length) {
             filters.push(
                 newPositiveAttributeFilter(Ldm.LocationCity, {
                     uris: cityFilterValues.map((filter) => filter.value),
@@ -90,7 +91,7 @@ export const ParentFilterExample: React.FC = () => {
     }, [stateFilterValues, cityFilterValues]);
 
     const cityParentFilters = useMemo(() => {
-        return stateFilterValues.length
+        return stateFilterValues?.length
             ? [
                   {
                       attributeFilter: newPositiveAttributeFilter(Ldm.LocationState, {
