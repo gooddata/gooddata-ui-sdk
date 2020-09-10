@@ -17,7 +17,6 @@ import invariant from "ts-invariant";
 import flatMap from "lodash/flatMap";
 import groupBy from "lodash/groupBy";
 import uniqWith from "lodash/uniqWith";
-import zip from "lodash/zip";
 
 import { toBearRef } from "../../../convertors/toBackend/ObjRefConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
@@ -137,18 +136,25 @@ export class LimitingAfmFactory {
 
     private getDisplayFormAttributeUriMapping = async (displayForms: ObjRef[]): Promise<[ObjRef, Uri][]> => {
         const displayFormUris = await objRefsToUris(displayForms, this.workspace, this.authCall);
-        const attributeUris = await this.getDisplayFormsAttributeUris(displayFormUris);
-        return zip(displayForms, attributeUris) as [ObjRef, Uri][]; // we know that the arrays have the same length so the cas is safe
-    };
-
-    private getDisplayFormsAttributeUris = async (uris: Uri[]): Promise<Uri[]> => {
         return this.authCall(async (sdk) => {
             const response = await sdk.md.getObjects<GdcMetadata.IWrappedAttributeDisplayForm>(
                 this.workspace,
-                uris,
+                displayFormUris,
             );
 
-            return response.map((item) => item.attributeDisplayForm.content.formOf);
+            return displayForms.map((displayForm) => {
+                const attribute = response.find((item) => {
+                    if (isIdentifierRef(displayForm)) {
+                        return displayForm.identifier === item.attributeDisplayForm.meta.identifier;
+                    } else {
+                        return displayForm.uri === item.attributeDisplayForm.meta.uri;
+                    }
+                });
+                if (attribute === undefined) {
+                    throw new Error("Cannot find attribute for display form");
+                }
+                return [displayForm, attribute.attributeDisplayForm.content.formOf];
+            });
         });
     };
 }
