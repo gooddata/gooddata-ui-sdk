@@ -19,24 +19,6 @@ export const RedColor: IColor = {
     },
 };
 
-export const GreenColor: IColor = {
-    type: "rgb",
-    value: {
-        r: 0,
-        g: 255,
-        b: 0,
-    },
-};
-
-export const BlueColor: IColor = {
-    type: "rgb",
-    value: {
-        r: 0,
-        g: 0,
-        b: 255,
-    },
-};
-
 export const CustomColors: string[] = [
     "rgb(33, 41, 195)",
     "rgb(18, 194, 25)",
