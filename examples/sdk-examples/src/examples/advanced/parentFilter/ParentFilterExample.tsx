@@ -34,12 +34,13 @@ const CustomFilter: React.FC<ICustomFilterProps> = ({
                     // eslint-disable-next-line no-console
                     console.error("Loading attribute elements failed!", error);
                 }
-                const selectOptions = validElements
-                    ? validElements.items.map((item) => ({
-                          label: item.title,
-                          value: item.uri,
-                      }))
-                    : [];
+                const selectOptions =
+                    !isLoading && validElements
+                        ? validElements.items.map((item) => ({
+                              label: item.title,
+                              value: item.uri,
+                          }))
+                        : [];
                 return (
                     <span
                         style={{
