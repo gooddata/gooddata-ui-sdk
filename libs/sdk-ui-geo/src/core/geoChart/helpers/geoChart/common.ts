@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { BucketNames, DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
 import { IGeoData, IGeoPointsConfig } from "../../../../GeoChart";
-import { bucketIsEmpty, bucketsFind, IAttribute, IBucket } from "@gooddata/sdk-model";
+import { bucketIsEmpty, bucketsFind, IBucket } from "@gooddata/sdk-model";
 import { DataValue, IResultHeader } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual";
 
@@ -57,7 +57,7 @@ export function isPointsConfigChanged(
     return !isEqual(prevPointsConfig, pointsConfig);
 }
 
-export interface IMinMax {
+interface IMinMax {
     min?: number;
     max?: number;
 }
@@ -105,12 +105,8 @@ export function isFluidLegendEnabled(responsive: boolean, showFluidLegend: boole
 }
 
 export function isColorAssignmentItemChanged(
-    prevColorAssigment: IColorAssignment[],
-    colorAssigment: IColorAssignment[],
+    prevColorAssignment: IColorAssignment[],
+    colorAssignment: IColorAssignment[],
 ): boolean {
-    return !isEqual(prevColorAssigment, colorAssigment);
-}
-
-export function isTooltipTextValueString(tooltipText: IAttribute | string): tooltipText is string {
-    return typeof tooltipText === "string";
+    return !isEqual(prevColorAssignment, colorAssignment);
 }

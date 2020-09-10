@@ -105,5 +105,3 @@ export function getColorStrategy(
         dv,
     );
 }
-
-export default GeoChartColorStrategy;

@@ -35,11 +35,11 @@ import { IColorPalette } from "@gooddata/sdk-model";
 
 export { IGeoChartRendererProps, IGeoChartLegendRendererProps };
 
-export function renderChart(props: IGeoChartRendererProps): React.ReactElement {
+function renderChart(props: IGeoChartRendererProps): React.ReactElement {
     return <GeoChartRenderer {...props} />;
 }
 
-export function renderLegend(props: IGeoChartLegendRendererProps): React.ReactElement {
+function renderLegend(props: IGeoChartLegendRendererProps): React.ReactElement {
     return (
         <IntlWrapper locale={props.locale}>
             <IntlTranslationsProvider>

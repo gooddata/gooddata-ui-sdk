@@ -20,7 +20,7 @@ export class BearWorkspacePermissionsFactory implements IWorkspacePermissionsFac
     }
 }
 
-export class BearWorkspaceUserPermissions implements IWorkspaceUserPermissions {
+class BearWorkspaceUserPermissions implements IWorkspaceUserPermissions {
     constructor(public readonly permissions: IWorkspacePermissions) {}
 
     public allPermissions(): IWorkspacePermissions {

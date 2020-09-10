@@ -22,7 +22,6 @@ const waitForDataLoaded = (wrapper: ReactWrapper<any, Readonly<{}>, React.Compon
     const table = wrapper.find(CorePivotTablePure);
     return table.prop("currentResult") !== null;
 };
-*/
 
 export function waitFor(testFn: () => any, maxDelay = 1000, delayOffset = 0, increment = 100): Promise<void> {
     const start = Date.now();
@@ -42,6 +41,7 @@ export function waitFor(testFn: () => any, maxDelay = 1000, delayOffset = 0, inc
         }, delayOffset);
     });
 }
+*/
 
 describe("CorePivotTable", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);

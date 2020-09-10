@@ -14,7 +14,7 @@ import * as ptPT from "../translations/pt-PT.json";
 import * as zhHans from "../translations/zh-Hans.json";
 import { DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 
-export const messagesMap = {
+const messagesMap = {
     "en-US": translationUtils.removeMetadata(enUS),
     "de-DE": deDE,
     "es-ES": esES,
@@ -30,7 +30,7 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
     return createIntl({ locale, messages: messagesMap[locale] });
 }
 
-export interface IInternalIntlWrapperProps {
+interface IInternalIntlWrapperProps {
     locale?: string;
 }
 

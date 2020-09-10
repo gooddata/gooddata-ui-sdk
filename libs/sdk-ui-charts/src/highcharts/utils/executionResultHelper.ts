@@ -90,13 +90,3 @@ export function findAttributeInDimension(
         },
     );
 }
-
-export function getNthAttributeDescriptor(
-    attributeDescriptors: IAttributeDescriptor[],
-    headerIndex: number,
-): IAttributeDescriptor["attributeHeader"] {
-    if (attributeDescriptors.length && attributeDescriptors[headerIndex]) {
-        return attributeDescriptors[headerIndex].attributeHeader;
-    }
-    return null;
-}

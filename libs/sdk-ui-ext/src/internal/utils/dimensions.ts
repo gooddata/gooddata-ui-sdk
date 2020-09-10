@@ -184,11 +184,11 @@ function getScatterDimensions(insight: IInsightDefinition): IDimension[] {
 }
 
 // Heatmap
-export function getHeatmapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
+function getHeatmapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
     return getHeatmapDimensionsFromBuckets(insight);
 }
 
-export function getHeatmapDimensionsFromBuckets(insight: IInsightDefinition): IDimension[] {
+function getHeatmapDimensionsFromBuckets(insight: IInsightDefinition): IDimension[] {
     const view = insightBucket(insight, BucketNames.VIEW);
     const viewAttributes = view ? bucketAttributes(view) : [];
     const stack = insightBucket(insight, BucketNames.STACK);
@@ -312,65 +312,16 @@ export function generateStackedDimensions(insight: IInsightDefinition): IDimensi
     ];
 }
 
-// for LineChart, AreaChart, BarChart, ColumnChart
-export function generateDefaultDimensions(insight: IInsightDefinition): IDimension[] {
-    return [
-        {
-            itemIdentifiers: [MeasureGroupIdentifier],
-        },
-        {
-            itemIdentifiers: insightAttributes(insight).map(attributeLocalId),
-        },
-    ];
-}
-
-// for ScatterPlot and BubbleChart
-export function generateDefaultDimensionsForPointsCharts(insight: IInsightDefinition): IDimension[] {
-    return [
-        {
-            itemIdentifiers: insightAttributes(insight).map(attributeLocalId),
-        },
-        {
-            itemIdentifiers: [MeasureGroupIdentifier],
-        },
-    ];
-}
-
-// for PieChart, DonutChart
-export const generateDefaultDimensionsForRoundChart = (insight: IInsightDefinition): IDimension[] => {
-    const attributes = insightAttributes(insight);
-
-    if (attributes.length === 0) {
-        return [
-            {
-                itemIdentifiers: [],
-            },
-            {
-                itemIdentifiers: [MeasureGroupIdentifier],
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: [MeasureGroupIdentifier],
-        },
-        {
-            itemIdentifiers: attributes.map(attributeLocalId),
-        },
-    ];
-};
-
 // Treemap
-export function getTreemapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
+function getTreemapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
     return getTreemapDimensionsFromBuckets(insight);
 }
 
-export function getTreemapDimensionsFromBuckets(insight: IInsightDefinition): IDimension[] {
+function getTreemapDimensionsFromBuckets(insight: IInsightDefinition): IDimension[] {
     return getTreemapDimensionsFromAFM(insight);
 }
 
-export function getTreemapDimensionsFromAFM(insight: IInsightDefinition): IDimension[] {
+function getTreemapDimensionsFromAFM(insight: IInsightDefinition): IDimension[] {
     const attributes = insightAttributes(insight);
 
     if (attributes.length === 1) {

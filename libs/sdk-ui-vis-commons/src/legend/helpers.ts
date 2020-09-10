@@ -151,7 +151,7 @@ export const heatmapLegendConfigMatrix: IColorLabelConfigItem[][] = [
     ],
 ];
 
-export const colorLegendConfigMatrix: IColorLabelConfigItem[][] = [
+const colorLegendConfigMatrix: IColorLabelConfigItem[][] = [
     [
         { type: "label", labelIndex: 0, style: { width: 175, textAlign: ALEFT } },
         { type: "label", labelIndex: 6, style: { width: 175, textAlign: ARIGHT } },

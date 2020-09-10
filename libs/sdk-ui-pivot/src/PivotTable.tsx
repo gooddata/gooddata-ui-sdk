@@ -31,9 +31,8 @@ import { InvariantError } from "ts-invariant";
  *
  * @param props - pivot table props
  * @returns new prepared execution
- * @internal
  */
-export function prepareExecution(props: IPivotTableProps): IPreparedExecution {
+function prepareExecution(props: IPivotTableProps): IPreparedExecution {
     const { backend, workspace, filters, sortBy = [] } = props;
 
     if (!backend) {

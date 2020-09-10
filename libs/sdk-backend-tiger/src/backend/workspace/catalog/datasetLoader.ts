@@ -16,11 +16,6 @@ import {
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter";
 
-export type LoaderResult = {
-    nonDateAttributes: ICatalogAttribute[];
-    dateDatasets: ICatalogDateDataset[];
-};
-
 function lookupRelatedObject(included: SuccessIncluded[] | undefined, id: string, type: string) {
     if (!included) {
         return;

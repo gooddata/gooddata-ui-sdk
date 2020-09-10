@@ -28,7 +28,6 @@ import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems";
 import { DateFilterRoute } from "./types";
 import {
     DateFilterGranularity,
-    IDateFilterOption,
     isAbsoluteDateFilterForm,
     isRelativeDateFilterForm,
 } from "@gooddata/sdk-backend-spi";
@@ -60,14 +59,9 @@ export interface IDateFilterBodyProps {
     dateFilterButton: JSX.Element;
 }
 
-export interface IDateFilterBodyState {
+interface IDateFilterBodyState {
     route: DateFilterRoute;
 }
-
-export const isFilterOptionSelected = (
-    filterOption: IDateFilterOption,
-    selectedOption: IDateFilterOption,
-): boolean => filterOption.localIdentifier === selectedOption.localIdentifier;
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

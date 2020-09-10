@@ -6,23 +6,19 @@ import { getTranslation } from "./translations";
 import { IMinMaxControlState, IMinMaxControlProps } from "../interfaces/MinMaxControl";
 import { IPushData } from "@gooddata/sdk-ui";
 
-export function fixEmptyMaxValue(value: string): number {
+function fixEmptyMaxValue(value: string): number {
     return value === "" ? Number.MAX_SAFE_INTEGER : Number(value);
 }
 
-export function fixEmptyMinValue(value: string): number {
+function fixEmptyMinValue(value: string): number {
     return value === "" ? Number.MIN_SAFE_INTEGER : Number(value);
 }
 
-export function isValueMinusOrEmpty(value: string): boolean {
+function isValueMinusOrEmpty(value: string): boolean {
     return value === "-" || value === "";
 }
 
-export function isInvalidOrMinMaxError(
-    value: string,
-    minNumberValue: number,
-    maxNumberValue: number,
-): boolean {
+function isInvalidOrMinMaxError(value: string, minNumberValue: number, maxNumberValue: number): boolean {
     const valueIsMinus = value === "-";
     const maxMinNumbers = !isNaN(minNumberValue) && !isNaN(maxNumberValue);
     return valueIsMinus || !maxMinNumbers || minNumberValue > maxNumberValue;

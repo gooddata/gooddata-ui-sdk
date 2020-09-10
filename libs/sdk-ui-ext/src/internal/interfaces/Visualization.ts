@@ -38,7 +38,6 @@ export interface IVisConstruct {
 }
 
 export interface ICustomProps {
-    stickyHeaderOffset?: number;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     totalsEditAllowed?: boolean;
 }

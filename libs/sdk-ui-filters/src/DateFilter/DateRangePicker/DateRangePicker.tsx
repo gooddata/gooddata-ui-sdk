@@ -27,7 +27,7 @@ interface IDateRangePickerProps {
     isMobile: boolean;
 }
 
-export class DateRangePickerComponent extends React.Component<IDateRangePickerProps & WrappedComponentProps> {
+class DateRangePickerComponent extends React.Component<IDateRangePickerProps & WrappedComponentProps> {
     private fromInputRef = React.createRef<DayPickerInput>();
     private toInputRef = React.createRef<DayPickerInput>();
 

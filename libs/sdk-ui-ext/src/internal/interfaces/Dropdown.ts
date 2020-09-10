@@ -8,7 +8,7 @@ export interface IDropdownItem {
     icon?: string;
 }
 
-export type TranslationKeys = keyof typeof translations;
+type TranslationKeys = keyof typeof translations;
 
 /**
  * This type narrows down the title to be a key from the translations bundle. Otherwise it provides

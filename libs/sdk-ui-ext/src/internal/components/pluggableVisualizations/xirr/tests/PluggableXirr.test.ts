@@ -62,7 +62,6 @@ describe("PluggableXirr", () => {
                     height: 14,
                 },
                 custom: {
-                    stickyHeaderOffset: 0,
                     drillableItems,
                 },
                 locale: "en-US",

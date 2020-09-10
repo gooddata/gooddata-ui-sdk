@@ -80,9 +80,7 @@ describe("PluggableBaseChart", () => {
         const options: IVisProps = {
             dimensions: { height: null },
             locale: dummyLocale,
-            custom: {
-                stickyHeaderOffset: 3,
-            },
+            custom: {},
         };
 
         visualization.update(options, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
@@ -107,9 +105,7 @@ describe("PluggableBaseChart", () => {
         const options: IVisProps = {
             dimensions: { height: null },
             locale: dummyLocale,
-            custom: {
-                stickyHeaderOffset: 3,
-            },
+            custom: {},
         };
 
         visualization.update(
@@ -132,9 +128,7 @@ describe("PluggableBaseChart", () => {
         const options: IVisProps = {
             dimensions: { height: expectedHeight },
             locale: dummyLocale,
-            custom: {
-                stickyHeaderOffset: 3,
-            },
+            custom: {},
         };
 
         const visualizationProperties = {
@@ -174,9 +168,7 @@ describe("PluggableBaseChart", () => {
         const options: IVisProps = {
             dimensions: { height: expectedHeight },
             locale: dummyLocale,
-            custom: {
-                stickyHeaderOffset: 3,
-            },
+            custom: {},
         };
 
         visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, null, executionFactory);
@@ -203,9 +195,7 @@ describe("PluggableBaseChart", () => {
         const options: IVisProps = {
             dimensions: { height: 50 },
             locale: dummyLocale,
-            custom: {
-                stickyHeaderOffset: 3,
-            },
+            custom: {},
         };
 
         const visualizationProperties = { controls: { legend: {} } };
@@ -722,9 +712,7 @@ describe("PluggableBaseChart", () => {
                 const options: IVisProps = {
                     dimensions: { height: 5, width },
                     locale: dummyLocale,
-                    custom: {
-                        stickyHeaderOffset: 3,
-                    },
+                    custom: {},
                 };
 
                 const visualizationProperties = {

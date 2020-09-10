@@ -1073,6 +1073,9 @@ export function isAttribute(obj: unknown): obj is IAttribute;
 export function isAttributeAreaSort(obj: unknown): obj is IAttributeSortItem;
 
 // @public
+export function isAttributeDisplayFormMetadataObject(obj: unknown): obj is IAttributeDisplayFormMetadataObject;
+
+// @public
 export function isAttributeElementsByRef(obj: unknown): obj is IAttributeElementsByRef;
 
 // @public
@@ -1083,6 +1086,9 @@ export function isAttributeFilter(obj: unknown): obj is IAttributeFilter;
 
 // @public
 export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem;
+
+// @public
+export function isAttributeMetadataObject(obj: unknown): obj is IAttributeMetadataObject;
 
 // @public
 export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
@@ -1112,10 +1118,16 @@ export function isComparisonCondition(obj: unknown): obj is IComparisonCondition
 export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator;
 
 // @public
+export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataObject;
+
+// @public
 export function isDateFilter(obj: unknown): obj is IDateFilter;
 
 // @public
 export function isDimension(obj: unknown): obj is IDimension;
+
+// @public
+export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
 
 // @public
 export function isIdentifierRef(obj: unknown): obj is IdentifierRef;
@@ -1136,10 +1148,16 @@ export function isMeasureDefinition(obj: unknown): obj is IMeasureDefinition;
 export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem;
 
 // @public
+export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataObject;
+
+// @public
 export function isMeasureSort(obj: unknown): obj is IMeasureSortItem;
 
 // @public
 export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter;
+
+// @public (undocumented)
+export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 
 // @public
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;
@@ -1185,6 +1203,9 @@ export function isTotal(obj: unknown): obj is ITotal;
 
 // @public
 export function isUriRef(obj: unknown): obj is UriRef;
+
+// @public
+export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
 
 // @public
 export type ItemInDimension = {

@@ -16,9 +16,6 @@ export interface IColumnHeaderState {
     sorting?: SortDirection;
 }
 
-export const ASC: SortDirection = "asc";
-export const DESC: SortDirection = "desc";
-
 class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderState> {
     public state: IColumnHeaderState = {
         sorting: undefined,
@@ -43,7 +40,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     };
 
     public getDefaultSortDirection(): SortDirection {
-        return this.getFieldType() === FIELD_TYPE_ATTRIBUTE ? ASC : DESC;
+        return this.getFieldType() === FIELD_TYPE_ATTRIBUTE ? "asc" : "desc";
     }
 
     public onSortRequested = (sortDir: SortDirection): void => {

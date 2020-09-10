@@ -36,7 +36,7 @@ export function getColorIndexInPalette(value: number | null, min: number, max: n
     return DEFAULT_COLOR_INDEX_IN_PALETTE;
 }
 
-export type ColorPaletteMapping = { [itemName: string]: string[] };
+type ColorPaletteMapping = { [itemName: string]: string[] };
 
 export function getColorPaletteMapping(colorStrategy: IColorStrategy): ColorPaletteMapping {
     const colorAssignment: IColorAssignment[] = colorStrategy.getColorAssignment();

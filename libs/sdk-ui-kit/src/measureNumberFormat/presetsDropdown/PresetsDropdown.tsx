@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { WrappedComponentProps } from "react-intl";
 import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { ISeparators } from "@gooddata/sdk-ui";
 
@@ -70,5 +70,3 @@ export class PresetsDropdown extends React.PureComponent<IMeasureNumberFormatDro
         return this.renderPresetOption(customPreset, presets.length);
     }
 }
-
-export default injectIntl(PresetsDropdown);

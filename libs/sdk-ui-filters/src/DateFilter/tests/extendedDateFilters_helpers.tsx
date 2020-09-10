@@ -203,8 +203,6 @@ const absoluteFormPicker = ".s-date-range-picker";
 const absoluteFormInputFrom = ".s-date-range-picker-from .s-date-range-picker-input-field";
 const absoluteFormInputTo = ".s-date-range-picker-to .s-date-range-picker-input-field";
 const absoluteFormError = ".s-absolute-range-error";
-const absoluteCalendarFrom = ".s-date-range-calendar-from";
-const absoluteCalendarTo = ".s-date-range-calendar-to";
 
 const relativeFormButton = "button.s-relative-form";
 const relativeFormPicker = ".s-relative-range-picker";
@@ -221,7 +219,7 @@ export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}) =>
 
 // common wrapper methods
 
-export type WrapperType = ReactWrapper<any, Readonly<unknown>, React.Component<unknown, unknown, any>>;
+type WrapperType = ReactWrapper<any, Readonly<unknown>, React.Component<unknown, unknown, any>>;
 
 export const clickDateFilterButton = (wrapper: WrapperType) => {
     wrapper.find(dateFilterButton).simulate("click");
@@ -263,11 +261,6 @@ export const getFilterTitle = (wrapper: WrapperType) => {
     return text.text();
 };
 
-export const getFilterMode = (wrapper: WrapperType) => {
-    const text = wrapper.find(dateButtonFilterTitle);
-    return text.text();
-};
-
 export const isDateFilterBodyVisible = (wrapper: WrapperType) => {
     const body = wrapper.find(dateFilterBody);
     return body.exists();
@@ -285,7 +278,7 @@ export const getSelectedItemText = (wrapper: WrapperType) => {
 
 // relative presets
 
-export const getLocalIdentifierFromItem = (item: string) => {
+const getLocalIdentifierFromItem = (item: string) => {
     return item.toUpperCase().replace(new RegExp("-", "g"), "_");
 };
 
@@ -296,11 +289,11 @@ export const getPresetByItem = (item: string, relativePreset: any[]) => {
     });
 };
 
-export const getStaticFilterSelectorClass = (filter: string) => {
+const getStaticFilterSelectorClass = (filter: string) => {
     return `button.s-relative-preset-${filter}`;
 };
 
-export const getAbsoluteFilterSelectorClass = (filter: string) => {
+const getAbsoluteFilterSelectorClass = (filter: string) => {
     return `button.s-absolute-preset-${filter}`;
 };
 
@@ -375,24 +368,6 @@ export const getMonthAgo = () => {
 
 export const isAbsoluteFormErrorVisible = (wrapper: WrapperType) => {
     return wrapper.find(absoluteFormError).exists();
-};
-
-export const isAbsoluteCalendarFromVisible = (wrapper: WrapperType) => {
-    wrapper.update();
-    return wrapper.find(absoluteCalendarFrom).exists();
-};
-
-export const isAbsoluteCalendarToVisible = (wrapper: WrapperType) => {
-    wrapper.update();
-    return wrapper.find(absoluteCalendarTo).exists();
-};
-
-export const clickAbsoluteFormInputFrom = (wrapper: WrapperType) => {
-    wrapper.find(absoluteFormInputFrom).simulate("click");
-};
-
-export const clickAbsoluteFormInputTo = (wrapper: WrapperType) => {
-    wrapper.find(absoluteFormInputTo).simulate("click");
 };
 
 // Relative filter form

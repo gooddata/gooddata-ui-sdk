@@ -47,7 +47,7 @@ const BAR_SECONDARY_AXIS_PROPERTIES = [
 
 export const OPTIONAL_STACKING_PROPERTIES = ["stackMeasures", "stackMeasuresToPercent"];
 
-export const CHART_TYPE_PROPERTIES = ["primaryChartType", "secondaryChartType", "dualAxis"];
+const CHART_TYPE_PROPERTIES = ["primaryChartType", "secondaryChartType", "dualAxis"];
 
 export const BASE_CHART_SUPPORTED_PROPERTIES = [
     ...BASE_PROPERTIES,

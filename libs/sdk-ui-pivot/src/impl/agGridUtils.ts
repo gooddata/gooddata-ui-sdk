@@ -222,7 +222,7 @@ export const getColumnIdentifier = (item: Column | IGridHeader | ColDef): string
     return getColumnIdentifierFromDef(item);
 };
 
-export function isColumn(item: Column | ColDef): item is Column {
+function isColumn(item: Column | ColDef): item is Column {
     return !!(item as Column).getColDef;
 }
 

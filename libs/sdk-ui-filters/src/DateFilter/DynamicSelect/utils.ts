@@ -12,7 +12,6 @@ export const WEEK_US: DateFilterGranularity = "GDC.time.week_us";
 export const MONTH: DateFilterGranularity = "GDC.time.month";
 export const QUARTER: DateFilterGranularity = "GDC.time.quarter";
 export const YEAR: DateFilterGranularity = "GDC.time.year";
-export const GRANULARITIES: DateFilterGranularity[] = [DAY, WEEK_US, MONTH, QUARTER, YEAR];
 
 type InputCategory = "Empty" | "TooBig" | "Numeric" | "Textual";
 

@@ -24,7 +24,7 @@ export interface IDropdownControlProps {
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 
-export const DROPDOWN_ALIGMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
+const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
 class DropdownControl extends React.PureComponent<IDropdownControlProps & WrappedComponentProps> {
     public static defaultProps = {
@@ -54,7 +54,7 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
                             button={this.getDropdownButton(selectedItem)}
                             closeOnParentScroll={true}
                             closeOnMouseDrag={true}
-                            alignPoints={DROPDOWN_ALIGMENTS}
+                            alignPoints={DROPDOWN_ALIGNMENTS}
                             body={
                                 <DropdownBody
                                     width={width}

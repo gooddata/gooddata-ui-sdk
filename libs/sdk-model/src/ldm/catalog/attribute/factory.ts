@@ -81,16 +81,3 @@ export class CatalogAttributeBuilder<
 export const newCatalogAttribute = (
     modifications: BuilderModifications<CatalogAttributeBuilder> = identity,
 ): ICatalogAttribute => builderFactory(CatalogAttributeBuilder, { type: "attribute" }, modifications);
-
-/**
- * Converts catalog attribute to execution attribute
- *
- * @param catalogAttribute - catalog attribute to convert
- * @param modifications - catalog attribute builder modifications to perform before conversion
- * @returns attribute converted to the execution model
- * @public
- */
-export const catalogAttributeToExecutionAttribute = (
-    catalogAttribute: ICatalogAttribute,
-    modifications: BuilderModifications<CatalogAttributeBuilder> = identity,
-): IAttribute => new CatalogAttributeBuilder(catalogAttribute).modify(modifications).toExecutionModel();
