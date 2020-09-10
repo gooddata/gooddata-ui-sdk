@@ -41,14 +41,13 @@ import { DataViewFacade } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
 export const MIN_WIDTH = 60;
-export const AUTO_SIZED_MAX_WIDTH = 500;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
 
 //
 //
 //
 
-export function isColumnWidthAuto(columnWidth: ColumnWidth): boolean {
+function isColumnWidthAuto(columnWidth: ColumnWidth): boolean {
     return columnWidth.value === "auto";
 }
 
@@ -528,7 +527,7 @@ export const getWeakColumnWidthsFromMap = (map: IWeakMeasureColumnWidthItemsMap)
     });
 };
 
-export const defaultWidthValidator = (width: ColumnWidth): ColumnWidth => {
+const defaultWidthValidator = (width: ColumnWidth): ColumnWidth => {
     if (isAbsoluteColumnWidth(width)) {
         return {
             ...width,
@@ -657,5 +656,5 @@ export const resizeWeakMeasureColumns = (
     });
 };
 
-export const getAllowGrowToFitProp = (allowGrowToFit: boolean | undefined): { allowGrowToFit?: boolean } =>
+const getAllowGrowToFitProp = (allowGrowToFit: boolean | undefined): { allowGrowToFit?: boolean } =>
     allowGrowToFit ? { allowGrowToFit } : {};
