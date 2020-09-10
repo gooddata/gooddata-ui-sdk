@@ -8,139 +8,144 @@ import { newPositiveAttributeFilter, attributeIdentifier } from "@gooddata/sdk-m
 import { Ldm, LdmExt } from "../../ldm";
 import { EmployeeProfile } from "./EmployeeProfile";
 
-interface IDrillWithExternalDataExampleState {
-    state: any;
-    location: ILocation | null;
-    employee: any;
-    employee3rdPartyData: {
-        error: any;
-        isLoading: boolean;
-        data: any;
-    };
+interface IEmployee3rdPartyData {
+    error: any;
+    isLoading: boolean;
+    data: any;
 }
 
-interface ILocation {
+interface IHasNameUri {
     name: string;
     uri: string;
 }
 
+const stateTableStyle: React.CSSProperties = { height: 200 };
+const employeeTableStyle: React.CSSProperties = { height: 300 };
+const salesChartStyle: React.CSSProperties = { height: 300 };
+
+const stateTableMeasures = [LdmExt.AvgDailyTotalSales];
+const stateTableRows = [LdmExt.LocationState];
+const stateTableDrillableItems = [
+    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationState)!),
+];
+
+const employeeTableMeasures = [LdmExt.AvgDailyTotalSales];
+const employeeTableRows = [LdmExt.EmployeeName];
+const employeeTableDrillableItems = [
+    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.EmployeeName)!),
+];
+
+const salesChartMeasures = [LdmExt.TotalSales2];
+const salesChartDrillableItems = [
+    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationName)!),
+];
+
+const EmployeeDetails: React.FC<{ employeeData: IEmployee3rdPartyData }> = ({ employeeData }) => {
+    if (employeeData.error) {
+        return <ErrorComponent height={150} message="There was an error getting employee details" />;
+    } else if (employeeData.isLoading) {
+        return <LoadingComponent height={150} />;
+    } else if (employeeData.data) {
+        return <EmployeeProfile {...employeeData.data} />;
+    }
+    return null;
+};
+
 export const DrillWithExternalDataExample: React.FC = () => {
-    const [componentState, setState] = useState<IDrillWithExternalDataExampleState>({
-        state: null,
-        location: null,
-        employee: null,
-        employee3rdPartyData: {
-            error: null,
-            isLoading: false,
-            data: null,
-        },
+    const [state, setState] = useState<IHasNameUri | null>(null);
+    const [location, setLocation] = useState<IHasNameUri | null>(null);
+    const [employee, setEmployee] = useState<any | null>(null);
+    const [employee3rdPartyData, setEmployee3rdPartyData] = useState<IEmployee3rdPartyData>({
+        data: null,
+        error: null,
+        isLoading: false,
     });
 
     const onLocationDrill = (drillTarget: any) => {
-        const { title: name, uri } =
+        const { name, uri } =
             drillTarget.drillContext.element === "bar"
                 ? drillTarget.drillContext.intersection[1].header.attributeHeaderItem
                 : drillTarget.drillContext.points[0].intersection[1].header.attributeHeaderItem;
 
-        const location = {
+        const newLocation: IHasNameUri = {
             name,
             uri,
         };
-        setState((oldState) => ({
-            ...oldState,
-            location,
-            state: null,
-        }));
+
+        setLocation(newLocation);
+        setState(null);
     };
 
     const onStateDrill = (drillTarget: any) => {
         const { name, id } = drillTarget.drillContext.row[0];
-        const state = {
+
+        const newState: IHasNameUri = {
             name,
             uri: `${LdmExt.locationStateAttributeUri}/elements?id=${id}`,
         };
-        setState((oldState) => ({
-            ...oldState,
-            state,
-            location: null,
-        }));
+
+        setState(newState);
+        setLocation(null);
     };
 
-    const onStateClear = () =>
-        setState((oldState) => ({
-            ...oldState,
-            state: null,
-        }));
-
-    const onLocationClear = () =>
-        setState((oldState) => ({
-            ...oldState,
-            location: null,
-        }));
+    const onStateClear = () => setState(null);
+    const onLocationClear = () => setLocation(null);
 
     const onEmployeeDrill = (drillTarget: any) => {
-        const employee = drillTarget.drillContext.row[0];
-        setState((oldState) => ({
-            ...oldState,
-            employee,
-            employee3rdPartyData: {
-                error: null,
-                isLoading: true,
-                data: null,
-            },
-        }));
+        const newEmployee = drillTarget.drillContext.row[0];
 
-        const firstName = employee.name.split(" ")[0];
+        setEmployee(newEmployee);
+        setEmployee3rdPartyData({
+            error: null,
+            isLoading: true,
+            data: null,
+        });
+
+        const firstName = newEmployee.name.split(" ")[0];
 
         fetch(`https://api.genderize.io/?name=${firstName}&country_id=us`)
             .then((res) => res.json())
             .then(({ gender }) => {
                 return fetch(
-                    `https://randomuser.me/api/?nat=us&inc=dob,cell,registered,location&gender=${gender}&seed=gooddata-${employee.id}`,
+                    `https://randomuser.me/api/?nat=us&inc=dob,cell,registered,location&gender=${gender}&seed=gooddata-${newEmployee.id}`,
                 )
                     .then((res) => res.json())
                     .then(({ results }) => {
-                        setState((oldState) => ({
-                            ...oldState,
-                            employee3rdPartyData: {
-                                isLoading: false,
-                                error: null,
-                                data: {
-                                    ...results[0],
-                                    id: employee.id,
-                                    gender,
-                                },
+                        setEmployee3rdPartyData({
+                            isLoading: false,
+                            error: null,
+                            data: {
+                                ...results[0],
+                                id: newEmployee.id,
+                                gender,
                             },
-                        }));
+                        });
                     })
                     .catch(() => {
-                        setState((oldState) => ({
-                            ...oldState,
-                            employee3rdPartyData: {
-                                isLoading: false,
-                                error: null,
-                                data: {
-                                    dob: {
-                                        date: new Date(),
-                                    },
-                                    registered: {
-                                        date: new Date(),
-                                    },
-                                    cell: "123456",
-                                    location: {
-                                        city: "Sample City",
-                                        state: "Sample State (load failed)",
-                                    },
-                                    id: employee.id,
-                                    gender,
+                        setEmployee3rdPartyData({
+                            isLoading: false,
+                            error: null,
+                            data: {
+                                dob: {
+                                    date: new Date(),
                                 },
+                                registered: {
+                                    date: new Date(),
+                                },
+                                cell: "123456",
+                                location: {
+                                    city: "Sample City",
+                                    state: "Sample State (load failed)",
+                                },
+                                id: newEmployee.id,
+                                gender,
                             },
-                        }));
+                        });
                     });
             });
     };
 
-    const getFilters = (state: any, location: ILocation) => {
+    const getFilters = (state: IHasNameUri | null, location: IHasNameUri | null) => {
         const filters = [];
         if (state) {
             filters.push(
@@ -159,61 +164,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
         return filters;
     };
 
-    const renderEmployeeDetails = (employeeData: any) => {
-        if (employeeData.isError) {
-            return <ErrorComponent height={150} message="There was an error getting employee details" />;
-        } else if (employeeData.isLoading) {
-            return <LoadingComponent height={150} />;
-        } else if (employeeData.data) {
-            return <EmployeeProfile {...employeeData.data} />;
-        }
-        return null;
-    };
-
-    const { state, location } = componentState;
-
-    const stateTable = (
-        <div style={{ height: 200 }} className="s-state-table">
-            <PivotTable
-                measures={[LdmExt.AvgDailyTotalSales]}
-                rows={[LdmExt.LocationState]}
-                drillableItems={[
-                    HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationState)!),
-                ]}
-                onDrill={onStateDrill}
-            />
-        </div>
-    );
-
-    const employeeTableFilters = getFilters(state, location!);
-    const employeeTable = (
-        <div style={{ height: 300 }} className="s-employee-table">
-            <PivotTable
-                measures={[LdmExt.AvgDailyTotalSales]}
-                rows={[LdmExt.EmployeeName]}
-                drillableItems={[HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.EmployeeName)!)]}
-                filters={employeeTableFilters}
-                onDrill={onEmployeeDrill}
-            />
-        </div>
-    );
-
-    const salesTableFilters = getFilters(state, location!);
-    const totalSalesChart = (
-        <div style={{ height: 300 }} className="s-sales-chart">
-            <ColumnChart
-                measures={[LdmExt.TotalSales2]}
-                viewBy={LdmExt.LocationName}
-                filters={salesTableFilters}
-                drillableItems={[HeaderPredicates.identifierMatch(attributeIdentifier(LdmExt.LocationName)!)]}
-                onDrill={onLocationDrill}
-            />
-        </div>
-    );
-
-    const { employee, employee3rdPartyData } = componentState;
-
-    const employeeDetails = renderEmployeeDetails(employee3rdPartyData);
+    const tableFilters = getFilters(state, location);
 
     return (
         <div className="layout-wrapper">
@@ -251,7 +202,14 @@ export const DrillWithExternalDataExample: React.FC = () => {
             `}</style>
             <div>
                 <h3>States</h3>
-                {stateTable}
+                <div style={stateTableStyle} className="s-state-table">
+                    <PivotTable
+                        measures={stateTableMeasures}
+                        rows={stateTableRows}
+                        drillableItems={stateTableDrillableItems}
+                        onDrill={onStateDrill}
+                    />
+                </div>
                 <h3>
                     {!state && !location ? "All Employees" : "Employees from "}
                     {state && (
@@ -273,7 +231,15 @@ export const DrillWithExternalDataExample: React.FC = () => {
                         </span>
                     )}
                 </h3>
-                {employeeTable}
+                <div style={employeeTableStyle} className="s-employee-table">
+                    <PivotTable
+                        measures={employeeTableMeasures}
+                        rows={employeeTableRows}
+                        drillableItems={employeeTableDrillableItems}
+                        filters={tableFilters}
+                        onDrill={onEmployeeDrill}
+                    />
+                </div>
             </div>
             <div className="details">
                 <h3>
@@ -297,11 +263,19 @@ export const DrillWithExternalDataExample: React.FC = () => {
                         </span>
                     )}
                 </h3>
-                {totalSalesChart}
+                <div style={salesChartStyle} className="s-sales-chart">
+                    <ColumnChart
+                        measures={salesChartMeasures}
+                        viewBy={LdmExt.LocationName}
+                        filters={tableFilters}
+                        drillableItems={salesChartDrillableItems}
+                        onDrill={onLocationDrill}
+                    />
+                </div>
                 {employee && (
                     <div>
                         <h3 className="s-employee-name">{employee.name}</h3>
-                        {employeeDetails}
+                        <EmployeeDetails employeeData={employee3rdPartyData} />
                     </div>
                 )}
             </div>

@@ -14,7 +14,7 @@ const measures = [
 
 const attributes = [LdmExt.LocationState, LdmExt.LocationName, LdmExt.MenuCategory];
 
-const columns = [LdmExt.quaterDate, LdmExt.monthDate];
+const columns = [LdmExt.quarterDate, LdmExt.monthDate];
 
 const totals: ITotal[] = [
     {

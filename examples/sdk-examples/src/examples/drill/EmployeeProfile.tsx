@@ -44,7 +44,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({
                 }
                 .text {
                     flex: 1 1 auto;
-                    zzmargin-left: 20px;
+                    margin-left: 20px;
                 }
             `}</style>
             <div>

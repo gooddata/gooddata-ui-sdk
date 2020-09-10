@@ -5,7 +5,7 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { measureIdentifier } from "@gooddata/sdk-model";
 import { Ldm, LdmExt } from "../../ldm";
 
-const measures = [LdmExt.NrRestaurants, LdmExt.TotalSales2, LdmExt.arithmeticMeasure1];
+const measures = [LdmExt.NrRestaurants, LdmExt.TotalSales2, LdmExt.arithmeticMeasure];
 
 const rows = [Ldm.LocationState];
 
