@@ -6,7 +6,7 @@ import { Sorting } from "../examples/sorting";
 import { TimeOverTimeComparison } from "../examples/timeOverTimeComparison";
 import { ArithmeticMeasures } from "../examples/arithmeticMeasures";
 import { Execute } from "../examples/execution";
-import { PivotTableDrilling, DrillWithExternalData } from "../examples/drill";
+import { PivotTableDrilling, DrillWithExternalData, GeoPushpinDrilling } from "../examples/drill";
 import { DateFilter } from "../examples/dateFilter";
 
 import { GlobalFilters } from "../examples/advanced/globalFilters";
@@ -35,7 +35,6 @@ import { Login } from "../components/login";
 import { Registration } from "../components/registration";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisProject } from "../components/AboutThisProject";
-import GeoPushpinChartDrillExample from "../examples/drill/GeoPushpinChartDrillExample";
 
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
@@ -74,7 +73,7 @@ export const drillingUseCasesRoutes = [
     {
         path: "/drilling/geo-pushpin-drilling",
         title: "Geo Pushpin Drilling",
-        Component: GeoPushpinChartDrillExample,
+        Component: GeoPushpinDrilling,
     },
 ];
 

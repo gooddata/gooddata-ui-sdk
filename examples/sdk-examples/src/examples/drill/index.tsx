@@ -2,12 +2,18 @@
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
+
 import { PivotTableDrillExample } from "./PivotTableDrillExample";
 import PivotTableDrillExampleSRC from "!raw-loader!./PivotTableDrillExample";
 import PivotTableDrillExampleSRCJS from "!raw-loader!../../../examplesJS/drill/PivotTableDrillExample";
+
 import { DrillWithExternalDataExample } from "./DrillWithExternalDataExample";
 import DrillWithExternalDataExampleSRC from "!raw-loader!./DrillWithExternalDataExample";
 import DrillWithExternalDataExampleSRCJS from "!raw-loader!../../../examplesJS/drill/DrillWithExternalDataExample";
+
+import { GeoPushpinChartDrillExample } from "./GeoPushpinChartDrillExample";
+import GeoPushpinChartDrillExampleSRC from "!raw-loader!./GeoPushpinChartDrillExample";
+import GeoPushpinChartDrillExampleSRCJS from "!raw-loader!../../../examplesJS/drill/GeoPushpinChartDrillExample";
 
 export const PivotTableDrilling: React.FC = () => (
     <div>
@@ -49,6 +55,18 @@ export const DrillWithExternalData = (): JSX.Element => (
             for={DrillWithExternalDataExample}
             source={DrillWithExternalDataExampleSRC}
             sourceJS={DrillWithExternalDataExampleSRCJS}
+        />
+    </div>
+);
+
+export const GeoPushpinDrilling: React.FC = () => (
+    <div>
+        <h1>Geo Pushpin Drilling</h1>
+
+        <ExampleWithSource
+            for={GeoPushpinChartDrillExample}
+            source={GeoPushpinChartDrillExampleSRC}
+            sourceJS={GeoPushpinChartDrillExampleSRCJS}
         />
     </div>
 );
