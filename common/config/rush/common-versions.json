@@ -32,7 +32,7 @@
         "pretty-quick": "~2.0.1",
         "ts-node": "^8.4.1",
         "tslib": "^2.0.0",
-        "typescript": "3.9.5"
+        "typescript": "4.0.2"
         /**
          * When someone asks for "^1.0.0" make sure they get "1.2.3" when working in this repo,
          * instead of the latest version.
