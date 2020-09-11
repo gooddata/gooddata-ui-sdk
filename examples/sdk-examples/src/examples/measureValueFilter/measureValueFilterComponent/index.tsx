@@ -17,6 +17,10 @@ import MeasureValueFilterDropdownComponentExample from "./MeasureValueFilterDrop
 import MeasureValueFilterDropdownComponentExampleSRC from "!raw-loader!./MeasureValueFilterDropdownComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import MeasureValueFilterDropdownComponentExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterComponent/MeasureValueFilterDropdownComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
+import MeasureValueFilterTreatNullAsZeroComponentExample from "./MeasureValueFilterTreatNullAsZeroComponentExample";
+import MeasureValueFilterTreatNullAsZeroComponentExampleSRC from "!raw-loader!./MeasureValueFilterTreatNullAsZeroComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import MeasureValueFilterTreatNullAsZeroComponentExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterComponent/MeasureValueFilterTreatNullAsZeroComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+
 export const MeasureValueFilterComponent = (): JSX.Element => (
     <div>
         <h1>Measure Value Filter Component</h1>
@@ -58,6 +62,17 @@ export const MeasureValueFilterComponent = (): JSX.Element => (
                 for={MeasureValueFilterDropdownComponentExample}
                 source={MeasureValueFilterDropdownComponentExampleSRC}
                 sourceJS={MeasureValueFilterDropdownComponentExampleSRCJS}
+            />
+        </div>
+        <p>
+            This example shows the component for setting up a measure value filter with treat null value as
+            zero
+        </p>
+        <div className="s-measure-value-filter-example-5">
+            <ExampleWithSource
+                for={MeasureValueFilterTreatNullAsZeroComponentExample}
+                source={MeasureValueFilterTreatNullAsZeroComponentExampleSRC}
+                sourceJS={MeasureValueFilterTreatNullAsZeroComponentExampleSRCJS}
             />
         </div>
     </div>

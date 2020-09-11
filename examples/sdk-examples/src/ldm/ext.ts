@@ -5,6 +5,7 @@ import {
     newMeasure,
     modifySimpleMeasure,
     modifyAttribute,
+    newAttribute,
 } from "@gooddata/sdk-model";
 import { workspace } from "../constants/fixtures";
 import * as Ldm from "./full";
@@ -35,6 +36,8 @@ export const LocationStateLocalId = "locationState";
 export const LocationCityLocalId = "locationCity";
 export const quarterDateLocalId = "quarter";
 export const franchiseSalesComputeRatioLocalId = "franchiseSalesComputeRatio";
+export const sumOfNumberLocalId = "a73e984d10e84156bcca68b5b70f0d2c";
+export const nameAttributeLocalId = "e8e31d6083c44de9b9bcdd84def972f7";
 
 // ===============================================================================================
 
@@ -45,6 +48,8 @@ export const dateDatasetIdentifier = "date.dataset.dt";
 export const franchiseFeesTag = "franchise_fees";
 export const yearDateDataSetAttributeIdentifier = "date.year";
 export const totalSalesLocalIdentifier = "c11c27a0b0314a83bfe5b64ab9de7b89";
+export const sumOfNumberIdentifier = "fact.csv_4dates.number";
+export const nameAttributeIdentifier = "label.csv_4dates.name";
 
 // ===============================================================================================
 
@@ -129,6 +134,12 @@ export const arithmeticMeasure = newArithmeticMeasure(
 export const averageRestaurantDailyCosts = newMeasure(averageRestaurantDailyCostsIdentifier, (m) =>
     m.format("#,##0").localId(averageRestaurantDailyCostsLocalId),
 );
+
+export const sumOfNumber = newMeasure(sumOfNumberIdentifier, (m) =>
+    m.aggregation("sum").localId(sumOfNumberLocalId).alias("Sum of Number"),
+);
+
+export const nameAttribute = newAttribute(nameAttributeIdentifier, (a) => a.localId(nameAttributeLocalId));
 
 // ===============================================================================================
 
