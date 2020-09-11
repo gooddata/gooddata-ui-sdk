@@ -1,3 +1,5 @@
+// (C) 2020 GoodData Corporation
+
 /* eslint-disable */
 /**
  * Metadata JSON:API
@@ -551,6 +553,8 @@ export interface ApiErrorSource {
 export enum AttributeGranularityResourceAttribute {
     Year = "year",
     Day = "day",
+    Hour = "hour",
+    Minute = "minute",
     Quarter = "quarter",
     Month = "month",
     Week = "week",
@@ -559,6 +563,8 @@ export enum AttributeGranularityResourceAttribute {
     DayOfYear = "dayOfYear",
     DayOfWeek = "dayOfWeek",
     DayOfMonth = "dayOfMonth",
+    HourOfDay = "hourOfDay",
+    MinuteOfHour = "minuteOfHour",
     WeekOfYear = "weekOfYear",
 }
 /**

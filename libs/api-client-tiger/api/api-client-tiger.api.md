@@ -342,6 +342,14 @@ export enum AttributeGranularityResourceAttribute {
     // (undocumented)
     DayOfYear = "dayOfYear",
     // (undocumented)
+    Hour = "hour",
+    // (undocumented)
+    HourOfDay = "hourOfDay",
+    // (undocumented)
+    Minute = "minute",
+    // (undocumented)
+    MinuteOfHour = "minuteOfHour",
+    // (undocumented)
     Month = "month",
     // (undocumented)
     MonthOfYear = "monthOfYear",

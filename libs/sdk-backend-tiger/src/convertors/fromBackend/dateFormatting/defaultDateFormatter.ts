@@ -8,6 +8,10 @@ import { DateFormatter } from "./types";
 const granularityFormatPatterns: {
     [granularity in DateAttributeGranularity]?: string;
 } = {
+    "GDC.time.minute": "P HH:mm", // 01/31/2020 14:01
+    "GDC.time.minute_in_hour": "mm", // 01-59
+    "GDC.time.hour": "P HH':00'", // 01/31/2020 14:00
+    "GDC.time.hour_in_day": "HH", // 01-23
     "GDC.time.date": "P", // 01/31/2020
     "GDC.time.day_in_month": "dd", // 01-31
     "GDC.time.day_in_week": "EEEE", // Monday-Sunday

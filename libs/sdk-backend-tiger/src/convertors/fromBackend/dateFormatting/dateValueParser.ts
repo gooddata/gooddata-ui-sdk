@@ -17,6 +17,10 @@ const granularityParseValueTransformations: {
 };
 
 const granularityParsePatterns: { [granularity in DateAttributeGranularity]?: string } = {
+    "GDC.time.minute": "yyyy-MM-dd HH:mm", // 2020-01-31 14:01
+    "GDC.time.minute_in_hour": "mm", // 00-59
+    "GDC.time.hour": "yyyy-MM-dd HH", // 2020-01-31 14
+    "GDC.time.hour_in_day": "HH", // 00-23
     "GDC.time.date": "yyyy-MM-dd", // 2020-01-31
     "GDC.time.day_in_month": "d", // 1-31
     "GDC.time.day_in_week": "i", // 1-7
