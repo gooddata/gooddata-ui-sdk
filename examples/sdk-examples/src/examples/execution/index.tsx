@@ -5,15 +5,18 @@ import React from "react";
 import { ExecuteExample } from "./ExecuteExample";
 import { ExecuteWithSlicesExample } from "./ExecuteWithSlicesExample";
 import { ExecuteAttributeValuesExample } from "./ExecuteAttributeValuesExample";
+import { ExecuteWithCustomVisualizationExample } from "./ExecuteWithCustomVisualizationExample";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import ExecuteExampleSRC from "!raw-loader!./ExecuteExample";
 import ExecuteWithSlicesExampleSRC from "!raw-loader!./ExecuteWithSlicesExample";
 import ExecuteAttributeValuesExampleSRC from "!raw-loader!./ExecuteAttributeValuesExample";
+import ExecuteWithCustomVisualizationExampleSRC from "!raw-loader!./ExecuteWithCustomVisualizationExample";
 
 import ExecuteExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteExample";
 import ExecuteWithSlicesExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteWithSlicesExample";
 import ExecuteAttributeValuesExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteAttributeValuesExample";
+import ExecuteWithCustomVisualizationExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteWithCustomVisualizationExample";
 
 export const Execute: React.FC = () => (
     <div>
@@ -50,6 +53,16 @@ export const Execute: React.FC = () => (
         />
 
         <hr className="separator" />
+
+        <p>
+            This example of Execute component shows how to obtain data and use them in a custom visualization.
+        </p>
+
+        <ExampleWithSource
+            for={ExecuteWithCustomVisualizationExample}
+            source={ExecuteWithCustomVisualizationExampleSRC}
+            sourceJS={ExecuteWithCustomVisualizationExampleSRCJS}
+        />
 
         <h1>RawExecute</h1>
         <p>
