@@ -8,9 +8,9 @@ import {
     IMeasureSortItem,
     newAttributeLocator,
     newAttributeAreaSort,
+    SortDirection,
 } from "@gooddata/sdk-model";
 import { LdmExt } from "../../ldm";
-import { SortDirection } from "@gooddata/api-client-bear";
 
 interface ISortOption {
     key: string;
@@ -121,10 +121,25 @@ export const DynamicSortingExample: React.FC = () => {
             ],
         },
         {
+            key: "several-element",
+            label: "Multiple sort types",
+            description: (dir) =>
+                `The column stacks (states) are sorted by the value of Total Sales and Sum of Month(Date) in the January column in ${getOrderLabel(
+                    dir!,
+                )} order.`,
+            sortBy: (dir) => [
+                newAttributeAreaSort(LdmExt.monthDate),
+                newMeasureSort(LdmExt.TotalSales1, dir, [
+                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateIdentifierJanuary),
+                ]),
+            ],
+        },
+        {
             key: "multi",
-            label: "Multi-sort",
+            label: "Multiple sort directions",
             overrideDirection: null,
-            description: () => "You can combine multiple sortItems together, even mix different directions.",
+            description: () =>
+                "The columns (date) are sorted by the value of the Total Sales of California stack in ascending order and the column stacks (states) are sorted by the value of Total Sales in the January column in descending direction",
             sortBy: () => [
                 newMeasureSort(LdmExt.TotalSales1, "asc", [
                     newAttributeLocator(LdmExt.LocationState, LdmExt.locationStateAttributeCaliforniaUri),
@@ -177,25 +192,27 @@ export const DynamicSortingExample: React.FC = () => {
                     );
                 })}
             </div>
-            <div className="sorting-options">
-                <span className="sorting-label">Direction</span>
-                <button
-                    className={`sorting-option gd-button gd-button-secondary s-ascending${
-                        isAsc ? " is-active" : ""
-                    }`}
-                    onClick={onDirectionChange("asc")}
-                >
-                    Ascending
-                </button>
-                <button
-                    className={`sorting-option gd-button gd-button-secondary s-descending${
-                        isDesc ? " is-active" : ""
-                    }`}
-                    onClick={onDirectionChange("desc")}
-                >
-                    Descending
-                </button>
-            </div>
+            {sortOption.key !== "multi" && (
+                <div className="sorting-options">
+                    <span className="sorting-label">Direction</span>
+                    <button
+                        className={`sorting-option gd-button gd-button-secondary s-ascending${
+                            isAsc ? " is-active" : ""
+                        }`}
+                        onClick={onDirectionChange("asc")}
+                    >
+                        Ascending
+                    </button>
+                    <button
+                        className={`sorting-option gd-button gd-button-secondary s-descending${
+                            isDesc ? " is-active" : ""
+                        }`}
+                        onClick={onDirectionChange("desc")}
+                    >
+                        Descending
+                    </button>
+                </div>
+            )}
             <p>{sortOption.description(direction)}</p>
 
             <hr className="separator" />

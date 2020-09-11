@@ -327,6 +327,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/recharts",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@types/rimraf",
       "allowedCategories": [ "tools" ]
     },
