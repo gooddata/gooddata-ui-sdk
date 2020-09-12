@@ -52,6 +52,7 @@ export namespace EmbeddedAnalyticalDesigner {
         FilterContextChanged = "filterContextChanged",
         InsightEditingCancelled = "insightEditingCancelled",
         InsightOpened = "insightOpened",
+        InsightRendered = "insightRendered",
         InsightSaved = "visualizationSaved",
         ListeningForDrillableItems = "listeningForDrillableItems",
         NewInsightInitialized = "newInsightInitialized",
@@ -76,6 +77,12 @@ export namespace EmbeddedAnalyticalDesigner {
         insight: IObjectMeta;
     };
     export type InsightOpenedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightOpened, InsightOpenedBody>;
+    export type InsightRendered = IGdcAdMessageEvent<GdcAdEventType.InsightRendered, InsightRenderedBody>;
+    export type InsightRenderedBody = IAvailableCommands & {
+        insight: IObjectMeta;
+        errorMessage?: string;
+    };
+    export type InsightRenderedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightRendered, InsightRenderedBody>;
     export type InsightSaved = IGdcAdMessageEvent<GdcAdEventType.InsightSaved, InsightSavedBody>;
     export type InsightSavedBody = IAvailableCommands & GdcVisualizationObject.IVisualization & {
         insight: IObjectMeta;
@@ -104,6 +111,7 @@ export namespace EmbeddedAnalyticalDesigner {
     export function isExportFinishedData(obj: unknown): obj is ExportFinishedData;
     export function isExportInsightCommandData(obj: unknown): obj is ExportInsightCommandData;
     export function isInsightOpenedData(obj: unknown): obj is InsightOpenedData;
+    export function isInsightRenderedData(obj: unknown): obj is InsightRenderedData;
     export function isInsightSavedData(obj: unknown): obj is InsightSavedData;
     export function isNewInsightInitializedData(obj: unknown): obj is NewInsightInitializedData;
     export function isOpenInsightCommandData(obj: unknown): obj is OpenInsightCommandData;
