@@ -375,7 +375,7 @@ describe("DateFilter", () => {
         });
 
         it("should sort static filters in ASC order", () => {
-            const expextedItems = [
+            const expectedItems = [
                 "Last 7 days",
                 "Last 30 days",
                 "Last 90 days",
@@ -392,7 +392,7 @@ describe("DateFilter", () => {
             const wrapper = createDateFilter();
             clickDateFilterButton(wrapper);
             const staticItems = getAllStaticItemsLabels(wrapper);
-            expect(staticItems).toEqual(expextedItems);
+            expect(staticItems).toEqual(expectedItems);
         });
     });
 
