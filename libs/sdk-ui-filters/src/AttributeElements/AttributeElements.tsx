@@ -9,6 +9,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { defaultErrorHandler, OnError, withContexts } from "@gooddata/sdk-ui";
+import stringify from "json-stable-stringify";
 
 import { AttributeElementsDefaultChildren } from "./AttributeElementsDefaultChildren";
 import { IAttributeElementsChildren } from "./types";
@@ -85,6 +86,19 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
         error: null,
     };
 
+    private lastRequestedConfigHash: string = "";
+
+    private getLoadingConfigHash = (props: IAttributeElementsProps): string => {
+        return stringify({
+            workspace: props.workspace,
+            displayForm: props.displayForm,
+            offset: props.offset,
+            limit: props.limit,
+            options: props.options,
+            filters: props.filters,
+        });
+    };
+
     private getBackend = () => {
         return this.props.backend.withTelemetry("AttributeElements", this.props);
     };
@@ -136,6 +150,9 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
         this.setState({ isLoading: true, error: null });
 
         try {
+            const configHash = this.getLoadingConfigHash(this.props);
+            this.lastRequestedConfigHash = configHash;
+
             const elements = await this.getBackend()
                 .workspace(workspace)
                 .elements()
@@ -146,7 +163,10 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
                 .withAttributeFilters(filters ?? [])
                 .query();
 
-            this.setState({ validElements: elements, isLoading: false });
+            // only set the result if the data is still relevant
+            if (this.lastRequestedConfigHash === configHash) {
+                this.setState({ validElements: elements, isLoading: false });
+            }
         } catch (error) {
             this.setState({ isLoading: false, error });
             this.props.onError(error);
