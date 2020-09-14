@@ -31,18 +31,6 @@
 //         );
 // });
 
-// test("Custom visualization should render", async t => {
-//     const chart = Selector(".s-visualization-custom .recharts-surface");
-//     const legend = Selector(".s-visualization-custom .recharts-legend-wrapper");
-//     await t
-//         .expect(chart.exists)
-//         .ok()
-//         .expect(legend.textContent)
-//         .eql(
-//             "$ Franchise Fees (Ad Royalty)$ Franchise Fees (Initial Franchise Fee)$ Franchise Fees (Ongoing Royalty)",
-//         );
-// });
-
 // test("Table visualization should render", async t => {
 //     const table = Selector(".s-visualization-table");
 //     const tableHeader = Selector(
