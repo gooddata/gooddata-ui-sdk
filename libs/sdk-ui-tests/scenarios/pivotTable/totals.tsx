@@ -3,6 +3,7 @@
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { requestPages } from "@gooddata/mock-handling";
 import { scenariosFor } from "../../src";
 import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
@@ -49,7 +50,17 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             newTotal("nat", ReferenceLdm.Amount, ReferenceLdm.Product.Name),
         ],
     })
-    .addScenario("two measures and single grand total for each", PivotTableWithTwoMeasuresAndTotals)
+    .addScenario(
+        "two measures and single grand total for one",
+        {
+            ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+            totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Product.Name)],
+        },
+        (m) => m.withCustomDataCapture({ windows: requestPages([0, 0], [22, 1000], 1) }),
+    )
+    .addScenario("two measures and single grand total for each", PivotTableWithTwoMeasuresAndTotals, (m) =>
+        m.withCustomDataCapture({ windows: requestPages([0, 0], [22, 1000], 1) }),
+    )
     .addScenario("two measures and multiple grand totals for each", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         totals: [
@@ -59,6 +70,14 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Product.Name),
         ],
     })
+    .addScenario(
+        "two measures and one subtotal",
+        {
+            ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+            totals: [newTotal("sum", ReferenceLdm.Amount, ReferenceLdm.Department)],
+        },
+        (m) => m.withCustomDataCapture({ windows: requestPages([0, 0], [22, 1000], 1) }),
+    )
     .addScenario("two measures and multiple subtotals", {
         ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,
         totals: [

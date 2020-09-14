@@ -1539,6 +1539,11 @@
         "scenarioName": "two measures with two row and one column attributes",
         "visName": "PivotTable"
     },
+    "PivotTable.94483039e1f85a9338af24a89dd91aa8": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and single grand total for one.",
+        "scenarioName": "two measures and single grand total for one",
+        "visName": "PivotTable"
+    },
     "PivotTable.95bb1982199a1ef75802a93cf1317d57": {
         "comment": "Auto-generated insight for test scenario PivotTable - single measure and single grand total.",
         "scenarioName": "single measure and single grand total",
@@ -1628,6 +1633,11 @@
     },
     "PivotTable.e1b8ffae54a79f55d2e5940b2a5a8974": {
         "comment": "Auto-generated insight for test scenario PivotTable - no totals and max height 300."
+    },
+    "PivotTable.e1e500c84d318c96bd31e86f1a0dd146": {
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and one subtotal.",
+        "scenarioName": "two measures and one subtotal",
+        "visName": "PivotTable"
     },
     "PivotTable.e3a00f8e310439639b8e0963742c6f32": {
         "comment": "Auto-generated insight for test scenario PivotTable - single attribute.",
