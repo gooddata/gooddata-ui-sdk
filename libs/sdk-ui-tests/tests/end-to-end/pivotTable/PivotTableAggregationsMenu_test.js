@@ -31,11 +31,9 @@ const clickOnMenuAggregationItem = async (t, cell, aggregationItemClass, attribu
 
 const nonEmptyValue = /\$?[0-9,.]+/;
 
-fixture
-    .only("Pivot Table Aggregations menu")
-    .beforeEach(
-        navigateToStory("50-stories-for-e2e-tests-pivot-table--complex-table-with-aggregations-menu"),
-    );
+fixture("Pivot Table Aggregations menu").beforeEach(
+    navigateToStory("50-stories-for-e2e-tests-pivot-table--complex-table-with-aggregations-menu"),
+);
 
 test("should show menu toggler button when mouse hovers over the cell", async (t) => {
     const measureCell = getMeasureCell(0);
