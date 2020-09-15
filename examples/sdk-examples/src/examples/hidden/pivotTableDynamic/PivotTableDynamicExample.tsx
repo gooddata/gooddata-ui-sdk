@@ -16,7 +16,7 @@ import {
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { LdmExt, Ldm } from "../../../ldm";
 import { createColumnTotal } from "../../../utils/helpers";
-import { ElementWithParam } from "../../pivotTable/ElementWithParam";
+import { ElementWithParam } from "./ElementWithParam";
 
 const measureFranchiseFees = LdmExt.FranchiseFees;
 const measureAdRoyalty = LdmExt.FranchiseFeesAdRoyalty;

@@ -20,8 +20,7 @@ export class ElementWithParam extends React.Component<IElementWithParamProps> {
     };
 
     public render(): React.ReactNode {
-        const { component: Elem, ...otherProps } = this.props;
-        delete otherProps.params;
+        const { component: Elem, params: _remove, ...otherProps } = this.props;
         return <Elem {...otherProps} onClick={this.onClick} />;
     }
 }
