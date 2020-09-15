@@ -20,6 +20,12 @@ import { DateAttributeGranularity } from "../../base/dateGranularities";
 /**
  * Creates a new positive attribute filter.
  *
+ * NOTE: when specifying attribute element using URIs (primary keys), please keep in mind that they MAY NOT be transferable
+ * across workspaces. On some backends (such as bear) same element WILL have different URI in each workspace.
+ * In general we recommend using URIs only if your code retrieves them at runtime from backend using elements query
+ * or from the data view's headers. Hardcoding URIs is never a good idea, if you find yourself doing that,
+ * please consider specifying attribute elements by value
+ *
  * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param inValues - values to filter for; these can be either specified as AttributeElements object or as an array
  *  of attribute element _values_; if you specify empty array, then the filter will be noop and will be ignored
@@ -47,6 +53,12 @@ export function newPositiveAttributeFilter(
 
 /**
  * Creates a new negative attribute filter.
+ *
+ * NOTE: when specifying attribute element using URIs (primary keys), please keep in mind that they MAY NOT be transferable
+ * across workspaces. On some backends (such as bear) same element WILL have different URI in each workspace.
+ * In general we recommend using URIs only if your code retrieves them at runtime from backend using elements query
+ * or from the data view's headers. Hardcoding URIs is never a good idea, if you find yourself doing that,
+ * please consider specifying attribute elements by value
  *
  * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param notInValues - values to filter out; these can be either specified as AttributeElements object or as an array

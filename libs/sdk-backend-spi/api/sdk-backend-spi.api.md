@@ -743,8 +743,8 @@ export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGr
 export interface IResultAttributeHeader {
     // (undocumented)
     attributeHeaderItem: {
-        uri: string;
         name: string;
+        uri: string;
     };
 }
 
