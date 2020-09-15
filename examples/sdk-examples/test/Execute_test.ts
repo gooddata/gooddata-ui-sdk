@@ -5,7 +5,7 @@ import { loginUserAndNavigate } from "./utils/helpers";
 
 fixture("Execute").beforeEach(loginUserAndNavigate(`${config.url}/execute`));
 
-test("should display correct result and retry should fail", async t => {
+test("should display correct result and retry should fail", async (t) => {
     const kpi = Selector(".s-execute-kpi");
     const attributeValues = Selector(".s-execute-attribute-values");
     const retryButton = Selector(".s-retry-button");
@@ -14,12 +14,9 @@ test("should display correct result and retry should fail", async t => {
         .expect(kpi.exists)
         .ok()
         .expect(kpi.textContent)
-        .eql("92556577.3");
+        .match(/\$[0-9,]+/);
 
-    await t
-        .click(retryButton)
-        .expect(Selector(".Error.s-error").exists)
-        .ok();
+    await t.click(retryButton).expect(Selector(".Error.s-error").exists).ok();
 
     await t
         .expect(attributeValues.exists)
