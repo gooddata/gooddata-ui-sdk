@@ -2,7 +2,7 @@
 import { DefaultColorPalette, IMappingHeader } from "@gooddata/sdk-ui";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";
-import { GuidType, IColor } from "@gooddata/sdk-model";
+import { GuidType, IColor, uriRef } from "@gooddata/sdk-model";
 
 describe("color utils", () => {
     const color1: IColor = {
@@ -43,10 +43,12 @@ describe("color utils", () => {
                     identifier: "label.a1",
                     localIdentifier: "a1",
                     name: "attribute header",
+                    ref: uriRef("a1"),
                     formOf: {
                         uri: "a1",
                         identifier: "label.a1",
                         name: "attribute header",
+                        ref: uriRef("a1"),
                     },
                 },
             },

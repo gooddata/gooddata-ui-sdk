@@ -14,6 +14,7 @@ export {
     RecordedBackendConfig,
     CatalogRecording,
     VisClassesRecording,
+    RecordedDescriptorRefType,
 } from "./recordedBackend/types";
 
 export {

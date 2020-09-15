@@ -1,9 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,
     headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../__mocks__/fixtures";
+import { uriRef } from "@gooddata/sdk-model";
 
 export const DRILL_EVENT_DATA_BY_MEASURE_URI = {
     drillContext: {
@@ -17,6 +18,7 @@ export const DRILL_EVENT_DATA_BY_MEASURE_URI = {
                         localIdentifier: "lostMetric",
                         name: "Lost",
                         uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                        ref: uriRef("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
                     },
                 },
             },
@@ -39,6 +41,7 @@ export const DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER = {
                         localIdentifier: "lostMetric",
                         name: "Lost",
                         uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                        ref: uriRef("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
                     },
                 },
             },
@@ -61,6 +64,7 @@ export const DRILL_EVENT_DATA_FOR_SECONDARY_ITEM = {
                         localIdentifier: "wonMetric",
                         name: "Won",
                         uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+                        ref: uriRef("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284"),
                     },
                 },
             },

@@ -4,6 +4,7 @@ import React from "react";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import AggregationsSubMenu, { IAggregationsSubMenuProps } from "../AggregationsSubMenu";
 import { IColumnTotal } from "../aggregationsMenuTypes";
+import { uriRef } from "@gooddata/sdk-model";
 
 describe("AggregationsSubMenu", () => {
     const intlMock = createIntlMock();
@@ -14,11 +15,13 @@ describe("AggregationsSubMenu", () => {
                     identifier: "1st_attr_local_identifier",
                     name: "Department",
                     uri: "/gdc/md/project_id/obj/1st_attr_uri_id",
+                    ref: uriRef("/gdc/md/project_id/obj/1st_attr_uri_id"),
                 },
                 identifier: "1st_attr_df_identifier",
                 localIdentifier: "1st_attr_df_local_identifier",
                 name: "Department Name",
                 uri: "/gdc/md/project_id/obj/1st_attr_df_uri_id",
+                ref: uriRef("/gdc/md/project_id/obj/1st_attr_df_uri_id"),
             },
         },
         {
@@ -27,11 +30,13 @@ describe("AggregationsSubMenu", () => {
                     identifier: "2nd_attr_local_identifier",
                     name: "Region",
                     uri: "/gdc/md/project_id/obj/2nd_attr_uri_id",
+                    ref: uriRef("/gdc/md/project_id/obj/2nd_attr_uri_id"),
                 },
                 identifier: "2nd_attr_df_identifier",
                 localIdentifier: "2nd_attr_df_local_identifier",
                 name: "Region Area",
                 uri: "/gdc/md/project_id/obj/2nd_attr_df_uri_id",
+                ref: uriRef("/gdc/md/project_id/obj/2nd_attr_df_uri_id"),
             },
         },
     ];

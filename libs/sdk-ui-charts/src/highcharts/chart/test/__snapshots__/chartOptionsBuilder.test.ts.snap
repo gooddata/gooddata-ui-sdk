@@ -1,0 +1,228 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`chartOptionsBuilder getDrillableSeries in usecase of bar chart with 3 measures and view by attribute with first and last drillable measures should assign correct drillIntersection to pointData with drilldown true 1`] = `
+Array [
+  Array [
+    Object {
+      "header": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.00",
+          "identifier": "af2Ewj9Re2vK",
+          "localIdentifier": "lostMetric",
+          "name": "<button>Lost</button> ...",
+          "ref": Object {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+        },
+      },
+    },
+    Object {
+      "header": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "created",
+            "name": "Year created",
+            "ref": Object {
+              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            },
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+          },
+          "identifier": "created.aag81lMifn6q",
+          "localIdentifier": "yearCreatedAttribute",
+          "name": "Year (Created)",
+          "ref": Object {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+        },
+        "attributeHeaderItem": Object {
+          "name": "<button>2008</button>",
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+        },
+      },
+    },
+  ],
+  undefined,
+  Array [
+    Object {
+      "header": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.00",
+          "identifier": "alUEwmBtbwSh",
+          "localIdentifier": "expectedMetric",
+          "name": "Expected",
+          "ref": Object {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+        },
+      },
+    },
+    Object {
+      "header": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "created",
+            "name": "Year created",
+            "ref": Object {
+              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            },
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+          },
+          "identifier": "created.aag81lMifn6q",
+          "localIdentifier": "yearCreatedAttribute",
+          "name": "Year (Created)",
+          "ref": Object {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+        },
+        "attributeHeaderItem": Object {
+          "name": "<button>2008</button>",
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+        },
+      },
+    },
+  ],
+]
+`;
+
+exports[`chartOptionsBuilder getDrillableSeries in usecase of bubble chart with 3 measures and attribute should assign correct drillIntersection to pointData with drilldown true 1`] = `
+Object {
+  "drillIntersection": Array [
+    Object {
+      "header": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.00",
+          "identifier": "ab0bydLaaisS",
+          "localIdentifier": "784a5018a51049078e8f7e86247e08a3",
+          "name": "_Snapshot [EOP-2]",
+          "ref": Object {
+            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
+          },
+          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
+        },
+      },
+    },
+    Object {
+      "header": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0",
+          "identifier": "aaYh6Voua2yj",
+          "localIdentifier": "9e5c3cd9a93f4476a93d3494cedc6010",
+          "name": "# of Open Opps.",
+          "ref": Object {
+            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
+          },
+          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
+        },
+      },
+    },
+    Object {
+      "header": Object {
+        "measureHeaderItem": Object {
+          "format": "$#,#00.00",
+          "identifier": "ab4EFOAmhjOx",
+          "localIdentifier": "71d50cf1d13746099b7f506576d78e4a",
+          "name": "Remaining Quota",
+          "ref": Object {
+            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
+          },
+          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
+        },
+      },
+    },
+    Object {
+      "header": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "attr.owner.id",
+            "name": "Sales Rep",
+            "ref": Object {
+              "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
+            },
+            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
+          },
+          "identifier": "label.owner.id.name",
+          "localIdentifier": "49a659fbd7c541a69284769d53a2be7f",
+          "name": "Owner Name",
+          "ref": Object {
+            "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+          },
+          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+        },
+        "attributeHeaderItem": Object {
+          "name": "Jessica Traven",
+          "uri": "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1235",
+        },
+      },
+    },
+  ],
+  "drilldown": true,
+  "format": "$#,#00.00",
+  "x": 245,
+  "y": 32,
+  "z": 2280481.04,
+}
+`;
+
+exports[`chartOptionsBuilder getDrillableSeries in usecase of scatter plot with 2 measures and attribute should assign correct drillIntersection to pointData with drilldown true 1`] = `
+Array [
+  Array [
+    Object {
+      "header": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.00",
+          "identifier": "af2Ewj9Re2vK",
+          "localIdentifier": "lostMetric",
+          "name": "<button>Lost</button> ...",
+          "ref": Object {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+        },
+      },
+    },
+    Object {
+      "header": Object {
+        "measureHeaderItem": Object {
+          "format": "#,##0.00",
+          "identifier": "afSEwRwdbMeQ",
+          "localIdentifier": "wonMetric",
+          "name": "Won",
+          "ref": Object {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+        },
+      },
+    },
+    Object {
+      "header": Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "created",
+            "name": "Year created",
+            "ref": Object {
+              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            },
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+          },
+          "identifier": "created.aag81lMifn6q",
+          "localIdentifier": "yearCreatedAttribute",
+          "name": "Year (Created)",
+          "ref": Object {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+        },
+        "attributeHeaderItem": Object {
+          "name": "<button>2008</button>",
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+        },
+      },
+    },
+  ],
+]
+`;

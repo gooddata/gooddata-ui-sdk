@@ -7,7 +7,7 @@ import {
     normalizeColorToRGB,
 } from "@gooddata/sdk-ui-vis-commons";
 import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { emptyDef } from "@gooddata/sdk-model";
+import { emptyDef, uriRef } from "@gooddata/sdk-model";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { getValidColorPalette } from "../color";
 
@@ -105,9 +105,11 @@ describe("getColorMappingPredicate", () => {
             identifier: "attributeIdentifier",
             localIdentifier: "attributeLocalIdentifier",
             name: "attributeName",
+            ref: uriRef("/attributeUri"),
             formOf: {
                 uri: "/attributeElementUri",
                 identifier: "attributeElementIdentifier",
+                ref: uriRef("/attributeElementUri"),
                 name: "attributeElementName",
             },
         },

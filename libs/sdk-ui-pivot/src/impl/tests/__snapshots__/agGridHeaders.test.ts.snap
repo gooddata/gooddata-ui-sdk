@@ -17,11 +17,17 @@ Array [
               "formOf": Object {
                 "identifier": "attr.owner.region",
                 "name": "Region",
+                "ref": Object {
+                  "uri": "/gdc/md/referenceworkspace/obj/1086",
+                },
                 "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
               "identifier": "label.owner.region",
               "localIdentifier": "a_label.owner.region",
               "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1087",
+              },
               "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
           },
@@ -31,6 +37,9 @@ Array [
               "identifier": "aangOxLSeztu",
               "localIdentifier": "m_aangOxLSeztu",
               "name": "Amount",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1271",
+              },
               "uri": "/gdc/md/referenceworkspace/obj/1271",
             },
           },
@@ -61,11 +70,17 @@ Array [
               "formOf": Object {
                 "identifier": "attr.owner.region",
                 "name": "Region",
+                "ref": Object {
+                  "uri": "/gdc/md/referenceworkspace/obj/1086",
+                },
                 "uri": "/gdc/md/referenceworkspace/obj/1086",
               },
               "identifier": "label.owner.region",
               "localIdentifier": "a_label.owner.region",
               "name": "Region",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1087",
+              },
               "uri": "/gdc/md/referenceworkspace/obj/1087",
             },
           },
@@ -75,6 +90,9 @@ Array [
               "identifier": "aangOxLSeztu",
               "localIdentifier": "m_aangOxLSeztu",
               "name": "Amount",
+              "ref": Object {
+                "uri": "/gdc/md/referenceworkspace/obj/1271",
+              },
               "uri": "/gdc/md/referenceworkspace/obj/1271",
             },
           },
@@ -139,11 +157,17 @@ Array [
           "formOf": Object {
             "identifier": "attr.product.id",
             "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
             "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },
@@ -164,11 +188,17 @@ Array [
           "formOf": Object {
             "identifier": "attr.product.id",
             "name": "Product",
+            "ref": Object {
+              "uri": "/gdc/md/referenceworkspace/obj/1054",
+            },
             "uri": "/gdc/md/referenceworkspace/obj/1054",
           },
           "identifier": "label.product.id.name",
           "localIdentifier": "a_label.product.id.name",
           "name": "Product Name",
+          "ref": Object {
+            "uri": "/gdc/md/referenceworkspace/obj/1055",
+          },
           "uri": "/gdc/md/referenceworkspace/obj/1055",
         },
       },

@@ -210,9 +210,11 @@ export interface IAttributeDescriptor {
         uri: string;
         identifier: string;
         localIdentifier: string;
+        ref: ObjRef;
         name: string;
         totalItems?: ITotalDescriptor[];
         formOf: {
+            ref: ObjRef;
             uri: string;
             identifier: string;
             name: string;
@@ -676,6 +678,7 @@ export interface IMeasureDescriptor {
         format: string;
         uri?: string;
         identifier?: string;
+        ref?: ObjRef;
     };
 }
 

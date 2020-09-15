@@ -8,10 +8,24 @@ import {
 import { Execution } from "@gooddata/api-client-tiger";
 
 import isAttributeHeader = Execution.isAttributeHeader;
+import {
+    idRef,
+    IExecutionDefinition,
+    isIdentifierRef,
+    isSimpleMeasure,
+    measureItem,
+    measureLocalId,
+    ObjRef,
+} from "@gooddata/sdk-model";
+import keyBy from "lodash/keyBy";
+import mapValues from "lodash/mapValues";
 
 const DEFAULT_FORMAT = "#,#.##";
 
-function transformDimension(dim: Execution.IResultDimension): IDimensionDescriptor {
+function transformDimension(
+    dim: Execution.IResultDimension,
+    simpleMeasureRefs: Record<string, ObjRef>,
+): IDimensionDescriptor {
     return {
         headers: dim.headers.map((header, headerIdx) => {
             const h = header;
@@ -27,10 +41,12 @@ function transformDimension(dim: Execution.IResultDimension): IDimensionDescript
                     attributeHeader: {
                         uri: `/obj/${headerIdx}`,
                         identifier: h.attributeHeader.identifier,
+                        ref: idRef(h.attributeHeader.identifier, "displayForm"),
                         formOf: {
                             identifier: h.attributeHeader.formOf.identifier,
                             name: h.attributeHeader.formOf.name,
                             uri: `/obj/${headerIdx}`,
+                            ref: idRef(h.attributeHeader.formOf.identifier, "attribute"),
                         },
                         localIdentifier: h.attributeHeader.localIdentifier,
                         name: h.attributeHeader.name,
@@ -45,15 +61,26 @@ function transformDimension(dim: Execution.IResultDimension): IDimensionDescript
                  *
                  *  -  if name does not come from tiger, then default the name to localIdentifier
                  *  -  if format does not come from tiger, then default to a hardcoded format
+                 *
+                 * Funny stuff #3: tiger does not send simple measure identifier. The code must reconciliate:
+                 *
+                 * -   look up simple measure by local id from execution definition
                  */
                 const measureDescriptor: IMeasureGroupDescriptor = {
                     measureGroupHeader: {
                         items: h.measureGroupHeader.items.map((m) => {
+                            const ref = simpleMeasureRefs[m.measureHeaderItem.localIdentifier];
+                            const identifier = isIdentifierRef(ref) ? ref.identifier : undefined;
+                            const uri = ref ? `/obj/${headerIdx}` : undefined;
+
                             const newItem: IMeasureDescriptor = {
                                 measureHeaderItem: {
                                     localIdentifier: m.measureHeaderItem.localIdentifier,
                                     name: m.measureHeaderItem.name ?? m.measureHeaderItem.localIdentifier,
                                     format: m.measureHeaderItem.format ?? DEFAULT_FORMAT,
+                                    identifier,
+                                    ref,
+                                    uri,
                                 },
                             };
 
@@ -69,11 +96,24 @@ function transformDimension(dim: Execution.IResultDimension): IDimensionDescript
 }
 
 /**
- * Transforms dimensions in the result provided by backend to the unified model used in SDK.
+ * Transforms dimensions in the result provided by backend to the unified model used in SDK. The tiger backend
+ * does not return all the data needed by the SPI. For some information, the transformation needs to look into
+ * the input execution definition. At the moment, this is the case for 'ref' fields
  *
  * @param dimensions - dimensions from execution result
+ * @param def - execution definition, this is needed to augment the descriptors with data required by the SPI which
+ *  the tiger backend does not pass
+ *
  * @returns dimensions as used in the unified model
  */
-export function transformResultDimensions(dimensions: Execution.IResultDimension[]): IDimensionDescriptor[] {
-    return dimensions.map(transformDimension);
+export function transformResultDimensions(
+    dimensions: Execution.IResultDimension[],
+    def: IExecutionDefinition,
+): IDimensionDescriptor[] {
+    const simpleMeasures = def.measures.filter(isSimpleMeasure);
+    const measureRefs: Record<string, ObjRef> = mapValues(keyBy(simpleMeasures, measureLocalId), (m) =>
+        measureItem(m),
+    );
+
+    return dimensions.map((dim) => transformDimension(dim, measureRefs));
 }

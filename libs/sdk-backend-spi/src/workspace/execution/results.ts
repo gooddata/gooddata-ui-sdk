@@ -52,8 +52,21 @@ export interface IMeasureDescriptor {
          * -  Otherwise the format must be defaulted
          */
         format: string;
+
+        /**
+         * For persistent metrics or facts, this returns URI of the object. Is empty for ad-hoc measures.
+         */
         uri?: string;
+
+        /**
+         * For persistent metrics or facts, this returns identifier of the object. Is empty for ad-hoc measures.
+         */
         identifier?: string;
+
+        /**
+         * Opaque reference of the metric or fact object.
+         */
+        ref?: ObjRef;
     };
 }
 
@@ -70,21 +83,71 @@ export interface ITotalDescriptor {
 }
 
 /**
- * Describes attribute slicing of a dimension.
+ * Describes attribute slicing of a dimension. The primary descriptor is the attribute display form which was
+ * used to slice the dimension. Description of the attribute to which the display form belongs is provided in the
+ * `formOf` property.
  *
  * @public
  */
 export interface IAttributeDescriptor {
     // TODO: rename this to attributeDescriptor ... the goal is to get rid of the overused 'header' nomenclature
     attributeHeader: {
+        /**
+         * URI of the display form object
+         */
         uri: string;
+
+        /**
+         * Display form identifier
+         */
         identifier: string;
+
+        /**
+         * Local identifier of the display form - this references back to the IAttribute which was on the input
+         * to the execution.
+         */
         localIdentifier: string;
+
+        /**
+         * Opaque reference of the display form object.
+         */
+        ref: ObjRef;
+
+        /**
+         * Human readable name of the attribute.
+         */
         name: string;
         totalItems?: ITotalDescriptor[];
+
+        /**
+         * Describes attributes to which the display form belongs.
+         */
         formOf: {
+            /**
+             * Opaque reference of the attribute object.
+             */
+            ref: ObjRef;
+
+            /**
+             * URI of the attribute object.
+             */
             uri: string;
+
+            /**
+             * Attribute identifier.
+             */
             identifier: string;
+
+            /**
+             * Human readable name of the attribute.
+             *
+             * Note: attribute name is typically more descriptive than the display form. Therefore, visualizations
+             * often use the attribute name for axes and other descriptive elements of the chart such as tooltips.
+             *
+             * For example attribute called 'Location' may have multiple display forms each with different name and possibly
+             * also different data type such as 'ShortName', 'LongName', 'Coordinates', 'Link' etc. Using the display
+             * form name would often lead to visualizations which are harder to comprehend.
+             */
             name: string;
         };
     };

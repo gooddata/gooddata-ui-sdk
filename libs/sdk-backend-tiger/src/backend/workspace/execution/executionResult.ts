@@ -52,7 +52,10 @@ export class TigerExecutionResult implements IExecutionResult {
         readonly execResponse: Execution.IExecutionResponse,
         private readonly dateFormatter: DateFormatter,
     ) {
-        this.dimensions = transformResultDimensions(execResponse.executionResponse.dimensions);
+        this.dimensions = transformResultDimensions(
+            execResponse.executionResponse.dimensions,
+            this.definition,
+        );
         this.resultId = execResponse.executionResponse.links.executionResult;
         this._fingerprint = SparkMD5.hash(this.resultId);
     }
