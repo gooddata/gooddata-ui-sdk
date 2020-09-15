@@ -32,7 +32,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
             config: {
                 columnSizing: {
-                    defaultWidth: "viewport",
+                    defaultWidth: "autoresizeAll", // TODO INE: revert back after testing
                 },
             },
             pageSize: 3,
@@ -53,6 +53,14 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             columnSizing: {
                 defaultWidth: "viewport",
                 growToFit: true,
+            },
+        },
+    })
+    .addScenario("with autoresizeAll", {
+        ...PivotTableWithTwoMeasuresAndSingleRowAttr,
+        config: {
+            columnSizing: {
+                defaultWidth: "autoresizeAll",
             },
         },
     })

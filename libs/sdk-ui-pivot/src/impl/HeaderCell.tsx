@@ -8,6 +8,7 @@ import { IMenu, IMenuAggregationClickConfig } from "../types";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
 import AggregationsMenu from "./AggregationsMenu";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
+import { HEADER_LABEL_CLASS } from "./agGridConst";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";
@@ -121,7 +122,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     private renderText() {
         const { displayText, textAlign, enableSorting } = this.props;
 
-        const classes = cx("s-header-cell-label", "gd-pivot-table-header-label", {
+        const classes = cx(HEADER_LABEL_CLASS, "gd-pivot-table-header-label", {
             "gd-pivot-table-header-label--right": textAlign === "right",
             "gd-pivot-table-header-label--center": textAlign === "center",
             "gd-pivot-table-header-label--clickable": enableSorting,
@@ -133,6 +134,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
                 onClick={this.onTextClick}
                 onMouseEnter={this.onMouseEnterHeaderCellText}
                 onMouseLeave={this.onMouseLeaveHeaderCellText}
+                style={{ fontSize: "22px" }} // TODO INE: remove once not needed for tests
             >
                 <span>{displayText ? displayText : ""}</span>
                 {this.renderSorting()}

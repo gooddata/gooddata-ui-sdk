@@ -32,7 +32,7 @@ export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthIte
 export const CorePivotTable: React_2.FC<ICorePivotTableProps>;
 
 // @public (undocumented)
-export type DefaultColumnWidth = "viewport" | "unset";
+export type DefaultColumnWidth = "viewport" | "unset" | "autoresizeAll";
 
 // @public (undocumented)
 export interface IAbsoluteColumnWidth {

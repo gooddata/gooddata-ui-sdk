@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import { TotalType } from "@gooddata/sdk-model";
 
@@ -17,3 +17,5 @@ export const ROW_SUBTOTAL = "rowSubtotal";
 export const COLUMN_GROUPING_DELIMITER = " › ";
 export const AVAILABLE_TOTALS: TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
 export const COLS_PER_PAGE: number = 1000;
+export const VALUE_CLASS = "s-value";
+export const HEADER_LABEL_CLASS = "s-header-cell-label";
