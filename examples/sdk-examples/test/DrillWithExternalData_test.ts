@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import { Selector } from "testcafe";
 import { config } from "./utils/config";
-import { loginUsingLoginForm } from "./utils/helpers";
+import { loginUserAndNavigate } from "./utils/helpers";
 
-fixture("Drill With External Data") // eslint-disable-line no-undef
+fixture("Drill With External Data")
     .page(config.url)
-    .beforeEach(loginUsingLoginForm(`${config.url}/drilling/drill-with-external-data`));
+    .beforeEach(loginUserAndNavigate(`${config.url}/drilling/drill-with-external-data`));
 
 const employeeHeadingClearState = Selector(".s-employee-heading-clear-state");
 const employeeHeadingClearLocation = Selector(".s-employee-heading-clear-location");

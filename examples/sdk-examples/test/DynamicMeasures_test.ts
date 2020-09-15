@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import { Selector } from "testcafe";
 import { config } from "./utils/config";
-import { loginUsingLoginForm } from "./utils/helpers";
+import { loginUserAndNavigate } from "./utils/helpers";
 
 fixture("Dynamic measures")
     .page(config.url)
-    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/dynamic-measures`));
+    .beforeEach(loginUserAndNavigate(`${config.url}/advanced/dynamic-measures`));
 
-test("should be able to set measures and render them", async t => {
+test("should be able to set measures and render them", async (t) => {
     const sidebarItems = Selector(".s-dynamic-measures-sidebar .list-item");
     const lineSeries = Selector(".s-dynamic-measures-line-chart .highcharts-series");
     const columnSeries = Selector(".s-dynamic-measures-column-chart .highcharts-series");

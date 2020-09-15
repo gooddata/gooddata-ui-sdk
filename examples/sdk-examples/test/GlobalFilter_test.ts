@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import { Selector } from "testcafe";
 import { config } from "./utils/config";
-import { loginUsingLoginForm } from "./utils/helpers";
+import { loginUserAndNavigate } from "./utils/helpers";
 
 fixture("Global filter")
     .page(config.url)
-    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/global-filters`));
+    .beforeEach(loginUserAndNavigate(`${config.url}/advanced/global-filters`));
 
-test("should filter components according to selected employee", async t => {
+test("should filter components according to selected employee", async (t) => {
     const displayedNameSelector = Selector(".additional-info > h1");
     const kpiMetricSelector = Selector(".gdc-kpi");
     const listItemSelector = Selector(".list-item");
