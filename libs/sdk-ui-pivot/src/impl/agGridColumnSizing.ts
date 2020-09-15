@@ -13,12 +13,27 @@ import {
     getParsedFields,
     getTreeLeaves,
     isMeasureColumn,
+    getMeasureFormat,
+    isSomeTotal,
 } from "./agGridUtils";
-import { FIELD_SEPARATOR, FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE, ID_SEPARATOR } from "./agGridConst";
+import {
+    FIELD_SEPARATOR,
+    FIELD_TYPE_ATTRIBUTE,
+    FIELD_TYPE_MEASURE,
+    ID_SEPARATOR,
+    VALUE_CLASS,
+    HEADER_LABEL_CLASS,
+    ROW_TOTAL_CLASS,
+    ROW_SUBTOTAL_CLASS,
+    DEFAULT_HEADER_FONT,
+    DEFAULT_ROW_FONT,
+    DEFAULT_SUBTOTAL_FONT,
+    DEFAULT_TOTAL_FONT,
+} from "./agGridConst";
 import { identifyResponseHeader } from "./agGridHeaders";
 
-import { IGridHeader } from "./agGridTypes";
-import { ColDef, Column, ColumnApi } from "@ag-grid-community/all-modules";
+import { IGridHeader, IGridRow } from "./agGridTypes";
+import { ColDef, Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
 import {
     ColumnWidth,
     ColumnWidthItem,
@@ -38,10 +53,13 @@ import {
     IMeasureColumnLocator,
 } from "../columnWidths";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IExecutionResult, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { getMeasureCellFormattedValue } from "./tableCell";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
+export const AUTO_SIZED_MAX_WIDTH = 500;
+export const SORT_ICON_WIDTH = 12;
 
 //
 //
@@ -658,3 +676,239 @@ export const resizeWeakMeasureColumns = (
 
 const getAllowGrowToFitProp = (allowGrowToFit: boolean | undefined): { allowGrowToFit?: boolean } =>
     allowGrowToFit ? { allowGrowToFit } : {};
+
+interface CalculateColumnWidthsConfig {
+    context: CanvasRenderingContext2D | null;
+    columns: Column[];
+    rowData: IGridRow[];
+    totalData: IGridRow[];
+    execution: IExecutionResult;
+    measureHeaders: boolean;
+    headerFont: string;
+    subtotalFont: string;
+    totalFont: string;
+    rowFont: string;
+    padding: number;
+    separators: any;
+    cache: Map<string, number>;
+}
+
+export const getMaxWidth = (
+    context: CanvasRenderingContext2D,
+    text: string | undefined,
+    hasSort: boolean,
+    maxWidth: number | undefined,
+): number | undefined => {
+    if (!text) {
+        return;
+    }
+    const width = hasSort
+        ? context.measureText(text).width + SORT_ICON_WIDTH
+        : context.measureText(text).width;
+
+    return maxWidth === undefined || width > maxWidth ? width : undefined;
+};
+
+export const getMaxWidthCached = (
+    context: CanvasRenderingContext2D,
+    text: string,
+    maxWidth: number | undefined,
+    widthsCache: Map<string, number>,
+): number | undefined => {
+    const cachedWidth = widthsCache.get(text);
+    let width;
+
+    if (cachedWidth === undefined) {
+        width = context.measureText(text).width;
+        widthsCache.set(text, width);
+    } else {
+        width = cachedWidth;
+    }
+
+    return maxWidth === undefined || width > maxWidth ? width : undefined;
+};
+
+const valueFormatter = (text: string, colDef: IGridHeader, execution: IExecutionResult, separators: any) => {
+    return text !== undefined
+        ? getMeasureCellFormattedValue(text, getMeasureFormat(colDef, execution), separators)
+        : null;
+};
+
+const collectWidths = (
+    config: CalculateColumnWidthsConfig,
+    row: IGridRow,
+    maxWidths: Map<string, number>,
+): void => {
+    const { context } = config;
+    config.columns.forEach((column: Column) => {
+        const colDef: IGridHeader = column.getColDef() as IGridHeader;
+        if (colDef.field && context) {
+            const text = row[colDef.field];
+            const formattedText =
+                isMeasureColumn(column) && valueFormatter(text, colDef, config.execution, config.separators);
+            const textForCalculation = formattedText || text;
+            const maxWidth = colDef.field ? maxWidths.get(colDef.field) : undefined;
+            let possibleMaxWidth;
+
+            if (config.cache) {
+                possibleMaxWidth = getMaxWidthCached(context, textForCalculation, maxWidth, config.cache);
+            } else {
+                possibleMaxWidth = getMaxWidth(context, textForCalculation, false, maxWidth);
+            }
+
+            if (possibleMaxWidth) {
+                maxWidths.set(colDef.field, possibleMaxWidth);
+            }
+        }
+    });
+};
+
+export const getUpdatedColumnDefs = (
+    columns: Column[],
+    maxWidths: Map<string, number>,
+    padding: number,
+): ColDef[] => {
+    return columns.map((column: Column) => {
+        const colDef: ColDef = column.getColDef();
+        if (colDef.field) {
+            const maxWidth = maxWidths.get(colDef.field);
+            const newWidth = maxWidth ? Math.ceil(maxWidth + padding) : 0;
+            return {
+                ...colDef,
+                width: Math.min(Math.max(MIN_WIDTH, newWidth), AUTO_SIZED_MAX_WIDTH),
+            };
+        }
+        return colDef;
+    });
+};
+
+const calculateColumnWidths = (config: CalculateColumnWidthsConfig) => {
+    const { context } = config;
+    const maxWidths = new Map<string, number>();
+
+    if (config.measureHeaders && context) {
+        context.font = config.headerFont;
+
+        config.columns.forEach((column: Column) => {
+            const colDef: ColDef = column.getColDef();
+            const maxWidth = colDef.field ? maxWidths.get(colDef.field) : undefined;
+            const possibleMaxWidth = getMaxWidth(context, colDef.headerName, !!colDef.sort, maxWidth);
+
+            if (colDef.field && possibleMaxWidth) {
+                maxWidths.set(colDef.field, possibleMaxWidth);
+            }
+        });
+    }
+
+    config.rowData.forEach((row: IGridRow) => {
+        if (context) {
+            context.font = isSomeTotal(row.type) ? config.subtotalFont : config.rowFont;
+            collectWidths(config, row, maxWidths);
+        }
+    });
+
+    config.totalData.forEach((row: IGridRow) => {
+        if (context) {
+            context.font = config.totalFont;
+            collectWidths(config, row, maxWidths);
+        }
+    });
+
+    return getUpdatedColumnDefs(config.columns, maxWidths, config.padding);
+};
+
+const getDisplayedRowData = (gridApi: GridApi): IGridRow[] => {
+    const rowCount = gridApi.getDisplayedRowCount();
+    const rowData: IGridRow[] = [];
+    for (let index = 0; index < rowCount; index++) {
+        const item: IGridRow = gridApi.getDisplayedRowAtIndex(index).data;
+        rowData.push(item);
+    }
+    return rowData;
+};
+
+const getDisplayedTotalData = (gridApi: GridApi): IGridRow[] => {
+    const totalCount = gridApi.getPinnedBottomRowCount();
+    const totalData: IGridRow[] = [];
+    for (let index = 0; index < totalCount; index++) {
+        const item: IGridRow = gridApi.getPinnedBottomRow(index).data;
+        totalData.push(item);
+    }
+    return totalData;
+};
+
+const getTableFont = (containerRef: HTMLDivElement, className: string, defaultFont: string) => {
+    const element = containerRef.getElementsByClassName(className)[0];
+    let font = defaultFont;
+    if (element) {
+        font = window.getComputedStyle(element).font;
+    }
+    return font;
+};
+
+const getTableFonts = (
+    containerRef: HTMLDivElement,
+): { headerFont: string; rowFont: string; subtotalFont: string; totalFont: string } => {
+    /**
+     * All fonts are gotten from first element with given class. Once we will have font different for each cell/header/row this will not work
+     */
+    const headerFont = getTableFont(containerRef, HEADER_LABEL_CLASS, DEFAULT_HEADER_FONT);
+    const rowFont = getTableFont(containerRef, VALUE_CLASS, DEFAULT_ROW_FONT);
+    const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS, DEFAULT_SUBTOTAL_FONT);
+    const totalFont = getTableFont(containerRef, ROW_TOTAL_CLASS, DEFAULT_TOTAL_FONT);
+    return { headerFont, rowFont, subtotalFont, totalFont };
+};
+
+/**
+ * Custom implementation of columns autoresizing according content: https://en.morzel.net/post/resizing-all-ag-gird-react-columns
+ * Calculate the width of text for each grid cell and collect the minimum width needed for each of the gird columns.
+ * Ag-Grid API set desired column sizes (it mutates pivot table columns data).
+ * Text width calculation is done efficiently with measureText method on Canvas.
+ */
+export const autoresizeAllColumns = (
+    gridApi: GridApi,
+    columnApi: ColumnApi,
+    execution: IExecutionResult | null,
+    containerRef: HTMLDivElement,
+    options: {
+        measureHeaders: boolean;
+        padding: number;
+        separators: any;
+    },
+): IResizedColumns => {
+    if (gridApi && columnApi && execution) {
+        const columns = columnApi.getPrimaryColumns();
+        const { headerFont, rowFont, subtotalFont, totalFont } = getTableFonts(containerRef);
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        const rowData = getDisplayedRowData(gridApi);
+        const totalData = getDisplayedTotalData(gridApi);
+        const autoResizedColumns = {};
+        const updatedColumDefs = calculateColumnWidths({
+            context,
+            columns,
+            rowData,
+            totalData,
+            execution,
+            measureHeaders: options.measureHeaders,
+            headerFont: headerFont,
+            subtotalFont: subtotalFont,
+            totalFont: totalFont,
+            rowFont: rowFont,
+            padding: options.padding,
+            separators: options.separators,
+            cache: new Map(),
+        });
+
+        updatedColumDefs.forEach((columnDef: ColDef) => {
+            if (columnDef.field && columnDef.width !== undefined) {
+                columnApi.setColumnWidth(columnDef.field, columnDef.width);
+                autoResizedColumns[getColumnIdentifier(columnDef)] = {
+                    width: columnDef.width,
+                };
+            }
+        });
+        return autoResizedColumns;
+    }
+    return {};
+};
