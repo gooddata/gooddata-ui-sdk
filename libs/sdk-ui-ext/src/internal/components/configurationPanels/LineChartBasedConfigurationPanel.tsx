@@ -14,12 +14,13 @@ import {
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
+import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel {
     protected renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
-        const { properties, propertiesMeta, pushData } = this.props;
+        const { featureFlags, properties, propertiesMeta, pushData } = this.props;
         const controlsDisabled = this.isControlDisabled();
         const dataPointsControlDisabled = this.isDataPointsControlDisabled();
 
@@ -42,13 +43,15 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             isDisabled={controlsDisabled}
                             defaultValue={false}
                         />
-                        <DataPointsControl
-                            pushData={pushData}
-                            properties={properties}
-                            isDisabled={controlsDisabled || dataPointsControlDisabled}
-                            showDisabledMessage={dataPointsControlDisabled}
-                            defaultValue={true}
-                        />
+                        {featureFlags[SettingCatalog.enableHidingOfDataPoints] && (
+                            <DataPointsControl
+                                pushData={pushData}
+                                properties={properties}
+                                isDisabled={controlsDisabled || dataPointsControlDisabled}
+                                showDisabledMessage={dataPointsControlDisabled}
+                                defaultValue={true}
+                            />
+                        )}
                         <CheckboxControl
                             valuePath="grid.enabled"
                             labelText="properties.canvas.gridline"

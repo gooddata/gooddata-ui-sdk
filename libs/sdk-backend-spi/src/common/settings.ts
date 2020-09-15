@@ -57,6 +57,11 @@ export enum SettingCatalog {
      * Indicates whether "Treat null as zero" option should be displayed in measure value filter configuration and its default state"
      */
     ADMeasureValueFilterNullAsZeroOption = "ADMeasureValueFilterNullAsZeroOption",
+
+    /**
+     * Indicates whether data point visibility configuration is available in AD
+     */
+    enableHidingOfDataPoints = "enableHidingOfDataPoints",
 }
 
 /**

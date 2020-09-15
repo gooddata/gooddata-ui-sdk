@@ -6,8 +6,9 @@ import { dataPointCustomizer } from "../_infra/dataPointVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { ComboChartWithTwoMeasuresAndViewBy } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { CustomizedScenario, UnboundVisProps } from "../../../src";
 
-export function dataPointCustomizerForComboCharts<T extends VisProps>(
+export function dataPointCustomizerForComboCharts<T extends IComboChartProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
 ): Array<CustomizedScenario<T>> {

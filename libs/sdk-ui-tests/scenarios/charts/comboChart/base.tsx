@@ -2,7 +2,7 @@
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
-import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
+import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export type ComboChartTypes = "area" | "column" | "line";
@@ -40,6 +40,13 @@ export const ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy = {
     viewBy: [ReferenceLdm.Product.Name],
 };
 
+export const ComboChartWithManyDataPoints = {
+    primaryMeasures: [ReferenceLdm.Amount],
+    secondaryMeasures: [ReferenceLdm.Won],
+    filters: [newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 200000)],
+    viewBy: ReferenceLdm.Opportunity.Name,
+};
+
 export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("one primary measure", {
@@ -49,7 +56,7 @@ export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
         primaryMeasures: [ReferenceLdm.Amount],
         viewBy: [ReferenceLdm.Product.Name],
     })
-    .addScenario("two secondary measure with viewBy", ComboChartWithTwoSecondaryMeasures)
+    .addScenario("two secondary measure with viewBy", ComboChartWithManyDataPoints)
     .addScenario("one secondary measure with viewBy", {
         secondaryMeasures: [ReferenceLdm.Amount],
         viewBy: [ReferenceLdm.Product.Name],
