@@ -202,8 +202,26 @@ export interface IDimensionDescriptor {
  */
 export interface IResultAttributeHeader {
     attributeHeaderItem: {
-        uri: string;
+        /**
+         * Human readable name of the attribute element
+         */
         name: string;
+
+        /**
+         * URI of the attribute element. This is essentially a primary key of the attribute element. It can
+         * be used in places where attribute elements have to be exactly specified - such as positive or
+         * negative attribute filters.
+         *
+         * It is up to the backend implementation whether the URI is transferable across workspaces or not in the
+         * data distribution scenarios. In other words, if a data for one attribute (say Product) is distributed
+         * into multiple workspaces, it is up to the backend whether the URIs of the elements will be same across
+         * all workspaces or not.
+         *
+         * Recommendation for the consumers: URI is safe to use if you obtain in programatically from this header
+         * and then use it in the same workspace for instance for filtering. It is not safe to hardcode URIs
+         * and use them in a solution which should operate on top of different workspaces.
+         */
+        uri: string;
     };
 }
 

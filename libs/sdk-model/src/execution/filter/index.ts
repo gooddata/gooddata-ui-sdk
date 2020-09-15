@@ -7,9 +7,12 @@ import { DateAttributeGranularity, AllTimeGranularity } from "../../base/dateGra
 /**
  * Attribute elements specified by their URI.
  *
- * NOTE: using attribute element URIs is discouraged - the URIs contain identifier of a workspace and thus
- * bind the attribute element to that workspace. The analytical application built using URIs will not work
- * across workspaces.
+ * NOTE: attribute element URIs MAY NOT be transferable across workspaces. On some backends (such as bear)
+ * same element WILL have different URI in each workspace. In general we recommend using URIs only if your code retrieves
+ * them at runtime from backend using elements query or from the data view's headers. Hardcoding URIs is never a good idea, if
+ * you find yourself doing that, please consider specifying attribute elements by value
+ *
+ * See {@link IAttributeElementsByValue}
  *
  * @public
  */
@@ -28,7 +31,7 @@ export interface IAttributeElementsByValue {
 
 /**
  * Attribute elements are used in positive and negative attribute filters. They can be specified either
- * using URI (discouraged) or using textual values of the attribute elements.
+ * using URI (primary key) or using textual values of the attribute elements.
  *
  * @public
  */
@@ -53,6 +56,13 @@ export interface IPositiveAttributeFilter {
          * Display form whose attribute elements are included in the 'in' list.
          */
         displayForm: ObjRef;
+
+        /**
+         * Attribute elements to filter in. The attribute elements can be specified either using
+         * their human readable value or by using their URI = the primary key. Using either representation has
+         * the same effect. While using human readable representation may be more readable in the client code,
+         * the using URI will likely have better performance on the backend.
+         */
         in: IAttributeElements;
     };
 }
@@ -73,7 +83,17 @@ export interface IPositiveAttributeFilter {
  */
 export interface INegativeAttributeFilter {
     negativeAttributeFilter: {
+        /**
+         * Display form whose attribute elements are included in the 'notIn' list.
+         */
         displayForm: ObjRef;
+
+        /**
+         * Attribute elements to filter out. The attribute elements can be specified either using
+         * their human readable value or by using they URI = the primary key. Using either representation has
+         * the same effect. While using human readable representation may be more readable in the client code,
+         * the using URI will likely have better performance on the backend.
+         */
         notIn: IAttributeElements;
     };
 }
