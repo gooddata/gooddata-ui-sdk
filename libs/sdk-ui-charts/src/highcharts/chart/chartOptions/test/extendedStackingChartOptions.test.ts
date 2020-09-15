@@ -3,7 +3,7 @@ import { IUnwrappedAttributeHeadersWithItems } from "../../../utils/types";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
 import { getMVSForViewByTwoAttributes } from "../../test/helper";
 import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
-import { attributeIdentifier, measureIdentifier } from "@gooddata/sdk-model";
+import { attributeIdentifier, measureIdentifier, uriRef } from "@gooddata/sdk-model";
 import { HeaderPredicates, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -16,9 +16,11 @@ describe("getCategoriesForTwoAttributes", () => {
         identifier: "identifier",
         localIdentifier: "localIdentifier",
         name: "name",
+        ref: uriRef("uri"),
         formOf: {
             uri: "uri",
             identifier: "identifier",
+            ref: uriRef("uri"),
             name: "name",
         },
     };

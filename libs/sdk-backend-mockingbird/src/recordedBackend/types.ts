@@ -12,6 +12,11 @@ import {
 } from "@gooddata/sdk-model";
 
 /**
+ * @internal
+ */
+export type RecordedDescriptorRefType = "id" | "uri";
+
+/**
  * Recorded backend allows convenient programmatic configuration of some services outcomes.
  *
  * @internal
@@ -26,6 +31,15 @@ export type RecordedBackendConfig = AnalyticalBackendConfig & {
      * Specify color palette to return
      */
     globalPalette?: IColorPalette;
+
+    /**
+     * Specify which ref type should be added to result descriptors. In the recording files themselves
+     * the descriptors do not have the 'ref' fields. They will be added dynamically by the recorded backend
+     * according to this setting.
+     *
+     * Default: 'uri'
+     */
+    resultDescriptorRefs?: RecordedDescriptorRefType;
 };
 
 /**

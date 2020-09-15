@@ -1613,51 +1613,7 @@ describe("chartOptionsBuilder", () => {
                     drillableMeasuresSeriesData.map(
                         (seriesItem: any) => seriesItem.data[0].drillIntersection,
                     ),
-                ).toEqual([
-                    [
-                        {
-                            header: {
-                                measureHeaderItem: {
-                                    format: "#,##0.00",
-                                    identifier: "af2Ewj9Re2vK",
-                                    localIdentifier: "lostMetric",
-                                    name: "<button>Lost</button> ...",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                                },
-                            },
-                        },
-                        {
-                            header: {
-                                measureHeaderItem: {
-                                    format: "#,##0.00",
-                                    identifier: "afSEwRwdbMeQ",
-                                    localIdentifier: "wonMetric",
-                                    name: "Won",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
-                                },
-                            },
-                        },
-                        {
-                            header: {
-                                attributeHeader: {
-                                    formOf: {
-                                        identifier: "created",
-                                        name: "Year created",
-                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
-                                    },
-                                    identifier: "created.aag81lMifn6q",
-                                    localIdentifier: "yearCreatedAttribute",
-                                    name: "Year (Created)",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
-                                },
-                                attributeHeaderItem: {
-                                    name: "<button>2008</button>",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
-                                },
-                            },
-                        },
-                    ],
-                ]);
+                ).toMatchSnapshot();
             });
 
             it("should fillter out points with one or both coordinates null", () => {
@@ -1733,67 +1689,7 @@ describe("chartOptionsBuilder", () => {
 
             it("should assign correct drillIntersection to pointData with drilldown true", () => {
                 expect(drillableMeasuresSeriesData.length).toBe(20);
-                expect(drillableMeasuresSeriesData[8].data[0]).toEqual({
-                    x: 245,
-                    y: 32,
-                    z: 2280481.04,
-                    format: "$#,#00.00",
-                    drilldown: true,
-                    drillIntersection: [
-                        {
-                            header: {
-                                measureHeaderItem: {
-                                    format: "#,##0.00",
-                                    identifier: "ab0bydLaaisS",
-                                    localIdentifier: "784a5018a51049078e8f7e86247e08a3",
-                                    name: "_Snapshot [EOP-2]",
-                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
-                                },
-                            },
-                        },
-                        {
-                            header: {
-                                measureHeaderItem: {
-                                    format: "#,##0",
-                                    identifier: "aaYh6Voua2yj",
-                                    localIdentifier: "9e5c3cd9a93f4476a93d3494cedc6010",
-                                    name: "# of Open Opps.",
-                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
-                                },
-                            },
-                        },
-                        {
-                            header: {
-                                measureHeaderItem: {
-                                    format: "$#,#00.00",
-                                    identifier: "ab4EFOAmhjOx",
-                                    localIdentifier: "71d50cf1d13746099b7f506576d78e4a",
-                                    name: "Remaining Quota",
-                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
-                                },
-                            },
-                        },
-                        {
-                            header: {
-                                attributeHeader: {
-                                    formOf: {
-                                        identifier: "attr.owner.id",
-                                        name: "Sales Rep",
-                                        uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
-                                    },
-                                    identifier: "label.owner.id.name",
-                                    localIdentifier: "49a659fbd7c541a69284769d53a2be7f",
-                                    name: "Owner Name",
-                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
-                                },
-                                attributeHeaderItem: {
-                                    name: "Jessica Traven",
-                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1235",
-                                },
-                            },
-                        },
-                    ],
-                });
+                expect(drillableMeasuresSeriesData[8].data[0]).toMatchSnapshot();
                 drillableMeasuresSeriesData.forEach((seriesItem: any, index: number) => {
                     expect(seriesItem.isDrillable).toEqual(true);
                     expect(seriesItem.legendIndex).toEqual(index);
@@ -2057,75 +1953,7 @@ describe("chartOptionsBuilder", () => {
                         twoDrillableMeasuresSeriesData.map(
                             (seriesItem: any) => seriesItem.data[0].drillIntersection,
                         ),
-                    ).toEqual([
-                        [
-                            {
-                                header: {
-                                    measureHeaderItem: {
-                                        format: "#,##0.00",
-                                        identifier: "af2Ewj9Re2vK",
-                                        localIdentifier: "lostMetric",
-                                        name: "<button>Lost</button> ...",
-                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                                    },
-                                },
-                            },
-                            {
-                                header: {
-                                    attributeHeader: {
-                                        formOf: {
-                                            identifier: "created",
-                                            name: "Year created",
-                                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
-                                        },
-                                        identifier: "created.aag81lMifn6q",
-                                        localIdentifier: "yearCreatedAttribute",
-                                        name: "Year (Created)",
-                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
-                                    },
-                                    attributeHeaderItem: {
-                                        name: "<button>2008</button>",
-                                        uri:
-                                            "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
-                                    },
-                                },
-                            },
-                        ],
-                        undefined,
-                        [
-                            {
-                                header: {
-                                    measureHeaderItem: {
-                                        format: "#,##0.00",
-                                        identifier: "alUEwmBtbwSh",
-                                        localIdentifier: "expectedMetric",
-                                        name: "Expected",
-                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
-                                    },
-                                },
-                            },
-                            {
-                                header: {
-                                    attributeHeader: {
-                                        formOf: {
-                                            identifier: "created",
-                                            name: "Year created",
-                                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
-                                        },
-                                        identifier: "created.aag81lMifn6q",
-                                        localIdentifier: "yearCreatedAttribute",
-                                        name: "Year (Created)",
-                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
-                                    },
-                                    attributeHeaderItem: {
-                                        name: "<button>2008</button>",
-                                        uri:
-                                            "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
-                                    },
-                                },
-                            },
-                        ],
-                    ]);
+                    ).toMatchSnapshot();
                 });
             });
         });

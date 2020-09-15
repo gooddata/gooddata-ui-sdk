@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-09-08T15:36:34.794Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-09-15T08:55:12.051Z; */
 
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
@@ -32,12 +32,6 @@ const fp_094d53ace34da5c39c872d89d1d38f2a = {
     definition: require("./uiTestScenarios/executions/094d53ace34da5c39c872d89d1d38f2a/definition.json"),
     executionResult: require("./uiTestScenarios/executions/094d53ace34da5c39c872d89d1d38f2a/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/094d53ace34da5c39c872d89d1d38f2a/dataView_all.json"),
-};
-const fp_0b8604f6800ccf06c50f43bca997cac6 = {
-    definition: require("./uiTestScenarios/executions/0b8604f6800ccf06c50f43bca997cac6/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/0b8604f6800ccf06c50f43bca997cac6/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/0b8604f6800ccf06c50f43bca997cac6/dataView_all.json"),
-    scenarios: require("./uiTestScenarios/executions/0b8604f6800ccf06c50f43bca997cac6/scenarios.json"),
 };
 const fp_0e74bb640420f06f1a634e0037f93025 = {
     definition: require("./uiTestScenarios/executions/0e74bb640420f06f1a634e0037f93025/definition.json"),
@@ -718,6 +712,12 @@ const fp_fde7a6a9ba205f28ce4a5391836f1153 = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/fde7a6a9ba205f28ce4a5391836f1153/dataView_o0_0s100_1000.json"),
     scenarios: require("./uiTestScenarios/executions/fde7a6a9ba205f28ce4a5391836f1153/scenarios.json"),
 };
+const fp_0b8604f6800ccf06c50f43bca997cac6 = {
+    definition: require("./uiTestScenarios/executions/0b8604f6800ccf06c50f43bca997cac6/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/0b8604f6800ccf06c50f43bca997cac6/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/0b8604f6800ccf06c50f43bca997cac6/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/0b8604f6800ccf06c50f43bca997cac6/scenarios.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -902,28 +902,6 @@ export const Scenarios = {
             execution: fp_e1030dca208f6b7b3ac060bfdb341df6,
         },
     },
-    LineChart: {
-        SingleMeasureWithTrendByAndSegmentBy: {
-            scenarioIndex: 0,
-            execution: fp_0b8604f6800ccf06c50f43bca997cac6,
-        },
-        ArithmeticMeasures: { scenarioIndex: 0, execution: fp_294b6ad524da5601acd5d936f0f7b6b9 },
-        SingleMeasureWithTrendBy: { scenarioIndex: 0, execution: fp_33f329bd3437f86917d52f88d2fc3743 },
-        TwoMeasuresWithTrendByAndSortByMeasure: {
-            scenarioIndex: 0,
-            execution: fp_5c8292a359f96b8436bc3127863bb13a,
-        },
-        SingleMeasure: { scenarioIndex: 4, execution: fp_8fd2ba0d6bd20ffd209f30f0993ae84b },
-        TwoMeasuresWithTrendByAndSortByAttribute: {
-            scenarioIndex: 0,
-            execution: fp_a5b51bd0180747c703ed2a952aa85e12,
-        },
-        TwoMeasuresWithTrendBy: { scenarioIndex: 0, execution: fp_d37a30afd9c8986ebb753f2b8090172a },
-        SingleMeasureWithPercentAndTrendBy: {
-            scenarioIndex: 0,
-            execution: fp_edd2872a4849d589547def7de056b654,
-        },
-    },
     BubbleChart: {
         XAndYAxisAndSizeMeasuresWithViewByAndSortedByAttr: {
             scenarioIndex: 0,
@@ -1028,6 +1006,28 @@ export const Scenarios = {
             execution: fp_e1030dca208f6b7b3ac060bfdb341df6,
         },
         SingleMeasureWithTwoViewBy: { scenarioIndex: 1, execution: fp_e1030dca208f6b7b3ac060bfdb341df6 },
+    },
+    LineChart: {
+        ArithmeticMeasures: { scenarioIndex: 0, execution: fp_294b6ad524da5601acd5d936f0f7b6b9 },
+        SingleMeasureWithTrendBy: { scenarioIndex: 0, execution: fp_33f329bd3437f86917d52f88d2fc3743 },
+        TwoMeasuresWithTrendByAndSortByMeasure: {
+            scenarioIndex: 0,
+            execution: fp_5c8292a359f96b8436bc3127863bb13a,
+        },
+        SingleMeasure: { scenarioIndex: 4, execution: fp_8fd2ba0d6bd20ffd209f30f0993ae84b },
+        TwoMeasuresWithTrendByAndSortByAttribute: {
+            scenarioIndex: 0,
+            execution: fp_a5b51bd0180747c703ed2a952aa85e12,
+        },
+        TwoMeasuresWithTrendBy: { scenarioIndex: 0, execution: fp_d37a30afd9c8986ebb753f2b8090172a },
+        SingleMeasureWithPercentAndTrendBy: {
+            scenarioIndex: 0,
+            execution: fp_edd2872a4849d589547def7de056b654,
+        },
+        SingleMeasureWithTrendByAndSegmentBy: {
+            scenarioIndex: 0,
+            execution: fp_0b8604f6800ccf06c50f43bca997cac6,
+        },
     },
     DonutChart: {
         SingleMeasureWithViewBy: { scenarioIndex: 5, execution: fp_3a10af340782b53c003532ddce4c9fa4 },
@@ -2809,7 +2809,6 @@ export const Recordings = {
         fp_036a8d52f628b2c9847579f40be9afed,
         fp_041204a159b659d481a14314ee557360,
         fp_094d53ace34da5c39c872d89d1d38f2a,
-        fp_0b8604f6800ccf06c50f43bca997cac6,
         fp_0e74bb640420f06f1a634e0037f93025,
         fp_10536444ec5e128350f8b5f25ad6d4bc,
         fp_11569714da29122c337cab005788a5fc,
@@ -2924,6 +2923,7 @@ export const Recordings = {
         fp_f9ac460051758476b8b7f0385e142bdc,
         fp_fd4473fef32dc8b57cdba96564af53e1,
         fp_fde7a6a9ba205f28ce4a5391836f1153,
+        fp_0b8604f6800ccf06c50f43bca997cac6,
     },
     metadata: {
         catalog,

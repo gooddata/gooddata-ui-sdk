@@ -26,6 +26,9 @@ import {
     IWorkspaceDashboards,
     IWorkspaceUsersQuery,
     IWorkspaceDateFilterConfigsQuery,
+    IDimensionDescriptor,
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -38,9 +41,11 @@ import {
     IExecutionDefinition,
     IFilter,
     ISortItem,
+    uriRef,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import isEqual from "lodash/isEqual";
+import isAttributeHeader = GdcExecution.isAttributeHeader;
 
 const defaultConfig = { hostname: "test" };
 
@@ -233,6 +238,43 @@ function recordedDataView(
     };
 }
 
+function convertDimensions(dims: GdcExecution.IResultDimension[]): IDimensionDescriptor[] {
+    return dims.map((dim) => {
+        return {
+            headers: dim.headers.map((header) => {
+                if (isAttributeHeader(header)) {
+                    return {
+                        attributeHeader: {
+                            ...header.attributeHeader,
+                            ref: uriRef(header.attributeHeader.uri),
+                            formOf: {
+                                ...header.attributeHeader.formOf,
+                                ref: uriRef(header.attributeHeader.formOf.uri),
+                            },
+                        },
+                    } as IAttributeDescriptor;
+                } else {
+                    return {
+                        measureGroupHeader: {
+                            items: header.measureGroupHeader.items.map((measure) => {
+                                return {
+                                    measureHeaderItem: {
+                                        ...measure.measureHeaderItem,
+                                        ref: measure.measureHeaderItem.uri
+                                            ? uriRef(measure.measureHeaderItem.uri)
+                                            : undefined,
+                                    },
+                                };
+                            }),
+                            totalItems: header.measureGroupHeader.totalItems,
+                        },
+                    } as IMeasureGroupDescriptor;
+                }
+            }),
+        };
+    });
+}
+
 function recordedExecutionResult(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
@@ -243,7 +285,7 @@ function recordedExecutionResult(
 
     const result: IExecutionResult = {
         definition,
-        dimensions: afmResponse.dimensions,
+        dimensions: convertDimensions(afmResponse.dimensions),
         readAll(): Promise<IDataView> {
             return new Promise((r) => r(recordedDataView(definition, result, recording)));
         },

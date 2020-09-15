@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`convertDimensions should add ref properties as uriRefs 1`] = `
+Array [
+  Object {
+    "headers": Array [
+      Object {
+        "measureGroupHeader": Object {
+          "items": Array [
+            Object {
+              "measureHeaderItem": Object {
+                "format": "#,##0.00",
+                "identifier": "af2Ewj9Re2vK",
+                "localIdentifier": "lostMetric",
+                "name": "<button>Lost</button> ...",
+                "ref": Object {
+                  "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                },
+                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+              },
+            },
+            Object {
+              "measureHeaderItem": Object {
+                "format": "#,##0.00",
+                "identifier": "afSEwRwdbMeQ",
+                "localIdentifier": "wonMetric",
+                "name": "Won",
+                "ref": Object {
+                  "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+                },
+                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+              },
+            },
+            Object {
+              "measureHeaderItem": Object {
+                "format": "#,##0.00",
+                "identifier": "alUEwmBtbwSh",
+                "localIdentifier": "expectedMetric",
+                "name": "Expected",
+                "ref": Object {
+                  "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+                },
+                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+              },
+            },
+          ],
+          "totalItems": undefined,
+        },
+      },
+    ],
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "created",
+            "name": "Year created",
+            "ref": Object {
+              "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+            },
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+          },
+          "identifier": "created.aag81lMifn6q",
+          "localIdentifier": "yearCreatedAttribute",
+          "name": "Year (Created)",
+          "ref": Object {
+            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+          },
+          "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+        },
+      },
+    ],
+  },
+]
+`;

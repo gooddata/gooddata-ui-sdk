@@ -4,23 +4,23 @@ import { GdcExecution, GdcExport } from "@gooddata/api-model-bear";
 import {
     DataValue,
     IDataView,
+    IDimensionDescriptor,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
     IPreparedExecution,
-    IDimensionDescriptor,
     IResultHeader,
+    IResultWarning,
     NoDataError,
     UnexpectedError,
-    IResultWarning,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
-import { convertWarning } from "../../../convertors/fromBackend/ExecutionResultConverter";
+import { convertWarning, convertDimensions } from "../../../convertors/fromBackend/ExecutionResultConverter";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
@@ -32,7 +32,7 @@ export class BearExecutionResult implements IExecutionResult {
         private readonly execFactory: IExecutionFactory,
         private readonly execResponse: GdcExecution.IExecutionResponse,
     ) {
-        this.dimensions = execResponse.dimensions;
+        this.dimensions = convertDimensions(execResponse.dimensions);
         this._fingerprint = SparkMD5.hash(execResponse.links.executionResult);
     }
 

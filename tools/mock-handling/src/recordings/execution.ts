@@ -1,7 +1,13 @@
 // (C) 2007-2020 GoodData Corporation
 
 import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
-import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IDataView,
+    IExecutionResult,
+    IDimensionDescriptor,
+    isAttributeDescriptor,
+} from "@gooddata/sdk-backend-spi";
 import * as fs from "fs";
 import * as path from "path";
 import { logWarn } from "../cli/loggers";
@@ -23,10 +29,6 @@ const dataViewWindowId = (win: RequestedWindow) => `o${win.offset.join("_")}s${w
 const DefaultDataViewRequests: DataViewRequests = {
     allData: true,
 };
-/**
- * Properties of execution result to serialize into the recording; everything else is functions or derivable / provided at runtime
- */
-const ExecutionResultPropsToSerialize: Array<keyof IExecutionResult> = ["dimensions"];
 /**
  * Properties of data view to serialize into the recording; everything else is functions or derivable / provided at runtime
  */
@@ -189,10 +191,20 @@ export class ExecutionRecording implements IRecording {
             .forDefinition(workspaceBoundDef)
             .execute();
 
-        writeAsJsonSync(path.join(this.directory, ExecutionResultFile), result, {
-            pickKeys: ExecutionResultPropsToSerialize,
-            replaceString,
-        });
+        /*
+         * Do not store refs for the dimension descriptors. Instead, let the recording backend reconstruct
+         * the ref and allow choice to reconstruct either idRef or uriRef. This allows more flexibility for
+         * tests + means existing test data is reusable and does not need to be regenerated.
+         */
+        const resultWithoutRefs = stripRefsFromDimensions(result.dimensions);
+
+        writeAsJsonSync(
+            path.join(this.directory, ExecutionResultFile),
+            { dimensions: resultWithoutRefs },
+            {
+                replaceString,
+            },
+        );
 
         const missingFiles = Object.entries(this.getMissingDataViewFiles());
 
@@ -268,4 +280,21 @@ export class ExecutionRecording implements IRecording {
 
         return files;
     }
+}
+
+function stripRefsFromDimensions(dims: IDimensionDescriptor[]) {
+    dims.forEach((dim) => {
+        dim.headers.forEach((descriptor) => {
+            if (isAttributeDescriptor(descriptor)) {
+                delete descriptor.attributeHeader.ref;
+                delete descriptor.attributeHeader.formOf.ref;
+            } else {
+                descriptor.measureGroupHeader.items.forEach((measure) => {
+                    delete measure.measureHeaderItem.ref;
+                });
+            }
+        });
+    });
+
+    return dims;
 }

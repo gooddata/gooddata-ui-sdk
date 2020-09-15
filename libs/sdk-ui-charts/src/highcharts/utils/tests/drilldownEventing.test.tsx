@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { newDefForItems } from "@gooddata/sdk-model";
+import { newDefForItems, uriRef } from "@gooddata/sdk-model";
 import { IDrillConfig, IDrillEventIntersectionElement, VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts from "../../chart/highcharts/highchartsEntryPoint";
 import { chartClick, getClickableElementNameByChartType } from "../drilldownEventing";
@@ -212,10 +212,12 @@ describe("Drilldown Eventing", () => {
                         identifier: "ac3EwmqvbxcX",
                         localIdentifier: "a1",
                         name: "Case",
+                        ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1282"),
                         formOf: {
                             uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1281",
                             identifier: "identifier1",
                             name: "Case",
+                            ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1281"),
                         },
                     },
                 },
@@ -231,10 +233,12 @@ describe("Drilldown Eventing", () => {
                         identifier: "label.product.id.name",
                         localIdentifier: "a2",
                         name: "Product",
+                        ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/952"),
                         formOf: {
                             uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/951",
                             identifier: "label.product.id",
                             name: "Product",
+                            ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/951"),
                         },
                     },
                 },
@@ -250,10 +254,12 @@ describe("Drilldown Eventing", () => {
                         identifier: "closed.aag81lMifn6q",
                         localIdentifier: "a3",
                         name: "Closed",
+                        ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/324"),
                         formOf: {
                             uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/323",
                             identifier: "closed",
                             name: "Closed",
+                            ref: uriRef("/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/323"),
                         },
                     },
                 },

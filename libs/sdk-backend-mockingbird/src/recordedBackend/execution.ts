@@ -2,14 +2,17 @@
 
 import {
     DataValue,
+    IAttributeDescriptor,
     IDataView,
     IDimensionDescriptor,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
+    IMeasureGroupDescriptor,
     IPreparedExecution,
     IResultHeader,
+    isAttributeDescriptor,
     NoDataError,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
@@ -19,12 +22,16 @@ import {
     defWithSorting,
     DimensionGenerator,
     IDimension,
+    idRef,
     IExecutionDefinition,
     IFilter,
     ISortItem,
+    ObjectType,
+    ObjRef,
+    uriRef,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
+import { ExecutionRecording, RecordingIndex, ScenarioRecording, RecordedDescriptorRefType } from "./types";
 import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import flatMap from "lodash/flatMap";
 import isEqual from "lodash/isEqual";
@@ -62,12 +69,16 @@ export const DataViewFirstPage = dataViewWindow([0, 0], [100, 1000]);
  * @internal
  */
 export class RecordedExecutionFactory extends AbstractExecutionFactory {
-    constructor(private readonly recordings: RecordingIndex, workspace: string) {
+    constructor(
+        private readonly recordings: RecordingIndex,
+        workspace: string,
+        private readonly resultRefType: RecordedDescriptorRefType,
+    ) {
         super(workspace);
     }
 
     public forDefinition(def: IExecutionDefinition): IPreparedExecution {
-        return recordedPreparedExecution(def, this, this.recordings);
+        return recordedPreparedExecution(def, this, this.resultRefType, this.recordings);
     }
 
     public forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
@@ -84,6 +95,7 @@ function recordedExecutionKey(defOrFingerprint: IExecutionDefinition | string): 
 function recordedPreparedExecution(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
+    resultRefType: RecordedDescriptorRefType,
     recordings: RecordingIndex = {},
 ): IPreparedExecution {
     const fp = defFingerprint(definition);
@@ -104,7 +116,9 @@ function recordedPreparedExecution(
                 if (!recording) {
                     reject(new NoDataError("recording was not found"));
                 } else {
-                    resolve(new RecordedExecutionResult(definition, executionFactory, recording));
+                    resolve(
+                        new RecordedExecutionResult(definition, executionFactory, resultRefType, recording),
+                    );
                 }
             });
         },
@@ -117,6 +131,75 @@ function recordedPreparedExecution(
     };
 }
 
+/**
+ * This function exists to make the recorded data more flexible in regards to what types of 'ref' objects will be
+ * in the result's dimension descriptors. The 'ref' is an opaque reference of an object by either its URI or identifier.
+ *
+ * Different backends may reference the objects differently and the 'ref' is a way to hide this.
+ *
+ * In order for test data to be more flexible and allow 'simulating' test runs against one or the other backend, the
+ * type of refs is variable and filled in ad-hoc.
+ */
+function enrichDescriptorsWithRefs(
+    dims: IDimensionDescriptor[],
+    resultRefType: RecordedDescriptorRefType,
+): IDimensionDescriptor[] {
+    const createRef = (type: ObjectType, uri?: string, identifier?: string): ObjRef | undefined => {
+        if (resultRefType === "uri" && uri) {
+            return uriRef(uri);
+        } else if (resultRefType === "id" && identifier) {
+            return idRef(identifier, type);
+        }
+
+        return undefined;
+    };
+
+    return dims.map((dim) => {
+        return {
+            headers: dim.headers.map((header) => {
+                if (isAttributeDescriptor(header)) {
+                    return {
+                        attributeHeader: {
+                            ...header.attributeHeader,
+                            ref: createRef(
+                                "displayForm",
+                                header.attributeHeader.uri,
+                                header.attributeHeader.identifier,
+                            )!,
+                            formOf: {
+                                ...header.attributeHeader.formOf,
+                                ref: createRef(
+                                    "attribute",
+                                    header.attributeHeader.formOf.uri,
+                                    header.attributeHeader.formOf.identifier,
+                                )!,
+                            },
+                        },
+                    } as IAttributeDescriptor;
+                } else {
+                    return {
+                        measureGroupHeader: {
+                            items: header.measureGroupHeader.items.map((measure) => {
+                                return {
+                                    measureHeaderItem: {
+                                        ...measure.measureHeaderItem,
+                                        ref: createRef(
+                                            "measure",
+                                            measure.measureHeaderItem.uri,
+                                            measure.measureHeaderItem.identifier,
+                                        ),
+                                    },
+                                };
+                            }),
+                            totalItems: header.measureGroupHeader.totalItems,
+                        },
+                    } as IMeasureGroupDescriptor;
+                }
+            }),
+        };
+    });
+}
+
 class RecordedExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
     private readonly _fp: string;
@@ -124,10 +207,14 @@ class RecordedExecutionResult implements IExecutionResult {
     constructor(
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
+        readonly resultRefType: RecordedDescriptorRefType,
         private readonly recording: ExecutionRecording,
         private readonly denormalizer?: Denormalizer,
     ) {
-        const dimensions = this.recording.executionResult.dimensions as IDimensionDescriptor[];
+        const dimensions = enrichDescriptorsWithRefs(
+            this.recording.executionResult.dimensions as IDimensionDescriptor[],
+            resultRefType,
+        );
         this.dimensions = denormalizer ? denormalizer.denormalizeDimDescriptors(dimensions) : dimensions;
 
         this._fp = defFingerprint(this.definition) + "/recordedResult";
@@ -226,14 +313,19 @@ function adHocExecIndex(key: string, execution: ExecutionRecording): RecordingIn
  * where exec factory, definition and results match live results. The factory is setup in a way that attempting
  * to transform and re-execute same prepared execution results works as expected.
  */
-function denormalizedDataView(recording: ScenarioRecording, scenario: any, dataViewId: string): IDataView {
+function denormalizedDataView(
+    recording: ScenarioRecording,
+    scenario: any,
+    dataViewId: string,
+    resultRefType: RecordedDescriptorRefType,
+): IDataView {
     const { execution } = recording;
     const definition = { ...execution.definition, buckets: scenario.buckets };
     const recordingKey = recordedExecutionKey(definition);
     const adHocIndex: RecordingIndex = adHocExecIndex(recordingKey, execution);
 
-    const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace");
-    const result = new RecordedExecutionResult(definition, factory, execution);
+    const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace", resultRefType);
+    const result = new RecordedExecutionResult(definition, factory, resultRefType, execution);
     const data = execution[dataViewId];
 
     invariant(data, `data for view ${dataViewId} could not be found in the recording`);
@@ -245,7 +337,12 @@ function denormalizedDataView(recording: ScenarioRecording, scenario: any, dataV
  * Constructs data view from normalized execution - performing denormalization in order to return the
  * expected data.
  */
-function normalizedDataView(recording: ScenarioRecording, scenario: any, dataViewId: string): IDataView {
+function normalizedDataView(
+    recording: ScenarioRecording,
+    scenario: any,
+    dataViewId: string,
+    resultRefType: RecordedDescriptorRefType,
+): IDataView {
     const { execution } = recording;
 
     const normalizationState: NormalizationState = {
@@ -258,8 +355,14 @@ function normalizedDataView(recording: ScenarioRecording, scenario: any, dataVie
     const recordingKey = recordedExecutionKey(normalizationState.original);
     const adHocIndex: RecordingIndex = adHocExecIndex(recordingKey, execution);
 
-    const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace");
-    const result = new RecordedExecutionResult(normalizationState.original, factory, execution, denormalizer);
+    const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace", resultRefType);
+    const result = new RecordedExecutionResult(
+        normalizationState.original,
+        factory,
+        resultRefType,
+        execution,
+        denormalizer,
+    );
     const data = execution[dataViewId];
 
     invariant(data, `data for view ${dataViewId} could not be found in the recording`);
@@ -280,9 +383,14 @@ function normalizedDataView(recording: ScenarioRecording, scenario: any, dataVie
  *
  * @param recording - recording (as obtained from the index, typically using the Scenario mapping)
  * @param dataViewId - optionally identifier of the data view; defaults to view with all data
+ * @param resultRefType - optionally specify what types of refs should the backend create in the result's dimension descriptors (uri refs returned by bear, id refs returned by tiger)
  * @internal
  */
-export function recordedDataView(recording: ScenarioRecording, dataViewId: string = DataViewAll): IDataView {
+export function recordedDataView(
+    recording: ScenarioRecording,
+    dataViewId: string = DataViewAll,
+    resultRefType: RecordedDescriptorRefType = "uri",
+): IDataView {
     const { execution, scenarioIndex } = recording;
     const scenario = execution.scenarios?.[scenarioIndex];
 
@@ -292,9 +400,9 @@ export function recordedDataView(recording: ScenarioRecording, dataViewId: strin
     );
 
     if (!scenario.originalExecution) {
-        return denormalizedDataView(recording, scenario, dataViewId);
+        return denormalizedDataView(recording, scenario, dataViewId, resultRefType);
     } else {
-        return normalizedDataView(recording, scenario, dataViewId);
+        return normalizedDataView(recording, scenario, dataViewId, resultRefType);
     }
 }
 

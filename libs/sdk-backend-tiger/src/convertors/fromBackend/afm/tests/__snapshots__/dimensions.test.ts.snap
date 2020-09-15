@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transformResultDimensions should fill in uris and refs for attribute descriptors 1`] = `
+Array [
+  Object {
+    "headers": Array [
+      Object {
+        "measureGroupHeader": Object {
+          "items": Array [
+            Object {
+              "measureHeaderItem": Object {
+                "format": "#,##0.00",
+                "identifier": undefined,
+                "localIdentifier": "measureLocalId",
+                "name": "Sum of duration",
+                "ref": undefined,
+                "uri": undefined,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": Object {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "/obj/0",
+          },
+          "identifier": "event_date.quarter.label",
+          "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
+          "name": "event_date - Quarter/Year",
+          "ref": Object {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "uri": "/obj/0",
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`transformResultDimensions should fill in uris and refs for attribute descriptors and simple measure descriptors 1`] = `
+Array [
+  Object {
+    "headers": Array [
+      Object {
+        "measureGroupHeader": Object {
+          "items": Array [
+            Object {
+              "measureHeaderItem": Object {
+                "format": "#,##0.00",
+                "identifier": "measureIdentifier",
+                "localIdentifier": "measureLocalId",
+                "name": "Sum of duration",
+                "ref": Object {
+                  "identifier": "measureIdentifier",
+                  "type": "measure",
+                },
+                "uri": "/obj/0",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": Object {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "/obj/0",
+          },
+          "identifier": "event_date.quarter.label",
+          "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
+          "name": "event_date - Quarter/Year",
+          "ref": Object {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "uri": "/obj/0",
+        },
+      },
+    ],
+  },
+]
+`;

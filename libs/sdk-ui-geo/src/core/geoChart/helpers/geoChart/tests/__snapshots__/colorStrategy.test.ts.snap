@@ -12,11 +12,17 @@ Array [
         "formOf": Object {
           "identifier": "attr.uscities.city",
           "name": "City",
+          "ref": Object {
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
+          },
           "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
         },
         "identifier": "label.uscities.city.location",
         "localIdentifier": "a_label.uscities.city.location",
         "name": "location",
+        "ref": Object {
+          "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
+        },
         "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
       },
     },
@@ -36,11 +42,17 @@ Array [
         "formOf": Object {
           "identifier": "attr.uscities.city",
           "name": "City",
+          "ref": Object {
+            "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
+          },
           "uri": "/gdc/md/liveexamplesworkspace/obj/9458",
         },
         "identifier": "label.uscities.city.location",
         "localIdentifier": "a_label.uscities.city.location",
         "name": "location",
+        "ref": Object {
+          "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
+        },
         "uri": "/gdc/md/liveexamplesworkspace/obj/9459",
       },
     },

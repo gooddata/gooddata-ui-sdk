@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { IDimensionDescriptor } from "@gooddata/sdk-backend-spi";
 import { Execution } from "@gooddata/api-client-tiger";
+import { idRef } from "@gooddata/sdk-model";
 
 export const mockResult: Execution.IExecutionResult = {
     data: [["20.0", "40.2"]],
@@ -70,10 +71,12 @@ export const mockDimensions: IDimensionDescriptor[] = [
                     localIdentifier: "fd48e8fd32b54b1baba3e3ccdd719f26",
                     name: "event_date - Quarter/Year",
                     uri: "foo",
+                    ref: idRef("event_date.quarter.label"),
                     formOf: {
                         identifier: "event_date.quarter",
                         uri: "bar",
                         name: "event_date - Quarter/Year",
+                        ref: idRef("event_date.quarter"),
                     },
                 },
             },

@@ -106,7 +106,11 @@ function recordedWorkspace(
     return {
         workspace,
         execution(): IExecutionFactory {
-            return new RecordedExecutionFactory(recordings, workspace);
+            return new RecordedExecutionFactory(
+                recordings,
+                workspace,
+                implConfig.resultDescriptorRefs ?? "uri",
+            );
         },
         elements(): IElementQueryFactory {
             return new RecordedElementQueryFactory(recordings);
