@@ -4,7 +4,7 @@ import { scenariosFor } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { dataPointCustomizer } from "../_infra/dataPointVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
-import { ComboChartWithTwoMeasuresAndViewBy } from "./base";
+import { ComboChartWithTwoMeasuresAndViewBy, ComboChartWithManyDataPoints } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 import { CustomizedScenario, UnboundVisProps } from "../../../src";
 
@@ -41,6 +41,6 @@ const dataPointScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboCha
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
     .withVisualTestConfig({ groupUnder: "data points" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("data points", ComboChartWithTwoMeasuresAndViewBy, dataPointCustomizerForComboCharts);
+    .addScenarios("data points", ComboChartWithManyDataPoints, dataPointCustomizerForComboCharts);
 
 export default [legendScenarios, dataLabelScenarios, dataPointScenarios];

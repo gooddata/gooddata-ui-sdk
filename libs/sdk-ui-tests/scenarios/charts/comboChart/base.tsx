@@ -56,7 +56,7 @@ export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
         primaryMeasures: [ReferenceLdm.Amount],
         viewBy: [ReferenceLdm.Product.Name],
     })
-    .addScenario("two secondary measure with viewBy", ComboChartWithManyDataPoints)
+    .addScenario("two secondary measure with viewBy", ComboChartWithTwoSecondaryMeasures)
     .addScenario("one secondary measure with viewBy", {
         secondaryMeasures: [ReferenceLdm.Amount],
         viewBy: [ReferenceLdm.Product.Name],
