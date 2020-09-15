@@ -18,6 +18,7 @@ interface ICustomFilterProps {
     parentFilters?: IElementQueryAttributeFilter[];
     placeholder: string;
     onChange: (filters: any) => void;
+    className: string;
 }
 
 const CustomFilter: React.FC<ICustomFilterProps> = ({
@@ -26,6 +27,7 @@ const CustomFilter: React.FC<ICustomFilterProps> = ({
     parentFilters,
     onChange,
     placeholder,
+    className,
 }) => {
     return (
         <AttributeElements displayForm={displayForm} filters={parentFilters}>
@@ -50,6 +52,7 @@ const CustomFilter: React.FC<ICustomFilterProps> = ({
                         }}
                     >
                         <Select
+                            className={className}
                             onChange={onChange}
                             options={selectOptions}
                             isMulti
@@ -111,6 +114,7 @@ export const ParentFilterExample: React.FC = () => {
                 filterValues={stateFilterValues}
                 onChange={setStateFilterValues}
                 placeholder="all states"
+                className="s-select-state"
             />
             &emsp;and&emsp;{" "}
             <CustomFilter
@@ -119,6 +123,7 @@ export const ParentFilterExample: React.FC = () => {
                 onChange={setCityFilterValues}
                 placeholder="all cities"
                 parentFilters={cityParentFilters}
+                className="s-select-city"
             />
             <hr className="separator" />
             <div style={{ height: 500 }}>
