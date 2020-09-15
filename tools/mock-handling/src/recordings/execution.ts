@@ -57,7 +57,7 @@ function loadDefinition(directory: string): [IExecutionDefinition, string] {
     const calculatedFingerprint = defFingerprint(definition);
 
     if (calculatedFingerprint !== fingerprint) {
-        logWarn(`The actual fingerprint ('${calculatedFingerprint}') of the execution definition stored in ${directory} does not match the directory in which it is stored. 
+        logWarn(`The actual fingerprint ('${calculatedFingerprint}') of the execution definition stored in ${directory} does not match the directory in which it is stored.
         If you created this definition manually then you do not have to worry about this warning. If this definition is supposed to be created
         by automation (such as the populate-ref scripts) then it indicates manual tampering.`);
     }
@@ -286,7 +286,9 @@ function stripRefsFromDimensions(dims: IDimensionDescriptor[]) {
     dims.forEach((dim) => {
         dim.headers.forEach((descriptor) => {
             if (isAttributeDescriptor(descriptor)) {
+                // @ts-expect-error we can deal with deleting this, the resulting object is used only for writing to a file
                 delete descriptor.attributeHeader.ref;
+                // @ts-expect-error we can deal with deleting this, the resulting object is used only for writing to a file
                 delete descriptor.attributeHeader.formOf.ref;
             } else {
                 descriptor.measureGroupHeader.items.forEach((measure) => {
