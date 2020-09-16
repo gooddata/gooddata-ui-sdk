@@ -22,6 +22,11 @@ import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi
  *
  * This class implements the convenience methods which do not need to change in implementations.
  *
+ * Note: the `forInsightByRef` is implemented as fallback to freeform execution done by `forInsight`. The
+ * rationale is that most backends do not support that anyway so it is a safe default behavior. If the backend
+ * supports execute-by-reference, then overload the method with your own implementation (see sdk-backend-bear for
+ * inspiration)
+ *
  * @internal
  */
 export abstract class AbstractExecutionFactory implements IExecutionFactory {

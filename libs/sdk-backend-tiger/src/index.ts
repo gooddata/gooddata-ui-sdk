@@ -27,9 +27,15 @@ function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnal
      * tiger backend match the contracts for result dimension and data view header items. To this end, there are
      * couple of alternations / enrichment of tiger's descriptors and header items. Those are done during
      * conversion. See `src/convertors/fromBackend/dimensions.ts` and `result.ts` in the same dir.
+     *
+     * NOTE: since tiger does not yet support true execute-by-reference, and instead always falls back to
+     * freeform execution of the definition derived from the insight itself, it is all good to use fallback mode
+     * in the normalizing backend. However, one day, if tiger supports execute-by-reference, then the normalizing
+     * decorator needs to be removed. and instead the logic to restore titles, aliases and formats must be implemented
+     * in the various convertors in this package.
      */
 
-    return withNormalization(new TigerBackend(config, implConfig));
+    return withNormalization(new TigerBackend(config, implConfig), { executeByRefMode: "fallback" });
 }
 
 export default tigerFactory;

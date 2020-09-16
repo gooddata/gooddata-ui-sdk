@@ -11,16 +11,30 @@ import {
     IDimensionDescriptor,
     DataValue,
     IResultHeader,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution";
-import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
+import { defFingerprint, IExecutionDefinition, IFilter, IInsight } from "@gooddata/sdk-model";
 import { Denormalizer, NormalizationState, Normalizer } from "./normalizer";
 import cloneDeep from "lodash/cloneDeep";
 
 class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
     constructor(decorated: IExecutionFactory, private readonly config: NormalizationConfig) {
         super(decorated);
+    }
+
+    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+        const isFallbackAllowed = this.config.executeByRefMode === "fallback";
+
+        if (isFallbackAllowed) {
+            return this.forInsight(insight, filters);
+        }
+
+        throw new NotSupported(
+            "Execution by reference is not supported when using normalizing backend. " +
+                "Use forInsight() instead.",
+        );
     }
 
     protected wrap = (original: IPreparedExecution): IPreparedExecution => {
@@ -182,11 +196,31 @@ class DenormalizedDataView implements IDataView {
 /**
  * @beta
  */
+export type NormalizationWhenExecuteByRef = "prohibit" | "fallback";
+
+/**
+ * @beta
+ */
 export type NormalizationConfig = {
     /**
      * Specify callback where the normalizing backend will dispatch state of the normalizations being done.
      */
     normalizationStatus?: (normalizationState: NormalizationState) => void;
+
+    /**
+     * Specify what should happen if the normalized backend is asked to perform execution by reference.
+     *
+     * Background:
+     *
+     * Execution by reference cannot be normalized - strictly because execution by reference executes exactly
+     * what is stored somewhere on the backend (this can connect to authorization schemes, ACLs and so on - such as
+     * allowing users to execute only insights exactly as they were prepared by someone else)
+     *
+     * By default, trying to run execute-by-reference using normalizing decorator will fail. It is possible
+     * to modify this behavior so that instead there will be fallback to freeform execution. For backends that
+     * do not support execute-by-ref this is all good.
+     */
+    executeByRefMode?: NormalizationWhenExecuteByRef;
 };
 
 /**

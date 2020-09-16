@@ -6,6 +6,10 @@ import { TigerPreparedExecution } from "./preparedExecution";
 import { AbstractExecutionFactory, AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
 
+/*
+ * Note: if you come here one day to implement the forInsightByRef because tiger supports execute-by-reference,
+ * then you are in for a treat. Check out comments in `tigerFactory` in the root index.
+ */
 export class TigerExecution extends AbstractExecutionFactory {
     constructor(
         private readonly authCall: AuthenticatedCallGuard,

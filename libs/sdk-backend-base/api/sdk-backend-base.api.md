@@ -327,6 +327,7 @@ export class NoopAuthProvider implements IAuthProviderCallGuard {
 // @beta (undocumented)
 export type NormalizationConfig = {
     normalizationStatus?: (normalizationState: NormalizationState) => void;
+    executeByRefMode?: NormalizationWhenExecuteByRef;
 };
 
 // @beta (undocumented)
@@ -335,6 +336,9 @@ export type NormalizationState = {
     readonly original: IExecutionDefinition;
     readonly n2oMap: LocalIdMap;
 };
+
+// @beta (undocumented)
+export type NormalizationWhenExecuteByRef = "prohibit" | "fallback";
 
 // @internal
 export class Normalizer {

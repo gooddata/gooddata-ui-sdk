@@ -29,7 +29,7 @@ export {
     DefaultCachingConfiguration,
     CacheControl,
 } from "./cachingBackend";
-export { withNormalization, NormalizationConfig } from "./normalizingBackend";
+export { withNormalization, NormalizationConfig, NormalizationWhenExecuteByRef } from "./normalizingBackend";
 export { Normalizer, Denormalizer, NormalizationState, LocalIdMap } from "./normalizingBackend/normalizer";
 
 export {
