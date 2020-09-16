@@ -107,7 +107,7 @@ export interface IGeoChartLegendRendererProps {
 }
 
 // @internal (undocumented)
-export interface IGeoChartRendererProps {
+export interface IGeoChartRendererProps extends WrappedComponentProps {
     // (undocumented)
     afterRender(): void;
     // (undocumented)

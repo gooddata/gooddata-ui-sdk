@@ -9,6 +9,7 @@ import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "./constants/geo
 import { IGeoConfig, IGeoTooltipItem } from "../../GeoChart";
 import { parseGeoProperties } from "./helpers/geoChart/data";
 import { formatValueForTooltip, getTooltipContentWidth } from "./helpers/geoChart/format";
+import { IntlShape } from "react-intl";
 
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 export const TOOLTIP_MAX_WIDTH = 320;
@@ -65,13 +66,21 @@ export function shouldShowTooltip(geoProperties: GeoJSON.GeoJsonProperties | und
     );
 }
 
+function getInteractionMessage(intl?: IntlShape): string {
+    const message = intl ? intl.formatMessage({ id: "visualization.tooltip.interaction" }) : null;
+
+    return intl ? `<div class="gd-viz-tooltip-interaction">${message}</div>` : "";
+}
+
 export function getTooltipHtml(
     geoProperties: GeoJSON.GeoJsonProperties,
     tooltipStroke: string,
     maxWidth: number,
     separators?: ISeparators,
+    intl?: IntlShape,
 ): string {
     const { locationName = {}, size = {}, color = {}, segment = {} } = geoProperties || {};
+    const interactionMessage = getInteractionMessage(intl);
 
     const tooltipItems: string = [
         formatAttribute(locationName),
@@ -84,7 +93,7 @@ export function getTooltipHtml(
 
     return `<div class="gd-viz-tooltip" style="max-width:${maxWidth}px">
                 <span class="stroke gd-viz-tooltip-stroke" style="border-top-color: ${tooltipStroke}"></span>
-                <div class="content gd-viz-tooltip-content">${tooltipItems}</div>
+                <div class="content gd-viz-tooltip-content">${tooltipItems}${interactionMessage}</div>
             </div>`;
 }
 
@@ -109,6 +118,7 @@ export const handlePushpinMouseEnter = (
     chart: mapboxgl.Map,
     tooltip: mapboxgl.Popup,
     config: IGeoConfig,
+    intl?: IntlShape,
 ): void => {
     if (isTooltipDisabled(config)) {
         return;
@@ -134,7 +144,7 @@ export const handlePushpinMouseEnter = (
         chartWidth,
         TOOLTIP_MAX_WIDTH,
     );
-    const tooltipHtml = getTooltipHtml(parsedProps, tooltipStroke, maxTooltipContentWidth, separators);
+    const tooltipHtml = getTooltipHtml(parsedProps, tooltipStroke, maxTooltipContentWidth, separators, intl);
 
     tooltip
         .setLngLat(coordinates)

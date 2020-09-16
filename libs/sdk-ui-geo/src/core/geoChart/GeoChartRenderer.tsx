@@ -38,10 +38,12 @@ import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { handleGeoPushpinDrillEvent } from "./helpers/geoChart/drilling";
 
+import { WrappedComponentProps } from "react-intl";
+
 /**
  * @internal
  */
-export interface IGeoChartRendererProps {
+export interface IGeoChartRendererProps extends WrappedComponentProps {
     config: IGeoConfig;
     drillableItems: IHeaderPredicate[];
     drillConfig: IDrillConfig;
@@ -53,7 +55,7 @@ export interface IGeoChartRendererProps {
     onZoomChanged(zoom: number): void;
 }
 
-export default class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
+class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
     public static defaultProps: Partial<IGeoChartRendererProps> = {
         config: {
             mapboxToken: "",
@@ -477,8 +479,8 @@ export default class GeoChartRenderer extends React.Component<IGeoChartRendererP
 
     private handlePushpinMouseEnter = (e: mapboxgl.EventData): void => {
         const { chart, props, tooltip } = this;
-        const { config } = props;
-        return handlePushpinMouseEnter(e, chart!, tooltip!, config);
+        const { config, intl } = props;
+        return handlePushpinMouseEnter(e, chart!, tooltip!, config, intl);
     };
 
     private handlePushpinMouseLeave = (e: mapboxgl.EventData): void => {
@@ -487,3 +489,5 @@ export default class GeoChartRenderer extends React.Component<IGeoChartRendererP
         return handlePushpinMouseLeave(e, chart!, tooltip!, config);
     };
 }
+
+export default GeoChartRenderer;
