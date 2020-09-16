@@ -19,6 +19,7 @@ import {
     IFilter,
     IInsightDefinition,
     ISortItem,
+    IInsight,
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
@@ -57,8 +58,8 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
         return this.wrap(this.decorated.forInsight(insight, filters));
     }
 
-    public forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution> {
-        return this.decorated.forInsightByRef(uri, filters).then(this.wrap);
+    public forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+        return this.wrap(this.decorated.forInsightByRef(insight, filters));
     }
 
     /**

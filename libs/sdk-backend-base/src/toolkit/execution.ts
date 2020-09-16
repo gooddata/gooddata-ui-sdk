@@ -11,6 +11,7 @@ import {
     newDefForBuckets,
     newDefForInsight,
     newDefForItems,
+    IInsight,
 } from "@gooddata/sdk-model";
 
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -24,10 +25,9 @@ import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi
  * @internal
  */
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
-    constructor(private readonly workspace: string) {}
+    constructor(protected readonly workspace: string) {}
 
     public abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
-    public abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
 
     public forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
         const def = defWithDimensions(
@@ -54,5 +54,9 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
         );
 
         return this.forDefinition(def);
+    }
+
+    public forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+        return this.forInsight(insight, filters);
     }
 }

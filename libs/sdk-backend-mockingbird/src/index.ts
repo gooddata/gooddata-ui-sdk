@@ -20,6 +20,7 @@ export {
 export {
     recordedDataView,
     recordedDataViews,
+    recordedInsight,
     DataViewAll,
     dataViewWindow,
     DataViewFirstPage,

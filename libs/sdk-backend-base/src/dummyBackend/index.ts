@@ -16,18 +16,18 @@ import {
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogFactoryOptions,
+    IWorkspaceDashboards,
     IWorkspaceDatasetsService,
+    IWorkspaceDateFilterConfigsQuery,
     IWorkspaceInsights,
     IWorkspaceMetadata,
     IWorkspacePermissionsFactory,
     IWorkspaceQueryFactory,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
+    IWorkspaceUsersQuery,
     NoDataError,
     NotSupported,
-    IWorkspaceDashboards,
-    IWorkspaceUsersQuery,
-    IWorkspaceDateFilterConfigsQuery,
 } from "@gooddata/sdk-backend-spi";
 import {
     CatalogItemType,
@@ -37,9 +37,8 @@ import {
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
-    IFilter,
-    ObjRef,
     ISortItem,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { AbstractExecutionFactory } from "../toolkit/execution";
@@ -221,10 +220,6 @@ class DummyExecutionFactory extends AbstractExecutionFactory {
 
     public forDefinition(def: IExecutionDefinition): IPreparedExecution {
         return dummyPreparedExecution(def, this, this.config);
-    }
-
-    public forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
-        throw new NotSupported("not yet supported");
     }
 }
 

@@ -4,7 +4,6 @@ import { AbstractExecutionFactory } from "../toolkit/execution";
 import {
     defFingerprint,
     IExecutionDefinition,
-    IFilter,
     IDimension,
     DimensionGenerator,
     ISortItem,
@@ -44,10 +43,6 @@ export class CustomExecutionFactory extends AbstractExecutionFactory {
 
     public forDefinition = (def: IExecutionDefinition): IPreparedExecution => {
         return new CustomPreparedExecution(def, this, this.config, this.state);
-    };
-
-    public forInsightByRef = (_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> => {
-        throw new NotSupported("execution by insight reference is not supported");
     };
 }
 

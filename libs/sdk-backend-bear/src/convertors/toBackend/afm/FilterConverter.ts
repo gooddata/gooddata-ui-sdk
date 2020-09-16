@@ -19,6 +19,7 @@ import {
 } from "@gooddata/sdk-model";
 import isNil from "lodash/isNil";
 import { toBearRef, toScopedBearRef } from "../ObjRefConverter";
+import compact from "lodash/compact";
 
 function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
     /*
@@ -165,4 +166,8 @@ export function convertMeasureFilter(filter: IMeasureFilter): GdcExecuteAFM.Filt
     } else {
         return convertRelativeDateFilter(filter);
     }
+}
+
+export function convertFilters(filters: IFilter[]): GdcExecuteAFM.CompatibilityFilter[] {
+    return filters ? compact(filters.map(convertFilter)) : [];
 }

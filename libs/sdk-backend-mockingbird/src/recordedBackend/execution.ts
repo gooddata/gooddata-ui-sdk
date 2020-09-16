@@ -24,14 +24,20 @@ import {
     IDimension,
     idRef,
     IExecutionDefinition,
-    IFilter,
+    IInsight,
     ISortItem,
     ObjectType,
     ObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { ExecutionRecording, RecordingIndex, ScenarioRecording, RecordedRefType } from "./types";
+import {
+    ExecutionRecording,
+    RecordingIndex,
+    ScenarioRecording,
+    RecordedRefType,
+    InsightRecording,
+} from "./types";
 import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import flatMap from "lodash/flatMap";
 import isEqual from "lodash/isEqual";
@@ -79,10 +85,6 @@ export class RecordedExecutionFactory extends AbstractExecutionFactory {
 
     public forDefinition(def: IExecutionDefinition): IPreparedExecution {
         return recordedPreparedExecution(def, this, this.resultRefType, this.recordings);
-    }
-
-    public forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
-        throw new NotSupported("not yet supported");
     }
 }
 
@@ -455,4 +457,23 @@ export function recordedDataViews(recordings: RecordingIndex): NamedDataView[] {
     const executionRecordings = Object.values(recordings.executions);
 
     return flatMap(executionRecordings, expandRecordingToDataViews);
+}
+
+/**
+ * Given insight recording (as accessible through Recordings.Insights), this function returns instance of IInsight.
+ *
+ * @param recording - insight recording
+ * @param refType - ref type to have in the insight, default is uri
+ * @internal
+ */
+export function recordedInsight(recording: InsightRecording, refType: RecordedRefType = "uri"): IInsight {
+    return {
+        insight: {
+            ...recording.obj.insight,
+            ref:
+                refType === "uri"
+                    ? uriRef(recording.obj.insight.uri)
+                    : idRef(recording.obj.insight.identifier, "insight"),
+        },
+    };
 }

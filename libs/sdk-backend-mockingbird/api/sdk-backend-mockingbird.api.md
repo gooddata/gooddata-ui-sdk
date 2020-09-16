@@ -125,6 +125,9 @@ export function recordedDataView(recording: ScenarioRecording, dataViewId?: stri
 // @internal
 export function recordedDataViews(recordings: RecordingIndex): NamedDataView[];
 
+// @internal
+export function recordedInsight(recording: InsightRecording, refType?: RecordedRefType): IInsight;
+
 // @internal (undocumented)
 export type RecordedRefType = "id" | "uri";
 

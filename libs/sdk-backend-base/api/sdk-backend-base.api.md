@@ -29,6 +29,7 @@ import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
@@ -49,10 +50,12 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
     // (undocumented)
     forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
-    abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
     forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
-    }
+    // (undocumented)
+    protected readonly workspace: string;
+}
 
 // @beta
 export type AnalyticalBackendCallbacks = {
@@ -167,7 +170,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
     // (undocumented)
     forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
     forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
     protected wrap: (execution: IPreparedExecution) => IPreparedExecution;
