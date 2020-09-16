@@ -5,7 +5,13 @@ import { shallow } from "enzyme";
 import { testUtils } from "@gooddata/util";
 
 import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization";
-import { IBucketItem, IReferencePoint, IVisConstruct, IVisProps } from "../../interfaces/Visualization";
+import {
+    IBucketItem,
+    IReferencePoint,
+    IVisConstruct,
+    IVisProps,
+    IDrillDownContext,
+} from "../../interfaces/Visualization";
 
 import * as testMocks from "../../tests/mocks/testMocks";
 import { emptyReferencePoint } from "../../tests/mocks/referencePointMocks";
@@ -14,7 +20,7 @@ import { AbstractPluggableVisualization } from "../pluggableVisualizations/Abstr
 import { VisualizationTypes, IDrillableItem } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture";
 
@@ -40,6 +46,13 @@ class DummyClass extends AbstractPluggableVisualization {
         _executionFactory: IExecutionFactory,
     ): void {
         return;
+    }
+
+    public getInsightWithDrillDownApplied(
+        sourceVisualization: IInsight,
+        _drillDownContext: IDrillDownContext,
+    ): IInsight {
+        return sourceVisualization;
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<any> {

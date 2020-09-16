@@ -14,6 +14,8 @@ import {
     MeasureInBucket,
     bucketModifyItems,
     BucketItemModifications,
+    bucketItemReduce,
+    BucketItemReducer,
 } from "./index";
 import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
 import { anyMeasure, idMatchMeasure, IMeasure, isMeasure, MeasurePredicate } from "../measure";
@@ -249,4 +251,17 @@ export function bucketsModifyItem(
 ): IBucket[] {
     invariant(buckets, "buckets must be specified");
     return buckets.map((bucket: IBucket): IBucket => bucketModifyItems(bucket, modifications));
+}
+
+/**
+ * Creates a new array of buckets, each bucket in the array contains modified bucket items
+ *
+ * @param buckets - an array of buckets, array is applied the modification function
+ * @param reducer - the reducer to apply to the bucket items array
+ * @returns a new array of buckets, each bucket in the array contains modified bucket items
+ * @public
+ */
+export function bucketsReduceItem(buckets: IBucket[], reducer: BucketItemReducer = identity): IBucket[] {
+    invariant(buckets, "buckets must be specified");
+    return buckets.map((bucket: IBucket): IBucket => bucketItemReduce(bucket, reducer));
 }

@@ -9,8 +9,17 @@ import * as referencePointMocks from "../../../../tests/mocks/referencePointMock
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
+import { IInsight, IAttribute, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
+import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { createDrillEvent, insightDefinitionToInsight, createDrillDefinition } from "../../tests/testHelpers";
+import {
+    sourceInsightDef,
+    intersection,
+    expectedInsightDefRegion,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock";
 import { DASHBOARDS_ENVIRONMENT } from "../../../../constants/properties";
 
 describe("PluggableBaseChart", () => {
@@ -732,6 +741,45 @@ describe("PluggableBaseChart", () => {
                 expect(
                     (mockRenderFun.mock.calls[renderCallsCount - 1][0] as any).props.config.legend.position,
                 ).toEqual(expectedPosition);
+            },
+        );
+    });
+
+    describe("Drill Down", () => {
+        it.each([
+            [
+                "on viewby attribute",
+                sourceInsightDef,
+                Region,
+                targetUri,
+                intersection,
+                expectedInsightDefRegion,
+            ],
+        ])(
+            "%s should replace the drill down attribute and add intersection filters",
+            (
+                _testName: string,
+                sourceInsightDefinition: IInsightDefinition,
+                drillSourceAttribute: IAttribute,
+                drillTargetUri: string,
+                drillIntersection: IDrillEventIntersectionElement[],
+                expectedInsightDefinition: IInsightDefinition,
+            ) => {
+                const bulletChart = createComponent();
+                const drillDefinition = createDrillDefinition(drillSourceAttribute, drillTargetUri);
+                const sourceInsight = insightDefinitionToInsight(sourceInsightDefinition, "first", "first");
+                const expectedInsight = insightDefinitionToInsight(
+                    expectedInsightDefinition,
+                    "first",
+                    "first",
+                );
+
+                const result: IInsight = bulletChart.getInsightWithDrillDownApplied(sourceInsight, {
+                    drillDefinition,
+                    event: createDrillEvent("column", drillIntersection),
+                });
+
+                expect(result).toEqual(expectedInsight);
             },
         );
     });

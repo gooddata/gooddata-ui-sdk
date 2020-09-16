@@ -3,20 +3,23 @@ import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
+    Identifier,
+    IInsight,
     IInsightDefinition,
     ITotal,
-    VisualizationProperties,
     ObjRef,
+    VisualizationProperties,
 } from "@gooddata/sdk-model";
 import {
     ChartType,
     IDrillableItem,
+    IDrillEvent,
+    IHeaderPredicate,
     ILocale,
     IPushData,
     IVisualizationCallbacks,
     OverTimeComparisonType,
     VisualizationEnvironment,
-    IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 
 export type RenderFunction = (component: any, target: Element) => void;
@@ -332,6 +335,19 @@ export interface IVisualization {
         referencePoint: IReferencePoint,
         previousReferencePoint?: IReferencePoint,
     ): Promise<IExtendedReferencePoint>;
+
+    /**
+     * Called when the Drill Down is performed, used to get the Drill Down target {@link IInsight} instance.
+     *
+     * The exact contract depends on individual {@link IInsight} type, but generally it should replace
+     * the drilled attribute with the Drill Down target target attribute and include the filters from the
+     * drill event into the returned {@link IInsight}.
+     *
+     * @param source {@link IInsight} to be used for the the Drill Down execution
+     * @param drillDownContext Drill Down configuration used to properly create the result
+     * @returns {@code source} as the Drill Down target {@link IInsight}
+     */
+    getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight;
 }
 
 export interface IGdcConfig {
@@ -368,3 +384,47 @@ export const PluggableVisualizationErrorCodes = {
      */
     EMPTY_AFM: "EMPTY_AFM",
 };
+
+/**
+ * Source implicit drill down attribute local Identifier
+ *
+ * @alpha
+ */
+export interface IDrillFromAttribute {
+    drillFromAttribute: {
+        localIdentifier: Identifier;
+    };
+}
+
+/**
+ * Target implicit drill down attribute display form
+ *
+ * @alpha
+ */
+export interface IDrillToAttribute {
+    drillToAttribute: {
+        attributeDisplayForm: ObjRef;
+    };
+}
+
+/**
+ * Implicit drill down definition
+ *
+ * @alpha
+ */
+export interface IImplicitDrillDown {
+    implicitDrillDown: {
+        from: IDrillFromAttribute;
+        target: IDrillToAttribute;
+    };
+}
+
+/**
+ * Implicit drill down context
+ *
+ * @alpha
+ */
+export interface IDrillDownContext {
+    drillDefinition: IImplicitDrillDown;
+    event: IDrillEvent;
+}

@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import { IVisProps } from "../../../interfaces/Visualization";
+import { IVisProps, IDrillDownContext } from "../../../interfaces/Visualization";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { BucketNames } from "@gooddata/sdk-ui";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { DummyVisConstruct } from "./visConstruct.fixture";
 
@@ -23,6 +23,13 @@ describe("AbstractPluggableVisualization", () => {
 
         protected renderConfigurationPanel(_insight: IInsightDefinition): void {
             return;
+        }
+
+        public getInsightWithDrillDownApplied(
+            sourceVisualization: IInsight,
+            _drillDownContext: IDrillDownContext,
+        ): IInsight {
+            return sourceVisualization;
         }
 
         protected renderVisualization(

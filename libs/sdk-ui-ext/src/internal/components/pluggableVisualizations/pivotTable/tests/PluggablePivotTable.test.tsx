@@ -23,7 +23,7 @@ import {
 } from "../../../../interfaces/Visualization";
 import { DefaultLocale, IDrillableItem, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
 import { ColumnWidthItem, CorePivotTable } from "@gooddata/sdk-ui-pivot";
-import { ISortItem } from "@gooddata/sdk-model";
+import { IInsight, ISortItem } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import noop from "lodash/noop";
@@ -48,6 +48,7 @@ import {
     validAttributeSort,
     validMeasureSort,
 } from "./sortMocks";
+import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock";
 
 describe("PluggablePivotTable", () => {
     const backend = dummyBackend();
@@ -79,6 +80,34 @@ describe("PluggablePivotTable", () => {
         expect(visualization).toBeTruthy();
     });
 
+    describe("Drill Down", () => {
+        it("should delete intersection filter attributes and sanitize properties", () => {
+            const pivotTable = createComponent();
+            const result: IInsight = pivotTable.getInsightWithDrillDownApplied(
+                getInsightWithDrillDownApplied.sourceInsight,
+                {
+                    drillDefinition: getInsightWithDrillDownApplied.drillConfig,
+                    event: null,
+                },
+            );
+
+            expect(result).toEqual(getInsightWithDrillDownApplied.expectedInsight);
+        });
+
+        it("should update totals according to the deleted intersection attribute filters", () => {
+            const pivotTable = createComponent();
+            const result: IInsight = pivotTable.getInsightWithDrillDownApplied(
+                getInsightWithDrillDownApplied.sourceInsightWithTotals,
+                {
+                    drillDefinition: getInsightWithDrillDownApplied.drillConfig,
+                    event: null,
+                },
+            );
+
+            expect(result).toEqual(getInsightWithDrillDownApplied.expectedInsightWithTotals);
+        });
+    });
+
     describe("update", () => {
         function getDefaultOptions(): IVisProps {
             const locale: ILocale = DefaultLocale;
@@ -94,6 +123,7 @@ describe("PluggablePivotTable", () => {
                 },
             };
         }
+
         const emptyPropertiesMeta = {};
 
         function spyOnFakeElement() {

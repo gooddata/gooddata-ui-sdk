@@ -130,7 +130,13 @@ export function bucketAttributes(bucket: IBucket, predicate?: AttributePredicate
 export function bucketIsEmpty(bucket: IBucket): boolean;
 
 // @public
+export function bucketItemLocalId(bucketItem: IAttributeOrMeasure): string;
+
+// @public
 export type BucketItemModifications = (bucketItem: IAttributeOrMeasure) => IAttributeOrMeasure;
+
+// @public
+export type BucketItemReducer = (acc: IAttributeOrMeasure[], cur: IAttributeOrMeasure, idx: number, src: IAttributeOrMeasure[]) => IAttributeOrMeasure[];
 
 // @public
 export function bucketItems(bucket: IBucket): IAttributeOrMeasure[];
@@ -179,6 +185,9 @@ export function bucketsMeasures(buckets: IBucket[], predicate?: MeasurePredicate
 
 // @public
 export function bucketsModifyItem(buckets: IBucket[], modifications?: BucketItemModifications): IBucket[];
+
+// @public
+export function bucketsReduceItem(buckets: IBucket[], reducer?: BucketItemReducer): IBucket[];
 
 // @public
 export function bucketsTotals(buckets: IBucket[]): ITotal[];
@@ -914,6 +923,9 @@ export function insightModifyItems<T extends IInsightDefinition>(insight: T, mod
 
 // @public
 export function insightProperties(insight: IInsightDefinition): VisualizationProperties;
+
+// @public
+export function insightReduceItems<T extends IInsightDefinition>(insight: T, reducer?: BucketItemReducer): T;
 
 // @public
 export function insightSanitize<T extends IInsightDefinition>(insight: T): T;

@@ -4,8 +4,18 @@ import { PluggableBulletChart } from "../PluggableBulletChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { IBucketOfFun, IFilters, IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization";
 import { DEFAULT_BULLET_CHART_CONFIG } from "../../../../constants/uiConfig";
-import { OverTimeComparisonTypes, BucketNames } from "@gooddata/sdk-ui";
+import { OverTimeComparisonTypes, BucketNames, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
+import { Department, Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { createDrillEvent, insightDefinitionToInsight, createDrillDefinition } from "../../tests/testHelpers";
+import {
+    sourceInsightDef,
+    intersection,
+    expectedInsightDefRegion,
+    expectedInsightDefDepartment,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock";
 
 const defaultProps: IVisConstruct = {
     backend: dummyBackend(),
@@ -481,5 +491,52 @@ describe("PluggableBulletChart", () => {
                 ]);
             });
         });
+    });
+
+    describe("Drill Down", () => {
+        it.each([
+            [
+                "on outer viewby attribute",
+                sourceInsightDef,
+                Region,
+                targetUri,
+                intersection,
+                expectedInsightDefRegion,
+            ],
+            [
+                "on inner viewby attribute",
+                sourceInsightDef,
+                Department,
+                targetUri,
+                intersection,
+                expectedInsightDefDepartment,
+            ],
+        ])(
+            "%s should replace the drill down attribute and add correct intersection filters",
+            (
+                _testName: string,
+                sourceInsightDefinition: IInsightDefinition,
+                drillSourceAttribute: IAttribute,
+                drillTargetUri: string,
+                drillIntersection: IDrillEventIntersectionElement[],
+                expectedInsightDefinition: IInsightDefinition,
+            ) => {
+                const chart = createComponent();
+                const drillDefinition = createDrillDefinition(drillSourceAttribute, drillTargetUri);
+                const sourceInsight = insightDefinitionToInsight(sourceInsightDefinition, "first", "first");
+                const expectedInsight = insightDefinitionToInsight(
+                    expectedInsightDefinition,
+                    "first",
+                    "first",
+                );
+
+                const result: IInsight = chart.getInsightWithDrillDownApplied(sourceInsight, {
+                    drillDefinition,
+                    event: createDrillEvent("bullet", drillIntersection),
+                });
+
+                expect(result).toEqual(expectedInsight);
+            },
+        );
     });
 });

@@ -12,9 +12,9 @@ import {
     IAttributeOrMeasure,
 } from "../..";
 import { newInsight } from "../../../__mocks__/insights";
-import { Account, Activity, Velocity, Won } from "../../../__mocks__/model";
-import { IAttribute, AttributePredicate } from "../../execution/attribute";
-import { IBucket, newBucket, BucketItemModifications } from "../../execution/buckets";
+import { Account, Activity, Velocity, Won, ActivityType } from "../../../__mocks__/model";
+import { IAttribute, AttributePredicate, isAttribute } from "../../execution/attribute";
+import { IBucket, newBucket, BucketItemModifications, BucketItemReducer } from "../../execution/buckets";
 import { IMeasure, isMeasure, MeasurePredicate } from "../../execution/measure";
 import {
     insightAttributes,
@@ -41,11 +41,13 @@ import {
     insightSetBuckets,
     IInsight,
     insightModifyItems,
+    insightReduceItems,
 } from "../index";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);
 const AttributeBucket = newBucket("bucket2", Activity.Subject);
 const MeasureBucket = newBucket("bucket3", Velocity.Sum, Velocity.Min);
+const MultiAttributeBucket = newBucket("bucket4", Activity.Subject, ActivityType);
 
 const AttributeFilter = newPositiveAttributeFilter(Account.Name, ["myAccount"]);
 
@@ -526,7 +528,7 @@ describe("insightModifyItems", () => {
             MixedBucket,
         ]);
         const modifiedInsight: IInsight = insightModifyItems(insightWithSomeBuckets, modifications);
-        expect(modifiedInsight !== insightWithSomeBuckets).toBe(true);
+        expect(modifiedInsight).not.toBe(insightWithSomeBuckets);
         expect(modifiedInsight.insight.buckets.length).toBe(3);
         expect(modifiedInsight.insight.buckets[0].items.length).toBe(1);
         expect((modifiedInsight.insight.buckets[0].items[0] as IAttribute).attribute.alias).toBe(
@@ -546,5 +548,34 @@ describe("insightModifyItems", () => {
         expect((modifiedInsight.insight.buckets[2].items[1] as IMeasure).measure.title).toBe(
             "Modified measure title",
         );
+    });
+});
+
+describe("insightReduceItems", () => {
+    const modifications: BucketItemReducer = (
+        acc: IAttributeOrMeasure[],
+        cur: IAttributeOrMeasure,
+        idx: number,
+        _src: IAttributeOrMeasure[],
+    ): IAttributeOrMeasure[] => {
+        // reduce to just one attribute for bucket
+        if (isAttribute(cur) && idx > 0) {
+            return [cur];
+        }
+        return [...acc, cur];
+    };
+
+    it("should return another insight with empty bucket", () => {
+        const modifiedInsight: IInsight = insightReduceItems(EmptyInsight, modifications);
+        expect(modifiedInsight !== EmptyInsight).toBe(true);
+        expect(modifiedInsight.insight.buckets.length).toBe(0);
+    });
+
+    it("should return another insight with reduced bucket items and only one attribute in bucket", () => {
+        const insightWithSomeBuckets: IInsight = insightSetBuckets(EmptyInsight, [MultiAttributeBucket]);
+
+        const modifiedInsight: IInsight = insightReduceItems(insightWithSomeBuckets, modifications);
+        expect(modifiedInsight).not.toBe(insightWithSomeBuckets);
+        expect(modifiedInsight.insight.buckets[0].items.length).toBe(1);
     });
 });

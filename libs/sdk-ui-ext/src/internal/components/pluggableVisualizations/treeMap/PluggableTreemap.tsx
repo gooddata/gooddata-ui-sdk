@@ -5,7 +5,7 @@ import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
 import tail from "lodash/tail";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes, IDrillEvent, getIntersectionPartAfter } from "@gooddata/sdk-ui";
 import { render } from "react-dom";
 import { BUCKETS } from "../../../constants/bucket";
 import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
@@ -16,7 +16,13 @@ import {
     TREEMAP_UICONFIG_WITH_ONE_MEASURE,
     UICONFIG,
 } from "../../../constants/uiConfig";
-import { IExtendedReferencePoint, IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
+import {
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
+    IImplicitDrillDown,
+    IDrillDownContext,
+} from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import {
@@ -35,8 +41,10 @@ import { removeSort } from "../../../utils/sort";
 import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConfigHelper";
 import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
+import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
+import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 
 export class PluggableTreemap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -105,6 +113,24 @@ export class PluggableTreemap extends PluggableBaseChart {
         newReferencePoint = removeSort(newReferencePoint);
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
+    }
+
+    private addFiltersForTreemap(source: IInsight, drillConfig: IImplicitDrillDown, event: IDrillEvent) {
+        const clicked = drillDownFromAttributeLocalId(drillConfig);
+
+        // intersection returned from treemap visualization is from outer to inner parts -> reverse
+        const reorderedIntersection = event.drillContext.intersection.slice().reverse();
+        const cutIntersection = getIntersectionPartAfter(reorderedIntersection, clicked);
+        return addIntersectionFiltersToInsight(source, cutIntersection);
+    }
+
+    public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
+        const withFilters = this.addFiltersForTreemap(
+            source,
+            drillDownContext.drillDefinition,
+            drillDownContext.event,
+        );
+        return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {

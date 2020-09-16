@@ -13,7 +13,19 @@ import {
 import { AXIS } from "../../../constants/axis";
 import { PluggableColumnChart } from "../columnChart/PluggableColumnChart";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { insightSetProperties } from "@gooddata/sdk-model";
+import { insightSetProperties, IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
+import {
+    insightDefinitionWithStackBy,
+    targetUri,
+    intersection,
+    expectedInsightDefinitionWithStackByDrillToDepartment,
+    expectedInsightDefinitionWithStackByDrillToRegion,
+    insightDefinition,
+    expectedInsightDefinitionDrillToRegion,
+} from "./getInsightWithDrillDownAppliedMock";
+import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { createDrillEvent, createDrillDefinition, insightDefinitionToInsight } from "./testHelpers";
+import { Department, Region } from "@gooddata/reference-workspace/dist/ldm/full";
 
 describe("PluggableColumnBarCharts", () => {
     const defaultProps: IVisConstruct = {
@@ -355,5 +367,60 @@ describe("PluggableColumnBarCharts", () => {
                 stackMeasuresToPercent: true,
             });
         });
+    });
+
+    describe("Drill Down", () => {
+        it.each([
+            [
+                "on viewby when stacks present",
+                insightDefinitionWithStackBy,
+                Department,
+                targetUri,
+                intersection,
+                expectedInsightDefinitionWithStackByDrillToDepartment,
+            ],
+            [
+                "on stackby when stacks present",
+                insightDefinitionWithStackBy,
+                Region,
+                targetUri,
+                intersection,
+                expectedInsightDefinitionWithStackByDrillToRegion,
+            ],
+            [
+                "on viewby when stacks not present",
+                insightDefinition,
+                Region,
+                targetUri,
+                intersection,
+                expectedInsightDefinitionDrillToRegion,
+            ],
+        ])(
+            "%s should replace the drill down attribute and add intersection filters",
+            (
+                _testName: string,
+                sourceInsightDefinition: IInsightDefinition,
+                drillSourceAttribute: IAttribute,
+                drillTargetUri: string,
+                drillIntersection: IDrillEventIntersectionElement[],
+                expectedInsightDefinition: IInsightDefinition,
+            ) => {
+                const columnChart = createComponent();
+                const drillDefinition = createDrillDefinition(drillSourceAttribute, drillTargetUri);
+                const sourceInsight = insightDefinitionToInsight(sourceInsightDefinition, "first", "first");
+                const expectedInsight = insightDefinitionToInsight(
+                    expectedInsightDefinition,
+                    "first",
+                    "first",
+                );
+
+                const result: IInsight = columnChart.getInsightWithDrillDownApplied(sourceInsight, {
+                    drillDefinition,
+                    event: createDrillEvent("column", drillIntersection),
+                });
+
+                expect(result).toEqual(expectedInsight);
+            },
+        );
     });
 });

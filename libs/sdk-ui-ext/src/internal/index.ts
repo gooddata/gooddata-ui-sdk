@@ -20,4 +20,7 @@ export {
     ConfigPanelClassName,
     IGdcConfig,
     PluggableVisualizationErrorCodes,
+    IDrillFromAttribute,
+    IDrillToAttribute,
+    IImplicitDrillDown,
 } from "./interfaces/Visualization";
