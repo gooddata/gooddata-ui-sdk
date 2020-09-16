@@ -152,6 +152,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * @param insight - insight that is about to be rendered
      */
     protected updateInstanceProperties(
+        // @ts-expect-error Ignoring here so that the JSDoc has the proper name (not _options)
         options: IVisProps,
         insight: IInsightDefinition,
         // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
