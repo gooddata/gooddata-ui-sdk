@@ -2811,6 +2811,563 @@ Object {
 }
 `;
 
+exports[`ComboChart with data points - auto visibility should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.opportunity.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.opportunity.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.opportunity.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.opportunity.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.opportunity.id.name",
+      ],
+    },
+  ],
+  "filters": Array [
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "GREATER_THAN",
+            "value": 200000,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    },
+  ],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with data points - auto visibility should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataPoints": Object {
+      "visible": "auto",
+    },
+    "primaryChartType": "line",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with data points - default for pre-feature charts should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.opportunity.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.opportunity.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.opportunity.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.opportunity.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.opportunity.id.name",
+      ],
+    },
+  ],
+  "filters": Array [
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "GREATER_THAN",
+            "value": 200000,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    },
+  ],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with data points - default for pre-feature charts should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "primaryChartType": "line",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with data points - forced hidden should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.opportunity.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.opportunity.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.opportunity.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.opportunity.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.opportunity.id.name",
+      ],
+    },
+  ],
+  "filters": Array [
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "GREATER_THAN",
+            "value": 200000,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    },
+  ],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with data points - forced hidden should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataPoints": Object {
+      "visible": false,
+    },
+    "primaryChartType": "line",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
+exports[`ComboChart with data points - forced visible should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.opportunity.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.opportunity.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.opportunity.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.opportunity.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.opportunity.id.name",
+      ],
+    },
+  ],
+  "filters": Array [
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "GREATER_THAN",
+            "value": 200000,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    },
+  ],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ComboChart with data points - forced visible should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataPoints": Object {
+      "visible": true,
+    },
+    "primaryChartType": "line",
+    "secondaryChartType": "area",
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ComboChart",
+}
+`;
+
 exports[`ComboChart with discard stacking when primary measures are not specified - secondary is area should create expected execution definition 1`] = `
 Object {
   "attributes": Array [

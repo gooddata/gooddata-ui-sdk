@@ -4,7 +4,11 @@ import { scenariosFor } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { dataPointCustomizer } from "../_infra/dataPointVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
-import { LineChartTwoMeasuresWithTrendyBy, LineChartWithArithmeticMeasuresAndViewBy } from "./base";
+import {
+    LineChartTwoMeasuresWithTrendyBy,
+    LineChartWithArithmeticMeasuresAndViewBy,
+    LineChartWithManyDataPoints,
+} from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 const legendScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
@@ -23,6 +27,7 @@ const dataPointScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
     .withVisualTestConfig({ groupUnder: "data points" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("data points", LineChartWithArithmeticMeasuresAndViewBy, dataPointCustomizer);
+    .addScenarios("data points - sparse chart", LineChartWithArithmeticMeasuresAndViewBy, dataPointCustomizer)
+    .addScenarios("data points - dense chart", LineChartWithManyDataPoints, dataPointCustomizer);
 
 export default [legendScenarios, dataLabelScenarios, dataPointScenarios];

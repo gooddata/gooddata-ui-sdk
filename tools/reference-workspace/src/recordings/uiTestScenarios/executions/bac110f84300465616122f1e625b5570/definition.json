@@ -1,0 +1,43 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.opportunity.id.name", "type": "displayForm" },
+                "localIdentifier": "a_label.opportunity.id.name"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["a_label.opportunity.id.name"] }
+    ],
+    "filters": [
+        {
+            "measureValueFilter": {
+                "condition": { "comparison": { "operator": "GREATER_THAN", "value": 200000 } },
+                "measure": { "localIdentifier": "m_aangOxLSeztu" }
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "aangOxLSeztu", "type": "measure" } }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "acugFHNJgsBy", "type": "measure" } }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

@@ -3,7 +3,7 @@ import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { dataPointCustomizer } from "../_infra/dataPointVariants";
-import { AreaChartWithTwoMeasuresAndViewBy } from "./base";
+import { AreaChartWithTwoMeasuresAndViewBy, AreaChartWithManyDataPoints } from "./base";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
@@ -25,6 +25,7 @@ const dataPointScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames("customization")
     .withVisualTestConfig({ groupUnder: "data points" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("data points", AreaChartWithTwoMeasuresAndViewBy, dataPointCustomizer);
+    .addScenarios("data points - sparse chart", AreaChartWithTwoMeasuresAndViewBy, dataPointCustomizer)
+    .addScenarios("data points - dense chart", AreaChartWithManyDataPoints, dataPointCustomizer);
 
 export default [legendScenarios, dataLabelScenarios, dataPointScenarios];

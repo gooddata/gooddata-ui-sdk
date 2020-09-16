@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.opportunity.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.opportunity.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "trend"
+            },
+            { "items": [], "localIdentifier": "segment" }
+        ],
+        "filters": [
+            {
+                "measureValueFilter": {
+                    "condition": { "comparison": { "operator": "GREATER_THAN", "value": 100000 } },
+                    "measure": { "localIdentifier": "m_aangOxLSeztu" }
+                }
+            }
+        ],
+        "identifier": "LineChart.a3da043f2b31dac48b4dd0a2bd96a594",
+        "properties": { "controls": { "dataPoints": { "visible": true } } },
+        "sorts": [],
+        "title": "LineChart - data points - dense chart - forced visible",
+        "uri": "LineChart.a3da043f2b31dac48b4dd0a2bd96a594",
+        "visualizationUrl": "local:line"
+    }
+}

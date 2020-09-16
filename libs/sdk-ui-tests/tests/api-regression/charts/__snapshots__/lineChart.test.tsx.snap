@@ -1769,6 +1769,726 @@ Object {
 }
 `;
 
+exports[`LineChart with data points - auto visibility should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with data points - auto visibility should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataPoints": Object {
+      "visible": "auto",
+    },
+  },
+  "exportTitle": "LineChart",
+}
+`;
+
+exports[`LineChart with data points - default for pre-feature charts should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with data points - default for pre-feature charts should create expected props for core chart 1`] = `
+Object {
+  "config": Object {},
+  "exportTitle": "LineChart",
+}
+`;
+
+exports[`LineChart with data points - forced hidden should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with data points - forced hidden should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataPoints": Object {
+      "visible": false,
+    },
+  },
+  "exportTitle": "LineChart",
+}
+`;
+
+exports[`LineChart with data points - forced visible should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with data points - forced visible should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataPoints": Object {
+      "visible": true,
+    },
+  },
+  "exportTitle": "LineChart",
+}
+`;
+
 exports[`LineChart with dual axes with one right measure should create expected execution definition 1`] = `
 Object {
   "attributes": Array [

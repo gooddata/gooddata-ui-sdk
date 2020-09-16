@@ -43,7 +43,7 @@ export const ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy = {
 export const ComboChartWithManyDataPoints = {
     primaryMeasures: [ReferenceLdm.Amount],
     secondaryMeasures: [ReferenceLdm.Won],
-    filters: [newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 200000)],
+    filters: [newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 100000)],
     viewBy: ReferenceLdm.Opportunity.Name,
 };
 

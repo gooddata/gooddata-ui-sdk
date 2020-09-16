@@ -41,6 +41,15 @@ const dataPointScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboCha
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
     .withVisualTestConfig({ groupUnder: "data points" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("data points", ComboChartWithManyDataPoints, dataPointCustomizerForComboCharts);
+    .addScenarios(
+        "data points - sparse chart",
+        ComboChartWithTwoMeasuresAndViewBy,
+        dataPointCustomizerForComboCharts,
+    )
+    .addScenarios(
+        "data points - dense chart",
+        ComboChartWithManyDataPoints,
+        dataPointCustomizerForComboCharts,
+    );
 
 export default [legendScenarios, dataLabelScenarios, dataPointScenarios];

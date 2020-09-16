@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.opportunity.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.opportunity.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "trend"
+            },
+            { "items": [], "localIdentifier": "segment" }
+        ],
+        "filters": [
+            {
+                "measureValueFilter": {
+                    "condition": { "comparison": { "operator": "GREATER_THAN", "value": 100000 } },
+                    "measure": { "localIdentifier": "m_aangOxLSeztu" }
+                }
+            }
+        ],
+        "identifier": "LineChart.458c9384ce6e0a0f8e4e7dc55812a6ce",
+        "properties": { "controls": { "dataPoints": { "visible": false } } },
+        "sorts": [],
+        "title": "LineChart - data points - dense chart - forced hidden",
+        "uri": "LineChart.458c9384ce6e0a0f8e4e7dc55812a6ce",
+        "visualizationUrl": "local:line"
+    }
+}

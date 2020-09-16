@@ -1,0 +1,559 @@
+{
+    "count": [2, 67],
+    "data": [
+        [
+            "442236.78",
+            "693481.47",
+            "220048.32",
+            "281974.2",
+            "645147.38",
+            "219872.09",
+            "521249.7",
+            "780596",
+            "641734.06",
+            "346399.28",
+            "620822.11",
+            "345816.59",
+            "257426.8",
+            "214255.44",
+            "483081.26",
+            "242220.03",
+            "245248.9",
+            "200217.78",
+            "335241.89",
+            "495170.14",
+            "315197",
+            "319740.8",
+            "225645.1",
+            "3849780",
+            "318918.77",
+            "301536.82",
+            "489772.58",
+            "371568.8",
+            "282292",
+            "289385.28",
+            "284710",
+            "259164",
+            "238847.56",
+            "1047326.61",
+            "820690.2",
+            "347967.2",
+            "484894.76",
+            "212940",
+            "289471.47",
+            "231454.01",
+            "550946.94",
+            "430569.6",
+            "220829.82",
+            "13139625.29",
+            "390468",
+            "206863.12",
+            "253171",
+            "230391.3",
+            "1280000.4",
+            "283943.87",
+            "224500.35",
+            "274856",
+            "298117.17",
+            "300000",
+            "322212.2",
+            "204685.47",
+            "211418.4",
+            "913059.74",
+            "204586",
+            "242170.76",
+            "424512.4",
+            "227956",
+            "317768.88",
+            "231860.39",
+            "365645.4",
+            "360000",
+            "313973.46"
+        ],
+        [
+            null,
+            null,
+            "220048.32",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "346399.28",
+            "620822.11",
+            null,
+            null,
+            null,
+            null,
+            "242220.03",
+            null,
+            null,
+            null,
+            "495170.14",
+            null,
+            null,
+            "225645.1",
+            null,
+            null,
+            "301536.82",
+            "489772.58",
+            null,
+            null,
+            null,
+            null,
+            "259164",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "289471.47",
+            "231454.01",
+            "550946.94",
+            "430569.6",
+            null,
+            null,
+            null,
+            "206863.12",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "204685.47",
+            null,
+            null,
+            null,
+            null,
+            "424512.4",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "3balls.com > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=53685"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "AccountNow > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=103073"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Addx > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=103399"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Allconnect > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=55662"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Amadeus Consulting > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=149513"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "BankServ > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=52750"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Blaser's USA > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=58338"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Boston Health Economics > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=10357"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Brightree > PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=156388"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Cafe Rio > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=59954"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Cahill Gordon & Reindel > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=11339"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Cyquent > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=64131"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "DataDirect Networks > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=64352"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Datawiz > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=113679"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Dennis Corporation > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=114080"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Discount Ramps.com > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=65459"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "DKW Communications > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=65714"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "EcoTech Marine > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=161616"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Fidelity Technologies > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=119112"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "GameFly > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=71524"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Granite Telecommunications > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=121754"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Great Expressions Dental Centers > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=72934"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Greenberg Traurig > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=24476"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Hinshaw & Culbertson > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=26054"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Holland & Hart > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=74572"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "HSP Direct > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=74937"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "IMS ExpertServices > Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=27029"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Invertix > PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=158293"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Invizion > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=29104"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "LAgraphico > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=79707"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Logic Planet > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=129876"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Logistic Dynamics > PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=32678"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Max Borges Agency > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=131341"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Mediatavern > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=131795"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Medical Transaction Billing > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=131944"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Milestone Metals > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=83617"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Mortgagebot > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=84413"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "MTC Transformers > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=35409"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "MyCEO > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=35525"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "National Asset Recovery Services > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=35666"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Nukk-Freeman & Cerra > Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=135424"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "OnDemand Resources > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=86546"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Ovation Travel Group > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=136648"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paramore-Redd Online Marketing > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=136938"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Paylocity > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=39341"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Physique 57 > Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=154398"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Portage > PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=88984"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Post-Up Stand > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=138171"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "R2integrated > PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=41539"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Safety Sam > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=43191"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "SecurityMetrics > WonderKid",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=43954"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "See Kai Run > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=142468"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Shorts Brewing > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=44639"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "SLR Contracting & Service > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=143375"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "TalentBurst > Educationly",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=96051"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Talyst > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=47276"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "T-Cellular > PhoenixSoft",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=47397"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "TechSource > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=47762"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "The Queensboro Shirt Company > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=146978"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "TOPCON > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=147411"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Torrey Hills Technologies > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=147445"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Traction > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=147645"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Trend Personnel Services > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=147870"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Turner Industries > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=50333"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Turtle Mountain > Grammar Plus",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=99577"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "VideoLink > Explorer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=52379"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Vitalize Consulting Solutions > CompuSci",
+                        "uri": "/gdc/md/referenceworkspace/obj/1066/elements?id=150104"
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [2, 67]
+}

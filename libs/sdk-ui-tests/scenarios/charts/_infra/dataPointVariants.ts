@@ -4,7 +4,7 @@ import { IChartConfig, IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import { CustomizedScenario, UnboundVisProps } from "../../../src";
 
 const ConfigVariants: Array<[string, IChartConfig]> = [
-    ["default for pre-feature charts", {}],
+    ["default", {}],
     ["auto visibility", { dataPoints: { visible: "auto" } }],
     ["forced visible", { dataPoints: { visible: true } }],
     ["forced hidden", { dataPoints: { visible: false } }],
