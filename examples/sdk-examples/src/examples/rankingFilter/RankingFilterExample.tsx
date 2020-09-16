@@ -29,7 +29,7 @@ const attributeDropdownItems: IAttributeDropdownItem[] = [
     },
     {
         title: "Location",
-        ref: localIdRef(attributeLocalId(LdmExt.LocationName.attribute.localIdentifier)),
+        ref: localIdRef(attributeLocalId(LdmExt.LocationName)),
         type: "ATTRIBUTE",
     },
 ];
