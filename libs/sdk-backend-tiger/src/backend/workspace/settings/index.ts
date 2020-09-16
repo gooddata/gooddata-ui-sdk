@@ -15,6 +15,8 @@ const HardcodedSettings = {
     enableNewADFilterBar: true,
     enableMeasureValueFilters: true,
     enableMetricDateFilter: true,
+    enableWeekFilters: true,
+    enableCustomMeasureFormatting: true,
     ADMeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",
 
     // KD specific
