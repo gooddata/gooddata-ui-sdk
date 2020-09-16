@@ -17,7 +17,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IImplicitDrillDown, IVisualizationProperties } from "../../../..";
 import { Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/ldm/full";
-import { newWidthForAttributeColumn, newWidthForAllMeasureColumns } from "@gooddata/sdk-ui-pivot";
+import { newWidthForAllMeasureColumns, newWidthForAttributeColumn } from "@gooddata/sdk-ui-pivot";
 
 const properties: IVisualizationProperties = {
     controls: {
@@ -86,7 +86,7 @@ const implicitTargetDF = uriRef("implicitDrillDown-target-uri");
 const drillConfig: IImplicitDrillDown = {
     implicitDrillDown: {
         from: { drillFromAttribute: { localIdentifier: Status.attribute.localIdentifier } },
-        target: {
+        drillDownStep: {
             drillToAttribute: {
                 attributeDisplayForm: implicitTargetDF,
             },
