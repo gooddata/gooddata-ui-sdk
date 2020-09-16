@@ -30,6 +30,8 @@ import {
     IMeasureValueFilter,
     isComparisonCondition,
     isRangeCondition,
+    isRankingFilter,
+    IRankingFilter,
 } from "../filter";
 import {
     isMeasureDefinition,
@@ -210,6 +212,21 @@ const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
     return `{ measureValueFilter: { measure: ${ref} }`;
 };
 
+const convertRankingFilter: Converter<IRankingFilter> = ({
+    rankingFilter: { measure, attributes, value, operator },
+}) => {
+    const attributesString = attributes?.map(stringify).join(ARRAY_JOINER);
+
+    const args = [
+        stringify(measure),
+        attributesString && `[${attributesString}]`,
+        `"${operator}"`,
+        `${value}`,
+    ].filter(isString);
+
+    return `newRankingFilter(${args.join(ARRAY_JOINER)})`;
+};
+
 /**
  * Returns a code for generating the provided input using convenience factory methods where possible.
  * @param data - data to return the generating code for
@@ -239,6 +256,8 @@ export const factoryNotationFor = (data: any): string => {
         return convertNegativeAttributeFilter(data);
     } else if (isMeasureValueFilter(data)) {
         return convertMeasureValueFilter(data);
+    } else if (isRankingFilter(data)) {
+        return convertRankingFilter(data);
     }
 
     return isObject(data) || isString(data) ? stringify(data) : data;

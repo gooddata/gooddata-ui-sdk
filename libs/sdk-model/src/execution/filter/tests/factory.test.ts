@@ -1,13 +1,16 @@
 // (C) 2019-2020 GoodData Corporation
-import { Account, Won } from "../../../../__mocks__/model";
+import { Account, Department, Won } from "../../../../__mocks__/model";
 import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
+    newRankingFilter,
 } from "../factory";
-import { localIdRef } from "../../../objRef/factory";
+import { localIdRef, idRef } from "../../../objRef/factory";
+import { IAttribute, attributeIdentifier, IdentifierRef, LocalIdRef } from "../../..";
+import { attributeLocalId } from "../../attribute";
 
 describe("filter factory", () => {
     describe("newPositiveAttributeFilter", () => {
@@ -60,7 +63,7 @@ describe("filter factory", () => {
             expect(newMeasureValueFilter(Won, "EQUAL_TO", 11)).toMatchSnapshot();
         });
         it("should generate comparison filter for measure identifier", () => {
-            expect(newMeasureValueFilter(localIdRef("measureObjLocalId"), "EQUAL_TO", 11)).toMatchSnapshot();
+            expect(newMeasureValueFilter(idRef("identifier"), "EQUAL_TO", 11)).toMatchSnapshot();
         });
         it("should generate comparison filter for measure local identifier", () => {
             expect(newMeasureValueFilter(localIdRef("measureObjLocalId"), "EQUAL_TO", 11)).toMatchSnapshot();
@@ -81,6 +84,50 @@ describe("filter factory", () => {
         });
         it("should generate range filter for measure object with treatNullValuesAs", () => {
             expect(newMeasureValueFilter(Won, "BETWEEN", 0, 100, 42)).toMatchSnapshot();
+        });
+    });
+
+    describe("newRankingFilter", () => {
+        it("should generate top filter for measure object", () => {
+            expect(newRankingFilter(Won, "TOP", 10)).toMatchSnapshot();
+        });
+        it("should generate top filter for measure identifier", () => {
+            expect(newRankingFilter(idRef("identifier"), "BOTTOM", 30)).toMatchSnapshot();
+        });
+        it("should generate top filter for measure local identifier ref", () => {
+            expect(newRankingFilter(localIdRef("measureObjLocalId"), "TOP", 5)).toMatchSnapshot();
+        });
+        it("should generate top filter for measure local identifier", () => {
+            expect(newRankingFilter("measureObjLocalId", "TOP", 5)).toMatchSnapshot();
+        });
+        it("should generate bottom filter for measure object", () => {
+            expect(newRankingFilter(Won, "BOTTOM", 10)).toMatchSnapshot();
+        });
+        it("should generate bottom filter for measure object and empty array of attributes", () => {
+            const attributes: IAttribute[] = [];
+            expect(newRankingFilter(Won, attributes, "BOTTOM", 20)).toMatchSnapshot();
+        });
+        it("should generate bottom filter for measure object and attribute objects", () => {
+            const attributes: IAttribute[] = [Department, Account.Name];
+            expect(newRankingFilter(Won, attributes, "BOTTOM", 20)).toMatchSnapshot();
+        });
+        it("should generate bottom filter for measure object and attribute identifiers", () => {
+            const attributes: IdentifierRef[] = [
+                idRef(attributeIdentifier(Department) ?? ""),
+                idRef(attributeIdentifier(Account.Default) ?? ""),
+            ];
+            expect(newRankingFilter(Won, attributes, "BOTTOM", 5)).toMatchSnapshot();
+        });
+        it("should generate bottom filter for measure object and attribute local identifiers refs", () => {
+            const attributes: LocalIdRef[] = [
+                localIdRef(attributeLocalId(Department)),
+                localIdRef(attributeLocalId(Account.Default)),
+            ];
+            expect(newRankingFilter(Won, attributes, "BOTTOM", 3)).toMatchSnapshot();
+        });
+        it("should generate bottom filter for measure object and attribute local identifiers", () => {
+            const attributes: string[] = [attributeLocalId(Department), attributeLocalId(Account.Default)];
+            expect(newRankingFilter(Won, attributes, "BOTTOM", 3)).toMatchSnapshot();
         });
     });
 });

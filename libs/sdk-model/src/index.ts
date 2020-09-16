@@ -100,6 +100,9 @@ export {
     IAbsoluteDateFilter,
     IRelativeDateFilter,
     IMeasureValueFilter,
+    IRankingFilter,
+    RankingFilterOperator,
+    isRankingFilter,
     IFilter,
     IMeasureFilter,
     IDateFilter,
@@ -143,6 +146,7 @@ export {
     newRelativeDateFilter,
     newAllTimeFilter,
     newMeasureValueFilter,
+    newRankingFilter,
 } from "./execution/filter/factory";
 
 export { mergeFilters } from "./execution/filter/filterMerge";

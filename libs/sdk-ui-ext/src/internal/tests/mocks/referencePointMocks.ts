@@ -8,6 +8,7 @@ import {
     IMeasureValueFilter,
     IFiltersBucketItem,
     DATE_DATASET_ATTRIBUTE,
+    IRankingFilter,
 } from "../../interfaces/Visualization";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
@@ -204,6 +205,12 @@ export const measureValueFilter: IMeasureValueFilter = {
             value: 100,
         },
     },
+};
+
+export const rankingFilter: IRankingFilter = {
+    measure: masterMeasureItems[0].localIdentifier,
+    operator: "TOP",
+    value: 3,
 };
 
 export const dateFilterSamePeriodPreviousYear: IDateFilter = {

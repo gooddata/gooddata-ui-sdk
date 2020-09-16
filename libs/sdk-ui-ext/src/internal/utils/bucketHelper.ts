@@ -34,6 +34,7 @@ import {
     IFiltersBucketItem,
     IMeasureValueFilter,
     IUiConfig,
+    IRankingFilter,
 } from "../interfaces/Visualization";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket";
 import { UICONFIG } from "../constants/uiConfig";
@@ -67,6 +68,16 @@ export function isMeasureValueFilter(filter: IBucketFilter): filter is IMeasureV
     return !!filter && !!(filter as IMeasureValueFilter).measureLocalIdentifier;
 }
 
+export function isRankingFilter(filter: IBucketFilter): filter is IRankingFilter {
+    const filterAsRankingFilter = filter as IRankingFilter;
+    return (
+        !!filter &&
+        typeof filterAsRankingFilter.measure === "string" &&
+        typeof filterAsRankingFilter.operator === "string" &&
+        typeof filterAsRankingFilter.value === "number"
+    );
+}
+
 export function sanitizeFilters(newReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const attributeBucketItems = getAllAttributeItems(newReferencePoint.buckets);
     const measureBucketItems = getAllMeasureItems(newReferencePoint.buckets);
@@ -94,6 +105,21 @@ export function sanitizeFilters(newReferencePoint: IExtendedReferencePoint): IEx
                 (measureBucketItem: IBucketItem) =>
                     measureBucketItem.localIdentifier === filter.measureLocalIdentifier,
             );
+        } else if (isRankingFilter(filter)) {
+            if (attributeBucketItems.length === 0) {
+                return false;
+            }
+            const hasValidMeasure = measureBucketItems.some(
+                (measureBucketItem: IBucketItem) => measureBucketItem.localIdentifier === filter.measure,
+            );
+            const hasValidAttributes =
+                !filter.attributes ||
+                filter.attributes.every((localIdentifier) =>
+                    attributeBucketItems.some(
+                        (attributeBucketItem) => attributeBucketItem.localIdentifier === localIdentifier,
+                    ),
+                );
+            return hasValidMeasure && hasValidAttributes;
         }
 
         return false;

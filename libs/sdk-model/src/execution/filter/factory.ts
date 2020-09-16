@@ -10,8 +10,10 @@ import {
     IPositiveAttributeFilter,
     IRelativeDateFilter,
     RangeConditionOperator,
+    IRankingFilter,
+    RankingFilterOperator,
 } from "./index";
-import { attributeDisplayFormRef, IAttribute } from "../attribute";
+import { attributeDisplayFormRef, IAttribute, isAttribute, attributeLocalId } from "../attribute";
 import { Identifier, isObjRef, LocalIdRef, ObjRef, ObjRefInScope } from "../../objRef";
 import { IMeasure, isMeasure, measureLocalId } from "../measure";
 import { idRef, localIdRef } from "../../objRef/factory";
@@ -156,6 +158,24 @@ export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDat
     };
 }
 
+function convertMeasureOrRefToObjRefInScope(measureOrRef: IMeasure | ObjRefInScope | string): ObjRefInScope {
+    return isMeasure(measureOrRef)
+        ? { localIdentifier: measureLocalId(measureOrRef) }
+        : typeof measureOrRef === "string"
+        ? localIdRef(measureOrRef)
+        : measureOrRef;
+}
+
+function convertAttributeOrRefToObjRefInScope(
+    attributeOrRef: IAttribute | ObjRefInScope | string,
+): ObjRefInScope {
+    return isAttribute(attributeOrRef)
+        ? { localIdentifier: attributeLocalId(attributeOrRef) }
+        : typeof attributeOrRef === "string"
+        ? localIdRef(attributeOrRef)
+        : attributeOrRef;
+}
+
 /**
  * Creates a new measure value filter.
  *
@@ -213,11 +233,7 @@ export function newMeasureValueFilter(
     val2OrTreatNullValuesAsInComparison?: number,
     treatNullValuesAsInRange?: number,
 ): IMeasureValueFilter {
-    const ref: ObjRefInScope = isMeasure(measureOrRef)
-        ? { localIdentifier: measureLocalId(measureOrRef) }
-        : typeof measureOrRef === "string"
-        ? localIdRef(measureOrRef)
-        : measureOrRef;
+    const ref = convertMeasureOrRefToObjRefInScope(measureOrRef);
 
     if (operator === "BETWEEN" || operator === "NOT_BETWEEN") {
         invariant(
@@ -260,4 +276,86 @@ export function newMeasureValueFilter(
             },
         };
     }
+}
+
+/**
+ * Creates a new ranking filter.
+ *
+ * @param measureOrRef - instance of measure to filter, or reference of the measure object; if instance of measure is
+ *   provided, then it is assumed this measure is in scope of execution and will be referenced by the filter by
+ *   its local identifier
+ * @param operator - TOP or BOTTOM operator to use in the filter
+ * @param value - Number of values to use in filter
+ * @param attributesOrRefs - Array of attributes used in filter, or reference of the attribute object. If instance of attribute is
+ *   provided, then it is assumed this attribute is in scope of execution and will be referenced by the filter by
+ *   its local identifier
+ * @public
+ */
+export function newRankingFilter(
+    measureOrRef: IMeasure | ObjRefInScope | string,
+    attributesOrRefs: Array<IAttribute | ObjRefInScope | string>,
+    operator: RankingFilterOperator,
+    value: number,
+): IRankingFilter;
+
+/**
+ * Creates a new ranking filter.
+ *
+ * @param measureOrRef - instance of measure to filter, or reference of the measure object; if instance of measure is
+ *   provided, then it is assumed this measure is in scope of execution and will be referenced by the filter by
+ *   its local identifier
+ * @param operator - TOP or BOTTOM operator to use in the filter
+ * @param value - Number of values to use in filter
+ * @public
+ */
+export function newRankingFilter(
+    measureOrRef: IMeasure | ObjRefInScope | string,
+    operator: RankingFilterOperator,
+    value: number,
+): IRankingFilter;
+
+/**
+ * Creates a new ranking filter.
+ *
+ * @param measureOrRef - instance of measure to filter, or reference of the measure object; if instance of measure is
+ *   provided, then it is assumed this measure is in scope of execution and will be referenced by the filter by
+ *   its local identifier
+ * @param attributesOrRefsOrOperator - Array of attributes used in filter, or reference of the attribute object. If instance of attribute is
+ *   provided, then it is assumed this attribute is in scope of execution and will be referenced by the filter by
+ *   its local identifier. If attributes are not specified it's TOP or BOTTOM operator to use in the filter
+ * @param operatorOrValue - Number of values to use in filter or operator if attributes are not speciied
+ * @param valueOrNothing - Value or nothing if attributes are not specified
+ * @public
+ */
+export function newRankingFilter(
+    measureOrRef: IMeasure | ObjRefInScope | string,
+    attributesOrRefsOrOperator: Array<IAttribute | ObjRefInScope | string> | RankingFilterOperator,
+    operatorOrValue: RankingFilterOperator | number,
+    valueOrNothing?: number,
+): IRankingFilter {
+    if (typeof attributesOrRefsOrOperator === "string" && typeof operatorOrValue === "number") {
+        const measureRef = convertMeasureOrRefToObjRefInScope(measureOrRef);
+        return {
+            rankingFilter: {
+                measure: measureRef,
+                operator: attributesOrRefsOrOperator,
+                value: operatorOrValue,
+            },
+        };
+    } else if (typeof operatorOrValue === "string" && valueOrNothing) {
+        const measureRef = convertMeasureOrRefToObjRefInScope(measureOrRef);
+        const attributeRefs = (attributesOrRefsOrOperator as Array<IAttribute | ObjRefInScope | string>).map(
+            convertAttributeOrRefToObjRefInScope,
+        );
+        return {
+            rankingFilter: {
+                measure: measureRef,
+                operator: operatorOrValue,
+                value: valueOrNothing,
+                attributes: attributeRefs,
+            },
+        };
+    }
+
+    throw new Error("Ranking filter requires measure, operator and value");
 }

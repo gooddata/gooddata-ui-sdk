@@ -106,7 +106,7 @@ export namespace GdcExecuteAFM {
         uri: string;
     }
 
-    export type ExtendedFilter = FilterItem | IMeasureValueFilter;
+    export type ExtendedFilter = FilterItem | IMeasureValueFilter | IRankingFilter;
     export type CompatibilityFilter = IExpressionFilter | ExtendedFilter;
     export type FilterItem = DateFilterItem | AttributeFilterItem;
     export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
@@ -192,6 +192,17 @@ export namespace GdcExecuteAFM {
         measureValueFilter: {
             measure: Qualifier;
             condition?: MeasureValueFilterCondition;
+        };
+    }
+
+    export type RankingFilterOperator = "TOP" | "BOTTOM";
+
+    export interface IRankingFilter {
+        rankingFilter: {
+            measures: Qualifier[];
+            attributes?: Qualifier[];
+            operator: RankingFilterOperator;
+            value: number;
         };
     }
 
@@ -405,6 +416,12 @@ export namespace GdcExecuteAFM {
         return (
             !isEmpty(filter) && (filter as GdcExecuteAFM.IMeasureValueFilter).measureValueFilter !== undefined
         );
+    }
+
+    export function isRankingFilter(
+        filter: GdcExecuteAFM.CompatibilityFilter,
+    ): filter is GdcExecuteAFM.IRankingFilter {
+        return !isEmpty(filter) && (filter as GdcExecuteAFM.IRankingFilter).rankingFilter !== undefined;
     }
 
     export function isExpressionFilter(

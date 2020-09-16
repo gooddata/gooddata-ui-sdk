@@ -1,7 +1,17 @@
 // (C) 2019-2020 GoodData Corporation
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
-import { dateFilter, attributeFilter, measureValueFilter } from "../../tests/mocks/referencePointMocks";
-import { isAttributeFilter, isDateFilter, isMeasureValueFilter } from "../../utils/bucketHelper";
+import {
+    dateFilter,
+    attributeFilter,
+    measureValueFilter,
+    rankingFilter,
+} from "../../tests/mocks/referencePointMocks";
+import {
+    isAttributeFilter,
+    isDateFilter,
+    isMeasureValueFilter,
+    isRankingFilter,
+} from "../../utils/bucketHelper";
 
 describe("Visualization typeguards", () => {
     describe("isDateFilter", () => {
@@ -9,6 +19,7 @@ describe("Visualization typeguards", () => {
             ...InvalidInputTestCases,
             [true, "date filter", dateFilter],
             [false, "attribute filter", attributeFilter],
+            [false, "ranking filter", rankingFilter],
             [false, "measure value filter", measureValueFilter],
         ];
 
@@ -21,6 +32,7 @@ describe("Visualization typeguards", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
             [false, "date filter", dateFilter],
+            [false, "ranking filter", rankingFilter],
             [true, "attribute filter", attributeFilter],
             [false, "measure value filter", measureValueFilter],
         ];
@@ -35,11 +47,26 @@ describe("Visualization typeguards", () => {
             ...InvalidInputTestCases,
             [false, "date filter", dateFilter],
             [false, "attribute filter", attributeFilter],
+            [false, "ranking filter", rankingFilter],
             [true, "measure value filter", measureValueFilter],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isMeasureValueFilter(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isRankingFilter", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "date filter", dateFilter],
+            [false, "attribute filter", attributeFilter],
+            [false, "measure value filter", measureValueFilter],
+            [true, "ranking filter", rankingFilter],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isRankingFilter(input)).toBe(expectedResult);
         });
     });
 });

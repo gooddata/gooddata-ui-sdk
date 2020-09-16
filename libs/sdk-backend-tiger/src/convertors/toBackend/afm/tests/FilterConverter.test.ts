@@ -14,6 +14,7 @@ import {
     newNegativeAttributeFilter,
     newMeasureValueFilter,
     IMeasureValueFilter,
+    newRankingFilter,
     idRef,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -152,6 +153,13 @@ describe("tiger filter converter from model to AFM", () => {
 
             expect(convertVisualizationObjectFilter(emptyPositiveFilter)).toBeNull();
             expect(convertVisualizationObjectFilter(emptyNegativeFilter)).toBeNull();
+        });
+    });
+
+    describe("ranking filters", () => {
+        it("should return null since tiger does not support ranking filters", () => {
+            const rankingFilter = newRankingFilter(ReferenceLdm.Won, "TOP", 10);
+            expect(convertVisualizationObjectFilter(rankingFilter)).toBeNull();
         });
     });
 });

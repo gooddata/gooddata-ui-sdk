@@ -5,6 +5,7 @@ import {
     newMeasureValueFilter,
     newAbsoluteDateFilter,
     newAllTimeFilter,
+    newRankingFilter,
 } from "../factory";
 import { IFilter } from "..";
 
@@ -21,6 +22,15 @@ describe("mergeFilters", () => {
     it("should append measure value filters", () => {
         const insightFilters = [newMeasureValueFilter("foo", "EQUAL_TO", 42)];
         const addedFilters = [newMeasureValueFilter("bar", "BETWEEN", 0, 100)];
+
+        const actual = mergeFilters(insightFilters, addedFilters);
+
+        expect(actual).toEqual([...insightFilters, ...addedFilters]);
+    });
+
+    it("should append ranking filters", () => {
+        const insightFilters = [newRankingFilter("foo", "TOP", 5)];
+        const addedFilters = [newRankingFilter("bar", "TOP", 3)];
 
         const actual = mergeFilters(insightFilters, addedFilters);
 

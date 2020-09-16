@@ -49,6 +49,13 @@ export const measureValueFilter: AFM.CompatibilityFilter = {
         },
     },
 };
+export const rankingFilter: AFM.CompatibilityFilter = {
+    rankingFilter: {
+        measures: [{ localIdentifier: "m1" }],
+        value: 5,
+        operator: "TOP",
+    },
+};
 export const identifierObjectQualifier: AFM.ObjQualifier = {
     identifier: "id",
 };

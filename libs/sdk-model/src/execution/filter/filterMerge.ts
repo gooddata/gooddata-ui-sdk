@@ -9,6 +9,9 @@ import {
     isDateFilter,
     filterObjRef,
     isAllTimeDateFilter,
+    IRankingFilter,
+    isMeasureValueFilter,
+    isRankingFilter,
 } from "./index";
 import groupBy from "lodash/groupBy";
 import last from "lodash/last";
@@ -18,6 +21,7 @@ type FilterByType = {
     attribute: IAttributeFilter[];
     date: IDateFilter[];
     measureValue: IMeasureValueFilter[];
+    ranking: IRankingFilter[];
 };
 
 function separateFiltersByType(filters: IFilter[]): FilterByType {
@@ -25,6 +29,7 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
         attribute: [],
         date: [],
         measureValue: [],
+        ranking: [],
     };
 
     filters.forEach((f) => {
@@ -32,9 +37,12 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
             result.attribute.push(f);
         } else if (isDateFilter(f)) {
             result.date.push(f);
-        } else {
+        } else if (isMeasureValueFilter(f)) {
             result.measureValue.push(f);
+        } else if (isRankingFilter(f)) {
+            result.ranking.push(f);
         }
+        invariant(f, "filter is not supported");
     });
 
     return result;
@@ -83,7 +91,9 @@ export function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[]
     // concat measure value filters
     const measureValueFilters = [...original.measureValue, ...added.measureValue];
 
-    return [...attributeFilters, ...dateFilters, ...measureValueFilters];
+    const rankingFilters = [...original.ranking, ...added.ranking];
+
+    return [...attributeFilters, ...dateFilters, ...measureValueFilters, ...rankingFilters];
 }
 
 function mergeDateFilters(originalFilters: IDateFilter[], addedFilters: IDateFilter[]): IDateFilter[] {

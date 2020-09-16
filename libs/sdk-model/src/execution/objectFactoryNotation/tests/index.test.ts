@@ -15,6 +15,7 @@ import {
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
     IRelativeDateFilter,
+    IRankingFilter,
 } from "../../filter";
 import {
     newAbsoluteDateFilter,
@@ -22,6 +23,7 @@ import {
     newPositiveAttributeFilter,
     newRelativeDateFilter,
     newMeasureValueFilter,
+    newRankingFilter,
 } from "../../filter/factory";
 import { IMeasure } from "../../measure";
 import {
@@ -45,6 +47,7 @@ const factories = {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newMeasureValueFilter,
+    newRankingFilter,
 
     newAttributeSort,
     newAttributeAreaSort,
@@ -478,6 +481,36 @@ describe("factoryNotationFor", () => {
             const actual = factoryNotationFor(input);
 
             testModelNotation(actual, input);
+        });
+
+        describe("ranking filter", () => {
+            it("should handle ranking filter without attribute", () => {
+                const input: IRankingFilter = {
+                    rankingFilter: {
+                        measure: {
+                            localIdentifier: "m1",
+                        },
+                        operator: "BOTTOM",
+                        value: 3,
+                    },
+                };
+                const actual = factoryNotationFor(input);
+                testModelNotation(actual, input);
+            });
+            it("should handle ranking filter with attributes", () => {
+                const input: IRankingFilter = {
+                    rankingFilter: {
+                        measure: {
+                            localIdentifier: "m1",
+                        },
+                        operator: "BOTTOM",
+                        value: 3,
+                        attributes: [{ localIdentifier: "a1" }, { localIdentifier: "a2" }],
+                    },
+                };
+                const actual = factoryNotationFor(input);
+                testModelNotation(actual, input);
+            });
         });
     });
 });

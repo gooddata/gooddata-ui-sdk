@@ -18,6 +18,7 @@ import {
     measureSortItem,
     attributeLocatorItem,
     measureLocatorItem,
+    rankingFilter,
 } from "./GdcExecuteAFM.fixtures";
 
 describe("GdcExecuteAFM", () => {
@@ -61,6 +62,7 @@ describe("GdcExecuteAFM", () => {
             [false, "positive attribute filter", positiveAttributeFilter],
             [false, "negative attribute filter", negativeAttributeFilter],
             [false, "expression filter", expressionFilter],
+            [false, "ranking filter", rankingFilter],
             [false, "measure value filter", measureValueFilter],
         ];
 
@@ -77,6 +79,7 @@ describe("GdcExecuteAFM", () => {
             [true, "positive attribute filter", positiveAttributeFilter],
             [true, "negative attribute filter", negativeAttributeFilter],
             [false, "expression filter", expressionFilter],
+            [false, "ranking filter", rankingFilter],
             [false, "measure value filter", measureValueFilter],
         ];
 
@@ -93,6 +96,7 @@ describe("GdcExecuteAFM", () => {
             [true, "positive attribute filter", positiveAttributeFilter],
             [false, "negative attribute filter", negativeAttributeFilter],
             [false, "expression filter", expressionFilter],
+            [false, "ranking filter", rankingFilter],
             [false, "measure value filter", measureValueFilter],
         ];
 
@@ -109,6 +113,7 @@ describe("GdcExecuteAFM", () => {
             [false, "positive attribute filter", positiveAttributeFilter],
             [true, "negative attribute filter", negativeAttributeFilter],
             [false, "expression filter", expressionFilter],
+            [false, "ranking filter", rankingFilter],
             [false, "measure value filter", measureValueFilter],
         ];
 
@@ -125,11 +130,29 @@ describe("GdcExecuteAFM", () => {
             [false, "positive attribute filter", positiveAttributeFilter],
             [false, "negative attribute filter", negativeAttributeFilter],
             [false, "expression filter", expressionFilter],
+            [false, "ranking filter", rankingFilter],
             [true, "measure value filter", measureValueFilter],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(AFM.isMeasureValueFilter(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isRankingFilter", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "expression filter", expressionFilter],
+            [false, "measure value filter", measureValueFilter],
+            [true, "ranking filter", rankingFilter],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isRankingFilter(input)).toBe(expectedResult);
         });
     });
 

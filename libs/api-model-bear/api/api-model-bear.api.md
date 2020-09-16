@@ -457,7 +457,7 @@ export namespace GdcExecuteAFM {
     // (undocumented)
     export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
     // (undocumented)
-    export type ExtendedFilter = FilterItem | IMeasureValueFilter;
+    export type ExtendedFilter = FilterItem | IMeasureValueFilter | IRankingFilter;
     // (undocumented)
     export type FilterItem = DateFilterItem | AttributeFilterItem;
     // (undocumented)
@@ -675,6 +675,16 @@ export namespace GdcExecuteAFM {
         };
     }
     // (undocumented)
+    export interface IRankingFilter {
+        // (undocumented)
+        rankingFilter: {
+            measures: Qualifier[];
+            attributes?: Qualifier[];
+            operator: RankingFilterOperator;
+            value: number;
+        };
+    }
+    // (undocumented)
     export interface IRelativeDateFilter {
         // (undocumented)
         relativeDateFilter: {
@@ -746,6 +756,8 @@ export namespace GdcExecuteAFM {
     // (undocumented)
     export function isPreviousPeriodMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.IPreviousPeriodMeasureDefinition;
     // (undocumented)
+    export function isRankingFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IRankingFilter;
+    // (undocumented)
     export function isRelativeDateFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IRelativeDateFilter;
     // (undocumented)
     export function isSimpleMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.ISimpleMeasureDefinition;
@@ -784,6 +796,8 @@ export namespace GdcExecuteAFM {
     export type Qualifier = ObjQualifier | ILocalIdentifierQualifier;
     // (undocumented)
     export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
+    // (undocumented)
+    export type RankingFilterOperator = "TOP" | "BOTTOM";
     // (undocumented)
     export type SimpleMeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
     // (undocumented)
@@ -2219,7 +2233,7 @@ export namespace GdcVisualizationObject {
     // (undocumented)
     export type DateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
     // (undocumented)
-    export type ExtendedFilter = Filter | IMeasureValueFilter;
+    export type ExtendedFilter = Filter | IMeasureValueFilter | IRankingFilter;
     // (undocumented)
     export type Filter = DateFilter | AttributeFilter;
     // (undocumented)
@@ -2367,6 +2381,16 @@ export namespace GdcVisualizationObject {
         };
     }
     // (undocumented)
+    export interface IRankingFilter {
+        // (undocumented)
+        rankingFilter: {
+            measures: (IObjUriQualifier | ILocalIdentifierQualifier)[];
+            attributes?: (IObjUriQualifier | ILocalIdentifierQualifier)[];
+            operator: RankingFilterOperator;
+            value: number;
+        };
+    }
+    // (undocumented)
     export interface IReferenceItems {
         // (undocumented)
         [identifier: string]: string;
@@ -2415,6 +2439,8 @@ export namespace GdcVisualizationObject {
     export function isPreviousPeriodMeasureDefinition(definition: IMeasureDefinitionType): definition is IPreviousPeriodMeasureDefinition;
     // (undocumented)
     export function isRangeCondition(condition: MeasureValueFilterCondition): condition is IRangeCondition;
+    // (undocumented)
+    export function isRankingFilter(filter: ExtendedFilter): filter is IRankingFilter;
     // (undocumented)
     export function isRelativeDateFilter(filter: DateFilter): filter is IRelativeDateFilter;
     // (undocumented)
@@ -2477,6 +2503,8 @@ export namespace GdcVisualizationObject {
     export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
     // (undocumented)
     export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
+    // (undocumented)
+    export type RankingFilterOperator = "TOP" | "BOTTOM";
     // (undocumented)
     export type SortDirection = "asc" | "desc";
     // (undocumented)

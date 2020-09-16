@@ -217,6 +217,23 @@ export interface IMeasureValueFilter {
 }
 
 /**
+ * @public
+ */
+export type RankingFilterOperator = "TOP" | "BOTTOM";
+
+/**
+ * @public
+ */
+export interface IRankingFilter {
+    rankingFilter: {
+        measure: ObjRefInScope;
+        attributes?: ObjRefInScope[];
+        operator: RankingFilterOperator;
+        value: number;
+    };
+}
+
+/**
  * All possible filters.
  *
  * @public
@@ -226,7 +243,8 @@ export type IFilter =
     | IRelativeDateFilter
     | IPositiveAttributeFilter
     | INegativeAttributeFilter
-    | IMeasureValueFilter;
+    | IMeasureValueFilter
+    | IRankingFilter;
 
 /**
  * All possible filters that can be specified for a simple measure.
@@ -316,6 +334,15 @@ export function isDateFilter(obj: unknown): obj is IDateFilter {
  */
 export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter {
     return !isEmpty(obj) && (obj as IMeasureValueFilter).measureValueFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is a ranking filter.
+ *
+ * @public
+ */
+export function isRankingFilter(obj: unknown): obj is IRankingFilter {
+    return !isEmpty(obj) && (obj as IRankingFilter).rankingFilter !== undefined;
 }
 
 /**

@@ -10,6 +10,8 @@ import {
     IAttribute,
     IMeasureFilter,
     DateAttributeGranularity,
+    IRankingFilter,
+    IMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
@@ -32,17 +34,37 @@ const convertAttributeElements = (items: string[]): IAttributeElements => {
     return isUriLike(first) ? { uris: items } : { values: items };
 };
 
+const convertMeasureValueFilter = (
+    filter: GdcVisualizationObject.IMeasureValueFilter,
+): IMeasureValueFilter => {
+    return {
+        measureValueFilter: {
+            condition: filter.measureValueFilter.condition,
+            measure: filter.measureValueFilter.measure,
+        },
+    };
+};
+
+const convertRankingFilter = (filter: GdcVisualizationObject.IRankingFilter): IRankingFilter => {
+    const { measures, operator, value, attributes } = filter.rankingFilter;
+    return {
+        rankingFilter: {
+            measure: measures[0],
+            operator,
+            value,
+            attributes,
+        },
+    };
+};
+
 const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter => {
     if (GdcVisualizationObject.isMeasureValueFilter(filter)) {
-        return {
-            measureValueFilter: {
-                condition: filter.measureValueFilter.condition,
-                measure: filter.measureValueFilter.measure,
-            },
-        };
+        return convertMeasureValueFilter(filter);
+    } else if (GdcVisualizationObject.isRankingFilter(filter)) {
+        return convertRankingFilter(filter);
+    } else {
+        return convertMeasureFilter(filter);
     }
-
-    return convertMeasureFilter(filter);
 };
 
 const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFilter => {
