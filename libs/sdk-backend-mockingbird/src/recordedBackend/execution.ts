@@ -31,7 +31,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { ExecutionRecording, RecordingIndex, ScenarioRecording, RecordedDescriptorRefType } from "./types";
+import { ExecutionRecording, RecordingIndex, ScenarioRecording, RecordedRefType } from "./types";
 import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import flatMap from "lodash/flatMap";
 import isEqual from "lodash/isEqual";
@@ -72,7 +72,7 @@ export class RecordedExecutionFactory extends AbstractExecutionFactory {
     constructor(
         private readonly recordings: RecordingIndex,
         workspace: string,
-        private readonly resultRefType: RecordedDescriptorRefType,
+        private readonly resultRefType: RecordedRefType,
     ) {
         super(workspace);
     }
@@ -95,7 +95,7 @@ function recordedExecutionKey(defOrFingerprint: IExecutionDefinition | string): 
 function recordedPreparedExecution(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
-    resultRefType: RecordedDescriptorRefType,
+    resultRefType: RecordedRefType,
     recordings: RecordingIndex = {},
 ): IPreparedExecution {
     const fp = defFingerprint(definition);
@@ -142,7 +142,7 @@ function recordedPreparedExecution(
  */
 function enrichDescriptorsWithRefs(
     dims: IDimensionDescriptor[],
-    resultRefType: RecordedDescriptorRefType,
+    resultRefType: RecordedRefType,
 ): IDimensionDescriptor[] {
     const createRef = (type: ObjectType, uri?: string, identifier?: string): ObjRef | undefined => {
         if (resultRefType === "uri" && uri) {
@@ -207,7 +207,7 @@ class RecordedExecutionResult implements IExecutionResult {
     constructor(
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
-        readonly resultRefType: RecordedDescriptorRefType,
+        readonly resultRefType: RecordedRefType,
         private readonly recording: ExecutionRecording,
         private readonly denormalizer?: Denormalizer,
     ) {
@@ -317,7 +317,7 @@ function denormalizedDataView(
     recording: ScenarioRecording,
     scenario: any,
     dataViewId: string,
-    resultRefType: RecordedDescriptorRefType,
+    resultRefType: RecordedRefType,
 ): IDataView {
     const { execution } = recording;
     const definition = { ...execution.definition, buckets: scenario.buckets };
@@ -341,7 +341,7 @@ function normalizedDataView(
     recording: ScenarioRecording,
     scenario: any,
     dataViewId: string,
-    resultRefType: RecordedDescriptorRefType,
+    resultRefType: RecordedRefType,
 ): IDataView {
     const { execution } = recording;
 
@@ -389,7 +389,7 @@ function normalizedDataView(
 export function recordedDataView(
     recording: ScenarioRecording,
     dataViewId: string = DataViewAll,
-    resultRefType: RecordedDescriptorRefType = "uri",
+    resultRefType: RecordedRefType = "uri",
 ): IDataView {
     const { execution, scenarioIndex } = recording;
     const scenario = execution.scenarios?.[scenarioIndex];

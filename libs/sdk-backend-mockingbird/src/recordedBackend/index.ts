@@ -106,11 +106,7 @@ function recordedWorkspace(
     return {
         workspace,
         execution(): IExecutionFactory {
-            return new RecordedExecutionFactory(
-                recordings,
-                workspace,
-                implConfig.resultDescriptorRefs ?? "uri",
-            );
+            return new RecordedExecutionFactory(recordings, workspace, implConfig.useRefType ?? "uri");
         },
         elements(): IElementQueryFactory {
             return new RecordedElementQueryFactory(recordings);
@@ -119,7 +115,7 @@ function recordedWorkspace(
             return new RecordedMetadata(recordings);
         },
         insights(): IWorkspaceInsights {
-            return new RecordedInsights(recordings);
+            return new RecordedInsights(recordings, implConfig.useRefType ?? "uri");
         },
         dashboards(): IWorkspaceDashboards {
             throw new NotSupported("not supported");

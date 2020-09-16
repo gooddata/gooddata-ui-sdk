@@ -54,7 +54,7 @@ export class InsightRecording implements IRecording {
         workspace: string,
         newWorkspaceId?: string,
     ): Promise<void> {
-        const obj = await backend.workspace(workspace).insights().getInsight(idRef(this.insightId));
+        const obj: any = await backend.workspace(workspace).insights().getInsight(idRef(this.insightId));
 
         if (!fs.existsSync(this.directory)) {
             fs.mkdirSync(this.directory, { recursive: true });
@@ -63,6 +63,11 @@ export class InsightRecording implements IRecording {
         const replaceString: [string, string] | undefined = newWorkspaceId
             ? [workspace, newWorkspaceId]
             : undefined;
+
+        /*
+         * Do not store ref, let the recorded backend fill-in
+         */
+        delete obj.insight.ref;
 
         writeAsJsonSync(this.objFile, obj, { replaceString });
     }

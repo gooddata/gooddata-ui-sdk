@@ -71,6 +71,7 @@ const sourceInsight: IInsight = {
         ...sourceInsightDefinition.insight,
         identifier: "sourceInsightIdentifier",
         uri: "/sourceInsightUri",
+        ref: uriRef("/sourceInsightUri"),
     },
 };
 
@@ -150,6 +151,7 @@ const expectedInsight: IInsight = {
         ...expectedInsightDefinition.insight,
         identifier: sourceInsight.insight.identifier,
         uri: sourceInsight.insight.uri,
+        ref: uriRef(sourceInsight.insight.uri),
     },
 };
 
@@ -159,6 +161,7 @@ const expectedInsightWithTotals: IInsight = {
         ...expectedInsightDefinitionWithTotals.insight,
         identifier: sourceInsight.insight.identifier,
         uri: sourceInsight.insight.uri,
+        ref: uriRef(sourceInsight.insight.uri),
     },
 };
 

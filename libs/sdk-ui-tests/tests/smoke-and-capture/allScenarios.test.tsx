@@ -4,7 +4,7 @@ import flatMap from "lodash/flatMap";
 import unionBy from "lodash/unionBy";
 import isArray from "lodash/isArray";
 import isObject from "lodash/isObject";
-import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@gooddata/sdk-model";
+import { defFingerprint, IInsight, IInsightDefinition, insightTitle, uriRef } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
 import allScenarios from "../../scenarios";
@@ -38,7 +38,7 @@ function scenarioSaveDataCaptureRequests(
             const existingRequests = readJsonSync(requestsFile);
 
             if (!isObject(existingRequests)) {
-                // tslint:disable-next-line:no-console
+                // eslint-disable-next-line no-console
                 console.warn(
                     `The requests file ${requestsFile} seems invalid. It should contain object describing what data view requests should be captured for the recording.`,
                 );
@@ -46,7 +46,7 @@ function scenarioSaveDataCaptureRequests(
                 requests = existingRequests as DataViewRequests;
             }
         } catch (err) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             console.warn("Unable to read or parse exec requests file in ", requestsFile);
         }
     }
@@ -106,7 +106,7 @@ function scenarioSaveDescriptors(
             const existingScenarios = readJsonSync(scenariosFile);
 
             if (!isArray(existingScenarios)) {
-                // tslint:disable-next-line:no-console
+                // eslint-disable-next-line no-console
                 console.warn(
                     `The scenarios file ${scenariosFile} seems invalid. It should contain array of scenario metadata.`,
                 );
@@ -114,7 +114,7 @@ function scenarioSaveDescriptors(
                 scenarioDescriptors = existingScenarios;
             }
         } catch (err) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             console.warn("Unable to read or parse exec definition scenario file in ", scenariosFile);
         }
     }
@@ -201,8 +201,12 @@ function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefinition)
     }
 
     const id = scenario.insightId;
+    /*
+     * Note: while the generated insight uses ref as uriRef, the recordedBackend allows to override this at
+     * runtime so then tests can say if they want id or uri
+     */
     const persistentInsight: IInsight = scenario.insightConverter({
-        insight: { identifier: id, uri: id, ...def.insight },
+        insight: { identifier: id, uri: id, ref: uriRef(id), ...def.insight },
     });
     const insightDir = path.join(storeDir, id);
 

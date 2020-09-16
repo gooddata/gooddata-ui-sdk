@@ -732,6 +732,7 @@ export type IInsight = IInsightDefinition & {
     insight: {
         identifier: string;
         uri: string;
+        ref: ObjRef;
         created?: string;
         updated?: string;
         isLocked?: boolean;
@@ -926,6 +927,9 @@ export function insightProperties(insight: IInsightDefinition): VisualizationPro
 
 // @public
 export function insightReduceItems<T extends IInsightDefinition>(insight: T, reducer?: BucketItemReducer): T;
+
+// @public
+export function insightRef(insight: IInsight): ObjRef;
 
 // @public
 export function insightSanitize<T extends IInsightDefinition>(insight: T): T;
