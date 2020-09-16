@@ -27,6 +27,9 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 platformEdition: "enterprise",
                 portalLogoPage: false,
                 analyticalDesigner: true,
+                enableWeekFilters: true,
+                enableCustomMeasureFormatting: true,
+                enableAnalyticalDashboards: true,
             };
         });
     }
