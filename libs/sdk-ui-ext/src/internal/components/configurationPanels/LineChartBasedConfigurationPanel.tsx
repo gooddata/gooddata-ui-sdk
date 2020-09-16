@@ -49,7 +49,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                                 properties={properties}
                                 isDisabled={controlsDisabled || dataPointsControlDisabled}
                                 showDisabledMessage={dataPointsControlDisabled}
-                                defaultValue={true}
+                                defaultValue={"auto"}
                             />
                         )}
                         <CheckboxControl
