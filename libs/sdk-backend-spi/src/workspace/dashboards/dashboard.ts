@@ -75,6 +75,11 @@ export interface IDashboardBase {
      * Dashboard description
      */
     readonly description: string;
+
+    /**
+     * When dashboard is locked, no one other than the administrator can edit it
+     */
+    readonly isLocked?: boolean;
 }
 
 /**
