@@ -167,7 +167,8 @@ class PivotTableSizingReset extends Component {
                         config={{
                             columnSizing: {
                                 columnWidths: [...this.state.columnWidths],
-                                defaultWidth: this.state.autoResize ? "viewport" : "unset",
+                                // todo: one-4491 for test
+                                defaultWidth: this.state.autoResize ? "autoresizeAll" : "unset",
                                 growToFit: this.state.growToFit,
                             },
                         }}
