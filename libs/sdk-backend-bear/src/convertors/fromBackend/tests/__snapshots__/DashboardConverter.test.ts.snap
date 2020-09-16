@@ -14,6 +14,7 @@ Object {
     "uri": "/tempFilterContext",
   },
   "identifier": "dashboardWithFilterContext",
+  "isLocked": false,
   "layout": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -39,6 +40,7 @@ Object {
   "description": "",
   "filterContext": undefined,
   "identifier": "dashboardWithExtendedDateFilterConfig",
+  "isLocked": false,
   "layout": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
@@ -124,6 +126,7 @@ Object {
     "uri": "/gdc/md/obj/filterContext",
   },
   "identifier": "dashboardWithFilterContext",
+  "isLocked": false,
   "layout": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -141,6 +144,7 @@ Object {
   "description": "",
   "filterContext": undefined,
   "identifier": "dashboardWithFilterContext",
+  "isLocked": false,
   "layout": Object {
     "fluidLayout": Object {
       "rows": Array [
@@ -298,6 +302,7 @@ Object {
   "description": "",
   "filterContext": undefined,
   "identifier": "dashboardWithFilterContext",
+  "isLocked": false,
   "layout": Object {
     "fluidLayout": Object {
       "rows": Array [
@@ -455,6 +460,7 @@ Object {
   "description": "",
   "filterContext": undefined,
   "identifier": "emptyDashboard",
+  "isLocked": false,
   "layout": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/emptyDashboard",
@@ -481,6 +487,7 @@ Object {
     "uri": "/gdc/md/obj/exportFilterContext",
   },
   "identifier": "dashboardWithFilterContext",
+  "isLocked": false,
   "layout": undefined,
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",

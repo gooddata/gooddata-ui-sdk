@@ -445,7 +445,16 @@ const convertDateFilterConfig = (
 export const convertDashboard = (
     dashboard: IDashboard | IDashboardDefinition,
 ): GdcDashboard.IWrappedAnalyticalDashboard => {
-    const { filterContext, layout, ref, identifier, title, description, dateFilterConfig } = dashboard;
+    const {
+        filterContext,
+        layout,
+        ref,
+        identifier,
+        title,
+        description,
+        dateFilterConfig,
+        isLocked,
+    } = dashboard;
     const convertedLayout = layout && convertLayout(layout);
     const widgets = layout && layoutWidgets(layout);
     const dashboardUri = ref && refToUri(ref);
@@ -469,6 +478,7 @@ export const convertDashboard = (
                     : {}),
                 title,
                 summary: description,
+                locked: isLocked,
             } as GdcMetadata.IObjectMeta,
         },
     };

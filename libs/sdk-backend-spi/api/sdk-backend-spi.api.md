@@ -274,6 +274,7 @@ export interface IDashboardAttributeFilterReference {
 // @alpha
 export interface IDashboardBase {
     readonly description: string;
+    readonly isLocked?: boolean;
     readonly title: string;
 }
 

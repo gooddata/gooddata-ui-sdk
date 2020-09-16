@@ -67,7 +67,7 @@ export const convertDashboard = (
     exportFilterContextUri?: string,
 ): IDashboard => {
     const {
-        meta: { summary, created, updated, identifier, uri, title },
+        meta: { summary, created, updated, identifier, uri, title, locked },
         content: { layout, filterContext, dateFilterConfig, widgets: widgetsUris },
     } = dashboard.analyticalDashboard;
 
@@ -95,6 +95,7 @@ export const convertDashboard = (
 
         created: created!,
         updated: updated!,
+        isLocked: !!locked,
 
         dateFilterConfig: dateFilterConfig && convertDashboardDateFilterConfig(dateFilterConfig),
 
