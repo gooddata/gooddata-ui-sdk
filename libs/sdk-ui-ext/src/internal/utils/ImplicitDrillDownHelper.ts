@@ -8,5 +8,5 @@ export function drillDownFromAttributeLocalId(drillDefinition: IImplicitDrillDow
 }
 
 export function drillDownDisplayForm(drillDefinition: IImplicitDrillDown): ObjRef {
-    return drillDefinition.implicitDrillDown.target.drillToAttribute.attributeDisplayForm;
+    return drillDefinition.implicitDrillDown.drillDownStep.drillToAttribute.attributeDisplayForm;
 }

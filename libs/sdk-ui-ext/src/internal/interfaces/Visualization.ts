@@ -424,7 +424,7 @@ export interface IDrillToAttribute {
 export interface IImplicitDrillDown {
     implicitDrillDown: {
         from: IDrillFromAttribute;
-        target: IDrillToAttribute;
+        drillDownStep: IDrillToAttribute;
     };
 }
 

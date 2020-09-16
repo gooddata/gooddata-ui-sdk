@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
 
-import { newInsightDefinition, newBucket, newAttribute } from "@gooddata/sdk-model";
+import { newAttribute, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
 import { IImplicitDrillDown } from "../../..";
 import { modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
-import { Won, Department, Region, Status, Account } from "@gooddata/reference-workspace/dist/ldm/full";
+import { Account, Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/ldm/full";
 import { insightDefinitionToInsight } from "./testHelpers";
 
 describe("drillDownUtil", () => {
@@ -18,7 +18,7 @@ describe("drillDownUtil", () => {
             const drillConfig: IImplicitDrillDown = {
                 implicitDrillDown: {
                     from: { drillFromAttribute: { localIdentifier: Department.attribute.localIdentifier } },
-                    target: {
+                    drillDownStep: {
                         drillToAttribute: {
                             attributeDisplayForm: Account.Default.attribute.displayForm,
                         },
@@ -56,7 +56,7 @@ describe("drillDownUtil", () => {
             const drillConfig: IImplicitDrillDown = {
                 implicitDrillDown: {
                     from: { drillFromAttribute: { localIdentifier: Region.attribute.localIdentifier } },
-                    target: {
+                    drillDownStep: {
                         drillToAttribute: {
                             attributeDisplayForm: Department.attribute.displayForm,
                         },
