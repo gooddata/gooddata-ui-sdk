@@ -34,8 +34,6 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
     ) {}
 
     public async execute(): Promise<IExecutionResult> {
-        checkDefIsExecutable(this.definition);
-
         const execution = await this.createVisualizationExecution();
 
         return this.authCall(
@@ -87,8 +85,4 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
     public equals(other: IPreparedExecution): boolean {
         return isEqual(this.definition, other.definition);
     }
-}
-
-function checkDefIsExecutable(_def: IExecutionDefinition): void {
-    return;
 }
