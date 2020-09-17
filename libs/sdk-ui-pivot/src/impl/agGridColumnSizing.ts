@@ -675,6 +675,7 @@ const getAllowGrowToFitProp = (allowGrowToFit: boolean | undefined): { allowGrow
 
 /**
  * Custom implementation of columns autoresizing according content
+ * https://en.morzel.net/post/resizing-all-ag-gird-react-columns
  */
 
 const collectMaxWidth = (
@@ -692,7 +693,6 @@ const collectMaxWidth = (
         : context.measureText(text).width;
 
     const maxWidth = maxWidths.get(group);
-    // console.log(text, width, maxWidth);
 
     if (maxWidth === undefined || width > maxWidth) {
         maxWidths.set(group, width);
@@ -714,12 +714,10 @@ const collectMaxWidthCached = (
         width = context.measureText(text).width;
         widthsCache.set(text, width);
     } else {
-        // console.log("cache hit");
         width = cachedWidth;
     }
 
     const maxWidth = maxWidths.get(group);
-    // console.log(text, width, maxWidth);
 
     if (maxWidth === undefined || width > maxWidth) {
         maxWidths.set(group, width);
@@ -733,8 +731,6 @@ const valueFormatter = (text: string, colDef: IGridHeader, execution: IExecution
 };
 
 const calculateColumnWidths = (config: any) => {
-    // eslint-disable-next-line no-console
-    console.time("Column widths calculation");
     const { context } = config;
 
     const maxWidths = new Map<string, number>();
@@ -767,16 +763,16 @@ const calculateColumnWidths = (config: any) => {
     });
 
     const updatedColumnDefs = config.columns.map((column: Column) => {
-        // console.log("calculated max width", maxWidths.get(cd.field))
         const cd: ColDef = column.getColDef();
-        const newWidth = Math.ceil(maxWidths.get(cd.field || "a") + config.padding);
-        return {
-            ...cd,
-            width: Math.min(Math.max(MIN_WIDTH, newWidth), AUTO_SIZED_MAX_WIDTH),
-        };
+        if (cd.field) {
+            const newWidth = Math.ceil(maxWidths.get(cd.field) + config.padding);
+            return {
+                ...cd,
+                width: Math.min(Math.max(MIN_WIDTH, newWidth), AUTO_SIZED_MAX_WIDTH),
+            };
+        }
+        return cd;
     });
-    // eslint-disable-next-line no-console
-    console.timeEnd("Column widths calculation");
 
     return updatedColumnDefs;
 };
@@ -806,7 +802,7 @@ export const autoresizeAllColumns = (
     },
 ): IResizedColumns => {
     // eslint-disable-next-line no-console
-    console.time("Resize all columns (including widths calculation)");
+    console.time("Resize all columns (including widths calculation)"); // TODO INE: remove time logging once tested on big table
 
     if (gridApi && columnApi && execution) {
         const canvas = document.createElement("canvas");
@@ -828,15 +824,8 @@ export const autoresizeAllColumns = (
             cache: options.useWidthsCache ? new Map() : null,
         });
 
-        // Setting width by setColumnWidth has the advantage of preserving column
-        // changes done by user such as sorting or filters. The disadvantage is that
-        // initial resize might be slow if the grid was scrolled towards later columns
-        // before resizing was invoked (bug in the gird?).
-        // Resize by gridApi.setColumnDefs(updatedColumDefs) or setColumnDefs(updatedColumDefs)
-        // should be faster but columns settings could be reset (mind deltaColumnMode)...
         const autoResizedColumns = {};
         updatedColumDefs.forEach((columnDef: ColDef) => {
-            // console.log(columnDef.field, columnDef.width);
             if (columnDef.field && columnDef.width !== undefined) {
                 columnApi.setColumnWidth(columnDef.field, columnDef.width);
                 autoResizedColumns[getColumnIdentifier(columnDef)] = {
@@ -845,7 +834,7 @@ export const autoresizeAllColumns = (
             }
         });
         // eslint-disable-next-line no-console
-        console.timeEnd("Resize all columns (including widths calculation)");
+        console.timeEnd("Resize all columns (including widths calculation)"); // TODO INE: remove time logging once tested on big table
         return autoResizedColumns;
     }
     return {};
@@ -863,7 +852,7 @@ const getTableFont = (containerRef: HTMLDivElement, className: string) => {
 export const getTableFonts = (
     containerRef: HTMLDivElement,
 ): { headerFont: string; rowFont: string; subtotalFont: string } => {
-    // TODO INE: All fonts are gotten from first column and its header and first cell. Once we will have font different for each cell/header/row this will not work
+    // All fonts are gotten from first element with given class. Once we will have font different for each cell/header/row this will not work
     const headerFont = getTableFont(containerRef, HEADER_LABEL_CLASS);
     const rowFont = getTableFont(containerRef, VALUE_CLASS);
     const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS);

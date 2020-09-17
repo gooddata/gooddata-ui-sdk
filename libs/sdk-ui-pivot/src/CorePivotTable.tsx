@@ -140,7 +140,7 @@ const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 const DEFAULT_ROW_HEIGHT = 28;
 
-const DEFAULT_AUTOSIZE_PADDING = 12;
+const DEFAULT_AUTOSIZE_PADDING = 12; // needs to match real padding from styles
 const COLUMN_RESIZE_TIMEOUT = 300;
 const AGGRID_ON_RESIZE_TIMEOUT = 300;
 
@@ -764,13 +764,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         previouslyResizedColumnIds: string[],
         firstCall: boolean = true,
     ): Promise<void> => {
-        // eslint-disable-next-line no-console
-        console.log("autoresizeVisibleColumns");
-        if (!this.shouldPerformAutoresize()) {
-            return Promise.resolve();
-        }
-
-        if (!this.isColumnAutoresizeEnabled()) {
+        if (!this.shouldPerformAutoresize() || !this.isColumnAutoresizeEnabled()) {
             return Promise.resolve();
         }
 
@@ -798,23 +792,18 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         setColumnMaxWidth(columnApi, columnIds, AUTO_SIZED_MAX_WIDTH);
 
         columnApi.autoSizeColumns(columnIds);
-        // await sleep(COLUMN_RESIZE_TIMEOUT);
 
         setColumnMaxWidth(columnApi, columnIds, MANUALLY_SIZED_MAX_WIDTH);
     }
 
     private autoresizeAllColumns = async (gridApi: GridApi, columnApi: ColumnApi) => {
-        if (!this.shouldPerformAutoresize()) {
-            return Promise.resolve();
-        }
-
-        if (!this.isColumnAutoresizeEnabled()) {
+        if (!this.shouldPerformAutoresize() || !this.isColumnAutoresizeEnabled()) {
             return Promise.resolve();
         }
 
         await sleep(COLUMN_RESIZE_TIMEOUT);
         const separators = get(this.props, ["config", "separators"], undefined);
-        const columns = columnApi.getPrimaryColumns(); //.map(primaryColumn => primaryColumn.getColDef());
+        const columns = columnApi.getPrimaryColumns();
         const { headerFont, rowFont, subtotalFont } = getTableFonts(this.containerRef);
         this.autoResizedColumns = autoresizeAllColumns(columns, gridApi, columnApi, this.currentResult, {
             measureHeaders: true,
