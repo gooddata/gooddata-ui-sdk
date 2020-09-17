@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
+import has from "lodash/get";
 import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
@@ -20,7 +21,10 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
     protected renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
-        const { featureFlags, properties, propertiesMeta, pushData } = this.props;
+        const { featureFlags, insight, properties, propertiesMeta, pushData } = this.props;
+
+        const isNewVisualization = insight.insight.title === "";
+
         const controlsDisabled = this.isControlDisabled();
         const dataPointsControlDisabled = this.isDataPointsControlDisabled();
 
@@ -49,7 +53,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                                 properties={properties}
                                 isDisabled={controlsDisabled || dataPointsControlDisabled}
                                 showDisabledMessage={dataPointsControlDisabled}
-                                defaultValue={"auto"}
+                                value={isNewVisualization ? "auto" : undefined}
                             />
                         )}
                         <CheckboxControl

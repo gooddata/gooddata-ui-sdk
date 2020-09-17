@@ -13,22 +13,33 @@ export interface IDataPointsControlProps {
     properties: IVisualizationProperties;
     isDisabled: boolean;
     showDisabledMessage?: boolean;
+    value?: string | boolean;
     defaultValue?: string | boolean;
 }
 
 class DataPointsControl extends React.Component<IDataPointsControlProps & WrappedComponentProps> {
     public static defaultProps = {
-        defaultValue: "auto",
+        defaultValue: true,
         showDisabledMessage: false,
+        value: "",
     };
     public render() {
-        const { pushData, properties, intl, isDisabled, showDisabledMessage, defaultValue } = this.props;
+        const {
+            pushData,
+            properties,
+            intl,
+            isDisabled,
+            showDisabledMessage,
+            value,
+            defaultValue,
+        } = this.props;
         const dataPoints = get(properties, "controls.dataPoints.visible", defaultValue);
 
         return (
             <div className="s-data-points-config">
                 <DropdownControl
-                    value={dataPoints}
+                    value={value !== "" ? value : dataPoints}
+                    pushInitialValue={value !== ""}
                     valuePath="dataPoints.visible"
                     labelText="properties.canvas.dataPoints"
                     disabled={isDisabled}

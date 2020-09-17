@@ -20,6 +20,7 @@ export interface IDropdownControlProps {
     width?: number;
     showDisabledMessage?: boolean;
     pushData(data: any): void;
+    pushInitialValue?: boolean;
 }
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
@@ -33,11 +34,19 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
         disabled: false,
         width: 117,
         showDisabledMessage: false,
+        pushInitialValue: false,
     };
 
     constructor(props: IDropdownControlProps & WrappedComponentProps) {
         super(props);
         this.onSelect = this.onSelect.bind(this);
+        this.getSelectedItem = this.getSelectedItem.bind(this);
+
+        const { value, pushInitialValue } = props;
+
+        if (pushInitialValue) {
+            this.onSelect(this.getSelectedItem(value));
+        }
     }
 
     public render() {

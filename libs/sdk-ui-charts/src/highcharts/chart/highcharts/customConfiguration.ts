@@ -668,7 +668,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
 }
 
 function getDataPointsConfiguration(_chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
-    const dataPointsVisible: IDataPointsVisible = get(chartConfig, "dataPoints.visible");
+    const dataPointsVisible: IDataPointsVisible = get(chartConfig, "dataPoints.visible", true);
     const dataPointsConfig = {
         marker: {
             enabled: dataPointsVisible === "auto" ? undefined : dataPointsVisible,
