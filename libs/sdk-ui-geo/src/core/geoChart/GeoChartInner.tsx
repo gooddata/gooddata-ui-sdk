@@ -304,6 +304,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             onCenterPositionChanged = noop,
             onDrill = noop,
             onZoomChanged = noop,
+            intl,
         } = this.props;
 
         if (!dataView) {
@@ -327,6 +328,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             geoData,
             onCenterPositionChanged,
             onZoomChanged,
+            intl,
         };
 
         if (segmentIndex) {
