@@ -5,6 +5,7 @@ import isFinite from "lodash/isFinite";
 import escape from "lodash/escape";
 import mapboxgl from "mapbox-gl";
 import { ISeparators } from "@gooddata/numberjs";
+import { IHeaderPredicate } from "@gooddata/sdk-ui";
 import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "./constants/geoChart";
 import { IGeoConfig, IGeoTooltipItem } from "../../GeoChart";
 import { parseGeoProperties } from "./helpers/geoChart/data";
@@ -66,10 +67,10 @@ export function shouldShowTooltip(geoProperties: GeoJSON.GeoJsonProperties | und
     );
 }
 
-function getInteractionMessage(intl?: IntlShape): string {
+function getInteractionMessage(drillableItems?: IHeaderPredicate[], intl?: IntlShape): string {
     const message = intl ? intl.formatMessage({ id: "visualization.tooltip.interaction" }) : null;
 
-    return intl ? `<div class="gd-viz-tooltip-interaction">${message}</div>` : "";
+    return drillableItems?.length && intl ? `<div class="gd-viz-tooltip-interaction">${message}</div>` : "";
 }
 
 export function getTooltipHtml(
@@ -77,10 +78,11 @@ export function getTooltipHtml(
     tooltipStroke: string,
     maxWidth: number,
     separators?: ISeparators,
+    drillableItems?: IHeaderPredicate[],
     intl?: IntlShape,
 ): string {
     const { locationName = {}, size = {}, color = {}, segment = {} } = geoProperties || {};
-    const interactionMessage = getInteractionMessage(intl);
+    const interactionMessage = getInteractionMessage(drillableItems, intl);
 
     const tooltipItems: string = [
         formatAttribute(locationName),
@@ -118,6 +120,7 @@ export const handlePushpinMouseEnter = (
     chart: mapboxgl.Map,
     tooltip: mapboxgl.Popup,
     config: IGeoConfig,
+    drillableItems?: IHeaderPredicate[],
     intl?: IntlShape,
 ): void => {
     if (isTooltipDisabled(config)) {
@@ -144,7 +147,14 @@ export const handlePushpinMouseEnter = (
         chartWidth,
         TOOLTIP_MAX_WIDTH,
     );
-    const tooltipHtml = getTooltipHtml(parsedProps, tooltipStroke, maxTooltipContentWidth, separators, intl);
+    const tooltipHtml = getTooltipHtml(
+        parsedProps,
+        tooltipStroke,
+        maxTooltipContentWidth,
+        separators,
+        drillableItems,
+        intl,
+    );
 
     tooltip
         .setLngLat(coordinates)
