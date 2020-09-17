@@ -23,6 +23,7 @@ import {
     ID_SEPARATOR,
     VALUE_CLASS,
     HEADER_LABEL_CLASS,
+    ROW_TOTAL_CLASS,
     ROW_SUBTOTAL_CLASS,
     DEFAULT_FONT,
 } from "./agGridConst";
@@ -745,7 +746,7 @@ const calculateColumnWidths = (config: any) => {
     }
 
     config.rowData.forEach((row: IGridRow) => {
-        context.font = isSomeTotal(row.type) ? config.totalFont : config.rowFont;
+        context.font = isSomeTotal(row.type) ? config.subtotalFont : config.rowFont;
         config.columns.forEach((column: Column) => {
             const cd: IGridHeader = column.getColDef() as IGridHeader;
             if (cd.field) {
@@ -753,6 +754,25 @@ const calculateColumnWidths = (config: any) => {
                 const formattedText =
                     isMeasureColumn(column) && valueFormatter(text, cd, config.execution, config.separators);
                 const textForCalculation = formattedText || text;
+                if (config.cache) {
+                    collectMaxWidthCached(context, textForCalculation, cd.field, maxWidths, config.cache);
+                } else {
+                    collectMaxWidth(context, textForCalculation, cd.field, false, maxWidths);
+                }
+            }
+        });
+    });
+
+    config.totalData.forEach((row: IGridRow) => {
+        context.font = config.totalFont;
+        config.columns.forEach((column: Column) => {
+            const cd: IGridHeader = column.getColDef() as IGridHeader;
+            if (cd.field) {
+                const text = row[cd.field];
+                const formattedText =
+                    isMeasureColumn(column) && valueFormatter(text, cd, config.execution, config.separators);
+                const textForCalculation = formattedText || text;
+                console.log(textForCalculation);
                 if (config.cache) {
                     collectMaxWidthCached(context, textForCalculation, cd.field, maxWidths, config.cache);
                 } else {
@@ -786,6 +806,15 @@ const getDisplayedRowData = (gridApi: GridApi): IGridRow[] => {
     return rowData;
 };
 
+const getDisplayedTotalData = (gridApi: GridApi): IGridRow[] => {
+    const totalCount = gridApi.getPinnedBottomRowCount();
+    const totalData = [];
+    for (let index = 0; index < totalCount; index++) {
+        totalData.push(gridApi.getPinnedBottomRow(index).data);
+    }
+    return totalData;
+};
+
 export const autoresizeAllColumns = (
     columns: Column[],
     gridApi: GridApi,
@@ -794,6 +823,7 @@ export const autoresizeAllColumns = (
     options: {
         measureHeaders: boolean;
         headerFont: string;
+        subtotalFont: string;
         totalFont: string;
         rowFont: string;
         padding: number;
@@ -809,14 +839,20 @@ export const autoresizeAllColumns = (
         const context = canvas.getContext("2d");
 
         const rowData = getDisplayedRowData(gridApi);
+        const totalData = getDisplayedTotalData(gridApi);
+        console.log("totalData", totalData);
+        console.log("subtotal font", options.subtotalFont);
+        console.log("total font", options.totalFont);
 
         const updatedColumDefs = calculateColumnWidths({
             context,
             columns,
             rowData,
+            totalData,
             execution,
             measureHeaders: options.measureHeaders,
             headerFont: options.headerFont,
+            subtotalFont: options.subtotalFont,
             totalFont: options.totalFont,
             rowFont: options.rowFont,
             padding: options.padding,
@@ -851,10 +887,11 @@ const getTableFont = (containerRef: HTMLDivElement, className: string) => {
 
 export const getTableFonts = (
     containerRef: HTMLDivElement,
-): { headerFont: string; rowFont: string; subtotalFont: string } => {
+): { headerFont: string; rowFont: string; subtotalFont: string; totalFont: string } => {
     // All fonts are gotten from first element with given class. Once we will have font different for each cell/header/row this will not work
     const headerFont = getTableFont(containerRef, HEADER_LABEL_CLASS);
     const rowFont = getTableFont(containerRef, VALUE_CLASS);
     const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS);
-    return { headerFont, rowFont, subtotalFont };
+    const totalFont = getTableFont(containerRef, ROW_TOTAL_CLASS);
+    return { headerFont, rowFont, subtotalFont, totalFont };
 };

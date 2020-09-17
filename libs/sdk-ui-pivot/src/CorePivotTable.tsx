@@ -804,11 +804,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         await sleep(COLUMN_RESIZE_TIMEOUT);
         const separators = get(this.props, ["config", "separators"], undefined);
         const columns = columnApi.getPrimaryColumns();
-        const { headerFont, rowFont, subtotalFont } = getTableFonts(this.containerRef);
+        const { headerFont, rowFont, subtotalFont, totalFont } = getTableFonts(this.containerRef);
         this.autoResizedColumns = autoresizeAllColumns(columns, gridApi, columnApi, this.currentResult, {
             measureHeaders: true,
             headerFont,
-            totalFont: subtotalFont,
+            subtotalFont,
+            totalFont,
             rowFont,
             padding: 2 * DEFAULT_AUTOSIZE_PADDING + 1, // header cell has 1px border
             useWidthsCache: true,
