@@ -731,6 +731,24 @@ const valueFormatter = (text: string, colDef: IGridHeader, execution: IExecution
         : null;
 };
 
+const collectWidths = (config: any, row: IGridRow, maxWidths: Map<string, number>) => {
+    const { context } = config;
+    config.columns.forEach((column: Column) => {
+        const cd: IGridHeader = column.getColDef() as IGridHeader;
+        if (cd.field) {
+            const text = row[cd.field];
+            const formattedText =
+                isMeasureColumn(column) && valueFormatter(text, cd, config.execution, config.separators);
+            const textForCalculation = formattedText || text;
+            if (config.cache) {
+                collectMaxWidthCached(context, textForCalculation, cd.field, maxWidths, config.cache);
+            } else {
+                collectMaxWidth(context, textForCalculation, cd.field, false, maxWidths);
+            }
+        }
+    });
+};
+
 const calculateColumnWidths = (config: any) => {
     const { context } = config;
 
@@ -747,39 +765,12 @@ const calculateColumnWidths = (config: any) => {
 
     config.rowData.forEach((row: IGridRow) => {
         context.font = isSomeTotal(row.type) ? config.subtotalFont : config.rowFont;
-        config.columns.forEach((column: Column) => {
-            const cd: IGridHeader = column.getColDef() as IGridHeader;
-            if (cd.field) {
-                const text = row[cd.field];
-                const formattedText =
-                    isMeasureColumn(column) && valueFormatter(text, cd, config.execution, config.separators);
-                const textForCalculation = formattedText || text;
-                if (config.cache) {
-                    collectMaxWidthCached(context, textForCalculation, cd.field, maxWidths, config.cache);
-                } else {
-                    collectMaxWidth(context, textForCalculation, cd.field, false, maxWidths);
-                }
-            }
-        });
+        collectWidths(config, row, maxWidths);
     });
 
     config.totalData.forEach((row: IGridRow) => {
         context.font = config.totalFont;
-        config.columns.forEach((column: Column) => {
-            const cd: IGridHeader = column.getColDef() as IGridHeader;
-            if (cd.field) {
-                const text = row[cd.field];
-                const formattedText =
-                    isMeasureColumn(column) && valueFormatter(text, cd, config.execution, config.separators);
-                const textForCalculation = formattedText || text;
-                console.log(textForCalculation);
-                if (config.cache) {
-                    collectMaxWidthCached(context, textForCalculation, cd.field, maxWidths, config.cache);
-                } else {
-                    collectMaxWidth(context, textForCalculation, cd.field, false, maxWidths);
-                }
-            }
-        });
+        collectWidths(config, row, maxWidths);
     });
 
     const updatedColumnDefs = config.columns.map((column: Column) => {
@@ -837,12 +828,8 @@ export const autoresizeAllColumns = (
     if (gridApi && columnApi && execution) {
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
-
         const rowData = getDisplayedRowData(gridApi);
         const totalData = getDisplayedTotalData(gridApi);
-        console.log("totalData", totalData);
-        console.log("subtotal font", options.subtotalFont);
-        console.log("total font", options.totalFont);
 
         const updatedColumDefs = calculateColumnWidths({
             context,
