@@ -422,8 +422,10 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const legendPosition = get(controlProperties, "legend.position", "auto");
 
         if (this.environment === DASHBOARDS_ENVIRONMENT) {
-            const width = options.dimensions?.width ?? 0;
-            return width <= getMaxWidthForCollapsedLegend(legendPosition) ? "top" : legendPosition;
+            const width = options.dimensions?.width;
+            return width !== undefined && width <= getMaxWidthForCollapsedLegend(legendPosition)
+                ? "top"
+                : legendPosition;
         }
 
         return legendPosition === "auto" && isStacked(insight) ? "right" : legendPosition;
