@@ -368,19 +368,6 @@ Object {
 }
 `;
 
-exports[`filter factory newRankingFilter should generate bottom filter for measure object and empty array of attributes 1`] = `
-Object {
-  "rankingFilter": Object {
-    "attributes": Array [],
-    "measure": Object {
-      "localIdentifier": "m_afSEwRwdbMeQ",
-    },
-    "operator": "BOTTOM",
-    "value": 20,
-  },
-}
-`;
-
 exports[`filter factory newRankingFilter should generate top filter for measure identifier 1`] = `
 Object {
   "rankingFilter": Object {
@@ -425,6 +412,18 @@ Object {
     },
     "operator": "TOP",
     "value": 10,
+  },
+}
+`;
+
+exports[`filter factory newRankingFilter should remove empty array of attributes as it's invalid state 1`] = `
+Object {
+  "rankingFilter": Object {
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+    "operator": "BOTTOM",
+    "value": 20,
   },
 }
 `;

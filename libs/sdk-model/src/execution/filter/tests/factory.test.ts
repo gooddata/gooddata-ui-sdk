@@ -103,7 +103,7 @@ describe("filter factory", () => {
         it("should generate bottom filter for measure object", () => {
             expect(newRankingFilter(Won, "BOTTOM", 10)).toMatchSnapshot();
         });
-        it("should generate bottom filter for measure object and empty array of attributes", () => {
+        it("should remove empty array of attributes as it's invalid state", () => {
             const attributes: IAttribute[] = [];
             expect(newRankingFilter(Won, attributes, "BOTTOM", 20)).toMatchSnapshot();
         });

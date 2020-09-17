@@ -7,7 +7,7 @@ import { PivotTable, IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 const PivotTableWithRankingFilter = {
     measures: [ExperimentalLdm.Amount],
     viewBy: [ExperimentalLdm.Product.Default],
-    filters: [newRankingFilter(ExperimentalLdm.Amount, [], "BOTTOM", 10)],
+    filters: [newRankingFilter(ExperimentalLdm.Amount, "BOTTOM", 10)],
 };
 
 const PivotTableWithMeasureValueFilter = {

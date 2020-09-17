@@ -296,21 +296,6 @@ Object {
 }
 `;
 
-exports[`bear filter converter from model to AFM convert ranking filter should return Ranking filter with empty attributes 1`] = `
-Object {
-  "rankingFilter": Object {
-    "attributes": Array [],
-    "measures": Array [
-      Object {
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    ],
-    "operator": "TOP",
-    "value": 3,
-  },
-}
-`;
-
 exports[`bear filter converter from model to AFM convert ranking filter should return Ranking filter with multiple attributes 1`] = `
 Object {
   "rankingFilter": Object {
