@@ -90,8 +90,9 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         source: IInsight,
         event: IDrillEvent,
     ): IDrillEventIntersectionElement[] {
+        const isStackBucket = idMatchBucket(BucketNames.STACK);
         const hasStackByAttributes = bucketsFind(insightBuckets(source), (bucket: IBucket) => {
-            return idMatchBucket(BucketNames.STACK) && !bucketIsEmpty(bucket);
+            return isStackBucket(bucket) && !bucketIsEmpty(bucket);
         });
 
         const intersection = event.drillContext.intersection;
