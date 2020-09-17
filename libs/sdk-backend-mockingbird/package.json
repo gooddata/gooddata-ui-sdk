@@ -4,7 +4,7 @@
     "author": "GoodData",
     "description": "Mock GoodData Backend SPI implementation",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-mockingbird",
-    "license": "LicenseRef-LICENSE",
+    "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [

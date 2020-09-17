@@ -4,7 +4,7 @@
     "author": "GoodData",
     "description": "GoodData SDK - Experimental workspace for features in dev",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/experimental-workspace",
-    "license": "LicenseRef-LICENSE",
+    "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [

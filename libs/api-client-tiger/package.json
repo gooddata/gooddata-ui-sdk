@@ -4,7 +4,7 @@
     "author": "GoodData",
     "description": "API Client for the Tiger backend",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-client-tiger",
-    "license": "LicenseRef-LICENSE",
+    "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [

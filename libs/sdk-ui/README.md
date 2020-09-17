@@ -4,6 +4,6 @@ This project implements all the necessary components and functions that a develo
 
 ## License
 
-(C) 2017-2020 GoodData Corporation
+(C) 2020 GoodData Corporation
 
-This project is under commercial license. See [LICENSE](LICENSE).
+This project is under MIT License. See [LICENSE](LICENSE).

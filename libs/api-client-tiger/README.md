@@ -31,6 +31,6 @@ and just run `npm run generate-client`. The `.env` file is ignored by git, so do
 
 ## License
 
-(C) 2017-2020 GoodData Corporation
+(C) 2020 GoodData Corporation
 
-This project is under commercial license. See [LICENSE](LICENSE).
+This project is under MIT License. See [LICENSE](LICENSE).

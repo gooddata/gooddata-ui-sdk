@@ -68,6 +68,6 @@ TBD
 
 ## License
 
-(C) 2017-2020 GoodData Corporation
+(C) 2020 GoodData Corporation
 
-This project is under commercial license. See [LICENSE](LICENSE).
+This project is under MIT License. See [LICENSE](LICENSE).
