@@ -12,9 +12,11 @@ import {
     newDefForInsight,
     newDefForItems,
     IInsight,
+    isInsight,
 } from "@gooddata/sdk-model";
 
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { DecoratedExecutionFactory } from "../decoratedBackend/execution";
 
 /**
  * Abstract base class that can be extended to implement concrete execution factories for different
@@ -63,5 +65,57 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
 
     public forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
         return this.forInsight(insight, filters);
+    }
+}
+
+/**
+ * This implementation of execution factory allows transparent injection of fixed set of filters to all
+ * executions started through it.
+ *
+ * This factory will not perform any filter merging. All it does is ensure some filters are always passed
+ * to the underlying factory. The responsibility to do the filter merging lies in the underlying factory.
+ *
+ * @internal
+ */
+export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory {
+    constructor(decorated: IExecutionFactory, private readonly filters: IFilter[] = []) {
+        super(decorated);
+    }
+
+    public forItems(items: IAttributeOrMeasure[], filters: IFilter[] = []): IPreparedExecution {
+        return super.forItems(items, this.filters.concat(filters));
+    }
+
+    public forBuckets(buckets: IBucket[], filters: IFilter[] = []): IPreparedExecution {
+        return super.forBuckets(buckets, this.filters.concat(filters));
+    }
+
+    public forInsight(insight: IInsightDefinition, filters: IFilter[] = []): IPreparedExecution {
+        return super.forInsight(insight, this.filters.concat(filters));
+    }
+
+    public forInsightByRef(insight: IInsight, filters: IFilter[] = []): IPreparedExecution {
+        return super.forInsightByRef(insight, this.filters.concat(filters));
+    }
+}
+
+/**
+ * This implementation of execution factory will transparently upgrade any `forInsight` execution
+ * to `forInsightByRef` execution IF the argument to `forInsight` is actually a persisted insight (`IInsight` which
+ * is subtype of `IInsightDefinition`).
+ *
+ * @internal
+ */
+export class ExecutionFactoryUpgradingToExecByReference extends DecoratedExecutionFactory {
+    constructor(decorated: IExecutionFactory) {
+        super(decorated);
+    }
+
+    public forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution {
+        if (isInsight(insight)) {
+            return this.forInsightByRef(insight, filters);
+        }
+
+        return super.forInsight(insight, filters);
     }
 }

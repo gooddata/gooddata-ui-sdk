@@ -296,6 +296,26 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 // @alpha (undocumented)
 export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;
 
+// @internal
+export class ExecutionFactoryUpgradingToExecByReference extends DecoratedExecutionFactory {
+    constructor(decorated: IExecutionFactory);
+    // (undocumented)
+    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+}
+
+// @internal
+export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory {
+    constructor(decorated: IExecutionFactory, filters?: IFilter[]);
+    // (undocumented)
+    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+}
+
 // @beta
 export interface IAuthenticatedAsyncCallContext {
     getPrincipal(): Promise<AuthenticatedPrincipal>;

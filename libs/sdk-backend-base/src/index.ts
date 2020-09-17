@@ -44,7 +44,11 @@ export {
 
 export { TelemetryData } from "./toolkit/backend";
 
-export { AbstractExecutionFactory } from "./toolkit/execution";
+export {
+    AbstractExecutionFactory,
+    ExecutionFactoryWithFixedFilters,
+    ExecutionFactoryUpgradingToExecByReference,
+} from "./toolkit/execution";
 
 export { customBackend } from "./customBackend";
 
