@@ -461,9 +461,6 @@ export default class GeoChartRenderer extends React.Component<IGeoChartRendererP
             return;
         }
 
-        // without this, the drill dialog will be closed
-        originalEvent.stopPropagation();
-
         return handleGeoPushpinDrillEvent(
             drillableItems,
             drillConfig,
