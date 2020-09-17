@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
+ROOT_DIR=${DIR}/../../..
 WIREMOCK_DIR="${DIR}/../../../libs/sdk-backend-bear/tests/wiremock"
 
 # Network for the wiremock server(s) & the test code to share; this is exported and propagated to dockerized
@@ -12,6 +13,18 @@ _RUSH="${DIR}/docker_rush.sh"
 # ---------------------------------------------------------------------
 # Support for starting wiremock on a dedicated docker network
 # ---------------------------------------------------------------------
+
+NPMRC_CONTENT="registry=https://sonatype-nexus.intgdc.com/repository/registry.npmjs.org/\n
+email=jenkins@gooddata.com\n
+always-auth=false\n
+strict-ssl=false\n
+"
+
+RUSH_NPMRC="${ROOT_DIR}/common/config/rush/.npmrc"
+ROOT_NPMRC="${ROOT_DIR}/.npmrc"
+
+echo -e $NPMRC_CONTENT >${RUSH_NPMRC}
+echo -e $NPMRC_CONTENT >${ROOT_NPMRC}
 
 
 #
