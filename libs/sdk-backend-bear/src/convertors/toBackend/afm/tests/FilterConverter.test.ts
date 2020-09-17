@@ -131,7 +131,6 @@ describe("bear filter converter from model to AFM", () => {
                     10,
                 ),
             ],
-            ["Ranking filter with empty attributes", newRankingFilter(ReferenceLdm.Amount, [], "TOP", 3)],
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
             expect(convertRankingFilter(input)).toMatchSnapshot();

@@ -347,12 +347,13 @@ export function newRankingFilter(
         const attributeRefs = (attributesOrRefsOrOperator as Array<IAttribute | ObjRefInScope | string>).map(
             convertAttributeOrRefToObjRefInScope,
         );
+        const attributesProp = attributeRefs.length ? { attributes: attributeRefs } : {};
         return {
             rankingFilter: {
                 measure: measureRef,
                 operator: operatorOrValue,
                 value: valueOrNothing,
-                attributes: attributeRefs,
+                ...attributesProp,
             },
         };
     }
