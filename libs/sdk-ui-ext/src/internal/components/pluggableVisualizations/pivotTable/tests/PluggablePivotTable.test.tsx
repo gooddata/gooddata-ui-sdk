@@ -49,6 +49,7 @@ import {
     validMeasureSort,
 } from "./sortMocks";
 import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock";
+import { createDrillEvent } from "../../tests/testHelpers";
 
 describe("PluggablePivotTable", () => {
     const backend = dummyBackend();
@@ -87,7 +88,7 @@ describe("PluggablePivotTable", () => {
                 getInsightWithDrillDownApplied.sourceInsight,
                 {
                     drillDefinition: getInsightWithDrillDownApplied.drillConfig,
-                    event: null,
+                    event: createDrillEvent("column", getInsightWithDrillDownApplied.intersection),
                 },
             );
 
@@ -100,7 +101,7 @@ describe("PluggablePivotTable", () => {
                 getInsightWithDrillDownApplied.sourceInsightWithTotals,
                 {
                     drillDefinition: getInsightWithDrillDownApplied.drillConfig,
-                    event: null,
+                    event: createDrillEvent("column", getInsightWithDrillDownApplied.intersection),
                 },
             );
 
