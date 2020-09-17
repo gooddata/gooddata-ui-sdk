@@ -75,6 +75,6 @@ Then you can import the library file and global variable `gooddata` contains all
 
 ## License
 
-(C) 2017-2020 GoodData Corporation
+(C) 2020 GoodData Corporation
 
-This project is under commercial license. See [LICENSE](LICENSE).
+This project is under MIT License. See [LICENSE](LICENSE).

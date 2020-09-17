@@ -8,6 +8,6 @@ the reference-workspace project itself. See the reference-project for more infor
 
 ## License
 
-(C) 2017-2020 GoodData Corporation
+(C) 2020 GoodData Corporation
 
-This project is under commercial license. See [LICENSE](LICENSE).
+This project is under MIT License. See [LICENSE](LICENSE).

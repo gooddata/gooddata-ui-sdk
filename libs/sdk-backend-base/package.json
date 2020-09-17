@@ -4,7 +4,7 @@
     "author": "GoodData",
     "description": "GoodData.UI SDK - Base for backend implementations",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-base",
-    "license": "LicenseRef-LICENSE",
+    "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [

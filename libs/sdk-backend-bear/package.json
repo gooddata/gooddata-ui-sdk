@@ -4,7 +4,7 @@
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for the Bear platform",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-bear",
-    "license": "LicenseRef-LICENSE",
+    "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [

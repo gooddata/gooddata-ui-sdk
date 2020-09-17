@@ -4,7 +4,7 @@
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for the Tiger platform",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-tiger",
-    "license": "LicenseRef-LICENSE",
+    "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [

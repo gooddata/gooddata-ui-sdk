@@ -5,7 +5,7 @@
     "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui",
     "author": "GoodData Corporation",
-    "license": "LicenseRef-LICENSE",
+    "license": "MIT",
     "files": [
         "dist",
         "styles"

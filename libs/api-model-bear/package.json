@@ -35,7 +35,7 @@
         "types"
     ],
     "author": "GoodData",
-    "license": "LicenseRef-LICENSE",
+    "license": "MIT",
     "dependencies": {
         "lodash": "^4.17.19",
         "tslib": "^2.0.0"

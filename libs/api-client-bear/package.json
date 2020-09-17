@@ -3,7 +3,7 @@
     "version": "8.0.0-beta.77",
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
-    "license": "LicenseRef-LICENSE",
+    "license": "MIT",
     "main": "dist/gooddata-node.js",
     "browser": "dist/gooddata-browser.js",
     "typings": "dist/gooddata-browser.d.ts",
