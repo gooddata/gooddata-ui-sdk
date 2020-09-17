@@ -8,6 +8,7 @@ import {
     ISortItem,
     IExecutionDefinition,
     DimensionGenerator,
+    IInsight,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export";
 import { DataValue, IDimensionDescriptor, IResultHeader, IResultWarning } from "./results";
@@ -78,28 +79,29 @@ export interface IExecutionFactory {
      * pre-filled dimensions greated using the `defaultDimensionsGenerator` provided by the
      * `@gooddata/sdk-model` package.
      *
-     * @param insight - insight to create execution for, must have buckets which must have some attributes or measures in them
+     * @param insightDefinition - insight definition to create execution for, must have buckets which must have some attributes or measures in them
      * @param filters - optional, may not be provided
      */
-    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    forInsight(insightDefinition: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
 
     /**
-     * Prepares new execution for an insight specified by reference =\> a link. This function is asynchronous as
-     * the insight WILL be retrieved from backend at this point.
+     * Prepares new, by-reference execution for an existing insight.
      *
      * Execution prepared using this method MAY be realized using different backend API than the executions where
      * attributes and measures are provided 'freeform'. In return, this different backend API may provide additional
      * authorization guarantees - for instance the backend MAY only allow end user to execute these stored insights
      * and not do any 'freeform' execution.
      *
+     * If the backend does not support execution by reference, then it MUST fall back to freeform execution.
+     *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
      * pre-filled dimensions created using the `defaultDimensionsGenerator` provided by the
      * `@gooddata/sdk-model` package.
      *
-     * @param uri - link to insight
+     * @param insight - saved insight
      * @param filters - optional list of filters to merge with filters already defined in the insight
      */
-    forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
 }
 
 /**

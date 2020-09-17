@@ -1,8 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
-import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
-import { convertFilter } from "./FilterConverter";
+import { convertFilters } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import {
     dimensionsFindItem,
@@ -32,9 +31,7 @@ function convertAFM(def: IExecutionDefinition): GdcExecuteAFM.IAfm {
     const measures: GdcExecuteAFM.IMeasure[] = def.measures.map(convertMeasure);
     const measuresProp = measures.length ? { measures } : {};
 
-    const filters: GdcExecuteAFM.CompatibilityFilter[] = def.filters
-        ? compact(def.filters.map(convertFilter))
-        : [];
+    const filters: GdcExecuteAFM.CompatibilityFilter[] = convertFilters(def.filters);
     const filtersProp = filters.length ? { filters } : {};
 
     const nativeTotals = convertNativeTotals(def);
@@ -110,7 +107,7 @@ function convertDimensions(def: IExecutionDefinition): GdcExecuteAFM.IDimension[
     });
 }
 
-function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IResultSpec {
+export function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IResultSpec {
     const sortsProp = !isEmpty(def.sortBy) ? { sorts: def.sortBy } : {};
     const dims = convertDimensions(def);
     const dimsProp = !isEmpty(dims) ? { dimensions: dims } : {};

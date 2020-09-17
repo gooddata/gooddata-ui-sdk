@@ -29,6 +29,7 @@ import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
@@ -49,10 +50,12 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
     // (undocumented)
     forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
-    abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
     forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
-    }
+    // (undocumented)
+    protected readonly workspace: string;
+}
 
 // @beta
 export type AnalyticalBackendCallbacks = {
@@ -167,7 +170,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
     // (undocumented)
     forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
     forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
     protected wrap: (execution: IPreparedExecution) => IPreparedExecution;
@@ -293,6 +296,26 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 // @alpha (undocumented)
 export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;
 
+// @internal
+export class ExecutionFactoryUpgradingToExecByReference extends DecoratedExecutionFactory {
+    constructor(decorated: IExecutionFactory);
+    // (undocumented)
+    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+}
+
+// @internal
+export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory {
+    constructor(decorated: IExecutionFactory, filters?: IFilter[]);
+    // (undocumented)
+    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+}
+
 // @beta
 export interface IAuthenticatedAsyncCallContext {
     getPrincipal(): Promise<AuthenticatedPrincipal>;
@@ -324,6 +347,7 @@ export class NoopAuthProvider implements IAuthProviderCallGuard {
 // @beta (undocumented)
 export type NormalizationConfig = {
     normalizationStatus?: (normalizationState: NormalizationState) => void;
+    executeByRefMode?: NormalizationWhenExecuteByRef;
 };
 
 // @beta (undocumented)
@@ -332,6 +356,9 @@ export type NormalizationState = {
     readonly original: IExecutionDefinition;
     readonly n2oMap: LocalIdMap;
 };
+
+// @beta (undocumented)
+export type NormalizationWhenExecuteByRef = "prohibit" | "fallback";
 
 // @internal
 export class Normalizer {

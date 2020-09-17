@@ -14,7 +14,7 @@ import {
 /**
  * @internal
  */
-export type RecordedDescriptorRefType = "id" | "uri";
+export type RecordedRefType = "id" | "uri";
 
 /**
  * Recorded backend allows convenient programmatic configuration of some services outcomes.
@@ -33,13 +33,15 @@ export type RecordedBackendConfig = AnalyticalBackendConfig & {
     globalPalette?: IColorPalette;
 
     /**
-     * Specify which ref type should be added to result descriptors. In the recording files themselves
-     * the descriptors do not have the 'ref' fields. They will be added dynamically by the recorded backend
-     * according to this setting.
+     * Specify which ref type should be added to recorded entities. Recording infrastructure does not
+     * store 'ref'. Instead, the recorded backend can return refs as either uri or identifier, thus allowing
+     * to simulate behavior of the different backend types.
+     *
+     * Note: this is currently implemented for executions and insights. it is not yet supported in catalog
      *
      * Default: 'uri'
      */
-    resultDescriptorRefs?: RecordedDescriptorRefType;
+    useRefType?: RecordedRefType;
 };
 
 /**

@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { ISortItem, VisualizationProperties } from "../src";
+import { ISortItem, uriRef, VisualizationProperties } from "../src";
 import { IBucket } from "../src/execution/buckets";
 import { IInsight } from "../src/insight";
 import { IFilter } from "../src/execution/filter";
@@ -31,6 +31,7 @@ export class InsightBuilder {
             properties: {},
             identifier: "random",
             uri: "random",
+            ref: uriRef("random"),
         };
     }
 

@@ -29,7 +29,7 @@ export {
     DefaultCachingConfiguration,
     CacheControl,
 } from "./cachingBackend";
-export { withNormalization, NormalizationConfig } from "./normalizingBackend";
+export { withNormalization, NormalizationConfig, NormalizationWhenExecuteByRef } from "./normalizingBackend";
 export { Normalizer, Denormalizer, NormalizationState, LocalIdMap } from "./normalizingBackend/normalizer";
 
 export {
@@ -44,7 +44,11 @@ export {
 
 export { TelemetryData } from "./toolkit/backend";
 
-export { AbstractExecutionFactory } from "./toolkit/execution";
+export {
+    AbstractExecutionFactory,
+    ExecutionFactoryWithFixedFilters,
+    ExecutionFactoryUpgradingToExecByReference,
+} from "./toolkit/execution";
 
 export { customBackend } from "./customBackend";
 

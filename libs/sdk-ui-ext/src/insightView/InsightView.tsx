@@ -5,7 +5,12 @@ import { render } from "react-dom";
 import noop from "lodash/noop";
 import isEqual from "lodash/isEqual";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IAnalyticalBackend, IExportResult, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IExecutionFactory,
+    IExportResult,
+    IWorkspaceSettings,
+} from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
     IFilter,
@@ -39,6 +44,10 @@ import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
 import { IInsightViewDataLoader, getInsightViewDataLoader } from "./dataLoaders";
+import {
+    ExecutionFactoryUpgradingToExecByReference,
+    ExecutionFactoryWithFixedFilters,
+} from "@gooddata/sdk-backend-base";
 
 /**
  * @public
@@ -95,6 +104,24 @@ export interface IInsightViewProps extends Partial<IVisCallbacks> {
      * Note: text values coming from the data itself are not localized.
      */
     locale?: ILocale;
+
+    /**
+     * Indicates that the execution to obtain the data for the insight should be an 'execution by reference'.
+     *
+     * Execution by reference means that the InsightView will ask analytical backend to compute results for an insight
+     * which is stored on the backend by specifying link to the insight, additional filters and description how
+     * to organize the data.
+     *
+     * Otherwise, a freeform execution is done, in which the InsightView will send to backend the full execution
+     * definition of what to compute.
+     *
+     * This distinction is in place because some backends MAY want to prohibit users from doing freeform executions
+     * and only allow computing data for set of insights created by admins.
+     *
+     * Note: the need for execute by reference is rare. You will typically be notified by the solution admin to use
+     * this mode.
+     */
+    executeByReference?: boolean;
 
     /**
      * Component to render if embedding fails.
@@ -305,6 +332,18 @@ class RenderInsightView extends React.Component<
 
         const insight = await this.getRemoteResource((loader) => loader.getInsight(this.props.backend, ref));
 
+        if (this.props.executeByReference) {
+            /*
+             * In execute-by-reference, filter merging happens on the server
+             */
+            return insight;
+        }
+
+        /*
+         * In freeform execution, frontend is responsible for filter merging. Code defers the merging to the
+         * implementation of analytical backend because the merging may first need to unify how the different
+         * filter entities are referenced (id vs uri).
+         */
         return this.props
             .backend!.workspace(this.props.workspace!)
             .insights()
@@ -337,8 +376,25 @@ class RenderInsightView extends React.Component<
         this.colorPalette = await this.getColorPalette();
     };
 
-    private getExecutionFactory = () => {
-        return this.props.backend.workspace(this.props.workspace).execution();
+    private getExecutionFactory = (): IExecutionFactory => {
+        const factory = this.props.backend.workspace(this.props.workspace).execution();
+
+        if (this.props.executeByReference) {
+            /*
+             * When executing by reference, decorate the original execution factory so that it
+             * transparently routes `forInsight` to `forInsightByRef` AND adds the filters
+             * from InsightView props.
+             *
+             * Code will pass this factory over to the pluggable visualizations - they will do execution
+             * `forInsight` and under the covers things will be routed and done differently without the
+             * plug viz knowing.
+             */
+            return new ExecutionFactoryUpgradingToExecByReference(
+                new ExecutionFactoryWithFixedFilters(factory, this.props.filters),
+            );
+        }
+
+        return factory;
     };
 
     private componentDidMountInner = async () => {

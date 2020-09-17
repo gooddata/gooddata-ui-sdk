@@ -5,6 +5,7 @@ import {
     IInsightDefinition,
     insightVisualizationUrl,
     IVisualizationClass,
+    uriRef,
 } from "@gooddata/sdk-model";
 import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/dist/internal";
 import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
@@ -54,6 +55,7 @@ export async function mountInsight(
         insight: {
             identifier: "test",
             uri: "test",
+            ref: uriRef("test"),
             ...insight.insight,
         },
     };

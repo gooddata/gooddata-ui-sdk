@@ -60,7 +60,7 @@ function initializeStore(
     }
 
     if (!fs.statSync(dir).isDirectory()) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.error(
             `Path ${dir} already exists but is not a directory. Not going to store any definitions.`,
         );

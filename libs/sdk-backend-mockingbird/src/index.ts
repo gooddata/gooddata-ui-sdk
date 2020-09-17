@@ -14,12 +14,13 @@ export {
     RecordedBackendConfig,
     CatalogRecording,
     VisClassesRecording,
-    RecordedDescriptorRefType,
+    RecordedRefType,
 } from "./recordedBackend/types";
 
 export {
     recordedDataView,
     recordedDataViews,
+    recordedInsight,
     DataViewAll,
     dataViewWindow,
     DataViewFirstPage,

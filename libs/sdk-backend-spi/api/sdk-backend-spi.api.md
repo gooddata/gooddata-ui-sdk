@@ -486,8 +486,8 @@ export type IElementQueryResult = IPagedResource<IAttributeElement>;
 export interface IExecutionFactory {
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
     forDefinition(def: IExecutionDefinition): IPreparedExecution;
-    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
-    forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    forInsight(insightDefinition: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
     forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 }
 

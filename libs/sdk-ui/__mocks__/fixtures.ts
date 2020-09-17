@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { LegacyExecutionRecording, legacyRecordedDataView } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, uriRef } from "@gooddata/sdk-model";
 import { DataViewFacade } from "../src/base/results/facade";
 
 export const testWorkspace = "testWorkspace";
@@ -21,6 +21,7 @@ export const insightWithPoP: IInsight = {
     insight: {
         identifier: "popMeasureInsight",
         uri: "/some/uri/popMeasureInsight",
+        ref: uriRef("/some/uri/popMeasureInsight"),
         visualizationUrl: "local:test",
         buckets: [
             {
@@ -84,6 +85,7 @@ export const insightWithPoPAndAlias: IInsight = {
     insight: {
         identifier: "popMeasureWithAliasInsight",
         uri: "/some/uri/popMeasureInsight",
+        ref: uriRef("/some/uri/popMeasureInsight"),
         visualizationUrl: "local:test",
         buckets: [
             {
@@ -148,6 +150,7 @@ export const insightWithArithmeticAndDerivedMeasures: IInsight = {
     insight: {
         identifier: "arithmeticAndDerivedMeasureInsight",
         uri: "/some/uri/arithmeticAndDerivedMeasureInsight",
+        ref: uriRef("/some/uri/arithmeticAndDerivedMeasureInsight"),
         visualizationUrl: "local:test",
         buckets: [
             {
@@ -206,6 +209,7 @@ export const insightWithArithmeticMeasureTree: IInsight = {
     insight: {
         identifier: "arithmeticMeasureTreeInsight",
         uri: "/some/uri/arithmeticMeasureTreeInsight",
+        ref: uriRef("/some/uri/arithmeticMeasureTreeInsight"),
         visualizationUrl: "local:test",
         buckets: [
             {
@@ -299,6 +303,7 @@ export const insightWithComplexArithmeticMeasureTree: IInsight = {
     insight: {
         identifier: "complexArithmeticMeasureTreeInsight",
         uri: "/some/uri/complexArithmeticMeasureTreeInsight",
+        ref: uriRef("/some/uri/complexArithmeticMeasureTreeInsight"),
         visualizationUrl: "local:test",
         buckets: [
             {
@@ -565,6 +570,7 @@ export const insightWithMultipleMeasureBuckets: IInsight = {
     insight: {
         identifier: "multipleMeasureBucketsInsight",
         uri: "/some/uri/multipleMeasureBucketsInsight",
+        ref: uriRef("/some/uri/multipleMeasureBucketsInsight"),
         visualizationUrl: "local:test",
         buckets: [
             {

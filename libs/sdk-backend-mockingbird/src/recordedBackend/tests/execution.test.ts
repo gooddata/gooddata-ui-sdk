@@ -57,7 +57,7 @@ describe("execution factory", () => {
     });
 
     it("should load result with idRefs if asked to", async () => {
-        const result = await recordedBackend(ReferenceRecordings.Recordings, { resultDescriptorRefs: "id" })
+        const result = await recordedBackend(ReferenceRecordings.Recordings, { useRefType: "id" })
             .workspace("reference-workspace")
             .execution()
             .forDefinition(

@@ -20,6 +20,7 @@ import {
     mergeFilters,
     insightFilters,
     insightSetFilters,
+    idRef,
 } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/api-client-tiger";
 import uuid4 from "uuid/v4";
@@ -37,6 +38,7 @@ const insightFromInsightDefinition = (insight: IInsightDefinition, id: string, u
             ...insight.insight,
             identifier: id,
             uri,
+            ref: idRef(id),
         },
     };
 };

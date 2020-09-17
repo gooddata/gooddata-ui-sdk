@@ -27,6 +27,7 @@ import {
 import invariant from "ts-invariant";
 import { IColor } from "../colors";
 import identity from "lodash/identity";
+import { ObjRef } from "../objRef";
 
 /**
  * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
@@ -48,6 +49,11 @@ export type IInsight = IInsightDefinition & {
          * Link to the insight.
          */
         uri: string;
+
+        /**
+         * Object to use when referencing insight.
+         */
+        ref: ObjRef;
 
         /**
          * Last update date - YYYY-MM-DD HH:mm:ss
@@ -432,7 +438,7 @@ export function insightVisualizationUrl(insight: IInsightDefinition): string {
 /**
  * Gets the insight title
  *
- * @param insight - insight to title of
+ * @param insight - insight to get title of
  * @returns the insight title
  * @public
  */
@@ -440,6 +446,18 @@ export function insightTitle(insight: IInsightDefinition): string {
     invariant(insight, "insight to get title from must be specified");
 
     return insight.insight.title;
+}
+
+/**
+ * Gets opaque reference to the insight.
+ *
+ * @param insight - insight to get ref of
+ * @public
+ */
+export function insightRef(insight: IInsight): ObjRef {
+    invariant(insight, "insight to get ref of must be specified");
+
+    return insight.insight.ref;
 }
 
 /**

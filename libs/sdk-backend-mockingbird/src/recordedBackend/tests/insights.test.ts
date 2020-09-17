@@ -1,7 +1,18 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { idRef, IInsight, insightId, insightTitle, newInsightDefinition } from "@gooddata/sdk-model";
+import {
+    idRef,
+    IInsight,
+    insightId,
+    insightRef,
+    insightTitle,
+    isIdentifierRef,
+    isUriRef,
+    newInsightDefinition,
+} from "@gooddata/sdk-model";
 import { RecordedInsights } from "../insights";
+import { recordedBackend } from "../index";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 /**
  * Creates test insight with the provided id and optionally with custom title. If title is not provided then one will be assigned.
@@ -11,14 +22,35 @@ function testInsight(id: string, title?: string): IInsight {
         insight: {
             identifier: id,
             uri: "test",
+            ref: idRef("test"),
             ...newInsightDefinition("local:test", (m) => m.title(title ?? "Untitled test insight")).insight,
         },
     };
 }
 
+describe("recorded insights ref variability", () => {
+    it("should return insights containing uriRefs by default", async () => {
+        const insights = await recordedBackend(ReferenceRecordings.Recordings)
+            .workspace("reference-workspace")
+            .insights()
+            .getInsights({ limit: 1 });
+
+        expect(isUriRef(insightRef(insights.items[0]))).toBeTruthy();
+    });
+
+    it("should return insights containing idRefs if told to", async () => {
+        const insights = await recordedBackend(ReferenceRecordings.Recordings, { useRefType: "id" })
+            .workspace("reference-workspace")
+            .insights()
+            .getInsights({ limit: 1 });
+
+        expect(isIdentifierRef(insightRef(insights.items[0]))).toBeTruthy();
+    });
+});
+
 describe("recorded insights", () => {
     it("should allow adding new insights", async () => {
-        const insights = new RecordedInsights();
+        const insights = new RecordedInsights({}, "uri");
         const result = await insights.createInsight(
             newInsightDefinition("local:test", (m) => m.title("Test Insight 1")),
         );
@@ -27,18 +59,21 @@ describe("recorded insights", () => {
         expect(await insights.getInsight(idRef(insightId(result)))).toBeDefined();
     });
 
-    let TestInsights: RecordedInsights = new RecordedInsights();
+    let TestInsights: RecordedInsights = new RecordedInsights({}, "uri");
     beforeEach(() => {
-        TestInsights = new RecordedInsights({
-            metadata: {
-                insights: {
-                    i_123: { obj: testInsight("123", "title4") },
-                    i_insight1: { obj: testInsight("insight1", "title3") },
-                    i_insight2: { obj: testInsight("insight2", "title2") },
-                    i_invalid: { obj: testInsight("insight4", "title1") },
+        TestInsights = new RecordedInsights(
+            {
+                metadata: {
+                    insights: {
+                        i_123: { obj: testInsight("123", "title4") },
+                        i_insight1: { obj: testInsight("insight1", "title3") },
+                        i_insight2: { obj: testInsight("insight2", "title2") },
+                        i_invalid: { obj: testInsight("insight4", "title1") },
+                    },
                 },
             },
-        });
+            "uri",
+        );
     });
 
     it("should allow retrieval of insights by ID", async () => {

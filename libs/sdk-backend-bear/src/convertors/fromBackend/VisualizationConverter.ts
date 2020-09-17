@@ -12,6 +12,7 @@ import {
     DateAttributeGranularity,
     IRankingFilter,
     IMeasureValueFilter,
+    uriRef,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
@@ -213,6 +214,7 @@ export const convertVisualization = (
         insight: {
             buckets: content.buckets.map(convertBucket),
             filters: content.filters ? compact(content.filters.map(convertFilter)) : [],
+            ref: uriRef(meta.uri),
             // we assume that identifier is always defined for visualizations
             identifier: meta.identifier!,
             properties: parsedProperties,

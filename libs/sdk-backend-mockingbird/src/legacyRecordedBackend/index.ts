@@ -5,30 +5,30 @@ import {
     AuthenticatedPrincipal,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAttributeDescriptor,
     IAuthenticationProvider,
     IDataView,
+    IDimensionDescriptor,
     IElementQueryFactory,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
+    IMeasureGroupDescriptor,
     IPreparedExecution,
     IUserService,
     IWorkspaceCatalogFactory,
+    IWorkspaceDashboards,
     IWorkspaceDatasetsService,
+    IWorkspaceDateFilterConfigsQuery,
     IWorkspaceInsights,
     IWorkspaceMetadata,
     IWorkspacePermissionsFactory,
     IWorkspaceQueryFactory,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
-    NotSupported,
-    IWorkspaceDashboards,
     IWorkspaceUsersQuery,
-    IWorkspaceDateFilterConfigsQuery,
-    IDimensionDescriptor,
-    IAttributeDescriptor,
-    IMeasureGroupDescriptor,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -39,7 +39,6 @@ import {
     IAttributeElement,
     IDimension,
     IExecutionDefinition,
-    IFilter,
     ISortItem,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -205,10 +204,6 @@ class RecordedExecutionFactory extends AbstractExecutionFactory {
 
     public forDefinition(def: IExecutionDefinition): IPreparedExecution {
         return recordedPreparedExecution(def, this, this.recordings);
-    }
-
-    public forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
-        throw new NotSupported("not yet supported");
     }
 }
 

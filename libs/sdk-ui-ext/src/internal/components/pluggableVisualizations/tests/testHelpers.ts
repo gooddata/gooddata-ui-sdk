@@ -29,6 +29,7 @@ export function insightDefinitionToInsight(
             ...insightDefinition.insight,
             identifier,
             uri,
+            ref: uriRef(uri),
         },
     };
 }

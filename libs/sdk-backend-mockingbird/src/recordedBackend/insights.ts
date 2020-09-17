@@ -4,12 +4,16 @@ import {
     IInsightQueryOptions,
     IInsightQueryResult,
     IInsightReferences,
+    IInsightReferencing,
     InsightOrdering,
     IWorkspaceInsights,
-    IInsightReferencing,
     SupportedInsightReferenceTypes,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
+import { InsightRecording, RecordedRefType, RecordingIndex } from "./types";
+import { identifierToRecording, RecordingPager } from "./utils";
+import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
 import {
     IInsight,
     IInsightDefinition,
@@ -25,11 +29,9 @@ import {
     mergeFilters,
     insightFilters,
     insightSetFilters,
+    uriRef,
+    idRef,
 } from "@gooddata/sdk-model";
-import { InsightRecording, RecordingIndex } from "./types";
-import { identifierToRecording, RecordingPager } from "./utils";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
 
 let adHocInsightCounter = 1;
 
@@ -44,14 +46,15 @@ export class RecordedInsights implements IWorkspaceInsights {
     private readonly insights: { [id: string]: InsightRecording };
     private readonly visClasses: IVisualizationClass[];
 
-    constructor(recordings: RecordingIndex = {}) {
+    constructor(recordings: RecordingIndex, private readonly insightRefType: RecordedRefType) {
         this.insights = recordings.metadata?.insights ?? {};
         this.visClasses = recordings.metadata?.visClasses?.items ?? [];
     }
 
     public async createInsight(def: IInsightDefinition): Promise<IInsight> {
         const newId = `adHocInsight_${adHocInsightCounter++}`;
-        const newInsight = { insight: { identifier: newId, uri: newId, ...cloneDeep(def.insight) } };
+        const ref = this.createRef(newId, newId);
+        const newInsight = { insight: { identifier: newId, uri: newId, ref, ...cloneDeep(def.insight) } };
         const recordingId = recId(newId);
 
         this.insights[recordingId] = { obj: newInsight };
@@ -76,7 +79,7 @@ export class RecordedInsights implements IWorkspaceInsights {
             throw new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {});
         }
 
-        return cloneDeep(recording.obj);
+        return this.createInsightWithRef(recording.obj);
     }
 
     public async getInsights(query?: IInsightQueryOptions): Promise<IInsightQueryResult> {
@@ -86,7 +89,7 @@ export class RecordedInsights implements IWorkspaceInsights {
             return new RecordingPager<IInsight>([], limit, offset);
         }
 
-        const insights = Object.values(this.insights).map((rec) => cloneDeep(rec.obj));
+        const insights = Object.values(this.insights).map((rec) => this.createInsightWithRef(rec.obj));
 
         if (orderBy) {
             insights.sort(comparator(orderBy));
@@ -156,6 +159,19 @@ export class RecordedInsights implements IWorkspaceInsights {
 
         return insightSetFilters(insight, mergedFilters);
     };
+
+    private createInsightWithRef(obj: IInsight): IInsight {
+        return {
+            insight: {
+                ...cloneDeep(obj.insight),
+                ref: this.createRef(obj.insight.uri, obj.insight.identifier),
+            },
+        };
+    }
+
+    private createRef(uri: string, id: string): ObjRef {
+        return this.insightRefType === "uri" ? uriRef(uri) : idRef(id, "insight");
+    }
 
     private async getVisualizationClassByUri(uri: string): Promise<IVisualizationClass> {
         const result = this.visClasses.find((visClass) => visClassUri(visClass) === uri);

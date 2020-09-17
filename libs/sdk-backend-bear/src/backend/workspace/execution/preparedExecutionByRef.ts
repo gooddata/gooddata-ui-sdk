@@ -8,30 +8,38 @@ import {
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
+    IFilter,
+    IInsight,
+    insightRef,
     ISortItem,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { BearExecutionResult } from "./executionResult";
-import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
+import { convertResultSpec } from "../../../convertors/toBackend/afm/ExecutionConverter";
+import { IVisualizationExecution } from "@gooddata/api-client-bear/dist/execution/execute-afm";
+import { objRefToUri } from "../../../utils/api";
+import { convertFilters } from "../../../convertors/toBackend/afm/FilterConverter";
 
-export class BearPreparedExecution implements IPreparedExecution {
+export class BearPreparedExecutionByRef implements IPreparedExecution {
     private _fingerprint: string | undefined;
 
     constructor(
         private readonly authCall: BearAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
+        private readonly insight: IInsight,
+        private readonly filters: IFilter[] = [],
         private readonly executionFactory: IExecutionFactory,
     ) {}
 
     public async execute(): Promise<IExecutionResult> {
-        const afmExecution = toAfmExecution(this.definition);
+        const execution = await this.createVisualizationExecution();
 
         return this.authCall(
             (sdk) =>
                 sdk.execution
-                    .getExecutionResponse(this.definition.workspace, afmExecution)
+                    ._getVisExecutionResponse(this.definition.workspace, execution)
                     .then((response) => {
                         return new BearExecutionResult(
                             this.authCall,
@@ -42,6 +50,20 @@ export class BearPreparedExecution implements IPreparedExecution {
                     }),
             convertExecutionApiError,
         );
+    }
+
+    private async createVisualizationExecution(): Promise<IVisualizationExecution> {
+        const uri = await objRefToUri(insightRef(this.insight), this.definition.workspace, this.authCall);
+        const resultSpec = convertResultSpec(this.definition);
+        const filters = convertFilters(this.filters);
+
+        return {
+            visualizationExecution: {
+                reference: uri,
+                resultSpec,
+                filters,
+            },
+        };
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {

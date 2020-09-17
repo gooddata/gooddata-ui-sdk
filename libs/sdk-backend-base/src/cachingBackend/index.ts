@@ -257,7 +257,7 @@ function cachedCatalog(ctx: CachingContext): CatalogDecoratorFactory {
 }
 
 function cachingEnabled(desiredSize: number | undefined): boolean {
-    return desiredSize === undefined || desiredSize > 0;
+    return desiredSize !== undefined && desiredSize > 0;
 }
 
 function cacheControl(ctx: CachingContext): CacheControl {

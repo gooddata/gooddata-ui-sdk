@@ -116,17 +116,20 @@ export function recordedBackend(index: RecordingIndex, config?: RecordedBackendC
 export type RecordedBackendConfig = AnalyticalBackendConfig & {
     globalSettings?: ISettings;
     globalPalette?: IColorPalette;
-    resultDescriptorRefs?: RecordedDescriptorRefType;
+    useRefType?: RecordedRefType;
 };
 
 // @internal
-export function recordedDataView(recording: ScenarioRecording, dataViewId?: string, resultRefType?: RecordedDescriptorRefType): IDataView;
+export function recordedDataView(recording: ScenarioRecording, dataViewId?: string, resultRefType?: RecordedRefType): IDataView;
 
 // @internal
 export function recordedDataViews(recordings: RecordingIndex): NamedDataView[];
 
+// @internal
+export function recordedInsight(recording: InsightRecording, refType?: RecordedRefType): IInsight;
+
 // @internal (undocumented)
-export type RecordedDescriptorRefType = "id" | "uri";
+export type RecordedRefType = "id" | "uri";
 
 // @internal (undocumented)
 export type RecordingIndex = {
