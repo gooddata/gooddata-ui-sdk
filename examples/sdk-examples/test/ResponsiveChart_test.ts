@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import { Selector } from "testcafe";
 import { config } from "./utils/config";
-import { loginUsingLoginForm } from "./utils/helpers";
+import { loginUserAndNavigate } from "./utils/helpers";
 
 fixture("Responsive chart")
     .page(config.url)
-    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/responsive`));
+    .beforeEach(loginUserAndNavigate(`${config.url}/advanced/responsive`));
 
-test("Responsive chart could be resized", async t => {
+test("Responsive chart could be resized", async (t) => {
     const chart = Selector(".s-resizable-vis svg");
     const resizeButton = Selector(".s-resize-800x200");
 

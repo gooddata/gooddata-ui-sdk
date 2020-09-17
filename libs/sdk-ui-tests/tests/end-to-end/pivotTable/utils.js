@@ -147,3 +147,15 @@ export const getMeasureColumnWidthItemByLocator = (data, measureIdentifier, attr
 export const getAllMeasureColumnWidth = (data) => {
     return data.find(isAllMeasureColumnWidthItem);
 };
+
+export const getMeasureCell = (column) => {
+    return Selector(`.s-table-measure-column-header-cell-${column}`);
+};
+
+export const getMeasureGroupCell = (column) => {
+    return Selector(`.s-table-measure-column-header-group-cell-${column}`);
+};
+
+export const getPivotTableFooterCell = (row, column) => {
+    return Selector(`[row-index="b-${row}"] .s-cell-${row}-${column}`);
+};

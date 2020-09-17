@@ -71,6 +71,7 @@
         "jest-junit": "^3.0.0",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
+        "moment": "^2.24.0",
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.4.4",
         "ts-jest": "^26.3.0",

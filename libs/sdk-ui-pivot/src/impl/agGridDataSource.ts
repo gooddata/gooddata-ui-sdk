@@ -134,8 +134,7 @@ export class AgGridDatasource implements IDatasource {
                 this.currentResult = newResult;
 
                 newResult
-                    // the as any cast is fishy but I did not want to change if as it could have unforeseen consequences
-                    .readWindow([startRow, 0], [endRow - startRow, undefined as any])
+                    .readWindow([startRow, 0], [endRow - startRow, COLS_PER_PAGE])
                     .then((data) => {
                         const dataView = this.config.dataViewTransform(data);
                         const dv = DataViewFacade.for(dataView);

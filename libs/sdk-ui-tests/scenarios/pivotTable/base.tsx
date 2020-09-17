@@ -4,6 +4,7 @@ import { scenariosFor } from "../../src";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames";
+import { requestPages } from "@gooddata/mock-handling";
 
 export const PivotTableWithSingleColumn = {
     columns: [ReferenceLdm.Product.Name],
@@ -95,6 +96,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario(
         "two measures with two row and two column attributes",
         PivotTableWithTwoMeasuresAndTwoRowsAndCols,
+        (m) => m.withCustomDataCapture({ windows: requestPages([0, 0], [22, 1000], 1) }),
     )
     .addScenario(
         "two measures with three rows and two column attributes",

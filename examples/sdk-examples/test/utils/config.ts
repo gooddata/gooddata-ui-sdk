@@ -2,7 +2,7 @@
 import { existsSync, readFileSync } from "fs";
 import * as path from "path";
 import program = require("commander");
-import invariant = require("invariant");
+import invariant from "ts-invariant";
 
 const DEFAULT_CONFIG_FILE_NAME = ".testcaferc.json";
 const DEFAULT_URL = "https://localhost:8999";
@@ -34,10 +34,10 @@ export const definedOptions = [
         isRequired: true,
     },
 ];
-export const definedOptionKeys = definedOptions.map(definedOption => definedOption.key);
+export const definedOptionKeys = definedOptions.map((definedOption) => definedOption.key);
 export const requiredOptionKeys = definedOptions
-    .filter(requiredOptions => requiredOptions.isRequired)
-    .map(requiredOptions => requiredOptions.key);
+    .filter((requiredOptions) => requiredOptions.isRequired)
+    .map((requiredOptions) => requiredOptions.key);
 
 definedOptions.map(({ param, description }) => program.option(param, description));
 
@@ -45,31 +45,29 @@ program.parse(process.argv);
 
 // get config defaults
 const configDefaults = definedOptions
-    .filter(definedOption => definedOption.defaultValue)
+    .filter((definedOption) => definedOption.defaultValue)
     .reduce(
         (defaults, defaultOption) => ({
             ...defaults,
             [defaultOption.key]: defaultOption.defaultValue,
         }),
-        // tslint:disable-next-line: no-object-literal-type-assertion
         {} as IConfig,
     );
 
-// get options from local confif if it exists
+// get options from local config if it exists
 const configPath = path.join(process.cwd(), program.config || DEFAULT_CONFIG_FILE_NAME);
-// tslint:disable-next-line: no-object-literal-type-assertion
-let localConfig = {} as IConfig;
+let localConfig: IConfig = {};
 const configExists = existsSync(configPath);
 
 if (configExists) {
     try {
         localConfig = JSON.parse(readFileSync(configPath).toString());
     } catch (error) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.log("JSON parse error", error);
     }
 } else {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.log(`No config file found at ${configPath}`);
 }
 
@@ -82,7 +80,6 @@ const paramOptions = definedOptionKeys.reduce(
                   [key]: program[key],
               }
             : setOptions,
-    // tslint:disable-next-line: no-object-literal-type-assertion
     {} as IConfig,
 );
 
@@ -92,16 +89,16 @@ interface IConfig {
     url?: string;
 }
 
-// asseble final config
+// assemble final config
 export const config: IConfig = {
     ...configDefaults,
     ...localConfig,
     ...paramOptions,
 };
 
-requiredOptionKeys.map(requiredKey => {
+requiredOptionKeys.map((requiredKey) => {
     const { key, param, defaultValue } = definedOptions.find(
-        definedOption => definedOption.key === requiredKey,
+        (definedOption) => definedOption.key === requiredKey,
     );
     const defaultText = defaultValue ? ` Default: ${defaultValue}` : "";
     return invariant(

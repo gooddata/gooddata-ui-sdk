@@ -752,7 +752,7 @@
     },
     {
       "name": "ts-invariant",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "ts-jest",

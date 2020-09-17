@@ -8,7 +8,7 @@ const style = { height: 300 };
 
 export const InsightViewDonutByIdentifierExample: React.FC = () => {
     return (
-        <div style={style} className="s-insightView-chart">
+        <div style={style} className="s-insightView-donut">
             <InsightView insight={Ldm.Insights.DonutChart} />
         </div>
     );

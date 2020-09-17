@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import { Selector } from "testcafe";
 import { config } from "./utils/config";
-import { loginUsingLoginForm } from "./utils/helpers";
+import { loginUserAndNavigate } from "./utils/helpers";
 
 fixture("Datepicker")
     .page(config.url)
-    .beforeEach(loginUsingLoginForm(`${config.url}/advanced/date-picker`));
+    .beforeEach(loginUserAndNavigate(`${config.url}/advanced/date-picker`));
 
-test("Should be able to set from and to dates", async t => {
+test("Should be able to set from and to dates", async (t) => {
     const datePickerFrom = Selector(".s-date-picker-from .gd-input-field");
     const datePickerFromNext = Selector(".s-date-picker-from .react-datepicker__navigation--next");
     const datePickerFromDay1 = Selector(".s-date-picker-from .react-datepicker__day").nth(3);
@@ -33,7 +33,7 @@ test("Should be able to set from and to dates", async t => {
         .eql("FebMarAprMayJunJulAugSepOct");
 });
 
-test("Should be able to set from and to months", async t => {
+test("Should be able to set from and to months", async (t) => {
     const monthPickerFrom = Selector(".s-month-picker-from .gd-input-field");
     const monthPickerFromNext = Selector(".s-month-picker-from .react-datepicker__navigation--next");
     const datePickerFromDay3 = Selector(".s-month-picker-from .react-datepicker__day").nth(3);
