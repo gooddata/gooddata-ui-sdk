@@ -1,6 +1,10 @@
 // (C) 2019 GoodData Corporation
 
-import { modifyBucketsAttributesForDrillDown, sanitizeTableProperties } from "../drillDownUtil";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    sanitizeTableProperties,
+} from "../drillDownUtil";
 import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
 import get from "lodash/get";
@@ -42,6 +46,7 @@ import {
     IBucketFilter,
     IBucketItem,
     IBucketOfFun,
+    IDrillDownContext,
     IExtendedReferencePoint,
     IGdcConfig,
     IReferencePoint,
@@ -49,7 +54,6 @@ import {
     IVisProps,
     IVisualizationProperties,
     RenderFunction,
-    IDrillDownContext,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -224,11 +228,15 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         sourceVisualization: IInsight,
         drillDownContext: IDrillDownContext,
     ): IInsight {
-        const insight = modifyBucketsAttributesForDrillDown(
+        const drillDownInsight = modifyBucketsAttributesForDrillDown(
             sourceVisualization,
             drillDownContext.drillDefinition,
         );
-        return sanitizeTableProperties(insightSanitize(insight));
+        const drillDownInsightWithFilters = addIntersectionFiltersToInsight(
+            drillDownInsight,
+            drillDownContext.event.drillContext.intersection,
+        );
+        return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }
 
     private createCorePivotTableProps = () => {

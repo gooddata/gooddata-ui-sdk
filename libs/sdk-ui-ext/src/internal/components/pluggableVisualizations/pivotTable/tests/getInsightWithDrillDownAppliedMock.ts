@@ -18,6 +18,9 @@ import {
 import { IImplicitDrillDown, IVisualizationProperties } from "../../../..";
 import { Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/ldm/full";
 import { newWidthForAllMeasureColumns, newWidthForAttributeColumn } from "@gooddata/sdk-ui-pivot";
+import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { IDrillEventIntersectionElement, IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
+import { ReferenceData } from "@gooddata/reference-workspace";
 
 const properties: IVisualizationProperties = {
     controls: {
@@ -94,6 +97,88 @@ const drillConfig: IImplicitDrillDown = {
     },
 };
 
+const measureHeader: IMeasureDescriptor = {
+    measureHeaderItem: {
+        name: Won.measure.title,
+        format: "#,##0.00",
+        localIdentifier: Won.measure.localIdentifier,
+        uri: "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/9203",
+        identifier: null,
+    },
+};
+
+const departmentDirectSalesUri = ReferenceData.Department.DirectSales.uri;
+const departmentHeaderAttributeUri = "departmentHeaderAttributeUri";
+const departmentHeader: IDrillIntersectionAttributeItem = {
+    attributeHeaderItem: {
+        name: "Direct Sales",
+        uri: departmentDirectSalesUri,
+    },
+    attributeHeader: {
+        name: Department.attribute.alias,
+        localIdentifier: Department.attribute.localIdentifier,
+        uri: departmentHeaderAttributeUri,
+        ref: {
+            uri: departmentHeaderAttributeUri,
+        },
+        identifier: null,
+        formOf: null,
+    },
+};
+
+const statusLostUri = ReferenceData.Status.Lost.uri;
+const statusHeaderAttributeUri = "statusHeaderAttributeUri";
+const statusHeader: IDrillIntersectionAttributeItem = {
+    attributeHeaderItem: {
+        name: "Lost",
+        uri: statusLostUri,
+    },
+    attributeHeader: {
+        name: Status.attribute.alias,
+        localIdentifier: Status.attribute.localIdentifier,
+        uri: statusHeaderAttributeUri,
+        ref: {
+            uri: statusHeaderAttributeUri,
+        },
+        identifier: null,
+        formOf: null,
+    },
+};
+
+const regionEastCoastUri = ReferenceData.Region.EastCoast.uri;
+const regionHeaderAttributeUri = "regionHeaderAttributeUri";
+const regionHeader: IDrillIntersectionAttributeItem = {
+    attributeHeaderItem: {
+        name: "East Coast",
+        uri: regionEastCoastUri,
+    },
+    attributeHeader: {
+        name: Region.attribute.alias,
+        localIdentifier: Region.attribute.localIdentifier,
+        uri: regionHeaderAttributeUri,
+        ref: {
+            uri: regionHeaderAttributeUri,
+        },
+        identifier: null,
+        formOf: null,
+    },
+};
+
+const intersection: IDrillEventIntersectionElement[] = [
+    {
+        header: measureHeader,
+    },
+    {
+        header: departmentHeader,
+    },
+    {
+        header: statusHeader,
+    },
+    {
+        header: regionHeader,
+    },
+];
+
 const expectedProperties: IVisualizationProperties = {
     ...sourceInsight.insight.properties,
     controls: {
@@ -105,6 +190,22 @@ const expectedProperties: IVisualizationProperties = {
     },
     sortItems: [newAttributeSort(Region, "desc"), newAttributeSort(Status)],
 };
+
+const expectedFilters: IFilter[] = [
+    newPositiveAttributeFilter(Department, ["Inside Sales"]),
+    newPositiveAttributeFilter(
+        modifyAttribute(Department, (a) => a.displayForm(uriRef(departmentHeaderAttributeUri))),
+        { uris: [departmentDirectSalesUri] },
+    ),
+    newPositiveAttributeFilter(
+        modifyAttribute(Status, (a) => a.displayForm(uriRef(statusHeaderAttributeUri))),
+        { uris: [statusLostUri] },
+    ),
+    newPositiveAttributeFilter(
+        modifyAttribute(Region, (a) => a.displayForm(uriRef(regionHeaderAttributeUri))),
+        { uris: [regionEastCoastUri] },
+    ),
+];
 
 const expectedInsightDefinition: IInsightDefinition = newInsightDefinition(
     sourceInsight.insight.visualizationUrl,
@@ -119,7 +220,7 @@ const expectedInsightDefinition: IInsightDefinition = newInsightDefinition(
                 ),
                 bucketSetTotals(newBucket("measure", Won), []),
             ])
-            .filters([newPositiveAttributeFilter(Department, ["Inside Sales"])])
+            .filters(expectedFilters)
             .sorts([newAttributeSort(Department)])
             .properties(expectedProperties);
     },
@@ -138,7 +239,7 @@ const expectedInsightDefinitionWithTotals: IInsightDefinition = newInsightDefini
                 ),
                 newBucket("measure", Won, newTotal("nat", Won, Status)),
             ])
-            .filters([newPositiveAttributeFilter(Department, ["Inside Sales"])])
+            .filters(expectedFilters)
             .sorts([newAttributeSort(Department)])
             .properties(expectedProperties);
     },
@@ -169,4 +270,5 @@ export const getInsightWithDrillDownApplied = {
     drillConfig,
     expectedInsight,
     expectedInsightWithTotals,
+    intersection,
 };
