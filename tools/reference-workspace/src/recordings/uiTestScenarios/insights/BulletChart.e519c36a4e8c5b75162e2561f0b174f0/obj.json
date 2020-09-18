@@ -1,101 +1,78 @@
 {
     "insight": {
-        "identifier": "BulletChart.e519c36a4e8c5b75162e2561f0b174f0",
-        "uri": "BulletChart.e519c36a4e8c5b75162e2561f0b174f0",
-        "visualizationUrl": "local:bullet",
-        "title": "BulletChart - axis name customization - invisible",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "secondary_measures"
             },
             {
-                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "tertiary_measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "BulletChart.e519c36a4e8c5b75162e2561f0b174f0",
         "properties": {
             "controls": {
-                "xaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                },
-                "yaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                },
-                "secondary_xaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                },
-                "secondary_yaxis": {
-                    "name": {
-                        "position": "center"
-                    }
-                }
+                "secondary_xaxis": { "name": { "position": "center" } },
+                "secondary_yaxis": { "name": { "position": "center" } },
+                "xaxis": { "name": { "position": "center" } },
+                "yaxis": { "name": { "position": "center" } }
             }
-        }
+        },
+        "sorts": [],
+        "title": "BulletChart - axis name customization - invisible",
+        "uri": "BulletChart.e519c36a4e8c5b75162e2561f0b174f0",
+        "visualizationUrl": "local:bullet"
     }
 }

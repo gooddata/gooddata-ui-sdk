@@ -1,66 +1,50 @@
 {
     "insight": {
-        "identifier": "LineChart.bc6a82a28ce2b6ef877ce4b78f36e7aa",
-        "uri": "LineChart.bc6a82a28ce2b6ef877ce4b78f36e7aa",
-        "visualizationUrl": "local:line",
-        "title": "LineChart - legend position - disabled",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "trend",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "created.aci81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "created.aci81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_created.aci81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "trend"
             },
-            {
-                "localIdentifier": "segment",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
+        "identifier": "LineChart.bc6a82a28ce2b6ef877ce4b78f36e7aa",
+        "properties": { "controls": { "legend": { "enabled": false } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "legend": {
-                    "enabled": false
-                }
-            }
-        }
+        "title": "LineChart - legend position - disabled",
+        "uri": "LineChart.bc6a82a28ce2b6ef877ce4b78f36e7aa",
+        "visualizationUrl": "local:line"
     }
 }

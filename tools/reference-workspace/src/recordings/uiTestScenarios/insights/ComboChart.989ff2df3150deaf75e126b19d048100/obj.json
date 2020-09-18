@@ -1,117 +1,111 @@
 {
     "insight": {
-        "identifier": "ComboChart.989ff2df3150deaf75e126b19d048100",
-        "uri": "ComboChart.989ff2df3150deaf75e126b19d048100",
-        "visualizationUrl": "local:combo2",
-        "title": "ComboChart - multiple primary and secondary measures with viewBy",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_e9c321cf_fact.opportunitysnapshot.amount_min",
+                            "alias": "Min Amount",
                             "definition": {
                                 "measureDefinition": {
+                                    "aggregation": "min",
                                     "item": {
-                                        "identifier": "fact.opportunitysnapshot.amount"
-                                    },
-                                    "aggregation": "min"
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
                                 }
                             },
-                            "alias": "Min Amount"
+                            "localIdentifier": "m_e9c321cf_fact.opportunitysnapshot.amount_min"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_899a31be_fact.opportunitysnapshot.amount_median",
+                            "alias": "Median Amount",
                             "definition": {
                                 "measureDefinition": {
+                                    "aggregation": "median",
                                     "item": {
-                                        "identifier": "fact.opportunitysnapshot.amount"
-                                    },
-                                    "aggregation": "median"
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
                                 }
                             },
-                            "alias": "Median Amount"
+                            "localIdentifier": "m_899a31be_fact.opportunitysnapshot.amount_median"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_5c640258_fact.opportunitysnapshot.amount_max",
+                            "alias": "Max Amount",
                             "definition": {
                                 "measureDefinition": {
+                                    "aggregation": "max",
                                     "item": {
-                                        "identifier": "fact.opportunitysnapshot.amount"
-                                    },
-                                    "aggregation": "max"
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
                                 }
                             },
-                            "alias": "Max Amount"
+                            "localIdentifier": "m_5c640258_fact.opportunitysnapshot.amount_max"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "secondary_measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "ComboChart.989ff2df3150deaf75e126b19d048100",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "ComboChart - multiple primary and secondary measures with viewBy",
+        "uri": "ComboChart.989ff2df3150deaf75e126b19d048100",
+        "visualizationUrl": "local:combo2"
     }
 }

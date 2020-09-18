@@ -1,50 +1,39 @@
 {
     "insight": {
-        "identifier": "DonutChart.2373f0f706a1afc63c7e580cb15fdad4",
-        "uri": "DonutChart.2373f0f706a1afc63c7e580cb15fdad4",
-        "visualizationUrl": "local:donut",
-        "title": "DonutChart - data labels - forced visible",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "DonutChart.2373f0f706a1afc63c7e580cb15fdad4",
+        "properties": { "controls": { "dataLabels": { "visible": true } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "dataLabels": {
-                    "visible": true
-                }
-            }
-        }
+        "title": "DonutChart - data labels - forced visible",
+        "uri": "DonutChart.2373f0f706a1afc63c7e580cb15fdad4",
+        "visualizationUrl": "local:donut"
     }
 }

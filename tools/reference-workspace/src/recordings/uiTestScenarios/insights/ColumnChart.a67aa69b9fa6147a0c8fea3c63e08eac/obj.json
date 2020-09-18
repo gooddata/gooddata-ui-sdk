@@ -1,83 +1,57 @@
 {
     "insight": {
-        "identifier": "ColumnChart.a67aa69b9fa6147a0c8fea3c63e08eac",
-        "uri": "ColumnChart.a67aa69b9fa6147a0c8fea3c63e08eac",
-        "visualizationUrl": "local:column",
-        "title": "ColumnChart - single axis name customization - low",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "ColumnChart.a67aa69b9fa6147a0c8fea3c63e08eac",
         "properties": {
             "controls": {
-                "xaxis": {
-                    "name": {
-                        "position": "left"
-                    }
-                },
-                "yaxis": {
-                    "name": {
-                        "position": "bottom"
-                    }
-                },
-                "secondary_xaxis": {
-                    "name": {
-                        "position": "left"
-                    }
-                },
-                "secondary_yaxis": {
-                    "name": {
-                        "position": "bottom"
-                    }
-                }
+                "secondary_xaxis": { "name": { "position": "left" } },
+                "secondary_yaxis": { "name": { "position": "bottom" } },
+                "xaxis": { "name": { "position": "left" } },
+                "yaxis": { "name": { "position": "bottom" } }
             }
-        }
+        },
+        "sorts": [],
+        "title": "ColumnChart - single axis name customization - low",
+        "uri": "ColumnChart.a67aa69b9fa6147a0c8fea3c63e08eac",
+        "visualizationUrl": "local:column"
     }
 }

@@ -1,76 +1,61 @@
 {
     "insight": {
-        "identifier": "BarChart.0cab5e6747f96ee77eab11064f2d4692",
-        "uri": "BarChart.0cab5e6747f96ee77eab11064f2d4692",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - two measures and two viewBy with top axis and stackMeasuresToPercent",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
-        "sorts": [],
+        "identifier": "BarChart.0cab5e6747f96ee77eab11064f2d4692",
         "properties": {
             "controls": {
-                "stackMeasuresToPercent": true,
-                "secondary_xaxis": {
-                    "measures": ["m_aangOxLSeztu", "m_acugFHNJgsBy"]
-                }
+                "secondary_xaxis": { "measures": ["m_aangOxLSeztu", "m_acugFHNJgsBy"] },
+                "stackMeasuresToPercent": true
             }
-        }
+        },
+        "sorts": [],
+        "title": "BarChart - two measures and two viewBy with top axis and stackMeasuresToPercent",
+        "uri": "BarChart.0cab5e6747f96ee77eab11064f2d4692",
+        "visualizationUrl": "local:bar"
     }
 }

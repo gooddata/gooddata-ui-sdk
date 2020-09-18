@@ -1,50 +1,40 @@
 {
     "insight": {
-        "identifier": "Heatmap.0d92e621bf0cff8f0a0d7e941d01c2df",
-        "uri": "Heatmap.0d92e621bf0cff8f0a0d7e941d01c2df",
-        "visualizationUrl": "local:heatmap",
-        "title": "Heatmap - measure and columns",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
+            { "items": [], "localIdentifier": "view" },
             {
-                "localIdentifier": "view",
-                "items": []
-            },
-            {
-                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "stack"
             }
         ],
         "filters": [],
+        "identifier": "Heatmap.0d92e621bf0cff8f0a0d7e941d01c2df",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "Heatmap - measure and columns",
+        "uri": "Heatmap.0d92e621bf0cff8f0a0d7e941d01c2df",
+        "visualizationUrl": "local:heatmap"
     }
 }

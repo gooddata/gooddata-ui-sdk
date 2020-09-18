@@ -1,52 +1,42 @@
 {
     "insight": {
-        "identifier": "PieChart.b909ccdaafcb53af132ebfc23cefc661",
-        "uri": "PieChart.b909ccdaafcb53af132ebfc23cefc661",
-        "visualizationUrl": "local:pie",
-        "title": "PieChart - arithmetic measures",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
                             "alias": "Ratio of Won and Lost",
                             "definition": {
                                 "arithmeticMeasure": {
@@ -56,20 +46,21 @@
                                     ],
                                     "operator": "ratio"
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
-            {
-                "localIdentifier": "view",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "view" }
         ],
         "filters": [],
+        "identifier": "PieChart.b909ccdaafcb53af132ebfc23cefc661",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "PieChart - arithmetic measures",
+        "uri": "PieChart.b909ccdaafcb53af132ebfc23cefc661",
+        "visualizationUrl": "local:pie"
     }
 }

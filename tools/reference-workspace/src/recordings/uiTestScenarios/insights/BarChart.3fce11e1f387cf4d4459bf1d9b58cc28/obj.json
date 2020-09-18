@@ -1,52 +1,40 @@
 {
     "insight": {
-        "identifier": "BarChart.3fce11e1f387cf4d4459bf1d9b58cc28",
-        "uri": "BarChart.3fce11e1f387cf4d4459bf1d9b58cc28",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - single measure ignores stack measures",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "BarChart.3fce11e1f387cf4d4459bf1d9b58cc28",
+        "properties": { "controls": { "stackMeasures": true } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "stackMeasures": true
-            }
-        }
+        "title": "BarChart - single measure ignores stack measures",
+        "uri": "BarChart.3fce11e1f387cf4d4459bf1d9b58cc28",
+        "visualizationUrl": "local:bar"
     }
 }

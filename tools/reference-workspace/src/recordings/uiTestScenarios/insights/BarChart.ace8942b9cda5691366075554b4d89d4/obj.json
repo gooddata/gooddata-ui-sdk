@@ -1,67 +1,50 @@
 {
     "insight": {
-        "identifier": "BarChart.ace8942b9cda5691366075554b4d89d4",
-        "uri": "BarChart.ace8942b9cda5691366075554b4d89d4",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - X axis min/max configuration",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "BarChart.ace8942b9cda5691366075554b4d89d4",
+        "properties": { "controls": { "xaxis": { "max": "25000000", "min": "5000000" } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "xaxis": {
-                    "min": "5000000",
-                    "max": "25000000"
-                }
-            }
-        }
+        "title": "BarChart - X axis min/max configuration",
+        "uri": "BarChart.ace8942b9cda5691366075554b4d89d4",
+        "visualizationUrl": "local:bar"
     }
 }

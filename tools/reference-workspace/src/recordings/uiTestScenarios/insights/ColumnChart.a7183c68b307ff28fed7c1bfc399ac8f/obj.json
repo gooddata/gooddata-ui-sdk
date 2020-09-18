@@ -1,69 +1,56 @@
 {
     "insight": {
-        "identifier": "ColumnChart.a7183c68b307ff28fed7c1bfc399ac8f",
-        "uri": "ColumnChart.a7183c68b307ff28fed7c1bfc399ac8f",
-        "visualizationUrl": "local:column",
-        "title": "ColumnChart - single measure with two viewBy and stack",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.region",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
             {
-                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.owner.department",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
                             "localIdentifier": "a_label.owner.department"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "stack"
             }
         ],
         "filters": [],
+        "identifier": "ColumnChart.a7183c68b307ff28fed7c1bfc399ac8f",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "ColumnChart - single measure with two viewBy and stack",
+        "uri": "ColumnChart.a7183c68b307ff28fed7c1bfc399ac8f",
+        "visualizationUrl": "local:column"
     }
 }

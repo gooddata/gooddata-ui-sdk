@@ -1,26 +1,16 @@
 {
-    "workspace": "reference-workspace",
-    "buckets": [],
     "attributes": [
         {
             "attribute": {
-                "displayForm": {
-                    "identifier": "label.product.id.name",
-                    "type": "displayForm"
-                },
+                "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                 "localIdentifier": "a_label.product.id.name"
             }
         }
     ],
-    "measures": [],
-    "dimensions": [
-        {
-            "itemIdentifiers": []
-        },
-        {
-            "itemIdentifiers": ["a_label.product.id.name"]
-        }
-    ],
+    "buckets": [],
+    "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["a_label.product.id.name"] }],
     "filters": [],
-    "sortBy": []
+    "measures": [],
+    "sortBy": [],
+    "workspace": "reference-workspace"
 }

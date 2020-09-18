@@ -1,67 +1,50 @@
 {
     "insight": {
-        "identifier": "AreaChart.cb62c2373d9cac42d3266a71a1ca3925",
-        "uri": "AreaChart.cb62c2373d9cac42d3266a71a1ca3925",
-        "visualizationUrl": "local:area",
-        "title": "AreaChart - Y axis configuration",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "AreaChart.cb62c2373d9cac42d3266a71a1ca3925",
+        "properties": { "controls": { "yaxis": { "max": "25000000", "min": "5000000" } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "yaxis": {
-                    "min": "5000000",
-                    "max": "25000000"
-                }
-            }
-        }
+        "title": "AreaChart - Y axis configuration",
+        "uri": "AreaChart.cb62c2373d9cac42d3266a71a1ca3925",
+        "visualizationUrl": "local:area"
     }
 }

@@ -1,46 +1,39 @@
 {
     "insight": {
-        "identifier": "PieChart.bfc8f6311b13b33f15b29c01f3758310",
-        "uri": "PieChart.bfc8f6311b13b33f15b29c01f3758310",
-        "visualizationUrl": "local:pie",
-        "title": "PieChart - data labels - default",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "PieChart.bfc8f6311b13b33f15b29c01f3758310",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "PieChart - data labels - default",
+        "uri": "PieChart.bfc8f6311b13b33f15b29c01f3758310",
+        "visualizationUrl": "local:pie"
     }
 }

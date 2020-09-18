@@ -1,62 +1,50 @@
 {
     "insight": {
-        "identifier": "AreaChart.ce4ee9a675913d146996f31b91d815fd",
-        "uri": "AreaChart.ce4ee9a675913d146996f31b91d815fd",
-        "visualizationUrl": "local:area",
-        "title": "AreaChart - two measures with undefined values",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "closed.aag81lMifn6q",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
                             "localIdentifier": "a_closed.aag81lMifn6q"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "AreaChart.ce4ee9a675913d146996f31b91d815fd",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "AreaChart - two measures with undefined values",
+        "uri": "AreaChart.ce4ee9a675913d146996f31b91d815fd",
+        "visualizationUrl": "local:area"
     }
 }

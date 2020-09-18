@@ -1,63 +1,54 @@
 {
     "insight": {
-        "identifier": "ScatterPlot.fdaf3daba830a53221eeb82891197eb7",
-        "uri": "ScatterPlot.fdaf3daba830a53221eeb82891197eb7",
-        "visualizationUrl": "local:scatter",
-        "title": "ScatterPlot - x and y axis measures and attribute",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "abZgFKGPaGYM"
-                                    }
+                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "secondary_measures"
             },
             {
-                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "attribute"
             }
         ],
         "filters": [],
+        "identifier": "ScatterPlot.fdaf3daba830a53221eeb82891197eb7",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "ScatterPlot - x and y axis measures and attribute",
+        "uri": "ScatterPlot.fdaf3daba830a53221eeb82891197eb7",
+        "visualizationUrl": "local:scatter"
     }
 }

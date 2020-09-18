@@ -1,66 +1,50 @@
 {
     "insight": {
-        "identifier": "ColumnChart.07c8df01c7cf8bd1113388769d89a040",
-        "uri": "ColumnChart.07c8df01c7cf8bd1113388769d89a040",
-        "visualizationUrl": "local:column",
-        "title": "ColumnChart - data labels - auto visibility",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     },
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "ColumnChart.07c8df01c7cf8bd1113388769d89a040",
+        "properties": { "controls": { "dataLabels": { "visible": "auto" } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "dataLabels": {
-                    "visible": "auto"
-                }
-            }
-        }
+        "title": "ColumnChart - data labels - auto visibility",
+        "uri": "ColumnChart.07c8df01c7cf8bd1113388769d89a040",
+        "visualizationUrl": "local:column"
     }
 }

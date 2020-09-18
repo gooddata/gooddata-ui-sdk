@@ -1,44 +1,31 @@
 {
     "insight": {
-        "identifier": "BulletChart.e6665acb15051c2330c6a6b14f0be1f5",
-        "uri": "BulletChart.e6665acb15051c2330c6a6b14f0be1f5",
-        "visualizationUrl": "local:bullet",
-        "title": "BulletChart - primary measure",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
-            {
-                "localIdentifier": "secondary_measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "tertiary_measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "view",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "secondary_measures" },
+            { "items": [], "localIdentifier": "tertiary_measures" },
+            { "items": [], "localIdentifier": "view" }
         ],
         "filters": [],
+        "identifier": "BulletChart.e6665acb15051c2330c6a6b14f0be1f5",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "BulletChart - primary measure",
+        "uri": "BulletChart.e6665acb15051c2330c6a6b14f0be1f5",
+        "visualizationUrl": "local:bullet"
     }
 }

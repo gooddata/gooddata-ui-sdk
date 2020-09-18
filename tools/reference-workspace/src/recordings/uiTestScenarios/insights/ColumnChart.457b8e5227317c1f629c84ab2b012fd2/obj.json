@@ -1,52 +1,42 @@
 {
     "insight": {
-        "identifier": "ColumnChart.457b8e5227317c1f629c84ab2b012fd2",
-        "uri": "ColumnChart.457b8e5227317c1f629c84ab2b012fd2",
-        "visualizationUrl": "local:column",
-        "title": "ColumnChart - single ratio measure with viewBy",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "Amount with Ratio",
+                            "alias": "Amount with Ratio",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    },
-                                    "computeRatio": true
+                                    "computeRatio": true,
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
                             },
-                            "alias": "Amount with Ratio"
+                            "localIdentifier": "Amount with Ratio"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "ColumnChart.457b8e5227317c1f629c84ab2b012fd2",
+        "properties": { "controls": {} },
         "sorts": [],
-        "properties": {
-            "controls": {}
-        }
+        "title": "ColumnChart - single ratio measure with viewBy",
+        "uri": "ColumnChart.457b8e5227317c1f629c84ab2b012fd2",
+        "visualizationUrl": "local:column"
     }
 }

@@ -1,50 +1,39 @@
 {
     "insight": {
-        "identifier": "PieChart.7db947b313d5003fd34016c77909aae8",
-        "uri": "PieChart.7db947b313d5003fd34016c77909aae8",
-        "visualizationUrl": "local:pie",
-        "title": "PieChart - vertical alignment - middle",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             }
         ],
         "filters": [],
+        "identifier": "PieChart.7db947b313d5003fd34016c77909aae8",
+        "properties": { "controls": { "chart": { "verticalAlign": "middle" } } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "chart": {
-                    "verticalAlign": "middle"
-                }
-            }
-        }
+        "title": "PieChart - vertical alignment - middle",
+        "uri": "PieChart.7db947b313d5003fd34016c77909aae8",
+        "visualizationUrl": "local:pie"
     }
 }

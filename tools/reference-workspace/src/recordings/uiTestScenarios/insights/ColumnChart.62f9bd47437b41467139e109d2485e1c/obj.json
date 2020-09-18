@@ -1,52 +1,40 @@
 {
     "insight": {
-        "identifier": "ColumnChart.62f9bd47437b41467139e109d2485e1c",
-        "uri": "ColumnChart.62f9bd47437b41467139e109d2485e1c",
-        "visualizationUrl": "local:column",
-        "title": "ColumnChart - single measure with stack to 100%",
         "buckets": [
             {
-                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
-                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
                                 }
-                            }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "measures"
             },
             {
-                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name",
-                                "type": "displayForm"
-                            },
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ]
+                ],
+                "localIdentifier": "view"
             },
-            {
-                "localIdentifier": "stack",
-                "items": []
-            }
+            { "items": [], "localIdentifier": "stack" }
         ],
         "filters": [],
+        "identifier": "ColumnChart.62f9bd47437b41467139e109d2485e1c",
+        "properties": { "controls": { "stackMeasuresToPercent": true } },
         "sorts": [],
-        "properties": {
-            "controls": {
-                "stackMeasuresToPercent": true
-            }
-        }
+        "title": "ColumnChart - single measure with stack to 100%",
+        "uri": "ColumnChart.62f9bd47437b41467139e109d2485e1c",
+        "visualizationUrl": "local:column"
     }
 }
