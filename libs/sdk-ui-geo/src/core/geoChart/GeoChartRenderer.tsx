@@ -476,8 +476,8 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
 
     private handlePushpinMouseEnter = (e: mapboxgl.EventData): void => {
         const { chart, props, tooltip } = this;
-        const { config, intl } = props;
-        return handlePushpinMouseEnter(e, chart!, tooltip!, config, intl);
+        const { config, drillableItems, intl } = props;
+        return handlePushpinMouseEnter(e, chart!, tooltip!, config, drillableItems, intl);
     };
 
     private handlePushpinMouseLeave = (e: mapboxgl.EventData): void => {
