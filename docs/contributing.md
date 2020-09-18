@@ -4,6 +4,10 @@ We are happy that you are considering contribution to GoodData.UI SDK. Before pr
 with the technical aspects of the contribution. This document gives overview how to build and test the SDK and perform
 other typical tasks related to contributing.
 
+## IDE Settings
+
+Please check out [How to setup IntelliJ](setupIntellij.md) guide to find out about recommended settings for IntelliJ IDEA.
+
 ## Rush primer
 
 Rush is an opinionated monorepo management tool that comes with batteries included. We strongly encourage you to
@@ -230,6 +234,7 @@ rsync -rptgD --no-links --include="/*/dist/*" ./libs/ ~/your-app/node_modules/@g
 This will make sure that the SDK8 files in your app are from your local SDK8 version. To revert the changes, run `yarn install --force` or equivalent in your app.
 
 > Hint: it is better to run the first `rsync` before starting your application, as the first run copies a lot of files and might make your app dev-server recompile multiple times unnecessarily. So the typical flow would be
+>
 > 1. run `rsync` as described above
 > 2. after it finishes, run your app's dev server
 > 3. change the SDK code and run `rush build -t [the package you make changes in]` and then run `rsync` without stopping your app
