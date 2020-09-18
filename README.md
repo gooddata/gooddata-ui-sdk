@@ -34,6 +34,7 @@ You can also register to our [live examples](https://gooddata-examples.herokuapp
     ```
 
 3.  Build: `rush build`
+4.  Read the [contribution guide](./docs/contributing.md)
 
 ### After you pull latest changes
 
