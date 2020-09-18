@@ -1,50 +1,64 @@
 {
     "insight": {
+        "identifier": "AreaChart.b7bbb0a42ebe89dacf595e445a617618",
+        "uri": "AreaChart.b7bbb0a42ebe89dacf595e445a617618",
+        "visualizationUrl": "local:area",
+        "title": "AreaChart - undefined values and disabled stacking",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "closed.aag81lMifn6q", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "closed.aag81lMifn6q",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_closed.aag81lMifn6q"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "AreaChart.b7bbb0a42ebe89dacf595e445a617618",
-        "properties": { "controls": { "stacking": false } },
         "sorts": [],
-        "title": "AreaChart - undefined values and disabled stacking",
-        "uri": "AreaChart.b7bbb0a42ebe89dacf595e445a617618",
-        "visualizationUrl": "local:area"
+        "properties": {
+            "controls": {
+                "stacking": false
+            }
+        }
     }
 }

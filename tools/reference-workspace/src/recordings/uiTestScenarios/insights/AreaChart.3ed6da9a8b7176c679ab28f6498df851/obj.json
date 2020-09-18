@@ -1,30 +1,40 @@
 {
     "insight": {
+        "identifier": "AreaChart.3ed6da9a8b7176c679ab28f6498df851",
+        "uri": "AreaChart.3ed6da9a8b7176c679ab28f6498df851",
+        "visualizationUrl": "local:area",
+        "title": "AreaChart - single measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "AreaChart.3ed6da9a8b7176c679ab28f6498df851",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "AreaChart - single measure",
-        "uri": "AreaChart.3ed6da9a8b7176c679ab28f6498df851",
-        "visualizationUrl": "local:area"
+        "properties": {
+            "controls": {}
+        }
     }
 }

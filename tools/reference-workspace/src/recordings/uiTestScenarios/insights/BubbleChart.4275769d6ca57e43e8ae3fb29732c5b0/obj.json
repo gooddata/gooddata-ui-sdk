@@ -1,69 +1,84 @@
 {
     "insight": {
+        "identifier": "BubbleChart.4275769d6ca57e43e8ae3fb29732c5b0",
+        "uri": "BubbleChart.4275769d6ca57e43e8ae3fb29732c5b0",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - data labels - forced visible",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abEgMnq5hyJQ",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abEgMnq5hyJQ"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "tertiary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "BubbleChart.4275769d6ca57e43e8ae3fb29732c5b0",
-        "properties": { "controls": { "dataLabels": { "visible": true } } },
         "sorts": [],
-        "title": "BubbleChart - data labels - forced visible",
-        "uri": "BubbleChart.4275769d6ca57e43e8ae3fb29732c5b0",
-        "visualizationUrl": "local:bubble"
+        "properties": {
+            "controls": {
+                "dataLabels": {
+                    "visible": true
+                }
+            }
+        }
     }
 }

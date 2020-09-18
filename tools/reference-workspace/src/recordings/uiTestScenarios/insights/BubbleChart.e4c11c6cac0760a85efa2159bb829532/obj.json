@@ -1,69 +1,84 @@
 {
     "insight": {
+        "identifier": "BubbleChart.e4c11c6cac0760a85efa2159bb829532",
+        "uri": "BubbleChart.e4c11c6cac0760a85efa2159bb829532",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - legend position - legend on top",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abEgMnq5hyJQ",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abEgMnq5hyJQ"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "tertiary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "BubbleChart.e4c11c6cac0760a85efa2159bb829532",
-        "properties": { "controls": { "legend": { "position": "top" } } },
         "sorts": [],
-        "title": "BubbleChart - legend position - legend on top",
-        "uri": "BubbleChart.e4c11c6cac0760a85efa2159bb829532",
-        "visualizationUrl": "local:bubble"
+        "properties": {
+            "controls": {
+                "legend": {
+                    "position": "top"
+                }
+            }
+        }
     }
 }

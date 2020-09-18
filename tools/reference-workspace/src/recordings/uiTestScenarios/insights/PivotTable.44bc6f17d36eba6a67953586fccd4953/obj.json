@@ -1,40 +1,48 @@
 {
     "insight": {
+        "identifier": "PivotTable.44bc6f17d36eba6a67953586fccd4953",
+        "uri": "PivotTable.44bc6f17d36eba6a67953586fccd4953",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - single measure with column attribute",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "attribute" },
             {
+                "localIdentifier": "attribute",
+                "items": []
+            },
+            {
+                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "columns"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "PivotTable.44bc6f17d36eba6a67953586fccd4953",
-        "properties": {},
         "sorts": [],
-        "title": "PivotTable - single measure with column attribute",
-        "uri": "PivotTable.44bc6f17d36eba6a67953586fccd4953",
-        "visualizationUrl": "local:table"
+        "properties": {}
     }
 }

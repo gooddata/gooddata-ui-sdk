@@ -1,69 +1,80 @@
 {
     "insight": {
+        "identifier": "BubbleChart.ebf408e63f9aee60993e76d5a397e4f2",
+        "uri": "BubbleChart.ebf408e63f9aee60993e76d5a397e4f2",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - coloring - custom palette",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abEgMnq5hyJQ",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abEgMnq5hyJQ"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "tertiary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "BubbleChart.ebf408e63f9aee60993e76d5a397e4f2",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "BubbleChart - coloring - custom palette",
-        "uri": "BubbleChart.ebf408e63f9aee60993e76d5a397e4f2",
-        "visualizationUrl": "local:bubble"
+        "properties": {
+            "controls": {}
+        }
     }
 }

@@ -1,39 +1,50 @@
 {
     "insight": {
+        "identifier": "DonutChart.db48fbe7b669d54d9a3c1935ff209839",
+        "uri": "DonutChart.db48fbe7b669d54d9a3c1935ff209839",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - legend position - single measure and viewBy - legend on left",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "DonutChart.db48fbe7b669d54d9a3c1935ff209839",
-        "properties": { "controls": { "legend": { "position": "left" } } },
         "sorts": [],
-        "title": "DonutChart - legend position - single measure and viewBy - legend on left",
-        "uri": "DonutChart.db48fbe7b669d54d9a3c1935ff209839",
-        "visualizationUrl": "local:donut"
+        "properties": {
+            "controls": {
+                "legend": {
+                    "position": "left"
+                }
+            }
+        }
     }
 }

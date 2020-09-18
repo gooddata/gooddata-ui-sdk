@@ -1,52 +1,71 @@
 {
     "insight": {
+        "identifier": "Heatmap.cc68ee3158b652e4bc319824183472eb",
+        "uri": "Heatmap.cc68ee3158b652e4bc319824183472eb",
+        "visualizationUrl": "local:heatmap",
+        "title": "Heatmap - data labels - forced visible",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
             {
+                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "stack"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "Heatmap.cc68ee3158b652e4bc319824183472eb",
-        "properties": { "controls": { "dataLabels": { "visible": true } } },
         "sorts": [
-            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "desc"
+                }
+            }
         ],
-        "title": "Heatmap - data labels - forced visible",
-        "uri": "Heatmap.cc68ee3158b652e4bc319824183472eb",
-        "visualizationUrl": "local:heatmap"
+        "properties": {
+            "controls": {
+                "dataLabels": {
+                    "visible": true
+                }
+            }
+        }
     }
 }

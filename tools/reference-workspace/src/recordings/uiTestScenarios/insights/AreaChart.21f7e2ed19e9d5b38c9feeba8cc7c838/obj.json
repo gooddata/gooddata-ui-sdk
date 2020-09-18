@@ -1,50 +1,62 @@
 {
     "insight": {
+        "identifier": "AreaChart.21f7e2ed19e9d5b38c9feeba8cc7c838",
+        "uri": "AreaChart.21f7e2ed19e9d5b38c9feeba8cc7c838",
+        "visualizationUrl": "local:area",
+        "title": "AreaChart - single measure with viewBy and stackBy and stack to percent",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
             {
+                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "stack"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "AreaChart.21f7e2ed19e9d5b38c9feeba8cc7c838",
-        "properties": { "controls": { "stackMeasuresToPercent": true } },
         "sorts": [],
-        "title": "AreaChart - single measure with viewBy and stackBy and stack to percent",
-        "uri": "AreaChart.21f7e2ed19e9d5b38c9feeba8cc7c838",
-        "visualizationUrl": "local:area"
+        "properties": {
+            "controls": {
+                "stackMeasuresToPercent": true
+            }
+        }
     }
 }

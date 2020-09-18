@@ -1,63 +1,85 @@
 {
     "insight": {
+        "identifier": "ColumnChart.68a492ced997d45c37454002fdc735ab",
+        "uri": "ColumnChart.68a492ced997d45c37454002fdc735ab",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - assign color to attribute element stack",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
             {
+                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "stack"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "ColumnChart.68a492ced997d45c37454002fdc735ab",
+        "sorts": [],
         "properties": {
             "controls": {
                 "colorMapping": [
                     {
-                        "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 0 } },
-                        "id": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488"
+                        "id": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488",
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
+                            }
+                        }
                     },
                     {
-                        "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 255 } },
-                        "id": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489"
+                        "id": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460489",
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 255,
+                                "g": 0,
+                                "b": 0
+                            }
+                        }
                     }
                 ]
             }
-        },
-        "sorts": [],
-        "title": "ColumnChart - assign color to attribute element stack",
-        "uri": "ColumnChart.68a492ced997d45c37454002fdc735ab",
-        "visualizationUrl": "local:column"
+        }
     }
 }

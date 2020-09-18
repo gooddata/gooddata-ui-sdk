@@ -1,29 +1,36 @@
 {
     "insight": {
+        "identifier": "Xirr.74456ce90909b92d28a01949e02ac574",
+        "uri": "Xirr.74456ce90909b92d28a01949e02ac574",
+        "visualizationUrl": "local:xirr",
+        "title": "Xirr - only measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aadpHDMBecIy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aadpHDMBecIy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aadpHDMBecIy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "attribute" }
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "Xirr.74456ce90909b92d28a01949e02ac574",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "Xirr - only measure",
-        "uri": "Xirr.74456ce90909b92d28a01949e02ac574",
-        "visualizationUrl": "local:xirr"
+        "properties": {
+            "controls": {}
+        }
     }
 }

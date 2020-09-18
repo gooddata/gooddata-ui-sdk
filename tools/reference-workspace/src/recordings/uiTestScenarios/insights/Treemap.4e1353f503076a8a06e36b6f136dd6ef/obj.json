@@ -1,40 +1,50 @@
 {
     "insight": {
+        "identifier": "Treemap.4e1353f503076a8a06e36b6f136dd6ef",
+        "uri": "Treemap.4e1353f503076a8a06e36b6f136dd6ef",
+        "visualizationUrl": "local:treemap",
+        "title": "Treemap - single measure and segment",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" },
             {
+                "localIdentifier": "view",
+                "items": []
+            },
+            {
+                "localIdentifier": "segment",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "segment"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "Treemap.4e1353f503076a8a06e36b6f136dd6ef",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "Treemap - single measure and segment",
-        "uri": "Treemap.4e1353f503076a8a06e36b6f136dd6ef",
-        "visualizationUrl": "local:treemap"
+        "properties": {
+            "controls": {}
+        }
     }
 }

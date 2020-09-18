@@ -1,61 +1,79 @@
 {
     "insight": {
+        "identifier": "PivotTable.42bc5c37bcd179c07efd2312b65e4552",
+        "uri": "PivotTable.42bc5c37bcd179c07efd2312b65e4552",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - simple table with custom metric column size",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "attribute"
+                ]
             },
-            { "items": [], "localIdentifier": "columns" }
+            {
+                "localIdentifier": "columns",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "PivotTable.42bc5c37bcd179c07efd2312b65e4552",
+        "sorts": [],
         "properties": {
             "controls": {
                 "columnWidths": [
                     {
                         "measureColumnWidthItem": {
-                            "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }],
-                            "width": { "value": 60 }
+                            "width": {
+                                "value": 60
+                            },
+                            "locators": [
+                                {
+                                    "measureLocatorItem": {
+                                        "measureIdentifier": "m_aangOxLSeztu"
+                                    }
+                                }
+                            ]
                         }
                     }
                 ]
             }
-        },
-        "sorts": [],
-        "title": "PivotTable - simple table with custom metric column size",
-        "uri": "PivotTable.42bc5c37bcd179c07efd2312b65e4552",
-        "visualizationUrl": "local:table"
+        }
     }
 }

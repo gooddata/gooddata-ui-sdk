@@ -1,50 +1,62 @@
 {
     "insight": {
+        "identifier": "ComboChart.e3e36d99546cb5cc0e2ac5c6c9a50c33",
+        "uri": "ComboChart.e3e36d99546cb5cc0e2ac5c6c9a50c33",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - two secondary measure with viewBy",
         "buckets": [
-            { "items": [], "localIdentifier": "measures" },
             {
+                "localIdentifier": "measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "ComboChart.e3e36d99546cb5cc0e2ac5c6c9a50c33",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "ComboChart - two secondary measure with viewBy",
-        "uri": "ComboChart.e3e36d99546cb5cc0e2ac5c6c9a50c33",
-        "visualizationUrl": "local:combo2"
+        "properties": {
+            "controls": {}
+        }
     }
 }

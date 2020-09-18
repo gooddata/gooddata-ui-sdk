@@ -1,67 +1,87 @@
 {
     "insight": {
+        "identifier": "PivotTable.aee8982ef01847c3e73d41b3eb5eab86",
+        "uri": "PivotTable.aee8982ef01847c3e73d41b3eb5eab86",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - simple table with attribute and metric column size",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "attribute"
+                ]
             },
-            { "items": [], "localIdentifier": "columns" }
+            {
+                "localIdentifier": "columns",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "PivotTable.aee8982ef01847c3e73d41b3eb5eab86",
+        "sorts": [],
         "properties": {
             "controls": {
                 "columnWidths": [
                     {
                         "attributeColumnWidthItem": {
-                            "attributeIdentifier": "a_label.product.id.name",
-                            "width": { "value": 400 }
+                            "width": {
+                                "value": 400
+                            },
+                            "attributeIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "measureColumnWidthItem": {
-                            "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }],
-                            "width": { "value": 60 }
+                            "width": {
+                                "value": 60
+                            },
+                            "locators": [
+                                {
+                                    "measureLocatorItem": {
+                                        "measureIdentifier": "m_aangOxLSeztu"
+                                    }
+                                }
+                            ]
                         }
                     }
                 ]
             }
-        },
-        "sorts": [],
-        "title": "PivotTable - simple table with attribute and metric column size",
-        "uri": "PivotTable.aee8982ef01847c3e73d41b3eb5eab86",
-        "visualizationUrl": "local:table"
+        }
     }
 }

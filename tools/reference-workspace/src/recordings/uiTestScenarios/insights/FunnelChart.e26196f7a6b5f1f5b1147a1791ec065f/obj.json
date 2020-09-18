@@ -1,39 +1,46 @@
 {
     "insight": {
+        "identifier": "FunnelChart.e26196f7a6b5f1f5b1147a1791ec065f",
+        "uri": "FunnelChart.e26196f7a6b5f1f5b1147a1791ec065f",
+        "visualizationUrl": "local:funnel",
+        "title": "FunnelChart - single measure with viewBy",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "FunnelChart.e26196f7a6b5f1f5b1147a1791ec065f",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "FunnelChart - single measure with viewBy",
-        "uri": "FunnelChart.e26196f7a6b5f1f5b1147a1791ec065f",
-        "visualizationUrl": "local:funnel"
+        "properties": {
+            "controls": {}
+        }
     }
 }

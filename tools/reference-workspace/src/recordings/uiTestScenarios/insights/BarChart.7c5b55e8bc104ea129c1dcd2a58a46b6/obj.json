@@ -1,56 +1,75 @@
 {
     "insight": {
+        "identifier": "BarChart.7c5b55e8bc104ea129c1dcd2a58a46b6",
+        "uri": "BarChart.7c5b55e8bc104ea129c1dcd2a58a46b6",
+        "visualizationUrl": "local:bar",
+        "title": "BarChart - dual axis when two viewBy attributes",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "BarChart.7c5b55e8bc104ea129c1dcd2a58a46b6",
-        "properties": { "controls": { "secondary_xaxis": { "measures": ["m_acugFHNJgsBy"] } } },
         "sorts": [],
-        "title": "BarChart - dual axis when two viewBy attributes",
-        "uri": "BarChart.7c5b55e8bc104ea129c1dcd2a58a46b6",
-        "visualizationUrl": "local:bar"
+        "properties": {
+            "controls": {
+                "secondary_xaxis": {
+                    "measures": ["m_acugFHNJgsBy"]
+                }
+            }
+        }
     }
 }

@@ -1,29 +1,36 @@
 {
     "insight": {
+        "identifier": "PieChart.865eeddb32d2ec3391ed80d3e64a54e9",
+        "uri": "PieChart.865eeddb32d2ec3391ed80d3e64a54e9",
+        "visualizationUrl": "local:pie",
+        "title": "PieChart - single measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "PieChart.865eeddb32d2ec3391ed80d3e64a54e9",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "PieChart - single measure",
-        "uri": "PieChart.865eeddb32d2ec3391ed80d3e64a54e9",
-        "visualizationUrl": "local:pie"
+        "properties": {
+            "controls": {}
+        }
     }
 }

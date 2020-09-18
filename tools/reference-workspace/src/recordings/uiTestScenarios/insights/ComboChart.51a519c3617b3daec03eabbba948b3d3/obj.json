@@ -1,44 +1,53 @@
 {
     "insight": {
+        "identifier": "ComboChart.51a519c3617b3daec03eabbba948b3d3",
+        "uri": "ComboChart.51a519c3617b3daec03eabbba948b3d3",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - one primary and secondary measure no viewBy",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "ComboChart.51a519c3617b3daec03eabbba948b3d3",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "ComboChart - one primary and secondary measure no viewBy",
-        "uri": "ComboChart.51a519c3617b3daec03eabbba948b3d3",
-        "visualizationUrl": "local:combo2"
+        "properties": {
+            "controls": {}
+        }
     }
 }

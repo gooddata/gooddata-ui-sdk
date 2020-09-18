@@ -1,58 +1,83 @@
 {
     "insight": {
+        "identifier": "Treemap.42c4abf4958e1bb28d75dbc732671b13",
+        "uri": "Treemap.42c4abf4958e1bb28d75dbc732671b13",
+        "visualizationUrl": "local:treemap",
+        "title": "Treemap - data labels - forced visible and german separators",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
             {
+                "localIdentifier": "segment",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "segment"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "Treemap.42c4abf4958e1bb28d75dbc732671b13",
-        "properties": { "controls": { "dataLabels": { "visible": true } } },
         "sorts": [
-            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "asc" } },
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "asc"
+                }
+            },
             {
                 "measureSortItem": {
                     "direction": "desc",
-                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
+                    "locators": [
+                        {
+                            "measureLocatorItem": {
+                                "measureIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ]
                 }
             }
         ],
-        "title": "Treemap - data labels - forced visible and german separators",
-        "uri": "Treemap.42c4abf4958e1bb28d75dbc732671b13",
-        "visualizationUrl": "local:treemap"
+        "properties": {
+            "controls": {
+                "dataLabels": {
+                    "visible": true
+                }
+            }
+        }
     }
 }

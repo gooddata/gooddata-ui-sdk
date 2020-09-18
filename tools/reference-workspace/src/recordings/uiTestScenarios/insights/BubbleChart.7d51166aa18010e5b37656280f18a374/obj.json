@@ -1,31 +1,44 @@
 {
     "insight": {
+        "identifier": "BubbleChart.7d51166aa18010e5b37656280f18a374",
+        "uri": "BubbleChart.7d51166aa18010e5b37656280f18a374",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - x axis measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "secondary_measures" },
-            { "items": [], "localIdentifier": "tertiary_measures" },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "secondary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "tertiary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "BubbleChart.7d51166aa18010e5b37656280f18a374",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "BubbleChart - x axis measure",
-        "uri": "BubbleChart.7d51166aa18010e5b37656280f18a374",
-        "visualizationUrl": "local:bubble"
+        "properties": {
+            "controls": {}
+        }
     }
 }

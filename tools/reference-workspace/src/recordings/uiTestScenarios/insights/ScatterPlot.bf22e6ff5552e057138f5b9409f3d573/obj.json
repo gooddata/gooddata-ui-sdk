@@ -1,40 +1,50 @@
 {
     "insight": {
+        "identifier": "ScatterPlot.bf22e6ff5552e057138f5b9409f3d573",
+        "uri": "ScatterPlot.bf22e6ff5552e057138f5b9409f3d573",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot - y axis measure and attribute",
         "buckets": [
-            { "items": [], "localIdentifier": "measures" },
             {
+                "localIdentifier": "measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "attribute"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "ScatterPlot.bf22e6ff5552e057138f5b9409f3d573",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "ScatterPlot - y axis measure and attribute",
-        "uri": "ScatterPlot.bf22e6ff5552e057138f5b9409f3d573",
-        "visualizationUrl": "local:scatter"
+        "properties": {
+            "controls": {}
+        }
     }
 }

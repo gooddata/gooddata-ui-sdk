@@ -1,39 +1,52 @@
 {
     "insight": {
+        "identifier": "PivotTable.1c50ab6af2442b9206aad546e37617b0",
+        "uri": "PivotTable.1c50ab6af2442b9206aad546e37617b0",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - table with multiple measure columns and weak measure size",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.department",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.department"
                         }
                     }
-                ],
-                "localIdentifier": "attribute"
+                ]
             },
             {
+                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
@@ -46,31 +59,35 @@
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "columns"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "PivotTable.1c50ab6af2442b9206aad546e37617b0",
+        "sorts": [],
         "properties": {
             "controls": {
                 "columnWidths": [
                     {
                         "measureColumnWidthItem": {
-                            "locator": { "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } },
-                            "width": { "value": 60 }
+                            "width": {
+                                "value": 60
+                            },
+                            "locator": {
+                                "measureLocatorItem": {
+                                    "measureIdentifier": "m_aangOxLSeztu"
+                                }
+                            }
                         }
                     }
                 ]
             }
-        },
-        "sorts": [],
-        "title": "PivotTable - table with multiple measure columns and weak measure size",
-        "uri": "PivotTable.1c50ab6af2442b9206aad546e37617b0",
-        "visualizationUrl": "local:table"
+        }
     }
 }

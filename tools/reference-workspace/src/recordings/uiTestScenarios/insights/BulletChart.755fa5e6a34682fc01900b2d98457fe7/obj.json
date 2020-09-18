@@ -1,45 +1,57 @@
 {
     "insight": {
+        "identifier": "BulletChart.755fa5e6a34682fc01900b2d98457fe7",
+        "uri": "BulletChart.755fa5e6a34682fc01900b2d98457fe7",
+        "visualizationUrl": "local:bullet",
+        "title": "BulletChart - primary and comparative measures",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "secondary_measures" },
             {
+                "localIdentifier": "secondary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "tertiary_measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "BulletChart.755fa5e6a34682fc01900b2d98457fe7",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "BulletChart - primary and comparative measures",
-        "uri": "BulletChart.755fa5e6a34682fc01900b2d98457fe7",
-        "visualizationUrl": "local:bullet"
+        "properties": {
+            "controls": {}
+        }
     }
 }

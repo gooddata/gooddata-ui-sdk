@@ -1,9 +1,7 @@
 {
-    "attribute": { "uri": "/gdc/md/referenceworkspace/obj/1054" },
-    "description": "",
+    "attribute": {
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054"
+    },
     "id": "label.product.id.name",
-    "ref": { "identifier": "label.product.id.name" },
-    "title": "Product Name",
-    "type": "displayForm",
-    "uri": "/gdc/md/referenceworkspace/obj/1055"
+    "title": "Product Name"
 }

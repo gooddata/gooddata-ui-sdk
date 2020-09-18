@@ -4,19 +4,21 @@
             "headers": [
                 {
                     "attributeHeader": {
-                        "formOf": {
-                            "identifier": "attr.product.id",
-                            "name": "Product",
-                            "uri": "/gdc/md/referenceworkspace/obj/1054"
-                        },
-                        "identifier": "label.product.id.name",
-                        "localIdentifier": "a_label.product.id.name",
                         "name": "Product Name",
-                        "uri": "/gdc/md/referenceworkspace/obj/1055"
+                        "localIdentifier": "a_label.product.id.name",
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                        "identifier": "label.product.id.name",
+                        "formOf": {
+                            "name": "Product",
+                            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+                            "identifier": "attr.product.id"
+                        }
                     }
                 }
             ]
         },
-        { "headers": [] }
+        {
+            "headers": []
+        }
     ]
 }

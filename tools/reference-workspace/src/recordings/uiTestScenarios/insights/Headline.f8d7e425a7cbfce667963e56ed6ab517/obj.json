@@ -1,28 +1,32 @@
 {
     "insight": {
+        "identifier": "Headline.f8d7e425a7cbfce667963e56ed6ab517",
+        "uri": "Headline.f8d7e425a7cbfce667963e56ed6ab517",
+        "visualizationUrl": "local:headline",
+        "title": "Headline - single measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "Headline.f8d7e425a7cbfce667963e56ed6ab517",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "Headline - single measure",
-        "uri": "Headline.f8d7e425a7cbfce667963e56ed6ab517",
-        "visualizationUrl": "local:headline"
+        "properties": {
+            "controls": {}
+        }
     }
 }

@@ -1,39 +1,52 @@
 {
     "insight": {
+        "identifier": "DonutChart.ec22a82cf1d285839cd56258968ad25c",
+        "uri": "DonutChart.ec22a82cf1d285839cd56258968ad25c",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - legend position - two measures - legend at bottom",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "DonutChart.ec22a82cf1d285839cd56258968ad25c",
-        "properties": { "controls": { "legend": { "position": "bottom" } } },
         "sorts": [],
-        "title": "DonutChart - legend position - two measures - legend at bottom",
-        "uri": "DonutChart.ec22a82cf1d285839cd56258968ad25c",
-        "visualizationUrl": "local:donut"
+        "properties": {
+            "controls": {
+                "legend": {
+                    "position": "bottom"
+                }
+            }
+        }
     }
 }

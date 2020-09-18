@@ -1,30 +1,40 @@
 {
     "insight": {
+        "identifier": "ComboChart.25021c550c2449812b428b2252cf75fb",
+        "uri": "ComboChart.25021c550c2449812b428b2252cf75fb",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - one primary measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "secondary_measures" },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "secondary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "ComboChart.25021c550c2449812b428b2252cf75fb",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "ComboChart - one primary measure",
-        "uri": "ComboChart.25021c550c2449812b428b2252cf75fb",
-        "visualizationUrl": "local:combo2"
+        "properties": {
+            "controls": {}
+        }
     }
 }

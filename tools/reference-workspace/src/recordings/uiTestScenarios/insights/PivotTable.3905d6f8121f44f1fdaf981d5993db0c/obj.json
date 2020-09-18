@@ -1,40 +1,50 @@
 {
     "insight": {
+        "identifier": "PivotTable.3905d6f8121f44f1fdaf981d5993db0c",
+        "uri": "PivotTable.3905d6f8121f44f1fdaf981d5993db0c",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - two measures",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "attribute" },
-            { "items": [], "localIdentifier": "columns" }
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            },
+            {
+                "localIdentifier": "columns",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "PivotTable.3905d6f8121f44f1fdaf981d5993db0c",
-        "properties": {},
         "sorts": [],
-        "title": "PivotTable - two measures",
-        "uri": "PivotTable.3905d6f8121f44f1fdaf981d5993db0c",
-        "visualizationUrl": "local:table"
+        "properties": {}
     }
 }

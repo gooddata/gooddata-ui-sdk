@@ -1,45 +1,57 @@
 {
     "insight": {
+        "identifier": "BulletChart.314a074574b65c6082f53a4901cacdd1",
+        "uri": "BulletChart.314a074574b65c6082f53a4901cacdd1",
+        "visualizationUrl": "local:bullet",
+        "title": "BulletChart - primary and target measures",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
-            { "items": [], "localIdentifier": "tertiary_measures" },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "tertiary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "BulletChart.314a074574b65c6082f53a4901cacdd1",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "BulletChart - primary and target measures",
-        "uri": "BulletChart.314a074574b65c6082f53a4901cacdd1",
-        "visualizationUrl": "local:bullet"
+        "properties": {
+            "controls": {}
+        }
     }
 }

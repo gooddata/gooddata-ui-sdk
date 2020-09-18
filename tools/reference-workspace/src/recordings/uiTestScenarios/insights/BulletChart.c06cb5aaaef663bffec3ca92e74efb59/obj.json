@@ -1,55 +1,67 @@
 {
     "insight": {
+        "identifier": "BulletChart.c06cb5aaaef663bffec3ca92e74efb59",
+        "uri": "BulletChart.c06cb5aaaef663bffec3ca92e74efb59",
+        "visualizationUrl": "local:bullet",
+        "title": "BulletChart - primary and target measures with viewBy",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
-            { "items": [], "localIdentifier": "tertiary_measures" },
             {
+                "localIdentifier": "tertiary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "BulletChart.c06cb5aaaef663bffec3ca92e74efb59",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "BulletChart - primary and target measures with viewBy",
-        "uri": "BulletChart.c06cb5aaaef663bffec3ca92e74efb59",
-        "visualizationUrl": "local:bullet"
+        "properties": {
+            "controls": {}
+        }
     }
 }

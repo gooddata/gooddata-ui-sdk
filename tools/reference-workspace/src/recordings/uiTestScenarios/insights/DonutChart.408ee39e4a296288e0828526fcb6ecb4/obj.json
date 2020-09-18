@@ -1,39 +1,50 @@
 {
     "insight": {
+        "identifier": "DonutChart.408ee39e4a296288e0828526fcb6ecb4",
+        "uri": "DonutChart.408ee39e4a296288e0828526fcb6ecb4",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - data labels - forced visible and german separators",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "DonutChart.408ee39e4a296288e0828526fcb6ecb4",
-        "properties": { "controls": { "dataLabels": { "visible": true } } },
         "sorts": [],
-        "title": "DonutChart - data labels - forced visible and german separators",
-        "uri": "DonutChart.408ee39e4a296288e0828526fcb6ecb4",
-        "visualizationUrl": "local:donut"
+        "properties": {
+            "controls": {
+                "dataLabels": {
+                    "visible": true
+                }
+            }
+        }
     }
 }

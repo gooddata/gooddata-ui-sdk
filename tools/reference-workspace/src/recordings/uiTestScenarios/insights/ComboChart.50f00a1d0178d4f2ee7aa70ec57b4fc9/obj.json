@@ -1,61 +1,84 @@
 {
     "insight": {
+        "identifier": "ComboChart.50f00a1d0178d4f2ee7aa70ec57b4fc9",
+        "uri": "ComboChart.50f00a1d0178d4f2ee7aa70ec57b4fc9",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - axis name configuration - high",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "ComboChart.50f00a1d0178d4f2ee7aa70ec57b4fc9",
+        "sorts": [],
         "properties": {
             "controls": {
-                "secondary_xaxis": { "name": { "position": "right" } },
-                "secondary_yaxis": { "name": { "position": "top" } },
-                "xaxis": { "name": { "position": "right" } },
-                "yaxis": { "name": { "position": "top" } }
+                "xaxis": {
+                    "name": {
+                        "position": "right"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "top"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "right"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "position": "top"
+                    }
+                }
             }
-        },
-        "sorts": [],
-        "title": "ComboChart - axis name configuration - high",
-        "uri": "ComboChart.50f00a1d0178d4f2ee7aa70ec57b4fc9",
-        "visualizationUrl": "local:combo2"
+        }
     }
 }

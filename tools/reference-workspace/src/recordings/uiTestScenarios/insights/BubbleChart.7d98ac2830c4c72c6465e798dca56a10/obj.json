@@ -1,69 +1,84 @@
 {
     "insight": {
+        "identifier": "BubbleChart.7d98ac2830c4c72c6465e798dca56a10",
+        "uri": "BubbleChart.7d98ac2830c4c72c6465e798dca56a10",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - legend position - disabled",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abEgMnq5hyJQ",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abEgMnq5hyJQ"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "tertiary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "BubbleChart.7d98ac2830c4c72c6465e798dca56a10",
-        "properties": { "controls": { "legend": { "enabled": false } } },
         "sorts": [],
-        "title": "BubbleChart - legend position - disabled",
-        "uri": "BubbleChart.7d98ac2830c4c72c6465e798dca56a10",
-        "visualizationUrl": "local:bubble"
+        "properties": {
+            "controls": {
+                "legend": {
+                    "enabled": false
+                }
+            }
+        }
     }
 }

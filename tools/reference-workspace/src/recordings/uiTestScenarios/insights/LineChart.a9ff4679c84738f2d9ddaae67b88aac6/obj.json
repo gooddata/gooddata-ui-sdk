@@ -1,57 +1,84 @@
 {
     "insight": {
+        "identifier": "LineChart.a9ff4679c84738f2d9ddaae67b88aac6",
+        "uri": "LineChart.a9ff4679c84738f2d9ddaae67b88aac6",
+        "visualizationUrl": "local:line",
+        "title": "LineChart - dual axis name configuration - low",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "trend",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "created.aci81lMifn6q", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_created.aci81lMifn6q"
                         }
                     }
-                ],
-                "localIdentifier": "trend"
+                ]
             },
-            { "items": [], "localIdentifier": "segment" }
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "LineChart.a9ff4679c84738f2d9ddaae67b88aac6",
+        "sorts": [],
         "properties": {
             "controls": {
-                "secondary_xaxis": { "name": { "position": "left" } },
-                "secondary_yaxis": { "measures": ["m_acugFHNJgsBy"], "name": { "position": "bottom" } },
-                "xaxis": { "name": { "position": "left" } },
-                "yaxis": { "name": { "position": "bottom" } }
+                "secondary_yaxis": {
+                    "measures": ["m_acugFHNJgsBy"],
+                    "name": {
+                        "position": "bottom"
+                    }
+                },
+                "xaxis": {
+                    "name": {
+                        "position": "left"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "bottom"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "left"
+                    }
+                }
             }
-        },
-        "sorts": [],
-        "title": "LineChart - dual axis name configuration - low",
-        "uri": "LineChart.a9ff4679c84738f2d9ddaae67b88aac6",
-        "visualizationUrl": "local:line"
+        }
     }
 }

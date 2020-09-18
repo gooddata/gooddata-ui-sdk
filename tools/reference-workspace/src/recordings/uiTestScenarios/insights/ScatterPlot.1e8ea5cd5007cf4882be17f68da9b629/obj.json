@@ -1,30 +1,40 @@
 {
     "insight": {
+        "identifier": "ScatterPlot.1e8ea5cd5007cf4882be17f68da9b629",
+        "uri": "ScatterPlot.1e8ea5cd5007cf4882be17f68da9b629",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot - x axis measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "secondary_measures" },
-            { "items": [], "localIdentifier": "attribute" }
+            {
+                "localIdentifier": "secondary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "ScatterPlot.1e8ea5cd5007cf4882be17f68da9b629",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "ScatterPlot - x axis measure",
-        "uri": "ScatterPlot.1e8ea5cd5007cf4882be17f68da9b629",
-        "visualizationUrl": "local:scatter"
+        "properties": {
+            "controls": {}
+        }
     }
 }

@@ -1,61 +1,84 @@
 {
     "insight": {
+        "identifier": "ComboChart.6641bb6c43ebcb9c5aa871f61ea2efbe",
+        "uri": "ComboChart.6641bb6c43ebcb9c5aa871f61ea2efbe",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - axis name configuration - invisible",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "ComboChart.6641bb6c43ebcb9c5aa871f61ea2efbe",
+        "sorts": [],
         "properties": {
             "controls": {
-                "secondary_xaxis": { "name": { "position": "center" } },
-                "secondary_yaxis": { "name": { "position": "center" } },
-                "xaxis": { "name": { "position": "center" } },
-                "yaxis": { "name": { "position": "center" } }
+                "xaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                }
             }
-        },
-        "sorts": [],
-        "title": "ComboChart - axis name configuration - invisible",
-        "uri": "ComboChart.6641bb6c43ebcb9c5aa871f61ea2efbe",
-        "visualizationUrl": "local:combo2"
+        }
     }
 }

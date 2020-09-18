@@ -1,40 +1,52 @@
 {
     "insight": {
+        "identifier": "ColumnChart.dd99a0f74cad15f75536c9e47e79fd1b",
+        "uri": "ColumnChart.dd99a0f74cad15f75536c9e47e79fd1b",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - single measure ignores stack measures",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "ColumnChart.dd99a0f74cad15f75536c9e47e79fd1b",
-        "properties": { "controls": { "stackMeasures": true } },
         "sorts": [],
-        "title": "ColumnChart - single measure ignores stack measures",
-        "uri": "ColumnChart.dd99a0f74cad15f75536c9e47e79fd1b",
-        "visualizationUrl": "local:column"
+        "properties": {
+            "controls": {
+                "stackMeasures": true
+            }
+        }
     }
 }

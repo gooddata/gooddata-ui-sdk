@@ -1,40 +1,53 @@
 {
     "insight": {
+        "identifier": "PivotTable.8159de7b843c478cd0a1fda6037fbc0c",
+        "uri": "PivotTable.8159de7b843c478cd0a1fda6037fbc0c",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - measure format with colors",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_76bde438_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
                             },
-                            "format": "[backgroundColor=ffff00][green]#,##0.00 €",
-                            "localIdentifier": "m_76bde438_aangOxLSeztu"
+                            "format": "[backgroundColor=ffff00][green]#,##0.00 €"
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.department",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.department"
                         }
                     }
-                ],
-                "localIdentifier": "attribute"
+                ]
             },
             {
+                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
@@ -47,20 +60,18 @@
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "columns"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "PivotTable.8159de7b843c478cd0a1fda6037fbc0c",
-        "properties": {},
         "sorts": [],
-        "title": "PivotTable - measure format with colors",
-        "uri": "PivotTable.8159de7b843c478cd0a1fda6037fbc0c",
-        "visualizationUrl": "local:table"
+        "properties": {}
     }
 }

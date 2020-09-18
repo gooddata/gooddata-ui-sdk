@@ -1,50 +1,67 @@
 {
     "insight": {
+        "identifier": "ColumnChart.3e8baf9a4a568e084ddc2ebb560d3fd4",
+        "uri": "ColumnChart.3e8baf9a4a568e084ddc2ebb560d3fd4",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - Y axis min/max configuration",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "ColumnChart.3e8baf9a4a568e084ddc2ebb560d3fd4",
-        "properties": { "controls": { "yaxis": { "max": "25000000", "min": "5000000" } } },
         "sorts": [],
-        "title": "ColumnChart - Y axis min/max configuration",
-        "uri": "ColumnChart.3e8baf9a4a568e084ddc2ebb560d3fd4",
-        "visualizationUrl": "local:column"
+        "properties": {
+            "controls": {
+                "yaxis": {
+                    "min": "5000000",
+                    "max": "25000000"
+                }
+            }
+        }
     }
 }

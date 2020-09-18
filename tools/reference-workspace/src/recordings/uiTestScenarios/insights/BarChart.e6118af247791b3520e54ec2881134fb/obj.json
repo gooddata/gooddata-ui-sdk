@@ -1,69 +1,94 @@
 {
     "insight": {
+        "identifier": "BarChart.e6118af247791b3520e54ec2881134fb",
+        "uri": "BarChart.e6118af247791b3520e54ec2881134fb",
+        "visualizationUrl": "local:bar",
+        "title": "BarChart - two measures with two viewBy, filtered to single value",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [
             {
                 "positiveAttributeFilter": {
-                    "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                    "in": { "values": ["WonderKid"] }
+                    "displayForm": {
+                        "identifier": "label.product.id.name",
+                        "type": "displayForm"
+                    },
+                    "in": {
+                        "values": ["WonderKid"]
+                    }
                 }
             },
             {
                 "positiveAttributeFilter": {
-                    "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
-                    "in": { "values": ["East Coast"] }
+                    "displayForm": {
+                        "identifier": "label.owner.region",
+                        "type": "displayForm"
+                    },
+                    "in": {
+                        "values": ["East Coast"]
+                    }
                 }
             }
         ],
-        "identifier": "BarChart.e6118af247791b3520e54ec2881134fb",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "BarChart - two measures with two viewBy, filtered to single value",
-        "uri": "BarChart.e6118af247791b3520e54ec2881134fb",
-        "visualizationUrl": "local:bar"
+        "properties": {
+            "controls": {}
+        }
     }
 }

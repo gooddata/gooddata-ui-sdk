@@ -1,71 +1,87 @@
 {
     "insight": {
+        "identifier": "BubbleChart.37c26334047e42c87ce6acdb6a96308c",
+        "uri": "BubbleChart.37c26334047e42c87ce6acdb6a96308c",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - x and y axis and size measures with viewBy and sorted by attr",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abEgMnq5hyJQ",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abEgMnq5hyJQ"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "tertiary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "BubbleChart.37c26334047e42c87ce6acdb6a96308c",
-        "properties": { "controls": {} },
         "sorts": [
-            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "desc"
+                }
+            }
         ],
-        "title": "BubbleChart - x and y axis and size measures with viewBy and sorted by attr",
-        "uri": "BubbleChart.37c26334047e42c87ce6acdb6a96308c",
-        "visualizationUrl": "local:bubble"
+        "properties": {
+            "controls": {}
+        }
     }
 }

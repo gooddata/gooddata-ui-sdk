@@ -1,0 +1,186 @@
+[
+    {
+        "vis": "BulletChart",
+        "scenario": "primary and target measures",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "secondary_measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "tertiary_measures",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": []
+                }
+            ],
+            "attributes": [],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": []
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        }
+    },
+    {
+        "vis": "BulletChart",
+        "scenario": "primary and comparative measures",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "secondary_measures",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "tertiary_measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_aangOxLSeztu",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "aangOxLSeztu"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "localIdentifier": "view",
+                    "items": []
+                }
+            ],
+            "attributes": [],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                },
+                {
+                    "itemIdentifiers": []
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy",
+            "m_aangOxLSeztu": "m_aangOxLSeztu"
+        }
+    }
+]

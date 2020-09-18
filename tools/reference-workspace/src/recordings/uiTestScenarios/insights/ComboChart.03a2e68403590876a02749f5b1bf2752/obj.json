@@ -1,54 +1,67 @@
 {
     "insight": {
+        "identifier": "ComboChart.03a2e68403590876a02749f5b1bf2752",
+        "uri": "ComboChart.03a2e68403590876a02749f5b1bf2752",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - legend position - legend on right",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "ComboChart.03a2e68403590876a02749f5b1bf2752",
-        "properties": { "controls": { "legend": { "position": "right" } } },
         "sorts": [],
-        "title": "ComboChart - legend position - legend on right",
-        "uri": "ComboChart.03a2e68403590876a02749f5b1bf2752",
-        "visualizationUrl": "local:combo2"
+        "properties": {
+            "controls": {
+                "legend": {
+                    "position": "right"
+                }
+            }
+        }
     }
 }

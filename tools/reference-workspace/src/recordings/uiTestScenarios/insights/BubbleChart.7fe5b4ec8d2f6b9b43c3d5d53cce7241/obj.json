@@ -1,55 +1,67 @@
 {
     "insight": {
+        "identifier": "BubbleChart.7fe5b4ec8d2f6b9b43c3d5d53cce7241",
+        "uri": "BubbleChart.7fe5b4ec8d2f6b9b43c3d5d53cce7241",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - x axis and size measures with viewBy",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "secondary_measures" },
             {
+                "localIdentifier": "secondary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abEgMnq5hyJQ",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abEgMnq5hyJQ"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "tertiary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "BubbleChart.7fe5b4ec8d2f6b9b43c3d5d53cce7241",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "BubbleChart - x axis and size measures with viewBy",
-        "uri": "BubbleChart.7fe5b4ec8d2f6b9b43c3d5d53cce7241",
-        "visualizationUrl": "local:bubble"
+        "properties": {
+            "controls": {}
+        }
     }
 }

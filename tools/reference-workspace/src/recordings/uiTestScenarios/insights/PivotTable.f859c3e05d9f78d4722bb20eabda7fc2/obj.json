@@ -1,43 +1,56 @@
 {
     "insight": {
+        "identifier": "PivotTable.f859c3e05d9f78d4722bb20eabda7fc2",
+        "uri": "PivotTable.f859c3e05d9f78d4722bb20eabda7fc2",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - single measure pivot with grouping sorted by first row attr",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.department",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.department"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "attribute"
+                ]
             },
-            { "items": [], "localIdentifier": "columns" }
+            {
+                "localIdentifier": "columns",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "PivotTable.f859c3e05d9f78d4722bb20eabda7fc2",
-        "properties": {},
         "sorts": [
             {
                 "attributeSortItem": {
@@ -46,8 +59,6 @@
                 }
             }
         ],
-        "title": "PivotTable - single measure pivot with grouping sorted by first row attr",
-        "uri": "PivotTable.f859c3e05d9f78d4722bb20eabda7fc2",
-        "visualizationUrl": "local:table"
+        "properties": {}
     }
 }

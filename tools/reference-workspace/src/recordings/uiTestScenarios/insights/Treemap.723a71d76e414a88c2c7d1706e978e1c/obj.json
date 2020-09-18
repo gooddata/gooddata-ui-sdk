@@ -1,58 +1,83 @@
 {
     "insight": {
+        "identifier": "Treemap.723a71d76e414a88c2c7d1706e978e1c",
+        "uri": "Treemap.723a71d76e414a88c2c7d1706e978e1c",
+        "visualizationUrl": "local:treemap",
+        "title": "Treemap - legend position - legend on left",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
             {
+                "localIdentifier": "segment",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "segment"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "Treemap.723a71d76e414a88c2c7d1706e978e1c",
-        "properties": { "controls": { "legend": { "position": "left" } } },
         "sorts": [
-            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "asc" } },
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "asc"
+                }
+            },
             {
                 "measureSortItem": {
                     "direction": "desc",
-                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
+                    "locators": [
+                        {
+                            "measureLocatorItem": {
+                                "measureIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ]
                 }
             }
         ],
-        "title": "Treemap - legend position - legend on left",
-        "uri": "Treemap.723a71d76e414a88c2c7d1706e978e1c",
-        "visualizationUrl": "local:treemap"
+        "properties": {
+            "controls": {
+                "legend": {
+                    "position": "left"
+                }
+            }
+        }
     }
 }

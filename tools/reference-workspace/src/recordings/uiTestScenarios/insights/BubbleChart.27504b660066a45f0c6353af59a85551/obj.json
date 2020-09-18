@@ -1,76 +1,101 @@
 {
     "insight": {
+        "identifier": "BubbleChart.27504b660066a45f0c6353af59a85551",
+        "uri": "BubbleChart.27504b660066a45f0c6353af59a85551",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - axis name customization - invisible",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abEgMnq5hyJQ",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abEgMnq5hyJQ"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "tertiary_measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "BubbleChart.27504b660066a45f0c6353af59a85551",
+        "sorts": [],
         "properties": {
             "controls": {
-                "secondary_xaxis": { "name": { "position": "center" } },
-                "secondary_yaxis": { "name": { "position": "center" } },
-                "xaxis": { "name": { "position": "center" } },
-                "yaxis": { "name": { "position": "center" } }
+                "xaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                }
             }
-        },
-        "sorts": [],
-        "title": "BubbleChart - axis name customization - invisible",
-        "uri": "BubbleChart.27504b660066a45f0c6353af59a85551",
-        "visualizationUrl": "local:bubble"
+        }
     }
 }

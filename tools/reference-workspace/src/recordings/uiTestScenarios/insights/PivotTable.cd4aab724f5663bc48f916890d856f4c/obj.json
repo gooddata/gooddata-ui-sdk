@@ -1,61 +1,76 @@
 {
     "insight": {
+        "identifier": "PivotTable.cd4aab724f5663bc48f916890d856f4c",
+        "uri": "PivotTable.cd4aab724f5663bc48f916890d856f4c",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - totals and max height 300",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.department",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.department"
                         }
                     }
                 ],
-                "localIdentifier": "attribute",
                 "totals": [
                     {
-                        "attributeIdentifier": "a_label.product.id.name",
+                        "type": "sum",
                         "measureIdentifier": "m_aangOxLSeztu",
-                        "type": "sum"
+                        "attributeIdentifier": "a_label.product.id.name"
                     },
                     {
-                        "attributeIdentifier": "a_label.product.id.name",
+                        "type": "sum",
                         "measureIdentifier": "m_acugFHNJgsBy",
-                        "type": "sum"
+                        "attributeIdentifier": "a_label.product.id.name"
                     }
                 ]
             },
             {
+                "localIdentifier": "columns",
                 "items": [
                     {
                         "attribute": {
@@ -68,20 +83,18 @@
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "columns"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "PivotTable.cd4aab724f5663bc48f916890d856f4c",
-        "properties": {},
         "sorts": [],
-        "title": "PivotTable - totals and max height 300",
-        "uri": "PivotTable.cd4aab724f5663bc48f916890d856f4c",
-        "visualizationUrl": "local:table"
+        "properties": {}
     }
 }

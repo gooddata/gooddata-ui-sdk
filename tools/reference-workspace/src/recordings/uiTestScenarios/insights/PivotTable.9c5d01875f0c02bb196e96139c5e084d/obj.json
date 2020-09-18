@@ -1,30 +1,38 @@
 {
     "insight": {
+        "identifier": "PivotTable.9c5d01875f0c02bb196e96139c5e084d",
+        "uri": "PivotTable.9c5d01875f0c02bb196e96139c5e084d",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - single measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "attribute" },
-            { "items": [], "localIdentifier": "columns" }
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            },
+            {
+                "localIdentifier": "columns",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "PivotTable.9c5d01875f0c02bb196e96139c5e084d",
-        "properties": {},
         "sorts": [],
-        "title": "PivotTable - single measure",
-        "uri": "PivotTable.9c5d01875f0c02bb196e96139c5e084d",
-        "visualizationUrl": "local:table"
+        "properties": {}
     }
 }

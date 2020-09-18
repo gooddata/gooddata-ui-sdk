@@ -1,59 +1,88 @@
 {
     "insight": {
+        "identifier": "Heatmap.7654db596ed899eb5729c112b8c8f9b2",
+        "uri": "Heatmap.7654db596ed899eb5729c112b8c8f9b2",
+        "visualizationUrl": "local:heatmap",
+        "title": "Heatmap - axis name configuration - middle",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
             {
+                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "stack"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "Heatmap.7654db596ed899eb5729c112b8c8f9b2",
+        "sorts": [
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "desc"
+                }
+            }
+        ],
         "properties": {
             "controls": {
-                "secondary_xaxis": { "name": { "position": "center" } },
-                "secondary_yaxis": { "name": { "position": "center" } },
-                "xaxis": { "name": { "position": "center" } },
-                "yaxis": { "name": { "position": "center" } }
+                "xaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "position": "center"
+                    }
+                }
             }
-        },
-        "sorts": [
-            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
-        ],
-        "title": "Heatmap - axis name configuration - middle",
-        "uri": "Heatmap.7654db596ed899eb5729c112b8c8f9b2",
-        "visualizationUrl": "local:heatmap"
+        }
     }
 }

@@ -1,42 +1,52 @@
 {
     "insight": {
+        "identifier": "ColumnChart.88ba6379a6376de945cc8a64ecc642e7",
+        "uri": "ColumnChart.88ba6379a6376de945cc8a64ecc642e7",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - dual axis name customization - low",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            },
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
                             "alias": "Ratio of Won and Lost",
                             "definition": {
                                 "arithmeticMeasure": {
@@ -46,42 +56,56 @@
                                     ],
                                     "operator": "ratio"
                                 }
-                            },
-                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "ColumnChart.88ba6379a6376de945cc8a64ecc642e7",
+        "sorts": [],
         "properties": {
             "controls": {
-                "secondary_xaxis": { "name": { "position": "left" } },
                 "secondary_yaxis": {
                     "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"],
-                    "name": { "position": "bottom" }
+                    "name": {
+                        "position": "bottom"
+                    }
                 },
-                "xaxis": { "name": { "position": "left" } },
-                "yaxis": { "name": { "position": "bottom" } }
+                "xaxis": {
+                    "name": {
+                        "position": "left"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "bottom"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "left"
+                    }
+                }
             }
-        },
-        "sorts": [],
-        "title": "ColumnChart - dual axis name customization - low",
-        "uri": "ColumnChart.88ba6379a6376de945cc8a64ecc642e7",
-        "visualizationUrl": "local:column"
+        }
     }
 }

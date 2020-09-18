@@ -1,42 +1,52 @@
 {
     "insight": {
+        "identifier": "DonutChart.0dcf22119071856ba7d24a7c25c2a042",
+        "uri": "DonutChart.0dcf22119071856ba7d24a7c25c2a042",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - arithmetic measures",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            },
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
                             "alias": "Ratio of Won and Lost",
                             "definition": {
                                 "arithmeticMeasure": {
@@ -46,21 +56,20 @@
                                     ],
                                     "operator": "ratio"
                                 }
-                            },
-                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "DonutChart.0dcf22119071856ba7d24a7c25c2a042",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "DonutChart - arithmetic measures",
-        "uri": "DonutChart.0dcf22119071856ba7d24a7c25c2a042",
-        "visualizationUrl": "local:donut"
+        "properties": {
+            "controls": {}
+        }
     }
 }

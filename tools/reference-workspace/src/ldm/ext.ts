@@ -43,7 +43,7 @@ export const CalculatedWonLostRatio = newArithmeticMeasure([CalculatedLost, Refe
 );
 
 /**
- * A PoP measure derived from 'Won' measure, comparing same period previous year
+ * A PoP measure derived from 'Won' measure, comparing same perioud previous year
  *
  * NOTE: popAttrId is hardcoded like this because PoP measure needs attribute ID and not display form ID and
  * attribute ids are not yet in the generated LDM catalog.
@@ -69,10 +69,4 @@ export const AmountWithRatio = modifySimpleMeasure(ReferenceLdm.Amount, (m) =>
  */
 export const ClosedDataDatasetRef: ObjRef = {
     identifier: "closed",
-};
-/**
- * A reference to Stage History Attribute
- */
-export const StageHistoryAttributeRef: ObjRef = {
-    identifier: "attr.stagehistory.id",
 };

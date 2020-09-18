@@ -1,0 +1,19 @@
+{
+    "data": [["116625456.54"]],
+    "headerItems": [
+        [],
+        [
+            [
+                {
+                    "measureHeaderItem": {
+                        "name": "Amount",
+                        "order": 0
+                    }
+                }
+            ]
+        ]
+    ],
+    "count": [1, 1],
+    "offset": [0, 0],
+    "totalCount": [1, 1]
+}

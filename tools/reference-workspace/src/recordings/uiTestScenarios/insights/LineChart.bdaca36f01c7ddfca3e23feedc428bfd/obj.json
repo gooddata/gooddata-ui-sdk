@@ -1,50 +1,60 @@
 {
     "insight": {
+        "identifier": "LineChart.bdaca36f01c7ddfca3e23feedc428bfd",
+        "uri": "LineChart.bdaca36f01c7ddfca3e23feedc428bfd",
+        "visualizationUrl": "local:line",
+        "title": "LineChart - single measure with trendBy and segmentBy",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "trend",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "created.aci81lMifn6q", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_created.aci81lMifn6q"
                         }
                     }
-                ],
-                "localIdentifier": "trend"
+                ]
             },
             {
+                "localIdentifier": "segment",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "segment"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "LineChart.bdaca36f01c7ddfca3e23feedc428bfd",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "LineChart - single measure with trendBy and segmentBy",
-        "uri": "LineChart.bdaca36f01c7ddfca3e23feedc428bfd",
-        "visualizationUrl": "local:line"
+        "properties": {
+            "controls": {}
+        }
     }
 }

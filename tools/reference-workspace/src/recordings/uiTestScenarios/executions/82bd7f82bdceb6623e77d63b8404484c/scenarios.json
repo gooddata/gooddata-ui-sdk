@@ -1,19 +1,20 @@
 [
     {
-        "n2oMap": { "a_label.product.id.name": "a_label.product.id.name" },
+        "vis": "PivotTable",
+        "scenario": "single column",
         "originalExecution": {
-            "attributes": [
-                {
-                    "attribute": {
-                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ],
+            "workspace": "reference-workspace",
             "buckets": [
-                { "items": [], "localIdentifier": "measures" },
-                { "items": [], "localIdentifier": "attribute" },
                 {
+                    "localIdentifier": "measures",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "attribute",
+                    "items": []
+                },
+                {
+                    "localIdentifier": "columns",
                     "items": [
                         {
                             "attribute": {
@@ -24,17 +25,34 @@
                                 "localIdentifier": "a_label.product.id.name"
                             }
                         }
-                    ],
-                    "localIdentifier": "columns"
+                    ]
                 }
             ],
-            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["a_label.product.id.name"] }],
-            "filters": [],
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
             "measures": [],
-            "sortBy": [],
-            "workspace": "reference-workspace"
+            "dimensions": [
+                {
+                    "itemIdentifiers": []
+                },
+                {
+                    "itemIdentifiers": ["a_label.product.id.name"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
         },
-        "scenario": "single column",
-        "vis": "PivotTable"
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name"
+        }
     }
 ]

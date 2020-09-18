@@ -1,39 +1,48 @@
 {
     "insight": {
+        "identifier": "DonutChart.5153902e34da5880c54d0d7faa3bd4ca",
+        "uri": "DonutChart.5153902e34da5880c54d0d7faa3bd4ca",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - two measures",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "DonutChart.5153902e34da5880c54d0d7faa3bd4ca",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "DonutChart - two measures",
-        "uri": "DonutChart.5153902e34da5880c54d0d7faa3bd4ca",
-        "visualizationUrl": "local:donut"
+        "properties": {
+            "controls": {}
+        }
     }
 }

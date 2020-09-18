@@ -1,29 +1,36 @@
 {
     "insight": {
+        "identifier": "FunnelChart.c8c4bd66f9a92aefb66ed4231721d190",
+        "uri": "FunnelChart.c8c4bd66f9a92aefb66ed4231721d190",
+        "visualizationUrl": "local:funnel",
+        "title": "FunnelChart - single measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "FunnelChart.c8c4bd66f9a92aefb66ed4231721d190",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "FunnelChart - single measure",
-        "uri": "FunnelChart.c8c4bd66f9a92aefb66ed4231721d190",
-        "visualizationUrl": "local:funnel"
+        "properties": {
+            "controls": {}
+        }
     }
 }

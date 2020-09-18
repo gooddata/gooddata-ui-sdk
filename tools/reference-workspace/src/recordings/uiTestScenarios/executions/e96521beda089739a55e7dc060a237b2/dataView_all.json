@@ -1,0 +1,18 @@
+{
+    "data": ["-123400"],
+    "headerItems": [
+        [
+            [
+                {
+                    "measureHeaderItem": {
+                        "name": "Sample XIRR",
+                        "order": 0
+                    }
+                }
+            ]
+        ]
+    ],
+    "count": [1],
+    "offset": [0],
+    "totalCount": [1]
+}

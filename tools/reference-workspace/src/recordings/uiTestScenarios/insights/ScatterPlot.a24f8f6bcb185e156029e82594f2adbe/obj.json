@@ -1,61 +1,84 @@
 {
     "insight": {
+        "identifier": "ScatterPlot.a24f8f6bcb185e156029e82594f2adbe",
+        "uri": "ScatterPlot.a24f8f6bcb185e156029e82594f2adbe",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot - axis name configuration - high",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "attribute"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "ScatterPlot.a24f8f6bcb185e156029e82594f2adbe",
+        "sorts": [],
         "properties": {
             "controls": {
-                "secondary_xaxis": { "name": { "position": "right" } },
-                "secondary_yaxis": { "name": { "position": "top" } },
-                "xaxis": { "name": { "position": "right" } },
-                "yaxis": { "name": { "position": "top" } }
+                "xaxis": {
+                    "name": {
+                        "position": "right"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "top"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "right"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "position": "top"
+                    }
+                }
             }
-        },
-        "sorts": [],
-        "title": "ScatterPlot - axis name configuration - high",
-        "uri": "ScatterPlot.a24f8f6bcb185e156029e82594f2adbe",
-        "visualizationUrl": "local:scatter"
+        }
     }
 }

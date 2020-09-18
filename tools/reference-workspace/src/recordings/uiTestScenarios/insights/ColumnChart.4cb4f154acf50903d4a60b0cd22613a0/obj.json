@@ -1,42 +1,52 @@
 {
     "insight": {
+        "identifier": "ColumnChart.4cb4f154acf50903d4a60b0cd22613a0",
+        "uri": "ColumnChart.4cb4f154acf50903d4a60b0cd22613a0",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - dual axis with hidden right Y axis",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            },
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
                             "alias": "Ratio of Won and Lost",
                             "definition": {
                                 "arithmeticMeasure": {
@@ -46,28 +56,32 @@
                                     ],
                                     "operator": "ratio"
                                 }
-                            },
-                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "ColumnChart.4cb4f154acf50903d4a60b0cd22613a0",
+        "sorts": [],
         "properties": {
             "controls": {
                 "secondary_yaxis": {
@@ -75,10 +89,6 @@
                     "visible": false
                 }
             }
-        },
-        "sorts": [],
-        "title": "ColumnChart - dual axis with hidden right Y axis",
-        "uri": "ColumnChart.4cb4f154acf50903d4a60b0cd22613a0",
-        "visualizationUrl": "local:column"
+        }
     }
 }

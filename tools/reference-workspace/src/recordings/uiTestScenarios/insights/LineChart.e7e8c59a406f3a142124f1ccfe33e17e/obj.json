@@ -1,57 +1,83 @@
 {
     "insight": {
+        "identifier": "LineChart.e7e8c59a406f3a142124f1ccfe33e17e",
+        "uri": "LineChart.e7e8c59a406f3a142124f1ccfe33e17e",
+        "visualizationUrl": "local:line",
+        "title": "LineChart - single axis name configuration - low",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "trend",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "created.aci81lMifn6q", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_created.aci81lMifn6q"
                         }
                     }
-                ],
-                "localIdentifier": "trend"
+                ]
             },
-            { "items": [], "localIdentifier": "segment" }
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "LineChart.e7e8c59a406f3a142124f1ccfe33e17e",
+        "sorts": [],
         "properties": {
             "controls": {
-                "secondary_xaxis": { "name": { "position": "left" } },
-                "secondary_yaxis": { "name": { "position": "bottom" } },
-                "xaxis": { "name": { "position": "left" } },
-                "yaxis": { "name": { "position": "bottom" } }
+                "xaxis": {
+                    "name": {
+                        "position": "left"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "position": "bottom"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "position": "left"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "position": "bottom"
+                    }
+                }
             }
-        },
-        "sorts": [],
-        "title": "LineChart - single axis name configuration - low",
-        "uri": "LineChart.e7e8c59a406f3a142124f1ccfe33e17e",
-        "visualizationUrl": "local:line"
+        }
     }
 }

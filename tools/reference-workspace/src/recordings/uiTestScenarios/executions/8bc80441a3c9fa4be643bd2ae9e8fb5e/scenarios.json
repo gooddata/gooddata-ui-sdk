@@ -1,0 +1,84 @@
+[
+    {
+        "vis": "Headline",
+        "scenario": "two measures one PoP",
+        "originalExecution": {
+            "workspace": "reference-workspace",
+            "buckets": [
+                {
+                    "localIdentifier": "measures",
+                    "items": [
+                        {
+                            "measure": {
+                                "localIdentifier": "m_acugFHNJgsBy",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "acugFHNJgsBy"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "measure": {
+                                "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+                                "alias": "Won Last Year",
+                                "definition": {
+                                    "popMeasureDefinition": {
+                                        "measureIdentifier": "m_acugFHNJgsBy",
+                                        "popAttribute": {
+                                            "identifier": "closed.year",
+                                            "type": "attribute"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "attributes": [],
+            "measures": [
+                {
+                    "measure": {
+                        "localIdentifier": "m_acugFHNJgsBy",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "measure": {
+                        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+                        "alias": "Won Last Year",
+                        "definition": {
+                            "popMeasureDefinition": {
+                                "measureIdentifier": "m_acugFHNJgsBy",
+                                "popAttribute": {
+                                    "identifier": "closed.year",
+                                    "type": "attribute"
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": ["measureGroup"]
+                }
+            ],
+            "filters": [],
+            "sortBy": []
+        },
+        "n2oMap": {
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy",
+            "m_m_acugFHNJgsBy_closed.year": "m_e40a8329_m_acugFHNJgsBy_closed.year"
+        }
+    }
+]

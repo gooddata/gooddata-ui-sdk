@@ -1,39 +1,46 @@
 {
     "insight": {
+        "identifier": "Xirr.e5deb6dfe7ff06cdc5210a56fc84c841",
+        "uri": "Xirr.e5deb6dfe7ff06cdc5210a56fc84c841",
+        "visualizationUrl": "local:xirr",
+        "title": "Xirr - semantically wrong measure",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abYgDBRagANw",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abYgDBRagANw", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abYgDBRagANw"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abYgDBRagANw"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "timeline.aag81lMifn6q", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "timeline.aag81lMifn6q",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_timeline.aag81lMifn6q"
                         }
                     }
-                ],
-                "localIdentifier": "attribute"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "Xirr.e5deb6dfe7ff06cdc5210a56fc84c841",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "Xirr - semantically wrong measure",
-        "uri": "Xirr.e5deb6dfe7ff06cdc5210a56fc84c841",
-        "visualizationUrl": "local:xirr"
+        "properties": {
+            "controls": {}
+        }
     }
 }

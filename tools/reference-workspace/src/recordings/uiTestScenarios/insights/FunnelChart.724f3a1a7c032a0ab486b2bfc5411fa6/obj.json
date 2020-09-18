@@ -1,39 +1,48 @@
 {
     "insight": {
+        "identifier": "FunnelChart.724f3a1a7c032a0ab486b2bfc5411fa6",
+        "uri": "FunnelChart.724f3a1a7c032a0ab486b2bfc5411fa6",
+        "visualizationUrl": "local:funnel",
+        "title": "FunnelChart - two measures",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "FunnelChart.724f3a1a7c032a0ab486b2bfc5411fa6",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "FunnelChart - two measures",
-        "uri": "FunnelChart.724f3a1a7c032a0ab486b2bfc5411fa6",
-        "visualizationUrl": "local:funnel"
+        "properties": {
+            "controls": {}
+        }
     }
 }

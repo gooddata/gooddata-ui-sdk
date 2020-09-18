@@ -1,42 +1,52 @@
 {
     "insight": {
+        "identifier": "ColumnChart.eb08731e5397c48ad7e458d4f04eb6bb",
+        "uri": "ColumnChart.eb08731e5397c48ad7e458d4f04eb6bb",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - stack measures to 100% with dual axis and axis min/max",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            },
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
                             "alias": "Ratio of Won and Lost",
                             "definition": {
                                 "arithmeticMeasure": {
@@ -46,42 +56,45 @@
                                     ],
                                     "operator": "ratio"
                                 }
-                            },
-                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "ColumnChart.eb08731e5397c48ad7e458d4f04eb6bb",
+        "sorts": [],
         "properties": {
             "controls": {
-                "secondary_yaxis": {
-                    "max": "2",
-                    "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"],
-                    "min": "1"
-                },
                 "stackMeasuresToPercent": true,
-                "yaxis": { "max": "0.9", "min": "0.1" }
+                "yaxis": {
+                    "min": "0.1",
+                    "max": "0.9"
+                },
+                "secondary_yaxis": {
+                    "min": "1",
+                    "max": "2",
+                    "measures": ["m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"]
+                }
             }
-        },
-        "sorts": [],
-        "title": "ColumnChart - stack measures to 100% with dual axis and axis min/max",
-        "uri": "ColumnChart.eb08731e5397c48ad7e458d4f04eb6bb",
-        "visualizationUrl": "local:column"
+        }
     }
 }

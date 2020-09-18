@@ -1,61 +1,81 @@
 {
     "insight": {
+        "identifier": "FunnelChart.8fc79843b9f3b1928ef01105b5e12d99",
+        "uri": "FunnelChart.8fc79843b9f3b1928ef01105b5e12d99",
+        "visualizationUrl": "local:funnel",
+        "title": "FunnelChart - assign color to measures",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            },
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "FunnelChart.8fc79843b9f3b1928ef01105b5e12d99",
+        "sorts": [],
         "properties": {
             "controls": {
                 "colorMapping": [
                     {
-                        "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 0 } },
-                        "id": "m_aangOxLSeztu"
+                        "id": "m_aangOxLSeztu",
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
+                            }
+                        }
                     },
-                    { "color": { "type": "guid", "value": "05" }, "id": "m_acugFHNJgsBy" }
+                    {
+                        "id": "m_acugFHNJgsBy",
+                        "color": {
+                            "type": "guid",
+                            "value": "05"
+                        }
+                    }
                 ]
             }
-        },
-        "sorts": [],
-        "title": "FunnelChart - assign color to measures",
-        "uri": "FunnelChart.8fc79843b9f3b1928ef01105b5e12d99",
-        "visualizationUrl": "local:funnel"
+        }
     }
 }

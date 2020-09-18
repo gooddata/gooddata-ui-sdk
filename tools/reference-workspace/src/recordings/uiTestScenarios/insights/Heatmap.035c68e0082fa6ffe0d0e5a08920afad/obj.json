@@ -1,61 +1,81 @@
 {
     "insight": {
+        "identifier": "Heatmap.035c68e0082fa6ffe0d0e5a08920afad",
+        "uri": "Heatmap.035c68e0082fa6ffe0d0e5a08920afad",
+        "visualizationUrl": "local:heatmap",
+        "title": "Heatmap - assign color to measures",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
             {
+                "localIdentifier": "stack",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.owner.region"
                         }
                     }
-                ],
-                "localIdentifier": "stack"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "Heatmap.035c68e0082fa6ffe0d0e5a08920afad",
+        "sorts": [
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "desc"
+                }
+            }
+        ],
         "properties": {
             "controls": {
                 "colorMapping": [
                     {
-                        "color": { "type": "rgb", "value": { "b": 0, "g": 0, "r": 0 } },
-                        "id": "m_aangOxLSeztu"
+                        "id": "m_aangOxLSeztu",
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
+                            }
+                        }
                     }
                 ]
             }
-        },
-        "sorts": [
-            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
-        ],
-        "title": "Heatmap - assign color to measures",
-        "uri": "Heatmap.035c68e0082fa6ffe0d0e5a08920afad",
-        "visualizationUrl": "local:heatmap"
+        }
     }
 }

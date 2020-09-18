@@ -1,50 +1,66 @@
 {
     "insight": {
+        "identifier": "BarChart.4085c4c13071f15d7a2b0d8845660f3b",
+        "uri": "BarChart.4085c4c13071f15d7a2b0d8845660f3b",
+        "visualizationUrl": "local:bar",
+        "title": "BarChart - legend position - legend on top",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "view",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "view"
+                ]
             },
-            { "items": [], "localIdentifier": "stack" }
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "BarChart.4085c4c13071f15d7a2b0d8845660f3b",
-        "properties": { "controls": { "legend": { "position": "top" } } },
         "sorts": [],
-        "title": "BarChart - legend position - legend on top",
-        "uri": "BarChart.4085c4c13071f15d7a2b0d8845660f3b",
-        "visualizationUrl": "local:bar"
+        "properties": {
+            "controls": {
+                "legend": {
+                    "position": "top"
+                }
+            }
+        }
     }
 }

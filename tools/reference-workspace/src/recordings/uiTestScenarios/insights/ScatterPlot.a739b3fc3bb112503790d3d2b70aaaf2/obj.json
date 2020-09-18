@@ -1,54 +1,63 @@
 {
     "insight": {
+        "identifier": "ScatterPlot.a739b3fc3bb112503790d3d2b70aaaf2",
+        "uri": "ScatterPlot.a739b3fc3bb112503790d3d2b70aaaf2",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot - coloring - custom palette",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
             {
+                "localIdentifier": "attribute",
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
                             "localIdentifier": "a_label.product.id.name"
                         }
                     }
-                ],
-                "localIdentifier": "attribute"
+                ]
             }
         ],
         "filters": [],
-        "identifier": "ScatterPlot.a739b3fc3bb112503790d3d2b70aaaf2",
-        "properties": { "controls": {} },
         "sorts": [],
-        "title": "ScatterPlot - coloring - custom palette",
-        "uri": "ScatterPlot.a739b3fc3bb112503790d3d2b70aaaf2",
-        "visualizationUrl": "local:scatter"
+        "properties": {
+            "controls": {}
+        }
     }
 }

@@ -1,47 +1,57 @@
 {
     "insight": {
+        "identifier": "ComboChart.1cf0f02da65a39d02ce0cb906c4eba30",
+        "uri": "ComboChart.1cf0f02da65a39d02ce0cb906c4eba30",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - dual axis multiple measures without slicingarea-area",
         "buckets": [
             {
+                "localIdentifier": "measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                             "alias": "Calculated 'Lost' measure",
                             "definition": {
                                 "arithmeticMeasure": {
                                     "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
                                     "operator": "difference"
                                 }
-                            },
-                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "measures"
+                ]
             },
             {
+                "localIdentifier": "secondary_measures",
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
                             "alias": "Ratio of Won and Lost",
                             "definition": {
                                 "arithmeticMeasure": {
@@ -51,21 +61,23 @@
                                     ],
                                     "operator": "ratio"
                                 }
-                            },
-                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
+                            }
                         }
                     }
-                ],
-                "localIdentifier": "secondary_measures"
+                ]
             },
-            { "items": [], "localIdentifier": "view" }
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
         ],
         "filters": [],
-        "identifier": "ComboChart.1cf0f02da65a39d02ce0cb906c4eba30",
-        "properties": { "controls": { "primaryChartType": "area", "secondaryChartType": "area" } },
         "sorts": [],
-        "title": "ComboChart - dual axis multiple measures without slicingarea-area",
-        "uri": "ComboChart.1cf0f02da65a39d02ce0cb906c4eba30",
-        "visualizationUrl": "local:combo2"
+        "properties": {
+            "controls": {
+                "primaryChartType": "area",
+                "secondaryChartType": "area"
+            }
+        }
     }
 }
