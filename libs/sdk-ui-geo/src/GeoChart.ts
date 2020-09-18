@@ -174,6 +174,7 @@ export interface IGeoConfig {
     colors?: string[];
     colorPalette?: IColorPalette;
     colorMapping?: IColorMapping[];
+    showLabels?: boolean;
 }
 
 /**

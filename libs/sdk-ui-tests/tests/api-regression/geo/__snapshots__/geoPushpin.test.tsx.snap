@@ -201,6 +201,7 @@ Object {
       "position": "left",
     },
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -420,6 +421,7 @@ Object {
       "position": "right",
     },
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -560,6 +562,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
   },
   "error": null,
   "exportTitle": "GeoPushpinChart",
@@ -715,6 +718,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -838,6 +842,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
   },
   "error": null,
   "exportTitle": "GeoPushpinChart",
@@ -976,6 +981,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -1140,6 +1146,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -1280,6 +1287,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
   },
   "error": null,
   "exportTitle": "GeoPushpinChart",
@@ -1374,6 +1382,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
   },
   "error": null,
   "exportTitle": "GeoPushpinChart",
@@ -1492,6 +1501,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -1652,6 +1662,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
   },
   "error": null,
   "exportTitle": "GeoPushpinChart",
@@ -1803,6 +1814,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
   },
   "error": null,
   "exportTitle": "GeoPushpinChart",
@@ -1978,6 +1990,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -2169,6 +2182,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
   },
   "error": null,
   "exportTitle": "GeoPushpinChart",
@@ -2391,6 +2405,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -2606,6 +2621,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -2790,6 +2806,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {
@@ -2961,6 +2978,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
   },
   "error": null,
   "exportTitle": "GeoPushpinChart",
@@ -3147,6 +3165,7 @@ Object {
   },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
+    "showLabels": false,
     "tooltipText": Object {
       "attribute": Object {
         "displayForm": Object {

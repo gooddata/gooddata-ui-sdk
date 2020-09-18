@@ -153,6 +153,8 @@ export interface IGeoConfig {
     // (undocumented)
     separators?: ISeparators;
     // (undocumented)
+    showLabels?: boolean;
+    // (undocumented)
     tooltipText?: IAttribute;
     // (undocumented)
     viewport?: IGeoConfigViewport;
