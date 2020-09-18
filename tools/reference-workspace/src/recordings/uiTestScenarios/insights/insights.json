@@ -1,7 +1,4 @@
 {
-    "AreaChart.141e496201b32738d0233842253651b4": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - sparse chart - forced hidden."
-    },
     "AreaChart.20d32557278cff623a76fa588f47c055": {
         "comment": "Auto-generated insight for test scenario AreaChart - legend position - legend at bottom."
     },
@@ -24,9 +21,6 @@
         "scenarioName": "single measure",
         "visName": "AreaChart"
     },
-    "AreaChart.402c66914511cb9a66d7b4db351c5f64": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - auto visibility."
-    },
     "AreaChart.472c7f31bc503ae4a5ca61406edc9826": {
         "comment": "Auto-generated insight for test scenario AreaChart - data labels - auto visibility."
     },
@@ -35,9 +29,6 @@
     },
     "AreaChart.48a1821beab9eb4e440b5a5ae5815340": {
         "comment": "Auto-generated insight for test scenario AreaChart - legend position - legend on top."
-    },
-    "AreaChart.48c3ea32450670d464000ae95f255f74": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - forced visible."
     },
     "AreaChart.50f413bdfea27a250f7bb584fd2796ac": {
         "comment": "Auto-generated insight for test scenario AreaChart - data labels - forced visible."
@@ -57,17 +48,8 @@
     "AreaChart.705a79dc5f269128348343e5743e2824": {
         "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy and disabled stack measures."
     },
-    "AreaChart.73524417269af705ca6118f52cc56c82": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - default for pre-feature charts."
-    },
-    "AreaChart.75ab604d872dfc3a6292f25128ffdda6": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - forced hidden."
-    },
     "AreaChart.76cbd726035415ee305add1cdcc31bbd": {
         "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy and stack to percent with labels."
-    },
-    "AreaChart.7e6c24553abc866ceb685d635f258ff1": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - dense chart - forced visible."
     },
     "AreaChart.85c4df7e31bfdd5c5f7062b291383f06": {
         "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy sorted by measure.",
@@ -77,17 +59,8 @@
     "AreaChart.87224432e5424b598cf3ac66e435b4c6": {
         "comment": "Auto-generated insight for test scenario AreaChart - legend position - auto legend."
     },
-    "AreaChart.8dbe31697789a4e464134ace891be7a1": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - sparse chart - forced visible."
-    },
     "AreaChart.9d2908f6b71d80aca6157eb1c8d6d413": {
         "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy and disabled stacking."
-    },
-    "AreaChart.9d78d560b2c516ad90ee68faabfc2b5d": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - sparse chart - auto visibility."
-    },
-    "AreaChart.a97be468994b89529a3efba0a264a799": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - dense chart - default."
     },
     "AreaChart.b4af78751c72ad83631f811af30a8ad9": {
         "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy.",
@@ -104,9 +77,6 @@
         "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy sorted by attribute.",
         "scenarioName": "two measures with viewBy sorted by attribute",
         "visName": "AreaChart"
-    },
-    "AreaChart.c27c510bc3157164911125cc456798d0": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - sparse chart - default."
     },
     "AreaChart.c4e35792e01a9249b8eed38ad42b91e9": {
         "comment": "Auto-generated insight for test scenario AreaChart - single measure with two viewBy.",
@@ -132,9 +102,6 @@
         "scenarioName": "single measure with viewBy",
         "visName": "AreaChart"
     },
-    "AreaChart.e4be9b3a2dc9a70ada8138be9365fa45": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - dense chart - auto visibility."
-    },
     "AreaChart.e645fbe6ec15321a6f8c52211e270f51": {
         "comment": "Auto-generated insight for test scenario AreaChart - arithmetic measures.",
         "scenarioName": "arithmetic measures",
@@ -145,9 +112,6 @@
     },
     "AreaChart.f1db7d153c7e72cf8191c5c3444db7b4": {
         "comment": "Auto-generated insight for test scenario AreaChart - legend position - disabled."
-    },
-    "AreaChart.ff657add1d4710e8859f761deb11ad04": {
-        "comment": "Auto-generated insight for test scenario AreaChart - data points - dense chart - forced hidden."
     },
     "BarChart.0251b7d885d8120a12178d2b8e7c53f4": {
         "comment": "Auto-generated insight for test scenario BarChart - two measures with dual axis and stack measures to 100%."
@@ -828,20 +792,11 @@
     "ComboChart.3eaadd3ef95f4900850b1677891bc4ba": {
         "comment": "Auto-generated insight for test scenario ComboChart - discard stacking when primary measures are not specified - secondary is column."
     },
-    "ComboChart.40e2f35d5a4acce8c96baa198557deac": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - dense chart - default."
-    },
-    "ComboChart.4117e0ea31a489ad8f503da9f61d8a0d": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - dense chart - forced visible."
-    },
     "ComboChart.473b39d9d81e5e2813449ae3976844c5": {
         "comment": "Auto-generated insight for test scenario ComboChart - stack primary measures to 100% with different chart type - column."
     },
     "ComboChart.4eae63ead3118617c88af35faef00efd": {
         "comment": "Auto-generated insight for test scenario ComboChart - stack primary measures with different chart type - column."
-    },
-    "ComboChart.4efd29a0bf1dc1f5491906c84786af36": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - sparse chart - auto visibility."
     },
     "ComboChart.50f00a1d0178d4f2ee7aa70ec57b4fc9": {
         "comment": "Auto-generated insight for test scenario ComboChart - axis name configuration - high."
@@ -853,9 +808,6 @@
     },
     "ComboChart.563f80d38e070f5e58ff56e0cf899c2f": {
         "comment": "Auto-generated insight for test scenario ComboChart - legend position - legend on left."
-    },
-    "ComboChart.56a95e3e11797c4aaaac441b1a441b2c": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - dense chart - auto visibility."
     },
     "ComboChart.5f37ca2fb2ee5ce7db5cd0baa57a9e1b": {
         "comment": "Auto-generated insight for test scenario ComboChart - arithmetic measures.",
@@ -882,12 +834,6 @@
     "ComboChart.68eb620854fbd4e48c78427acdc893c9": {
         "comment": "Auto-generated insight for test scenario ComboChart - stack primary measures with different chart type - area."
     },
-    "ComboChart.693d068589b6204a6890d5ce2e06eca6": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - forced visible."
-    },
-    "ComboChart.6c3b038ec6366c8b06e19cfc44732d3b": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - sparse chart - forced visible."
-    },
     "ComboChart.709200a13cc59b9ddea45280fd54557d": {
         "comment": "Auto-generated insight for test scenario ComboChart - legend position - disabled."
     },
@@ -909,14 +855,8 @@
     "ComboChart.8958eb659c0fad40df71f621b6ab2b2f": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures with slicingline-area."
     },
-    "ComboChart.8a4e966b901b888f7cf5d0c0cdd7ae87": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - sparse chart - default."
-    },
     "ComboChart.8c9aa8fea51d87446debe6e42fa37bb1": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures without slicingline-line."
-    },
-    "ComboChart.9664fb0c104bf3774eecf8847b5c6c01": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - dense chart - forced hidden."
     },
     "ComboChart.982eb7956cfdc5760da09f0709c77ec7": {
         "comment": "Auto-generated insight for test scenario ComboChart - discard stacking when primary measures are on line chart - secondary is column."
@@ -944,9 +884,6 @@
     "ComboChart.ac77eb870277235b221b0e6af671eff2": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures without slicingcolumn-column."
     },
-    "ComboChart.ad9c42a4c0288c400caf0c9edf462c51": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - forced hidden."
-    },
     "ComboChart.b5eef2a766c7c089941db284fed158bb": {
         "comment": "Auto-generated insight for test scenario ComboChart - stack primary measures when both column chart - normal stacking."
     },
@@ -973,9 +910,6 @@
     "ComboChart.c808a4aa52d33bbbcb7e59477b9b3886": {
         "comment": "Auto-generated insight for test scenario ComboChart - axis name configuration - low."
     },
-    "ComboChart.c8f4aa27b340f10e1aa5d170d6426c68": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - default for pre-feature charts."
-    },
     "ComboChart.caedde63fb0c968318dac540ecb57f84": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis multiple measures without slicingcolumn-line."
     },
@@ -989,9 +923,6 @@
     },
     "ComboChart.d30b35a3f394feeaea3c496bcba471bc": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingline-area."
-    },
-    "ComboChart.d58ee5f24ef932fcaba6f6799d96ee91": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - sparse chart - forced hidden."
     },
     "ComboChart.dddefd5a5ec7c362cbe16e287fc0983a": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures with slicingline-column."
@@ -1011,9 +942,6 @@
     },
     "ComboChart.eba0312c73accf44b490f120cbbcb625": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingcolumn-area."
-    },
-    "ComboChart.ee46169d52882002b70dcd4977a605e3": {
-        "comment": "Auto-generated insight for test scenario ComboChart - data points - auto visibility."
     },
     "ComboChart.eeaf82dd751072f09dc8f7236c805f68": {
         "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure with viewBy sorted by primary measure.",
@@ -1280,9 +1208,6 @@
     "LineChart.04218fab4ef03b9e9fcaf6d33a6eea79": {
         "comment": "Auto-generated insight for test scenario LineChart - data labels - auto visibility."
     },
-    "LineChart.0c3cfda1ddce21d70dd3835cb1225d49": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - sparse chart - forced hidden."
-    },
     "LineChart.0f8f689a3a7d175276fb9a8089eab3bb": {
         "comment": "Auto-generated insight for test scenario LineChart - dual axis name configuration - invisible."
     },
@@ -1294,9 +1219,6 @@
     "LineChart.163bab002bb394a581239db6d95a4f98": {
         "comment": "Auto-generated insight for test scenario LineChart - legend position - legend at bottom."
     },
-    "LineChart.18f889d109971ef7bedc2ba1ac49a987": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - auto visibility."
-    },
     "LineChart.1e340938f43d76525ed6235a33c8ab4c": {
         "comment": "Auto-generated insight for test scenario LineChart - Y axis on the right."
     },
@@ -1305,29 +1227,14 @@
         "scenarioName": "arithmetic measures",
         "visName": "LineChart"
     },
-    "LineChart.34043572c98eac3dc8887f3cac95c479": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - sparse chart - forced visible."
-    },
     "LineChart.3a3c66b7979613ef10d1cd4f54c3eebb": {
         "comment": "Auto-generated insight for test scenario LineChart - dual axis name configuration - middle."
-    },
-    "LineChart.458c9384ce6e0a0f8e4e7dc55812a6ce": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - dense chart - forced hidden."
     },
     "LineChart.4a67b094ea5e96873cb4ff1de72b0274": {
         "comment": "Auto-generated insight for test scenario LineChart - legend position - legend on left."
     },
-    "LineChart.4b9123d4da99344e4873ac9dde1d2347": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - dense chart - auto visibility."
-    },
     "LineChart.57a5157d052ee2d68824971b542d25a8": {
         "comment": "Auto-generated insight for test scenario LineChart - single axis name configuration - high."
-    },
-    "LineChart.5c193ac9a1eaaaabe92d2eb4029ddc13": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - default for pre-feature charts."
-    },
-    "LineChart.5c396752aeecd479b3705a6a95fab0df": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - forced visible."
     },
     "LineChart.5df0206b8eccca34fb10d0e937c0a39c": {
         "comment": "Auto-generated insight for test scenario LineChart - legend position - legend on top."
@@ -1349,14 +1256,8 @@
     "LineChart.78f74c25d0e6f6da93bbb7f3ca1474df": {
         "comment": "Auto-generated insight for test scenario LineChart - data labels - forced visible and german separators."
     },
-    "LineChart.7ba23c2415503a71d65561f05478f34c": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - forced hidden."
-    },
     "LineChart.85909a0a262e8fac3660c88b40095580": {
         "comment": "Auto-generated insight for test scenario LineChart - single axis name configuration - invisible."
-    },
-    "LineChart.8b6aa8716535cffcbc957ebb58a47127": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - dense chart - default."
     },
     "LineChart.8b772064dbb2740ea4be89b4a89937d6": {
         "comment": "Auto-generated insight for test scenario LineChart - single measure with % and trendBy.",
@@ -1365,9 +1266,6 @@
     },
     "LineChart.9f577ebe31c509c6af49a635a29fda64": {
         "comment": "Auto-generated insight for test scenario LineChart - data labels - forced hidden."
-    },
-    "LineChart.a3da043f2b31dac48b4dd0a2bd96a594": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - dense chart - forced visible."
     },
     "LineChart.a9b12ed216e07806395dd7afe624fc1e": {
         "comment": "Auto-generated insight for test scenario LineChart - single measure.",
@@ -1397,17 +1295,11 @@
     "LineChart.cd83fa57c3b4b69d618f678e8070cbfb": {
         "comment": "Auto-generated insight for test scenario LineChart - data labels - forced visible."
     },
-    "LineChart.d1d5671fbe4843b307d8d1cfcdd3eb7e": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - sparse chart - auto visibility."
-    },
     "LineChart.dd2fbeaac58234eadce0f1bed9542acf": {
         "comment": "Auto-generated insight for test scenario LineChart - Y axis min/max configuration."
     },
     "LineChart.e0b1b0c97bdb74bf90a51004c74e49c7": {
         "comment": "Auto-generated insight for test scenario LineChart - data labels - default."
-    },
-    "LineChart.e42047517322f7adc149f3b16bfbede5": {
-        "comment": "Auto-generated insight for test scenario LineChart - data points - sparse chart - default."
     },
     "LineChart.e7e8c59a406f3a142124f1ccfe33e17e": {
         "comment": "Auto-generated insight for test scenario LineChart - single axis name configuration - low."
