@@ -291,6 +291,17 @@ export const attributeFilterBucketItem: IFilters = {
     ],
 };
 
+export const rankingFilterBucketItem: IFiltersBucketItem = {
+    localIdentifier: "rf1",
+    filters: [
+        {
+            measure: masterMeasureItems[0].localIdentifier,
+            operator: "TOP",
+            value: 3,
+        },
+    ],
+};
+
 export const emptyReferencePoint: IReferencePoint = {
     buckets: [
         {

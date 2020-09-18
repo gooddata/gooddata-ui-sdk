@@ -47,6 +47,21 @@ describe("isShowInPercentAllowed", () => {
             ),
         ).toBeFalsy();
     });
+
+    it("should return false if ranking filter is present", () => {
+        const editedReferencePoint = cloneDeep(
+            referencePointMocks.metricWithViewByDateAndDateFilterReferencePoint,
+        );
+        set(editedReferencePoint, ["filters", "items", 1], referencePointMocks.rankingFilterBucketItem);
+
+        expect(
+            bucketRules.isShowInPercentAllowed(
+                editedReferencePoint.buckets,
+                editedReferencePoint.filters,
+                BucketNames.MEASURES,
+            ),
+        ).toBeFalsy();
+    });
 });
 
 describe("overTimeComparisonRecommendationEnabled", () => {
@@ -529,6 +544,26 @@ describe("partial rules", () => {
             expect(
                 bucketRules.hasGlobalDateFilterIgnoreAllTime(referencePointMocks.attributeFilterBucketItem),
             ).toBeFalsy();
+        });
+    });
+
+    describe("hasRankingFilter", () => {
+        it("should return false when ranking filter is not in filter bucket", () => {
+            const filters: IFilters = {
+                localIdentifier: "filters",
+                items: [...referencePointMocks.attributeFilters],
+            };
+
+            expect(bucketRules.hasRankingFilter(filters)).toBeFalsy();
+        });
+
+        it("should return true when ranking filter is not in filter bucket", () => {
+            const filters: IFilters = {
+                localIdentifier: "filters",
+                items: [...referencePointMocks.attributeFilters, referencePointMocks.rankingFilterBucketItem],
+            };
+
+            expect(bucketRules.hasRankingFilter(filters)).toBeTruthy();
         });
     });
 });

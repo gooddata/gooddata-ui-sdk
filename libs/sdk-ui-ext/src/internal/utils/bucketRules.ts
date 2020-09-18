@@ -25,6 +25,7 @@ import {
     getAttributeItemsWithoutStacks,
     isDateBucketItem,
     isMeasureValueFilter,
+    isRankingFilter,
 } from "./bucketHelper";
 
 import { FILTERS, GRANULARITY, ALL_TIME, ATTRIBUTE, BUCKETS, METRIC } from "../constants/bucket";
@@ -185,6 +186,11 @@ export function hasNonAllTimeFilter(filters: IFilters): boolean {
     return !isEmpty(filterInterval);
 }
 
+export function hasRankingFilter(filters: IFilters): boolean {
+    const allBucketFilters = flatMap(filters.items, (filterItem) => filterItem.filters);
+    return allBucketFilters.some(isRankingFilter);
+}
+
 export function isShowInPercentAllowed(
     buckets: IBucketOfFun[],
     filters: IFilters,
@@ -195,7 +201,8 @@ export function isShowInPercentAllowed(
     return (
         allRulesMet(rules, buckets, filters) &&
         hasOneMasterMeasureInBucket(buckets, bucketLocalIdentifier) &&
-        !filteredByDerivedMeasure(buckets, filters)
+        !filteredByDerivedMeasure(buckets, filters) &&
+        !hasRankingFilter(filters)
     );
 }
 
