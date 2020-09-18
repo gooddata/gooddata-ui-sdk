@@ -13,9 +13,9 @@ strict-ssl=false\n
 RUSH_NPMRC="${ROOT_DIR}/common/config/rush/.npmrc"
 ROOT_NPMRC="${ROOT_DIR}/.npmrc"
 
-echo -e $NPMRC_CONTENT >${RUSH_NPMRC}
-echo -e $NPMRC_CONTENT >${ROOT_NPMRC}
-echo "_auth=${NPMRC_AUTH}" >>${ROOT_NPMRC}
+#echo -e $NPMRC_CONTENT >${RUSH_NPMRC}
+#echo -e $NPMRC_CONTENT >${ROOT_NPMRC}
+#echo "_auth=${NPMRC_AUTH}" >>${ROOT_NPMRC}
 
 _RUSH="${DIR}/docker_rush.sh"
 $_RUSH install --network-concurrency 200
