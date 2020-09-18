@@ -347,29 +347,3 @@ For inspiration how to automatically obtain execution recording definitions (not
 what data to obtain) please see:
 
 -   [libs/sdk-ui-tests](libs/sdk-ui-tests)
-
-### Debugging packages in your own app
-
-#### Using links
-
-There might be situations when you want to quickly test changes made in the SDK packages in your own app. Let's try `sdk-ui` as an example (this guide is applicable to other packages – `sdk-model`, `sdk-backend-spi`, etc. as well). Use the following steps (we assume your app uses `yarn` as a dependency manager, you should be able to replace `yarn` by `pnpm` or `npm` depending on your app's setup and achieve the same results):
-
-1.  Run `yarn link` in the `sdk-ui` folder.
-2.  Run `yarn link "@gooddata/sdk-ui"` in your app root folder.
-
-You only have to do the linking once. After you linked the package, you can run the compilation:
-
-1.  Run `rushx dev` in the `sdk-ui` folder. This will start the compilation in watch mode and will rebuild `sdk-ui` on every change
-2.  Run your app (you can use watch mode if applicable). You will see the up-to-date version of `sdk-ui` in your app and it will refresh as long as `pnpm run dev` is running.
-
-#### Using `rsync`
-
-Alternatively, if you want to avoid the potential problems with links, you can use the [`rsync`](https://en.wikipedia.org/wiki/Rsync) utility to copy the dist files of your version of the SDK packages to your app's `node_modules`. For example:
-
-```bash
-cd gooddata-ui-sdk
-rush build
-rsync -rptgD --no-links --include="/*/dist/*" ./libs/ ~/your-app/node_modules/@gooddata/
-```
-
-This will make sure that the SDK8 files in your app are from your local SDK8 version. To revert the changes, run `yarn install --force` or equivalent in your app.

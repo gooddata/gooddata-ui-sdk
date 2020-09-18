@@ -94,7 +94,7 @@ To build everything, run `rush build`; this will trigger parallel execution of b
 `package.json`, starting them in the correct order - honoring the inter-package dependencies.
 
 Rush build is incremental and will only build projects which have changed since the last build. This is
-safe and preferred way to build. In rare cases such as large refactorings or refactorings of SCSS styles you should
+safe and preferred way to build. In rare cases such as large refactors or refactors of SCSS styles you should
 perform clean & rebuild: `rush clean && rush rebuild`
 
 To build a single subproject with its dependencies:
@@ -114,7 +114,7 @@ rushx build
 
 ### What should the commits look like?
 
-You should write imperative commit messages with well-defined title and body (for more context, please see t[this blog post](https://chris.beams.io/posts/git-commit/)).
+You should write imperative commit messages with well-defined title and body (for more context, please see [this blog post](https://chris.beams.io/posts/git-commit/)).
 
 To give some examples of commit messages we'd like to see from this repo:
 
@@ -178,7 +178,7 @@ There will probably be a check step in the future that will make sure you ran th
 
 For detailed description of the release process, please see [Release process](docs/releases.md).
 
-## Where do I put my contributions?
+### Where do I put my contributions?
 
 Please go ahead and familiarize yourself with the GoodData.UI SDK architecture, layering and packaging design
 which are all documented in our [Developer's Guide](docs/sdk-dev.md).
@@ -197,6 +197,34 @@ proceeding.
 
 After that, we have a couple of skeleton projects to bootstrap development of new SDK packages. See [skel](skel) directory for
 more information. Bear in mind the naming conventions described in the developer's guide.
+
+### How do I test the changes in my own app?
+
+There might be situations when you want to quickly test changes made in the SDK packages in your own app. There are two ways you can do it: using links or using `rsync`.
+
+#### Using links
+
+Let's try `sdk-ui` as an example (this guide is applicable to other packages – `sdk-model`, `sdk-backend-spi`, etc. as well). Use the following steps (we assume your app uses `yarn` as a dependency manager, you should be able to replace `yarn` by `pnpm` or `npm` depending on your app's setup and achieve the same results):
+
+1.  Run `yarn link` in the `sdk-ui` folder.
+2.  Run `yarn link "@gooddata/sdk-ui"` in your app root folder.
+
+You only have to do the linking once. After you linked the package, you can run the compilation:
+
+1.  Run `rushx dev` in the `sdk-ui` folder. This will start the compilation in watch mode and will rebuild `sdk-ui` on every change
+2.  Run your app (you can use watch mode if applicable). You will see the up-to-date version of `sdk-ui` in your app and it will refresh as long as `pnpm run dev` is running.
+
+#### Using `rsync`
+
+Alternatively, if you want to avoid the potential problems with links, you can use the [`rsync`](https://en.wikipedia.org/wiki/Rsync) utility to copy the dist files of your version of the SDK packages to your app's `node_modules`. For example:
+
+```bash
+cd gooddata-ui-sdk
+rush build
+rsync -rptgD --no-links --include="/*/dist/*" ./libs/ ~/your-app/node_modules/@gooddata/
+```
+
+This will make sure that the SDK8 files in your app are from your local SDK8 version. To revert the changes, run `yarn install --force` or equivalent in your app.
 
 ## CI jobs and gating
 
