@@ -215,6 +215,22 @@ export function getHighchartsAxisNameConfiguration(
     };
 }
 
+export function getDataPointsConfiguration(
+    controlProperties: IVisualizationProperties,
+    enableHidingOfDataPoints: boolean = false,
+): IVisualizationProperties {
+    if (enableHidingOfDataPoints) {
+        return controlProperties;
+    }
+
+    return {
+        ...controlProperties,
+        dataPoints: {
+            visible: undefined,
+        },
+    };
+}
+
 export function getColumnWidthsFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ColumnWidthItem[] | undefined {

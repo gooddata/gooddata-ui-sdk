@@ -21,9 +21,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
     protected renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
-        const { featureFlags, insight, properties, propertiesMeta, pushData } = this.props;
-
-        const isNewVisualization = insight.insight.title === "";
+        const { featureFlags, properties, propertiesMeta, pushData } = this.props;
 
         const controlsDisabled = this.isControlDisabled();
         const dataPointsControlDisabled = this.isDataPointsControlDisabled();
@@ -53,7 +51,6 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                                 properties={properties}
                                 isDisabled={controlsDisabled || dataPointsControlDisabled}
                                 showDisabledMessage={dataPointsControlDisabled}
-                                value={isNewVisualization ? "auto" : undefined}
                             />
                         )}
                         <CheckboxControl
