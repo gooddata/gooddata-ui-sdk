@@ -2,21 +2,19 @@
 import get from "lodash/get";
 import set from "lodash/set";
 import {
-    IInsight,
-    bucketsItems,
-    IInsightDefinition,
-    insightBuckets,
-    bucketsFind,
-    IBucket,
-    idMatchBucket,
     bucketIsEmpty,
+    bucketsItems,
+    IInsight,
+    IInsightDefinition,
+    insightBucket,
+    insightBuckets,
 } from "@gooddata/sdk-model";
 import { arrayUtils } from "@gooddata/util";
 import {
     BucketNames,
+    getIntersectionPartAfter,
     IDrillEvent,
     IDrillEventIntersectionElement,
-    getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
 import { AXIS } from "../../constants/axis";
 import { BUCKETS } from "../../constants/bucket";
@@ -24,11 +22,11 @@ import { MAX_CATEGORIES_COUNT, MAX_STACKS_COUNT, UICONFIG, UICONFIG_AXIS } from 
 import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper";
 import {
     IBucketOfFun,
+    IDrillDownContext,
     IExtendedReferencePoint,
+    IImplicitDrillDown,
     IReferencePoint,
     IVisConstruct,
-    IImplicitDrillDown,
-    IDrillDownContext,
 } from "../../interfaces/Visualization";
 import {
     getAllCategoriesAttributeItems,
@@ -47,7 +45,7 @@ import {
 } from "../../utils/propertiesHelper";
 import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper";
 import { PluggableBaseChart } from "./baseChart/PluggableBaseChart";
-import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "./drillDownUtil";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "./drillDownUtil";
 
 export class PluggableColumnBarCharts extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -90,9 +88,8 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         source: IInsight,
         event: IDrillEvent,
     ): IDrillEventIntersectionElement[] {
-        const hasStackByAttributes = bucketsFind(insightBuckets(source), (bucket: IBucket) => {
-            return idMatchBucket(BucketNames.STACK) && !bucketIsEmpty(bucket);
-        });
+        const stackBucket = insightBucket(source, BucketNames.STACK);
+        const hasStackByAttributes = stackBucket && !bucketIsEmpty(stackBucket);
 
         const intersection = event.drillContext.intersection;
         return hasStackByAttributes ? arrayUtils.shiftArrayRight(intersection) : intersection;

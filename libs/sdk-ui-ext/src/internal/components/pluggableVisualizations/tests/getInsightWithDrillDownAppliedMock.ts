@@ -1,13 +1,13 @@
 // (C) 2020 GoodData Corporation
 import {
     IInsightDefinition,
+    modifyAttribute,
+    newAttribute,
     newBucket,
     newInsightDefinition,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
-    newAttribute,
     uriRef,
-    modifyAttribute,
 } from "@gooddata/sdk-model";
 import { ReferenceData } from "@gooddata/reference-workspace";
 import { Department, Region, Won } from "@gooddata/reference-workspace/dist/ldm/full";
@@ -106,10 +106,6 @@ export const expectedInsightDefinitionDrillToRegion: IInsightDefinition = newIns
                 newPositiveAttributeFilter(
                     modifyAttribute(Region, (a) => a.displayForm(uriRef(regionUri))),
                     { uris: [westCoastUri] },
-                ),
-                newPositiveAttributeFilter(
-                    modifyAttribute(Department, (a) => a.displayForm(uriRef(departmentUri))),
-                    { uris: [directSalesUri] },
                 ),
             ]);
     },
