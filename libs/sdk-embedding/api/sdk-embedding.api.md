@@ -145,9 +145,19 @@ export namespace EmbeddedAnalyticalDesigner {
 // @public (undocumented)
 export namespace EmbeddedGdc {
     // (undocumented)
+    export type AbsoluteType = "absolute";
+    // (undocumented)
+    export type AllTimeType = "allTime";
+    // (undocumented)
     export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
     // (undocumented)
+    export type DashboardDateFilter = IDashboardAllTimeDateFilter | IDashboardAbsoluteDateFilter | IDashboardRelativeDateFilter;
+    // (undocumented)
+    export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+    // (undocumented)
     export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
+    // (undocumented)
+    export type DateString = string;
     // (undocumented)
     export type FilterItem = DateFilterItem | AttributeFilterItem;
     // (undocumented)
@@ -157,6 +167,42 @@ export namespace EmbeddedGdc {
             dataSet?: ObjQualifier;
             from: string;
             to: string;
+        };
+    }
+    // (undocumented)
+    export interface IDashboardAbsoluteDateFilter {
+        // (undocumented)
+        dateFilter: {
+            type: AbsoluteType;
+            granularity: DateFilterGranularity;
+            from: DateString;
+            to: DateString;
+        };
+    }
+    // (undocumented)
+    export interface IDashboardAllTimeDateFilter {
+        // (undocumented)
+        dateFilter: {
+            type: AllTimeType;
+        };
+    }
+    // (undocumented)
+    export interface IDashboardAttributeFilter {
+        // (undocumented)
+        attributeFilter: {
+            displayForm: string;
+            negativeSelection: boolean;
+            attributeElements: string[];
+        };
+    }
+    // (undocumented)
+    export interface IDashboardRelativeDateFilter {
+        // (undocumented)
+        dateFilter: {
+            type: RelativeType;
+            granularity: DateFilterGranularity;
+            from: number;
+            to: number;
         };
     }
     export interface IFilterContextContent {
@@ -191,6 +237,10 @@ export namespace EmbeddedGdc {
             to: number;
         };
     }
+    const // (undocumented)
+    isObjIdentifierQualifier: typeof GdcExecuteAFM.isObjIdentifierQualifier;
+    const // (undocumented)
+    isObjectUriQualifier: typeof GdcExecuteAFM.isObjectUriQualifier;
     // (undocumented)
     export interface IRemoveAttributeFilterItem {
         // (undocumented)
@@ -210,6 +260,16 @@ export namespace EmbeddedGdc {
     // (undocumented)
     export function isAttributeFilter(filter: unknown): filter is AttributeFilterItem;
     // (undocumented)
+    export function isDashboardAbsoluteDateFilter(filter: unknown): filter is IDashboardAbsoluteDateFilter;
+    // (undocumented)
+    export function isDashboardAllTimeDateFilter(filter: unknown): filter is IDashboardAllTimeDateFilter;
+    // (undocumented)
+    export function isDashboardAttributeFilter(filter: unknown): filter is IDashboardAttributeFilter;
+    // (undocumented)
+    export function isDashboardDateFilter(filter: unknown): filter is DashboardDateFilter;
+    // (undocumented)
+    export function isDashboardRelativeDateFilter(filter: unknown): filter is IDashboardRelativeDateFilter;
+    // (undocumented)
     export function isDateFilter(filter: unknown): filter is DateFilterItem;
     // (undocumented)
     export function isNegativeAttributeFilter(filter: unknown): filter is INegativeAttributeFilter;
@@ -217,16 +277,14 @@ export namespace EmbeddedGdc {
     export function isPositiveAttributeFilter(filter: unknown): filter is IPositiveAttributeFilter;
     // (undocumented)
     export function isRelativeDateFilter(filter: unknown): filter is IRelativeDateFilter;
-    const // (undocumented)
-    isObjIdentifierQualifier: typeof GdcExecuteAFM.isObjIdentifierQualifier;
-    const // (undocumented)
-    isObjectUriQualifier: typeof GdcExecuteAFM.isObjectUriQualifier;
     // (undocumented)
     export function isRemoveAttributeFilter(filter: unknown): filter is EmbeddedGdc.IRemoveAttributeFilterItem;
     // (undocumented)
     export function isRemoveDateFilter(filter: unknown): filter is EmbeddedGdc.IRemoveDateFilterItem;
     // (undocumented)
     export type ObjQualifier = GdcExecuteAFM.ObjQualifier;
+    // (undocumented)
+    export type RelativeType = "relative";
     // (undocumented)
     export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem;
 }
@@ -247,6 +305,8 @@ export namespace EmbeddedKpiDashboard {
     export type DeleteDashboardCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.Delete, null>;
     export type DrillableItemsCommand = IGdcKdMessageEvent<GdcKdCommandType.DrillableItems, IDrillableItemsCommandBody>;
     export type DrillableItemsCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.DrillableItems, IDrillableItemsCommandBody>;
+    // (undocumented)
+    export type DrillToUrlFilters = Array<EmbeddedGdc.DashboardDateFilter | EmbeddedGdc.IDashboardAttributeFilter>;
     // (undocumented)
     export type DrillToUrlResolvedData = IGdcKdMessageEnvelope<GdcKdEventType.DrillToUrlResolved, IDrillToUrlResolvedDataBody>;
     // (undocumented)
@@ -329,6 +389,7 @@ export namespace EmbeddedKpiDashboard {
     export type IDashboardUpdatedData = IGdcKdMessageEnvelope<GdcKdEventType.DashboardUpdated, IDashboardBody>;
     // (undocumented)
     export interface IDrillToUrlResolvedDataBody {
+        filters: DrillToUrlFilters;
         // (undocumented)
         id: string;
         // (undocumented)
@@ -336,6 +397,7 @@ export namespace EmbeddedKpiDashboard {
     }
     // (undocumented)
     export interface IDrillToUrlStartedDataBody {
+        filters: DrillToUrlFilters;
         // (undocumented)
         id: string;
     }

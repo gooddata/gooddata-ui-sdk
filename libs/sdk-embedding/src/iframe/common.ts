@@ -356,4 +356,68 @@ export namespace EmbeddedGdc {
             !isEmpty(filter) && (filter as EmbeddedGdc.IRemoveAttributeFilterItem).displayForm !== undefined
         );
     }
+
+    export type AllTimeType = "allTime";
+    export type AbsoluteType = "absolute";
+    export type RelativeType = "relative";
+
+    export type DateString = string;
+    export type DateFilterGranularity =
+        | "GDC.time.date"
+        | "GDC.time.week_us"
+        | "GDC.time.month"
+        | "GDC.time.quarter"
+        | "GDC.time.year";
+
+    export interface IDashboardAllTimeDateFilter {
+        dateFilter: { type: AllTimeType };
+    }
+
+    export interface IDashboardAbsoluteDateFilter {
+        dateFilter: {
+            type: AbsoluteType;
+            granularity: DateFilterGranularity;
+            from: DateString;
+            to: DateString;
+        };
+    }
+
+    export interface IDashboardRelativeDateFilter {
+        dateFilter: {
+            type: RelativeType;
+            granularity: DateFilterGranularity;
+            from: number;
+            to: number;
+        };
+    }
+
+    export type DashboardDateFilter =
+        | IDashboardAllTimeDateFilter
+        | IDashboardAbsoluteDateFilter
+        | IDashboardRelativeDateFilter;
+
+    export function isDashboardDateFilter(filter: unknown): filter is DashboardDateFilter {
+        return !isEmpty(filter) && (filter as DashboardDateFilter).dateFilter !== undefined;
+    }
+    export function isDashboardAllTimeDateFilter(filter: unknown): filter is IDashboardAllTimeDateFilter {
+        return !isEmpty(filter) && (filter as IDashboardAllTimeDateFilter).dateFilter?.type === "allTime";
+    }
+    export function isDashboardAbsoluteDateFilter(filter: unknown): filter is IDashboardAbsoluteDateFilter {
+        return !isEmpty(filter) && (filter as IDashboardAbsoluteDateFilter).dateFilter?.type === "absolute";
+    }
+    export function isDashboardRelativeDateFilter(filter: unknown): filter is IDashboardRelativeDateFilter {
+        return !isEmpty(filter) && (filter as IDashboardRelativeDateFilter).dateFilter?.type === "relative";
+    }
+
+    export interface IDashboardAttributeFilter {
+        attributeFilter: {
+            displayForm: string;
+            negativeSelection: boolean;
+            attributeElements: string[];
+        };
+    }
+
+    export function isDashboardAttributeFilter(filter: unknown): filter is IDashboardAttributeFilter {
+        return !isEmpty(filter) && (filter as IDashboardAttributeFilter).attributeFilter !== undefined;
+    }
 }
