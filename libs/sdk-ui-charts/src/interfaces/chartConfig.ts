@@ -163,6 +163,13 @@ export interface IChartConfig {
      */
     disableDrillUnderline?: boolean;
 
+    /**
+     * Allow zooming and panning in a chart.
+     *
+     * When this option is enabled, we will prepare some configs for the 'chart' option to allow the chart can be zooming/panning.
+     */
+    zoomInsight?: boolean;
+
     //
     //
     //

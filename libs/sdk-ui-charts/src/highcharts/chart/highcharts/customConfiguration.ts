@@ -70,6 +70,7 @@ const TOOLTIP_VERTICAL_OFFSET = 14;
 const BAR_COLUMN_TOOLTIP_TOP_OFFSET = 8;
 const BAR_COLUMN_TOOLTIP_LEFT_OFFSET = 5;
 const HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET = 16;
+const MIN_RANGE = 2;
 
 // in viewport <= 480, tooltip width is equal to chart container width
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
@@ -1010,7 +1011,7 @@ function getYAxisTickConfiguration(chartOptions: IChartOptions, axisPropsKey: st
     };
 }
 
-function getAxesConfiguration(chartOptions: IChartOptions) {
+function getAxesConfiguration(chartOptions: IChartOptions, _config: any, chartConfig: IChartConfig) {
     const { forceDisableDrillOnAxes = false } = chartOptions;
     const type = chartOptions.type as ChartType;
 
@@ -1112,6 +1113,8 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
             );
 
             const tickConfiguration = getXAxisTickConfiguration(chartOptions);
+            // for minimum zoom level value
+            const minRange = get(chartConfig, "zoomInsight", false) ? MIN_RANGE : undefined;
 
             // for bar chart take y axis options
             return {
@@ -1123,6 +1126,7 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
 
                 // padding of maximum value
                 maxPadding: 0.05,
+                minRange,
 
                 labels: {
                     ...labelsEnabled,
@@ -1166,6 +1170,27 @@ function getTargetCursorConfigurationForBulletChart(chartOptions: IChartOptions)
     return isTargetDrillable ? { plotOptions: { bullet: { cursor: "pointer" } } } : {};
 }
 
+function getZoomingAndPanningConfiguration(
+    _chartOptions: IChartOptions,
+    _config: any,
+    chartConfig: IChartConfig,
+) {
+    return chartConfig?.zoomInsight
+        ? {
+              chart: {
+                  zoomType: "x",
+                  panKey: "shift",
+                  panning: true,
+                  resetZoomButton: {
+                      theme: {
+                          display: "none",
+                      },
+                  },
+              },
+          }
+        : undefined;
+}
+
 export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
     chartConfig?: IChartConfig,
@@ -1192,6 +1217,7 @@ export function getCustomizedConfiguration(
         getChartAlignmentConfiguration,
         getAxisLabelConfigurationForDualBarChart,
         getTargetCursorConfigurationForBulletChart,
+        getZoomingAndPanningConfiguration,
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {

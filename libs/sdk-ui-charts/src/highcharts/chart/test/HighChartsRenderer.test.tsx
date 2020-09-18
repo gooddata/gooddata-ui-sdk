@@ -12,7 +12,7 @@ import { TOP, BOTTOM, LEFT, RIGHT } from "../legend/PositionTypes";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
 import { Legend } from "@gooddata/sdk-ui-vis-commons";
 
-function createComponent(customProps: any = {}) {
+function createComponent(customProps: any = {}, zoomable = false) {
     const chartOptions = {
         type: VisualizationTypes.BAR,
         ...customProps.chartOptions,
@@ -34,7 +34,17 @@ function createComponent(customProps: any = {}) {
     };
     const chartProps = {
         chartOptions,
-        hcOptions: getHighchartsOptions(chartOptions, drillConfig),
+        hcOptions: getHighchartsOptions(
+            chartOptions,
+            drillConfig,
+            zoomable
+                ? {
+                      chart: {
+                          zoomType: "x",
+                      },
+                  }
+                : undefined,
+        ),
         legend: {
             enabled: false,
             items: [
@@ -490,6 +500,83 @@ describe("HighChartsRenderer", () => {
                     .childAt(legendChildPosition)
                     .is(Legend);
                 expect(legendIsRenderedFirst).toEqual(true);
+            },
+        );
+    });
+
+    describe("Zoom Out Button", () => {
+        it("should render the zoom out button", () => {
+            const chartRenderer = jest.fn().mockReturnValue(<div className="chart" />);
+            const legendRenderer = jest.fn().mockReturnValue(<div className="legend" />);
+            const wrapper = mount(
+                createComponent(
+                    {
+                        legend: {
+                            enabled: true,
+                            items: [
+                                {
+                                    legendIndex: 0,
+                                    name: "test",
+                                    color: "rgb(0, 0, 0)",
+                                },
+                            ],
+                        },
+                        legendRenderer,
+                        chartRenderer,
+                    },
+                    true,
+                ),
+            );
+            const chartWrapper = wrapper.find(".viz-line-family-chart-wrap");
+
+            expect(chartWrapper.childAt(0).hasClass("s-zoom-out")).toBe(true);
+            expect(chartWrapper.childAt(1).prop("className")).toBe("legend");
+            expect(chartWrapper.childAt(2).prop("className")).toBe("chart");
+        });
+
+        it.each([[true], [false]])(
+            "should show and hide the zoom out button correctly when the resetSelection is %s",
+            (resetSelection: boolean) => {
+                const chartRenderer = jest.fn().mockReturnValue(<div className="chart" />);
+                const legendRenderer = jest.fn().mockReturnValue(<div className="legend" />);
+                const wrapperInstance: any = mount(
+                    createComponent(
+                        {
+                            legend: {
+                                enabled: true,
+                                items: [
+                                    {
+                                        legendIndex: 0,
+                                        name: "test",
+                                        color: "rgb(0, 0, 0)",
+                                    },
+                                ],
+                            },
+                            legendRenderer,
+                            chartRenderer,
+                        },
+                        true,
+                    ),
+                ).instance();
+                const zoomOutButton = {
+                    style: {
+                        display: "block",
+                    },
+                };
+                wrapperInstance.onChartSelection({
+                    target: {
+                        renderTo: {
+                            parentElement: {
+                                closest: jest.fn().mockReturnValue({
+                                    querySelector: jest.fn().mockReturnValue(zoomOutButton),
+                                }),
+                            },
+                        },
+                    },
+                    resetSelection,
+                });
+
+                expect(zoomOutButton.style.display).toBe(resetSelection ? "none" : "block");
             },
         );
     });

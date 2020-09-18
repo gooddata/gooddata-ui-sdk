@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { AXIS } from "./axis";
 
-const BASE_PROPERTIES = ["dataLabels.visible", "grid", "legend", "colorMapping"];
+const BASE_PROPERTIES = ["dataLabels.visible", "grid", "legend", "colorMapping", "zoomInsight"];
 
 const BASE_X_AXIS_PROPERTIES = [
     "xaxis.rotation",
@@ -138,8 +138,8 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
 };
 
 export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
-    "dataLabels.visible",
-    "grid",
+    ...BASE_PROPERTIES,
+
     "xaxis.rotation",
     "xaxis.labelsEnabled",
     "xaxis.visible",
@@ -155,9 +155,6 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
     "yaxis.max",
     "yaxis.name.visible",
     "yaxis.name.position",
-
-    "legend",
-    "colorMapping",
 ];
 
 export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
@@ -179,6 +176,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "yaxis.name.visible",
     "yaxis.name.position",
     "colorMapping",
+    "zoomInsight",
 ];
 
 export const PIECHART_SUPPORTED_PROPERTIES = [
@@ -188,7 +186,7 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
     "chart.verticalAlign",
 ];
 
-export const TREEMAP_SUPPORTED_PROPERTIES = ["dataLabels.visible", "legend", "colorMapping"];
+export const TREEMAP_SUPPORTED_PROPERTIES = ["dataLabels.visible", "legend", "colorMapping", "zoomInsight"];
 
 export const HEATMAP_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
@@ -205,6 +203,7 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "xaxis.name.visible",
     "xaxis.name.position",
     "colorMapping",
+    "zoomInsight",
 ];
 
 export const BULLET_CHART_SUPPORTED_PROPERTIES = [
@@ -225,6 +224,7 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
 
     "legend",
     "colorMapping",
+    "zoomInsight",
 ];
 
 export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
