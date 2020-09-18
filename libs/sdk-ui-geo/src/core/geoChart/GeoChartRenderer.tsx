@@ -22,6 +22,7 @@ import {
     DEFAULT_MAPBOX_OPTIONS,
     DEFAULT_TOOLTIP_OPTIONS,
     INTERACTION_EVENTS,
+    LAYER_STYLE_LABEL_PREFIX,
     ZOOM_CONTROLS_HEIGHT,
 } from "./constants/geoChart";
 import { IGeoConfig, IGeoData, IGeoLngLat } from "../../GeoChart";
@@ -329,7 +330,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         }
 
         const { colorStrategy, config, geoData } = props;
-        const { points: { groupNearbyPoints = true } = {} } = config || {};
+        const { points: { groupNearbyPoints = true } = {}, showLabels = true } = config || {};
 
         const hasClustering: boolean = isClusteringAllowed(geoData, groupNearbyPoints);
         const dataSourceProps: IGeoDataSourceProps = {
@@ -350,6 +351,17 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
             chart.addLayer(createClusterLabels(DEFAULT_DATA_SOURCE_NAME));
             // un-clustered points will be rendered under state/county label
             chart.addLayer(createUnclusterPoints(DEFAULT_DATA_SOURCE_NAME), "state-label");
+        }
+
+        // that config is not public,
+        // we only use for storybook to make it is more stable
+        if (!showLabels) {
+            const { layers = [] } = chart.getStyle();
+            layers.forEach((layer: mapboxgl.Layer) => {
+                if (layer.id.includes(LAYER_STYLE_LABEL_PREFIX)) {
+                    this.removeLayer(layer.id);
+                }
+            });
         }
 
         // keep listening to the data event until the style is loaded

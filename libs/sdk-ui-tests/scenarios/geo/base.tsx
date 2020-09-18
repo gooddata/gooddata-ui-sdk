@@ -7,6 +7,7 @@ import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 
 const DefaultConfig: IGeoConfig = {
     mapboxToken: MapboxToken,
+    showLabels: false,
 };
 
 /*
