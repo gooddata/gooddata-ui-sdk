@@ -112,6 +112,9 @@ rushx build
 
 > Hint: starting package.json **scripts** using npm/yarn/pnpm also works and there is nothing wrong with it.
 
+> Hint: if you find that the `rush build` makes your system unresponsive, you can try tweaking (lowering) the parallelism,
+> either by using the `-p` parameter of `rush build`, or by setting the `RUSH_PARALLELISM` environment variable.
+
 ### What should the commits look like?
 
 You should write imperative commit messages with well-defined title and body (for more context, please see [this blog post](https://chris.beams.io/posts/git-commit/)).
@@ -225,6 +228,11 @@ rsync -rptgD --no-links --include="/*/dist/*" ./libs/ ~/your-app/node_modules/@g
 ```
 
 This will make sure that the SDK8 files in your app are from your local SDK8 version. To revert the changes, run `yarn install --force` or equivalent in your app.
+
+> Hint: it is better to run the first `rsync` before starting your application, as the first run copies a lot of files and might make your app dev-server recompile multiple times unnecessarily. So the typical flow would be
+> 1. run `rsync` as described above
+> 2. after it finishes, run your app's dev server
+> 3. change the SDK code and run `rush build -t [the package you make changes in]` and then run `rsync` without stopping your app
 
 ## CI jobs and gating
 
