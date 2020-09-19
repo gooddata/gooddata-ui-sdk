@@ -18,6 +18,7 @@
         "prepublishOnly": "npm run build",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
+        "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "build-dev": "bash scripts/build.sh --dev",
         "dev": "bash scripts/build.sh --dev-watch",
         "test": "jest --watch",

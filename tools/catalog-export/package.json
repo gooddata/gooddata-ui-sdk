@@ -19,6 +19,7 @@
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
+        "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "build": "rm -rf dist && tsc -p tsconfig.build.json",
         "test": "jest --watch",
         "test-once": "jest",

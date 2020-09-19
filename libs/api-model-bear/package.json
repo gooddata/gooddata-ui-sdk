@@ -7,6 +7,7 @@
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
+        "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "prepublish": "npm run build",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "dev": "tsc -p tsconfig.dev.json --watch --noEmit",

@@ -20,6 +20,7 @@
         "build": "npm run build:dist && npm run build:umd",
         "build:dist": "rm -rf dist && tsc -p tsconfig.build.json",
         "build:umd": "rm -rf umd && webpack -p",
+        "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "prepublishOnly": "npm run build",
         "test": "jest --watch",
         "test-once": "jest",

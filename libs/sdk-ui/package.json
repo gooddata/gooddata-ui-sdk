@@ -17,6 +17,7 @@
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "prepublishOnly": "npm run build",
         "build": "bash scripts/build.sh",
+        "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "build-dev": "bash scripts/build.sh --dev",
         "dev": "bash scripts/build.sh --dev-watch",
         "test": "jest --watch",

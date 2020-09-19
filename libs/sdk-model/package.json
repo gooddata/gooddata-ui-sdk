@@ -17,6 +17,7 @@
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
+        "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "test": "jest --watch",
         "test-once": "jest",

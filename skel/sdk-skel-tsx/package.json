@@ -15,6 +15,7 @@
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "build": "bash scripts/build.sh && npm run api-extractor",
+        "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build-dev": "bash scripts/build.sh --dev",
         "dev": "bash scripts/build.sh --dev-watch",

@@ -17,6 +17,7 @@
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
+        "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "openapi-generate": "./scripts/generate.js",
         "generate-client": "rm -rf src/generated/* && npm run openapi-generate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
