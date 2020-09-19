@@ -2763,6 +2763,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+  /@types/json5/0.0.30:
+    dev: false
+    resolution:
+      integrity: sha512-sqm9g7mHlPY/43fcSNrCYfOeX9zkTTK+euO5E6+CVijSMm5tTjkVdwdqRkY3ljjIAf8679vps5jKUoJBCLsMDA==
   /@types/lodash/4.14.161:
     dev: false
     resolution:
@@ -8195,6 +8199,15 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
+  /find-up/5.0.0:
+    dependencies:
+      locate-path: 6.0.0
+      path-exists: 4.0.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==
   /findup-sync/3.0.0:
     dependencies:
       detect-file: 1.0.0
@@ -11261,6 +11274,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
+  /locate-path/6.0.0:
+    dependencies:
+      p-locate: 5.0.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
   /lodash-webpack-plugin/0.11.5_webpack@4.44.1:
     dependencies:
       lodash: 4.17.20
@@ -12606,6 +12627,14 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==
+  /p-limit/3.0.2:
+    dependencies:
+      p-try: 2.2.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-iwqZSOoWIW+Ew4kAGUlN16J4M7OB3ysMLSZtnhmqx7njIHFPlxWBX8xo3lVTyFVq6mI/lL9qt2IsN1sHwaxJkg==
   /p-locate/2.0.0:
     dependencies:
       p-limit: 1.3.0
@@ -12630,6 +12659,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==
+  /p-locate/5.0.0:
+    dependencies:
+      p-limit: 3.0.2
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==
   /p-map/1.2.0:
     dev: false
     engines:
@@ -17949,26 +17986,33 @@ packages:
       '@gooddata/eslint-config': 2.0.0_d51a20c114e6e2c91f604dce070183d3
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.12
+      '@types/json5': 0.0.30
       '@types/lodash': 4.14.161
+      '@types/node': 12.12.54
       '@typescript-eslint/eslint-plugin': 3.10.1_8c4180ecb21edfa10ba68e449171fb00
       '@typescript-eslint/parser': 3.10.1_eslint@7.8.0+typescript@4.0.2
+      chalk: 2.4.2
+      commander: 3.0.2
       dependency-cruiser: 9.12.0_typescript@4.0.2
       eslint: 7.8.0
       eslint-plugin-header: 3.1.0_eslint@7.8.0
       eslint-plugin-import: 2.22.0_eslint@7.8.0
       eslint-plugin-jest: 23.20.0_eslint@7.8.0
       eslint-plugin-prettier: 3.1.4_eslint@7.8.0+prettier@2.0.5
+      find-up: 5.0.0
       jest: 26.4.2
       jest-junit: 3.7.0
+      json5: 2.1.3
       lodash: 4.17.20
       prettier: 2.0.5
       ts-jest: 26.3.0_jest@26.4.2+typescript@4.0.2
+      ts-node: 8.10.2_typescript@4.0.2
       tslib: 2.0.1
       typescript: 4.0.2
     dev: false
     name: '@rush-temp/applink'
     resolution:
-      integrity: sha512-iE40vLm764gnClMQ3iz8TYEJ4TkXfJHVaWjNi2W8coW1+ZE/URRlrRaEMJD4yko5+NYIKhSGYO6kkQ5MeA5Q/g==
+      integrity: sha512-8B/yY5NAYtBO8y9exZOVtGNUTr263Mk1rRhkiaOkZn6IkZRLLzFyUkTnM4j0DxIQqDNOMkxXm6rdQrcPdHpIxw==
       tarball: 'file:projects/applink.tgz'
     version: 0.0.0
   'file:projects/catalog-export.tgz':

@@ -8,6 +8,7 @@
         "lib": ["es7", "dom"],
         "module": "commonjs",
         "moduleResolution": "node",
+        "strict": true,
         "esModuleInterop": true,
         "importHelpers": true,
         "noImplicitAny": true,

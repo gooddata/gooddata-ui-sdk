@@ -243,6 +243,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@types/json5",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/lodash",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -499,6 +503,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "find-up",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "fixed-data-table-2",
       "allowedCategories": [ "production" ]
     },
@@ -573,6 +581,10 @@
     {
       "name": "json-stable-stringify",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "json5",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "lodash",
