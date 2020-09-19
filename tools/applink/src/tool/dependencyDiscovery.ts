@@ -2,7 +2,7 @@
 
 import * as path from "path";
 import * as fs from "fs";
-import { SdkPackage } from "./sdkPackages";
+import { Sdk, SdkPackage } from "./sdkPackages";
 import { readJsonSync } from "./utils";
 
 export type DependencyOnSdk = {
@@ -11,13 +11,10 @@ export type DependencyOnSdk = {
     pkg: SdkPackage;
 };
 
-export function findSdkDependencies(
-    target: string,
-    sdkPackages: Record<string, SdkPackage>,
-): DependencyOnSdk[] {
+export function findSdkDependencies(target: string, sdk: Sdk): DependencyOnSdk[] {
     const result: DependencyOnSdk[] = [];
 
-    Object.values(sdkPackages).forEach((pkg) => {
+    Object.values(sdk.packages).forEach((pkg) => {
         const directory = path.join(target, "node_modules", ...pkg.packageDirs);
 
         if (fs.existsSync(directory) && fs.statSync(directory).isDirectory()) {

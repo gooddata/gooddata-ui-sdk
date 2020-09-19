@@ -6,7 +6,13 @@ import findUp from "find-up";
 import process from "process";
 import { readJsonSync } from "./utils";
 
-let SdkPackages: Record<string, SdkPackage> | undefined;
+let _Sdk: Sdk | undefined;
+
+export type Sdk = {
+    root: string;
+    packages: Record<string, SdkPackage>;
+    packagesByDir: Record<string, SdkPackage>;
+};
 
 export type SdkPackage = {
     type: "lib" | "tool";
@@ -28,7 +34,7 @@ async function findRushJsonFile(): Promise<string | undefined> {
     return await findUp("rush.json", { cwd: process.cwd(), type: "file" });
 }
 
-export async function getSdkPackages(): Promise<Record<string, SdkPackage> | undefined> {
+export async function getSdkPackages(): Promise<Sdk | undefined> {
     const rushJsonFile = await findRushJsonFile();
 
     if (!rushJsonFile) {
@@ -41,7 +47,7 @@ export async function getSdkPackages(): Promise<Record<string, SdkPackage> | und
         logInfo(`Found ${rushJsonFile}. Reading packages.`);
     }
 
-    if (!SdkPackages) {
+    if (!_Sdk) {
         const rushPackages = readJsonSync(rushJsonFile).projects as RushPackage[];
         const rootDir = path.dirname(rushJsonFile);
         const packages: SdkPackage[] = rushPackages
@@ -63,9 +69,14 @@ export async function getSdkPackages(): Promise<Record<string, SdkPackage> | und
                 };
             });
 
-        SdkPackages = keyBy(packages, (p) => p.packageName);
         logInfo(`Found ${packages.length} packages in rush.json`);
+
+        _Sdk = {
+            root: path.dirname(rushJsonFile),
+            packages: keyBy(packages, (p) => p.packageName),
+            packagesByDir: keyBy(packages, (p) => p.rushPackage.projectFolder),
+        };
     }
 
-    return SdkPackages;
+    return _Sdk;
 }

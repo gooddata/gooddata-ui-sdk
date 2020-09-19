@@ -203,6 +203,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/cross-spawn",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/enzyme",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -395,6 +399,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "circular-dependency-plugin",
       "allowedCategories": [ "examples" ]
     },
@@ -421,6 +429,10 @@
     {
       "name": "core-js",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "cross-spawn",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "css-loader",

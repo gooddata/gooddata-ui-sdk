@@ -2623,6 +2623,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
+  /@types/cross-spawn/6.0.2:
+    dependencies:
+      '@types/node': 14.6.2
+    dev: false
+    resolution:
+      integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==
   /@types/d3-path/1.0.8:
     dev: false
     resolution:
@@ -4982,7 +4988,6 @@ packages:
     dev: false
     engines:
       node: '>=8'
-    optional: true
     resolution:
       integrity: sha512-1Yj8h9Q+QDF5FzhMs/c9+6UntbD5MkRfRwac8DoEm9ZfUBZ7tZ55YcGVAzEe4bXsdQHEk+s9S5wsOKVdZrw0tQ==
   /bindings/1.5.0:
@@ -5608,7 +5613,6 @@ packages:
     dev: false
     engines:
       node: '>= 8.10.0'
-    optional: true
     optionalDependencies:
       fsevents: 2.1.3
     resolution:
@@ -9647,7 +9651,6 @@ packages:
     dev: false
     engines:
       node: '>=8'
-    optional: true
     resolution:
       integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==
   /is-boolean-object/1.0.1:
@@ -14372,7 +14375,6 @@ packages:
     dev: false
     engines:
       node: '>=8.10.0'
-    optional: true
     resolution:
       integrity: sha512-0xe001vZBnJEK+uKcj8qOhyAKPzIT+gStxWr3LCB0DwcXR5NZJ3IaC+yGnHCYzB/S7ov3m3EEbZI2zeNvX+hGQ==
   /realpath-native/1.1.0:
@@ -17985,6 +17987,7 @@ packages:
     dependencies:
       '@gooddata/eslint-config': 2.0.0_d51a20c114e6e2c91f604dce070183d3
       '@microsoft/api-extractor': 7.8.1
+      '@types/cross-spawn': 6.0.2
       '@types/jest': 26.0.12
       '@types/json5': 0.0.30
       '@types/lodash': 4.14.161
@@ -17992,7 +17995,9 @@ packages:
       '@typescript-eslint/eslint-plugin': 3.10.1_8c4180ecb21edfa10ba68e449171fb00
       '@typescript-eslint/parser': 3.10.1_eslint@7.8.0+typescript@4.0.2
       chalk: 2.4.2
+      chokidar: 3.4.2
       commander: 3.0.2
+      cross-spawn: 7.0.3
       dependency-cruiser: 9.12.0_typescript@4.0.2
       eslint: 7.8.0
       eslint-plugin-header: 3.1.0_eslint@7.8.0
@@ -18012,7 +18017,7 @@ packages:
     dev: false
     name: '@rush-temp/applink'
     resolution:
-      integrity: sha512-8B/yY5NAYtBO8y9exZOVtGNUTr263Mk1rRhkiaOkZn6IkZRLLzFyUkTnM4j0DxIQqDNOMkxXm6rdQrcPdHpIxw==
+      integrity: sha512-mjG1GdKvBL3l5L5eiPkpXtatEuR0ukvRfClZoLezpMA50SoRu4m0ERLRP1PxZ1uZziM7gdCJ+U/a6+ngyTFqqg==
       tarball: 'file:projects/applink.tgz'
     version: 0.0.0
   'file:projects/catalog-export.tgz':
