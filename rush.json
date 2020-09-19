@@ -301,6 +301,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/applink",
+            "projectFolder": "tools/applink",
+            "reviewCategory": "tools",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/experimental-workspace",
             "projectFolder": "tools/experimental-workspace",
             "reviewCategory": "tools",
